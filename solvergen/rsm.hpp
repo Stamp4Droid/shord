@@ -48,17 +48,53 @@ private:
     }
 };
 
-template<bool Tagged> class Label {
+class Tag {
+    friend Registry<Tag>;
+    typedef std::string Key;
+public:
+    const std::string name;
+    const Ref<Tag> ref;
+private:
+    explicit Tag(const std::string& name, Ref<Tag> ref)
+	: name(name), ref(ref) {}
+    bool merge() const {
+	return false;
+    }
+};
+
+class Label {
+public:
+    const Ref<Symbol> symbol;
+    const bool rev;
+    const Ref<Tag> tag; // An invalid tag here means "any".
+public:
+    explicit Label(const Symbol& symbol, bool rev, Ref<Tag> tag)
+	: symbol(symbol.ref), rev(rev), tag(tag) {
+	EXPECT(!tag.valid() || symbol.parametric);
+    }
+    static Label parse(const std::string& str, Registry<Symbol>& symbol_reg,
+		       Registry<Tag>& tag_reg);
+    void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
+	       const Registry<Tag>& tag_reg) const;
+    bool operator<(const Label& rhs) const {
+	return (std::tie(    symbol,     rev,     tag) <
+		std::tie(rhs.symbol, rhs.rev, rhs.tag));
+    }
+};
+
+class MatchLabel {
 public:
     const Ref<Symbol> symbol;
     const bool rev;
 public:
-    explicit Label(const Symbol& symbol, bool rev) : symbol(symbol.ref),
-						     rev(rev) {
-	EXPECT(!Tagged || symbol.parametric);
+    explicit MatchLabel(const Symbol& symbol, bool rev)
+	: symbol(symbol.ref), rev(rev) {
+	EXPECT(symbol.parametric);
     }
+    static MatchLabel parse(const std::string& str,
+			    Registry<Symbol>& symbol_reg);
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
-    bool operator<(const Label& rhs) const {
+    bool operator<(const MatchLabel& rhs) const {
 	return (std::tie(    symbol,     rev) <
 		std::tie(rhs.symbol, rhs.rev));
     }
@@ -116,12 +152,13 @@ class Transition {
 public:
     const Ref<State> from;
     const Ref<State> to;
-    const Label<false> label;
+    const Label label;
 public:
-    explicit Transition(Ref<State> from, Ref<State> to, Label<false> label)
+    explicit Transition(Ref<State> from, Ref<State> to, const Label& label)
 	: from(from), to(to), label(label) {}
     void print(std::ostream& os, const Registry<State>& state_reg,
-	       const Registry<Symbol>& symbol_reg) const;
+	       const Registry<Symbol>& symbol_reg,
+	       const Registry<Tag>& tag_reg) const;
     bool operator<(const Transition& rhs) const {
 	return (std::tie(    from,     to,     label) <
 		std::tie(rhs.from, rhs.to, rhs.label));
@@ -137,9 +174,9 @@ class Entry {
 public:
     const Ref<State> from;
     const Ref<Box> to;
-    const Label<true> label;
+    const MatchLabel label;
 public:
-    explicit Entry(Ref<State> from, Ref<Box> to, Label<true> label)
+    explicit Entry(Ref<State> from, Ref<Box> to, const MatchLabel& label)
 	: from(from), to(to), label(label) {}
     void print(std::ostream& os, const Registry<State>& state_reg,
 	       const Registry<Box>& box_reg,
@@ -154,9 +191,9 @@ class Exit {
 public:
     const Ref<Box> from;
     const Ref<State> to;
-    const Label<true> label;
+    const MatchLabel label;
 public:
-    explicit Exit(Ref<Box> from, Ref<State> to, Label<true> label)
+    explicit Exit(Ref<Box> from, Ref<State> to, const MatchLabel& label)
 	: from(from), to(to), label(label) {}
     void print(std::ostream& os, const Registry<State>& state_reg,
 	       const Registry<Box>& box_reg,
@@ -209,6 +246,7 @@ public:
 	return final;
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
+	       const Registry<Tag>& tag_reg,
 	       const Registry<Component>& comp_reg) const;
 };
 
@@ -220,17 +258,18 @@ public:
 public:
     Registry<Component> components;
 private:
-    void parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg);
+    void parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg,
+		    Registry<Tag>& tag_reg);
 public:
-    explicit RSM(const std::string& dirname, Registry<Symbol>& symbol_reg);
-    void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
+    explicit RSM(const std::string& dirname, Registry<Symbol>& symbol_reg,
+		 Registry<Tag>& tag_reg);
+    void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
+	       const Registry<Tag>& tag_reg) const;
 };
 
 typedef mi::Index<F_FROM, Ref<State>,
 	    mi::Table<F_TO, Ref<State>>> FsmEffect;
 typedef mi::Uniq<FsmEffect> TransRel;
-
-// TODO: Make some of the fields constant.
 
 class FSM {
 public:
@@ -245,19 +284,37 @@ private:
     // - Could instead have specialized data structures for FSM.
     mi::FlatIndex<REV, bool,
 	mi::FlatIndex<SYMBOL, Ref<Symbol>,
-	    TransRel>> base_effects;
+	    // Non-parametric symbols will only have an entry for "none".
+	    // Parametric ones will have effects applicable to all tags under
+	    // "none", and additional effects specific to some tag under that
+	    // tag. The two will need to be combined.
+	    mi::Index<TAG, Ref<Tag>,
+		TransRel>>> base_effects;
+private:
+    void print_effects(std::ostream& os, const Symbol& s, bool rev,
+		       const Registry<Symbol>& symbol_reg,
+		       const Registry<Tag>& tag_reg) const;
 public:
-    explicit FSM(const std::string& fname, Registry<Symbol>& symbol_reg);
+    explicit FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
+		 Registry<Tag>& tag_reg);
     TransRel id_trel() const {
 	// TODO: Could just do this externally
 	return mi::uniq_id<FsmEffect>(comp.get_states());
     };
-    template<bool Tagged>
-    TransRel effect_of(const Label<Tagged>& label) const {
-	return base_effects[label.rev][label.symbol];
+    // The tag on the label isn't used; the provided tag is used instead.
+    // TODO: Ensure that this is only applied to valid Edge objects.
+    // Specifically: tag.valid() iff symbol.parametric
+    template<class L> TransRel effect_of(const L& label, Ref<Tag> tag) const {
+	const auto& slice = base_effects[label.rev][label.symbol];
+	TransRel res = slice[Ref<Tag>()];
+	if (tag.valid()) {
+	    res.copy(slice[tag]);
+	}
+	return res;
     }
     bool is_accepting(const TransRel& trel) const;
-    void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
+    void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
+	       const Registry<Tag>& tag_reg) const;
 };
 
 TransRel compose(const TransRel& trel1, const TransRel& trel2);
@@ -265,6 +322,7 @@ TransRel compose(const TransRel& trel1, const TransRel& trel2);
 class Analysis {
 public:
     Registry<Symbol> symbols;
+    Registry<Tag> tags;
     RSM rsm;
     FSM fsm; // TODO: Exactly one FSM for now
 private:
@@ -273,7 +331,7 @@ private:
 public:
     explicit Analysis(const std::string& rsm_dname,
 		      const std::string& fsm_fname)
-	: rsm(rsm_dname, symbols), fsm(fsm_fname, symbols) {}
+	: rsm(rsm_dname, symbols, tags), fsm(fsm_fname, symbols, tags) {}
     void print(std::ostream& os) const;
     void close(Graph& graph) const;
 };
@@ -288,20 +346,6 @@ public:
     const Ref<Node> ref;
 private:
     explicit Node(const std::string& name, Ref<Node> ref)
-	: name(name), ref(ref) {}
-    bool merge() const {
-	return false;
-    }
-};
-
-class Tag {
-    friend Registry<Tag>;
-    typedef std::string Key;
-public:
-    const std::string name;
-    const Ref<Tag> ref;
-private:
-    explicit Tag(const std::string& name, Ref<Tag> ref)
 	: name(name), ref(ref) {}
     bool merge() const {
 	return false;
@@ -339,7 +383,6 @@ public:
     static const std::string FILE_EXTENSION;
 public:
     Registry<Node> nodes;
-    Registry<Tag> tags;
     // TODO:
     // - Separate indices increases the chances that we'll forget to apply all
     //   modifications on both.
@@ -350,9 +393,9 @@ public:
     SummaryStore summaries;
 private:
     void parse_file(const Symbol& symbol, const fs::path& fpath,
-		    ParsingMode mode);
+		    ParsingMode mode, Registry<Tag>& tag_reg);
 public:
-    explicit Graph(const Registry<Symbol>& symbol_reg,
+    explicit Graph(const Registry<Symbol>& symbol_reg, Registry<Tag>& tag_reg,
 		   const std::string& dirname);
     Graph(const Graph& rhs) = delete;
     Graph& operator=(const Graph& rhs) = delete;
@@ -361,15 +404,16 @@ public:
 	delete edges_2;
     }
     std::map<Ref<Node>,std::set<Ref<Node>>>
-	subpath_bounds(const Label<true>& hd_lab,
-		       const Label<true>& tl_lab) const;
-    template<bool Tagged>
-    const LabelSlice& search(const Label<Tagged>& label) const {
+	subpath_bounds(const MatchLabel& hd_lab,
+		       const MatchLabel& tl_lab) const;
+    const LabelSlice& search(const MatchLabel& label) const {
 	return (*edges_2)[label.rev][label.symbol];
     }
-    template<bool Tagged>
-    const SrcLabelSlice& search(Ref<Node> src,
-				const Label<Tagged>& label) const {
+    const SrcLabelSlice& search(Ref<Node> src, const MatchLabel& label) const {
+	return (*edges_1)[label.rev][src][label.symbol];
+    }
+    // CAUTION: The tag on the label is ignored.
+    const SrcLabelSlice& search(Ref<Node> src, const Label& label) const {
 	return (*edges_1)[label.rev][src][label.symbol];
     }
     void print_stats(std::ostream& os) const;

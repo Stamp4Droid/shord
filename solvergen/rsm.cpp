@@ -11,17 +11,55 @@
 
 const boost::regex Symbol::NAME_REGEX("[a-z]\\w*");
 
-template<bool Tagged>
-void Label<Tagged>::print(std::ostream& os,
-			  const Registry<Symbol>& symbol_reg) const {
+Label Label::parse(const std::string& str, Registry<Symbol>& symbol_reg,
+		   Registry<Tag>& tag_reg) {
+    static const boost::regex r("(_)?([a-z]\\w*)(?:\\[(\\w*|\\*)\\])?");
+    boost::smatch m;
+    bool matched = boost::regex_match(str, m, r);
+    EXPECT(matched);
+
+    bool rev = m[1].matched;
+    std::string symbol_name(m[2].first, m[2].second);
+    std::string tag_name(m[3].first, m[3].second);
+    bool parametric = m[3].matched;
+    const Symbol& symbol = symbol_reg.add(symbol_name, parametric);
+    Ref<Tag> tag;
+    if (parametric && tag_name != "*") {
+	tag = tag_reg.add(tag_name).ref;
+    }
+
+    return Label(symbol, rev, tag);
+}
+
+void Label::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
+		  const Registry<Tag>& tag_reg) const {
     if (rev) {
 	os << "_";
     }
-    const Symbol& s = symbol_reg[symbol];
-    os << s.name;
-    if (s.parametric) {
-	os << "[" << (Tagged ? "i" : "*") << "]";
+    os << symbol_reg[symbol].name
+       << "[" << (tag.valid() ? tag_reg[tag].name : "*") << "]";
+}
+
+MatchLabel MatchLabel::parse(const std::string& str,
+			     Registry<Symbol>& symbol_reg) {
+    static const boost::regex r("(_)?([a-z]\\w*)\\[[a-z]\\]");
+    boost::smatch m;
+    bool matched = boost::regex_match(str, m, r);
+    EXPECT(matched);
+
+    bool rev = m[1].matched;
+    std::string symbol_name(m[2].first, m[2].second);
+    const Symbol& symbol = symbol_reg.add(symbol_name, true);
+
+    return MatchLabel(symbol, rev);
+}
+
+void MatchLabel::print(std::ostream& os,
+		       const Registry<Symbol>& symbol_reg) const {
+    if (rev) {
+	os << "_";
     }
+    os << symbol_reg[symbol].name << "[i]";
 }
 
 // SM COMPONENTS ==============================================================
@@ -42,9 +80,10 @@ void Box::print(std::ostream& os, const Registry<Component>& comp_reg) const {
 }
 
 void Transition::print(std::ostream& os, const Registry<State>& state_reg,
-		       const Registry<Symbol>& symbol_reg) const {
+		       const Registry<Symbol>& symbol_reg,
+		       const Registry<Tag>& tag_reg) const {
     os << state_reg[from].name << " " << state_reg[to].name << " ";
-    label.print(os, symbol_reg);
+    label.print(os, symbol_reg, tag_reg);
     os << std::endl;
 }
 
@@ -80,6 +119,7 @@ const State& Component::add_state(const std::string& name, bool initial,
 }
 
 void Component::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
+		      const Registry<Tag>& tag_reg,
 		      const Registry<Component>& comp_reg) const {
     for (const State& s : states) {
 	s.print(os);
@@ -89,7 +129,7 @@ void Component::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
     }
     os << "#" << std::endl;
     for (const Transition& t : transitions) {
-	t.print(os, states, symbol_reg);
+	t.print(os, states, symbol_reg, tag_reg);
     }
     for (const Entry& e : entries) {
 	e.print(os, states, boxes, symbol_reg);
@@ -103,35 +143,18 @@ void Component::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 
 const std::string RSM::FILE_EXTENSION(".rsm.tgf");
 
-template<bool Tagged>
-Label<Tagged> parse_label(const std::string& str,
-			  Registry<Symbol>& symbol_reg) {
-    static const boost::regex r("(_)?([a-z]\\w*)(?:\\[([a-z\\*])\\])?");
-    boost::smatch m;
-    bool matched = boost::regex_match(str, m, r);
-    EXPECT(matched);
-
-    bool rev = m[1].matched;
-    std::string name(m[2].first, m[2].second);
-    std::string tag(m[3].first, m[3].second);
-    bool parametric = m[3].matched;
-    EXPECT((Tagged && parametric && tag != "*") ||
-	   (!Tagged && (!parametric || tag == "*")));
-
-    return Label<Tagged>(symbol_reg.add(name, parametric), rev);
-}
-
-RSM::RSM(const std::string& dirname, Registry<Symbol>& symbol_reg) {
+RSM::RSM(const std::string& dirname, Registry<Symbol>& symbol_reg,
+	 Registry<Tag>& tag_reg) {
     Directory dir(dirname);
     std::list<fs::path> files(dir.begin(), dir.end());
     files.sort();
     for (const fs::path& fpath : files) {
-	parse_file(fpath, symbol_reg);
+	parse_file(fpath, symbol_reg, tag_reg);
     }
 }
 
 void parse_component(const fs::path& fpath, Component& comp,
-		     Registry<Symbol>& symbol_reg,
+		     Registry<Symbol>& symbol_reg, Registry<Tag>& tag_reg,
 		     const Registry<Component>& comp_reg) {
     std::ifstream fin(fpath.string());
     EXPECT(fin);
@@ -202,21 +225,21 @@ void parse_component(const fs::path& fpath, Component& comp,
 		Ref<State> src = comp.get_states().find(toks[0]).ref;
 		Ref<State> dst = comp.get_states().find(toks[1]).ref;
 		for (const std::string& t : label_toks) {
-		    Label<false> lab = parse_label<false>(t, symbol_reg);
+		    Label lab = Label::parse(t, symbol_reg, tag_reg);
 		    comp.transitions.insert(Transition(src, dst, lab));
 		}
 	    } else if (src_is_state && !dst_is_state) {
 		Ref<State> src = comp.get_states().find(toks[0]).ref;
 		Ref<Box> dst = comp.boxes.find(toks[1]).ref;
 		for (const std::string& t : label_toks) {
-		    Label<true> lab = parse_label<true>(t, symbol_reg);
+		    MatchLabel lab = MatchLabel::parse(t, symbol_reg);
 		    comp.entries.insert(Entry(src, dst, lab));
 		}
 	    } else if (!src_is_state && dst_is_state) {
 		Ref<Box> src = comp.boxes.find(toks[0]).ref;
 		Ref<State> dst = comp.get_states().find(toks[1]).ref;
 		for (const std::string& t : label_toks) {
-		    Label<true> lab = parse_label<true>(t, symbol_reg);
+		    MatchLabel lab = MatchLabel::parse(t, symbol_reg);
 		    comp.exits.insert(Exit(src, dst, lab));
 		}
 	    }
@@ -231,7 +254,8 @@ void parse_component(const fs::path& fpath, Component& comp,
     EXPECT(mode == ParsingMode::EDGES);
 }
 
-void RSM::parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg) {
+void RSM::parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg,
+		     Registry<Tag>& tag_reg) {
     std::string fbase(fpath.filename().string());
     if (!boost::algorithm::ends_with(fbase, FILE_EXTENSION)) {
 	return;
@@ -240,19 +264,21 @@ void RSM::parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg) {
     size_t name_len = fbase.size() - FILE_EXTENSION.size();
     std::string name(fbase.substr(0, name_len));
     Component& comp = components.make(name);
-    parse_component(fpath, comp, symbol_reg, components);
+    parse_component(fpath, comp, symbol_reg, tag_reg, components);
 }
 
-void RSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
+void RSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
+		const Registry<Tag>& tag_reg) const {
     for (const Component& comp : components) {
 	os << comp.name << ":" << std::endl;
-	comp.print(os, symbol_reg, components);
+	comp.print(os, symbol_reg, tag_reg, components);
     }
 }
 
 const std::string FSM::FILE_EXTENSION(".fsm.tgf");
 
-FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg)
+FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
+	 Registry<Tag>& tag_reg)
     : base_effects(boost::none, symbol_reg) {
     fs::path fpath(fname);
     std::string fbase(fpath.filename().string());
@@ -260,7 +286,7 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg)
 
     std::cout << "Parsing " << fbase << std::endl;
     unsigned int old_sz = symbol_reg.size();
-    parse_component(fpath, comp, symbol_reg, Registry<Component>());
+    parse_component(fpath, comp, symbol_reg, tag_reg, Registry<Component>());
     // HACK: Don't allow new symbols on the secondary machine.
     // TODO: Also check that it covers all symbols from the primary one.
     EXPECT(old_sz == symbol_reg.size());
@@ -269,7 +295,8 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg)
 
     std::cout << "Calculating base effects" << std::endl;
     for (const Transition& t : comp.transitions) {
-	base_effects.insert(t.label.rev, t.label.symbol, t.from, t.to);
+	base_effects.insert(t.label.rev, t.label.symbol, t.label.tag,
+			    t.from, t.to);
     }
 }
 
@@ -282,23 +309,26 @@ bool FSM::is_accepting(const TransRel& trel) const {
     return false;
 }
 
-void FSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
+void FSM::print_effects(std::ostream& os, const Symbol& s, bool rev,
+			const Registry<Symbol>& symbol_reg,
+			const Registry<Tag>& tag_reg) const {
+    for (Ref<Tag> tag : base_effects[rev][s.ref]) {
+	Label(s, rev, tag).print(os, symbol_reg, tag_reg);
+	os << ":" << std::endl;
+	FOR(trans, base_effects[rev][s.ref][tag]) {
+	    os << "  " << comp.get_states()[trans.get<F_FROM>()].name << " "
+	       << comp.get_states()[trans.get<F_TO>()].name << std::endl;
+	}
+    }
+}
+
+void FSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
+		const Registry<Tag>& tag_reg) const {
     os << "FSM:" << std::endl;
-    comp.print(os, symbol_reg, Registry<Component>());
+    comp.print(os, symbol_reg, tag_reg, Registry<Component>());
     os << "Base effects:" << std::endl;
     for (const Symbol& s : symbol_reg) {
-	Label<false>(s, false).print(os, symbol_reg);
-	os << ":" << std::endl;
-	FOR(trans, base_effects[false][s.ref]) {
-	    os << "  " << comp.get_states()[trans.get<F_FROM>()].name << " "
-	       << comp.get_states()[trans.get<F_TO>()].name << std::endl;
-	}
-	Label<false>(s, true).print(os, symbol_reg);
-	os << ":" << std::endl;
-	FOR(trans, base_effects[true][s.ref]) {
-	    os << "  " << comp.get_states()[trans.get<F_FROM>()].name << " "
-	       << comp.get_states()[trans.get<F_TO>()].name << std::endl;
-	}
+	print_effects(os, s, false, symbol_reg, tag_reg);
     }
 }
 
@@ -307,8 +337,8 @@ TransRel compose(const TransRel& trel1, const TransRel& trel2) {
 }
 
 void Analysis::print(std::ostream& os) const {
-    rsm.print(os, symbols);
-    fsm.print(os, symbols);
+    rsm.print(os, symbols, tags);
+    fsm.print(os, symbols, tags);
 }
 
 // GRAPH ======================================================================
@@ -317,7 +347,7 @@ const std::string Graph::FILE_EXTENSION(".dat");
 
 // TODO: Two passes over the files.
 void Graph::parse_file(const Symbol& symbol, const fs::path& fpath,
-		       ParsingMode mode) {
+		       ParsingMode mode, Registry<Tag>& tag_reg) {
     std::ifstream fin(fpath.string());
     EXPECT(fin);
     std::string line;
@@ -340,7 +370,7 @@ void Graph::parse_file(const Symbol& symbol, const fs::path& fpath,
 	    Ref<Tag> tag;
 	    if (symbol.parametric) {
 		EXPECT(toks.size() == 3);
-		tag = tags.add(toks[2]).ref;
+		tag = tag_reg.add(toks[2]).ref;
 	    } else {
 		EXPECT(toks.size() == 2);
 	    }
@@ -363,21 +393,21 @@ void Graph::parse_file(const Symbol& symbol, const fs::path& fpath,
     EXPECT(fin.eof());
 }
 
-Graph::Graph(const Registry<Symbol>& symbol_reg,
+Graph::Graph(const Registry<Symbol>& symbol_reg, Registry<Tag>& tag_reg,
 	     const std::string& dirname) {
     fs::path dirpath(dirname);
     std::cout << "Parsing nodes" << std::endl;
     for (const Symbol& s : symbol_reg) {
 	std::string fname = s.name + FILE_EXTENSION;
 	// Will fail if some symbol is missing its Edge file.
-	parse_file(s, dirpath/fname, ParsingMode::NODES);
+	parse_file(s, dirpath/fname, ParsingMode::NODES, tag_reg);
     }
     edges_1 = new EdgesSrcLabelIndex(boost::none, nodes);
     edges_2 = new EdgesLabelIndex(boost::none, symbol_reg);
     std::cout << "Parsing edges" << std::endl;
     for (const Symbol& s : symbol_reg) {
 	std::string fname = s.name + FILE_EXTENSION;
-	parse_file(s, dirpath/fname, ParsingMode::EDGES);
+	parse_file(s, dirpath/fname, ParsingMode::EDGES, tag_reg);
     }
 }
 
@@ -408,10 +438,9 @@ void Graph::print_summaries(const std::string& dirname,
 
 // TODO:
 // - Don't produce the output by value.
-// - Implicitly assumes all entry/exit labels are tagged.
 std::map<Ref<Node>,std::set<Ref<Node>>>
-Graph::subpath_bounds(const Label<true>& hd_lab,
-		      const Label<true>& tl_lab) const {
+Graph::subpath_bounds(const MatchLabel& hd_lab,
+		      const MatchLabel& tl_lab) const {
     std::map<Ref<Node>,std::set<Ref<Node>>> res;
     FOR(hd, search(hd_lab)) {
 	FOR(tl, search(tl_lab)[hd.get<TAG>()]) {
@@ -569,33 +598,33 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 	}
 
 	// Cross edges according to the transitions out of the current state.
-	// TODO: Implicitly assumes all transition labels are untagged.
 	for (const Transition& t : comp.transitions[pos.r_to]) {
-	    TransRel new_trel = compose(pos.trel, fsm.effect_of(t.label));
-	    // Don't even search the graph if we couldn't follow the edge
-	    // anyway, due to FSM constraints.
-	    if (new_trel.empty()) {
-		continue;
-	    }
-	    FOR(e, graph.search(pos.dst, t.label)) {
+	    boost::optional<Ref<Tag>> maybe_tag =
+		boost::make_optional(t.label.tag.valid(), t.label.tag);
+	    FOR(e, graph.search(pos.dst, t.label), maybe_tag) {
+		TransRel new_trel =
+		    compose(pos.trel, fsm.effect_of(t.label, e.get<TAG>()));
+		if (new_trel.empty()) {
+		    continue;
+		}
 		worklist.enqueue(Position(e.get<DST>(), t.to, new_trel));
 	    }
 	}
 
 	// Cross summary edges according to the boxes that the current state
 	// enters into. The entry, box, and all exits are crossed in one step.
-	// TODO: Implicitly assumes all entry/exit labels are tagged.
 	for (const Entry& entry : comp.entries.secondary<0>()[pos.r_to]) {
 	    Ref<Component> sub_comp = comp.boxes[entry.to].comp;
 
 	    // Enter the box.
-	    TransRel in_trel = compose(pos.trel, fsm.effect_of(entry.label));
-	    if (in_trel.empty()) {
-		continue;
-	    }
 	    FOR(e_in, graph.search(pos.dst, entry.label)) {
 		Ref<Node> in_node = e_in.get<DST>();
 		Ref<Tag> in_tag = e_in.get<TAG>();
+		TransRel in_trel =
+		    compose(pos.trel, fsm.effect_of(entry.label, in_tag));
+		if (in_trel.empty()) {
+		    continue;
+		}
 
 		// If this is a self-reference, record our dependence on it
 		// (otherwise it must refer to a component further down the
@@ -617,7 +646,8 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 		    // entered entry edge.
 		    for (const Exit& exit : comp.exits[entry.to]) {
 			TransRel full_trel =
-			    compose(out_trel, fsm.effect_of(exit.label));
+			    compose(out_trel,
+				    fsm.effect_of(exit.label, in_tag));
 			if (full_trel.empty()) {
 			    continue;
 			}
@@ -688,7 +718,7 @@ int main(int argc, char* argv[]) {
 	      << std::endl;
     Analysis spec(rsm_dir, fsm_file);
     std::cout << "Parsing graph from " << graph_dir << std::endl;
-    Graph graph(spec.symbols, graph_dir);
+    Graph graph(spec.symbols, spec.tags, graph_dir);
     graph.print_stats(std::cout);
 
     // Timekeeping
