@@ -1,3 +1,25 @@
+The name of the sub-directory where an analysis is stored defines the format
+of its input and output facts. Each sub-directory name has 4 fields, each of
+which describes the cloning strategy of some program domain:
+
+  +----- variable nodes w.r.t. field sensitivity
+  |+---- variable nodes w.r.t. call sensitivity
+  ||+--- object nodes (same dimension as variable nodes)
+  |||+-- label nodes (same dimension as variable nodes)
+  ||||
+  VVVV
+  oooo
+
+The following cloning strategies are used:
+  _ : no cloning
+  e : node-based graph explosion
+  r : index relation-based graph explosion
+
+The analysis may not actually be sensitive on the corresponding dimensions, but
+simply support that input/output format.
+
+===============================================================================
+
 How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
 
 1st part: field sensitivity
@@ -10,12 +32,17 @@ How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
   s : fully calling context-(s)ensitive
       call strings are the primary context-free dimension
   r : index (r)elation-based k-CFA call-string approximation
-  e : graph (e)xplosion-based k-CFA call-string approximation
+      can only appear in a sub-directory named *r**
+  e : node (e)xplosion-based k-CFA call-string approximation
+      can only appear in a sub-directory named *e**
 
 3rd part: alias formulation
   p : (p)oints-to based
       points-to facts computed for each abstract object, then connected to form
       alias relations
+  e : node (e)xplosion-based cloning of objects
+      (for the non-primary sensitivity dimension)
+      can only appear in a sub-directory named **e*
   v : intermediate (v)ariable based
       no abstract objects used, connect alias subpaths at the first common
       variable
@@ -25,7 +52,9 @@ How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
   s : only (s)tart and finish of flow covered (passthroughs ignored)
   a : (a)lias piggyback
   c : (c)onditional flow annotations supported
-  e : (e)xploded labels (for the non-primary sensitivity dimension)
+  e : node (e)xplosion-based cloning of labels
+      (for the non-primary sensitivity dimension)
+      can only appear in a sub-directory named ***e
   n : (almost) full (n)esting
       no nesting support for conditional escaping trigger entry
   l : (l)imited nested taint propagation
@@ -34,17 +63,14 @@ How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
       conditional escaping trigger entry: no nesting support
 
 5th part: additional parameters:
-  r : the analysis agrees on the parametricity of terminals with analyses based
-      on relation indices for implementing k-CFA (implicit if 'r' is present in
-      the 2nd part)
   a : the analysis uses (or supports) special terminals for array operations,
       rather than constant tags on the specification
-  e : the analysis agrees on the parametricity of terminals with analyses using
-      exploded labels (implicit if 'e' is present in the 4th part)
   p : PN-style matching
   b : original formulation, with no optimizations
   m : multi-mode RSM formulation (requires normalization before processing)
       both fully recursive boxes and inlinable references on transitions
+
+===============================================================================
 
 Other features (not currently covered):
 - Modeling of arbitrary object instantiation inside missing code
