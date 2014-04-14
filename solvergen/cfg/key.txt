@@ -67,8 +67,6 @@ How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
       rather than constant tags on the specification
   p : PN-style matching
   b : original formulation, with no optimizations
-  m : multi-mode RSM formulation (requires normalization before processing)
-      both fully recursive boxes and inlinable references on transitions
 
 ===============================================================================
 
