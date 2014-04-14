@@ -374,9 +374,11 @@ def switch_dir(src_file, tgt_dir, new_ext):
     base = os.path.basename(os.path.splitext(src_file)[0])
     return os.path.join(tgt_dir, base + '.' + new_ext)
 
-def tail_dir(fname):
-    base = os.path.basename(fname)
-    return base if base != '' else os.path.basename(os.path.dirname(fname))
+def split_dir(fname):
+    (rest, base) = os.path.split(fname)
+    if base == '':
+        (rest, base) = os.path.split(rest)
+    return (rest, base)
 
 def mkdir(path):
     try:

@@ -1629,9 +1629,13 @@ if __name__ == '__main__':
     assert (rg_terms == cfg_terms), "Alphabet mismatch between CFG and RG"
 
     if args.out_dir is not None:
-        cfg_name = os.path.splitext(os.path.basename(args.cfg_file))[0]
-        rg_name = util.tail_dir(args.fsms_dir)
-        intxn_name = '%s^%s' % (cfg_name, rg_name)
+        (rest, base) = os.path.split(os.path.abspath(args.cfg_file))
+        cfg_name = os.path.splitext(base)[0]
+        cfg_class = os.path.split(rest)[1]
+        (rest, rg_name) = util.split_dir(os.path.abspath(args.fsms_dir))
+        rg_class = os.path.split(rest)[1]
+        assert cfg_class == rg_class
+        intxn_name = '%s@%s^%s' % (cfg_class, cfg_name, rg_name)
         code_out = os.path.join(args.out_dir, '%s.cpp' % intxn_name)
         with open(code_out, 'w') as f:
             emit_solver(grammar, trans_tab, f)

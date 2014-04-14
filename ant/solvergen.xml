@@ -3,7 +3,9 @@
 
   <target name="-prepare-backend-solvergen">
     <!-- Compile SolverGen analysis. -->
-    <property name="stamp.solvergen.analysis" value="s-r-pt-lace:a^null:ear"/>
+    <property name="stamp.solvergen.analysis.class" value="_ree"/>
+    <property name="stamp.solvergen.analysis"
+	      value="${stamp.solvergen.analysis.class}@s-r-pet-lace:a^null:a"/>
     <runtarget target="make-cfl-solver"/>
 
     <!-- Prepare SolverGen I/O directories. -->
@@ -17,7 +19,7 @@
     <!-- Set backend-specific system properties. -->
     <!-- Facts Dumper options -->
     <property name="stamp.dumper.templates.dir"
-	      location="${stamp.dir}/solvergen/input"/>
+	      location="${stamp.dir}/solvergen/input/${stamp.solvergen.analysis.class}"/>
     <load-strings property="stamp.dumper.templates.list.1"
 		  file="${stamp.solvergen.terms.listfile}">
       <replaceregex pattern="^(.+)$" replace="\1.dat"/>
@@ -40,7 +42,7 @@
     <property name="stamp.datparser.indir"
 	      location="${stamp.out.dir}/output"/>
     <property name="stamp.datparser.templatesdir"
-	      location="${stamp.dir}/solvergen/output"/>
+	      location="${stamp.dir}/solvergen/output/${stamp.solvergen.analysis.class}"/>
     <!-- Paths Adapter options -->
     <require-prop property="stamp.paths.schema"
 		  description="schema file used to validate SolverGen paths XML file"/>
@@ -71,7 +73,9 @@
   <target name="make-cfl-solver">
     <!-- Read required properties. -->
     <require-prop property="stamp.solvergen.analysis"
-		  description="CFL Solver analysis to process"/>
+		  description="full name of CFL Solver analysis to process"/>
+    <require-prop property="stamp.solvergen.analysis.class"
+		  description="cloning strategy of CFL Solver analysis"/>
     <prop-default property="stamp.solvergen.logging" default="true"
 		  description="whether to enable logging in the generated solver"/>
     <prop-default property="stamp.solvergen.profiling" default="false"
@@ -98,7 +102,7 @@
 
     <!-- Compile and link the analysis code with the CFL Solver engine. -->
     <property name="stamp.solvergen.solver"
-	      value="bin/${stamp.solvergen.analysis}#${stamp.solvergen.flags}"/>
+	      value="bin/cfg/${stamp.solvergen.analysis}#${stamp.solvergen.flags}"/>
     <exec executable="make" dir="${stamp.dir}/solvergen"
 	  spawn="false" failonerror="true">
       <arg value="${stamp.solvergen.solver}"/>
