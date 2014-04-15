@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -eu
 
 SGEN_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
@@ -22,6 +22,9 @@ mkdir -p output
 if [ "$VERSION" == "cfg" ]; then
     "$SGEN_DIR/$SOLVER"
 else
-    "$SGEN_DIR/$SOLVER" "$SGEN_DIR/rsm/$CLASS/$PRI/" \
-	"$SGEN_DIR/fsm/$CLASS/$SEC.fsm.tgf" input/ output/
+    PRI_DIR="rsm/$CLASS/$PRI"
+    (cd "$SGEN_DIR" && make "$PRI_DIR/"*.rsm.tgf)
+    SEC_FSM="fsm/$CLASS/$SEC.fsm.tgf"
+    make -C "$SGEN_DIR" "$SEC_FSM"
+    "$SGEN_DIR/$SOLVER" "$SGEN_DIR/$PRI_DIR" "$SGEN_DIR/$SEC_FSM" input output
 fi

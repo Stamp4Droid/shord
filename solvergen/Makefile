@@ -34,7 +34,7 @@ clean:
 fsm/*/*.fsm.tgf: $$(wildcard $$(basename $$(basename $$@))/*.fsm.tgf)
 	$(error $@ out of date, re-combine the components in $(basename $(basename $@)))
 
-# rsm/cls/pri/*.fsm.tgf : rsm/cls/pri/src/*.fsm.tgf
+# rsm/cls/pri/*.rsm.tgf : rsm/cls/pri/src/*.rsm.tgf
 # TODO: Might be able to do the processing automatically.
 rsm/*/*/*.rsm.tgf: $$(wildcard $$(dir $$@)src/*.rsm.tgf)
 	$(error $@ out of date, re-process the components in $(dir $@)src/)
