@@ -2,9 +2,15 @@
 
 SGEN_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
-if [ $# -ne 4 -o "$1" != "cfg" -a "$1" != "rsm" ]; then
+function quit() {
     echo "Usage: $(basename "${BASH_SOURCE[0]}") cfg|rsm <class> <pri> <sec>"
     exit 1
+}
+
+if [ $# -ne 4 ]; then
+    quit
+elif [ "$1" != "cfg" -a "$1" != "rsm" ]; then
+    quit
 fi
 VERSION="$1"
 CLASS="$2"
