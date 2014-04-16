@@ -653,13 +653,13 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
  * The directory where we expect to find the initial set of terminal-@Symbol
  * Edge%s.
  */
-#define INPUT_DIR "input"
+const char* INPUT_DIR;
 
 /**
  * The directory where we dump the Node listing and final set of
  * non-terminal-@Symbol Edge%s.
  */
-#define OUTPUT_DIR "output"
+const char* OUTPUT_DIR;
 
 /**
  * The file extension for both input and output Edge set files.
@@ -1418,10 +1418,15 @@ void stop_profiler() {
  * Read in the non-terminal Edge%s, run the analysis, then print out all
  * generated non-terminal Edge%s.
  */
-int main() {
+int main(int argc, char* argv[]) {
     mem_manager_init();
     LOGGING_INIT();
-    create_directory("output");
+
+    if (argc != 3) {
+	APP_ERR("Usage: %s <in-dir> <out-dir>", argv[0]);
+    }
+    INPUT_DIR = argv[1];
+    OUTPUT_DIR = argv[2];
 
     DECL_COUNTER(loading_start, CURRENT_TIME());
     parse_input_files(ParsingMode::RECORD_NODES);

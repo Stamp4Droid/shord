@@ -9,8 +9,10 @@
     <runtarget target="make-cfl-solver"/>
 
     <!-- Prepare SolverGen I/O directories. -->
-    <mkdir dir="${stamp.out.dir}/input"/>
-    <mkdir dir="${stamp.out.dir}/output"/>
+    <property name="stamp.solvergen.indir" location="${stamp.out.dir}/input"/>
+    <mkdir dir="${stamp.solvergen.indir}"/>
+    <property name="stamp.solvergen.outdir" location="${stamp.out.dir}/output"/>
+    <mkdir dir="${stamp.solvergen.outdir}"/>
 
     <!-- Register backend-specific analyses. -->
     <property name="stamp.analyses.main"
@@ -34,24 +36,22 @@
 	      location="${stamp.out.dir}/input"/>
     <property name="stamp.dumper.accrange.printindex" value="false"/>
     <!-- Solver Runner options -->
-    <property name="stamp.solvergen.workdir"
-	      location="${stamp.out.dir}"/>
     <require-prop property="stamp.solvergen.executable"
 		  description="path to generated SolverGen executable"/>
     <!-- DAT Parser options -->
     <property name="stamp.datparser.indir"
-	      location="${stamp.out.dir}/output"/>
+	      location="${stamp.solvergen.outdir}"/>
     <property name="stamp.datparser.templatesdir"
 	      location="${stamp.dir}/solvergen/output/${stamp.solvergen.analysis.class}"/>
     <!-- Paths Adapter options -->
     <require-prop property="stamp.paths.schema"
 		  description="schema file used to validate SolverGen paths XML file"/>
     <property name="stamp.paths.raw"
-	      location="${stamp.out.dir}/output/Src2Sink.paths.xml"/>
+	      location="${stamp.solvergen.outdir}/Src2Sink.paths.xml"/>
     <property name="stamp.paths.normal"
-	      location="${stamp.out.dir}/output/Src2Sink.paths.normal.xml"/>
+	      location="${stamp.solvergen.outdir}/Src2Sink.paths.normal.xml"/>
     <property name="stamp.paths.flat"
-	      location="${stamp.out.dir}/output/Src2Sink.paths.flat.txt"/>
+	      location="${stamp.solvergen.outdir}/Src2Sink.paths.flat.txt"/>
 
     <!-- Register backend-specific system properties. -->
     <propertyset id="stamp.analyses.main.sysprops">
@@ -59,8 +59,9 @@
       <propertyref name="stamp.dumper.templates.list"/>
       <propertyref name="stamp.dumper.outdir"/>
       <propertyref name="stamp.dumper.accrange.printindex"/>
-      <propertyref name="stamp.solvergen.workdir"/>
       <propertyref name="stamp.solvergen.executable"/>
+      <propertyref name="stamp.solvergen.indir"/>
+      <propertyref name="stamp.solvergen.outdir"/>
       <propertyref name="stamp.datparser.indir"/>
       <propertyref name="stamp.datparser.templatesdir"/>
       <propertyref name="stamp.paths.schema"/>

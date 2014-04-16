@@ -12,19 +12,27 @@ PRI="$3"
 SEC="$4"
 
 if [ "$VERSION" == "cfg" ]; then
-    SOLVER="bin/cfg/$CLASS@$PRI^$SEC#-DLOGGING-DPATH_RECORDING"
+    REL_SOLVER="bin/cfg/$CLASS@$PRI^$SEC#-DLOGGING-DPATH_RECORDING"
 else
-    SOLVER="bin/rsm#-O3"
+    REL_SOLVER="bin/rsm#-O3"
 fi
-make -C "$SGEN_DIR" "$SOLVER"
+make -C "$SGEN_DIR" "$REL_SOLVER"
+SOLVER="$SGEN_DIR/$REL_SOLVER"
 
-mkdir -p output
+IN_DIR="input"
+OUT_DIR="output"
+mkdir -p "$OUT_DIR"
+
 if [ "$VERSION" == "cfg" ]; then
-    "$SGEN_DIR/$SOLVER"
+    "$SOLVER" "$IN_DIR" "$OUT_DIR"
 else
-    PRI_DIR="rsm/$CLASS/$PRI"
-    (cd "$SGEN_DIR" && make "$PRI_DIR/"*.rsm.tgf)
-    SEC_FSM="fsm/$CLASS/$SEC.fsm.tgf"
-    make -C "$SGEN_DIR" "$SEC_FSM"
-    "$SGEN_DIR/$SOLVER" "$SGEN_DIR/$PRI_DIR" "$SGEN_DIR/$SEC_FSM" input output
+    REL_PRI_DIR="rsm/$CLASS/$PRI"
+    (cd "$SGEN_DIR" && make "$REL_PRI_DIR/"*.rsm.tgf)
+    PRI_DIR="$SGEN_DIR/$REL_PRI_DIR"
+
+    REL_SEC_FSM="fsm/$CLASS/$SEC.fsm.tgf"
+    SEC_FSM="$SGEN_DIR/$REL_SEC_FSM"
+    make -C "$SGEN_DIR" "$REL_SEC_FSM"
+
+    "$SOLVER" "$PRI_DIR" "$SEC_FSM" "$IN_DIR" "$OUT_DIR"
 fi

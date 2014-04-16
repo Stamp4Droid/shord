@@ -3,8 +3,6 @@ package stamp.analyses;
 import stamp.util.PropertyHelper;
 import stamp.util.ShellProcessRunner;
 
-import java.util.Calendar;
-
 import chord.project.Chord;
 import shord.project.analyses.JavaAnalysis;
 
@@ -14,10 +12,12 @@ import shord.project.analyses.JavaAnalysis;
 public class CFLSolverRunnerAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
-		String workDir = PropertyHelper.getProperty("stamp.solvergen.workdir");
-		String executable =
-			PropertyHelper.getProperty("stamp.solvergen.executable");
-		long startTime = Calendar.getInstance().getTimeInMillis();
-		ShellProcessRunner.run(new String[]{executable}, workDir, true);
+		String workDir = PropertyHelper.getProperty("stamp.out.dir");
+		String[] cmdLine = new String[]{
+			PropertyHelper.getProperty("stamp.solvergen.executable"),
+			PropertyHelper.getProperty("stamp.solvergen.indir"),
+			PropertyHelper.getProperty("stamp.solvergen.outdir"),
+		};
+		ShellProcessRunner.run(cmdLine, workDir, true);
 	}
 }
