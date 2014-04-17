@@ -9,9 +9,11 @@
     <runtarget target="make-cfl-solver"/>
 
     <!-- Prepare SolverGen I/O directories. -->
-    <property name="stamp.solvergen.indir" location="${stamp.out.dir}/input"/>
+    <property name="stamp.solvergen.indir"
+	      location="${stamp.out.dir}/input/${stamp.solvergen.analysis.class}"/>
     <mkdir dir="${stamp.solvergen.indir}"/>
-    <property name="stamp.solvergen.outdir" location="${stamp.out.dir}/output"/>
+    <property name="stamp.solvergen.outdir"
+	      location="${stamp.out.dir}/output/${stamp.solvergen.analysis.version}#${stamp.solvergen.analysis.class}@${stamp.solvergen.analysis.pri}^${stamp.solvergen.analysis.sec}"/>
     <mkdir dir="${stamp.solvergen.outdir}"/>
 
     <!-- Register backend-specific analyses. -->
@@ -21,17 +23,7 @@
     <!-- Set backend-specific system properties. -->
     <!-- Facts Dumper options -->
     <property name="stamp.dumper.templates.dir"
-	      location="${stamp.dir}/solvergen/input/${stamp.solvergen.analysis.class}"/>
-    <load-strings property="stamp.dumper.templates.list.1"
-		  file="${stamp.solvergen.terms.listfile}">
-      <replaceregex pattern="^(.+)$" replace="\1.dat"/>
-    </load-strings>
-    <load-strings property="stamp.dumper.templates.list.2"
-		  file="${stamp.solvergen.rels.listfile}">
-      <replaceregex pattern="^(.+)$" replace="\1.rel"/>
-    </load-strings>
-    <property name="stamp.dumper.templates.list"
-	      value="${stamp.dumper.templates.list.1}${path.separator}${stamp.dumper.templates.list.2}"/>
+	      location="${stamp.dir}/solvergen/input"/>
     <property name="stamp.dumper.outdir"
 	      location="${stamp.out.dir}/input"/>
     <property name="stamp.dumper.accrange.printindex" value="false"/>
@@ -56,7 +48,6 @@
     <!-- Register backend-specific system properties. -->
     <propertyset id="stamp.analyses.main.sysprops">
       <propertyref name="stamp.dumper.templates.dir"/>
-      <propertyref name="stamp.dumper.templates.list"/>
       <propertyref name="stamp.dumper.outdir"/>
       <propertyref name="stamp.dumper.accrange.printindex"/>
       <propertyref name="stamp.solvergen.executable"/>

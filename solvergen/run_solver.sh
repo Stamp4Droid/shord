@@ -25,8 +25,8 @@ fi
 make -C "$SGEN_DIR" "$REL_SOLVER"
 SOLVER="$SGEN_DIR/$REL_SOLVER"
 
-IN_DIR="input"
-OUT_DIR="output"
+IN_DIR="input/$CLASS"
+OUT_DIR="output/$VERSION#$CLASS@$PRI^$SEC"
 mkdir -p "$OUT_DIR"
 
 if [ "$VERSION" == "cfg" ]; then
