@@ -2015,7 +2015,7 @@ Uniq<Idx> join(const Uniq<Idx>& r, const Uniq<Idx>& s) {
     Ref<Immut<Idx>>& cached = cache[std::make_pair(r.cell_ref, s.cell_ref)];
     if (!cached.valid()) {
 	Idx idx = join(r.real_idx(), s.real_idx());
-	cached = Immut<Idx>::store().add(idx).ref;
+	cached = Immut<Idx>::unique(idx);
     }
     return Uniq<Idx>(cached);
 }
@@ -2028,20 +2028,14 @@ uniq_id(const typename KeyTraits<typename Idx::Key>::SizeHint& hint) {
     Ref<Immut<Idx>>& cached = cache[lim];
     if (!cached.valid()) {
 	Idx idx = identity<Idx>(hint);
-	cached = Immut<Idx>::store().add(idx).ref;
+	cached = Immut<Idx>::unique(idx);
     }
     return Uniq<Idx>(cached);
 }
 
 template<class Idx> class Immut {
     friend Registry<Immut>;
-    friend Uniq<Idx>;
     typedef Idx Key;
-    friend Uniq<Idx> join<>(const Uniq<Idx>& r, const Uniq<Idx>& s);
-    // TODO: This is not as tight as possible, but it allows us to unique
-    // classes that don't support identity building.
-    template<class T> friend Uniq<T>
-    uniq_id(const typename KeyTraits<typename T::Key>::SizeHint& hint);
 private:
     // Can't simply declare this as a static field, because of initialization
     // order issues.
@@ -2050,10 +2044,16 @@ private:
 	return store;
     }
 public:
+    static Ref<Immut> unique(const Idx& idx) {
+	return store().add(idx).ref;
+    }
+    static Immut& cell_for(Ref<Immut> ref) {
+	return store()[ref];
+    }
     static Ref<Immut> zero() {
 	static Ref<Immut> cached;
 	if (!cached.valid()) {
-	    cached = store().add(Idx()).ref;
+	    cached = unique(Idx());
 	}
 	return cached;
     }
@@ -2075,21 +2075,21 @@ public:
 	if (!cached.valid()) {
 	    Idx new_idx = backer;
 	    new_idx.insert(tuple);
-	    cached = store().add(new_idx).ref;
+	    cached = unique(new_idx);
 	}
 	return cached;
     }
     Ref<Immut> copy(Ref<Immut> src) {
 	Ref<Immut>& cached = copy_cache[src];
 	if (!cached.valid()) {
-	    cached = copy(store()[src].backer);
+	    cached = copy(cell_for(src).backer);
 	}
 	return cached;
     }
     Ref<Immut> copy(const Idx& src) {
 	Idx new_idx = backer;
 	new_idx.copy(src);
-	return store().add(new_idx).ref;
+	return unique(new_idx);
     }
 };
 
@@ -2110,10 +2110,10 @@ private:
     Ref<Immut<Idx>> cell_ref;
 private:
     Immut<Idx>& immut_cell() {
-	return Immut<Idx>::store()[cell_ref];
+	return Immut<Idx>::cell_for(cell_ref);
     }
     const Idx& real_idx() const {
-	return Immut<Idx>::store()[cell_ref].backer;
+	return Immut<Idx>::cell_for(cell_ref).backer;
     }
     explicit Uniq(Ref<Immut<Idx>> cell_ref) : cell_ref(cell_ref) {}
 public:
