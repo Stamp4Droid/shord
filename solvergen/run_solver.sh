@@ -38,7 +38,16 @@ else
 
     REL_SEC_FSM="fsm/$CLASS/$SEC.fsm.tgf"
     SEC_FSM="$SGEN_DIR/$REL_SEC_FSM"
-    make -C "$SGEN_DIR" "$REL_SEC_FSM"
+    if [ -e "$SEC_FSM" ]; then
+	make -C "$SGEN_DIR" "$REL_SEC_FSM"
+    else
+	SEC_FSM="$OUT_DIR/$SEC.fsm.tgf"
+	SEC_PY="$SGEN_DIR/fsm/$CLASS/$SEC.fsm.py"
+	START_TIME="$(date +"%s")"
+	"$SEC_PY" "$IN_DIR" "$SEC_FSM"
+	DIFF=$(($(date +"%s")-$START_TIME))
+	printf "FSM Building: %02dm%02ds\n" $(($DIFF/60)) $(($DIFF%60))
+    fi
 
     "$SOLVER" "$PRI_DIR" "$SEC_FSM" "$IN_DIR" "$OUT_DIR"
 fi
