@@ -958,9 +958,8 @@ public:
 //   also need to explicitly specify which dimension we pick
 // - hack to avoid iterating on bottom fields, if not requested
 //   create an iterator to a dummy singleton container
-// - short-circuiting empty() check
 // - primitive multi-dimension support:
-//   - from top only
+//   - from top only (special wrapper to "close" the hierarchy?)
 //   - primary index tuple order becomes the exported Tuple
 //   - 'insert' automatically adds on both dimensions, does required reordering
 
@@ -1013,6 +1012,7 @@ public:
 //   generalize hint passing to allow this deeper in the hierarchy
 //   would need to cache the widths on parent levels
 //   because we'd need to construct new sub-indices dynamically
+//   or store them on a special top-level wrapper
 // - support resizing of Flatindex?
 //   would need to support move semantics on indices
 // - outer iterator instantiates the result struct
@@ -1078,6 +1078,10 @@ public:
 //   can this be done dynamically?
 //   need variable-size class support?
 // - KeyIter on Table iterates over the values
+// - use probabilistic data structures (as long as they're sound)
+// - exploit sharing of bit patterns
+// - disable operator[], only allow constraining the top iterator
+//   then we get a full tuple (but more overhead when iterating?)
 
 // Uniquing infrastructure:
 // - works for any kind of Index class
@@ -1999,12 +2003,9 @@ template<class Idx>
 Uniq<Idx> join(const Uniq<Idx>& r, const Uniq<Idx>& s) {
     static std::map<std::pair<Ref<Immut<Idx>>,Ref<Immut<Idx>>>,
 		    Ref<Immut<Idx>>> cache;
-    Ref<Immut<Idx>> r_ref = r.cell_ref;
-    Ref<Immut<Idx>> s_ref = s.cell_ref;
-    Ref<Immut<Idx>>& cached = cache[std::make_pair(r_ref, s_ref)];
+    Ref<Immut<Idx>>& cached = cache[std::make_pair(r.cell_ref, s.cell_ref)];
     if (!cached.valid()) {
-	Idx idx = join(Immut<Idx>::store()[r_ref].backer,
-		       Immut<Idx>::store()[s_ref].backer);
+	Idx idx = join(r.real_idx(), s.real_idx());
 	cached = Immut<Idx>::store().add(idx).ref;
     }
     return Uniq<Idx>(cached);
@@ -2096,6 +2097,9 @@ public:
 private:
     Ref<Immut<Idx>> cell_ref;
 private:
+    Immut<Idx>& immut_cell() {
+	return Immut<Idx>::store()[cell_ref];
+    }
     const Idx& real_idx() const {
 	return Immut<Idx>::store()[cell_ref].backer;
     }
@@ -2111,12 +2115,12 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	Ref<Immut<Idx>> old_cell = cell_ref;
-	cell_ref = Immut<Idx>::store()[cell_ref].insert(tuple);
+	cell_ref = immut_cell().insert(tuple);
 	return old_cell != cell_ref;
     }
     bool copy(const Uniq& src) {
 	Ref<Immut<Idx>> old_cell = cell_ref;
-	cell_ref = Immut<Idx>::store()[cell_ref].copy(src.cell_ref);
+	cell_ref = immut_cell().copy(src.cell_ref);
 	return old_cell != cell_ref;
     }
     template<class... Rest>
