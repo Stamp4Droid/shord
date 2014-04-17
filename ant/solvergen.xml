@@ -2,11 +2,10 @@
 <project name="STAMP-SolverGen">
 
   <target name="-prepare-backend-solvergen">
-    <!-- Compile SolverGen analysis. -->
+    <property name="stamp.solvergen.analysis.version" value="cfg"/>
     <property name="stamp.solvergen.analysis.class" value="_ree"/>
-    <property name="stamp.solvergen.analysis"
-	      value="${stamp.solvergen.analysis.class}@s-r-pet-lace:a^null:a"/>
-    <runtarget target="make-cfl-solver"/>
+    <property name="stamp.solvergen.analysis.pri" value="s-r-pet-lace:a"/>
+    <property name="stamp.solvergen.analysis.sec" value="null:a"/>
 
     <!-- Prepare SolverGen I/O directories. -->
     <property name="stamp.solvergen.indir"
@@ -28,8 +27,8 @@
 	      location="${stamp.out.dir}/input"/>
     <property name="stamp.dumper.accrange.printindex" value="false"/>
     <!-- Solver Runner options -->
-    <require-prop property="stamp.solvergen.executable"
-		  description="path to generated SolverGen executable"/>
+    <property name="stamp.solvergen.script"
+	      location="${stamp.dir}/solvergen/run_solver.sh"/>
     <!-- DAT Parser options -->
     <property name="stamp.datparser.indir"
 	      location="${stamp.solvergen.outdir}"/>
@@ -50,9 +49,11 @@
       <propertyref name="stamp.dumper.templates.dir"/>
       <propertyref name="stamp.dumper.outdir"/>
       <propertyref name="stamp.dumper.accrange.printindex"/>
-      <propertyref name="stamp.solvergen.executable"/>
-      <propertyref name="stamp.solvergen.indir"/>
-      <propertyref name="stamp.solvergen.outdir"/>
+      <propertyref name="stamp.solvergen.analysis.version"/>
+      <propertyref name="stamp.solvergen.analysis.class"/>
+      <propertyref name="stamp.solvergen.analysis.pri"/>
+      <propertyref name="stamp.solvergen.analysis.sec"/>
+      <propertyref name="stamp.solvergen.script"/>
       <propertyref name="stamp.datparser.indir"/>
       <propertyref name="stamp.datparser.templatesdir"/>
       <propertyref name="stamp.paths.schema"/>
@@ -60,56 +61,6 @@
       <propertyref name="stamp.paths.normal"/>
       <propertyref name="stamp.paths.flat"/>
     </propertyset>
-  </target>
-
-  <target name="make-cfl-solver">
-    <!-- Read required properties. -->
-    <require-prop property="stamp.solvergen.analysis"
-		  description="full name of CFL Solver analysis to process"/>
-    <require-prop property="stamp.solvergen.analysis.class"
-		  description="cloning strategy of CFL Solver analysis"/>
-    <prop-default property="stamp.solvergen.logging" default="true"
-		  description="whether to enable logging in the generated solver"/>
-    <prop-default property="stamp.solvergen.profiling" default="false"
-		  description="whether to enable profiling output for the generated solver"/>
-    <prop-default property="stamp.solvergen.pathrecord" default="true"
-		  description="whether to record child edge information during solver execution, to help in calculating paths"/>
-    <prop-default property="stamp.solvergen.assertions" default="true"
-		  description="whether to enable assertions in the generated solver (STRONGLY RECOMMENDED)"/>
-
-    <!-- Set compiler flags. -->
-    <prop-ite property="stamp.solvergen.logging.flag"
-	      condition="${stamp.solvergen.logging}" then="-DLOGGING" else=""/>
-    <prop-ite property="stamp.solvergen.profiling.flag"
-	      condition="${stamp.solvergen.profiling}"
-	      then="-DPROFILING" else=""/>
-    <prop-ite property="stamp.solvergen.pathrecord.flag"
-	      condition="${stamp.solvergen.pathrecord}"
-	      then="-DPATH_RECORDING" else=""/>
-    <prop-ite property="stamp.solvergen.assertions.flag"
-	      condition="${stamp.solvergen.assertions}"
-	      then="" else="-DNDEBUG"/>
-    <property name="stamp.solvergen.flags"
-	      value="${stamp.solvergen.logging.flag}${stamp.solvergen.profiling.flag}${stamp.solvergen.pathrecord.flag}${stamp.solvergen.assertions.flag}"/>
-
-    <!-- Compile and link the analysis code with the CFL Solver engine. -->
-    <property name="stamp.solvergen.solver"
-	      value="bin/cfg/${stamp.solvergen.analysis}#${stamp.solvergen.flags}"/>
-    <exec executable="make" dir="${stamp.dir}/solvergen"
-	  spawn="false" failonerror="true">
-      <arg value="${stamp.solvergen.solver}"/>
-    </exec>
-
-    <!-- Locate output files. -->
-    <property name="stamp.solvergen.executable"
-	      location="${stamp.dir}/solvergen/${stamp.solvergen.solver}"/>
-    <property name="stamp.solvergen.terms.listfile"
-	      location="${stamp.dir}/solvergen/gen/${stamp.solvergen.analysis}.terms.dat"/>
-    <property name="stamp.solvergen.rels.listfile"
-	      location="${stamp.dir}/solvergen/gen/${stamp.solvergen.analysis}.rels.dat"/>
-    <require-file file="${stamp.solvergen.executable}"/>
-    <require-file file="${stamp.solvergen.terms.listfile}"/>
-    <require-file file="${stamp.solvergen.rels.listfile}"/>
   </target>
 
   <target name="doc-solvergen">

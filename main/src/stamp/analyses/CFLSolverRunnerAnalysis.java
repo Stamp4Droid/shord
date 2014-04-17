@@ -14,9 +14,12 @@ public class CFLSolverRunnerAnalysis extends JavaAnalysis {
 	public void run() {
 		String workDir = PropertyHelper.getProperty("stamp.out.dir");
 		String[] cmdLine = new String[]{
-			PropertyHelper.getProperty("stamp.solvergen.executable"),
-			PropertyHelper.getProperty("stamp.solvergen.indir"),
-			PropertyHelper.getProperty("stamp.solvergen.outdir"),
+			"/bin/bash",
+			PropertyHelper.getProperty("stamp.solvergen.script"),
+			PropertyHelper.getProperty("stamp.solvergen.analysis.version"),
+			PropertyHelper.getProperty("stamp.solvergen.analysis.class"),
+			PropertyHelper.getProperty("stamp.solvergen.analysis.pri"),
+			PropertyHelper.getProperty("stamp.solvergen.analysis.sec")
 		};
 		ShellProcessRunner.run(cmdLine, workDir, true);
 	}
