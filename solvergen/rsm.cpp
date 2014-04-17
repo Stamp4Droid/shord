@@ -294,10 +294,15 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
     EXPECT(comp.simple());
 
     std::cout << "Calculating base effects" << std::endl;
+    mi::FlatIndex<REV, bool,
+	mi::FlatIndex<SYMBOL, Ref<Symbol>,
+	    mi::Index<TAG, Ref<Tag>,
+		FsmEffect>>> non_uniqd_effects(boost::none, symbol_reg);
     for (const Transition& t : comp.transitions) {
-	base_effects.insert(t.label.rev, t.label.symbol, t.label.tag,
-			    t.from, t.to);
+	non_uniqd_effects.insert(t.label.rev, t.label.symbol, t.label.tag,
+				 t.from, t.to);
     }
+    base_effects.copy(non_uniqd_effects);
 }
 
 bool FSM::is_accepting(const TransRel& trel) const {

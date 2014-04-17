@@ -967,7 +967,8 @@ public:
 // - abstract-out size type
 // - auto-increment attributes
 // - more index implementations:
-//   - hashtable
+//   - hashtable -- complicated by the need to implement ordering
+//     (needed for uniquing using a std::set)
 //   - dynamically growing flat table of pointers
 //   - sorted k-ptr to allocated wrapped
 // - more table implementations:
@@ -1115,6 +1116,9 @@ public:
 //   validity flag
 // - also support uniquing single tables
 // - caches are static variables, this complicates concurrent operation
+// - expose the uniquing operation to clients
+//   this way, they can cache results manually
+//   specialized operations like "id" should probably be handled this way
 
 namespace mi {
 
@@ -1399,6 +1403,7 @@ public:
 };
 
 template<class Tag, class K, class S> class Index {
+    template<class A, class B, class C> friend class Index;
 public:
     typedef K Key;
     typedef S Sub;
@@ -1431,7 +1436,8 @@ public:
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
     }
-    bool copy(const Index& src) {
+    template<class C>
+    bool copy(const Index<Tag,K,C>& src) {
 	bool grew = false;
 	for (const auto& p : src.map) {
 	    if (follow(p.first).copy(p.second)) {
@@ -1543,6 +1549,7 @@ const S Index<Tag,K,S>::dummy;
 // SPECIALIZED CONTAINERS =====================================================
 
 template<class Tag, class K, class S> class FlatIndex {
+    template<class A, class B, class C> friend class FlatIndex;
 public:
     typedef K Key;
     typedef S Sub;
@@ -1577,7 +1584,8 @@ public:
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
     }
-    bool copy(const FlatIndex& src) {
+    template<class C>
+    bool copy(const FlatIndex<Tag,K,C>& src) {
 	unsigned int lim = src.array.size();
 	assert(array.size() == lim);
 	bool grew = false;
@@ -1828,7 +1836,7 @@ public:
 };
 
 template<class Tag, class K, class S> class LightIndex {
-private:
+    template<class A, class B, class C> friend class LightIndex;
     typedef std::forward_list<std::pair<const K,S>> List;
 public:
     typedef K Key;
@@ -1880,7 +1888,8 @@ public:
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
     }
-    bool copy(const LightIndex& src) {
+    template<class C>
+    bool copy(const LightIndex<Tag,K,C>& src) {
 	bool grew = false;
 	for (const auto& p : src.list) {
 	    if (follow(p.first).copy(p.second)) {
@@ -2073,11 +2082,14 @@ public:
     Ref<Immut> copy(Ref<Immut> src) {
 	Ref<Immut>& cached = copy_cache[src];
 	if (!cached.valid()) {
-	    Idx new_idx = backer;
-	    new_idx.copy(store()[src].backer);
-	    cached = store().add(new_idx).ref;
+	    cached = copy(store()[src].backer);
 	}
 	return cached;
+    }
+    Ref<Immut> copy(const Idx& src) {
+	Idx new_idx = backer;
+	new_idx.copy(src);
+	return store().add(new_idx).ref;
     }
 };
 
@@ -2121,6 +2133,11 @@ public:
     bool copy(const Uniq& src) {
 	Ref<Immut<Idx>> old_cell = cell_ref;
 	cell_ref = immut_cell().copy(src.cell_ref);
+	return old_cell != cell_ref;
+    }
+    bool copy(const Idx& src) {
+	Ref<Immut<Idx>> old_cell = cell_ref;
+	cell_ref = immut_cell().copy(src);
 	return old_cell != cell_ref;
     }
     template<class... Rest>
