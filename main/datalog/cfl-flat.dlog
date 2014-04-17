@@ -39,6 +39,7 @@ StorePrim(b:V,f:F,u:U) input
 # OUTPUT RELATIONS ============================================================
 
 CIC(c:C,i:I,d:C) output
+CO(c:C,o:C) output
 
 AllocCtxt(c:C,v:V,o:C) output
 OTFilter(o:C,t:T)      output
@@ -54,6 +55,7 @@ ArrStorePrim(b:V,u:U) output # b[*] = u
 # RULES =======================================================================
 
 CIC(c,i,d) :- CC(c,d), CI(d,i).
+CO(c,o) :- CC(c,o), CH(o,_).
 
 AllocCtxt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
 OTFilter(o,t)    :- CH(o,h), HTFilter(h,t).
