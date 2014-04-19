@@ -89,7 +89,7 @@ public class QueryCallGraph
 		}catch(Exception e){
 			throw new Error(e);
 		}
-		return Common.linkToSrc(callsite, filePath, lineNum);
+		return Common.linkToSrc(callsite, filePath, lineNum, chordSig);
 	}
 	
 	// Added by Patrick

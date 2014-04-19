@@ -109,7 +109,8 @@
   		
 		<link href="/stamp/fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
 		<link href="/stamp/css/prettify.css" type="text/css" rel="stylesheet"/> 
-		<link href="/stamp/css/notes.css" type="text/css" rel="stylesheet"/>   
+		<link href="/stamp/css/notes.css" type="text/css" rel="stylesheet"/> 
+		<link href="/stamp/css/navbar.css" type="text/css" rel="stylesheet"/>     
 	</head>
 
 	<body>
@@ -117,17 +118,17 @@
 		
 		<div class="container-fluid">
 			<div class="row-fluid">
- 				<div class="span3">
+ 				<div class="span3" id="leftbar">
 					<!--Sidebar content-->
 					<%@include file="leftbar.jsp" %>
 				</div>
 				<div class="span6" id="centerpane">
 					<ul class="nav nav-tabs" id="codetabs">
 						<li style="padding-right:5px">
-							<img id="back-button" src="/stamp/res/backdisabled.png" style="height:25px" onclick="back()"></img>
+							<img id="back-button" src="/stamp/res/backdisabled.png" style="height:20px" onclick="back()"></img>
 						</li>
 						<li style="padding-right:5px">
-							<img id="forward-button" src="/stamp/res/forwarddisabled.png" style="height:25px" onclick="forward()"></img>
+							<img id="forward-button" src="/stamp/res/forwarddisabled.png" style="height:20px" onclick="forward()"></img>
 						</li>
 					<!--span class="label label-info" id="filename">
 					</span>
@@ -168,6 +169,8 @@
 		<script src="/stamp/scripts/viewSource.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/notes.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/nav.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/manifest.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/grep.js" type="text/javascript"></script>
 		
 		<script>
 		$('#codetabs').hide();

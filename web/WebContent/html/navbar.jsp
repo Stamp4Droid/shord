@@ -31,6 +31,7 @@
 							i++;
 						}
 					%>
+						<li><a onClick="analyzeManifest();">Manifest</a></li>
            			</ul>
          		</li>
 			</ul>
@@ -67,6 +68,13 @@
 				<!-- <li><a href="#">Settings</a></li> -->
 				<!-- Modes: test for annoyances, flows from ad libs to notif bar, etc -->
 			</ul>
+			
+			<ul>
+				<div id="nav-div">
+					<span id="nav-label"> Grep </span>
+					<input type="text" id="grep-input">
+				</div>
+			</ul>
 
 			<!-- DisplayApp Name -->
 			<!--span class="pull-right" id="appname"><h4><%=session.getAttribute("appPath")%></h4></span-->
@@ -74,4 +82,3 @@
 		</div>
  	</div>
 </div> 
-
