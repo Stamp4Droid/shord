@@ -8,15 +8,16 @@ var app = "test"; // TODO - make this work for independent apps
 /**** Public interface ****/
 
 // Displays notes for each callee of a given callsite
-function showNotes(callsite, filePath, lineNum){
-	$.getJSON(
-		'/stamp/html/getCallees.jsp',
-		{ chordSig: callsite, filePath: filePath, lineNum: lineNum },
-		function (data){
-			buildNotesPanel(data); 
-		}
-	);
+function showNotes(){
+	$(".callee-link").each( function(){
+		var chordSig = $(this).attr("chordSig");
+		var notes = getNotes(chordSig);
+		var html = "</br> <pre>" + notes + "</pre>"
+		
+		$(this).after(html)
+	});
 }
+
 
 // Opens the note editing panel for a given method
 function editNotes(method){
@@ -77,33 +78,6 @@ function clearStorage(){
 }
 
 /**** DOM management ****/
-
-// This is super ugly, templates would be better
-function buildNotesPanel(data){
-	html = "<table class='table'><tbody>";
-	
-	for(var i = 0; i < data.length; i++){
-		callee = data[i];
-		note = getNotes(callee);
-		html += noteTemplate(callee, note);
-	}
-	
-	html += "</tbody></table>";
-	
-	$("#notes_viewer").html(html);
-	showElement("#notes_pane");
-	hideElement("#notes_editor");
-	showElement("#notes_viewer");
-}
-
-function noteTemplate(callee, note){
-	html = "<tr><td>"
-	
-	html += callee + "</br>";
-	html += "<pre>" + note + "</pre>";
-	html += "</td></tr>"
-	return html;
-}
 
 function showElement(id){
 	$(id).addClass("notes_show");

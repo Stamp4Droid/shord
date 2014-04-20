@@ -1,5 +1,5 @@
 <%!
-	String createElement(String s){
+	String createElement(String s, String klass){
 		String[] split = s.split("#");
 		if(split.length < 3){
 			return s;
@@ -30,7 +30,7 @@
 			text = text.substring(0, text.length()-1);
 		}		
 		
-		return "<a href='#' class='callee-link' id='SrcLoc" + srcLoc + "' chordSig='" + chordSig + "'>" 
+		return "<a href='#' class='" + klass + "' id='SrcLoc" + srcLoc + "' chordSig='" + chordSig + "'>" 
 			+ text + "</a>"; 
 	}
 %>
@@ -69,14 +69,14 @@
 <%
 		} else {	 			
 %>
-			<span class="label label-info">method</span><br/><%=createElement(methodName)%>
+			<span class="label label-info">method</span><br/><%=createElement(methodName, "method-link")%>
 			<br/>
 			<span class="label label-info">callers</span>
 			<table class='table'>
 <%
 			for(String caller : callers){
 %>
-				<tr><td><%=createElement(caller)%></td></tr>
+				<tr><td><%=createElement(caller, "caller-link")%></td></tr>
 <%
 			}
 %>
@@ -98,14 +98,16 @@
 <%
 		} else {
 %>
-			<span class="label label-info">call site</span><br/><span class='value' type='method'><%=createElement(callsite)%></span>
+			<span class="label label-info">call site</span><br/><span class='value' type='method'>
+				<%=createElement(callsite, "callsite-link")%>
+			</span>
 			<br/>
 			<span class="label label-info">callees</span>
 			<table class='table'>
 <%		
 			for(String callee : callees){
 %>
-				<tr><td><%=createElement(callee)%></td></tr>
+				<tr><td><%=createElement(callee, "callee-link")%></td></tr>
 <%			
 			}
 %>
