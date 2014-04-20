@@ -141,6 +141,24 @@
 				<div class="span3 right-view" id="rightside">
 					<div id="rightbar">
 					</div>
+					<div id="notes_pane" style="padding-bottom:20px; width:100%" class="notes_hide">
+						
+						<div id="notes_header">
+							<span id="notes_title" class="label label-info"> notes </span> 
+							<!--<button type="button" class="close" onclick="toggleView()" id="notes_button" aria-hidden="true">&or;</button>-->
+							</br>
+						</div>
+						
+						<div id="notes_body" style="width:100%">
+							<div id="notes_editor" style="width:100%" class="notes_hide">
+								<textarea id="editor" class="input-block-level" rows="6"></textarea>
+							</div>
+						
+							<div id="notes_viewer" class="notes_hide" style="padding-top: 10px; width:100%">
+							</div>
+						</div>
+						
+					</div>
 				</div>
 			</div>
 		</div>
@@ -316,11 +334,15 @@
 					  var file = $(this).prev().attr("data-filepath");
 					  
 			  		  $('#rightbar').load('/stamp/html/imList.jsp',
-			  		            {chordSig: chordSig, type: 'method'});
+			  		            {chordSig: chordSig, type: 'method'},
+				    		    function () { 
+									editNotes(chordSig);
+								}
+						);
 								
 						// Added by Patrick
 						// display notes for the method when it is clicked
-						editNotes(chordSig);
+						//editNotes(chordSig);
 						
 						// Added by Patrick
 						// records that we were at this location for the back button
@@ -345,6 +367,7 @@
 			    		    {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum}, 
 			    		    function () { 
 								rightBarAddDynamicData(drDataParams);
+								hideElement("#notes_pane")
 								showNotes(); 
 							})
 							

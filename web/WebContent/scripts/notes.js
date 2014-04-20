@@ -87,6 +87,7 @@ function showElement(id){
 function hideElement(id){
 	$(id).addClass("notes_hide");
 	$(id).removeClass("notes_show");
+	saveNotes();
 }
 
 // Imports notes from local storage when the page is first loaded
