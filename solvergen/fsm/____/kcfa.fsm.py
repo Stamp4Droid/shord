@@ -52,7 +52,7 @@ neutral_syms = ['asgnRef', 'loadRef[*]', 'storeRef[*]', 'asgnPrim',
                 'loadPrim[*]', 'storePrim[*]', 'prim2Prim', 'prim2Ref',
                 'ref2Prim', 'ref2Ref', 'prim2SinkByPrim', 'prim2SinkByRef',
                 'ref2SinkByPrim', 'ref2SinkByRef', 'label2Prim', 'label2Ref',
-                'prim2Sink', 'ref2Sink']
+                'prim2Sink', 'ref2Sink', 'new']
 neutral_lits = ' '.join(neutral_syms + ['_' + n for n in neutral_syms])
 
 enter_lits = 'srcLabel'
@@ -65,9 +65,6 @@ def call_lits(i):
     return 'paramRef[%s] paramPrim[%s] _retRef[%s] _retPrim[%s]' % (i,i,i,i)
 def _call_lits(i):
     return '_paramRef[%s] _paramPrim[%s] retRef[%s] retPrim[%s]' % (i,i,i,i)
-
-new_lits = 'new'
-_new_lits = '_new'
 
 # =============================================================================
 
@@ -92,8 +89,6 @@ with open(args.outfile, 'w') as f:
     f.write('GLOBAL\n')   # "global" context state
     for c in var_ctxts:
         f.write('%s\n' % c)
-    for o in obj_ctxts:
-        f.write('%s\n' % o)
 
     f.write('#\n')
 
@@ -115,10 +110,3 @@ with open(args.outfile, 'w') as f:
         for c2 in src2invks:
             for i in src2invks[c2]:
                 f.write('%s %s %s\n' % (c1, c2, _call_lits(i)))
-        # Allocations
-        for o in _new_trans.get(c1, []):
-            f.write('%s %s %s\n' % (c1, o, _new_lits))
-    for o in obj_ctxts:
-        # Allocations
-        for c in new_trans.get(o, []):
-            f.write('%s %s %s\n' % (o, c, new_lits))

@@ -310,22 +310,17 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
     EXPECT(comp.simple());
 
     std::cout << "Calculating base effects" << std::endl;
-    mi::FlatIndex<REV, bool,
-	mi::FlatIndex<SYMBOL, Ref<Symbol>,
-	    mi::Index<TAG, Ref<Tag>,
-		FsmEffect>>> non_uniqd_effects(boost::none, symbol_reg);
     for (const Transition& t : comp.transitions) {
-	non_uniqd_effects.insert(t.label.rev, t.label.symbol, t.label.tag,
-				 boost::make_optional(t.from.valid(), t.from),
-				 boost::make_optional(t.to.valid(), t.to));
+	base_effects.insert(t.label.rev, t.label.symbol, t.label.tag,
+			    boost::make_optional(t.from.valid(), t.from),
+			    boost::make_optional(t.to.valid(), t.to));
     }
-    base_effects.copy(non_uniqd_effects);
-
-    FsmEffect non_uniqd_id;
     for (const State& s : comp.get_states()) {
-	non_uniqd_id.insert(s.ref, s.ref);
+	id_trel_.insert(s.ref, s.ref);
     }
-    id_trel_.copy(non_uniqd_id);
+
+    std::cout << comp.get_states().size() << std::endl;
+    std::cout << comp.transitions.size() << std::endl;
 }
 
 bool FSM::is_accepting(const TransRel& trel) const {
@@ -550,6 +545,8 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 
     std::cout << "Starting with " << workers.size() << " workers" << std::endl;
 
+    unsigned int good_runs = 0;
+
     while (!worklist.empty()) {
 	const Worker& w = workers[worklist.dequeue()];
 	Worker::Result res = w.handle(graph, fsm);
@@ -561,6 +558,9 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 	    deps.insert(Dependence(dep_start, w.ref));
 	}
 	if (graph.summaries.copy(res.summs, w.comp.ref, w.start)) {
+	    ++good_runs;
+	    std::cout << good_runs << " useful runs, "
+		      << graph.summaries.size() << " summaries" << std::endl;
 	    unsigned int reschedules = 0;
 	    for (const Dependence& d : deps[w.start]) {
 		if (worklist.enqueue(d.worker)) {
@@ -568,6 +568,11 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 		}
 	    }
 	    reschedule_freqs.record(reschedules);
+	    graph.print_summaries(".", rsm.components, fsm);
+	    std::cout << "Early printing done" << std::endl;
+	    exit(0);
+	} else {
+	    std::cout << "    useless run" << std::endl;
 	}
     }
 
@@ -609,14 +614,10 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
     Result res;
     WorkerWorklist worklist;
     Ref<State> fsm_init = fsm.comp.get_initial();
-    TransRel start_trel;
-    if (top_level) {
-	start_trel.insert(fsm_init, fsm_init);
-    } else {
-	start_trel = fsm.id_trel();
-    }
-    Position start_pos(start, comp.get_initial(), start_trel);
-    worklist.enqueue(start_pos);
+    TransRel init_move;
+    init_move.insert(fsm_init, fsm_init);
+    worklist.enqueue(start, comp.get_initial(),
+		     top_level ? init_move : fsm.id_trel());
 
     while (!worklist.empty()) {
 	Position pos = worklist.dequeue();
@@ -625,11 +626,11 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 	if (comp.get_final().count(pos.r_to) > 0) {
 	    if (// During the final top-down reachability step, we only accept
 		// initial-to-final FSM effects.
-		(top_level && fsm.is_accepting(pos.trel)) ||
+		(top_level && fsm.is_accepting(worklist.effect_at(pos))) ||
 		// During the summarization step, we only emit a summary at one
 		// of the "interesting" summary out-nodes.
 		(!top_level && tgts.count(pos.dst) > 0)) {
-		res.summs.copy(pos.trel, pos.dst);
+		res.summs.copy(worklist.effect_at(pos), pos.dst);
 	    }
 	}
 
@@ -639,11 +640,12 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 		boost::make_optional(t.label.tag.valid(), t.label.tag);
 	    FOR(e, graph.search(pos.dst, t.label), maybe_tag) {
 		TransRel new_trel =
-		    compose(pos.trel, fsm.effect_of(t.label, e.get<TAG>()));
+		    compose(worklist.effect_at(pos),
+			    fsm.effect_of(t.label, e.get<TAG>()));
 		if (new_trel.empty()) {
 		    continue;
 		}
-		worklist.enqueue(Position(e.get<DST>(), t.to, new_trel));
+		worklist.enqueue(e.get<DST>(), t.to, new_trel);
 	    }
 	}
 
@@ -656,8 +658,8 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 	    FOR(e_in, graph.search(pos.dst, entry.label)) {
 		Ref<Node> in_node = e_in.get<DST>();
 		Ref<Tag> in_tag = e_in.get<TAG>();
-		TransRel in_trel =
-		    compose(pos.trel, fsm.effect_of(entry.label, in_tag));
+		TransRel in_trel = compose(worklist.effect_at(pos),
+					   fsm.effect_of(entry.label, in_tag));
 		if (in_trel.empty()) {
 		    continue;
 		}
@@ -672,7 +674,7 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 		// Cross through any existing summary edges.
 		const auto& compat_summs = graph.summaries[sub_comp][in_node];
 		for (Ref<Node> out_node : compat_summs) {
-		    TransRel sub_trel = compat_summs[out_node];
+		    const TransRel& sub_trel = compat_summs[out_node];
 		    TransRel out_trel = compose(in_trel, sub_trel);
 		    if (out_trel.empty()) {
 			continue;
@@ -690,8 +692,8 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 			const auto& slice =
 			    graph.search(out_node, exit.label)[in_tag];
 			FOR(e_out, slice) {
-			    worklist.enqueue(Position(e_out.get<DST>(),
-						      exit.to, full_trel));
+			    worklist.enqueue(e_out.get<DST>(), exit.to,
+					     full_trel);
 			}
 		    }
 		}

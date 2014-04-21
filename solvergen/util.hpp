@@ -2262,6 +2262,18 @@ public:
     bool empty() const {
 	return !full && a_to_all.empty() && all_to_b.empty() && a2b.empty();
     }
+    unsigned int size() const {
+	unsigned int sz = 0;
+	if (full) {
+	    ++sz;
+	}
+	sz += a_to_all.size();
+	sz += all_to_b.size();
+	for (const auto& p : a2b) {
+	    sz += p.second.size();
+	}
+	return sz;
+    }
     friend int compare(const BiRel& lhs, const BiRel& rhs) {
 	if (rhs.full) {
 	    if (lhs.full) {

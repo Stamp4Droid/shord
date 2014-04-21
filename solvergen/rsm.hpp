@@ -267,8 +267,7 @@ public:
 	       const Registry<Tag>& tag_reg) const;
 };
 
-typedef mi::BiRel<F_FROM, F_TO, Ref<State>> FsmEffect;
-typedef mi::Uniq<FsmEffect> TransRel;
+typedef mi::BiRel<F_FROM, F_TO, Ref<State>> TransRel;
 
 class FSM {
 public:
@@ -298,7 +297,7 @@ private:
 public:
     explicit FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 		 Registry<Tag>& tag_reg);
-    TransRel id_trel() const {
+    const TransRel& id_trel() const {
 	return id_trel_;
     };
     // The tag on the label isn't used; the provided tag is used instead.
@@ -481,11 +480,9 @@ class Position {
 public:
     const Ref<Node> dst;
     const Ref<State> r_to;
-    const TransRel trel;
 public:
     // TODO: Only construct through a 'follow' method, not directly?
-    explicit Position(Ref<Node> dst, Ref<State> r_to, const TransRel& trel)
-	: dst(dst), r_to(r_to), trel(trel) {}
+    explicit Position(Ref<Node> dst, Ref<State> r_to) : dst(dst), r_to(r_to) {}
 };
 
 // A single Position can carry a set of FSM effects, so we prefer to schedule
@@ -498,35 +495,28 @@ public:
 // duplicate work (TODO: guard against this).
 class WorkerWorklist {
 private:
-
-    struct PosPrefix {
-	Ref<Node> dst;
-	Ref<State> r_to;
-	explicit PosPrefix(Ref<Node> dst, Ref<State> r_to)
-	    : dst(dst), r_to(r_to) {}
-    };
-
-private:
     mi::Index<DST, Ref<Node>,
 	mi::Index<R_TO, Ref<State>,
 	    TransRel>> reached;
-    std::deque<PosPrefix> queue;
+    std::deque<Position> queue;
 public:
     bool empty() const {
 	return queue.empty();
     }
-    bool enqueue(const Position& pos) {
-	if (reached.copy(pos.trel, pos.dst, pos.r_to)) {
-	    queue.emplace_back(pos.dst, pos.r_to);
+    bool enqueue(Ref<Node> dst, Ref<State> r_to, const TransRel& trel) {
+	if (reached.copy(trel, dst, r_to)) {
+	    queue.emplace_back(dst, r_to);
 	    return true;
 	}
 	return false;
     }
     Position dequeue() {
-	const PosPrefix& pre = queue.front();
-	Position res(pre.dst, pre.r_to, reached[pre.dst][pre.r_to]);
+	Position res = queue.front();
 	queue.pop_front();
 	return res;
+    }
+    const TransRel& effect_at(const Position& pos) {
+	return reached[pos.dst][pos.r_to];
     }
 };
 
