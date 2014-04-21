@@ -43,6 +43,89 @@ struct gen_seq : gen_seq<N-1,N-1,Is...> {};
 template<unsigned int... Is>
 struct gen_seq<0,Is...> : seq<Is...> {};
 
+// CUSTOM ORDERING ============================================================
+
+template<class T>
+typename std::enable_if<std::is_arithmetic<T>::value,int>::type
+compare(const T& lhs, const T& rhs) {
+    if (lhs == rhs) {
+	return 0;
+    }
+    if (lhs < rhs) {
+	return -1;
+    }
+    return 1;
+}
+
+template<class T>
+int compare(const std::set<T>& lhs, const std::set<T>& rhs) {
+    auto l_curr = lhs.cbegin();
+    auto r_curr = rhs.cbegin();
+    const auto l_end = lhs.cend();
+    const auto r_end = rhs.cend();
+
+    while (true) {
+	if (l_curr == l_end) {
+	    if (r_curr == r_end) {
+		return 0;
+	    }
+	    return -1;
+	}
+	if (r_curr == r_end) {
+	    return 1;
+	}
+	int curr_rel = compare(*l_curr, *r_curr);
+	if (curr_rel != 0) {
+	    return curr_rel;
+	}
+	// *l_curr == *r_curr
+	++l_curr;
+	++r_curr;
+    }
+}
+
+template<class T> int map_compare(const T& lhs, const T& rhs) {
+    auto l_curr = lhs.cbegin();
+    auto r_curr = rhs.cbegin();
+    const auto l_end = lhs.cend();
+    const auto r_end = rhs.cend();
+
+    while (true) {
+	if (l_curr == l_end && r_curr == r_end) {
+	    return 0;
+	}
+	// l_curr != l_end || r_curr != r_end
+	if (l_curr == l_end // => r_curr != r_end
+	    || (r_curr != r_end && r_curr->first < l_curr->first)) {
+	    if (!r_curr->second.empty()) {
+		return -1;
+	    }
+	    ++r_curr;
+	    continue;
+	}
+	// l_curr != l_end
+	if (r_curr == r_end || l_curr->first < r_curr->first) {
+	    if (!l_curr->second.empty()) {
+		return 1;
+	    }
+	    ++l_curr;
+	    continue;
+	}
+	// l_curr != l_end && r_curr != r_end && *l_curr == *r_curr
+	int sub_rel = compare(l_curr->second, r_curr->second);
+	if (sub_rel != 0) {
+	    return sub_rel;
+	}
+	++l_curr;
+	++r_curr;
+    }
+}
+
+template<class K, class V>
+int compare(const std::map<K,V>& lhs, const std::map<K,V>& rhs) {
+    return map_compare(lhs, rhs);
+}
+
 // ERROR HANDLING =============================================================
 
 void expect(const char* file, unsigned int line, bool cond,
@@ -434,6 +517,9 @@ public:
     }
     bool operator!=(const Ref& rhs) const {
 	return !(*this == rhs);
+    }
+    friend int compare(const Ref& lhs, const Ref& rhs) {
+	return compare(lhs.value, rhs.value);
     }
     bool operator<(const Ref& rhs) const {
 	return value < rhs.value;
@@ -1258,31 +1344,17 @@ static const T& id(const T& val) {
     return val;
 }
 
-template<class Idx> struct MultiDimApply {
-private:
-    typedef typename Idx::Key Key;
-    typedef typename KeyTraits<Key>::SizeHint SizeHint;
-    static const unsigned int DEPTH = tuple_size<typename Idx::Tuple>::value;
-    static const unsigned int FLAT_DIMS = flat_dims<Idx>::value;
-private:
-    template<unsigned int... Is>
-    static bool insert(Idx& idx, const Key& val, seq<Is...>) {
-	return idx.insert(id<Key,Is>(val)...);
-    }
-    template<unsigned int... Is>
-    static Idx construct(const SizeHint& hint, seq<Is...>) {
-	return Idx(id<SizeHint,Is>(hint)...);
-    }
-public:
-    static bool insert(Idx& idx, const Key& val) {
-	return insert(idx, val, gen_seq<DEPTH>());
-    }
-    static Idx construct(const SizeHint& hint) {
-	return construct(hint, gen_seq<FLAT_DIMS>());
-    }
-};
-
 } // namespace detail
+
+template<class T>
+std::ostream& operator<<(std::ostream& os, const boost::optional<T>& val) {
+    if (val) {
+	os << *val;
+    } else {
+	os << "*";
+    }
+    return os;
+}
 
 // BASE CONTAINERS & OPERATIONS ===============================================
 
@@ -1294,25 +1366,7 @@ public:
 
 const boost::none_t any = boost::none;
 
-template<class Idx, class... HintTs>
-Idx join(const Idx& r, const Idx& s, const HintTs&... hints) {
-    Idx res(hints...);
-    FOR(r_tup, r) {
-	res.copy(s[r_tup.tl.hd], r_tup.hd);
-    }
-    return res;
-}
-
-template<class Idx>
-Idx identity(const typename KeyTraits<typename Idx::Key>::SizeHint& hint) {
-    Idx idx = detail::MultiDimApply<Idx>::construct(hint);
-    unsigned int lim = KeyTraits<typename Idx::Key>::extract_size(hint);
-    for (unsigned int i = 0; i < lim; i++) {
-	typename Idx::Key val = KeyTraits<typename Idx::Key>::from_idx(i);
-	detail::MultiDimApply<Idx>::insert(idx, val);
-    }
-    return idx;
-}
+template<class Idx> Idx join(const Idx& l, const Idx& r);
 
 template<class Tag, class T> class Table {
 public:
@@ -1348,22 +1402,11 @@ public:
     unsigned int size() const {
 	return store.size();
     }
+    friend int compare(const Table& lhs, const Table& rhs) {
+	return compare(lhs.store, rhs.store);
+    }
     bool operator<(const Table& rhs) const {
-	Tuple l_tup, r_tup;
-	auto l_it = iter(l_tup);
-	auto r_it = rhs.iter(r_tup);
-	while (true) {
-	    if (!l_it.next()) {
-		return r_it.next();
-	    }
-	    if (!r_it.next() || r_tup < l_tup) {
-		return false;
-	    }
-	    if (l_tup < r_tup) {
-		return true;
-	    }
-	    // At this point we know that l_tup == r_tup.
-	}
+	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -1480,22 +1523,11 @@ public:
 	}
 	return sz;
     }
+    friend int compare(const Index& lhs, const Index& rhs) {
+	return compare(lhs.map, rhs.map);
+    }
     bool operator<(const Index& rhs) const {
-	Tuple l_tup, r_tup;
-	auto l_it = iter(l_tup);
-	auto r_it = rhs.iter(r_tup);
-	while (true) {
-	    if (!l_it.next()) {
-		return r_it.next();
-	    }
-	    if (!r_it.next() || r_tup < l_tup) {
-		return false;
-	    }
-	    if (l_tup < r_tup) {
-		return true;
-	    }
-	    // At this point we know that l_tup == r_tup.
-	}
+	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -1635,18 +1667,19 @@ public:
 	}
 	return sz;
     }
-    bool operator<(const FlatIndex& rhs) const {
+    friend int compare(const FlatIndex& lhs, const FlatIndex& rhs) {
 	unsigned int lim = rhs.array.size();
-	assert(array.size() == lim);
+	assert(lhs.array.size() == lim);
 	for (unsigned int i = 0; i < lim; i++) {
-	    if (array[i] < rhs.array[i]) {
-		return true;
-	    }
-	    if (rhs.array[i] < array[i]) {
-		return false;
+	    int sub_rel = compare(lhs.array[i], rhs.array[i]);
+	    if (sub_rel != 0) {
+		return sub_rel;
 	    }
 	}
-	return false;
+	return 0;
+    }
+    bool operator<(const FlatIndex& rhs) const {
+	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -1745,6 +1778,7 @@ public:
 template<class Tag, class T> class BitSet {
 private:
     typedef unsigned short Store;
+    static const Store top_bit = 1 << (sizeof(Store) * 8 - 1);
 public:
     class Iterator;
     friend Iterator;
@@ -1758,11 +1792,9 @@ public:
     bool insert(const T& val) {
 	unsigned int idx = KeyTraits<T>::extract_idx(val);
 	assert(idx < sizeof(Store) * 8);
-	if (bits & (1 << idx)) {
-	    return false;
-	}
-	bits |= 1 << idx;
-	return true;
+	Store prev_bits = bits;
+	bits |= (top_bit >> idx);
+	return prev_bits != bits;
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
@@ -1782,8 +1814,8 @@ public:
 	return bits == 0;
     }
     bool contains(const T& val) const {
-	unsigned int i = KeyTraits<T>::extract_idx(val);
-	return bits & (1 << i);
+	unsigned int idx = KeyTraits<T>::extract_idx(val);
+	return bits & (top_bit >> idx);
     }
     unsigned int size() const {
 	Store v = bits;
@@ -1792,6 +1824,9 @@ public:
 	    count += v & 1;
 	}
 	return count;
+    }
+    friend int compare(const BitSet& lhs, const BitSet& rhs) {
+	return compare(lhs.bits, rhs.bits);
     }
     bool operator<(const BitSet& rhs) const {
 	return bits < rhs.bits;
@@ -1824,7 +1859,7 @@ public:
 		++curr;
 	    }
 	    while (curr < lim) {
-		if (*bits & (1 << curr)) {
+		if (*bits & (top_bit >> curr)) {
 		    tgt_fld = KeyTraits<T>::from_idx(curr);
 		    return true;
 		}
@@ -1933,22 +1968,11 @@ public:
 	}
 	return sz;
     }
+    friend int compare(const LightIndex& lhs, const LightIndex& rhs) {
+	return map_compare(lhs.list, rhs.list);
+    }
     bool operator<(const LightIndex& rhs) const {
-	Tuple l_tup, r_tup;
-	auto l_it = iter(l_tup);
-	auto r_it = rhs.iter(r_tup);
-	while (true) {
-	    if (!l_it.next()) {
-		return r_it.next();
-	    }
-	    if (!r_it.next() || r_tup < l_tup) {
-		return false;
-	    }
-	    if (l_tup < r_tup) {
-		return true;
-	    }
-	    // At this point we know that l_tup == r_tup.
-	}
+	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -2003,31 +2027,392 @@ public:
 template<class Tag, class K, class S>
 const S LightIndex<Tag,K,S>::dummy;
 
+template<class TagA, class TagB, class T> class BiRel;
+
+template<class TagA, class TagB, class T>
+BiRel<TagA,TagB,T> join(const BiRel<TagA,TagB,T>& l,
+			const BiRel<TagA,TagB,T>& r) {
+    typedef IterWrapper<typename std::map<T,std::set<T>>::const_iterator,
+			T, detail::get_first> KeyIt;
+    BiRel<TagA,TagB,T> res;
+
+    if (l.full) {
+	if (r.full || !r.a_to_all.empty()) {
+	    res.make_full();
+	    return res;
+	}
+	for (const T& b : r.all_to_b) {
+	    res.add_all_to_b(b);
+	}
+	for (const auto& p : r.b2a) {
+	    res.add_all_to_b(p.first);
+	}
+	return res;
+    }
+
+    if (r.full) {
+	if (l.full || !l.all_to_b.empty()) {
+	    res.make_full();
+	    return res;
+	}
+	for (const T& a : l.a_to_all) {
+	    res.add_a_to_all(a);
+	}
+	for (const auto& p : l.a2b) {
+	    res.add_a_to_all(p.first);
+	}
+	return res;
+    }
+
+    std::list<T> all_to_all_mids;
+    std::set_intersection(l.all_to_b.cbegin(), l.all_to_b.cend(),
+			  r.a_to_all.cbegin(), r.a_to_all.cend(),
+			  std::back_inserter(all_to_all_mids));
+    if (!all_to_all_mids.empty()) {
+	res.make_full();
+	return res;
+    }
+
+    std::list<T> a_to_all_mids;
+    std::set_intersection(KeyIt(l.b2a.cbegin()), KeyIt(l.b2a.cend()),
+			  r.a_to_all.cbegin(),   r.a_to_all.cend(),
+			  std::back_inserter(a_to_all_mids));
+    for (const T& mid : a_to_all_mids) {
+	for (const T& a : l.b2a.at(mid)) {
+	    res.add_a_to_all(a);
+	}
+    }
+
+    std::list<T> all_to_b_mids;
+    std::set_intersection(l.all_to_b.cbegin(),   l.all_to_b.cend(),
+			  KeyIt(r.a2b.cbegin()), KeyIt(r.a2b.cend()),
+			  std::back_inserter(all_to_b_mids));
+    for (const T& mid : all_to_b_mids) {
+	for (const T& b : r.a2b.at(mid)) {
+	    res.add_all_to_b(b);
+	}
+    }
+
+    std::list<T> a2b_mids;
+    std::set_intersection(KeyIt(l.b2a.cbegin()), KeyIt(l.b2a.cend()),
+			  KeyIt(r.a2b.cbegin()), KeyIt(r.a2b.cend()),
+			  std::back_inserter(a2b_mids));
+    for (const T& mid : a2b_mids) {
+	for (const T& a : l.b2a.at(mid)) {
+	    for (const T& b : r.a2b.at(mid)) {
+		res.add_single(a, b);
+	    }
+	}
+    }
+
+    for (const T& a : l.a_to_all) {
+	if (!r.a_to_all.empty()) {
+	    res.add_a_to_all(a);
+	    continue;
+	}
+	for (const T& b : r.all_to_b) {
+	    res.add_single(a, b);
+	}
+	for (const auto& p : r.b2a) {
+	    res.add_single(a, p.first);
+	}
+    }
+
+    for (const T& b : r.all_to_b) {
+	if (!l.all_to_b.empty()) {
+	    res.add_all_to_b(b);
+	    continue;
+	}
+	for (const T& a : l.a_to_all) {
+	    res.add_single(a, b);
+	}
+	for (const auto& p : l.a2b) {
+	    res.add_single(p.first, b);
+	}
+    }
+
+    return res;
+}
+
+template<class TagA, class TagB, class T> class BiRel {
+    friend BiRel join<>(const BiRel& l, const BiRel& r);
+public:
+    typedef boost::optional<T> Key;
+    typedef boost::none_t Sub; // dummy declaration
+    class Iterator;
+    friend Iterator;
+    typedef boost::none_t KeyIter; // dummy declaration
+    typedef NamedTuple<TagA, boost::optional<T>,
+		       NamedTuple<TagB,boost::optional<T>,Nil>> Tuple;
+private:
+    bool full = false; // if true, all other sets are empty
+    std::set<T> a_to_all; // if a in a_to_all, (a,_) not in a2b or b2a
+    std::set<T> all_to_b; // if b in all_to_b, (_,b) not in a2b or b2a
+    std::map<T,std::set<T>> a2b; // mapped sets are never empty
+    std::map<T,std::set<T>> b2a; // mapped sets are never empty
+private:
+    bool make_full() {
+	if (full) {
+	    return false;
+	}
+	full = true;
+	a_to_all.clear();
+	all_to_b.clear();
+	a2b.clear();
+	b2a.clear();
+	return true;
+    }
+    bool add_a_to_all(const T& a) {
+	if (full) {
+	    return false;
+	}
+	if (a_to_all.insert(a).second) {
+	    a2b.erase(a);
+	    for (auto it = b2a.begin(); it != b2a.end();) {
+		it->second.erase(a);
+		if (it->second.empty()) {
+		    it = b2a.erase(it);
+		} else {
+		    ++it;
+		}
+	    }
+	    return true;
+	}
+	return false;
+    }
+    bool add_all_to_b(const T& b) {
+	if (full) {
+	    return false;
+	}
+	if (all_to_b.insert(b).second) {
+	    for (auto it = a2b.begin(); it != a2b.end();) {
+		it->second.erase(b);
+		if (it->second.empty()) {
+		    it = a2b.erase(it);
+		} else {
+		    ++it;
+		}
+	    }
+	    b2a.erase(b);
+	    return true;
+	}
+	return false;
+    }
+    bool add_single(const T& a, const T& b) {
+	if (full || a_to_all.count(a) || all_to_b.count(b)) {
+	    return false;
+	}
+	if (a2b[a].insert(b).second) {
+	    bool added = b2a[b].insert(a).second;
+	    assert(added);
+	    return true;
+	}
+	return false;
+    }
+public:
+    bool insert(const boost::optional<T>& a, const boost::optional<T>& b) {
+	if (a) {
+	    if (b) {
+		return add_single(*a, *b);
+	    }
+	    return add_a_to_all(*a);
+	}
+	if (b) {
+	    return add_all_to_b(*b);
+	}
+	return make_full();
+    }
+    bool insert(const Tuple& tuple) {
+	return insert(tuple.hd, tuple.tl.hd);
+    }
+    bool copy(const BiRel& src) {
+	if (full) {
+	    return false;
+	}
+	if (src.full) {
+	    return make_full();
+	}
+	bool grew = false;
+	for (const T& a : src.a_to_all) {
+	    if (add_a_to_all(a)) {
+		grew = true;
+	    }
+	}
+	for (const T& b : src.all_to_b) {
+	    if (add_all_to_b(b)) {
+		grew = true;
+	    }
+	}
+	for (const auto& p : src.a2b) {
+	    const T& a = p.first;
+	    for (const T& b : p.second) {
+		if (add_single(a, b)) {
+		    grew = true;
+		}
+	    }
+	}
+	return grew;
+    }
+    template<class... Rest>
+    Iterator iter(Tuple& tgt, const Rest&... rest) const {
+	Iterator it(tgt, rest...);
+	it.migrate(*this);
+	return it;
+    }
+    bool empty() const {
+	return !full && a_to_all.empty() && all_to_b.empty() && a2b.empty();
+    }
+    friend int compare(const BiRel& lhs, const BiRel& rhs) {
+	if (rhs.full) {
+	    if (lhs.full) {
+		return 0;
+	    }
+	    return -1;
+	}
+	if (lhs.full) {
+	    return 1;
+	}
+	int sub_rel = compare(lhs.a_to_all, rhs.a_to_all);
+	if (sub_rel != 0) {
+	    return sub_rel;
+	}
+	sub_rel = compare(lhs.all_to_b, rhs.all_to_b);
+	if (sub_rel != 0) {
+	    return sub_rel;
+	}
+	return compare(lhs.a2b, rhs.a2b);
+    }
+    bool operator<(const BiRel& rhs) const {
+	return compare(*this, rhs) < 0;
+    }
+public:
+
+    class Iterator {
+    private:
+	enum class Phase {
+	    BEFORE_START, AFTER_FULL_CHECK, A_TO_ALL, ALL_TO_B, A2B};
+    private:
+	typename std::map<T,std::set<T>>::const_iterator map_curr;
+	typename std::map<T,std::set<T>>::const_iterator map_end;
+	typename std::set<T>::const_iterator set_curr;
+	typename std::set<T>::const_iterator set_end;
+	boost::optional<T>& a_tgt;
+	boost::optional<T>& b_tgt;
+	const boost::optional<T> a_cnstr;
+	const boost::optional<T> b_cnstr;
+	const BiRel* parent;
+	Phase phase;
+    private:
+	bool a2b_set_sub_iter() {
+	    if (map_curr == map_end) {
+		return false;
+	    }
+	    a_tgt = map_curr->first;
+	    if (b_cnstr) {
+		std::tie(set_curr, set_end) =
+		    map_curr->second.equal_range(*b_cnstr);
+	    } else {
+		set_curr = map_curr->second.cbegin();
+		set_end  = map_curr->second.cend();
+	    }
+	    return true;
+	}
+    public:
+	explicit Iterator(Tuple& tgt,
+			  const boost::optional<T>& a_cnstr = boost::none,
+			  const boost::optional<T>& b_cnstr = boost::none)
+	    : a_tgt(tgt.hd), b_tgt(tgt.tl.hd),
+	      a_cnstr(a_cnstr), b_cnstr(b_cnstr) {}
+	void migrate(const BiRel& birel) {
+	    parent = &birel;
+	    phase = Phase::BEFORE_START;
+	}
+	bool next() {
+	    while (true) {
+		switch (phase) {
+		case Phase::BEFORE_START:
+		    phase = Phase::AFTER_FULL_CHECK;
+		    if (parent->full) {
+			a_tgt = boost::none;
+			b_tgt = boost::none;
+			return true;
+		    }
+		    break;
+		case Phase::AFTER_FULL_CHECK:
+		    if (a_cnstr) {
+			std::tie(set_curr, set_end) =
+			    parent->a_to_all.equal_range(*a_cnstr);
+		    } else {
+			set_curr = parent->a_to_all.cbegin();
+			set_end  = parent->a_to_all.cend();
+		    }
+		    b_tgt = boost::none;
+		    phase = Phase::A_TO_ALL;
+		    break;
+		case Phase::A_TO_ALL:
+		    if (set_curr == set_end) {
+			if (b_cnstr) {
+			    std::tie(set_curr, set_end) =
+				parent->all_to_b.equal_range(*b_cnstr);
+			} else {
+			    set_curr = parent->all_to_b.cbegin();
+			    set_end  = parent->all_to_b.cend();
+			}
+			a_tgt = boost::none;
+			phase = Phase::ALL_TO_B;
+			break;
+		    }
+		    a_tgt = *set_curr;
+		    ++set_curr;
+		    return true;
+		case Phase::ALL_TO_B:
+		    if (set_curr == set_end) {
+			if (a_cnstr) {
+			    std::tie(map_curr, map_end) =
+				parent->a2b.equal_range(*a_cnstr);
+			} else {
+			    map_curr = parent->a2b.cbegin();
+			    map_end  = parent->a2b.cend();
+			}
+			if (!a2b_set_sub_iter()) {
+			    return false;
+			}
+			phase = Phase::A2B;
+			break;
+		    }
+		    b_tgt = *set_curr;
+		    ++set_curr;
+		    return true;
+		case Phase::A2B:
+		    while (set_curr == set_end) {
+			++map_curr;
+			if (!a2b_set_sub_iter()) {
+			    return false;
+			}
+		    }
+		    b_tgt = *set_curr;
+		    ++set_curr;
+		    return true;
+		default:
+		    assert(false);
+		}
+	    }
+	}
+    };
+};
+
 // UNIQUING INFRASTRUCTURE ====================================================
 
 template<class Idx> class Immut;
 template<class Idx> class Uniq;
 
 template<class Idx>
-Uniq<Idx> join(const Uniq<Idx>& r, const Uniq<Idx>& s) {
+Uniq<Idx> join(const Uniq<Idx>& l, const Uniq<Idx>& r) {
     static std::map<std::pair<Ref<Immut<Idx>>,Ref<Immut<Idx>>>,
 		    Ref<Immut<Idx>>> cache;
-    Ref<Immut<Idx>>& cached = cache[std::make_pair(r.cell_ref, s.cell_ref)];
+    Ref<Immut<Idx>>& cached = cache[std::make_pair(l.cell_ref, r.cell_ref)];
     if (!cached.valid()) {
-	Idx idx = join(r.real_idx(), s.real_idx());
-	cached = Immut<Idx>::unique(idx);
-    }
-    return Uniq<Idx>(cached);
-}
-
-template<class Idx>
-Uniq<Idx>
-uniq_id(const typename KeyTraits<typename Idx::Key>::SizeHint& hint) {
-    static std::map<unsigned int,Ref<Immut<Idx>>> cache;
-    unsigned int lim = KeyTraits<typename Idx::Key>::extract_size(hint);
-    Ref<Immut<Idx>>& cached = cache[lim];
-    if (!cached.valid()) {
-	Idx idx = identity<Idx>(hint);
+	Idx idx = join(l.real_idx(), r.real_idx());
 	cached = Immut<Idx>::unique(idx);
     }
     return Uniq<Idx>(cached);
@@ -2095,10 +2480,6 @@ public:
 
 template<class Idx> class Uniq {
     friend Uniq join<>(const Uniq& r, const Uniq& s);
-    // TODO: This is not as tight as possible, but it allows us to unique
-    // classes that don't support identity building.
-    template<class T> friend Uniq<T>
-    uniq_id(const typename KeyTraits<typename T::Key>::SizeHint& hint);
 public:
     typedef typename Idx::Key Key;
     typedef typename Idx::Sub Sub;
@@ -2161,8 +2542,11 @@ public:
     unsigned int size() const {
 	return real_idx().size();
     }
+    friend int compare(const Uniq& lhs, const Uniq& rhs) {
+	return compare(lhs.real_idx(), rhs.real_idx());
+    }
     bool operator<(const Uniq& rhs) const {
-	return (real_idx() < rhs.real_idx());
+	return real_idx() < rhs.real_idx();
     }
 public:
 

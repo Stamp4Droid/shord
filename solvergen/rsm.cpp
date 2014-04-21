@@ -82,7 +82,8 @@ void Box::print(std::ostream& os, const Registry<Component>& comp_reg) const {
 void Transition::print(std::ostream& os, const Registry<State>& state_reg,
 		       const Registry<Symbol>& symbol_reg,
 		       const Registry<Tag>& tag_reg) const {
-    os << state_reg[from].name << " " << state_reg[to].name << " ";
+    os << (from.valid() ? state_reg[from].name : "*") << " "
+       << (to.valid() ? state_reg[to].name : "*") << " ";
     label.print(os, symbol_reg, tag_reg);
     os << std::endl;
 }
@@ -217,19 +218,30 @@ void parse_component(const fs::path& fpath, Component& comp,
 	    // We are certain that box names and transition names are disjoint.
 	    EXPECT(toks.size() >= 3);
 	    std::list<std::string> label_toks(toks.begin() + 2, toks.end());
-	    bool src_is_state = comp.get_states().contains(toks[0]);
-	    bool dst_is_state = comp.get_states().contains(toks[1]);
+	    bool src_is_state =
+		toks[0] == "*" || comp.get_states().contains(toks[0]);
+	    bool dst_is_state =
+		toks[1] == "*" || comp.get_states().contains(toks[1]);
 	    EXPECT(src_is_state || dst_is_state);
 
 	    if (src_is_state && dst_is_state) {
-		Ref<State> src = comp.get_states().find(toks[0]).ref;
-		Ref<State> dst = comp.get_states().find(toks[1]).ref;
+		Ref<State> src;
+		if (toks[0] != "*") {
+		    src = comp.get_states().find(toks[0]).ref;
+		}
+		Ref<State> dst;
+		if (toks[1] != "*") {
+		    dst = comp.get_states().find(toks[1]).ref;
+		}
 		for (const std::string& t : label_toks) {
 		    Label lab = Label::parse(t, symbol_reg, tag_reg);
 		    comp.transitions.insert(Transition(src, dst, lab));
 		}
 	    } else if (src_is_state && !dst_is_state) {
-		Ref<State> src = comp.get_states().find(toks[0]).ref;
+		Ref<State> src;
+		if (toks[0] != "*") {
+		    src = comp.get_states().find(toks[0]).ref;
+		}
 		Ref<Box> dst = comp.boxes.find(toks[1]).ref;
 		for (const std::string& t : label_toks) {
 		    MatchLabel lab = MatchLabel::parse(t, symbol_reg);
@@ -237,7 +249,10 @@ void parse_component(const fs::path& fpath, Component& comp,
 		}
 	    } else if (!src_is_state && dst_is_state) {
 		Ref<Box> src = comp.boxes.find(toks[0]).ref;
-		Ref<State> dst = comp.get_states().find(toks[1]).ref;
+		Ref<State> dst;
+		if (toks[1] != "*") {
+		    dst = comp.get_states().find(toks[1]).ref;
+		}
 		for (const std::string& t : label_toks) {
 		    MatchLabel lab = MatchLabel::parse(t, symbol_reg);
 		    comp.exits.insert(Exit(src, dst, lab));
@@ -276,6 +291,7 @@ void RSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 }
 
 const std::string FSM::FILE_EXTENSION(".fsm.tgf");
+const std::string FSM::ANY_STATE_STR("*");
 
 FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 	 Registry<Tag>& tag_reg)
@@ -300,14 +316,22 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 		FsmEffect>>> non_uniqd_effects(boost::none, symbol_reg);
     for (const Transition& t : comp.transitions) {
 	non_uniqd_effects.insert(t.label.rev, t.label.symbol, t.label.tag,
-				 t.from, t.to);
+				 boost::make_optional(t.from.valid(), t.from),
+				 boost::make_optional(t.to.valid(), t.to));
     }
     base_effects.copy(non_uniqd_effects);
+
+    FsmEffect non_uniqd_id;
+    for (const State& s : comp.get_states()) {
+	non_uniqd_id.insert(s.ref, s.ref);
+    }
+    id_trel_.copy(non_uniqd_id);
 }
 
 bool FSM::is_accepting(const TransRel& trel) const {
-    FOR(tup, trel[comp.get_initial()]) {
-	if (comp.get_final().count(tup.get<F_TO>()) > 0) {
+    FOR(tup, trel, comp.get_initial()) {
+	boost::optional<Ref<State>> to = tup.get<F_TO>();
+	if (!to || comp.get_final().count(*to)) {
 	    return true;
 	}
     }
@@ -321,8 +345,8 @@ void FSM::print_effects(std::ostream& os, const Symbol& s, bool rev,
 	Label(s, rev, tag).print(os, symbol_reg, tag_reg);
 	os << ":" << std::endl;
 	FOR(trans, base_effects[rev][s.ref][tag]) {
-	    os << "  " << comp.get_states()[trans.get<F_FROM>()].name << " "
-	       << comp.get_states()[trans.get<F_TO>()].name << std::endl;
+	    os << "  " << state_str(trans.get<F_FROM>()) << " "
+	       << state_str(trans.get<F_TO>()) << std::endl;
 	}
     }
 }
@@ -335,6 +359,13 @@ void FSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
     for (const Symbol& s : symbol_reg) {
 	print_effects(os, s, false, symbol_reg, tag_reg);
     }
+}
+
+const std::string& FSM::state_str(const boost::optional<Ref<State>>& s) const {
+    if (s) {
+	return comp.get_states()[*s].name;
+    }
+    return ANY_STATE_STR;
 }
 
 TransRel compose(const TransRel& trel1, const TransRel& trel2) {
@@ -433,8 +464,8 @@ void Graph::print_summaries(const std::string& dirname,
 	FOR(s, summaries[comp.ref]) {
 	    fout << nodes[s.get<SRC>()].name << " "
 		 << nodes[s.get<DST>()].name << " "
-		 << fsm.comp.get_states()[s.get<F_FROM>()].name << " "
-		 << fsm.comp.get_states()[s.get<F_TO>()].name << std::endl;
+		 << fsm.state_str(s.get<F_FROM>()) << " "
+		 << fsm.state_str(s.get<F_TO>()) << std::endl;
 	}
     }
 }
@@ -557,7 +588,7 @@ void Analysis::propagate(Graph& graph, const Component& comp) const {
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
 	if (!res.summs.empty()) {
-	    std::cout << res.summs.size() << " summaries found in "
+	    std::cout << "??? summaries found in "
 		      << current_time() - t_start << " ms" << std::endl;
 	}
 	// Reachability information is stored like regular summaries.

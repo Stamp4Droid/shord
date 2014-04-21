@@ -267,13 +267,13 @@ public:
 	       const Registry<Tag>& tag_reg) const;
 };
 
-typedef mi::Index<F_FROM, Ref<State>,
-	    mi::Table<F_TO, Ref<State>>> FsmEffect;
+typedef mi::BiRel<F_FROM, F_TO, Ref<State>> FsmEffect;
 typedef mi::Uniq<FsmEffect> TransRel;
 
 class FSM {
 public:
     static const std::string FILE_EXTENSION;
+    static const std::string ANY_STATE_STR;
 public:
     // Reusing Component class, but only for the FSM part.
     Component comp;
@@ -290,6 +290,7 @@ private:
 	    // tag. The two will need to be combined.
 	    mi::Index<TAG, Ref<Tag>,
 		TransRel>>> base_effects;
+    TransRel id_trel_;
 private:
     void print_effects(std::ostream& os, const Symbol& s, bool rev,
 		       const Registry<Symbol>& symbol_reg,
@@ -298,8 +299,7 @@ public:
     explicit FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 		 Registry<Tag>& tag_reg);
     TransRel id_trel() const {
-	// TODO: Could just do this externally
-	return mi::uniq_id<FsmEffect>(comp.get_states());
+	return id_trel_;
     };
     // The tag on the label isn't used; the provided tag is used instead.
     // TODO: Ensure that this is only applied to valid Edge objects.
@@ -315,6 +315,7 @@ public:
     bool is_accepting(const TransRel& trel) const;
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 	       const Registry<Tag>& tag_reg) const;
+    const std::string& state_str(const boost::optional<Ref<State>>& s) const;
 };
 
 TransRel compose(const TransRel& trel1, const TransRel& trel2);
