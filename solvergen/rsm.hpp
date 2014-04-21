@@ -267,7 +267,8 @@ public:
 	       const Registry<Tag>& tag_reg) const;
 };
 
-typedef mi::BiRel<F_FROM, F_TO, Ref<State>> TransRel;
+typedef mi::BiRel<F_FROM, F_TO, Ref<State>> FsmEffect;
+typedef mi::Uniq<FsmEffect> TransRel;
 
 class FSM {
 public:
@@ -297,7 +298,7 @@ private:
 public:
     explicit FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 		 Registry<Tag>& tag_reg);
-    const TransRel& id_trel() const {
+    TransRel id_trel() const {
 	return id_trel_;
     };
     // The tag on the label isn't used; the provided tag is used instead.
@@ -480,9 +481,11 @@ class Position {
 public:
     const Ref<Node> dst;
     const Ref<State> r_to;
+    const TransRel trel;
 public:
     // TODO: Only construct through a 'follow' method, not directly?
-    explicit Position(Ref<Node> dst, Ref<State> r_to) : dst(dst), r_to(r_to) {}
+    explicit Position(Ref<Node> dst, Ref<State> r_to, const TransRel& trel)
+	: dst(dst), r_to(r_to), trel(trel) {}
 };
 
 // A single Position can carry a set of FSM effects, so we prefer to schedule
@@ -495,23 +498,33 @@ public:
 // duplicate work (TODO: guard against this).
 class WorkerWorklist {
 private:
+
+    struct PosPrefix {
+	Ref<Node> dst;
+	Ref<State> r_to;
+	explicit PosPrefix(Ref<Node> dst, Ref<State> r_to)
+	    : dst(dst), r_to(r_to) {}
+    };
+
+public:
     mi::Index<DST, Ref<Node>,
 	mi::Index<R_TO, Ref<State>,
 	    TransRel>> reached;
-    std::deque<Position> queue;
+    std::deque<PosPrefix> queue;
 public:
     bool empty() const {
 	return queue.empty();
     }
-    bool enqueue(Ref<Node> dst, Ref<State> r_to, const TransRel& trel) {
-	if (reached.copy(trel, dst, r_to)) {
-	    queue.emplace_back(dst, r_to);
+    bool enqueue(const Position& pos) {
+	if (reached.copy(pos.trel, pos.dst, pos.r_to)) {
+	    queue.emplace_back(pos.dst, pos.r_to);
 	    return true;
 	}
 	return false;
     }
     Position dequeue() {
-	Position res = queue.front();
+	const PosPrefix& pre = queue.front();
+	Position res(pre.dst, pre.r_to, reached[pre.dst][pre.r_to]);
 	queue.pop_front();
 	return res;
     }
