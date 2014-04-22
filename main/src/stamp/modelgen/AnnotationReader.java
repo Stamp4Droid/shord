@@ -18,10 +18,22 @@ import java.util.*;
 public class AnnotationReader
 {
 	private static PrintWriter writer;
+	
+	public static enum DRModelgenLevel {
+		NONE, SAFE, ALL
+	}
+	private static DRModelgenLevel modelgenLevel = DRModelgenLevel.NONE;
 
 	public static void main(String[] args) throws Exception
 	{
 		writer = new PrintWriter(new FileWriter("stamp_annotations.txt"));
+		
+		String modelgenLevelStr = System.getProperty("stamp.droidrecord.modelgen.use_models","none");
+		if(modelgenLevelStr.equals("safe")) { 
+			modelgenLevel = DRModelgenLevel.SAFE; 
+		} else if(modelgenLevelStr.equals("all")) {
+			modelgenLevel = DRModelgenLevel.ALL;
+		}
 
 		File stubsDir = new File(args[0]);
 
@@ -82,6 +94,22 @@ public class AnnotationReader
 								Map<String,Integer> nameToIndex = paramNames(member); 
 
 								String chordMethSig = Util.chordMethodSig(member, type, pkg);
+								
+								// First, find out origin if any
+								String origin = "manual";
+								for(MemberValuePair  pair1 : ((NormalAnnotationExpr) ae).getPairs()){
+									if(!pair1.getName().equals("origin"))
+										continue;
+									origin = ((StringLiteralExpr) pair1.getValue()).getValue();
+								}
+								DRModelgenLevel annotationLevel = DRModelgenLevel.NONE;
+								if(origin.equals("dr-modelgen-safe")) {
+									annotationLevel = DRModelgenLevel.SAFE;
+								} else if(origin.equals("dr-modelgen")) {
+									annotationLevel = DRModelgenLevel.ALL;
+								}
+								if(annotationLevel.ordinal() >= modelgenLevel.ordinal()) continue;
+								
 								for(MemberValuePair  pair1 : ((NormalAnnotationExpr) ae).getPairs()){
 									if(!pair1.getName().equals("flows"))
 										continue;

@@ -19,4 +19,6 @@ public @interface STAMP
      * All the flows that will be caused if this method is called.
      */
     Flow[] flows() default {};
+    
+    String origin() default "manual";
 }
