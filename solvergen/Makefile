@@ -22,7 +22,7 @@ sec = $(call last,^,$(call last,@,$(call first,\#,$(1))))
 default:
 
 clean:
-	rm -f bin/cfg/* bin/rsm/* gen/*.cpp gen/*.dat
+	rm -f bin/cfg/* bin/rsm* gen/*.cpp gen/*.dat
 
 %.tgf: %.graphml
 	$(error $@ out of date, manually re-export from $?)

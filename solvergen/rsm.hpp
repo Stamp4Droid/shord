@@ -232,8 +232,8 @@ private:
     }
 public:
     explicit Component() : name("ANONYMOUS") {}
-    bool simple() const {
-	return boxes.empty();
+    bool recursive() const {
+	return !boxes.empty();
     }
     const Registry<State>& get_states() const {
 	return states;
@@ -267,8 +267,7 @@ public:
 	       const Registry<Tag>& tag_reg) const;
 };
 
-typedef mi::Index<F_FROM, Ref<State>,
-	    mi::Table<F_TO, Ref<State>>> FsmEffect;
+typedef mi::BiRel<F_FROM, F_TO, Ref<State>> FsmEffect;
 typedef mi::Uniq<FsmEffect> TransRel;
 
 class FSM {
@@ -290,6 +289,7 @@ private:
 	    // tag. The two will need to be combined.
 	    mi::Index<TAG, Ref<Tag>,
 		TransRel>>> base_effects;
+    TransRel id_trel_;
 private:
     void print_effects(std::ostream& os, const Symbol& s, bool rev,
 		       const Registry<Symbol>& symbol_reg,
@@ -298,8 +298,7 @@ public:
     explicit FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 		 Registry<Tag>& tag_reg);
     TransRel id_trel() const {
-	// TODO: Could just do this externally
-	return mi::uniq_id<FsmEffect>(comp.get_states());
+	return id_trel_;
     };
     // The tag on the label isn't used; the provided tag is used instead.
     // TODO: Ensure that this is only applied to valid Edge objects.

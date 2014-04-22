@@ -291,7 +291,7 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
     // TODO: Also check that it covers all symbols from the primary one.
     EXPECT(old_sz == symbol_reg.size());
     // Disallow recursion.
-    EXPECT(comp.simple());
+    EXPECT(!comp.recursive());
 
     std::cout << "Calculating base effects" << std::endl;
     mi::FlatIndex<REV, bool,
@@ -303,10 +303,16 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 				 t.from, t.to);
     }
     base_effects.copy(non_uniqd_effects);
+
+    FsmEffect non_uniqd_id;
+    for (const State& s : comp.get_states()) {
+	non_uniqd_id.insert(s.ref, s.ref);
+    }
+    id_trel_.copy(non_uniqd_id);
 }
 
 bool FSM::is_accepting(const TransRel& trel) const {
-    FOR(tup, trel[comp.get_initial()]) {
+    FOR(tup, trel, comp.get_initial()) {
 	if (comp.get_final().count(tup.get<F_TO>()) > 0) {
 	    return true;
 	}

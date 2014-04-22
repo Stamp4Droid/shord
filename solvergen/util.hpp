@@ -58,6 +58,91 @@ void expect(const char* file, unsigned int line, bool cond,
 
 #define EXPECT(...) do {expect(__FILE__, __LINE__, __VA_ARGS__);} while(0)
 
+// CUSTOM ORDERING ============================================================
+
+template<class T>
+typename std::enable_if<std::is_arithmetic<T>::value ||
+			std::is_enum<T>::value, int>::type
+compare(const T& lhs, const T& rhs) {
+    if (lhs == rhs) {
+	return 0;
+    }
+    if (lhs < rhs) {
+	return -1;
+    }
+    return 1;
+}
+
+template<class T>
+int compare(const std::set<T>& lhs, const std::set<T>& rhs) {
+    auto l_curr = lhs.cbegin();
+    auto r_curr = rhs.cbegin();
+    const auto l_end = lhs.cend();
+    const auto r_end = rhs.cend();
+
+    while (true) {
+	if (l_curr == l_end) {
+	    if (r_curr == r_end) {
+		return 0;
+	    }
+	    return -1;
+	}
+	if (r_curr == r_end) {
+	    return 1;
+	}
+	int curr_rel = compare(*l_curr, *r_curr);
+	if (curr_rel != 0) {
+	    return curr_rel;
+	}
+	// *l_curr == *r_curr
+	++l_curr;
+	++r_curr;
+    }
+}
+
+template<class T>
+int map_compare(const T& lhs, const T& rhs) {
+    auto l_curr = lhs.cbegin();
+    auto r_curr = rhs.cbegin();
+    const auto l_end = lhs.cend();
+    const auto r_end = rhs.cend();
+
+    while (true) {
+	if (l_curr == l_end && r_curr == r_end) {
+	    return 0;
+	}
+	// l_curr != l_end || r_curr != r_end
+	if (l_curr == l_end // => r_curr != r_end
+	    || (r_curr != r_end && r_curr->first < l_curr->first)) {
+	    if (!r_curr->second.empty()) {
+		return -1;
+	    }
+	    ++r_curr;
+	    continue;
+	}
+	// l_curr != l_end
+	if (r_curr == r_end || l_curr->first < r_curr->first) {
+	    if (!l_curr->second.empty()) {
+		return 1;
+	    }
+	    ++l_curr;
+	    continue;
+	}
+	// l_curr != l_end && r_curr != r_end && *l_curr == *r_curr
+	int sub_rel = compare(l_curr->second, r_curr->second);
+	if (sub_rel != 0) {
+	    return sub_rel;
+	}
+	++l_curr;
+	++r_curr;
+    }
+}
+
+template<class K, class V>
+int compare(const std::map<K,V>& lhs, const std::map<K,V>& rhs) {
+    return map_compare(lhs, rhs);
+}
+
 // HELPER CODE ================================================================
 
 namespace detail {
@@ -434,6 +519,9 @@ public:
     }
     bool operator!=(const Ref& rhs) const {
 	return !(*this == rhs);
+    }
+    friend int compare(const Ref& lhs, const Ref& rhs) {
+	return compare(lhs.value, rhs.value);
     }
     bool operator<(const Ref& rhs) const {
 	return value < rhs.value;
@@ -1083,6 +1171,7 @@ public:
 // - exploit sharing of bit patterns
 // - disable operator[], only allow constraining the top iterator
 //   then we get a full tuple (but more overhead when iterating?)
+// - "full" observer on index
 
 // Uniquing infrastructure:
 // - works for any kind of Index class
@@ -1116,9 +1205,9 @@ public:
 //   validity flag
 // - also support uniquing single tables
 // - caches are static variables, this complicates concurrent operation
-// - expose the uniquing operation to clients
-//   this way, they can cache results manually
-//   specialized operations like "id" should probably be handled this way
+// - take advantage of uniquing in operations with special cases
+//   e.g. implement empty() as comparison with the empty-index container
+//   since they'll be uniqued
 
 namespace mi {
 
@@ -1258,30 +1347,6 @@ static const T& id(const T& val) {
     return val;
 }
 
-template<class Idx> struct MultiDimApply {
-private:
-    typedef typename Idx::Key Key;
-    typedef typename KeyTraits<Key>::SizeHint SizeHint;
-    static const unsigned int DEPTH = tuple_size<typename Idx::Tuple>::value;
-    static const unsigned int FLAT_DIMS = flat_dims<Idx>::value;
-private:
-    template<unsigned int... Is>
-    static bool insert(Idx& idx, const Key& val, seq<Is...>) {
-	return idx.insert(id<Key,Is>(val)...);
-    }
-    template<unsigned int... Is>
-    static Idx construct(const SizeHint& hint, seq<Is...>) {
-	return Idx(id<SizeHint,Is>(hint)...);
-    }
-public:
-    static bool insert(Idx& idx, const Key& val) {
-	return insert(idx, val, gen_seq<DEPTH>());
-    }
-    static Idx construct(const SizeHint& hint) {
-	return construct(hint, gen_seq<FLAT_DIMS>());
-    }
-};
-
 } // namespace detail
 
 // BASE CONTAINERS & OPERATIONS ===============================================
@@ -1294,25 +1359,7 @@ public:
 
 const boost::none_t any = boost::none;
 
-template<class Idx, class... HintTs>
-Idx join(const Idx& r, const Idx& s, const HintTs&... hints) {
-    Idx res(hints...);
-    FOR(r_tup, r) {
-	res.copy(s[r_tup.tl.hd], r_tup.hd);
-    }
-    return res;
-}
-
-template<class Idx>
-Idx identity(const typename KeyTraits<typename Idx::Key>::SizeHint& hint) {
-    Idx idx = detail::MultiDimApply<Idx>::construct(hint);
-    unsigned int lim = KeyTraits<typename Idx::Key>::extract_size(hint);
-    for (unsigned int i = 0; i < lim; i++) {
-	typename Idx::Key val = KeyTraits<typename Idx::Key>::from_idx(i);
-	detail::MultiDimApply<Idx>::insert(idx, val);
-    }
-    return idx;
-}
+template<class Idx> Idx join(const Idx& l, const Idx& r);
 
 template<class Tag, class T> class Table {
 public:
@@ -1348,22 +1395,11 @@ public:
     unsigned int size() const {
 	return store.size();
     }
+    friend int compare(const Table& lhs, const Table& rhs) {
+	return compare(lhs.store, rhs.store);
+    }
     bool operator<(const Table& rhs) const {
-	Tuple l_tup, r_tup;
-	auto l_it = iter(l_tup);
-	auto r_it = rhs.iter(r_tup);
-	while (true) {
-	    if (!l_it.next()) {
-		return r_it.next();
-	    }
-	    if (!r_it.next() || r_tup < l_tup) {
-		return false;
-	    }
-	    if (l_tup < r_tup) {
-		return true;
-	    }
-	    // At this point we know that l_tup == r_tup.
-	}
+	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -1480,22 +1516,11 @@ public:
 	}
 	return sz;
     }
+    friend int compare(const Index& lhs, const Index& rhs) {
+	return compare(lhs.map, rhs.map);
+    }
     bool operator<(const Index& rhs) const {
-	Tuple l_tup, r_tup;
-	auto l_it = iter(l_tup);
-	auto r_it = rhs.iter(r_tup);
-	while (true) {
-	    if (!l_it.next()) {
-		return r_it.next();
-	    }
-	    if (!r_it.next() || r_tup < l_tup) {
-		return false;
-	    }
-	    if (l_tup < r_tup) {
-		return true;
-	    }
-	    // At this point we know that l_tup == r_tup.
-	}
+	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -1635,18 +1660,19 @@ public:
 	}
 	return sz;
     }
-    bool operator<(const FlatIndex& rhs) const {
+    friend int compare(const FlatIndex& lhs, const FlatIndex& rhs) {
 	unsigned int lim = rhs.array.size();
-	assert(array.size() == lim);
+	assert(lhs.array.size() == lim);
 	for (unsigned int i = 0; i < lim; i++) {
-	    if (array[i] < rhs.array[i]) {
-		return true;
-	    }
-	    if (rhs.array[i] < array[i]) {
-		return false;
+	    int sub_rel = compare(lhs.array[i], rhs.array[i]);
+	    if (sub_rel != 0) {
+		return sub_rel;
 	    }
 	}
-	return false;
+	return 0;
+    }
+    bool operator<(const FlatIndex& rhs) const {
+	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -1745,6 +1771,7 @@ public:
 template<class Tag, class T> class BitSet {
 private:
     typedef unsigned short Store;
+    static const Store top_bit = 1 << (sizeof(Store) * 8 - 1);
 public:
     class Iterator;
     friend Iterator;
@@ -1758,11 +1785,9 @@ public:
     bool insert(const T& val) {
 	unsigned int idx = KeyTraits<T>::extract_idx(val);
 	assert(idx < sizeof(Store) * 8);
-	if (bits & (1 << idx)) {
-	    return false;
-	}
-	bits |= 1 << idx;
-	return true;
+	Store prev_bits = bits;
+	bits |= (top_bit >> idx);
+	return prev_bits != bits;
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
@@ -1782,8 +1807,8 @@ public:
 	return bits == 0;
     }
     bool contains(const T& val) const {
-	unsigned int i = KeyTraits<T>::extract_idx(val);
-	return bits & (1 << i);
+	unsigned int idx = KeyTraits<T>::extract_idx(val);
+	return bits & (top_bit >> idx);
     }
     unsigned int size() const {
 	Store v = bits;
@@ -1792,6 +1817,9 @@ public:
 	    count += v & 1;
 	}
 	return count;
+    }
+    friend int compare(const BitSet& lhs, const BitSet& rhs) {
+	return compare(lhs.bits, rhs.bits);
     }
     bool operator<(const BitSet& rhs) const {
 	return bits < rhs.bits;
@@ -1824,7 +1852,7 @@ public:
 		++curr;
 	    }
 	    while (curr < lim) {
-		if (*bits & (1 << curr)) {
+		if (*bits & (top_bit >> curr)) {
 		    tgt_fld = KeyTraits<T>::from_idx(curr);
 		    return true;
 		}
@@ -1933,22 +1961,11 @@ public:
 	}
 	return sz;
     }
+    friend int compare(const LightIndex& lhs, const LightIndex& rhs) {
+	return map_compare(lhs.list, rhs.list);
+    }
     bool operator<(const LightIndex& rhs) const {
-	Tuple l_tup, r_tup;
-	auto l_it = iter(l_tup);
-	auto r_it = rhs.iter(r_tup);
-	while (true) {
-	    if (!l_it.next()) {
-		return r_it.next();
-	    }
-	    if (!r_it.next() || r_tup < l_tup) {
-		return false;
-	    }
-	    if (l_tup < r_tup) {
-		return true;
-	    }
-	    // At this point we know that l_tup == r_tup.
-	}
+	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -2003,31 +2020,182 @@ public:
 template<class Tag, class K, class S>
 const S LightIndex<Tag,K,S>::dummy;
 
+template<class TagA, class TagB, class T> class BiRel;
+
+template<class TagA, class TagB, class T>
+BiRel<TagA,TagB,T> join(const BiRel<TagA,TagB,T>& l,
+			const BiRel<TagA,TagB,T>& r) {
+    BiRel<TagA,TagB,T> res;
+    auto l_curr = l.b2a.cbegin();
+    auto r_curr = r.a2b.cbegin();
+    const auto l_end = l.b2a.cend();
+    const auto r_end = r.a2b.cend();
+    while(l_curr != l_end && r_curr != r_end) {
+	int key_rel = compare(l_curr->first, r_curr->first);
+	if (key_rel < 0) {
+	    ++l_curr;
+	} else if (key_rel > 0) {
+	    ++r_curr;
+	} else {
+	    for (const T& a : l_curr->second) {
+		for (const T& b : r_curr->second) {
+		    res.insert(a, b);
+		}
+	    }
+	    ++l_curr;
+	    ++r_curr;
+	}
+    }
+    return res;
+}
+
+// TODO: Not offering visibility into the nested container.
+// Missing operations:
+// - merging into nested table
+// - operator[]
+// - key iteration
+// - key contains
+// Could fix this by storing a2b and b2a as Index<Table>.
+// (this is a special case of a multi-index)
+template<class TagA, class TagB, class T> class BiRel {
+    friend BiRel join<>(const BiRel& l, const BiRel& r);
+public:
+    typedef T Key;
+    typedef boost::none_t Sub; // dummy declaration
+    class Iterator;
+    friend Iterator;
+    typedef boost::none_t KeyIter; // dummy declaration
+    typedef NamedTuple<TagA,T,NamedTuple<TagB,T,Nil>> Tuple;
+private:
+    std::map<T,std::set<T>> a2b;
+    std::map<T,std::set<T>> b2a;
+public:
+    bool insert(const T& a, const T& b) {
+	if (a2b[a].insert(b).second) {
+	    bool added = b2a[b].insert(a).second;
+	    assert(added);
+	    return true;
+	}
+	return false;
+    }
+    bool insert(const Tuple& tuple) {
+	return insert(tuple.hd, tuple.tl.hd);
+    }
+    bool copy(const BiRel& src) {
+	bool grew = false;
+	for (const auto& p : src.a2b) {
+	    const T& a = p.first;
+	    for (const T& b : p.second) {
+		if (insert(a, b)) {
+		    grew = true;
+		}
+	    }
+	}
+	return grew;
+    }
+    template<class... Rest>
+    Iterator iter(Tuple& tgt, const Rest&... rest) const {
+	Iterator it(tgt, rest...);
+	it.migrate(*this);
+	return it;
+    }
+    bool empty() const {
+	for (const auto& p : a2b) {
+	    if (!p.second.empty()) {
+		return false;
+	    }
+	}
+	return true;
+    }
+    unsigned int size() const {
+	unsigned int sz = 0;
+	for (const auto& p : a2b) {
+	    sz += p.second.size();
+	}
+	return sz;
+    }
+    friend int compare(const BiRel& lhs, const BiRel& rhs) {
+	return compare(lhs.a2b, rhs.a2b);
+    }
+    bool operator<(const BiRel& rhs) const {
+	return compare(*this, rhs) < 0;
+    }
+public:
+
+    // TODO: Could use the b2a container instead, if b_cnstr && !a_cnstr
+    class Iterator {
+    private:
+	typename std::map<T,std::set<T>>::const_iterator map_curr;
+	typename std::map<T,std::set<T>>::const_iterator map_end;
+	typename std::set<T>::const_iterator set_curr;
+	typename std::set<T>::const_iterator set_end;
+	T& a_tgt;
+	T& b_tgt;
+	const boost::optional<T> a_cnstr;
+	const boost::optional<T> b_cnstr;
+	bool before_start = true;
+    private:
+	bool set_sub_iter() {
+	    if (map_curr == map_end) {
+		return false;
+	    }
+	    a_tgt = map_curr->first;
+	    if (b_cnstr) {
+		std::tie(set_curr, set_end) =
+		    map_curr->second.equal_range(*b_cnstr);
+	    } else {
+		set_curr = map_curr->second.cbegin();
+		set_end  = map_curr->second.cend();
+	    }
+	    return true;
+	}
+    public:
+	explicit Iterator(Tuple& tgt,
+			  const boost::optional<T>& a_cnstr = boost::none,
+			  const boost::optional<T>& b_cnstr = boost::none)
+	    : a_tgt(tgt.hd), b_tgt(tgt.tl.hd),
+	      a_cnstr(a_cnstr), b_cnstr(b_cnstr) {}
+	void migrate(const BiRel& birel) {
+	    if (a_cnstr) {
+		std::tie(map_curr, map_end) = birel.a2b.equal_range(*a_cnstr);
+	    } else {
+		map_curr = birel.a2b.cbegin();
+		map_end  = birel.a2b.cend();
+	    }
+	    before_start = true;
+	}
+	bool next() {
+	    if (before_start) {
+		before_start = false;
+		if (!set_sub_iter()) {
+		    return false;
+		}
+	    }
+	    while (set_curr == set_end) {
+		++map_curr;
+		if (!set_sub_iter()) {
+		    return false;
+		}
+	    }
+	    b_tgt = *set_curr;
+	    ++set_curr;
+	    return true;
+	}
+    };
+};
+
 // UNIQUING INFRASTRUCTURE ====================================================
 
 template<class Idx> class Immut;
 template<class Idx> class Uniq;
 
 template<class Idx>
-Uniq<Idx> join(const Uniq<Idx>& r, const Uniq<Idx>& s) {
+Uniq<Idx> join(const Uniq<Idx>& l, const Uniq<Idx>& r) {
     static std::map<std::pair<Ref<Immut<Idx>>,Ref<Immut<Idx>>>,
 		    Ref<Immut<Idx>>> cache;
-    Ref<Immut<Idx>>& cached = cache[std::make_pair(r.cell_ref, s.cell_ref)];
+    Ref<Immut<Idx>>& cached = cache[std::make_pair(l.cell_ref, r.cell_ref)];
     if (!cached.valid()) {
-	Idx idx = join(r.real_idx(), s.real_idx());
-	cached = Immut<Idx>::unique(idx);
-    }
-    return Uniq<Idx>(cached);
-}
-
-template<class Idx>
-Uniq<Idx>
-uniq_id(const typename KeyTraits<typename Idx::Key>::SizeHint& hint) {
-    static std::map<unsigned int,Ref<Immut<Idx>>> cache;
-    unsigned int lim = KeyTraits<typename Idx::Key>::extract_size(hint);
-    Ref<Immut<Idx>>& cached = cache[lim];
-    if (!cached.valid()) {
-	Idx idx = identity<Idx>(hint);
+	Idx idx = join(l.real_idx(), r.real_idx());
 	cached = Immut<Idx>::unique(idx);
     }
     return Uniq<Idx>(cached);
@@ -2095,10 +2263,6 @@ public:
 
 template<class Idx> class Uniq {
     friend Uniq join<>(const Uniq& r, const Uniq& s);
-    // TODO: This is not as tight as possible, but it allows us to unique
-    // classes that don't support identity building.
-    template<class T> friend Uniq<T>
-    uniq_id(const typename KeyTraits<typename T::Key>::SizeHint& hint);
 public:
     typedef typename Idx::Key Key;
     typedef typename Idx::Sub Sub;
@@ -2161,8 +2325,11 @@ public:
     unsigned int size() const {
 	return real_idx().size();
     }
+    friend int compare(const Uniq& lhs, const Uniq& rhs) {
+	return compare(lhs.real_idx(), rhs.real_idx());
+    }
     bool operator<(const Uniq& rhs) const {
-	return (real_idx() < rhs.real_idx());
+	return real_idx() < rhs.real_idx();
     }
 public:
 

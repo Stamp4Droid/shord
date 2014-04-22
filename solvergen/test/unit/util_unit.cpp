@@ -54,6 +54,59 @@ std::ostream& operator<<(std::ostream& os, const Bar& obj) {
     return os;
 }
 
+namespace mi {
+
+template<> struct KeyTraits<unsigned int> {
+    typedef unsigned int SizeHint;
+    static unsigned int extract_size(unsigned int max) {
+	return max;
+    }
+    static unsigned int extract_idx(unsigned int val) {
+	return val;
+    }
+    static unsigned int from_idx(unsigned int idx) {
+	return idx;
+    }
+};
+
+} // namespace mi
+
+template<class C, class... Hints>
+void test_ordering(const Hints&... hints) {
+    std::vector<C> sets;
+    sets.emplace_back(hints...); C& s_01_11 = sets.back();
+    s_01_11.insert(0, 1);
+    s_01_11.insert(1, 1);
+    sets.emplace_back(hints...); C& s_00 = sets.back();
+    s_00.insert(0, 0);
+    sets.emplace_back(hints...);
+    sets.emplace_back(hints...); C& s_10_11 = sets.back();
+    s_10_11.insert(1, 0);
+    s_10_11.insert(1, 1);
+    sets.emplace_back(hints...); C& s_00_01_10 = sets.back();
+    s_00_01_10.insert(0, 0);
+    s_00_01_10.insert(0, 1);
+    s_00_01_10.insert(1, 0);
+    sets.emplace_back(hints...); C& s_10 = sets.back();
+    s_10.insert(1, 0);
+    std::cout << "Original sets:" << std::endl;
+    for (const auto& s : sets) {
+	std::cout << "  Set:" << std::endl;
+	FOR(tup, s) {
+	    std::cout << "    " << tup << std::endl;
+	}
+    }
+    sort(sets.begin(), sets.end());
+    std::cout << "Sorted sets:" << std::endl;
+    for (const auto& s : sets) {
+	std::cout << "  Set:" << std::endl;
+	FOR(tup, s) {
+	    std::cout << "    " << tup << std::endl;
+	}
+    }
+    std::cout << std::endl;
+}
+
 int main() {
     std::cout << std::boolalpha;
 
@@ -148,8 +201,7 @@ int main() {
     std::cout << std::endl;
 
     mi::Index<first, char,
-	mi::Uniq<mi::Index<second, int,
-	    mi::Table<third, int>>>> tabs;
+	      mi::Uniq<mi::BiRel<second, third, int>>> tabs;
     tabs.insert('a', 1, 2); tabs.insert('a', 1, 3);
     tabs.insert('b', 2, 1); tabs.insert('b', 3, 1);
     tabs.insert('b', 3, 4); tabs.insert('b', 4, 4);
@@ -164,15 +216,11 @@ int main() {
     }
     std::cout << std::endl;
 
-    typedef mi::FlatIndex<first, bool,
-			  mi::LightIndex<second, bool,
-					 mi::Table<third, bool>>> Bool3;
-    Bool3 bool_tab = mi::identity<Bool3>(boost::none);
-    std::cout << "Should see the identity relation:" << std::endl;
-    FOR(tup, bool_tab) {
-	std::cout << "  " << tup << std::endl;
-    }
-    std::cout << std::endl;
+    test_ordering<mi::Index<a,int,mi::Table<b,int>>>();
+    test_ordering<mi::FlatIndex<a,unsigned int,
+				mi::BitSet<b,unsigned int>>>(2, 2);
+    test_ordering<mi::Uniq<mi::LightIndex<a,unsigned int,
+					  mi::Table<b,unsigned int>>>>();
 
     mi::Index<first, int, mi::Table<second, int>> int_tab;
     mi::Uniq<decltype(int_tab)> uniq_tab;
