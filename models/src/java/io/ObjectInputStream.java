@@ -5,7 +5,7 @@ class ObjectInputStream
 
 	@STAMP(flows = {@Flow(from="this",to="@return")})
 	public  int read() throws java.io.IOException { return 0; }
-	@STAMP(flows = {@Flow(from="this",to="buffer")})
+	@STAMP(flows = {@Flow(from="this",to="buffer"), @Flow(from="length",to="this"), @Flow(from="length",to="@return")})
 	public  int read(byte[] buffer, int offset, int length) throws java.io.IOException { return 0; }
 	@STAMP(flows = {@Flow(from="this",to="@return")})
 	public  boolean readBoolean() throws java.io.IOException { return false; }

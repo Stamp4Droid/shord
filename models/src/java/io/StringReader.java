@@ -11,7 +11,7 @@ class StringReader {
         return 0;
     }
 
-    @STAMP(flows = { @Flow(from = "this", to = "buf") })
+    @STAMP(flows = { @Flow(from = "this", to = "buf"), @Flow(from="len",to="this"), @Flow(from="len",to="@return") })
     public int read(char[] buf, int offset, int len) throws java.io.IOException {
         return 0;
     }

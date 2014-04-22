@@ -8,11 +8,11 @@ class OutputStreamWriter
     public OutputStreamWriter(java.io.OutputStream out, java.lang.String enc) throws java.io.UnsupportedEncodingException {
     }
 
-	@STAMP(flows = {@Flow(from="out",to="this")})
+	@STAMP(flows = {@Flow(from="out",to="this"), @Flow(from="cs",to="this")})
     public OutputStreamWriter(java.io.OutputStream out, java.nio.charset.Charset cs) {
     }
 
-	@STAMP(flows = {@Flow(from="out",to="this")})
+	@STAMP(flows = {@Flow(from="out",to="this"), @Flow(from="enc",to="this")})
     public OutputStreamWriter(java.io.OutputStream out, java.nio.charset.CharsetEncoder enc) {
     }
 
