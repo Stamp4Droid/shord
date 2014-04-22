@@ -349,7 +349,7 @@
 		<exec executable="adb">
 		    <arg line="wait-for-device" />
 		</exec>
-		<sleep seconds="60" /> <!-- this should wait for am to respond instead, but while-loops are a pain in ant w/o parallel builds (waitfor)-->
+		<sleep seconds="200" /> <!-- this should wait for am to respond instead, but while-loops are a pain in ant w/o parallel builds (waitfor)-->
             </else>
         </if>
 	<exec executable="adb"
@@ -367,11 +367,11 @@
             </exec>
             <exec executable="sh" outputproperty="stamp.droidrecord.packagenames">
                 <arg value="-c" />
-                <arg value="${stamp.android.buildtools.dir}/dexdump -l xml ${app} | grep package\ name | sed &quot;s/&lt;package name=\&quot;/-p /&quot; |sed &quot;s/\&quot;//&quot; | tr &apos;\n&apos; &apos; &apos;" />
+                <arg value="${stamp.android.buildtools.dir}/dexdump -l xml ${app} | grep package\ name | head -n40 | sed &quot;s/&lt;package name=\&quot;/-p /&quot; |sed &quot;s/\&quot;//&quot; | tr &apos;\n&apos; &apos; &apos;" />
             </exec>
             <exec executable="adb"
                 spawn="false">
-		<arg line="${stamp.dynamic.device.arg} shell monkey ${stamp.droidrecord.packagenames} -v 1000" />
+		<arg line="${stamp.dynamic.device.arg} shell monkey ${stamp.droidrecord.packagenames} -v 5000" />
 	    </exec>
         </then>
         <else>

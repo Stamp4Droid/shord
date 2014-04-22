@@ -202,6 +202,28 @@
 		</script>
 		
 		<script>
+                    /* Trick for on show event from 
+                       http://stackoverflow.com/questions/1225102/jquery-event-to-trigger-action-when-a-div-is-made-visible */
+                      var _oldShow = $.fn.show;
+
+                      $.fn.show = function(speed, oldCallback) {
+                        return $(this).each(function() {
+                          var obj         = $(this),
+                              newCallback = function() {
+                                if ($.isFunction(oldCallback)) {
+                                  oldCallback.apply(obj);
+                                }
+                              };
+
+                          // you can trigger a before show if you want
+                          obj.trigger('beforeShow');
+
+                          // now use the old function to show the element passing the new callback
+                          _oldShow.apply(obj, [speed, newCallback]);
+                          obj.trigger('afterShow');
+                        });
+                      };
+
 		  function contract(b,id) {
 		    document.getElementById(id).style.display = "none";
 		    b.innerHTML = "Expand";
@@ -253,6 +275,7 @@
 			var idToHighlightedLine = new Object();
 			var totalFilesOpened = 0;
 			var flowSwitches = [];
+                        var srcSinkWhitelist = [];
 			for (var ii = 0; ii < numFlows; ++ii) {
 				flowSwitches.push(true);
 			}
@@ -274,17 +297,37 @@
 				return false;
 			}
 
+                        function ssTainted(ssdata) {
+                            var whitelisted = false;
+                            $.each(ssdata, function (index, value) {
+                                $.each(value, function (i, v) {
+                                    if ($.inArray(v,srcSinkWhitelist)>-1) {
+                                        whitelisted = true;
+                                    }
+                                });
+                            });
+
+                            return whitelisted;
+                        }
+                        
+
 			function colorTaint(href) {
 				href = href.replace('#','');
 				var taintedVariables = $('#'+href).find("[name=taintedVariable]");
 			    for(var i=0; i<taintedVariables.length; ++i) {
 			    	var flowString = taintedVariables[i].getAttribute("flows");
+                                var ssspan = $(taintedVariables[i]).find(".srcSinkSpan")[0];
+                                var ssdata = jQuery.parseJSON(atob($(ssspan).attr("data-stamp-srcsink")));
 			    	var taintedFlows = flowString.split(':');
+                                if (ssTainted(ssdata)) {
 			    	if (flowString === 'null' || anyTaintedFlowShowing(taintedFlows)) {
 						taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
 					} else if (taintedVariables[i].hasAttribute('style')) {
 						taintedVariables[i].removeAttribute('style');
 					}
+                                } else if (taintedVariables[i].hasAttribute('style')) {
+                                        taintedVariables[i].removeAttribute('style');
+                                }
 			    }
 			}
 
@@ -617,6 +660,50 @@
               return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
             }
 
+            function addSrcSinkToggles(id) {
+
+                $('#'+id).parent().bind('afterShow', function () {
+	                    var $selected = $(this).find('.tree-folder-name').filter ( function () {
+		                        return true;
+	                    });
+                            if ($selected.find('i.icon-eye-open, i.icon-eye-close').length == 0) {
+                                $selected.append('<i class="icon-eye-close" style="position:relative; float:right;"></i>');
+                            }
+                });
+
+                $('#'+id).on('click','i.icon-eye-open, i.icon-eye-close', function() {
+
+	                	var $selected = $(this).parent().parent().find('.tree-folder-name');
+	                	var name = $selected.text();
+
+	                    if ($(this)[0].className === 'icon-eye-close') {
+	                        $(this).parent().append('<i class="icon-eye-open" style="position:relative; float:right;"></i>');
+                                $(this).remove();
+                                srcSinkWhitelist.push(name);
+	                        $('#'+id+'help').empty();
+	                        $('#'+id+'help').append('Taint from '+name+' now highlighted.');
+	                    } else {
+	                        $(this).parent().append('<i class="icon-eye-close" style="position:relative; float:right;"></i>');
+                                $(this).remove();
+                                if ($.inArray(name, srcSinkWhitelist) >= 0) {
+                                    srcSinkWhitelist.splice($.inArray(name, srcSinkWhitelist), 1);
+                                } else {
+                                    console.log(name+' expected but not present in srcSinkWhitelist');
+                                }
+	                        $('#'+id+'help').empty();
+	                        $('#'+id+'help').append('Not highlighting Taint from '+name);
+	                    }
+
+		                var $activeCodeTabs = $('li.active a');
+		                for (var i = 0; i < $activeCodeTabs.length; ++i) {
+		                	var attr = $activeCodeTabs[i].getAttribute('href');
+		                	colorTaint(attr);
+		                }
+	                 });
+
+				$('#'+id).parent().append('<p class="muted"><em id="'+id+'help">Click a Src/Sink name to show / hide </em></p>');
+            }
+
             function addSrcSinkFlowBehavior(id) {
 
                 function escTags(str) {
@@ -797,6 +884,11 @@
             %>
                     addSrcSinkFlowBehavior('ResultTree<%=j%>');
 			<%
+                } else if (title.equals("Sinks") || title.equals("Sources")) {
+            %>
+                    addSrcSinkToggles('ResultTree<%=j%>');
+			<%
+
                 }
 				//}
 				j++;

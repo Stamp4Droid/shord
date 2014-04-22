@@ -77,7 +77,7 @@ class Bundle
 		return this.unknown_int;
 	}
 
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="defaultValue",to="@return")})
 	public int getInt(java.lang.String key, int defaultValue) 
 	{ 
 		return this.unknown_int;
@@ -89,7 +89,7 @@ class Bundle
 		return this.unknown_float;
 	}
 
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="defaultValue",to="@return")})
 	public float getFloat(java.lang.String key, float defaultValue) 
 	{ 
 		return this.unknown_float;
@@ -101,7 +101,7 @@ class Bundle
 		return this.unknown_char;
 	}
 
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="defaultValue",to="@return")})
 	public char getChar(java.lang.String key, char defaultValue) 
 	{ 
 		return this.unknown_char;
@@ -113,7 +113,7 @@ class Bundle
 		return this.unknown_byte;
 	}
 
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="defaultValue",to="@return")})
 	public java.lang.Byte getByte(java.lang.String key, byte defaultValue) 
 	{ 
 		return this.unknown_byte;
@@ -125,7 +125,7 @@ class Bundle
 		return this.unknown_boolean;
 	}
 
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="defaultValue",to="@return")})
 	public boolean getBoolean(java.lang.String key, boolean defaultValue) 
 	{ 
 		return this.unknown_boolean;
@@ -137,7 +137,7 @@ class Bundle
 		return this.unknown_short;
 	}
 
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="defaultValue",to="@return")})
 	public short getShort(java.lang.String key, short defaultValue) 
 	{ 
 		return this.unknown_short;
@@ -149,7 +149,7 @@ class Bundle
 		return this.unknown_double;
 	}
 	
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="defaultValue",to="@return")})
 	public double getDouble(java.lang.String key, double defaultValue) 
 	{ 
 		return this.unknown_double;
@@ -160,7 +160,7 @@ class Bundle
         return this.unknown_long;
     }
 	
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="defaultValue",to="@return")})
     public long getLong(java.lang.String key, long defaultValue) {
         return this.unknown_long;
     }

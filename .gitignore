@@ -43,3 +43,6 @@ tomcat/work/Catalina/localhost/*
 tomcat/webapps/*
 
 web/web.xml
+
+stamp-url.txt
+web/stamp-url.txt

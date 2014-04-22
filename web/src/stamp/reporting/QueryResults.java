@@ -162,7 +162,7 @@ public class QueryResults
 	private String processValueNode(Element valueElem, String type, String subcatNodeId)
 	{
 	    StringBuilder builder = new StringBuilder();
-	    String name = getLabel(valueElem);
+	    String name = getLabel(valueElem).trim();
         builder.append("{\"name\":\""+name+"\"");
         builder.append(",\"type\":\""+type+"\"");
         builder.append(",\"nodeId\":\""+subcatNodeId+"\"");

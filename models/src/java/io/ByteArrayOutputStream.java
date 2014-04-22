@@ -10,7 +10,7 @@ class ByteArrayOutputStream
 		return new String(); 
 	}
 
-	@STAMP(flows = {@Flow(from="this",to="@return")})
+	@STAMP(flows = {@Flow(from="this",to="@return"), @Flow(from="hibyte",to="@return")})
 	public java.lang.String toString(int hibyte) { 
 		return new String(); 
 	}
@@ -20,7 +20,7 @@ class ByteArrayOutputStream
 		return new String(); 
 	}
 
-	@STAMP(flows = {@Flow(from="buffer",to="this")})
+	@STAMP(flows = {@Flow(from="buffer",to="this"), @Flow(from="len",to="this")})
 	public synchronized void write(byte[] buffer, int offset, int len) {
 	}
 
