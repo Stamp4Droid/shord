@@ -21,7 +21,8 @@ public class Common
 	{
 		String srcFile = value.getAttribute("srcFile");
 		String lineNum = value.getAttribute("lineNum");
-		return linkToSrc(label, srcFile, lineNum);
+		String chordSig = value.getAttribute("chordsig");
+		return linkToSrc(label, srcFile, lineNum, chordSig);
 	}
 	
 	public static String linkToSrc(String label, String srcFile, String lineNum)
@@ -33,6 +34,20 @@ public class Common
 			String newLineNum = String.valueOf(ln > 0 ? ln : 0);
 			StringBuilder builder = new StringBuilder();
 			builder.append(label).append('#').append(srcFile).append('#').append(newLineNum);
+			return builder.toString();
+		}
+	}
+	
+	// Added by Patrick to include chordSigs in returned callee results - used for notes
+	public static String linkToSrc(String label, String srcFile, String lineNum, String chordSig){
+		if(srcFile == null) {
+			return label;
+		} else {
+			int ln = lineNum.length() == 0 ? 0 : Integer.parseInt(lineNum);
+			String newLineNum = String.valueOf(ln > 0 ? ln : 0);
+			StringBuilder builder = new StringBuilder();
+			builder.append(label).append('#').append(srcFile).append('#').
+				append(newLineNum).append('#').append(chordSig);
 			return builder.toString();
 		}
 	}

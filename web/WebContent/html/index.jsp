@@ -108,7 +108,9 @@
   		</style>
   		
 		<link href="/stamp/fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
-		<link href="/stamp/css/prettify.css" type="text/css" rel="stylesheet"/>  
+		<link href="/stamp/css/prettify.css" type="text/css" rel="stylesheet"/> 
+		<link href="/stamp/css/notes.css" type="text/css" rel="stylesheet"/> 
+		<link href="/stamp/css/navbar.css" type="text/css" rel="stylesheet"/>     
 	</head>
 
 	<body>
@@ -116,12 +118,18 @@
 		
 		<div class="container-fluid">
 			<div class="row-fluid">
- 				<div class="span3">
+ 				<div class="span3" id="leftbar">
 					<!--Sidebar content-->
 					<%@include file="leftbar.jsp" %>
 				</div>
 				<div class="span6" id="centerpane">
 					<ul class="nav nav-tabs" id="codetabs">
+						<li style="padding-right:5px; padding-top:5px">
+							<img id="back-button" src="/stamp/res/backdisabled.png" style="height:20px" onclick="back()"></img>
+						</li>
+						<li style="padding-right:5px; padding-top:5px">
+							<img id="forward-button" src="/stamp/res/forwarddisabled.png" style="height:20px" onclick="forward()"></img>
+						</li>
 					<!--span class="label label-info" id="filename">
 					</span>
 					<div class="source-view" id="codeview">
@@ -133,6 +141,24 @@
 				<div class="span3 right-view" id="rightside">
 					<div id="rightbar">
 					</div>
+					<div id="notes_pane" style="padding-bottom:20px; width:100%" class="notes_hide">
+						
+						<div id="notes_header">
+							<span id="notes_title" class="label label-info"> notes </span> 
+							<!--<button type="button" class="close" onclick="toggleView()" id="notes_button" aria-hidden="true">&or;</button>-->
+							</br>
+						</div>
+						
+						<div id="notes_body" style="width:100%">
+							<div id="notes_editor" style="width:100%" class="notes_hide">
+								<textarea id="editor" class="input-block-level" rows="6"></textarea>
+							</div>
+						
+							<div id="notes_viewer" class="notes_hide" style="padding-top: 10px; width:100%">
+							</div>
+						</div>
+						
+					</div>
 				</div>
 			</div>
 		</div>
@@ -141,6 +167,10 @@
 		<script src="/stamp/fuelux/loader.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/prettify.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/viewSource.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/notes.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/nav.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/manifest.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/grep.js" type="text/javascript"></script>
 		
 		<script>
 		$('#codetabs').hide();
@@ -333,6 +363,10 @@
 				
 			    var methodNames = $('#'+href).find("span[name=MethodName]");
 			    for(var i=0; i < methodNames.length; ++i) {
+					
+					// Added by Patrick
+					lineNumber = $(methodNames[i]).parent().attr("name");
+					
 			        $(methodNames[i]).after('<img src="/stamp/res/down.png" height="12" width="12" style="display:inline"></img>');
 			        var reachable = $(methodNames[i]).attr("data-reachable");
 					var reached = $(methodNames[i]).attr("reached");
@@ -340,8 +374,22 @@
 			        	$(methodNames[i]).css('background','#BCF5A9' );
 			        $(methodNames[i]).next().on("click",  function(event){
 			  		  var chordSig = $(this).prev().attr("data-chordsig");
+					  var file = $(this).prev().attr("data-filepath");
+					  
 			  		  $('#rightbar').load('/stamp/html/imList.jsp',
-			  		            {chordSig: chordSig, type: 'method'})
+			  		            {chordSig: chordSig, type: 'method'},
+				    		    function () { 
+									editNotes(chordSig);
+								}
+						);
+								
+						// Added by Patrick
+						// display notes for the method when it is clicked
+						//editNotes(chordSig);
+						
+						// Added by Patrick
+						// records that we were at this location for the back button
+						// recordNav(file, lineNumber);
 			  		});
 			    }
 
@@ -349,7 +397,7 @@
 			    for(var i=0; i < invkSites.length; ++i) {
 			        $(invkSites[i]).append('<img src="/stamp/res/down.png" height="12" width="12" style="display:inline"></img>');
 			        
-			        $(invkSites[i]).on("click",  function(event){
+			        $(invkSites[i]).on("click",  function(event){ // invoke click
 			    		  var chordSig = $(this).attr("data-chordsig");
 			    		  var filePath = $(this).attr("data-filePath");
 			    		  var lineNum = $(this).attr("data-lineNum");
@@ -360,7 +408,16 @@
 			    		  }
 			    		  $('#rightbar').load('/stamp/html/imList.jsp',
 			    		    {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum}, 
-			    		    function () { rightBarAddDynamicData(drDataParams); })
+			    		    function () { 
+								rightBarAddDynamicData(drDataParams);
+								hideElement("#notes_pane")
+								showNotes(); 
+							})
+							
+							// Added by Patrick
+							// display notes for a call site's targets when it is clicked
+							//showNotes(chordSig, filePath, lineNum)
+							
 			    		});
 			    }
 			    
@@ -463,93 +520,6 @@
 					scrollTo.css('backgroundColor','#CEECF5' );
 				}
 			}
-			
-			var showContentTab = function(tabUniqueName, tabDisplayName, 
-			                       onTabLoad, onTabDisplay)
-            {
-                if(!tabUniqueName)
-                    return;
-                $('#codetabs').show();
-                var href = tabNameToId[tabUniqueName];
-                if(typeof href === "undefined"){
-                    //add a new tab
-                    tabCount = $("#codetabs li").size(); 
-                    var id = totalFilesOpened++;
-                    href = 'filetab'+id;
-                    tabNameToId[tabUniqueName] = href;
-
-                    var tabTitle = tabDisplayName;
-                    $('#codetabs').append('<li><a href="#'+href+'" data-toggle="tab">'+tabTitle+'<button class="btn btn-link" id="closetab'+href+'">x</button></a></li>');
-                    $('#codetabs a:last button').on('click', function(event){
-                        var tabToClose = $(this).attr('id').substring(8/*"closetab".length()*/);
-                        var aNew;
-                        var liCurrent;
-                        var href = '#'+tabToClose;
-							
-                        $('#codetabs li a').each(function(){
-                            if($(this).attr('href') == href){
-                                liCurrent = $(this).parent();
-                            } else if(typeof liNew === "undefined"){
-                                aNew = $(this);
-                            }
-                        });
-						
-                        //delete the li from #codetabs
-                        liCurrent.remove(); 
-
-                        //delete the div from #codetabcontents
-                        $('#'+tabToClose).remove(); 				
-                        if(typeof aNew === "undefined")
-                            $('#codetabs').hide();
-                        else{
-                            //alert(aNew.html());
-                            aNew.tab('show');
-                        }
-						
-                        //clean up
-                        delete idToHighlightedLine[tabToClose];
-                        for(var tn in tabNameToId) {
-                            if(tabNameToId[tn] == tabToClose){
-                                delete tabNameToId[tn];
-                                break;
-                            }
-                        }
-                    });
-				    onTabLoad(href);
-                } else {
-                    $('#codetabs li a[href="#'+href+'"]').tab('show');
-                }
-                onTabDisplay(href);
-            };
-			
-			var showSource = function(selectedFile, isModelFlag, ln, useJimple)
-			{
-			    var tabTitle = selectedFile.substring(selectedFile.lastIndexOf('/')+1);
-			    var onTabLoad = function (href) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/stamp/html/viewSource.jsp",
-                        data: {filepath: selectedFile, 
-                            lineNum: ln, 
-                            isModel: isModelFlag,
-			    useJimple: useJimple}
-	                }).done(function (response) {
-                        showCode(response, href);
-                        highlightLine(ln, href);
-                    })
-			    };
-			    
-			    var onTabDisplay = function (href) {
-			        var highlightedLine = idToHighlightedLine[href];
-					if(typeof highlightedLine !== "undefined"){
-                        $('#'+href+' ol li:nth-child('+highlightedLine+')').css('backgroundColor','');
-					}
-					highlightLine(ln, href);
-			    };
-			    
-			    showContentTab(selectedFile, tabTitle, onTabLoad, onTabDisplay);
-			};
-			
 		</script>
 			  
 		<script>

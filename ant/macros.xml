@@ -169,8 +169,6 @@
 	  <exec executable="open"
             spawn="yes"
             os="Mac OS X">
-		<arg line="-a" />
-		<arg value="${stamp.osx_browser}" />
 		<arg line="http://${stamp.server.host}:8080/@{url}"/>
 	  </exec>
 	  <echo>
