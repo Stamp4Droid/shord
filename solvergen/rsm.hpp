@@ -126,6 +126,10 @@ private:
     }
 public:
     void print(std::ostream& os) const;
+    static void print(std::ostream& os, const Pattern<Ref<State>>& pat,
+		      const Registry<State>& state_reg);
+    static boost::optional<Pattern<Ref<State>>>
+    try_parse(const std::string& str, const Registry<State>& state_reg);
 };
 
 class Box {
@@ -150,11 +154,13 @@ public:
 // tagged with '[*]'.
 class Transition {
 public:
-    const Ref<State> from;
-    const Ref<State> to;
+    const Pattern<Ref<State>> from;
+    const Pattern<Ref<State>> to;
     const Label label;
 public:
-    explicit Transition(Ref<State> from, Ref<State> to, const Label& label)
+    explicit Transition(const Pattern<Ref<State>>& from,
+			const Pattern<Ref<State>>& to,
+			const Label& label)
 	: from(from), to(to), label(label) {}
     void print(std::ostream& os, const Registry<State>& state_reg,
 	       const Registry<Symbol>& symbol_reg,
@@ -214,7 +220,7 @@ public:
     const std::string name;
     const Ref<Component> ref;
     Registry<Box> boxes;
-    Index<Table<Transition>,Ref<State>,&Transition::from> transitions;
+    Index<Table<Transition>,Pattern<Ref<State>>,&Transition::from> transitions;
     MultiIndex<Index<Table<Entry>,Ref<Box>,&Entry::to>,
 	       Index<PtrTable<Entry>,Ref<State>,&Entry::from>> entries;
     Index<Table<Exit>,Ref<Box>,&Exit::from> exits;
@@ -232,8 +238,16 @@ private:
     }
 public:
     explicit Component() : name("ANONYMOUS") {}
-    bool simple() const {
-	return boxes.empty();
+    bool recursive() const {
+	return !boxes.empty();
+    }
+    bool ext_patterns() const {
+	for (const Transition& t : transitions) {
+	    if (!t.from.has_value() || !t.to.has_value()) {
+		return true;
+	    }
+	}
+	return false;
     }
     const Registry<State>& get_states() const {
 	return states;
@@ -315,7 +329,7 @@ public:
     bool is_accepting(const TransRel& trel) const;
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 	       const Registry<Tag>& tag_reg) const;
-    const std::string& state_str(const boost::optional<Ref<State>>& s) const;
+    const std::string& state_str(const Pattern<Ref<State>>& s) const;
 };
 
 TransRel compose(const TransRel& trel1, const TransRel& trel2);

@@ -75,6 +75,37 @@ void State::print(std::ostream& os) const {
     os << std::endl;
 }
 
+void State::print(std::ostream& os, const Pattern<Ref<State>>& pat,
+		  const Registry<State>& state_reg) {
+    switch (pat.kind) {
+    case MatchKind::ANY:
+	os << "*";
+	break;
+    case MatchKind::MATCH:
+	os << "?";
+	break;
+    case MatchKind::VALUE:
+	os << state_reg[pat.value].name;
+	break;
+    default:
+	assert(false);
+    }
+}
+
+boost::optional<Pattern<Ref<State>>>
+State::try_parse(const std::string& str, const Registry<State>& state_reg) {
+    if (str == "*") {
+	return boost::make_optional(Pattern<Ref<State>>::any());
+    }
+    if (str == "?") {
+	return boost::make_optional(Pattern<Ref<State>>::match());
+    }
+    if (state_reg.contains(str)) {
+	return boost::make_optional(make_pattern(state_reg.find(str).ref));
+    }
+    return boost::optional<Pattern<Ref<State>>>();
+}
+
 void Box::print(std::ostream& os, const Registry<Component>& comp_reg) const {
     os << name << " " << comp_reg[comp].name << std::endl;
 }
@@ -82,8 +113,10 @@ void Box::print(std::ostream& os, const Registry<Component>& comp_reg) const {
 void Transition::print(std::ostream& os, const Registry<State>& state_reg,
 		       const Registry<Symbol>& symbol_reg,
 		       const Registry<Tag>& tag_reg) const {
-    os << (from.valid() ? state_reg[from].name : "*") << " "
-       << (to.valid() ? state_reg[to].name : "*") << " ";
+    State::print(os, from, state_reg);
+    os << " ";
+    State::print(os, to, state_reg);
+    os << " ";
     label.print(os, symbol_reg, tag_reg);
     os << std::endl;
 }
@@ -152,8 +185,6 @@ RSM::RSM(const std::string& dirname, Registry<Symbol>& symbol_reg,
     for (const fs::path& fpath : files) {
 	parse_file(fpath, symbol_reg, tag_reg);
     }
-    // XXX: Verify that transitions only use simple patterns (the rest aren't
-    // currently handled during solving.
 }
 
 void parse_component(const fs::path& fpath, Component& comp,
@@ -222,41 +253,30 @@ void parse_component(const fs::path& fpath, Component& comp,
 	    // We are certain that box names and transition names are disjoint.
 	    EXPECT(toks.size() >= 3);
 	    std::list<std::string> label_toks(toks.begin() + 2, toks.end());
-	    bool src_is_state =
-		toks[0] == "*" || comp.get_states().contains(toks[0]);
-	    bool dst_is_state =
-		toks[1] == "*" || comp.get_states().contains(toks[1]);
-	    EXPECT(src_is_state || dst_is_state);
+	    boost::optional<Pattern<Ref<State>>>
+		src_state = State::try_parse(toks[0], comp.get_states()),
+		dst_state = State::try_parse(toks[1], comp.get_states());
+	    EXPECT(src_state || dst_state);
 
-	    if (src_is_state && dst_is_state) {
-		Ref<State> src;
-		if (toks[0] != "*") {
-		    src = comp.get_states().find(toks[0]).ref;
-		}
-		Ref<State> dst;
-		if (toks[1] != "*") {
-		    dst = comp.get_states().find(toks[1]).ref;
-		}
+	    if (src_state && dst_state) {
+		Pattern<Ref<State>> src = *src_state;
+		Pattern<Ref<State>> dst = *dst_state;
 		for (const std::string& t : label_toks) {
 		    Label lab = Label::parse(t, symbol_reg, tag_reg);
 		    comp.transitions.insert(Transition(src, dst, lab));
 		}
-	    } else if (src_is_state && !dst_is_state) {
-		Ref<State> src;
-		if (toks[0] != "*") {
-		    src = comp.get_states().find(toks[0]).ref;
-		}
+	    } else if (src_state && !dst_state) {
+		EXPECT(src_state->has_value());
+		Ref<State> src = src_state->value;
 		Ref<Box> dst = comp.boxes.find(toks[1]).ref;
 		for (const std::string& t : label_toks) {
 		    MatchLabel lab = MatchLabel::parse(t, symbol_reg);
 		    comp.entries.insert(Entry(src, dst, lab));
 		}
-	    } else if (!src_is_state && dst_is_state) {
+	    } else if (!src_state && dst_state) {
 		Ref<Box> src = comp.boxes.find(toks[0]).ref;
-		Ref<State> dst;
-		if (toks[1] != "*") {
-		    dst = comp.get_states().find(toks[1]).ref;
-		}
+		EXPECT(dst_state->has_value());
+		Ref<State> dst = dst_state->value;
 		for (const std::string& t : label_toks) {
 		    MatchLabel lab = MatchLabel::parse(t, symbol_reg);
 		    comp.exits.insert(Exit(src, dst, lab));
@@ -284,6 +304,9 @@ void RSM::parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg,
     std::string name(fbase.substr(0, name_len));
     Component& comp = components.make(name);
     parse_component(fpath, comp, symbol_reg, tag_reg, components);
+    // Verify that transitions on RSM components only use simple patterns.
+    // TODO: Should support them during solving.
+    EXPECT(!comp.ext_patterns());
 }
 
 void RSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
@@ -295,7 +318,6 @@ void RSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 }
 
 const std::string FSM::FILE_EXTENSION(".fsm.tgf");
-const std::string FSM::ANY_STATE_STR("*");
 
 FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 	 Registry<Tag>& tag_reg)
@@ -311,7 +333,7 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
     // TODO: Also check that it covers all symbols from the primary one.
     EXPECT(old_sz == symbol_reg.size());
     // Disallow recursion.
-    EXPECT(comp.simple());
+    EXPECT(!comp.recursive());
 
     std::cout << "Calculating base effects" << std::endl;
     mi::FlatIndex<REV, bool,
@@ -320,8 +342,7 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 		FsmEffect>>> non_uniqd_effects(boost::none, symbol_reg);
     for (const Transition& t : comp.transitions) {
 	non_uniqd_effects.insert(t.label.rev, t.label.symbol, t.label.tag,
-				 boost::make_optional(t.from.valid(), t.from),
-				 boost::make_optional(t.to.valid(), t.to));
+				 t.from, t.to);
     }
     base_effects.copy(non_uniqd_effects);
 
@@ -334,9 +355,22 @@ FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
 
 bool FSM::is_accepting(const TransRel& trel) const {
     FOR(tup, trel, comp.get_initial()) {
-	boost::optional<Ref<State>> to = tup.get<F_TO>();
-	if (!to || comp.get_final().count(*to)) {
+	Pattern<Ref<State>> to = tup.get<F_TO>();
+	switch (to.kind) {
+	case MatchKind::ANY:
 	    return true;
+	case MatchKind::MATCH:
+	    if (comp.get_final().count(comp.get_initial())) {
+		return true;
+	    }
+	    break;
+	case MatchKind::VALUE:
+	    if (comp.get_final().count(to.value)) {
+		return true;
+	    }
+	    break;
+	default:
+	    assert(false);
 	}
     }
     return false;
@@ -349,8 +383,11 @@ void FSM::print_effects(std::ostream& os, const Symbol& s, bool rev,
 	Label(s, rev, tag).print(os, symbol_reg, tag_reg);
 	os << ":" << std::endl;
 	FOR(trans, base_effects[rev][s.ref][tag]) {
-	    os << "  " << state_str(trans.get<F_FROM>()) << " "
-	       << state_str(trans.get<F_TO>()) << std::endl;
+	    os << "  ";
+	    State::print(os, trans.get<F_FROM>(), comp.get_states());
+	    os << " ";
+	    State::print(os, trans.get<F_TO>(), comp.get_states());
+	    os << std::endl;
 	}
     }
 }
@@ -363,13 +400,6 @@ void FSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
     for (const Symbol& s : symbol_reg) {
 	print_effects(os, s, false, symbol_reg, tag_reg);
     }
-}
-
-const std::string& FSM::state_str(const boost::optional<Ref<State>>& s) const {
-    if (s) {
-	return comp.get_states()[*s].name;
-    }
-    return ANY_STATE_STR;
 }
 
 TransRel compose(const TransRel& trel1, const TransRel& trel2) {
@@ -467,9 +497,11 @@ void Graph::print_summaries(const std::string& dirname,
 	EXPECT(fout);
 	FOR(s, summaries[comp.ref]) {
 	    fout << nodes[s.get<SRC>()].name << " "
-		 << nodes[s.get<DST>()].name << " "
-		 << fsm.state_str(s.get<F_FROM>()) << " "
-		 << fsm.state_str(s.get<F_TO>()) << std::endl;
+		 << nodes[s.get<DST>()].name << " ";
+	    State::print(fout, s.get<F_FROM>(), fsm.comp.get_states());
+	    fout << " ";
+	    State::print(fout, s.get<F_TO>(), fsm.comp.get_states());
+	    fout << std::endl;
 	}
     }
 }
@@ -647,7 +679,7 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 		if (new_trel.empty()) {
 		    continue;
 		}
-		worklist.enqueue(Position(e.get<DST>(), t.to, new_trel));
+		worklist.enqueue(Position(e.get<DST>(), t.to.value, new_trel));
 	    }
 	}
 

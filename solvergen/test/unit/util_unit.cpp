@@ -205,10 +205,11 @@ int main() {
     tabs.insert('a', 1, 2); tabs.insert('a', 1, 3);
     tabs.insert('b', 2, 1); tabs.insert('b', 3, 1);
     tabs.insert('b', 3, 4); tabs.insert('b', 4, 4);
-    tabs.insert('b', boost::none, 6);
+    tabs.insert('b', MatchKind::ANY, 6);
+    tabs.insert('b', MatchKind::MATCH, MatchKind::MATCH);
     tabs.insert('c', 5, 5);
     tabs.copy(join(tabs['a'], tabs['b']), 'c');
-    std::cout << "Should see (1,1) (1,4) (1,6) (5,5):" << std::endl;
+    std::cout << "Should see 1->{1,2,3,4,6}, 5->5:" << std::endl;
     FOR(c_tup, tabs['c']) {
 	std::cout << "  " << c_tup << std::endl;
     }

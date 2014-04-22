@@ -92,15 +92,15 @@ with open(args.outfile, 'w') as f:
 
     f.write('#\n')
 
+    # Neutral symbols
+    f.write('? ? %s\n' % neutral_lits)
+    # Entry/exit labels
+    f.write('START * %s\n' % enter_lits)
+    f.write('* END %s\n' % exit_lits)
     # Global transitions
     f.write('* GLOBAL %s\n' % lits_to_glob)
     f.write('GLOBAL * %s\n' % lits_from_glob)
     for c1 in var_ctxts:
-        # Neutral symbols
-        f.write('%s %s %s\n' % (c1, c1, neutral_lits))
-        # Entry/exit labels
-        f.write('START %s %s\n' % (c1, enter_lits))
-        f.write('%s END %s\n' % (c1, exit_lits))
         # Calls & returns
         tgt2invks = call_trans.get(c1, {})
         for c2 in tgt2invks:

@@ -142,6 +142,74 @@ int compare(const std::map<K,V>& lhs, const std::map<K,V>& rhs) {
     return map_compare(lhs, rhs);
 }
 
+// GENERIC PATTERN TYPE =======================================================
+
+enum class MatchKind {ANY, MATCH, VALUE};
+
+template<class T> class Pattern {
+public:
+    MatchKind kind;
+    T value;
+public:
+    Pattern(MatchKind kind = MatchKind::ANY) : kind(kind) {
+	EXPECT(kind != MatchKind::VALUE);
+    }
+    Pattern(const T& value) : kind(MatchKind::VALUE), value(value) {}
+    static Pattern any() {
+	return Pattern(MatchKind::ANY);
+    }
+    static Pattern match() {
+	return Pattern(MatchKind::MATCH);
+    }
+    Pattern(const Pattern& rhs) : kind(rhs.kind), value(rhs.value) {}
+    Pattern& operator=(const Pattern& rhs) {
+	kind = rhs.kind;
+	value = rhs.value;
+	return *this;
+    }
+    bool has_value() const {
+	return kind == MatchKind::VALUE;
+    }
+    friend int compare(const Pattern& lhs, const Pattern& rhs) {
+	int kind_rel = compare(lhs.kind, rhs.kind);
+	if (kind_rel != 0) {
+	    return kind_rel;
+	}
+	if (lhs.kind == MatchKind::VALUE) {
+	    return compare(lhs.value, rhs.value);
+	}
+	return 0;
+    }
+    bool operator<(const Pattern& rhs) const {
+	return compare(*this, rhs) < 0;
+    }
+    friend std::ostream& operator<<(std::ostream& os, const Pattern& pat) {
+	switch (pat.kind) {
+	case MatchKind::ANY:
+	    os << "*";
+	    break;
+	case MatchKind::MATCH:
+	    os << "?";
+	    break;
+	case MatchKind::VALUE:
+	    os << pat.value;
+	    break;
+	default:
+	    assert(false);
+	}
+	return os;
+    }
+};
+
+template<class T>
+Pattern<T> make_pattern(const T& value, bool cond = true) {
+    if (cond) {
+	return Pattern<T>(value);
+    } else {
+	return Pattern<T>::any();
+    }
+}
+
 // HELPER CODE ================================================================
 
 namespace detail {
@@ -1345,16 +1413,6 @@ static const T& id(const T& val) {
 
 } // namespace detail
 
-template<class T>
-std::ostream& operator<<(std::ostream& os, const boost::optional<T>& val) {
-    if (val) {
-	os << *val;
-    } else {
-	os << "*";
-    }
-    return os;
-}
-
 // BASE CONTAINERS & OPERATIONS ===============================================
 
 #define FOR(RES, EXPR, ...) \
@@ -2036,7 +2094,7 @@ BiRel<TagA,TagB,T> join(const BiRel<TagA,TagB,T>& l,
     BiRel<TagA,TagB,T> res;
 
     if (l.full) {
-	if (r.full || !r.a_to_all.empty()) {
+	if (r.full || r.contains_id || !r.a_to_all.empty()) {
 	    res.make_full();
 	    return res;
 	}
@@ -2050,7 +2108,7 @@ BiRel<TagA,TagB,T> join(const BiRel<TagA,TagB,T>& l,
     }
 
     if (r.full) {
-	if (l.full || !l.all_to_b.empty()) {
+	if (l.full || l.contains_id || !l.all_to_b.empty()) {
 	    res.make_full();
 	    return res;
 	}
@@ -2061,6 +2119,14 @@ BiRel<TagA,TagB,T> join(const BiRel<TagA,TagB,T>& l,
 	    res.add_a_to_all(p.first);
 	}
 	return res;
+    }
+
+    if (l.contains_id) {
+	res.copy(r);
+    }
+
+    if (r.contains_id) {
+	res.copy(l);
     }
 
     std::list<T> all_to_all_mids;
@@ -2136,15 +2202,15 @@ BiRel<TagA,TagB,T> join(const BiRel<TagA,TagB,T>& l,
 template<class TagA, class TagB, class T> class BiRel {
     friend BiRel join<>(const BiRel& l, const BiRel& r);
 public:
-    typedef boost::optional<T> Key;
+    typedef Pattern<T> Key;
     typedef boost::none_t Sub; // dummy declaration
     class Iterator;
     friend Iterator;
     typedef boost::none_t KeyIter; // dummy declaration
-    typedef NamedTuple<TagA, boost::optional<T>,
-		       NamedTuple<TagB,boost::optional<T>,Nil>> Tuple;
+    typedef NamedTuple<TagA,Pattern<T>,NamedTuple<TagB,Pattern<T>,Nil>> Tuple;
 private:
     bool full = false; // if true, all other sets are empty
+    bool contains_id = false; // if true, any (i,i) not in a2b or b2a
     std::set<T> a_to_all; // if a in a_to_all, (a,_) not in a2b or b2a
     std::set<T> all_to_b; // if b in all_to_b, (_,b) not in a2b or b2a
     std::map<T,std::set<T>> a2b; // mapped sets are never empty
@@ -2155,10 +2221,34 @@ private:
 	    return false;
 	}
 	full = true;
+	contains_id = false;
 	a_to_all.clear();
 	all_to_b.clear();
 	a2b.clear();
 	b2a.clear();
+	return true;
+    }
+    bool add_id() {
+	if (full || contains_id) {
+	    return false;
+	}
+	contains_id = true;
+	for (auto it = b2a.begin(); it != b2a.end();) {
+	    it->second.erase(it->first);
+	    if (it->second.empty()) {
+		it = b2a.erase(it);
+	    } else {
+		++it;
+	    }
+	}
+	for (auto it = a2b.begin(); it != a2b.end();) {
+	    it->second.erase(it->first);
+	    if (it->second.empty()) {
+		it = a2b.erase(it);
+	    } else {
+		++it;
+	    }
+	}
 	return true;
     }
     bool add_a_to_all(const T& a) {
@@ -2198,7 +2288,8 @@ private:
 	return false;
     }
     bool add_single(const T& a, const T& b) {
-	if (full || a_to_all.count(a) || all_to_b.count(b)) {
+	if (full || a_to_all.count(a) || all_to_b.count(b) ||
+	    (contains_id && a == b)) {
 	    return false;
 	}
 	if (a2b[a].insert(b).second) {
@@ -2209,17 +2300,28 @@ private:
 	return false;
     }
 public:
-    bool insert(const boost::optional<T>& a, const boost::optional<T>& b) {
-	if (a) {
-	    if (b) {
-		return add_single(*a, *b);
+    bool insert(const Pattern<T>& a, const Pattern<T>& b) {
+	switch (a.kind) {
+	case MatchKind::ANY:
+	    switch (b.kind) {
+	    case MatchKind::ANY:   return make_full();
+	    case MatchKind::VALUE: return add_all_to_b(b.value);
+	    default:               EXPECT(false);
 	    }
-	    return add_a_to_all(*a);
+	case MatchKind::MATCH:
+	    switch (b.kind) {
+	    case MatchKind::MATCH: return add_id();
+	    default:               EXPECT(false);
+	    }
+	case MatchKind::VALUE:
+	    switch (b.kind) {
+	    case MatchKind::ANY:   return add_a_to_all(a.value);
+	    case MatchKind::VALUE: return add_single(a.value, b.value);
+	    default:               EXPECT(false);
+	    }
+	default:
+	    assert(false);
 	}
-	if (b) {
-	    return add_all_to_b(*b);
-	}
-	return make_full();
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl.hd);
@@ -2232,6 +2334,9 @@ public:
 	    return make_full();
 	}
 	bool grew = false;
+	if (src.contains_id && add_id()) {
+	    grew = true;
+	}
 	for (const T& a : src.a_to_all) {
 	    if (add_a_to_all(a)) {
 		grew = true;
@@ -2259,11 +2364,15 @@ public:
 	return it;
     }
     bool empty() const {
-	return !full && a_to_all.empty() && all_to_b.empty() && a2b.empty();
+	return (!full && !contains_id && a_to_all.empty() &&
+		all_to_b.empty() && a2b.empty());
     }
     unsigned int size() const {
 	unsigned int sz = 0;
 	if (full) {
+	    ++sz;
+	}
+	if (contains_id) {
 	    ++sz;
 	}
 	sz += a_to_all.size();
@@ -2281,6 +2390,13 @@ public:
 	    return -1;
 	}
 	if (lhs.full) {
+	    return 1;
+	}
+	if (rhs.contains_id) {
+	    if (!lhs.contains_id) {
+		return -1;
+	    }
+	} else if (lhs.contains_id) {
 	    return 1;
 	}
 	int sub_rel = compare(lhs.a_to_all, rhs.a_to_all);
@@ -2301,14 +2417,14 @@ public:
     class Iterator {
     private:
 	enum class Phase {
-	    BEFORE_START, AFTER_FULL_CHECK, A_TO_ALL, ALL_TO_B, A2B};
+	    BEFORE_FULL, BEFORE_ID, AFTER_ID, A_TO_ALL, ALL_TO_B, A2B};
     private:
 	typename std::map<T,std::set<T>>::const_iterator map_curr;
 	typename std::map<T,std::set<T>>::const_iterator map_end;
 	typename std::set<T>::const_iterator set_curr;
 	typename std::set<T>::const_iterator set_end;
-	boost::optional<T>& a_tgt;
-	boost::optional<T>& b_tgt;
+	Pattern<T>& a_tgt;
+	Pattern<T>& b_tgt;
 	const boost::optional<T> a_cnstr;
 	const boost::optional<T> b_cnstr;
 	const BiRel* parent;
@@ -2336,20 +2452,29 @@ public:
 	      a_cnstr(a_cnstr), b_cnstr(b_cnstr) {}
 	void migrate(const BiRel& birel) {
 	    parent = &birel;
-	    phase = Phase::BEFORE_START;
+	    phase = Phase::BEFORE_FULL;
 	}
 	bool next() {
 	    while (true) {
 		switch (phase) {
-		case Phase::BEFORE_START:
-		    phase = Phase::AFTER_FULL_CHECK;
+		case Phase::BEFORE_FULL:
+		    phase = Phase::BEFORE_ID;
 		    if (parent->full) {
-			a_tgt = boost::none;
-			b_tgt = boost::none;
+			a_tgt = Pattern<T>::any();
+			b_tgt = Pattern<T>::any();
 			return true;
 		    }
 		    break;
-		case Phase::AFTER_FULL_CHECK:
+		case Phase::BEFORE_ID:
+		    phase = Phase::AFTER_ID;
+		    if (parent->contains_id &&
+			(!a_cnstr || !b_cnstr || *a_cnstr == *b_cnstr)) {
+			a_tgt = Pattern<T>::match();
+			b_tgt = Pattern<T>::match();
+			return true;
+		    }
+		    break;
+		case Phase::AFTER_ID:
 		    if (a_cnstr) {
 			std::tie(set_curr, set_end) =
 			    parent->a_to_all.equal_range(*a_cnstr);
@@ -2357,7 +2482,7 @@ public:
 			set_curr = parent->a_to_all.cbegin();
 			set_end  = parent->a_to_all.cend();
 		    }
-		    b_tgt = boost::none;
+		    b_tgt = Pattern<T>::any();
 		    phase = Phase::A_TO_ALL;
 		    break;
 		case Phase::A_TO_ALL:
@@ -2369,7 +2494,7 @@ public:
 			    set_curr = parent->all_to_b.cbegin();
 			    set_end  = parent->all_to_b.cend();
 			}
-			a_tgt = boost::none;
+			a_tgt = Pattern<T>::any();
 			phase = Phase::ALL_TO_B;
 			break;
 		    }
