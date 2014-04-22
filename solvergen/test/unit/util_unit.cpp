@@ -214,16 +214,6 @@ int main() {
     }
     std::cout << std::endl;
 
-    typedef mi::FlatIndex<first, bool,
-    			  mi::LightIndex<second, bool,
-    					 mi::Table<third, bool>>> Bool3;
-    Bool3 bool_tab = mi::identity<Bool3>(boost::none);
-    std::cout << "Should see the identity relation:" << std::endl;
-    FOR(tup, bool_tab) {
-    	std::cout << "  " << tup << std::endl;
-    }
-    std::cout << std::endl;
-
     test_ordering<mi::Index<a,int,mi::Table<b,int>>>();
     test_ordering<mi::FlatIndex<a,unsigned int,
 				mi::BitSet<b,unsigned int>>>(2, 2);

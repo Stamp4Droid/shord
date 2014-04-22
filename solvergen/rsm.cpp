@@ -152,6 +152,8 @@ RSM::RSM(const std::string& dirname, Registry<Symbol>& symbol_reg,
     for (const fs::path& fpath : files) {
 	parse_file(fpath, symbol_reg, tag_reg);
     }
+    // XXX: Verify that transitions only use simple patterns (the rest aren't
+    // currently handled during solving.
 }
 
 void parse_component(const fs::path& fpath, Component& comp,
@@ -182,6 +184,8 @@ void parse_component(const fs::path& fpath, Component& comp,
 		mode = ParsingMode::EDGES;
 		break;
 	    }
+	    // TODO: Also check the state name doesn't clash with special
+	    // pattern characters.
 	    bool can_be_state = true, initial = false, final = false;
 	    bool can_be_box = true;
 	    Ref<Component> box_rsm;
@@ -550,8 +554,6 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 
     std::cout << "Starting with " << workers.size() << " workers" << std::endl;
 
-    unsigned int good_runs = 0;
-
     while (!worklist.empty()) {
 	const Worker& w = workers[worklist.dequeue()];
 	Worker::Result res = w.handle(graph, fsm);
@@ -563,9 +565,6 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 	    deps.insert(Dependence(dep_start, w.ref));
 	}
 	if (graph.summaries.copy(res.summs, w.comp.ref, w.start)) {
-	    ++good_runs;
-	    std::cout << good_runs << " useful runs, "
-		      << graph.summaries.size() << " summaries" << std::endl;
 	    unsigned int reschedules = 0;
 	    for (const Dependence& d : deps[w.start]) {
 		if (worklist.enqueue(d.worker)) {
@@ -573,11 +572,6 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 		}
 	    }
 	    reschedule_freqs.record(reschedules);
-	    graph.print_summaries(".", rsm.components, fsm);
-	    std::cout << "Early printing done" << std::endl;
-	    exit(0);
-	} else {
-	    std::cout << "    useless run" << std::endl;
 	}
     }
 
@@ -598,7 +592,7 @@ void Analysis::propagate(Graph& graph, const Component& comp) const {
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
 	if (!res.summs.empty()) {
-	    std::cout << "??? summaries found in "
+	    std::cout << res.summs.size() << " summaries found in "
 		      << current_time() - t_start << " ms" << std::endl;
 	}
 	// Reachability information is stored like regular summaries.

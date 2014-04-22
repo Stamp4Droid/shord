@@ -506,7 +506,7 @@ private:
 	    : dst(dst), r_to(r_to) {}
     };
 
-public:
+private:
     mi::Index<DST, Ref<Node>,
 	mi::Index<R_TO, Ref<State>,
 	    TransRel>> reached;
@@ -527,9 +527,6 @@ public:
 	Position res(pre.dst, pre.r_to, reached[pre.dst][pre.r_to]);
 	queue.pop_front();
 	return res;
-    }
-    const TransRel& effect_at(const Position& pos) {
-	return reached[pos.dst][pos.r_to];
     }
 };
 

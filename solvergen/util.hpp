@@ -43,10 +43,26 @@ struct gen_seq : gen_seq<N-1,N-1,Is...> {};
 template<unsigned int... Is>
 struct gen_seq<0,Is...> : seq<Is...> {};
 
+// ERROR HANDLING =============================================================
+
+void expect(const char* file, unsigned int line, bool cond,
+	    std::string err_msg = "(no details)") {
+    if (cond) {
+	return;
+    }
+    std::cout.flush();
+    std::cerr << file << ", line " << line << ":" << std::endl;
+    std::cerr << "Fatal Error: " << err_msg << std::endl;
+    std::exit(EXIT_FAILURE);
+}
+
+#define EXPECT(...) do {expect(__FILE__, __LINE__, __VA_ARGS__);} while(0)
+
 // CUSTOM ORDERING ============================================================
 
 template<class T>
-typename std::enable_if<std::is_arithmetic<T>::value,int>::type
+typename std::enable_if<std::is_arithmetic<T>::value ||
+			std::is_enum<T>::value, int>::type
 compare(const T& lhs, const T& rhs) {
     if (lhs == rhs) {
 	return 0;
@@ -125,21 +141,6 @@ template<class K, class V>
 int compare(const std::map<K,V>& lhs, const std::map<K,V>& rhs) {
     return map_compare(lhs, rhs);
 }
-
-// ERROR HANDLING =============================================================
-
-void expect(const char* file, unsigned int line, bool cond,
-	    std::string err_msg = "(no details)") {
-    if (cond) {
-	return;
-    }
-    std::cout.flush();
-    std::cerr << file << ", line " << line << ":" << std::endl;
-    std::cerr << "Fatal Error: " << err_msg << std::endl;
-    std::exit(EXIT_FAILURE);
-}
-
-#define EXPECT(...) do {expect(__FILE__, __LINE__, __VA_ARGS__);} while(0)
 
 // HELPER CODE ================================================================
 
@@ -996,8 +997,6 @@ public:
 // - Union operation
 // - Join (static operation)
 //   only works for relations of the form Index<T,Table<T>>
-// - Identity (static operation)
-//   only works for relations where all columns are of the same type
 // - Instantiated nested sets are NOT guaranteed to be non-empty.
 
 // Primary extensions:
