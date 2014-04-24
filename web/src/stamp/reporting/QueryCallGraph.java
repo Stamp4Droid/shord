@@ -89,8 +89,38 @@ public class QueryCallGraph
 		}catch(Exception e){
 			throw new Error(e);
 		}
-		return Common.linkToSrc(callsite, filePath, lineNum);
+		return Common.linkToSrc(callsite, filePath, lineNum, chordSig);
 	}
+	
+	// Added by Patrick
+	// Returns a list of callees by their chord signatures. This is used to
+	// compare with the HTML labels used when taking notes. 
+	public List<String> getCalleesChordSigs(String callerSig, String filePath, String lineNum){
+		NodeList methodElems;
+		try{
+			String query = "//category[@type=\"method\" and tuple/value[@chordsig=\""+callerSig+"\" and @lineNum=\""+lineNum+"\" and @srcFile=\""+filePath+"\"]]";
+			methodElems = (NodeList) xpath.evaluate(query, document, XPathConstants.NODESET);
+		}catch(Exception e){
+			throw new Error(e);
+		}
+		
+		int numCallees = methodElems.getLength();
+		ArrayList<String> callees = new ArrayList<String>();
+		
+		for(int i = 0; i < numCallees; i++){
+			Element methElem = (Element) methodElems.item(i);
+			callees.add(chordSig(methElem));
+		}
+		return callees;
+	}
+	
+	// Added by Patrick
+	// Used in getCalleesChordSigs for parsing XML elements
+	private String chordSig(Element methodElem){
+		Element value = Common.getFirstChildByTagName(methodElem, "value");
+		return value.getAttribute("chordsig");
+	}
+	
 
 	public static void main(String[] args)
 	{

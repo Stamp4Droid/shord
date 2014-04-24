@@ -20,7 +20,7 @@ public class DroidrecordProxyWeb {
     private BinLogReader logReader = null;
     private List<String> binLogFiles;
     
-    private CoverageReport catchedCoverage = null;
+    private CoverageReport cachedCoverage = null;
     private CallValueAnalysis catchedCVAnalysis = null;
     
     private void getBinLogFiles(String binLogFile) {
@@ -34,7 +34,7 @@ public class DroidrecordProxyWeb {
             String canonicalBinLogFile = 
                 folder.getCanonicalPath() + binLogFile.substring(dirEnd);
             Pattern traceFilePattern = 
-                Pattern.compile("^" + canonicalBinLogFile + "\\.run\\d*\\.thread\\d*$");
+                Pattern.compile("^" + canonicalBinLogFile + "\\.run\\d*\\.thread\\d+\\.\\d+$");
             System.out.println("Droidrecord bin log pattern: " + traceFilePattern.toString());
             File[] files = folder.listFiles();
             for(File file : files) {
@@ -71,11 +71,11 @@ public class DroidrecordProxyWeb {
     public CoverageReport getCoverage() {
         if(!isAvailable()) {
             throw new Error("Droidrecord log not available!");
-        } else if(catchedCoverage == null){
+        } else if(cachedCoverage == null){
             logReader.parseLogs(binLogFiles).readAll();
-            catchedCoverage = logReader.getCumulativeCoverageReport();;
+            cachedCoverage = logReader.getCumulativeCoverageReport();;
         }
-        return catchedCoverage;
+        return cachedCoverage;
     }
     
     public CallValueAnalysis getCallValueAnalysis() {

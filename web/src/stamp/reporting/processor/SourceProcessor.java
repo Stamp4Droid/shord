@@ -125,16 +125,20 @@ public class SourceProcessor
 		private String chordSig;
 		private boolean reachable;
 		private boolean reached;
+		private String filePath; // Added by Patrick so method definitions know what file they live in
 
-		public MethodNameStart(int position, String chordSig, boolean isReachable, boolean reached) {
+		public MethodNameStart(int position, String chordSig, boolean isReachable, boolean reached, String filePath) {
 			super(position, 6);
 			this.reachable = isReachable;
 			this.chordSig = chordSig;
 			this.reached  = reached;
+			this.filePath = filePath;
 		}
 		
 		@Override public String toString() {
-			return "<span data-chordsig='"+StringEscapeUtils.escapeHtml4(chordSig)+"' data-reachable='"+reachable+"' reached='"+reached+"' reached='"+reached+"' name='MethodName'>";
+			return "<span data-chordsig='" + StringEscapeUtils.escapeHtml4(chordSig) + 
+				"' data-reachable='" + reachable + "' reached='" + reached + 
+				"' reached='" + reached + "' data-filepath='" + filePath + "' name='MethodName'>";
 		}
     }
 
@@ -574,7 +578,7 @@ public class SourceProcessor
 				boolean reachable = reachableSigs.contains(chordSig);
 				boolean reached = reachedSigs.contains(chordSig);
                 
-				insertions.add(new MethodNameStart(start, chordSig, reachable, reached));
+				insertions.add(new MethodNameStart(start, chordSig, reachable, reached, filePath));
 				insertions.add(new SpanEnd(end));	
 			}
 			
