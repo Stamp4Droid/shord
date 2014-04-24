@@ -198,6 +198,39 @@ public class ConversionUtils {
 		relations.add("transfer", new StubIndexRelation("ActiveTransferRet", "V", 1, 0, "V", 2, 0, 3, 4));
 		relations.add("transferSelf", new IndexRelation("ActiveTransferSelf", "V", 1, 0, "V", 2, 0));
 	}
+
+	public static String getMethodName(String node) {
+		String[] tokens = tokenizeNodeName(node);
+		VarNode register;
+		if(tokens[0].equals("V")) {
+			DomV dom = (DomV)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
+			register = dom.get(Integer.parseInt(tokens[1]));
+		} else if(tokens[0].equals("U")) {
+			DomU dom = (DomU)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
+			register = dom.get(Integer.parseInt(tokens[1]));
+		} else {
+			throw new RuntimeException("Unrecognized symbol: " + tokens[0]);
+		}
+
+		SootMethod method = null;
+		//Local local = null;
+		if(register instanceof LocalVarNode) {
+			LocalVarNode localRegister = (LocalVarNode)register;
+			//local = localRegister.local;
+			method = localRegister.meth;
+		} else if(register instanceof ThisVarNode) {
+			ThisVarNode thisRegister = (ThisVarNode)register;
+			method = thisRegister.method;
+		} else if(register instanceof ParamVarNode) {
+			ParamVarNode paramRegister = (ParamVarNode)register;
+			method = paramRegister.method;
+		} else if(register instanceof RetVarNode) {
+			RetVarNode retRegister = (RetVarNode)register;
+			method = retRegister.method;
+		}
+		
+		return method.toString();		
+	}
 	
 	/*
 	 * Returns the Shord relations associated with a given

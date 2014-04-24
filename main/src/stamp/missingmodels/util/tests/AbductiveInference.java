@@ -120,6 +120,7 @@ public class AbductiveInference {
 		LinearProgramResult solution = this.lp.solve();
 		Set<Edge> result = new HashSet<Edge>();
 		for(Edge edge : (Set<Edge>)solution.variableValues.keySet()) {
+			System.out.println("val: " + (double)solution.variableValues.get(edge));
 			if((double)solution.variableValues.get(edge) < 0.5) {
 				result.add(edge);
 			}

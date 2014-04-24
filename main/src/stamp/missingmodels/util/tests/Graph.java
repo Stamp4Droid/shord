@@ -26,6 +26,10 @@ public final class Graph {
 				this.outgoingEdgesByLabel[i] = new HashMap();
 			}
 		}
+		
+		public String getName() {
+			return vertexNames.get(this);
+		}
 
 		@Override
 		public String toString() {

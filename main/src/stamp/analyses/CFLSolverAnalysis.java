@@ -226,8 +226,23 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				removedEdges.add(edge);
 			}
 			Set<Edge> result = ai.performInference(g, cutEdges, removedEdges);
+			System.out.println("Edges cut:");
 			for(Edge edge : sortedEdges.get("assignCCtxt")) {
-				System.out.println(edge + (result.contains(edge) ? ": 0" : ": 1"));
+				//System.out.println(edge + (result.contains(edge) ? ": 0" : ": 1"));
+				String sourceMethod = ConversionUtils.getMethodName(edge.source.toString());
+				String sinkMethod = ConversionUtils.getMethodName(edge.sink.toString());
+				if(result.contains(edge)) {
+					System.out.println(sourceMethod + " -> " + sinkMethod + " removed");
+				}
+			}
+			System.out.println("Edges retained:");
+			for(Edge edge : sortedEdges.get("assignCCtxt")) {
+				//System.out.println(edge + (result.contains(edge) ? ": 0" : ": 1"));
+				String sourceMethod = ConversionUtils.getMethodName(edge.source.toString());
+				String sinkMethod = ConversionUtils.getMethodName(edge.sink.toString());
+				if(!result.contains(edge)) {
+					System.out.println(sourceMethod + " -> " + sinkMethod + " retained");
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

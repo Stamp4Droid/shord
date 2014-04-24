@@ -18,14 +18,45 @@ public class LinearProgram<T> {
 			this.variable = variable;
 			this.coefficient = coefficient;
 		}
+		
+		@Override
+		public String toString() {
+			return this.coefficient + "*(" + this.variable.toString() + ")";
+		}
 	}
 
 	public static enum ObjectiveType {
-		MAXIMIZE, MINIMIZE
+		MAXIMIZE, MINIMIZE;
+		
+		@Override
+		public String toString() {
+			switch(this) {
+			case MAXIMIZE:
+				return "MAX";
+			case MINIMIZE:
+				return "MIN";
+			default:
+				throw new RuntimeException("Unrecognized objective type!");
+			}
+		}
 	}
 
 	public static enum ConstraintType {
-		GEQ, LEQ, EQ
+		GEQ, LEQ, EQ;
+		
+		@Override
+		public String toString() {
+			switch(this) {
+			case GEQ:
+				return ">=";
+			case LEQ:
+				return "<=";
+			case EQ:
+				return "=";
+			default:
+				throw new RuntimeException("Invalid constraint type");
+			}
+		}
 	}
 
 	private static class Objective<T> {
@@ -35,8 +66,19 @@ public class LinearProgram<T> {
 		private Objective(ObjectiveType objectiveType) {
 			this.objectiveType = objectiveType;
 		}
+		
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append(this.objectiveType.toString()).append(" ");			
+			for(Coefficient<T> t : this.coefficients.values()) {
+				sb.append(t.toString()).append(" + ");
+			}
+			sb.delete(sb.length()-3, sb.length());
+			return sb.toString();
+		}
 
-		private String toString(Map<Integer,T> variableNames, int numVariables) {
+		private String toMappedString(Map<Integer,T> variableNames, int numVariables) {
 			StringBuilder sb = new StringBuilder();
 			for(int i=0; i<numVariables; i++) {
 				Coefficient<T> coefficient = this.coefficients.get(variableNames.get(i));
@@ -71,8 +113,19 @@ public class LinearProgram<T> {
 			}
 			throw new RuntimeException("Constraint type not recognized!");
 		}
+		
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			for(Coefficient<T> t : this.coefficients.values()) {
+				sb.append(t.toString()).append(" + ");
+			}
+			sb.delete(sb.length()-2, sb.length());
+			sb.append(this.constraintType.toString()).append(" ").append(constant);
+			return sb.toString();
+		}
 
-		private String toString(Map<Integer,T> variableNames, int numVariables) {
+		private String toMappedString(Map<Integer,T> variableNames, int numVariables) {
 			StringBuilder sb = new StringBuilder();
 			for(int i=0; i<numVariables; i++) {
 				Coefficient<T> coefficient = this.coefficients.get(variableNames.get(i));
@@ -131,8 +184,8 @@ public class LinearProgram<T> {
 	}
 	
 	public LinearProgramResult<T> solve() throws LpSolveException {
-		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55.so");
-		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55j.so");
+		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55.so");
+		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55j.so");
 
 		System.out.println("Setting up constraints");
 		
@@ -172,7 +225,7 @@ public class LinearProgram<T> {
 		problem.setVerbose(0);
 		problem.setAddRowmode(true);
 		
-		problem.strSetObjFn(this.objective.toString(variableNames, numVariables));
+		problem.strSetObjFn(this.objective.toMappedString(variableNames, numVariables));
 		if(this.objective.objectiveType == ObjectiveType.MAXIMIZE) {
 			problem.setMaxim();
 		} else if(this.objective.objectiveType == ObjectiveType.MINIMIZE){
@@ -180,8 +233,10 @@ public class LinearProgram<T> {
 		} else {
 			throw new RuntimeException("Objective type not recognized!");
 		}
+		System.out.println(this.objective);
 		for(Constraint<T> constraint : this.constraints) {
-			problem.strAddConstraint(constraint.toString(variableNames, numVariables), constraint.convertConstraintType(), constraint.constant);
+			System.out.println(constraint.toString());
+			problem.strAddConstraint(constraint.toMappedString(variableNames, numVariables), constraint.convertConstraintType(), constraint.constant);
 		}
 		
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
