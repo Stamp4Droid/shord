@@ -32,7 +32,7 @@ CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 pt(c:C,v:V,o:C)    output # (c,v) points-to o
 fpt(o1:C,f:F,o2:C) output
 
-fptStat(f:F,o:C)
+fptStat(f:F,o:C) output
 
 ###################
 #    RULES

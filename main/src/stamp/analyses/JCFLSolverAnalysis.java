@@ -181,7 +181,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	public static void run(FileManager manager, RelationAdder relationAdder) {		
+	public static void run(FileManager manager, RelationAdder relationAdder) {
 		// STEP 1: Set up the graph and load the stub model set if applicable.
 		StubModelSet m;
 		try {

@@ -59,6 +59,16 @@ public class AbductiveInference {
 		this.lp.setObjective(ObjectiveType.MAXIMIZE, coefficients);
 	}
 	
+	public void removeEdge(Graph graph, Edge edge) {
+		
+	}
+	
+	public void performInferenceNew(Graph graph, Collection<Edge> cutEdges, Collection<Edge> removedEdges) throws LpSolveException {
+		for(Edge edge : removedEdges) {
+			this.removeEdge(graph, edge);
+		}
+	}
+	
 	public Set<Edge> performInference(Graph graph, Collection<Edge> cutEdges, Collection<Edge> removedEdges) throws LpSolveException {
 		this.setObjective(cutEdges);
 		this.setRemovedEdges(removedEdges);

@@ -239,6 +239,16 @@ public class LinearProgram<T> {
 			problem.strAddConstraint(constraint.toMappedString(variableNames, numVariables), constraint.convertConstraintType(), constraint.constant);
 		}
 		
+		// Set constraints to be integer valued
+		for(int i=1; i<=problem.getNcolumns(); i++) {
+			System.out.println("Setting variable " + i + " to integer");
+			try {
+				problem.setInt(i, true);
+			} catch(LpSolveException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 		
 		System.out.println("Solving LP");
@@ -281,8 +291,8 @@ public class LinearProgram<T> {
 	}
 
 	public static void test2() throws LpSolveException {
-		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55.so");
-		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55j.so");
+		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55.so");
+		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55j.so");
 		
 		LpSolve problem = LpSolve.makeLp(0, 4); // make a new problem with 4 variables and 0 constraints
 		problem.strAddConstraint("3 2 2 1", LpSolve.LE, 4); // add constraint 3*c1 + 2*c2 + 2*c3 + c4 <= 4
