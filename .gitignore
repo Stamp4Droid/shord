@@ -13,6 +13,7 @@ local.config
 *.ap_.d
 *.jimple
 .project
+.metadata
 .classpath
 .settings
 timestamp.txt
@@ -46,3 +47,4 @@ web/web.xml
 
 stamp-url.txt
 web/stamp-url.txt
+

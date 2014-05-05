@@ -3,7 +3,10 @@ package stamp.analyses;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import shord.project.ClassicProject;
@@ -20,17 +23,19 @@ public class RelationPrinter extends JavaAnalysis {
 		relations.add(new Relation("Assign"));
 		relations.add(new Relation("Store"));
 		relations.add(new Relation("Load"));
-		relations.add(new Relation("StoreStat"));
-		relations.add(new Relation("LoadStat"));
+		//relations.add(new Relation("StoreStat"));
+		//relations.add(new Relation("LoadStat"));
 		relations.add(new Relation("param"));
 		relations.add(new Relation("return"));
-		relations.add(new Relation("typeFilter"));
+		//relations.add(new Relation("typeFilter"));
 
 		relations.add(new Relation("CH"));
 
-		relations.add(new Relation("pt"));
-		relations.add(new Relation("fpt"));
-		relations.add(new Relation("fptStat"));
+		//relations.add(new Relation("pt"));
+		//relations.add(new Relation("fpt"));
+		//relations.add(new Relation("fptStat"));
+		
+		relations.add(new Relation("ptdf"));
 	}
 	
 	public static class Relation {
@@ -69,8 +74,13 @@ public class RelationPrinter extends JavaAnalysis {
 			pw.println(toString(rel.getDoms()));			
 			
 			Iterable<int[]> res = rel.getAryNIntTuples();
+			List<String> tuples = new ArrayList<String>();
 			for(int[] tuple : res) {
-				pw.println(toString(tuple));
+				tuples.add(toString(tuple));
+			}
+			Collections.sort(tuples);
+			for(String tuple : tuples) {
+				pw.println(tuple);
 			}
 			
 			rel.close();
