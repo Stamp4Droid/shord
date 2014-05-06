@@ -107,6 +107,32 @@ void test_ordering(const Hints&... hints) {
     std::cout << std::endl;
 }
 
+typedef FuzzyStack<int,3> Stack;
+
+void print_stack(const Stack& s) {
+    std::cout << "size: " << s.size()
+	      << ", exact: " << s.is_exact()
+	      << ", contents: ";
+    print(std::cout, s, false);
+    std::cout << std::endl;
+}
+
+template<class T> void print_relation(const T& lhs, const T& rhs) {
+    switch (compare(lhs, rhs)) {
+    case 0:
+	std::cout << "equal to:" << std::endl;
+	break;
+    case -1:
+	std::cout << "less than:" << std::endl;
+	break;
+    case 1:
+	std::cout << "greater than:" << std::endl;
+	break;
+    default:
+	assert(false);
+    }
+}
+
 int main() {
     std::cout << std::boolalpha;
 
@@ -256,12 +282,28 @@ int main() {
     std::cout << std::endl;
     wl1.enqueue(1);
     assert(!wl1.empty());
+    std::cout << std::endl;
 
     Worklist<int,false,Table<int>> wl2;
     wl2.enqueue(1);
     wl2.dequeue();
     wl2.enqueue(1);
     assert(wl2.empty());
+
+    auto s321 = Stack().push(1).push(2).push(3);
+    print_stack(s321);
+    auto s54 = Stack().push(4).push(5);
+    print_relation(s321, s54);
+    print_stack(s54);
+    auto s54321 = s321.append(s54);
+    print_relation(s54, s54321);
+    print_stack(s54321);
+    auto s5454321 = s54321.append(s54);
+    print_relation(s54321, s5454321);
+    print_stack(s5454321);
+    auto s5432154 = s54.append(s54321);
+    print_relation(s5454321, s5432154);
+    print_stack(s5432154);
 
     return 0;
 }

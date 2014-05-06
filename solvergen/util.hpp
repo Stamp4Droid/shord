@@ -58,6 +58,15 @@ void expect(const char* file, unsigned int line, bool cond,
 
 #define EXPECT(...) do {expect(__FILE__, __LINE__, __VA_ARGS__);} while(0)
 
+// CUSTOM PRINTING ============================================================
+
+template<class T>
+typename std::enable_if<std::is_arithmetic<T>::value ||
+			std::is_enum<T>::value, void>::type
+print(std::ostream& os, T val) {
+    os << val;
+}
+
 // CUSTOM ORDERING ============================================================
 
 // TODO: Generic solution for comparing multiple dimensions, to implement
@@ -396,6 +405,182 @@ public:
 	    os << p.first << "\t" << p.second << std::endl;
 	}
 	return os;
+    }
+};
+
+template<class T, unsigned int LIMIT> class FuzzyStack {
+private:
+    class Contents;
+    typedef std::map<T,Contents> Map;
+    typedef typename Map::value_type Node; // std::pair<const T,Contents>
+    class Contents {
+    public:
+	Node* const parent;
+	Map children;
+    public:
+	Contents(Node* parent = NULL) : parent(parent) {}
+    };
+private:
+    static Node* root() {
+	static Node root;
+	return &root;
+    }
+    static bool at_root(const Node* node) {
+	return node->second.parent == NULL;
+    }
+    static unsigned int height(const Node* node) {
+	unsigned int h = 0;
+	for (; !at_root(node); node = parent(node)) {
+	    h++;
+	}
+	return h;
+    }
+    static Node* follow(Node* node, const T& val) {
+	return &(*(node->second.children.emplace(val, node).first));
+    }
+    static const T& value(const Node* node) {
+	return node->first;
+    }
+    static const Node* parent(const Node* node) {
+	Node* p = node->second.parent;
+	assert(p != NULL);
+	return p;
+    }
+    static Node* parent(Node* node) {
+	return const_cast<Node*>(parent(const_cast<const Node*>(node)));
+    }
+private:
+    bool exact;
+    Node* node;
+private:
+    void append(const Node* other, unsigned int left) {
+	if (at_root(other)) {
+	    return;
+	}
+	if (left == 0) {
+	    exact = false;
+	    return;
+	}
+	append(parent(other), left - 1);
+	node = follow(node, value(other));
+    }
+    void append(const Node* l, const Node* r, unsigned int left) {
+	if (at_root(r)) {
+	    append(l, left);
+	    return;
+	}
+	if (left == 0) {
+	    exact = false;
+	    return;
+	}
+	append(l, parent(r), left - 1);
+	node = follow(node, value(r));
+    }
+    // CAUTION: Not checking if the depth is low enough for exact matching.
+    explicit FuzzyStack(bool exact, Node* node) : exact(exact), node(node) {}
+public:
+    explicit FuzzyStack() : FuzzyStack(true, root()) {}
+    bool empty() const {
+	return at_root(node);
+    }
+    bool is_exact() const {
+	return exact;
+    }
+    const T& top() const {
+	return value(node);
+    }
+    FuzzyStack pop() const {
+	assert(!empty());
+	return FuzzyStack(exact, parent(node));
+    }
+    unsigned int size() const {
+	return height(node);
+    }
+    FuzzyStack relax() const {
+	return FuzzyStack(false, node);
+    }
+    FuzzyStack push(const T& val) const {
+	if (height(node) < LIMIT) {
+	    return FuzzyStack(exact, follow(node, val));
+	} else {
+	    return append(FuzzyStack(true, follow(root(), val)));
+	}
+    }
+    FuzzyStack append(const FuzzyStack& rhs) const {
+	FuzzyStack res(exact && rhs.exact, root());
+	if (rhs.exact) {
+	    res.append(node, rhs.node, LIMIT);
+	} else {
+	    res.node = rhs.node;
+	}
+	return res;
+    }
+    template<class... ArgTs>
+    friend void print(std::ostream& os, const FuzzyStack& s, bool reverse,
+		      const ArgTs&... args) {
+	if (!s.exact && reverse) {
+	    os << " *";
+	}
+	std::list<T> stage;
+	for (const Node* n = s.node; !at_root(n); n = parent(n)) {
+	    if (reverse) {
+		stage.push_front(value(n));
+	    } else {
+		stage.push_back(value(n));
+	    }
+	}
+	for (const T& val : stage) {
+	    if (reverse) {
+		os << " ";
+	    }
+	    print(os, val, args...);
+	    if (!reverse) {
+		os << " ";
+	    }
+	}
+	if (!s.exact && !reverse) {
+	    os << "* ";
+	}
+    }
+    friend std::ostream& operator<<(std::ostream& os, const FuzzyStack& s) {
+	for (const Node* n = s.node; !at_root(n); n = parent(n)) {
+	    os << value(n) << " ";
+	}
+	if (!s.exact) {
+	    os << "* ";
+	}
+	return os;
+    }
+    // Stacks are compared lexicographically, from top to bottom.
+    friend int compare(const FuzzyStack& lhs, const FuzzyStack& rhs) {
+	int exact_rel = compare(lhs.exact, rhs.exact);
+	if (exact_rel != 0) {
+	    return exact_rel;
+	}
+	if (lhs.node == rhs.node) {
+	    // Stacks are uniqued; this is the only case of equality.
+	    return 0;
+	}
+	const Node* l = lhs.node;
+	const Node* r = rhs.node;
+	while (true) {
+	    if (at_root(l)) {
+		assert(!at_root(r));
+		return -1;
+	    }
+	    if (at_root(r)) {
+		return 1;
+	    }
+	    int val_rel = compare(value(l), value(r));
+	    if (val_rel != 0) {
+		return val_rel;
+	    }
+	    l = parent(l);
+	    r = parent(r);
+	}
+    }
+    bool operator<(const FuzzyStack& rhs) const {
+	return compare(*this, rhs) < 0;
     }
 };
 
