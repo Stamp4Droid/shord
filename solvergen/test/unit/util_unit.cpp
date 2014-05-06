@@ -178,8 +178,8 @@ int main() {
 	std::cout << "  " << res << std::endl;
     }
     std::cout << "All the ref's for false:" << std::endl;
-    for (const Ref<Bar> fls_bar : nidx[false]) {
-	std::cout << "  " << fls_bar << std::endl;
+    for (const auto& p : nidx[false]) {
+	std::cout << "  " << p.first << std::endl;
     }
     std::cout << "All true entries:" << std::endl;
     FOR(res, nidx[true]) {
@@ -195,7 +195,7 @@ int main() {
 	std::cout <<  "  " << res << std::endl;
     }
     std::cout << "All entries for bbb:" << std::endl;
-    FOR(res, nidx, mi::any, bars.find("bbb").ref) {
+    FOR_CNSTR(res, nidx, mi::any, bars.find("bbb").ref) {
 	std::cout << "  " <<  res << std::endl;
     }
     std::cout << std::endl;
@@ -232,10 +232,16 @@ int main() {
     FOR(tup, int_tab) {
 	std::cout << "  " << tup << std::endl;
     }
+    std::cout << "Contains (1,41): " << int_tab.contains(1, 41) << std::endl;
+    std::cout << "Contains (1,43): " << int_tab.contains(1, 43) << std::endl;
+    std::cout << "Contains (6,46): " << int_tab.contains(6, 46) << std::endl;
     std::cout << "Uniq'd table contents:" << std::endl;
     FOR(tup, uniq_tab) {
 	std::cout << "  " << tup << std::endl;
     }
+    std::cout << "Contains (1,41): " << uniq_tab.contains(1, 41) << std::endl;
+    std::cout << "Contains (1,43): " << uniq_tab.contains(1, 43) << std::endl;
+    std::cout << "Contains (6,46): " << uniq_tab.contains(6, 46) << std::endl;
     std::cout << std::endl;
 
     Worklist<int,true> wl1;

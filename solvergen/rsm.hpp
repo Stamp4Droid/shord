@@ -104,7 +104,6 @@ public:
 
 class Component;
 class Graph;
-class Worker;
 
 // States carry very little actual information; e.g. transitions are stored on
 // a separate table.
@@ -405,15 +404,12 @@ public:
     std::map<Ref<Node>,std::set<Ref<Node>>>
 	subpath_bounds(const MatchLabel& hd_lab,
 		       const MatchLabel& tl_lab) const;
-    const LabelSlice& search(const MatchLabel& label) const {
-	return (*edges_2)[label.rev][label.symbol];
+    const LabelSlice& search(Ref<Symbol> symbol, bool rev) const {
+	return (*edges_2)[rev][symbol];
     }
-    const SrcLabelSlice& search(Ref<Node> src, const MatchLabel& label) const {
-	return (*edges_1)[label.rev][src][label.symbol];
-    }
-    // CAUTION: The tag on the label is ignored.
-    const SrcLabelSlice& search(Ref<Node> src, const Label& label) const {
-	return (*edges_1)[label.rev][src][label.symbol];
+    const SrcLabelSlice& search(Ref<Symbol> symbol, bool rev,
+				Ref<Node> src) const {
+	return (*edges_1)[rev][src][symbol];
     }
     void print_stats(std::ostream& os) const;
     void print_summaries(const std::string& dirname,
@@ -422,8 +418,6 @@ public:
 };
 
 // SOLVING ====================================================================
-
-class Dependence;
 
 // TODO: alternative name ("Summarizer"? "Propagator"?)
 class Worker {
@@ -454,7 +448,8 @@ private:
 public:
     explicit Worker(Ref<Node> start, const Component& comp)
 	: start(start), comp(comp), top_level(true) {}
-    Result handle(const Graph& graph, const FSM& fsm) const;
+    Result handle(const Graph& graph, const Registry<Symbol>& symbol_reg,
+		  const FSM& fsm) const;
 };
 
 // TODO: Should include the component if we support multiple components in SCCs

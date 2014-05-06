@@ -60,6 +60,9 @@ void expect(const char* file, unsigned int line, bool cond,
 
 // CUSTOM ORDERING ============================================================
 
+// TODO: Generic solution for comparing multiple dimensions, to implement
+// simple struct comparison
+
 template<class T>
 typename std::enable_if<std::is_arithmetic<T>::value ||
 			std::is_enum<T>::value, int>::type
@@ -319,7 +322,7 @@ public:
     }
 };
 
-// GENERIC DATA STRUCTURES ====================================================
+// GENERIC DATA STRUCTURES & ALGORITHMS =======================================
 
 // Properties:
 // - Guarantees no duplicate entries in the queue.
@@ -395,6 +398,34 @@ public:
 	return os;
     }
 };
+
+// TODO:
+// - Also feed the common key to zip?
+// - Should implement using iterators?
+template<class LMap, class RMap, class ZipT>
+void join_zip(const LMap& l, const RMap& r, const ZipT& zip) {
+    auto l_curr = l.begin();
+    auto r_curr = r.begin();
+    const auto l_end = l.end();
+    const auto r_end = r.end();
+    while (l_curr != l_end && r_curr != r_end) {
+	switch (compare(l_curr->first, r_curr->first)) {
+	case -1:
+	    ++l_curr;
+	    break;
+	case 1:
+	    ++r_curr;
+	    break;
+	case 0:
+	    zip(l_curr->second, r_curr->second);
+	    ++l_curr;
+	    ++r_curr;
+	    break;
+	default:
+	    assert(false);
+	}
+    }
+}
 
 // OS SERVICES ================================================================
 
@@ -1166,7 +1197,7 @@ public:
 //   all sub-containers must have the same size
 //   can this be done dynamically?
 //   need variable-size class support?
-// - KeyIter on Table iterates over the values
+// - TopIter on Table iterates over the values
 // - use probabilistic data structures (as long as they're sound)
 // - exploit sharing of bit patterns
 // - disable operator[], only allow constraining the top iterator
@@ -1447,18 +1478,16 @@ public:
     typedef S Sub;
     class Iterator;
     friend Iterator;
-    typedef IterWrapper<typename std::map<Key,Sub>::const_iterator,
-			Key, detail::get_first> KeyIter;
+    typedef typename std::map<Key,Sub>::const_iterator TopIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     static const Sub dummy;
 private:
     std::map<Key,Sub> map;
-private:
+public:
     Sub& follow(const Key& key) {
 	return map[key];
     }
-public:
     const Sub& operator[](const Key& key) const {
 	// TODO: Should just create new entries?
 	try {
@@ -1494,11 +1523,11 @@ public:
 	it.migrate(*this);
 	return it;
     }
-    KeyIter begin() const {
-	return KeyIter(map.cbegin());
+    TopIter begin() const {
+	return map.cbegin();
     }
-    KeyIter end() const {
-	return KeyIter(map.cend());
+    TopIter end() const {
+	return map.cend();
     }
     bool empty() const {
 	for (const auto& entry : map) {
@@ -1510,6 +1539,11 @@ public:
     }
     bool contains(const Key& key) const {
 	return map.count(key) > 0;
+    }
+    template<class... Rest>
+    bool contains(const Key& key, const Rest&... rest) const {
+	const Sub& sub = (*this)[key];
+	return &sub != &dummy && sub.contains(rest...);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1582,20 +1616,19 @@ public:
     typedef S Sub;
     class Iterator;
     friend Iterator;
-    class KeyIter;
-    friend KeyIter;
+    class TopIter;
+    friend TopIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     std::vector<Sub> array;
-private:
-    Sub& follow(const Key& key) {
-	return const_cast<Sub&>((*this)[key]);
-    }
 public:
     template<class... Rest>
     explicit FlatIndex(const typename KeyTraits<Key>::SizeHint& hint,
 		       const Rest&... rest)
 	: array(KeyTraits<Key>::extract_size(hint), Sub(rest...)) {}
+    Sub& follow(const Key& key) {
+	return const_cast<Sub&>((*this)[key]);
+    }
     const Sub& operator[](const Key& key) const {
 	unsigned int i = KeyTraits<Key>::extract_idx(key);
 #ifdef NDEBUG
@@ -1633,11 +1666,11 @@ public:
 	it.migrate(*this);
 	return it;
     }
-    KeyIter begin() const {
-	return KeyIter(*this, false);
+    TopIter begin() const {
+	return TopIter(*this, false);
     }
-    KeyIter end() const {
-	return KeyIter(*this, true);
+    TopIter end() const {
+	return TopIter(*this, true);
     }
     bool empty() const {
 	for (const Sub& entry : array) {
@@ -1654,6 +1687,10 @@ public:
 #else
 	return array.at(i).empty();
 #endif
+    }
+    template<class... Rest>
+    bool contains(const Key& key, const Rest&... rest) const {
+	return (*this)[key].contains(rest...);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1731,7 +1768,10 @@ public:
 	}
     };
 
-    class KeyIter : public std::iterator<std::forward_iterator_tag,Key> {
+    class TopIter : public std::iterator<std::forward_iterator_tag,
+					 std::pair<const Key,const Sub&>> {
+    public:
+	typedef std::pair<const Key,const Sub&> Value;
     private:
 	unsigned int curr;
 	const FlatIndex& parent;
@@ -1742,29 +1782,29 @@ public:
 	    }
 	}
     public:
-	explicit KeyIter(const FlatIndex& parent, bool at_end)
+	explicit TopIter(const FlatIndex& parent, bool at_end)
 	    : curr(at_end ? parent.array.size() : 0), parent(parent) {
 	    skip_empty();
 	}
-	KeyIter(const KeyIter& rhs) : curr(rhs.curr), parent(rhs.parent) {}
-	KeyIter& operator=(const KeyIter& rhs) {
+	TopIter(const TopIter& rhs) : curr(rhs.curr), parent(rhs.parent) {}
+	TopIter& operator=(const TopIter& rhs) {
 	    assert(&parent == &(rhs.parent));
 	    curr = rhs.curr;
 	    return *this;
 	}
-	Key operator*() const {
-	    return KeyTraits<Key>::from_idx(curr);
+	Value operator*() const {
+	    return Value(KeyTraits<Key>::from_idx(curr), parent.array[curr]);
 	}
-	KeyIter& operator++() {
+	TopIter& operator++() {
 	    ++curr;
 	    skip_empty();
 	    return *this;
 	}
-	bool operator==(const KeyIter& rhs) const {
+	bool operator==(const TopIter& rhs) const {
 	    assert(&parent == &(rhs.parent));
 	    return curr == rhs.curr;
 	}
-	bool operator!=(const KeyIter& rhs) const {
+	bool operator!=(const TopIter& rhs) const {
 	    return !(*this == rhs);
 	}
     };
@@ -1873,8 +1913,7 @@ public:
     typedef S Sub;
     class Iterator;
     friend Iterator;
-    typedef IterWrapper<typename List::const_iterator,
-			Key, detail::get_first> KeyIter;
+    typedef typename List::const_iterator TopIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     static const Sub dummy;
@@ -1894,6 +1933,7 @@ private:
 	pos = prev;
 	return false;
     }
+public:
     Sub& follow(const Key& key) {
 	typename List::const_iterator cpos;
 	typename List::iterator pos =
@@ -1903,7 +1943,6 @@ private:
 	    : list.emplace_after(cpos, key, Sub());
 	return pos->second;
     }
-public:
     const Sub& operator[](const Key& key) const {
 	typename List::const_iterator pos;
 	if (!find(key, pos)) {
@@ -1938,11 +1977,11 @@ public:
 	it.migrate(*this);
 	return it;
     }
-    KeyIter begin() const {
-	return KeyIter(list.cbegin());
+    TopIter begin() const {
+	return list.cbegin();
     }
-    KeyIter end() const {
-	return KeyIter(list.cend());
+    TopIter end() const {
+	return list.cend();
     }
     bool empty() const {
 	for (const auto& entry : list) {
@@ -1955,6 +1994,11 @@ public:
     bool contains(const Key& key) const {
 	typename List::const_iterator dummy;
 	return find(key, dummy);
+    }
+    template<class... Rest>
+    bool contains(const Key& key, const Rest&... rest) const {
+	const Sub& sub = (*this)[key];
+	return &sub != &dummy && sub.contains(rest...);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -2028,26 +2072,14 @@ template<class TagA, class TagB, class T>
 BiRel<TagA,TagB,T> join(const BiRel<TagA,TagB,T>& l,
 			const BiRel<TagA,TagB,T>& r) {
     BiRel<TagA,TagB,T> res;
-    auto l_curr = l.b2a.cbegin();
-    auto r_curr = r.a2b.cbegin();
-    const auto l_end = l.b2a.cend();
-    const auto r_end = r.a2b.cend();
-    while(l_curr != l_end && r_curr != r_end) {
-	int key_rel = compare(l_curr->first, r_curr->first);
-	if (key_rel < 0) {
-	    ++l_curr;
-	} else if (key_rel > 0) {
-	    ++r_curr;
-	} else {
-	    for (const T& a : l_curr->second) {
-		for (const T& b : r_curr->second) {
-		    res.insert(a, b);
-		}
+    auto zip = [&](const std::set<T>& as, const std::set<T>& bs) {
+	for (const T& a : as) {
+	    for (const T& b : bs) {
+		res.insert(a, b);
 	    }
-	    ++l_curr;
-	    ++r_curr;
 	}
-    }
+    };
+    join_zip(l.b2a, r.a2b, zip);
     return res;
 }
 
@@ -2066,7 +2098,7 @@ public:
     typedef boost::none_t Sub; // dummy declaration
     class Iterator;
     friend Iterator;
-    typedef boost::none_t KeyIter; // dummy declaration
+    typedef boost::none_t TopIter; // dummy declaration
     typedef NamedTuple<TagA,T,NamedTuple<TagB,T,Nil>> Tuple;
 private:
     std::map<T,std::set<T>> a2b;
@@ -2270,7 +2302,7 @@ public:
     typedef typename Idx::Sub Sub;
     class Iterator;
     friend Iterator;
-    typedef typename Idx::KeyIter KeyIter;
+    typedef typename Idx::TopIter TopIter;
     typedef typename Idx::Tuple Tuple;
 private:
     Ref<Immut<Idx>> cell_ref;
@@ -2312,17 +2344,18 @@ public:
 	it.migrate(*this);
 	return it;
     }
-    KeyIter begin() const {
+    TopIter begin() const {
 	return real_idx().begin();
     }
-    KeyIter end() const {
+    TopIter end() const {
 	return real_idx().end();
     }
     bool empty() const {
 	return real_idx().empty();
     }
-    bool contains(const Key& key) const {
-	return real_idx().contains(key);
+    template<class... Rest>
+    bool contains(const Key& key, const Rest&... rest) const {
+	return real_idx().contains(key, rest...);
     }
     unsigned int size() const {
 	return real_idx().size();

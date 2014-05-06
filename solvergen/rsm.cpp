@@ -13,7 +13,7 @@ const boost::regex Symbol::NAME_REGEX("[a-z]\\w*");
 
 Label Label::parse(const std::string& str, Registry<Symbol>& symbol_reg,
 		   Registry<Tag>& tag_reg) {
-    static const boost::regex r("(_)?([a-z]\\w*)(?:\\[(\\w*|\\*)\\])?");
+    static const boost::regex r("(_)?([a-z]\\w*)(?:\\[(\\w+|\\*)\\])?");
     boost::smatch m;
     bool matched = boost::regex_match(str, m, r);
     EXPECT(matched);
@@ -146,10 +146,12 @@ const std::string RSM::FILE_EXTENSION(".rsm.tgf");
 RSM::RSM(const std::string& dirname, Registry<Symbol>& symbol_reg,
 	 Registry<Tag>& tag_reg) {
     Directory dir(dirname);
-    std::list<fs::path> files(dir.begin(), dir.end());
-    files.sort();
-    for (const fs::path& fpath : files) {
-	parse_file(fpath, symbol_reg, tag_reg);
+    std::list<fs::path> paths(dir.begin(), dir.end());
+    // TODO: Assuming the usage order of components is the same as their
+    // alphabetic order.
+    paths.sort();
+    for (const fs::path& p : paths) {
+	parse_file(p, symbol_reg, tag_reg);
     }
 }
 
@@ -162,6 +164,7 @@ void parse_component(const fs::path& fpath, Component& comp,
     std::string line;
 
     while (std::getline(fin, line)) {
+	boost::trim(line);
 	if (line.empty()) {
 	    continue; // Empty lines are ignored.
 	}
@@ -260,7 +263,7 @@ void RSM::parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg,
     if (!boost::algorithm::ends_with(fbase, FILE_EXTENSION)) {
 	return;
     }
-    std::cout << "Parsing " << fbase << std::endl;
+    std::cout << "Parsing " << fpath << std::endl;
     size_t name_len = fbase.size() - FILE_EXTENSION.size();
     std::string name(fbase.substr(0, name_len));
     Component& comp = components.make(name);
@@ -323,10 +326,10 @@ bool FSM::is_accepting(const TransRel& trel) const {
 void FSM::print_effects(std::ostream& os, const Symbol& s, bool rev,
 			const Registry<Symbol>& symbol_reg,
 			const Registry<Tag>& tag_reg) const {
-    for (Ref<Tag> tag : base_effects[rev][s.ref]) {
-	Label(s, rev, tag).print(os, symbol_reg, tag_reg);
+    for (const auto& tag_pair : base_effects[rev][s.ref]) {
+	Label(s, rev, tag_pair.first).print(os, symbol_reg, tag_reg);
 	os << ":" << std::endl;
-	FOR(trans, base_effects[rev][s.ref][tag]) {
+	FOR(trans, base_effects[rev][s.ref][tag_pair.first]) {
 	    os << "  " << comp.get_states()[trans.get<F_FROM>()].name << " "
 	       << comp.get_states()[trans.get<F_TO>()].name << std::endl;
 	}
@@ -432,9 +435,9 @@ void Graph::print_summaries(const std::string& dirname,
 			    const FSM& fsm) const {
     fs::path dirpath(dirname);
     for (const Component& comp : comp_reg) {
-	std::string fname = comp.name + FILE_EXTENSION;
-	std::cout << "Printing " << fname << std::endl;
-	std::ofstream fout((dirpath/fname).string());
+	fs::path fpath(dirpath/(comp.name + FILE_EXTENSION));
+	std::cout << "Printing " << fpath << std::endl;
+	std::ofstream fout(fpath.string());
 	EXPECT(fout);
 	FOR(s, summaries[comp.ref]) {
 	    fout << nodes[s.get<SRC>()].name << " "
@@ -453,8 +456,8 @@ std::map<Ref<Node>,std::set<Ref<Node>>>
 Graph::subpath_bounds(const MatchLabel& hd_lab,
 		      const MatchLabel& tl_lab) const {
     std::map<Ref<Node>,std::set<Ref<Node>>> res;
-    FOR(hd, search(hd_lab)) {
-	FOR(tl, search(tl_lab)[hd.get<TAG>()]) {
+    FOR(hd, search(hd_lab.symbol, hd_lab.rev)) {
+	FOR(tl, search(tl_lab.symbol, tl_lab.rev)[hd.get<TAG>()]) {
 	    res[hd.get<DST>()].insert(tl.get<SRC>());
 	}
     }
@@ -527,7 +530,8 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 
     while (!worklist.empty()) {
 	const Worker& w = workers[worklist.dequeue()];
-	Worker::Result res = w.handle(graph, fsm);
+	Worker::Result res = w.handle(graph, symbols, fsm);
+
 	// Dependencies must be recorded first, to ensure we re-process the
 	// function in cases of self-recursion.
 	// TODO: Could insert the dependencies as we find them, inside the
@@ -558,7 +562,8 @@ void Analysis::propagate(Graph& graph, const Component& comp) const {
     // We can do this one node at a time.
     for (const Node& start : graph.nodes) {
 	unsigned int t_start = current_time();
-	Worker::Result res = Worker(start.ref, comp).handle(graph, fsm);
+	Worker::Result res =
+	    Worker(start.ref, comp).handle(graph, symbols, fsm);
 	// Ignore any emitted dependencies, they should have been handled
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
@@ -580,7 +585,9 @@ bool Worker::merge(const Component& comp,
     return tgts.size() > old_sz;
 }
 
-Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
+Worker::Result Worker::handle(const Graph& graph,
+			      const Registry<Symbol>& symbol_reg,
+			      const FSM& fsm) const {
     Result res;
     WorkerWorklist worklist;
     Ref<State> fsm_init = fsm.comp.get_initial();
@@ -610,9 +617,11 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 
 	// Cross edges according to the transitions out of the current state.
 	for (const Transition& t : comp.transitions[pos.r_to]) {
+	    const Symbol& e_symb = symbol_reg[t.label.symbol];
+	    bool e_rev = t.label.rev;
 	    boost::optional<Ref<Tag>> maybe_tag =
 		boost::make_optional(t.label.tag.valid(), t.label.tag);
-	    FOR_CNSTR(e, graph.search(pos.dst, t.label), maybe_tag) {
+	    FOR_CNSTR(e, graph.search(e_symb.ref, e_rev, pos.dst), maybe_tag) {
 		TransRel new_trel =
 		    compose(pos.trel, fsm.effect_of(t.label, e.get<TAG>()));
 		if (new_trel.empty()) {
@@ -646,8 +655,9 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 
 		// Cross through any existing summary edges.
 		const auto& compat_summs = graph.summaries[sub_comp][in_node];
-		for (Ref<Node> out_node : compat_summs) {
-		    TransRel sub_trel = compat_summs[out_node];
+		for (const auto& p : compat_summs) {
+		    Ref<Node> out_node = p.first;
+		    TransRel sub_trel = p.second;
 		    TransRel out_trel = compose(in_trel, sub_trel);
 		    if (out_trel.empty()) {
 			continue;
@@ -659,12 +669,16 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 			TransRel full_trel =
 			    compose(out_trel,
 				    fsm.effect_of(exit.label, in_tag));
+			const Symbol& e_out_symb =
+			    symbol_reg[exit.label.symbol];
+			bool e_out_rev = exit.label.rev;
 			if (full_trel.empty()) {
 			    continue;
 			}
-			const auto& slice =
-			    graph.search(out_node, exit.label)[in_tag];
-			FOR(e_out, slice) {
+
+			// Exit the box.
+			FOR(e_out, graph.search(e_out_symb.ref, e_out_rev,
+						out_node)[in_tag]) {
 			    worklist.enqueue(Position(e_out.get<DST>(),
 						      exit.to, full_trel));
 			}
