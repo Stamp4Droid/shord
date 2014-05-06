@@ -1376,7 +1376,7 @@ public:
 	return insert(tuple.hd);
     }
     bool copy(const Table& src) {
-	bool old_sz = size();
+	unsigned int old_sz = size();
 	store.insert(src.store.cbegin(), src.store.cend());
 	return old_sz != size();
     }
