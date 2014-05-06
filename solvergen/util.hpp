@@ -1351,11 +1351,13 @@ static const T& id(const T& val) {
 
 // BASE CONTAINERS & OPERATIONS ===============================================
 
-#define FOR(RES, EXPR, ...) \
+#define FOR_CNSTR(RES, EXPR, ...) \
     if (bool cond__ = true) \
 	for (typename std::remove_reference<decltype(EXPR)>::type::Tuple RES; \
 	     cond__; cond__ = false) \
-	    for (auto it__ = (EXPR).iter(RES, ##__VA_ARGS__); it__.next();)
+	    for (auto it__ = (EXPR).iter(RES, __VA_ARGS__); it__.next();)
+
+#define FOR(RES, EXPR) FOR_CNSTR(RES, EXPR, boost::none)
 
 const boost::none_t any = boost::none;
 

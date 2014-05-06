@@ -612,7 +612,7 @@ Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
 	for (const Transition& t : comp.transitions[pos.r_to]) {
 	    boost::optional<Ref<Tag>> maybe_tag =
 		boost::make_optional(t.label.tag.valid(), t.label.tag);
-	    FOR(e, graph.search(pos.dst, t.label), maybe_tag) {
+	    FOR_CNSTR(e, graph.search(pos.dst, t.label), maybe_tag) {
 		TransRel new_trel =
 		    compose(pos.trel, fsm.effect_of(t.label, e.get<TAG>()));
 		if (new_trel.empty()) {
