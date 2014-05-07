@@ -4,11 +4,20 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import lpsolve.LpSolveException;
+import shord.analyses.CastVarNode;
 import shord.analyses.DomI;
+import shord.analyses.DomU;
+import shord.analyses.DomV;
+import shord.analyses.LocalVarNode;
+import shord.analyses.ParamVarNode;
+import shord.analyses.RetVarNode;
+import shord.analyses.ThisVarNode;
+import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -22,6 +31,7 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import chord.project.Chord;
 
 @Chord(name = "cflsolver")
@@ -49,7 +59,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		// object annotations
 		taintGrammar.addBinaryProduction("Obj2RefT", "Flow", "ref2RefT");
 		taintGrammar.addBinaryProduction("Obj2PrimT", "Flow", "ref2PrimT");
-		taintGrammar.addBinaryProduction("Obj2RefT", "FlowFieldArr", "Obj2RefT"); // TODO: FlowFieldArr
+		taintGrammar.addBinaryProduction("Obj2RefT", "FlowFieldArr", "Obj2RefT");
 		taintGrammar.addBinaryProduction("Obj2PrimT", "FlowFieldArr", "Obj2PrimT");
 		
 		taintGrammar.addBinaryProduction("Label2ObjT", "label2RefT", "Flow", false, true);
@@ -103,13 +113,13 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		taintGrammar.addBinaryProduction("Label2PrimFldStat", "Label2Prim", "storeStatPrim");
 	}
 	
-	public static Map<Edge,Boolean> runInference(Graph g) throws LpSolveException {		
+	public static Map<Edge,Boolean> runInference(Graph g, TypeFilter t) throws LpSolveException {		
 		// STEP 1: Run reachability solver
 		
 		long time = System.currentTimeMillis();
 		System.out.println("Computing transitive closure");
 		
-		Graph gbar = new ReachabilitySolver(g).getResult();
+		Graph gbar = new ReachabilitySolver(g, t).getResult();
 		
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 		System.out.println("Num edges: " + gbar.getEdges().size());
@@ -136,15 +146,66 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		System.out.println("Num initial edges: " + initialCutEdges.size());
 		return new AbductiveInference(gbar, baseEdges, initialCutEdges).solve();
 	}
+	
+	private static String getMethodSig(String name) {
+		VarNode v;
+		if(name.startsWith("V")) {
+			DomV dom = (DomV)ClassicProject.g().getTrgt(name.substring(0,1).toUpperCase());
+			v = dom.get(Integer.parseInt(name.substring(1)));
+		} else if(name.startsWith("U")) {
+			DomU dom = (DomU)ClassicProject.g().getTrgt(name.substring(0,1).toUpperCase());
+			v = dom.get(Integer.parseInt(name.substring(1)));
+		} else {
+			throw new RuntimeException("Unrecognized vertex: " + name);
+		}
+		if(v instanceof ParamVarNode) {
+			return ((ParamVarNode)v).method.toString();
+		} else if(v instanceof RetVarNode) {
+			return ((RetVarNode)v).method.toString();
+		} else if(v instanceof ThisVarNode) {
+			return ((ThisVarNode)v).method.toString();
+		} else if(v instanceof LocalVarNode) {
+			return ((LocalVarNode)v).meth.toString();
+		} else if(v instanceof CastVarNode) {
+			return ((CastVarNode)v).method.toString();
+		} else {
+			throw new RuntimeException("Unrecognized variable: " + v);
+		}
+	}
 
 	public static void printResultShord(Map<Edge,Boolean> result) {
-		DomI dom = (DomI)ClassicProject.g().getTrgt("I");
+		DomI domI = (DomI)ClassicProject.g().getTrgt("I");
 		for(Edge edge : result.keySet()) {
 			if(result.get(edge)) {
 				System.out.println("remove: " + edge);
-				System.out.println("invk: " + dom.get(edge.context.getContexts().get(0)));
+				System.out.println("caller: " + getMethodSig(edge.source.name));
+				System.out.println("callee: " + domI.get(edge.context.getContexts().get(0)));
 			}
 		}
+	}
+	
+	public static void printGraphStatics(Graph g) {
+		for(int symbolInt=0; symbolInt<g.getContextFreeGrammar().getNumLabels(); symbolInt++) {
+			final String symbol = g.getContextFreeGrammar().getSymbol(symbolInt);
+			if(!symbol.equals(symbol)) continue;
+			Set<String> edges = new HashSet<String>();
+			for(Edge edge : g.getEdges(new EdgeFilter() {
+				@Override
+				public boolean filter(Edge edge) {
+					return edge.getSymbol().equals(symbol); 
+				}})) {
+				edges.add(edge.sink.name.substring(1) + " " + edge.source.name.substring(1));
+			}
+			/*
+			List<String> edgeList = new ArrayList<String>(edges);
+			Collections.sort(edgeList);
+			for(String edge : edgeList) {
+				System.out.println(edge);
+			}
+			*/
+			System.out.println(symbol + ": " + edges.size());
+		}
+		System.out.println("total edges: " + g.getEdges().size());
 	}
 	
 	public static void printResult(Map<Edge,Boolean> result) {
@@ -153,33 +214,12 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				System.out.println("remove: " + edge);
 			}
 		}
-
-		/*
-		for(int symbolInt=0; symbolInt<gbar.getContextFreeGrammar().getNumLabels(); symbolInt++) {
-			final String symbol = gbar.getContextFreeGrammar().getSymbol(symbolInt);
-			if(!symbol.equals("Flow")) continue;
-			Set<String> edges = new HashSet<String>();
-			for(Edge edge : gbar.getEdges(new EdgeFilter() {
-				@Override
-				public boolean filter(Edge edge) {
-					return edge.getSymbol().equals(symbol); 
-				}})) {
-				edges.add(edge.sink.name.substring(1) + " " + edge.source.name.substring(1));
-			}
-			List<String> edgeList = new ArrayList<String>(edges);
-			Collections.sort(edgeList);
-			for(String edge : edgeList) {
-				System.out.println(edge);
-			}
-			//System.out.println(symbol + ": " + edges.size());
-		}
-		*/
 	}
 	
 	@Override
 	public void run() {
 		try {
-			printResultShord(runInference(getGraphFromShord()));
+			printResultShord(runInference(getGraphFromShord(), getTypeFilterFromShord()));
 		} catch(LpSolveException e) {
 			e.printStackTrace();
 		}
@@ -188,9 +228,10 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	public static void main(String[] args) throws LpSolveException {
 		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_shord_apps_samples_MultipleLeaks/cfl";
 		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_Butane/cfl";
-		printResult(runInference(getGraphFromFiles(directoryName)));
+		//printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)));
+		printGraphStatics(new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult());
 	}
-	
+
 	private static void readRelation(GraphBuilder gb, Relation relation) {
 		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relation.getName());
 		rel.load();
@@ -201,6 +242,21 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		}
 		
 		rel.close();
+	}
+	
+	public static TypeFilter getTypeFilterFromShord() {
+		TypeFilter t = new TypeFilter(taintGrammar);
+		
+		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt("HVFilter");
+		rel.load();
+		
+		Iterable<int[]> res = rel.getAryNIntTuples();
+		for(int[] tuple : res) {
+			t.add("H" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
+		}
+		
+		rel.close();
+		return t;
 	}
 	
 	public static Graph getGraphFromShord() {
@@ -228,6 +284,23 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				relation.addEdge(gb, tuple);
 			}
 		}
+	}
+	
+	public static TypeFilter getTypeFilterFromFiles(String directoryName) {
+		TypeFilter t = new TypeFilter(taintGrammar);
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(directoryName + File.separator + "HVFilter.txt"));
+			br.readLine();
+			String line;
+			while((line = br.readLine()) != null) {
+				String[] tupleStr = line.split("\\s+");
+				t.add("H" + tupleStr[1], "V" + tupleStr[0]);
+			}
+			br.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		return t;
 	}
 	
 	public static Graph getGraphFromFiles(String directoryName) {

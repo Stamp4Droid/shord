@@ -1,0 +1,26 @@
+##################
+# CFL Initialization
+##################
+
+###################
+# CONFIGURATION
+###################
+
+# name=cfl-debug-dlog
+
+.include "V.dom"
+.include "H.dom"
+.include "C.dom"
+
+.bddvarorder C0xC1_V0_H0
+
+###################
+# DEBUG RELATIONS
+###################
+
+pt(c:C,v:V,o:C) input
+CH(c:C,h:H) input
+
+ptd(v:V,h:H) output
+
+ptd(v,h) :- pt(_,v,o), CH(o,h).

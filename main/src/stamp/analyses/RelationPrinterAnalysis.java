@@ -46,11 +46,11 @@ public class RelationPrinterAnalysis extends JavaAnalysis {
 		relations.add(new Relation("LoadStatPrim"));
 		
 		// arr
-		relations.add(new Relation("StoreCtxtArr"));
-		relations.add(new Relation("LoadCtxtArr"));
+		relations.add(new Relation("StoreArr"));
+		relations.add(new Relation("LoadArr"));
 		
-		relations.add(new Relation("StorePrimCtxtArr"));
-		relations.add(new Relation("LoadPrimCtxtArr"));
+		relations.add(new Relation("StorePrimArr"));
+		relations.add(new Relation("LoadPrimArr"));
 		
 		// annotations
 		relations.add(new Relation("Ref2RefT"));
@@ -74,7 +74,7 @@ public class RelationPrinterAnalysis extends JavaAnalysis {
 		
 		// TODO: "dynAssign"
 		
-		relations.add(new Relation("typeFilter"));
+		relations.add(new Relation("HVFilter"));
 		//relations.add(new Relation("CH"));
 
 		//relations.add(new Relation("pt"));

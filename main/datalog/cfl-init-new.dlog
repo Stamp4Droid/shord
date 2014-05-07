@@ -10,6 +10,7 @@
 
 .include "V.dom"
 .include "H.dom"
+.include "F.dom"
 .include "U.dom"
 .include "T.dom"
 
@@ -46,8 +47,8 @@ HTFilter(h:H,t:T) input
 # OUTPUT: ARR
 ###################
 
-StoreArr(v:V,f:F,u:V) output
-LoadArr(v:V,u:V,f:F) output
+StoreArr(v:V,u:V) output
+LoadArr(v:V,u:V) output
 
 StorePrimArr(u:V,v:U) output
 LoadPrimArr(y:U,x:V) output
@@ -56,7 +57,7 @@ LoadPrimArr(y:U,x:V) output
 # OUTPUT: TYPEFILTER
 ###################
 
-HVFilter(V:v,H:h) output
+HVFilter(v:V,h:H) output
 
 ###################
 # RULES: ARR
@@ -73,3 +74,4 @@ LoadPrimArr(v,u) :- LoadPrim(v,u,0).
 ###################
 
 HVFilter(v,h) :- VT(v,t), HTFilter(h,t).
+

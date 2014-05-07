@@ -56,11 +56,11 @@ public class RelationManager {
 		relations.add(new IndexRelation("Src2Label", "L", 0, "L", 0, "src2Label"));
 		relations.add(new IndexRelation("Sink2Label", "L", 0, "L", 0, "sink2Label"));
 		
-		relations.add(new IndexRelation("StoreCtxtArr", "V", 2, "V", 1, "storeArr"));
-		relations.add(new IndexRelation("LoadCtxtArr", "V", 2, "V", 1, "loadArr"));
+		relations.add(new IndexRelation("StoreArr", "V", 1, "V", 0, "storeArr"));
+		relations.add(new IndexRelation("LoadArr", "V", 1, "V", 0, "loadArr"));
 
-		relations.add(new IndexRelation("StorePrimCtxtArr", "U", 2, "U", 1, "storePrimArr"));
-		relations.add(new IndexRelation("LoadPrimCtxtArr", "U", 2, "U", 1, "loadPrimArr"));
+		relations.add(new IndexRelation("StorePrimArr", "U", 1, "V", 0, "storePrimArr"));
+		relations.add(new IndexRelation("LoadPrimArr", "V", 1, "U", 0, "loadPrimArr"));
 	}
 	
 	private final MultivalueMap<String,Relation> relationsByName = new MultivalueMap<String,Relation>();
