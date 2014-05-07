@@ -1,27 +1,27 @@
 package stamp.analyses;
 
-import java.util.HashSet;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 
-import shord.analyses.CastVarNode;
-import shord.analyses.DomU;
-import shord.analyses.DomV;
-import shord.analyses.LocalVarNode;
-import shord.analyses.ParamVarNode;
-import shord.analyses.RetVarNode;
-import shord.analyses.ThisVarNode;
-import shord.analyses.VarNode;
+import lpsolve.LpSolveException;
+import shord.analyses.DomI;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.ConversionUtils;
-import stamp.missingmodels.util.Relation;
-import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.tests.AbductiveInference;
-import stamp.missingmodels.util.tests.ContextFreeGrammar;
-import stamp.missingmodels.util.tests.Graph;
-import stamp.missingmodels.util.tests.Graph.Edge;
-import stamp.missingmodels.util.tests.ReachabilitySolver;
+import stamp.missingmodels.util.abduction.AbductiveInference;
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.graph.Graph;
+import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
+import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.relation.RelationManager;
+import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import chord.project.Chord;
 
 @Chord(name = "cflsolver")
@@ -29,17 +29,23 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	private static ContextFreeGrammar taintGrammar = new ContextFreeGrammar();
 	static {
 		// pt rules
-		taintGrammar.addUnaryProduction("Flow", "newCtxt", true);
-		taintGrammar.addBinaryProduction("Flow", "Flow", "assignCtxt", false, true);
-		taintGrammar.addBinaryProduction("Flow", "Flow", "assignCCtxt", false, true);
-		taintGrammar.addBinaryProduction("Flow", "Flow", "dynAssignCCtxt", false, true);
-		taintGrammar.addProduction("FlowField", new String[]{"Flow", "storeCtxt", "Flow"}, new boolean[]{false, true, true});
-		taintGrammar.addProduction("Flow", new String[]{"FlowField", "Flow", "loadCtxt"}, new boolean[]{false, false, true});
-		taintGrammar.addBinaryProduction("FlowStatField", "Flow", "storeStatCtxt", false, true);
-		taintGrammar.addBinaryProduction("Flow", "FlowStatField", "loadStatCtxt", false, true);
+		taintGrammar.addUnaryProduction("Flow", "alloc");
 		
-		taintGrammar.addProduction("FlowFieldArr", new String[]{"Flow", "storeCtxtArr", "Flow"}, new boolean[]{false, true, true});
+		taintGrammar.addBinaryProduction("Flow", "Flow", "assign");
 		
+		taintGrammar.addBinaryProduction("Flow", "Flow", "param");
+		taintGrammar.addBinaryProduction("Flow", "Flow", "return");
+		
+		taintGrammar.addBinaryProduction("Flow", "Flow", "dynAssign");
+		
+		taintGrammar.addProduction("FlowField", new String[]{"Flow", "store", "Flow"}, new boolean[]{false, false, true});
+		taintGrammar.addProduction("Flow", new String[]{"FlowField", "Flow", "load"});
+		
+		taintGrammar.addBinaryProduction("FlowStatField", "Flow", "storeStat");
+		taintGrammar.addBinaryProduction("Flow", "FlowStatField", "loadStat");
+		
+		taintGrammar.addProduction("FlowFieldArr", new String[]{"Flow", "storeArr", "Flow"}, new boolean[]{false, false, true});
+
 		// object annotations
 		taintGrammar.addBinaryProduction("Obj2RefT", "Flow", "ref2RefT");
 		taintGrammar.addBinaryProduction("Obj2PrimT", "Flow", "ref2PrimT");
@@ -47,17 +53,17 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		taintGrammar.addBinaryProduction("Obj2PrimT", "FlowFieldArr", "Obj2PrimT");
 		
 		taintGrammar.addBinaryProduction("Label2ObjT", "label2RefT", "Flow", false, true);
-		taintGrammar.addBinaryProduction("Label2ObjT", "label2ObjT", "FlowField", false, true, true);
+		taintGrammar.addBinaryProduction("Label2ObjT", "Label2ObjT", "FlowField", false, true, true);
 		
 		// sinkf
 		taintGrammar.addBinaryProduction("SinkF2Obj", "sinkF2RefF", "Flow", false, true);
 		taintGrammar.addProduction("SinkF2Obj", new String[]{"sink2Label", "Label2Obj", "Flow", "ref2RefF", "Flow"}, new boolean[]{false, false, false, true, true});
-		taintGrammar.addProduction("SinkF2Obj", new String[]{"sink2Label", "Label2Prim", "ref2RefPrimF", "Flow"}, new boolean[]{false, false, true, true});
+		taintGrammar.addProduction("SinkF2Obj", new String[]{"sink2Label", "Label2Prim", "ref2PrimF", "Flow"}, new boolean[]{false, false, true, true});
 		taintGrammar.addBinaryProduction("SinkF2Obj", "SinkF2Obj", "FieldFlow", false, true, true);
 		
 		taintGrammar.addUnaryProduction("SinkF2Prim", "sinkF2PrimF");
 		taintGrammar.addProduction("SinkF2Prim", new String[]{"sink2Label", "Label2Obj", "Flow", "prim2RefF"}, new boolean[]{false, false, false, true});
-		taintGrammar.addProduction("SinkF2Prim", new String[]{"sink2Label", "Label2Prim", "Prim2PrimF"}, new boolean[]{false, false, true});
+		taintGrammar.addProduction("SinkF2Prim", new String[]{"sink2Label", "Label2Prim", "prim2PrimF"}, new boolean[]{false, false, true});
 		
 		// source-sink flow
 		taintGrammar.addProduction("Src2Sink", new String[]{"src2Label", "Label2Obj", "SinkF2Obj"}, new boolean[]{false, false, true});
@@ -75,204 +81,177 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		
 		// label-prim flow
 		taintGrammar.addUnaryProduction("Label2Prim", "label2PrimT");
-		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "assignPrimCtxt", false, true);
-		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "assignPrimCCtxt", false, true);
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "assignPrim");
+		
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "paramPrim");
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "returnPrim");
+		
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "dynAssignPrim");
 
 		taintGrammar.addBinaryProduction("Label2Prim", "Label2Obj", "Obj2PrimT");
 		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "Prim2PrimT");
 
-		taintGrammar.addProduction("Label2Prim", new String[]{"Label2ObjT", "Flow", "loadPrimCtxt"}, new boolean[]{false, false, true}, true);
-		taintGrammar.addProduction("Label2Prim", new String[]{"Label2ObjX", "Flow", "loadPrimCtxtArr"}, new boolean[]{false, false, true});
+		taintGrammar.addProduction("Label2Prim", new String[]{"Label2ObjT", "Flow", "loadPrim"}, true);
+		taintGrammar.addProduction("Label2Prim", new String[]{"Label2ObjX", "Flow", "loadPrim"});
 		taintGrammar.addBinaryProduction("Label2Prim", "Label2PrimFldArr", "Obj2PrimT");
 
-		taintGrammar.addProduction("Label2Prim", new String[]{"Label2PrimFld", "Flow", "loadPrimCtxt"}, new boolean[]{false, false, true});
-		taintGrammar.addBinaryProduction("Label2Prim", "Label2PrimFldStat", "loadStatPrimCtxt", false, true);
+		taintGrammar.addProduction("Label2Prim", new String[]{"Label2PrimFld", "Flow", "loadPrim"});
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2PrimFldStat", "loadStatPrim");
 		
-		taintGrammar.addProduction("Label2PrimFld", new String[]{"Label2Prim", "storePrimCtxt", "Flow"}, new boolean[]{false, true, true});
-		taintGrammar.addProduction("Label2PrimFldArr", new String[]{"Label2Prim", "storePrimCtxtArr", "Flow"}, new boolean[]{false, true, true});
-		taintGrammar.addBinaryProduction("Label2PrimFldStat", "Label2Prim", "storeStatPrimCtxt", false, true);		
+		taintGrammar.addProduction("Label2PrimFld", new String[]{"Label2Prim", "storePrim", "Flow"}, new boolean[]{false, false, true});
+		taintGrammar.addProduction("Label2PrimFldArr", new String[]{"Label2Prim", "storePrimArr", "Flow"}, new boolean[]{false, false, true});
+		taintGrammar.addBinaryProduction("Label2PrimFldStat", "Label2Prim", "storeStatPrim");
+	}
+	
+	public static Map<Edge,Boolean> runInference(Graph g) throws LpSolveException {		
+		// STEP 1: Run reachability solver
+		
+		long time = System.currentTimeMillis();
+		System.out.println("Computing transitive closure");
+		
+		Graph gbar = new ReachabilitySolver(g).getResult();
+		
+		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
+		System.out.println("Num edges: " + gbar.getEdges().size());
+		
+		// STEP 2: Run the abductive inference algorithm
+		Set<Edge> baseEdges = gbar.getEdges(new EdgeFilter() {
+			@Override
+			public boolean filter(Edge edge) {
+				return edge.getSymbol().equals("param") || edge.getSymbol().equals("return");
+			}
+		});
+		System.out.println("Num base edges: " + baseEdges.size());
+		Set<Edge> initialCutEdges = gbar.getEdges(new EdgeFilter() {
+			private boolean added = false;
+			@Override
+			public boolean filter(Edge edge) {
+				boolean result = (!this.added) && edge.getSymbol().equals("Src2Sink");
+				if(result) {
+					//this.added = true;
+				}
+				return result;
+			}
+		});
+		System.out.println("Num initial edges: " + initialCutEdges.size());
+		return new AbductiveInference(gbar, baseEdges, initialCutEdges).solve();
 	}
 
-	public static void main(String[] args) {
-		//System.out.println("CFG:");
-		//System.out.println(taintGrammar.toString());
-
-		Graph g = new Graph(taintGrammar);
-		g.addEdge("x", "o1", "newCtxt", (short)1);
-		g.addEdge("z", "o2", "newCtxt", (short)1);
-		g.addEdge("y", "x", "assignCtxt", (short)1);
-		g.addEdge("y", "z", "storeCtxt", "f", (short)1);
-		g.addEdge("w", "x", "assignCtxt", (short)1);
-		g.addEdge("v", "w", "loadCtxt", "f", (short)1);
-
-		new ReachabilitySolver().solve(taintGrammar, g);	
-
-		//System.out.println("Solution:");
-		//System.out.println(g.toString());
-		
-		MultivalueMap<String,Edge> sortedEdges = g.getSortedEdges();
-		
-		/*
-		for(String label : sortedEdges.keySet()) {
-			System.out.println(label + ": " + sortedEdges.get(label).size());
-		}
-		for(Set<Edge> edges : sortedEdges.values()) {
-			for(Edge edge : edges) {
-				System.out.println("Inputs for " + edge);
-				for(Edge input : g.getPositiveWeightInputs(edge)) {
-					System.out.println(input);
-				}
+	public static void printResultShord(Map<Edge,Boolean> result) {
+		DomI dom = (DomI)ClassicProject.g().getTrgt("I");
+		for(Edge edge : result.keySet()) {
+			if(result.get(edge)) {
+				System.out.println("remove: " + edge);
+				System.out.println("invk: " + dom.get(edge.context.getContexts().get(0)));
 			}
-			System.out.println();
+		}
+	}
+	
+	public static void printResult(Map<Edge,Boolean> result) {
+		for(Edge edge : result.keySet()) {
+			if(result.get(edge)) {
+				System.out.println("remove: " + edge);
+			}
+		}
+
+		/*
+		for(int symbolInt=0; symbolInt<gbar.getContextFreeGrammar().getNumLabels(); symbolInt++) {
+			final String symbol = gbar.getContextFreeGrammar().getSymbol(symbolInt);
+			if(!symbol.equals("Flow")) continue;
+			Set<String> edges = new HashSet<String>();
+			for(Edge edge : gbar.getEdges(new EdgeFilter() {
+				@Override
+				public boolean filter(Edge edge) {
+					return edge.getSymbol().equals(symbol); 
+				}})) {
+				edges.add(edge.sink.name.substring(1) + " " + edge.source.name.substring(1));
+			}
+			List<String> edgeList = new ArrayList<String>(edges);
+			Collections.sort(edgeList);
+			for(String edge : edgeList) {
+				System.out.println(edge);
+			}
+			//System.out.println(symbol + ": " + edges.size());
 		}
 		*/
-		
-		AbductiveInference ai = new AbductiveInference();
-		try {
-			Set<Edge> cutEdges = new HashSet<Edge>();
-			for(Edge edge : g.getEdges()) {
-				if(edge.firstInput == null) {
-					cutEdges.add(edge);
-				}
-			}
-			Set<Edge> removedEdges = new HashSet<Edge>();
-			for(Edge edge : sortedEdges.get("Flow")) {
-				if(g.getVertexName(edge.source).equals("o2")) {
-					removedEdges.add(edge);
-				}
-			}
-			Set<Edge> result = ai.performInference(g, cutEdges, removedEdges);
-			for(Edge edge : g.getEdges()) {
-				if(edge.firstInput == null) {
-					if(result.contains(edge)) {
-						System.out.println(edge + ": 0");
-					} else {
-						System.out.println(edge + ": 1");
-					}
-				}
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 	}
-
+	
 	@Override
 	public void run() {
-		Graph g = new Graph(taintGrammar);
-
-		for(String label : taintGrammar.getLabelNames()) {
-			for(Relation relation : ConversionUtils.getChordRelationsFor(label)) {
-				try {
-					// STEP 1: Load the Shord relation.
-					final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relation.getRelationName());
-					rel.load();
-					Iterable<int[]> res = rel.getAryNIntTuples();
-
-					// STEP 2: Iterate over relation and add to the graph.
-					for(int[] tuple : res) {
-						String sourceName = relation.getSourceFromTuple(tuple);
-						String sinkName = relation.getSinkFromTuple(tuple);
-
-						if(relation.hasLabel()) {
-							g.addEdge(sourceName, sinkName, label, Integer.toString(relation.getLabelFromTuple(tuple)), relation.getWeightFromTuple(tuple));
-						} else {
-							g.addEdge(sourceName, sinkName, label, relation.getWeightFromTuple(tuple));
-						}
-					}
-					
-					rel.close();
-				} catch(RuntimeException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		new ReachabilitySolver().solve(taintGrammar, g);
-		//System.out.println(g.toString());
-
-		System.out.println("Printing CFL outputs:");
-		MultivalueMap<String,Edge> sortedEdges = g.getSortedEdges();
-		for(String label : sortedEdges.keySet()) {
-			System.out.println(label + ": " + sortedEdges.get(label).size());
-		}
-		System.out.println();
-		
-		System.out.println("Printing dynamic edges:");
-		for(Edge edge : sortedEdges.get("dynAssignCCtxt")) {
-			System.out.println(getMethodSig(g, edge));
-		}
-		
-		System.out.println("Printing input edges:");
-		for(Edge edge : sortedEdges.get("Src2Sink")) {
-			System.out.println("Src2Sink edge: " + edge.toString());
-			for(Edge input : g.getInputs(edge, "assignCCtxt")) {
-				System.out.println("Input method edge: " + getMethodSig(g, input) + " (weight " + input.weight + ")");
-			}
-			for(Edge input : g.getInputs(edge, "dynAssignCCtxt")) {
-				System.out.println("Input method edge: " + getMethodSig(g, input) + " (weight " + input.weight + ")");				
-			}
-		}
-		
-		// run abduction
-		System.out.println("Abductive inference:");
-		AbductiveInference ai = new AbductiveInference();
 		try {
-			Set<Edge> cutEdges = new HashSet<Edge>();
-			for(Edge edge : sortedEdges.get("assignCCtxt")) {
-				cutEdges.add(edge);
-			}
-			Set<Edge> removedEdges = new HashSet<Edge>();
-			for(Edge edge : sortedEdges.get("Src2Sink")) {
-				removedEdges.add(edge);
-			}
-			Set<Edge> result = ai.performInference(g, cutEdges, removedEdges);
-			System.out.println("Edges cut:");
-			for(Edge edge : sortedEdges.get("assignCCtxt")) {
-				//System.out.println(edge + (result.contains(edge) ? ": 0" : ": 1"));
-				String sourceMethod = ConversionUtils.getMethodName(edge.source.toString());
-				String sinkMethod = ConversionUtils.getMethodName(edge.sink.toString());
-				if(result.contains(edge)) {
-					System.out.println(sourceMethod + " -> " + sinkMethod + " removed");
-				}
-			}
-			System.out.println("Edges retained:");
-			for(Edge edge : sortedEdges.get("assignCCtxt")) {
-				//System.out.println(edge + (result.contains(edge) ? ": 0" : ": 1"));
-				String sourceMethod = ConversionUtils.getMethodName(edge.source.toString());
-				String sinkMethod = ConversionUtils.getMethodName(edge.sink.toString());
-				if(!result.contains(edge)) {
-					System.out.println(sourceMethod + " -> " + sinkMethod + " retained");
-				}
-			}
-		} catch(Exception e) {
+			printResultShord(runInference(getGraphFromShord()));
+		} catch(LpSolveException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private static String getMethodSig(Graph graph, Edge edge) {
-		VarNode v;
-		String[] tokens = graph.getVertexName(edge.source).split("_");
-		if(tokens[0].startsWith("V")) {
-			DomV dom = (DomV)ClassicProject.g().getTrgt(tokens[0].substring(0,1).toUpperCase());
-			v = dom.get(Integer.parseInt(tokens[0].substring(1)));
-		} else if(tokens[0].startsWith("U")) {
-			DomU dom = (DomU)ClassicProject.g().getTrgt(tokens[0].substring(0,1).toUpperCase());
-			v = dom.get(Integer.parseInt(tokens[0].substring(1)));
-		} else {
-			throw new RuntimeException("Unrecognized vertex: " + tokens[0]);
+	public static void main(String[] args) throws LpSolveException {
+		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_shord_apps_samples_MultipleLeaks/cfl";
+		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_Butane/cfl";
+		printResult(runInference(getGraphFromFiles(directoryName)));
+	}
+	
+	private static void readRelation(GraphBuilder gb, Relation relation) {
+		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relation.getName());
+		rel.load();
+		
+		Iterable<int[]> res = rel.getAryNIntTuples();
+		for(int[] tuple : res) {
+			relation.addEdge(gb, tuple);
 		}
-		if(v instanceof ParamVarNode) {
-			return ((ParamVarNode)v).method.toString();
-		} else if(v instanceof RetVarNode) {
-			return ((RetVarNode)v).method.toString();
-		} else if(v instanceof ThisVarNode) {
-			return ((ThisVarNode)v).method.toString();
-		} else if(v instanceof LocalVarNode) {
-			return ((LocalVarNode)v).meth.toString();
-		} else if(v instanceof CastVarNode) {
-			return ((CastVarNode)v).method.toString();
-		} else {
-			throw new RuntimeException("Unrecognized variable: " + v);
+		
+		rel.close();
+	}
+	
+	public static Graph getGraphFromShord() {
+		GraphBuilder gb = new GraphBuilder(taintGrammar);
+		int numSymbols = gb.toGraph().getContextFreeGrammar().getNumLabels();
+		for(int i=0; i<numSymbols; i++) {
+			String symbol = gb.toGraph().getContextFreeGrammar().getSymbol(i);
+			for(Relation relation : RelationManager.relations.getRelationsBySymbol(symbol)) {
+				readRelation(gb, relation);
+			}
 		}
+		return gb.toGraph();
+	}
+	
+	private static void readRelation(BufferedReader br, GraphBuilder gb, String relationName) throws IOException {
+		br.readLine();
+		String line;
+		while((line = br.readLine()) != null) {
+			String[] tupleStr = line.split("\\s+");
+			int[] tuple = new int[tupleStr.length];
+			for(int i=0; i<tuple.length; i++) {
+				tuple[i] = Integer.parseInt(tupleStr[i]);
+			}
+			for(Relation relation : RelationManager.relations.getRelationsByName(relationName)) {
+				relation.addEdge(gb, tuple);
+			}
+		}
+	}
+	
+	public static Graph getGraphFromFiles(String directoryName) {
+		GraphBuilder gb = new GraphBuilder(taintGrammar);
+		File directory = new File(directoryName);
+		for(File relationFile : directory.listFiles()) {
+			try {
+				String relationName = relationFile.getName().split("\\.")[0];
+				BufferedReader br = new BufferedReader(new FileReader(relationFile));
+				readRelation(br, gb, relationName);
+			} catch(Exception e) {}
+		}
+		return gb.toGraph();
+	}
+	
+	public static Graph getTestGraph() {
+		// STEP 1: Build the graph
+		GraphBuilder gb = new GraphBuilder(taintGrammar);
+		gb.addEdge("o1", "x", "alloc");
+		gb.addEdge("o2", "z", "alloc");
+		gb.addEdge("x", "y", "param", new EdgeInfo(1));
+		gb.addEdge("z", "y", "store");
+		gb.addEdge("x", "w", "param", new EdgeInfo(1));
+		gb.addEdge("w", "v", "load");
+		return gb.toGraph();
 	}
 }

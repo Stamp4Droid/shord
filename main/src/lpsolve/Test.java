@@ -9,8 +9,8 @@ public class Test {
 		System.out.println("PATH : " + System.getProperty("java.library.path"));
 		System.out.println("CLASSPATH : " + System.getProperty("java.class.path"));
 
-		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55.so");
-		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55j.so");
+		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55.so");
+		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55j.so");
 
 		LpSolve solver = LpSolve.makeLp(0,4);
 		solver.strAddConstraint("3 2 2 1", LpSolve.LE, 4);
@@ -34,8 +34,8 @@ public class Test {
 	}
 
 	public void execute2() throws LpSolveException {
-		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55.so");
-		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55j.so");
+		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55.so");
+		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55j.so");
 		
 		LpSolve problem = LpSolve.makeLp(0, 4); // make a new problem with 4 variables and 0 constraints
 		problem.strAddConstraint("3 2 2 1", LpSolve.LE, 4); // add constraint 3*c1 + 2*c2 + 2*c3 + c4 <= 4

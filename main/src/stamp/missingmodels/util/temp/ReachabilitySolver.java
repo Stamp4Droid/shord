@@ -1,12 +1,12 @@
-package stamp.missingmodels.util.tests;
+package stamp.missingmodels.util.temp;
 
 import java.util.List;
 import java.util.Set;
 
-import stamp.missingmodels.util.tests.ContextFreeGrammar.BinaryProduction;
-import stamp.missingmodels.util.tests.ContextFreeGrammar.UnaryProduction;
-import stamp.missingmodels.util.tests.Graph.Edge;
-import stamp.missingmodels.util.tests.Graph.Vertex;
+import stamp.missingmodels.util.temp.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.temp.ContextFreeGrammar.UnaryProduction;
+import stamp.missingmodels.util.temp.Graph.Edge;
+import stamp.missingmodels.util.temp.Graph.Vertex;
 
 public class ReachabilitySolver {
 	public static int getField(int field, boolean ignoreFields) {

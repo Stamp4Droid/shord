@@ -1,4 +1,4 @@
-package stamp.missingmodels.util.tests;
+package stamp.missingmodels.util.temp;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -6,13 +6,14 @@ import java.util.Map;
 import java.util.Set;
 
 import lpsolve.LpSolveException;
-import stamp.missingmodels.util.tests.ContextFreeGrammar.BinaryProduction;
-import stamp.missingmodels.util.tests.ContextFreeGrammar.UnaryProduction;
-import stamp.missingmodels.util.tests.Graph.Edge;
-import stamp.missingmodels.util.tests.LinearProgram.Coefficient;
-import stamp.missingmodels.util.tests.LinearProgram.ConstraintType;
-import stamp.missingmodels.util.tests.LinearProgram.LinearProgramResult;
-import stamp.missingmodels.util.tests.LinearProgram.ObjectiveType;
+import stamp.missingmodels.util.abduction.LinearProgram;
+import stamp.missingmodels.util.abduction.LinearProgram.Coefficient;
+import stamp.missingmodels.util.abduction.LinearProgram.ConstraintType;
+import stamp.missingmodels.util.abduction.LinearProgram.LinearProgramResult;
+import stamp.missingmodels.util.abduction.LinearProgram.ObjectiveType;
+import stamp.missingmodels.util.temp.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.temp.ContextFreeGrammar.UnaryProduction;
+import stamp.missingmodels.util.temp.Graph.Edge;
 
 public class AbductiveInference {
 	private LinearProgram<Edge> lp = new LinearProgram<Edge>();

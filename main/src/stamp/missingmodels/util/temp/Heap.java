@@ -1,4 +1,4 @@
-package stamp.missingmodels.util.tests;
+package stamp.missingmodels.util.temp;
 
 public interface Heap<T> {
 	public void add(T t, short weight);

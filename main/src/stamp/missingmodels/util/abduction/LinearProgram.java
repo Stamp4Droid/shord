@@ -1,4 +1,4 @@
-package stamp.missingmodels.util.tests;
+package stamp.missingmodels.util.abduction;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -165,13 +165,15 @@ public class LinearProgram<T> {
 		this.constraints.add(constraint);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addConstraint(ConstraintType constraintType, double constant, Coefficient<T> ... coefficients) {
 		Constraint<T> constraint = new Constraint<T>(constraintType, constant);
 		for(Coefficient<T> coefficient : coefficients) {
 			constraint.coefficients.put(coefficient.variable, coefficient);
 		}
 		this.constraints.add(constraint);
+		if(this.constraints.size()%1000 == 0) {
+			System.out.println(this.constraints.size());
+		}
 	}
 
 	public static class LinearProgramResult<T> {
@@ -222,36 +224,37 @@ public class LinearProgram<T> {
 		long time = System.currentTimeMillis();
 		
 		LpSolve problem = LpSolve.makeLp(0, numVariables);
-		problem.setVerbose(0);
-		problem.setAddRowmode(true);
+		//problem.setAddRowmode(true); // THIS CAUSES BUGS
 		
 		problem.strSetObjFn(this.objective.toMappedString(variableNames, numVariables));
 		if(this.objective.objectiveType == ObjectiveType.MAXIMIZE) {
 			problem.setMaxim();
-		} else if(this.objective.objectiveType == ObjectiveType.MINIMIZE){
+		} else if(this.objective.objectiveType == ObjectiveType.MINIMIZE) {
 			problem.setMinim();
 		} else {
 			throw new RuntimeException("Objective type not recognized!");
 		}
-		System.out.println(this.objective);
+		//System.out.println(this.objective.toString());
 		for(Constraint<T> constraint : this.constraints) {
-			System.out.println(constraint.toString());
+			//System.out.println(constraint.toString());
 			problem.strAddConstraint(constraint.toMappedString(variableNames, numVariables), constraint.convertConstraintType(), constraint.constant);
 		}
 		
-		// Set constraints to be integer valued
+		// Set variables to be integer valued
 		for(int i=1; i<=problem.getNcolumns(); i++) {
-			System.out.println("Setting variable " + i + " to integer");
-			try {
-				problem.setInt(i, true);
-			} catch(LpSolveException e) {
-				e.printStackTrace();
-			}
+			problem.setInt(i, true);
+			problem.setUpbo(i, 1.0);
 		}
 		
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 		
+		//problem.printLp();
+		
 		System.out.println("Solving LP");
+		
+		problem.setDebug(true); // set branch & bound debugging to true
+		problem.setVerbose(0);
+		//problem.setScaling(LpSolve.SCALE_MEAN); // use automatic scaling (if int type variable then only rows scaled)
 		
 		time = System.currentTimeMillis();
 		
@@ -272,10 +275,12 @@ public class LinearProgram<T> {
 		return result;
 	}
 
+	/*
 	public static void main(String[] args) throws LpSolveException {
 		test1();
 		//test2();
 	}
+	*/
 
 	public static void test1() throws LpSolveException {
 		LinearProgram<String> problem = new LinearProgram<String>();
