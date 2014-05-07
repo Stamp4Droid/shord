@@ -20,10 +20,13 @@ TUPLE_TAG(SRC);
 TUPLE_TAG(DST);
 TUPLE_TAG(TAG);
 TUPLE_TAG(COMP);
-TUPLE_TAG(R_FROM);
-TUPLE_TAG(R_TO);
-TUPLE_TAG(F_FROM);
-TUPLE_TAG(F_TO);
+TUPLE_TAG(STATE);
+TUPLE_TAG(CP_FROM);
+TUPLE_TAG(CP_TO);
+TUPLE_TAG(ST_FROM);
+TUPLE_TAG(ST_TO);
+TUPLE_TAG(REQD);
+TUPLE_TAG(PUSH);
 
 // ALPHABET ===================================================================
 
@@ -213,10 +216,14 @@ public:
     const std::string name;
     const Ref<Component> ref;
     Registry<Box> boxes;
-    Index<Table<Transition>,Ref<State>,&Transition::from> transitions;
+    MultiIndex<Index<Table<Transition>,Ref<State>,&Transition::from>,
+	       Index<PtrTable<Transition>,Label,&Transition::label>>
+	transitions;
     MultiIndex<Index<Table<Entry>,Ref<Box>,&Entry::to>,
-	       Index<PtrTable<Entry>,Ref<State>,&Entry::from>> entries;
-    Index<Table<Exit>,Ref<Box>,&Exit::from> exits;
+	       Index<PtrTable<Entry>,Ref<State>,&Entry::from>,
+	       Index<PtrTable<Entry>,MatchLabel,&Entry::label>> entries;
+    MultiIndex<Index<Table<Exit>,Ref<Box>,&Exit::from>,
+	       Index<PtrTable<Exit>,MatchLabel,&Exit::label>> exits;
 private:
     Registry<State> states;
     Ref<State> initial;
@@ -230,10 +237,6 @@ private:
 	return false;
     }
 public:
-    explicit Component() : name("ANONYMOUS") {}
-    bool recursive() const {
-	return !boxes.empty();
-    }
     const Registry<State>& get_states() const {
 	return states;
     }
@@ -249,6 +252,66 @@ public:
 	       const Registry<Component>& comp_reg) const;
 };
 
+// EFFECT HANDLING ============================================================
+
+class RSM;
+
+class Frame {
+public:
+    Ref<Component> comp;
+    Ref<Box> box;
+    Ref<Tag> tag;
+public:
+    friend int compare(const Frame& lhs, const Frame& rhs) {
+	int fld_rel = compare(lhs.comp, rhs.comp);
+	if (fld_rel != 0) {
+	    return fld_rel;
+	}
+	fld_rel = compare(lhs.box, rhs.box);
+	if (fld_rel != 0) {
+	    return fld_rel;
+	}
+	return compare(lhs.tag, rhs.tag);
+    }
+    bool operator<(const Frame& rhs) const {
+	return compare(*this, rhs) < 0;
+    }
+    bool operator==(const Frame& rhs) const {
+	return compare(*this, rhs) == 0;
+    }
+    friend void print(std::ostream& os, const Frame& frame,
+		      const Registry<Component>& comp_reg,
+		      const Registry<Tag>& tag_reg);
+};
+
+typedef FuzzyStack<Frame,2> EfftReqd;
+typedef FuzzyStack<Frame,2> EfftPush;
+
+typedef mi::Index<CP_TO, Ref<Component>,
+	    mi::Index<ST_TO, Ref<State>,
+		mi::Index<CP_FROM, Ref<Component>,
+		    mi::Index<ST_FROM, Ref<State>,
+			mi::Index<REQD, EfftReqd,
+			    mi::Table<PUSH, EfftPush>>>>>> EffectRTL;
+
+typedef mi::Index<CP_FROM, Ref<Component>,
+	    mi::Index<ST_FROM, Ref<State>,
+		mi::Index<CP_TO, Ref<Component>,
+		    mi::Index<ST_TO, Ref<State>,
+			mi::Index<REQD, EfftReqd,
+			    mi::Table<PUSH, EfftPush>>>>>> EffectLTR;
+
+template<class EfftT>
+void print_effect(std::ostream& os, const std::string& prefix,
+		  const EfftT& efft, const Registry<Component>& comp_reg,
+		  const Registry<Tag>& tag_reg);
+
+bool compose(const EffectRTL& l_efft, const EffectLTR& r_efft,
+	     EffectRTL& res_efft, bool fwd_only);
+
+bool copy_trans(const EffectRTL& src, EffectLTR& dst, bool accepting_only,
+		const RSM& rsm);
+
 // ANALYSIS SPEC ==============================================================
 
 class RSM {
@@ -257,79 +320,45 @@ public:
 public:
     Registry<Component> components;
 private:
+    // If the symbol is not parametric, there will only be one entry, for the
+    // invalid tag. Otherwise, there will be a separate entry for each tag.
+    // These entries get constructed on the fly.
+    // TODO: Perhaps a copy for each separate tag causes blowup?
+    // XXX: This gets initialized using the original capacity of the symbol
+    // store, however the RSM might later introduce new symbols.
+    mutable mi::FlatIndex<REV, bool,
+		mi::FlatIndex<SYMBOL, Ref<Symbol>,
+		    mi::Index<TAG, Ref<Tag>,
+			EffectLTR>>> base_effts;
+    EffectRTL id_efft_;
+private:
     void parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg,
 		    Registry<Tag>& tag_reg);
 public:
     explicit RSM(const std::string& dirname, Registry<Symbol>& symbol_reg,
 		 Registry<Tag>& tag_reg);
-    void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
-	       const Registry<Tag>& tag_reg) const;
-};
-
-typedef mi::BiRel<F_FROM, F_TO, Ref<State>> FsmEffect;
-typedef mi::Uniq<FsmEffect> TransRel;
-
-class FSM {
-public:
-    static const std::string FILE_EXTENSION;
-public:
-    // Reusing Component class, but only for the FSM part.
-    Component comp;
-private:
-    // TODO:
-    // - Constructing this externally from the uniquing class means we'll also
-    //   unique various intermediate sets along the way.
-    // - Could instead have specialized data structures for FSM.
-    mi::FlatIndex<REV, bool,
-	mi::FlatIndex<SYMBOL, Ref<Symbol>,
-	    // Non-parametric symbols will only have an entry for "none".
-	    // Parametric ones will have effects applicable to all tags under
-	    // "none", and additional effects specific to some tag under that
-	    // tag. The two will need to be combined.
-	    mi::Index<TAG, Ref<Tag>,
-		TransRel>>> base_effects;
-    TransRel id_trel_;
-private:
-    void print_effects(std::ostream& os, const Symbol& s, bool rev,
-		       const Registry<Symbol>& symbol_reg,
-		       const Registry<Tag>& tag_reg) const;
-public:
-    explicit FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
-		 Registry<Tag>& tag_reg);
-    TransRel id_trel() const {
-	return id_trel_;
-    };
-    // The tag on the label isn't used; the provided tag is used instead.
-    // TODO: Ensure that this is only applied to valid Edge objects.
-    // Specifically: tag.valid() iff symbol.parametric
-    template<class L> TransRel effect_of(const L& label, Ref<Tag> tag) const {
-	const auto& slice = base_effects[label.rev][label.symbol];
-	TransRel res = slice[Ref<Tag>()];
-	if (tag.valid() && slice.contains(tag)) {
-	    res.copy(slice[tag]);
-	}
-	return res;
+    const EffectLTR& effect_of(const Symbol& symbol, bool rev,
+			       Ref<Tag> tag) const;
+    const EffectRTL& id_efft() const {
+	return id_efft_;
     }
-    bool is_accepting(const TransRel& trel) const;
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 	       const Registry<Tag>& tag_reg) const;
 };
-
-TransRel compose(const TransRel& trel1, const TransRel& trel2);
 
 class Analysis {
 public:
     Registry<Symbol> symbols;
     Registry<Tag> tags;
-    RSM rsm;
-    FSM fsm; // TODO: Exactly one FSM for now
+    RSM pri;
+    RSM sec; // TODO: Exactly one secondary RSM for now
 private:
     void summarize(Graph& graph, const Component& comp) const;
     void propagate(Graph& graph, const Component& comp) const;
 public:
-    explicit Analysis(const std::string& rsm_dname,
-		      const std::string& fsm_fname)
-	: rsm(rsm_dname, symbols, tags), fsm(fsm_fname, symbols, tags) {}
+    explicit Analysis(const std::string& pri_dname,
+		      const std::string& sec_dname)
+	: pri(pri_dname, symbols, tags), sec(sec_dname, symbols, tags) {}
     void print(std::ostream& os) const;
     void close(Graph& graph) const;
 };
@@ -372,7 +401,7 @@ public:
 		mi::FlatIndex<SYMBOL, Ref<Symbol>,
 		    LabelSlice>>
 	EdgesLabelIndex;
-    typedef mi::Index<DST, Ref<Node>, TransRel> WorkerSummaries;
+    typedef mi::Index<DST, Ref<Node>, EffectLTR> WorkerSummaries;
     typedef mi::Index<COMP, Ref<Component>,
 		mi::Index<SRC, Ref<Node>,
 		    WorkerSummaries>>
@@ -413,8 +442,9 @@ public:
     }
     void print_stats(std::ostream& os) const;
     void print_summaries(const std::string& dirname,
-			 const Registry<Component>& comp_reg,
-			 const FSM& fsm) const;
+			 const Registry<Component>& pri_comp_reg,
+			 const Registry<Component>& sec_comp_reg,
+			 const Registry<Tag>& tag_reg) const;
 };
 
 // SOLVING ====================================================================
@@ -435,7 +465,7 @@ public:
     const Ref<Node> start; // used as primary key, to identify a Worker
     const Ref<Worker> ref;
     const Component& comp;
-    const bool top_level;
+    const bool top_level; // TODO: Make this into a template parameter.
 private:
     std::set<Ref<Node>> tgts;
 private:
@@ -449,7 +479,7 @@ public:
     explicit Worker(Ref<Node> start, const Component& comp)
 	: start(start), comp(comp), top_level(true) {}
     Result handle(const Graph& graph, const Registry<Symbol>& symbol_reg,
-		  const FSM& fsm) const;
+		  const RSM& sec) const;
 };
 
 // TODO: Should include the component if we support multiple components in SCCs
@@ -466,24 +496,18 @@ public:
     }
 };
 
-// A summary normally contains a single FSM effect (i.e. a single
-// "FSM start -> FSM end" transition), but we track them in bulk during
-// summarization (for efficiency). Thus, Position contains a set of such
-// transitions, in a TransRel.
-class Position {
-public:
-    const Ref<Node> dst;
-    const Ref<State> r_to;
-    const TransRel trel;
-public:
-    // TODO: Only construct through a 'follow' method, not directly?
-    explicit Position(Ref<Node> dst, Ref<State> r_to, const TransRel& trel)
-	: dst(dst), r_to(r_to), trel(trel) {}
+// A summary normally contains a single transition over the secondary RSM, but
+// we track them in bulk during summarization (for efficiency). Thus, a
+// Position object only covers the rest of the required fields.
+// TODO: Only construct through a 'follow' method, not directly?
+struct Position {
+    Ref<Node> dst;
+    Ref<State> state;
 };
 
-// A single Position can carry a set of FSM effects, so we prefer to schedule
-// all available FSM effects at once. However, a new set of effects can reach
-// a node+state, so we have to reschedule at least the added effects. We're not
+// A single Position can carry a set of RSM effects, so we prefer to schedule
+// all available effects at once. However, a new set of effects can reach a
+// node+state, so we have to reschedule at least the added effects. We're not
 // currently tracking the difference set (we expect such updated to happen
 // infrequently) (TODO: try this), and simply reschedule the entire set of
 // effects. Therefore, we only need to store the node+state on the worklist,
@@ -491,35 +515,40 @@ public:
 // duplicate work (TODO: guard against this).
 class WorkerWorklist {
 private:
-
-    struct PosPrefix {
-	Ref<Node> dst;
-	Ref<State> r_to;
-	explicit PosPrefix(Ref<Node> dst, Ref<State> r_to)
-	    : dst(dst), r_to(r_to) {}
-    };
-
-private:
+    const bool fwd_only;
     mi::Index<DST, Ref<Node>,
-	mi::Index<R_TO, Ref<State>,
-	    TransRel>> reached;
-    std::deque<PosPrefix> queue;
+	mi::Index<STATE, Ref<State>,
+	    EffectRTL>> reached;
+    std::deque<Position> queue;
 public:
+    WorkerWorklist(bool fwd_only) : fwd_only(fwd_only) {}
     bool empty() const {
 	return queue.empty();
     }
-    bool enqueue(const Position& pos) {
-	if (reached.copy(pos.trel, pos.dst, pos.r_to)) {
-	    queue.emplace_back(pos.dst, pos.r_to);
+    bool enqueue(Ref<Node> dst, Ref<State> state, const EffectRTL& efft) {
+	// TODO: Check that the provided effect agrees with our directionality.
+	if (reached.copy(efft, dst, state)) {
+	    queue.push_back(Position{dst, state});
+	    return true;
+	}
+	return false;
+    }
+    bool enqueue(Ref<Node> dst, Ref<State> state, const EffectRTL& l_efft,
+		 const EffectLTR& r_efft) {
+	if (compose(l_efft, r_efft, reached.follow(dst).follow(state),
+		    fwd_only)) {
+	    queue.push_back(Position{dst, state});
 	    return true;
 	}
 	return false;
     }
     Position dequeue() {
-	const PosPrefix& pre = queue.front();
-	Position res(pre.dst, pre.r_to, reached[pre.dst][pre.r_to]);
+	Position res = queue.front();
 	queue.pop_front();
 	return res;
+    }
+    const EffectRTL& effect_at(const Position& pos) const {
+	return reached[pos.dst][pos.state];
     }
 };
 

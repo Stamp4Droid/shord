@@ -139,12 +139,210 @@ void Component::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
     }
 }
 
+// EFFECT HANDLING ============================================================
+
+void print(std::ostream& os, const Frame& frame,
+	   const Registry<Component>& comp_reg, const Registry<Tag>& tag_reg) {
+    const Component& c = comp_reg[frame.comp];
+    os << c.name << ":" << c.boxes[frame.box].name
+       << "{" << tag_reg[frame.tag].name << "}";
+}
+
+template<class EfftT>
+void print_effect(std::ostream& os, const std::string& prefix,
+		  const EfftT& efft, const Registry<Component>& comp_reg,
+		  const Registry<Tag>& tag_reg) {
+    FOR(trans, efft) {
+	const Component& cp_from = comp_reg[trans.template get<CP_FROM>()];
+	const State& st_from =
+	    cp_from.get_states()[trans.template get<ST_FROM>()];
+	const Component& cp_to = comp_reg[trans.template get<CP_TO>()];
+	const State& st_to =
+	    cp_to.get_states()[trans.template get<ST_TO>()];
+	os << prefix
+	   << cp_from.name << ":" << st_from.name << " "
+	   <<   cp_to.name << ":" <<   st_to.name << " <";
+	print(os, trans.template get<REQD>(), false, comp_reg, tag_reg);
+	os << "|";
+	print(os, trans.template get<PUSH>(), true, comp_reg, tag_reg);
+	os << ">" << std::endl;
+    }
+}
+
+void compose(const EfftReqd& l_reqd, const EfftPush& l_push,
+	     const EfftReqd& r_reqd, const EfftPush& r_push,
+	     std::list<std::pair<EfftReqd,EfftPush>>& res) {
+    if (l_push.empty()) {
+	if (l_push.is_exact()) {
+	    // α|- + γ|δ = αγ|δ
+	    res.emplace_back(r_reqd.append(l_reqd), r_push);
+	} else if (r_reqd.empty()) {
+	    // α|* + -|δ = α|*δ
+	    // α|* + *|δ = α|*δ, ...
+	    res.emplace_back(l_reqd, r_push.relax());
+	    if (!r_reqd.is_exact()) {
+		// α|* + *|δ = ..., α*|δ
+		res.emplace_back(l_reqd.relax(), r_push);
+	    }
+	} else {
+	    // α|* + xγ|δ = α|* + γ|δ
+	    compose(l_reqd, l_push, r_reqd.pop(), r_push, res);
+	}
+    } else if (r_reqd.empty()) {
+	// α|βx + -|δ = α|βxδ
+	// α|βx + *|δ = α|βxδ, ...
+	res.emplace_back(l_reqd, l_push.append(r_push));
+	if (!r_reqd.is_exact()) {
+	    // α|βx + *|δ = ..., α|β + *|δ
+	    compose(l_reqd, l_push.pop(), r_reqd, r_push, res);
+	}
+    } else if (l_push.top() == r_reqd.top()) {
+	// α|βx + xγ|δ = α|β + γ|δ
+	compose(l_reqd, l_push.pop(), r_reqd.pop(), r_push, res);
+    }
+}
+
+// TODO: Wasteful to store forward-only effects in RTL.
+bool compose(const EffectRTL& l_efft, const EffectLTR& r_efft,
+	     EffectRTL& res_efft, bool fwd_only) {
+    bool grew = false;
+    auto add_product = [&](const typename EffectRTL::Sub::Sub& prefixes,
+			   const typename EffectLTR::Sub::Sub& additions) {
+	FOR(l, prefixes) {
+	    assert(!fwd_only || (l.get<REQD>().empty() &&
+				 l.get<REQD>().is_exact()));
+	    FOR(r, additions) {
+		std::list<std::pair<EfftReqd,EfftPush>> res_stacks;
+		compose(l.get<REQD>(), l.get<PUSH>(),
+			r.get<REQD>(), r.get<PUSH>(), res_stacks);
+		for (const auto& p : res_stacks) {
+		    if (fwd_only && (!p.first.empty() ||
+				     !p.first.is_exact())) {
+			continue;
+		    }
+		    if (res_efft.insert(r.get<CP_TO>(),   r.get<ST_TO>(),
+					l.get<CP_FROM>(), l.get<ST_FROM>(),
+					p.first,          p.second)) {
+			grew = true;
+		    }
+		}
+	    }
+	}
+    };
+    auto zip = [&](const typename EffectRTL::Sub& a,
+		   const typename EffectLTR::Sub& b) {
+	join_zip(a, b, add_product);
+    };
+    join_zip(l_efft, r_efft, zip);
+    return grew;
+}
+
+bool copy_trans(const EffectRTL& src, EffectLTR& dst, bool accepting_only,
+		const RSM& rsm) {
+    bool grew = false;
+    if (accepting_only) {
+	const Component& top_comp = rsm.components.last();
+	Ref<State> init_st = top_comp.get_initial();
+	for (const auto& st_to_pair : src[top_comp.ref]) {
+	    Ref<State> st_to = st_to_pair.first;
+	    if (top_comp.get_final().count(st_to) > 0
+		&& st_to_pair.second.contains(top_comp.ref, init_st,
+					      EfftReqd(),   EfftPush())
+		&& dst.insert(top_comp.ref, init_st,
+			      top_comp.ref, st_to,
+			      EfftReqd(),   EfftPush())) {
+		grew = true;
+	    }
+	}
+    } else {
+	for (const auto& cp_to_pair : src) {
+	    for (const auto& st_to_pair : cp_to_pair.second) {
+		for (const auto& cp_from_pair : st_to_pair.second) {
+		    for (const auto& st_from_pair : cp_from_pair.second) {
+			if (dst.copy(st_from_pair.second,
+				     cp_from_pair.first, st_from_pair.first,
+				     cp_to_pair.first,   st_to_pair.first)) {
+			    grew = true;
+			}
+		    }
+		}
+	    }
+	}
+    }
+    return grew;
+}
+
+const EffectLTR& RSM::effect_of(const Symbol& symbol, bool rev,
+				Ref<Tag> tag) const {
+    // Check that this is a valid Arc.
+    assert(!symbol.parametric ^ tag.valid());
+
+    // If not found in cache, compute all effects for this arc on the fly.
+    // TODO: Somewhat wasteful, constructing temporary Label objects and
+    // dereferencing the map using full labels. Would work better if we
+    // indexed Transitions using mi library.
+    // XXX: What if the label doesn't appear in the secondary RSM?
+    EffectLTR& res = base_effts.follow(rev).follow(symbol.ref).follow(tag);
+    if (res.empty()) {
+	for (const Component& comp : components) {
+
+	    // Record effects due to tag-agnostic transitions.
+	    for (const Transition& t :
+		     comp.transitions.secondary<0>()[Label(symbol, rev,
+							   Ref<Tag>())]) {
+		res.insert(comp.ref, t.from,
+			   comp.ref, t.to,
+			   EfftReqd(), EfftPush());
+	    }
+
+	    // Record effects due to tag-specific transitions.
+	    if (tag.valid()) {
+		for (const Transition& t :
+			 comp.transitions.secondary<0>()[Label(symbol, rev,
+							       tag)]) {
+		    res.insert(comp.ref, t.from,
+			       comp.ref, t.to,
+			       EfftReqd(), EfftPush());
+		}
+	    }
+
+	    if (symbol.parametric) {
+		// Record effects due to box entries.
+		for (const Entry& e :
+			 comp.entries.secondary<1>()[MatchLabel(symbol,
+								rev)]) {
+		    Ref<Component> cp_to = comp.boxes[e.to].comp;
+		    Ref<State> st_to = components[cp_to].get_initial();
+		    res.insert(comp.ref, e.from, cp_to, st_to,
+			       EfftReqd(),
+			       EfftPush().push(Frame{comp.ref, e.to, tag}));
+		}
+
+		// Record effects due to box exits.
+		for (const Exit& e :
+			 comp.exits.secondary<0>()[MatchLabel(symbol, rev)]) {
+		    Ref<Component> cp_from = comp.boxes[e.from].comp;
+		    for (Ref<State> st_from :
+			     components[cp_from].get_final()) {
+			res.insert(cp_from, st_from, comp.ref, e.to,
+				   EfftReqd().push(Frame{comp.ref, e.from,
+							 tag}),
+				   EfftPush());
+		    }
+		}
+	    }
+	}
+    }
+
+    return res;
+}
+
 // ANALYSIS SPEC ==============================================================
 
 const std::string RSM::FILE_EXTENSION(".rsm.tgf");
 
 RSM::RSM(const std::string& dirname, Registry<Symbol>& symbol_reg,
-	 Registry<Tag>& tag_reg) {
+	 Registry<Tag>& tag_reg) : base_effts(boost::none, symbol_reg) {
     Directory dir(dirname);
     std::list<fs::path> paths(dir.begin(), dir.end());
     // TODO: Assuming the usage order of components is the same as their
@@ -152,6 +350,16 @@ RSM::RSM(const std::string& dirname, Registry<Symbol>& symbol_reg,
     paths.sort();
     for (const fs::path& p : paths) {
 	parse_file(p, symbol_reg, tag_reg);
+    }
+    // TODO: If this is a secondary RSM, verify that it doesn't introduce new
+    // symbols, and it covers all symbols on the primary one.
+
+    std::cout << "Calculating identity effect" << std::endl;
+    for (const Component& comp : components) {
+	for (const State& s : comp.get_states()) {
+	    id_efft_.insert(comp.ref, s.ref, comp.ref, s.ref,
+			    EfftReqd(), EfftPush());
+	}
     }
 }
 
@@ -276,83 +484,22 @@ void RSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 	os << comp.name << ":" << std::endl;
 	comp.print(os, symbol_reg, tag_reg, components);
     }
-}
-
-const std::string FSM::FILE_EXTENSION(".fsm.tgf");
-
-FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg,
-	 Registry<Tag>& tag_reg)
-    : base_effects(boost::none, symbol_reg) {
-    fs::path fpath(fname);
-    std::string fbase(fpath.filename().string());
-    EXPECT(boost::algorithm::ends_with(fbase, FILE_EXTENSION));
-
-    std::cout << "Parsing " << fbase << std::endl;
-    unsigned int old_sz = symbol_reg.size();
-    parse_component(fpath, comp, symbol_reg, tag_reg, Registry<Component>());
-    // HACK: Don't allow new symbols on the secondary machine.
-    // TODO: Also check that it covers all symbols from the primary one.
-    EXPECT(old_sz == symbol_reg.size());
-    // Disallow recursion.
-    EXPECT(!comp.recursive());
-
-    std::cout << "Calculating base effects" << std::endl;
-    mi::FlatIndex<REV, bool,
-	mi::FlatIndex<SYMBOL, Ref<Symbol>,
-	    mi::Index<TAG, Ref<Tag>,
-		FsmEffect>>> non_uniqd_effects(boost::none, symbol_reg);
-    for (const Transition& t : comp.transitions) {
-	non_uniqd_effects.insert(t.label.rev, t.label.symbol, t.label.tag,
-				 t.from, t.to);
-    }
-    base_effects.copy(non_uniqd_effects);
-
-    FsmEffect non_uniqd_id;
-    for (const State& s : comp.get_states()) {
-	non_uniqd_id.insert(s.ref, s.ref);
-    }
-    id_trel_.copy(non_uniqd_id);
-}
-
-bool FSM::is_accepting(const TransRel& trel) const {
-    FOR(tup, trel, comp.get_initial()) {
-	if (comp.get_final().count(tup.get<F_TO>()) > 0) {
-	    return true;
+    os << "Effects requested so far:" << std::endl;
+    for (const auto& rev_pair : base_effts) {
+	for (const auto& symb_pair : rev_pair.second) {
+	    for (const auto& tag_pair : symb_pair.second) {
+		Label(symbol_reg[symb_pair.first], rev_pair.first,
+		      tag_pair.first).print(os, symbol_reg, tag_reg);
+		os << ":" << std::endl;
+		print_effect(os, "  ", tag_pair.second, components, tag_reg);
+	    }
 	}
     }
-    return false;
-}
-
-void FSM::print_effects(std::ostream& os, const Symbol& s, bool rev,
-			const Registry<Symbol>& symbol_reg,
-			const Registry<Tag>& tag_reg) const {
-    for (const auto& tag_pair : base_effects[rev][s.ref]) {
-	Label(s, rev, tag_pair.first).print(os, symbol_reg, tag_reg);
-	os << ":" << std::endl;
-	FOR(trans, base_effects[rev][s.ref][tag_pair.first]) {
-	    os << "  " << comp.get_states()[trans.get<F_FROM>()].name << " "
-	       << comp.get_states()[trans.get<F_TO>()].name << std::endl;
-	}
-    }
-}
-
-void FSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
-		const Registry<Tag>& tag_reg) const {
-    os << "FSM:" << std::endl;
-    comp.print(os, symbol_reg, tag_reg, Registry<Component>());
-    os << "Base effects:" << std::endl;
-    for (const Symbol& s : symbol_reg) {
-	print_effects(os, s, false, symbol_reg, tag_reg);
-    }
-}
-
-TransRel compose(const TransRel& trel1, const TransRel& trel2) {
-    return mi::join(trel1, trel2);
 }
 
 void Analysis::print(std::ostream& os) const {
-    rsm.print(os, symbols, tags);
-    fsm.print(os, symbols, tags);
+    pri.print(os, symbols, tags);
+    sec.print(os, symbols, tags);
 }
 
 // GRAPH ======================================================================
@@ -431,19 +578,22 @@ void Graph::print_stats(std::ostream& os) const {
 }
 
 void Graph::print_summaries(const std::string& dirname,
-			    const Registry<Component>& comp_reg,
-			    const FSM& fsm) const {
+			    const Registry<Component>& pri_comp_reg,
+			    const Registry<Component>& sec_comp_reg,
+			    const Registry<Tag>& tag_reg) const {
     fs::path dirpath(dirname);
-    for (const Component& comp : comp_reg) {
-	fs::path fpath(dirpath/(comp.name + FILE_EXTENSION));
+    for (const Component& pc : pri_comp_reg) {
+	fs::path fpath(dirpath/(pc.name + FILE_EXTENSION));
 	std::cout << "Printing " << fpath << std::endl;
 	std::ofstream fout(fpath.string());
 	EXPECT(fout);
-	FOR(s, summaries[comp.ref]) {
-	    fout << nodes[s.get<SRC>()].name << " "
-		 << nodes[s.get<DST>()].name << " "
-		 << fsm.comp.get_states()[s.get<F_FROM>()].name << " "
-		 << fsm.comp.get_states()[s.get<F_TO>()].name << std::endl;
+	for (const auto& src_pair : summaries[pc.ref]) {
+	    for (const auto& dst_pair : src_pair.second) {
+		std::string prefix = (nodes[src_pair.first].name + " " +
+				      nodes[dst_pair.first].name + " ");
+		print_effect(fout, prefix, dst_pair.second,
+			     sec_comp_reg, tag_reg);
+	    }
 	}
     }
 }
@@ -467,7 +617,7 @@ Graph::subpath_bounds(const MatchLabel& hd_lab,
 void Analysis::close(Graph& graph) const {
     // Components are processed in order of addition, which is guaranteed to be
     // a valid bottom-up order.
-    for (const Component& comp : rsm.components) {
+    for (const Component& comp : pri.components) {
 	const unsigned int t_summ = current_time();
 	std::cout << "Summarizing " << comp.name << std::endl;
 	summarize(graph, comp);
@@ -475,10 +625,10 @@ void Analysis::close(Graph& graph) const {
 		  << std::endl << std::endl;
     }
 
-    // Final propagation step for the top component in the RSM. All required
-    // summarization has been completed at this point, and we only need to
-    // perform forward propagation.
-    const Component& top_comp = rsm.components.last();
+    // Final propagation step for the top component in the primary RSM. All
+    // required summarization has been completed at this point, and we only
+    // need to perform forward propagation.
+    const Component& top_comp = pri.components.last();
     const unsigned int t_prop = current_time();
     std::cout << "Propagating over " << top_comp.name << std::endl;
     propagate(graph, top_comp);
@@ -497,7 +647,7 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
     // process needs to happen on the full RSM level.
     // TODO: Use a better heuristic for the summarization order, to avoid
     // rescheduling (e.g. based on call graph, for call matching).
-    for (const Component& user : rsm.components) {
+    for (const Component& user : pri.components) {
 	for (const Box& b : user.boxes) {
 	    // TODO: This is a simple selection filter, we could have used an
 	    // index on boxes instead.
@@ -510,7 +660,7 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 	    // member of the cartesian product. Could instead keep these
 	    // grouped and pass them as sets to subpath_bounds.
 	    for (const Entry& i : user.entries.primary()[b.ref]) {
-		for (const Exit& o : user.exits[b.ref]) {
+		for (const Exit& o : user.exits.primary()[b.ref]) {
 		    std::map<Ref<Node>,std::set<Ref<Node>>> bounds =
 			graph.subpath_bounds(i.label, o.label);
 		    for (const auto& p : bounds) {
@@ -530,7 +680,7 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 
     while (!worklist.empty()) {
 	const Worker& w = workers[worklist.dequeue()];
-	Worker::Result res = w.handle(graph, symbols, fsm);
+	Worker::Result res = w.handle(graph, symbols, sec);
 
 	// Dependencies must be recorded first, to ensure we re-process the
 	// function in cases of self-recursion.
@@ -563,7 +713,7 @@ void Analysis::propagate(Graph& graph, const Component& comp) const {
     for (const Node& start : graph.nodes) {
 	unsigned int t_start = current_time();
 	Worker::Result res =
-	    Worker(start.ref, comp).handle(graph, symbols, fsm);
+	    Worker(start.ref, comp).handle(graph, symbols, sec);
 	// Ignore any emitted dependencies, they should have been handled
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
@@ -587,62 +737,65 @@ bool Worker::merge(const Component& comp,
 
 Worker::Result Worker::handle(const Graph& graph,
 			      const Registry<Symbol>& symbol_reg,
-			      const FSM& fsm) const {
+			      const RSM& sec) const {
     Result res;
-    WorkerWorklist worklist;
-    Ref<State> fsm_init = fsm.comp.get_initial();
-    TransRel start_trel;
+    WorkerWorklist worklist(top_level);
     if (top_level) {
-	start_trel.insert(fsm_init, fsm_init);
+	EffectRTL init_move;
+	const Component& sec_top = sec.components.last();
+	init_move.insert(sec_top.ref, sec_top.get_initial(),
+			 sec_top.ref, sec_top.get_initial(),
+			 EfftReqd(), EfftPush());
+	worklist.enqueue(start, comp.get_initial(), init_move);
     } else {
-	start_trel = fsm.id_trel();
+	worklist.enqueue(start, comp.get_initial(), sec.id_efft());
     }
-    Position start_pos(start, comp.get_initial(), start_trel);
-    worklist.enqueue(start_pos);
 
     while (!worklist.empty()) {
 	Position pos = worklist.dequeue();
+	const EffectRTL& efft = worklist.effect_at(pos);
 
 	// Report a summary edge if we've reached a final state.
-	if (comp.get_final().count(pos.r_to) > 0) {
-	    if (// During the final top-down reachability step, we only accept
+	if (comp.get_final().count(pos.state) > 0) {
+	    // During the summarization step, we only emit a summary at one
+	    // of the "interesting" summary out-nodes.
+	    if (top_level || tgts.count(pos.dst) > 0) {
+		// During the final top-down reachability step, we only accept
 		// initial-to-final FSM effects.
-		(top_level && fsm.is_accepting(pos.trel)) ||
-		// During the summarization step, we only emit a summary at one
-		// of the "interesting" summary out-nodes.
-		(!top_level && tgts.count(pos.dst) > 0)) {
-		res.summs.copy(pos.trel, pos.dst);
+		copy_trans(efft, res.summs.follow(pos.dst), top_level, sec);
 	    }
 	}
 
 	// Cross edges according to the transitions out of the current state.
-	for (const Transition& t : comp.transitions[pos.r_to]) {
+	for (const Transition& t : comp.transitions.primary()[pos.state]) {
 	    const Symbol& e_symb = symbol_reg[t.label.symbol];
 	    bool e_rev = t.label.rev;
 	    boost::optional<Ref<Tag>> maybe_tag =
 		boost::make_optional(t.label.tag.valid(), t.label.tag);
 	    FOR_CNSTR(e, graph.search(e_symb.ref, e_rev, pos.dst), maybe_tag) {
-		TransRel new_trel =
-		    compose(pos.trel, fsm.effect_of(t.label, e.get<TAG>()));
-		if (new_trel.empty()) {
-		    continue;
-		}
-		worklist.enqueue(Position(e.get<DST>(), t.to, new_trel));
+		const EffectLTR& e_efft =
+		    sec.effect_of(e_symb, e_rev, e.get<TAG>());
+		worklist.enqueue(e.get<DST>(), t.to, efft, e_efft);
 	    }
 	}
 
 	// Cross summary edges according to the boxes that the current state
 	// enters into. The entry, box, and all exits are crossed in one step.
-	for (const Entry& entry : comp.entries.secondary<0>()[pos.r_to]) {
+	for (const Entry& entry : comp.entries.secondary<0>()[pos.state]) {
 	    Ref<Component> sub_comp = comp.boxes[entry.to].comp;
+	    const Symbol& e_in_symb = symbol_reg[entry.label.symbol];
+	    bool e_in_rev = entry.label.rev;
 
 	    // Enter the box.
-	    FOR(e_in, graph.search(pos.dst, entry.label)) {
+	    FOR(e_in, graph.search(e_in_symb.ref, e_in_rev, pos.dst)) {
 		Ref<Node> in_node = e_in.get<DST>();
-		Ref<Tag> in_tag = e_in.get<TAG>();
-		TransRel in_trel =
-		    compose(pos.trel, fsm.effect_of(entry.label, in_tag));
-		if (in_trel.empty()) {
+		Ref<Tag> call_tag = e_in.get<TAG>();
+
+		// Calculate the effect up to the summary entry node.
+		EffectRTL in_efft;
+		const EffectLTR& e_in_efft =
+		    sec.effect_of(e_in_symb, e_in_rev, call_tag);
+		if (!compose(efft, e_in_efft, in_efft, top_level)) {
 		    continue;
 		}
 
@@ -657,30 +810,35 @@ Worker::Result Worker::handle(const Graph& graph,
 		const auto& compat_summs = graph.summaries[sub_comp][in_node];
 		for (const auto& p : compat_summs) {
 		    Ref<Node> out_node = p.first;
-		    TransRel sub_trel = p.second;
-		    TransRel out_trel = compose(in_trel, sub_trel);
-		    if (out_trel.empty()) {
+
+		    // Calculate the effect up to the summary exit node.
+		    EffectRTL out_efft;
+		    const EffectLTR& summ_efft = p.second;
+		    if (!compose(in_efft, summ_efft, out_efft, top_level)) {
 			continue;
 		    }
 
 		    // Cross through exit edges compatible with the previously
 		    // entered entry edge.
-		    for (const Exit& exit : comp.exits[entry.to]) {
-			TransRel full_trel =
-			    compose(out_trel,
-				    fsm.effect_of(exit.label, in_tag));
+		    for (const Exit& exit : comp.exits.primary()[entry.to]) {
 			const Symbol& e_out_symb =
 			    symbol_reg[exit.label.symbol];
 			bool e_out_rev = exit.label.rev;
-			if (full_trel.empty()) {
+
+			// Calculate the effect up to the return node.
+			EffectRTL full_efft;
+			const EffectLTR& e_out_efft =
+			    sec.effect_of(e_out_symb, e_out_rev, call_tag);
+			if (!compose(out_efft, e_out_efft, full_efft,
+				     top_level)) {
 			    continue;
 			}
 
 			// Exit the box.
 			FOR(e_out, graph.search(e_out_symb.ref, e_out_rev,
-						out_node)[in_tag]) {
-			    worklist.enqueue(Position(e_out.get<DST>(),
-						      exit.to, full_trel));
+						out_node)[call_tag]) {
+			    worklist.enqueue(e_out.get<DST>(), exit.to,
+					     full_efft);
 			}
 		    }
 		}
@@ -698,8 +856,8 @@ int main(int argc, char* argv[]) {
     const unsigned int t_input = current_time();
 
     // User-defined parameters
-    std::string rsm_dir;
-    std::string fsm_file;
+    std::string pri_dir;
+    std::string sec_dir;
     std::string graph_dir;
     std::string summ_dir;
 
@@ -707,17 +865,17 @@ int main(int argc, char* argv[]) {
     po::options_description desc("Options");
     desc.add_options()
 	("help,h", "Print help message")
-	("rsm-dir", po::value<std::string>(&rsm_dir)->required(),
-	 "Directory of RSM components")
-	("fsm-file", po::value<std::string>(&fsm_file)->required(),
-	 "Intersected FSM file")
+	("pri-dir", po::value<std::string>(&pri_dir)->required(),
+	 "Directory of primary RSM components")
+	("sec-dir", po::value<std::string>(&sec_dir)->required(),
+	 "Directory of secondary RSM components")
 	("graph-dir", po::value<std::string>(&graph_dir)->required(),
 	 "Directory of edge files")
 	("summ-dir", po::value<std::string>(&summ_dir)->required(),
 	 "Directory to store the summaries");
     po::positional_options_description pos_desc;
-    pos_desc.add("rsm-dir", 1);
-    pos_desc.add("fsm-file", 1);
+    pos_desc.add("pri-dir", 1);
+    pos_desc.add("sec-dir", 1);
     pos_desc.add("graph-dir", 1);
     pos_desc.add("summ-dir", 1);
     po::variables_map vm;
@@ -739,9 +897,9 @@ int main(int argc, char* argv[]) {
     std::cout.imbue(std::locale(""));
 
     // Parse input
-    std::cout << "Parsing RSM from " << rsm_dir << ", FSM from " << fsm_file
-	      << std::endl;
-    Analysis spec(rsm_dir, fsm_file);
+    std::cout << "Parsing primary RSM from " << pri_dir
+	      << ", secondary RSM from " << sec_dir << std::endl;
+    Analysis spec(pri_dir, sec_dir);
     std::cout << "Parsing graph from " << graph_dir << std::endl;
     Graph graph(spec.symbols, spec.tags, graph_dir);
     graph.print_stats(std::cout);
@@ -759,7 +917,8 @@ int main(int argc, char* argv[]) {
 
     // Print the output
     std::cout << "Printing summaries" << std::endl;
-    graph.print_summaries(summ_dir, spec.rsm.components, spec.fsm);
+    graph.print_summaries(summ_dir, spec.pri.components, spec.sec.components,
+			  spec.tags);
 
     // Timekeeping
     std::cout << "Output printing: " << current_time() - t_output << " ms"
