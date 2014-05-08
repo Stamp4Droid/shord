@@ -155,6 +155,40 @@ int compare(const std::map<K,V>& lhs, const std::map<K,V>& rhs) {
     return map_compare(lhs, rhs);
 }
 
+// HASHING INFRASTRUCTURE =====================================================
+
+namespace std {
+
+// Any class declaring a member function 'std::size_t hash_code() const'
+// automatically gets a custom overload of the default hasher.
+// TODO: Will this work correctly with class hierarchies?
+template<class T> struct hash {
+    size_t operator()(const T& x) const {
+	return x.hash_code();
+    }
+};
+
+} // namespace std
+
+namespace detail {
+
+std::size_t hash_impl(std::size_t seed) {
+    return seed;
+}
+
+template<class T, class... Rest>
+std::size_t hash_impl(std::size_t seed, const T& v, const Rest&... rest) {
+    seed ^= std::hash<T>()(v) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+    return hash_impl(seed, rest...);
+}
+
+} // namespace detail
+
+template<class T, class... Rest>
+std::size_t hash(const T& v, const Rest&... rest) {
+    return detail::hash_impl(std::hash<T>()(v), rest...);
+}
+
 // HELPER CODE ================================================================
 
 namespace detail {
@@ -725,17 +759,20 @@ public:
     bool valid() const {
 	return value < std::numeric_limits<unsigned int>::max();
     }
+    friend int compare(const Ref& lhs, const Ref& rhs) {
+	return compare(lhs.value, rhs.value);
+    }
+    bool operator<(const Ref& rhs) const {
+	return value < rhs.value;
+    }
     bool operator==(const Ref& rhs) const {
 	return value == rhs.value;
     }
     bool operator!=(const Ref& rhs) const {
 	return !(*this == rhs);
     }
-    friend int compare(const Ref& lhs, const Ref& rhs) {
-	return compare(lhs.value, rhs.value);
-    }
-    bool operator<(const Ref& rhs) const {
-	return value < rhs.value;
+    std::size_t hash_code() const {
+	return hash(value);
     }
     friend std::ostream& operator<<(std::ostream& os, const Ref& ref) {
 	EXPECT(ref.valid());

@@ -279,6 +279,9 @@ public:
     bool operator==(const Frame& rhs) const {
 	return compare(*this, rhs) == 0;
     }
+    std::size_t hash_code() const {
+	return hash(comp, box, tag);
+    }
     friend void print(std::ostream& os, const Frame& frame,
 		      const Registry<Component>& comp_reg,
 		      const Registry<Tag>& tag_reg);
