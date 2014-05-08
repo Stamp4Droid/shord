@@ -594,20 +594,15 @@ void join_zip(const LMap& l, const RMap& r, const ZipT& zip) {
     const auto l_end = l.end();
     const auto r_end = r.end();
     while (l_curr != l_end && r_curr != r_end) {
-	switch (compare(l_curr->first, r_curr->first)) {
-	case -1:
-	    ++l_curr;
-	    break;
-	case 1:
-	    ++r_curr;
-	    break;
-	case 0:
+	int key_rel = compare(l_curr->first, r_curr->first);
+	if (key_rel == 0) {
 	    zip(l_curr->second, r_curr->second);
-	    ++l_curr;
+	}
+	if (key_rel >= 0) {
 	    ++r_curr;
-	    break;
-	default:
-	    assert(false);
+	}
+	if (key_rel <= 0) {
+	    ++l_curr;
 	}
     }
 }
