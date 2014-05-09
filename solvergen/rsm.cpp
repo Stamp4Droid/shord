@@ -169,37 +169,53 @@ void print_effect(std::ostream& os, const std::string& prefix,
     }
 }
 
-void compose(const EfftReqd& l_reqd, const EfftPush& l_push,
-	     const EfftReqd& r_reqd, const EfftPush& r_push,
-	     std::list<std::pair<EfftReqd,EfftPush>>& res) {
-    if (l_push.empty()) {
-	if (l_push.is_exact()) {
-	    // α|- + γ|δ = αγ|δ
-	    res.emplace_back(r_reqd.append(l_reqd), r_push);
-	} else if (r_reqd.empty()) {
-	    // α|* + -|δ = α|*δ
-	    // α|* + *|δ = α|*δ, ...
-	    res.emplace_back(l_reqd, r_push.relax());
-	    if (!r_reqd.is_exact()) {
-		// α|* + *|δ = ..., α*|δ
-		res.emplace_back(l_reqd.relax(), r_push);
+std::list<std::pair<EfftReqd,EfftPush>> match(EfftPush l_push,
+					      EfftReqd r_reqd) {
+    std::list<std::pair<EfftReqd,EfftPush>> res;
+    while (true) {
+	if (l_push.empty()) {
+	    if (l_push.is_exact()) {
+		// α|- + γ|δ = αγ|δ
+		res.emplace_back(r_reqd, l_push);
+		break;
 	    }
-	} else {
+	    if (r_reqd.empty()) {
+		// α|* + -|δ = α|*δ
+		// α|* + *|δ = α|*δ, ...
+		res.emplace_back(EfftReqd(), l_push);
+		if (!r_reqd.is_exact()) {
+		    // α|* + *|δ = ..., α*|δ
+		    res.emplace_back(r_reqd, EfftPush());
+		}
+		break;
+	    }
 	    // α|* + xγ|δ = α|* + γ|δ
-	    compose(l_reqd, l_push, r_reqd.pop(), r_push, res);
+	    r_reqd = r_reqd.pop();
+	    continue;
 	}
-    } else if (r_reqd.empty()) {
-	// α|βx + -|δ = α|βxδ
-	// α|βx + *|δ = α|βxδ, ...
-	res.emplace_back(l_reqd, l_push.append(r_push));
-	if (!r_reqd.is_exact()) {
+
+	if (r_reqd.empty()) {
+	    // α|βx + -|δ = α|βxδ
+	    // α|βx + *|δ = α|βxδ, ...
+	    res.emplace_back(EfftReqd(), l_push);
+	    if (r_reqd.is_exact()) {
+		break;
+	    }
 	    // α|βx + *|δ = ..., α|β + *|δ
-	    compose(l_reqd, l_push.pop(), r_reqd, r_push, res);
+	    l_push = l_push.pop();
+	    continue;
 	}
-    } else if (l_push.top() == r_reqd.top()) {
-	// α|βx + xγ|δ = α|β + γ|δ
-	compose(l_reqd, l_push.pop(), r_reqd.pop(), r_push, res);
+
+	if (l_push.top() == r_reqd.top()) {
+	    // α|βx + xγ|δ = α|β + γ|δ
+	    l_push = l_push.pop();
+	    r_reqd = r_reqd.pop();
+	    continue;
+	}
+
+	break;
     }
+    return res;
 }
 
 // TODO: Wasteful to store forward-only effects in RTL.
@@ -208,22 +224,35 @@ bool compose(const EffectRTL& l_efft, const EffectLTR& r_efft,
     bool grew = false;
     auto add_product = [&](const typename EffectRTL::Sub::Sub& prefixes,
 			   const typename EffectLTR::Sub::Sub& additions) {
-	FOR(l, prefixes) {
-	    assert(!fwd_only || (l.get<REQD>().empty() &&
-				 l.get<REQD>().is_exact()));
-	    FOR(r, additions) {
-		std::list<std::pair<EfftReqd,EfftPush>> res_stacks;
-		compose(l.get<REQD>(), l.get<PUSH>(),
-			r.get<REQD>(), r.get<PUSH>(), res_stacks);
-		for (const auto& p : res_stacks) {
-		    if (fwd_only && (!p.first.empty() ||
-				     !p.first.is_exact())) {
-			continue;
-		    }
-		    if (res_efft.insert(r.get<CP_TO>(),   r.get<ST_TO>(),
-					l.get<CP_FROM>(), l.get<ST_FROM>(),
-					p.first,          p.second)) {
-			grew = true;
+	for (const auto& l_push_pair : prefixes) {
+	    const EfftPush& l_push = l_push_pair.first;
+	    for (const auto& r_reqd_pair : additions) {
+		const EfftReqd& r_reqd = r_reqd_pair.first;
+		std::list<std::pair<EfftReqd,EfftPush>> base =
+		    match(l_push, r_reqd);
+		if (base.empty()) {
+		    continue;
+		}
+		FOR(l, l_push_pair.second) {
+		    assert(!fwd_only || (l.get<REQD>().empty() &&
+					 l.get<REQD>().is_exact()));
+		    FOR(r, r_reqd_pair.second) {
+			for (const auto& p : base) {
+			    EfftReqd res_reqd = p.first.append(l.get<REQD>());
+			    if (fwd_only && (!res_reqd.empty() ||
+					     !res_reqd.is_exact())) {
+				continue;
+			    }
+			    EfftPush res_push = p.second.append(r.get<PUSH>());
+			    if (res_efft.insert(r.get<CP_TO>(),
+						r.get<ST_TO>(),
+						res_push,
+						l.get<CP_FROM>(),
+						l.get<ST_FROM>(),
+						res_reqd)) {
+				grew = true;
+			    }
+			}
 		    }
 		}
 	    }
@@ -246,26 +275,19 @@ bool copy_trans(const EffectRTL& src, EffectLTR& dst, bool accepting_only,
 	for (const auto& st_to_pair : src[top_comp.ref]) {
 	    Ref<State> st_to = st_to_pair.first;
 	    if (top_comp.get_final().count(st_to) > 0
-		&& st_to_pair.second.contains(top_comp.ref, init_st,
-					      EfftReqd(),   EfftPush())
-		&& dst.insert(top_comp.ref, init_st,
-			      top_comp.ref, st_to,
-			      EfftReqd(),   EfftPush())) {
+		&& st_to_pair.second.contains(EfftPush(), top_comp.ref,
+					      init_st,    EfftReqd())
+		&& dst.insert(top_comp.ref, init_st, EfftReqd(),
+			      top_comp.ref, st_to,   EfftPush())) {
 		grew = true;
 	    }
 	}
     } else {
-	for (const auto& cp_to_pair : src) {
-	    for (const auto& st_to_pair : cp_to_pair.second) {
-		for (const auto& cp_from_pair : st_to_pair.second) {
-		    for (const auto& st_from_pair : cp_from_pair.second) {
-			if (dst.copy(st_from_pair.second,
-				     cp_from_pair.first, st_from_pair.first,
-				     cp_to_pair.first,   st_to_pair.first)) {
-			    grew = true;
-			}
-		    }
-		}
+	FOR(trans, src) {
+	    if (dst.insert(trans.get<CP_FROM>(), trans.get<ST_FROM>(),
+			   trans.get<REQD>(),    trans.get<CP_TO>(),
+			   trans.get<ST_TO>(),   trans.get<PUSH>())) {
+		grew = true;
 	    }
 	}
     }
@@ -290,9 +312,8 @@ const EffectLTR& RSM::effect_of(const Symbol& symbol, bool rev,
 	    for (const Transition& t :
 		     comp.transitions.secondary<0>()[Label(symbol, rev,
 							   Ref<Tag>())]) {
-		res.insert(comp.ref, t.from,
-			   comp.ref, t.to,
-			   EfftReqd(), EfftPush());
+		res.insert(comp.ref, t.from, EfftReqd(),
+			   comp.ref, t.to,   EfftPush());
 	    }
 
 	    // Record effects due to tag-specific transitions.
@@ -300,9 +321,8 @@ const EffectLTR& RSM::effect_of(const Symbol& symbol, bool rev,
 		for (const Transition& t :
 			 comp.transitions.secondary<0>()[Label(symbol, rev,
 							       tag)]) {
-		    res.insert(comp.ref, t.from,
-			       comp.ref, t.to,
-			       EfftReqd(), EfftPush());
+		    res.insert(comp.ref, t.from, EfftReqd(),
+			       comp.ref, t.to,   EfftPush());
 		}
 	    }
 
@@ -313,9 +333,10 @@ const EffectLTR& RSM::effect_of(const Symbol& symbol, bool rev,
 								rev)]) {
 		    Ref<Component> cp_to = comp.boxes[e.to].comp;
 		    Ref<State> st_to = components[cp_to].get_initial();
-		    res.insert(comp.ref, e.from, cp_to, st_to,
-			       EfftReqd(),
-			       EfftPush().push(Frame{comp.ref, e.to, tag}));
+		    EfftPush push =
+			EfftPush().push(Frame{comp.ref, e.to, tag});
+		    res.insert(comp.ref, e.from, EfftReqd(),
+			       cp_to,    st_to,  push);
 		}
 
 		// Record effects due to box exits.
@@ -324,10 +345,10 @@ const EffectLTR& RSM::effect_of(const Symbol& symbol, bool rev,
 		    Ref<Component> cp_from = comp.boxes[e.from].comp;
 		    for (Ref<State> st_from :
 			     components[cp_from].get_final()) {
-			res.insert(cp_from, st_from, comp.ref, e.to,
-				   EfftReqd().push(Frame{comp.ref, e.from,
-							 tag}),
-				   EfftPush());
+			EfftReqd reqd =
+			    EfftReqd().push(Frame{comp.ref, e.from, tag});
+			res.insert(cp_from,  st_from, reqd,
+				   comp.ref, e.to,    EfftPush());
 		    }
 		}
 	    }
@@ -357,8 +378,8 @@ RSM::RSM(const std::string& dirname, Registry<Symbol>& symbol_reg,
     std::cout << "Calculating identity effect" << std::endl;
     for (const Component& comp : components) {
 	for (const State& s : comp.get_states()) {
-	    id_efft_.insert(comp.ref, s.ref, comp.ref, s.ref,
-			    EfftReqd(), EfftPush());
+	    id_efft_.insert(comp.ref, s.ref, EfftPush(),
+			    comp.ref, s.ref, EfftReqd());
 	}
     }
 }
@@ -743,9 +764,8 @@ Worker::Result Worker::handle(const Graph& graph,
     if (top_level) {
 	EffectRTL init_move;
 	const Component& sec_top = sec.components.last();
-	init_move.insert(sec_top.ref, sec_top.get_initial(),
-			 sec_top.ref, sec_top.get_initial(),
-			 EfftReqd(), EfftPush());
+	init_move.insert(sec_top.ref, sec_top.get_initial(), EfftPush(),
+			 sec_top.ref, sec_top.get_initial(), EfftReqd());
 	worklist.enqueue(start, comp.get_initial(), init_move);
     } else {
 	worklist.enqueue(start, comp.get_initial(), sec.id_efft());

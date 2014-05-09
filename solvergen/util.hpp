@@ -541,12 +541,21 @@ public:
 	}
     }
     FuzzyStack append(const FuzzyStack& rhs) const {
-	FuzzyStack res(exact && rhs.exact, root());
-	if (rhs.exact) {
-	    res.append(node, rhs.node, LIMIT);
-	} else {
-	    res.node = rhs.node;
+	if (empty()) {
+	    if (exact) {
+		return rhs;
+	    } else {
+		return rhs.relax();
+	    }
 	}
+	if (!rhs.exact) {
+	    return rhs;
+	}
+	if (rhs.empty()) {
+	    return *this;
+	}
+	FuzzyStack res(exact, root());
+	res.append(node, rhs.node, LIMIT);
 	return res;
     }
     template<class... ArgTs>

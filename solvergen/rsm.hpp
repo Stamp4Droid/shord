@@ -292,16 +292,16 @@ typedef FuzzyStack<Frame,2> EfftPush;
 
 typedef mi::Index<CP_TO, Ref<Component>,
 	    mi::Index<ST_TO, Ref<State>,
-		mi::Index<CP_FROM, Ref<Component>,
-		    mi::Index<ST_FROM, Ref<State>,
-			mi::Index<REQD, EfftReqd,
-			    mi::Table<PUSH, EfftPush>>>>>> EffectRTL;
+		mi::Index<PUSH, EfftPush,
+		    mi::Index<CP_FROM, Ref<Component>,
+			mi::Index<ST_FROM, Ref<State>,
+			    mi::Table<REQD, EfftReqd>>>>>> EffectRTL;
 
 typedef mi::Index<CP_FROM, Ref<Component>,
 	    mi::Index<ST_FROM, Ref<State>,
-		mi::Index<CP_TO, Ref<Component>,
-		    mi::Index<ST_TO, Ref<State>,
-			mi::Index<REQD, EfftReqd,
+		mi::Index<REQD, EfftReqd,
+		    mi::Index<CP_TO, Ref<Component>,
+			mi::Index<ST_TO, Ref<State>,
 			    mi::Table<PUSH, EfftPush>>>>>> EffectLTR;
 
 template<class EfftT>
