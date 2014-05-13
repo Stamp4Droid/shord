@@ -388,7 +388,7 @@ void parse_component(const fs::path& fpath, Component& comp,
 		     Registry<Symbol>& symbol_reg, Registry<Tag>& tag_reg,
 		     const Registry<Component>& comp_reg) {
     std::ifstream fin(fpath.string());
-    EXPECT(fin);
+    EXPECT((bool) fin);
     ParsingMode mode = ParsingMode::NODES;
     std::string line;
 
@@ -531,7 +531,7 @@ const std::string Graph::FILE_EXTENSION(".dat");
 void Graph::parse_file(const Symbol& symbol, const fs::path& fpath,
 		       ParsingMode mode, Registry<Tag>& tag_reg) {
     std::ifstream fin(fpath.string());
-    EXPECT(fin);
+    EXPECT((bool) fin);
     std::string line;
 
     while (std::getline(fin, line)) {
@@ -607,7 +607,7 @@ void Graph::print_summaries(const std::string& dirname,
 	fs::path fpath(dirpath/(pc.name + FILE_EXTENSION));
 	std::cout << "Printing " << fpath << std::endl;
 	std::ofstream fout(fpath.string());
-	EXPECT(fout);
+	EXPECT((bool) fout);
 	for (const auto& src_pair : summaries[pc.ref]) {
 	    for (const auto& dst_pair : src_pair.second) {
 		std::string prefix = (nodes[src_pair.first].name + " " +

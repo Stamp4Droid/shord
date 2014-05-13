@@ -736,7 +736,7 @@ unsigned int current_time() {
 // }
 
 namespace mi {
-    template<typename T> class KeyTraits;
+    template<typename T> struct KeyTraits;
 }
 template<typename T> class Ref;
 template<typename T> class Registry;
@@ -1035,6 +1035,7 @@ public:
 private:
     std::set<Tuple> store;
 public:
+    Table() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	auto res = store.insert(tuple);
 	return std::make_pair(&(*(res.first)), res.second);
@@ -1062,6 +1063,7 @@ private:
 private:
     Map idx;
 public:
+    Index() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	return idx[tuple.*MemPtr].insert(tuple);
     }
@@ -1104,6 +1106,7 @@ public:
 private:
     Wrapped array[2];
 public:
+    Index() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	return array[tuple.*MemPtr].insert(tuple);
     }
@@ -1139,6 +1142,7 @@ private:
 private:
     PtrArray array;
 public:
+    FlatIndex() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	return (*this)[tuple.*MemPtr].insert(tuple);
     }
@@ -1181,6 +1185,7 @@ public:
 private:
     std::deque<const Tuple*> store;
 public:
+    PtrTable() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	// Assuming this is only called via a fork point, it will never be
 	// called for duplicate entries, so we don't need to check.
@@ -1206,6 +1211,7 @@ private:
     PriIdxT pri_idx;
     std::tuple<SecIdxTs...> sec_idxs;
 public:
+    MultiIndex() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	auto res = pri_idx.insert(tuple);
 	// Only insert on secondary indices if tuple wasn't already present.
@@ -1628,6 +1634,7 @@ public:
 private:
     std::set<T> store;
 public:
+    Table() {}
     bool insert(const T& val) {
 	return store.insert(val).second;
     }
@@ -1711,6 +1718,7 @@ private:
 private:
     std::map<Key,Sub> map;
 public:
+    Index() {}
     Sub& follow(const Key& key) {
 	return map[key];
     }
@@ -2160,6 +2168,7 @@ private:
 	return false;
     }
 public:
+    LightIndex() {}
     Sub& follow(const Key& key) {
 	typename List::const_iterator cpos;
 	typename List::iterator pos =
@@ -2330,6 +2339,7 @@ private:
     std::map<T,std::set<T>> a2b;
     std::map<T,std::set<T>> b2a;
 public:
+    BiRel() {}
     bool insert(const T& a, const T& b) {
 	if (a2b[a].insert(b).second) {
 	    bool added = b2a[b].insert(a).second;
