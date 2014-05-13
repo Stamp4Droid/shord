@@ -111,10 +111,10 @@ class Machine(util.BaseClass):
 
     def _add_state(self, name, initial, final, ref):
         if name is None:
-            name = '#' + str(self._anon_states)
+            name = '__' + str(self._anon_states)
             self._anon_states += 1
         else:
-            assert '#' not in name
+            assert '__' not in name
         # Guarantees no name duplication
         index = self._nfa.addState(name)
         if initial:

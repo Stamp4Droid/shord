@@ -1,0 +1,13 @@
+1 in
+2 
+3 
+4 out
+5 
+6 
+#
+1 2 srcLabel
+2 3 Label2Var
+3 4 prim2Sink ref2Sink
+5 4 sinkLabel
+3 6 ref2SinkByRef prim2SinkByRef ref2SinkByPrim prim2SinkByPrim
+6 5 _Label2Var

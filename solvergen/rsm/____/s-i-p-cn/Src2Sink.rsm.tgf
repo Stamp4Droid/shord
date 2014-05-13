@@ -1,0 +1,138 @@
+1 in
+2
+4 out
+6
+__1
+__2
+__3
+__4 Alias
+__5
+__6
+__7 Alias
+__8
+__9
+__10
+__11 Alias
+__12
+__13
+__14 Alias
+__15
+__16
+__17 Alias
+__18
+__19
+__20
+__21
+__22 Alias
+__23
+__24
+__25 Alias
+__26
+__27
+__28
+__29 Alias
+__30
+__31
+__32 Alias
+__33
+__34
+__35 Alias
+#
+1 2 srcLabel
+2 __15 label2Prim
+2 __2 label2Ref
+6 __30 _retRef[*] _paramRef[*] _asgnRef _ref2Prim
+6 __31 _statLoadRef
+6 __32 _loadRef[i]
+6 __33 _prim2Prim _paramPrim[*] _asgnPrim _retPrim[*]
+6 __34 _statLoadPrim
+6 __35 _loadPrim[i]
+6 __18 _label2Prim
+6 __19 _new
+6 __23 _ref2Prim _loadPrim[*] _loadRef[*] _retRef[*] _paramRef[*] _asgnRef
+6 __24 _statLoadRef
+6 __25 _loadRef[i]
+6 __26 _new
+__1 __5 new
+__2 __1 _new
+__2 __2 _paramRef[*] _asgnRef _retRef[*]
+__2 __3 _statLoadRef
+__2 __4 _loadRef[i]
+__3 __2 _statStoreRef
+__4 __2 _storeRef[i]
+__5 4 prim2Sink ref2Sink
+__5 6 prim2SinkByRef ref2SinkByRef prim2SinkByPrim ref2SinkByPrim
+__5 __2 ref2Ref
+__5 __5 paramRef[*] asgnRef loadRef[*] retRef[*]
+__5 __6 statStoreRef
+__5 __7 storeRef[i]
+__5 __9 storeRef[*]
+__5 __15 ref2Prim loadPrim[*]
+__6 __5 statLoadRef
+__7 __5 loadRef[i]
+__8 __12 new
+__9 __8 _new
+__9 __9 _paramRef[*] _retRef[*] _asgnRef
+__9 __10 _statLoadRef
+__9 __11 _loadRef[i]
+__10 __9 _statStoreRef
+__11 __9 _storeRef[i]
+__12 4 ref2Sink prim2Sink
+__12 6 prim2SinkByPrim ref2SinkByPrim prim2SinkByRef ref2SinkByRef
+__12 __2 ref2Ref
+__12 __9 storeRef[*]
+__12 __12 asgnRef paramRef[*] retRef[*]
+__12 __13 statStoreRef
+__12 __14 storeRef[i]
+__12 __15 ref2Prim
+__13 __12 statLoadRef
+__14 __12 loadRef[i]
+__15 4 prim2Sink ref2Sink
+__15 6 prim2SinkByPrim ref2SinkByPrim ref2SinkByRef prim2SinkByRef
+__15 __2 prim2Ref
+__15 __9 storePrim[*]
+__15 __15 retPrim[*] asgnPrim paramPrim[*] prim2Prim
+__15 __16 statStorePrim
+__15 __17 storePrim[i]
+__16 __15 statLoadPrim
+__17 __15 loadPrim[i]
+__18 4 sinkLabel
+__19 __20 new
+__20 __30 _ref2Ref
+__20 __33 _prim2Ref
+__20 __18 _label2Ref
+__20 __20 paramRef[*] asgnRef retRef[*]
+__20 __21 statStoreRef
+__20 __22 storeRef[i]
+__20 __23 _ref2Ref
+__21 __20 statLoadRef
+__22 __20 loadRef[i]
+__23 __23 _loadRef[*] _retRef[*] _asgnRef _paramRef[*]
+__23 __24 _statLoadRef
+__23 __25 _loadRef[i]
+__23 __19 _new
+__24 __23 _statStoreRef
+__25 __23 _storeRef[i]
+__26 __27 new
+__27 __29 storeRef[i]
+__27 __30 _storeRef[*]
+__27 __33 _storePrim[*]
+__27 __23 _storeRef[*]
+__27 __27 asgnRef paramRef[*] retRef[*]
+__27 __28 statStoreRef
+__28 __27 statLoadRef
+__29 __27 loadRef[i]
+__30 __30 _retRef[*] _paramRef[*] _asgnRef
+__30 __31 _statLoadRef
+__30 __32 _loadRef[i]
+__30 __26 _new
+__31 __30 _statStoreRef
+__32 __30 _storeRef[i]
+__33 __30 _ref2Prim
+__33 __33 _retPrim[*] _prim2Prim _paramPrim[*] _asgnPrim
+__33 __34 _statLoadPrim
+__33 __35 _loadPrim[i]
+__33 __18 _label2Prim
+__33 __23 _loadPrim[*] _ref2Prim
+__34 __33 _statStorePrim
+__35 __33 _storePrim[i]

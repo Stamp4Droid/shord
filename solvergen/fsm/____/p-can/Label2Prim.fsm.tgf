@@ -7,28 +7,22 @@
 7 
 8 
 9 
-10 
-11 
 #
 1 2 label2Ref
 1 3 label2Prim
 4 2 loadRef[*]
-2 5 Alias
-11 5 Alias
-5 11 storeRef[*]
-5 2 ref2Ref
+9 5 Alias
+5 9 storeRef[*]
 3 6 storePrim[*]
 6 5 Alias
 3 3 asgnPrim paramPrim[*] retPrim[*] prim2Prim
-6 7 Alias
 7 3 loadPrim[*]
-9 8 Alias
-8 9 storeRef[*]
-8 3 ref2Prim
-2 8 Alias
-6 8 Alias
-3 2 prim2Ref
-3 10 statStorePrim
-10 3 statLoadPrim
+3 8 statStorePrim
+8 3 statLoadPrim
 2 7 Alias
 2 4 Alias
+5 2 ref2Ref
+5 3 ref2Prim
+2 5 Alias
+3 2 prim2Ref
+6 7 Alias

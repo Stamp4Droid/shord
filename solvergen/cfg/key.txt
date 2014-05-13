@@ -72,3 +72,6 @@ How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
 
 Other features (not currently covered):
 - Modeling of arbitrary object instantiation inside missing code
+  specifically, storing taint at an arbitrary depth inside a formal parameter
+  (would need to allow unbalanced stores followed in reverse after exit from an
+  API method)
