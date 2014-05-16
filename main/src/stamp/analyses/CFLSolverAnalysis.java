@@ -46,7 +46,8 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		taintGrammar.addBinaryProduction("Flow", "Flow", "param");
 		taintGrammar.addBinaryProduction("Flow", "Flow", "return");
 		
-		taintGrammar.addBinaryProduction("Flow", "Flow", "dynAssign");
+		taintGrammar.addBinaryProduction("Flow", "Flow", "dynparam");
+		taintGrammar.addBinaryProduction("Flow", "Flow", "dynreturn");
 		
 		taintGrammar.addProduction("FlowField", new String[]{"Flow", "store", "Flow"}, new boolean[]{false, false, true});
 		taintGrammar.addProduction("Flow", new String[]{"FlowField", "Flow", "load"});
@@ -95,8 +96,9 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		
 		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "paramPrim");
 		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "returnPrim");
-		
-		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "dynAssignPrim");
+
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "dynparamPrim");
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "dynreturnPrim");
 
 		taintGrammar.addBinaryProduction("Label2Prim", "Label2Obj", "Obj2PrimT");
 		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "Prim2PrimT");
@@ -144,6 +146,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			}
 		});
 		System.out.println("Num initial edges: " + initialCutEdges.size());
+		
 		return new AbductiveInference(gbar, baseEdges, initialCutEdges).solve();
 	}
 	
@@ -227,9 +230,16 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	
 	public static void main(String[] args) throws LpSolveException {
 		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_shord_apps_samples_MultipleLeaks/cfl";
-		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_Butane/cfl";
+		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_SysMon/cfl";
+		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_Butane/cfl";
+		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1C_tomdroid/cfl";
 		//printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)));
+		
+		long time = System.currentTimeMillis();
 		printGraphStatics(new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult());
+		//printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)));
+		//new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult();
+		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 	}
 
 	private static void readRelation(GraphBuilder gb, Relation relation) {

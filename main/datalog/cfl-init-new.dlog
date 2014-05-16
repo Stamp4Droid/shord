@@ -9,12 +9,13 @@
 # name=cfl-init-new-dlog
 
 .include "V.dom"
+.include "C.dom"
 .include "H.dom"
 .include "F.dom"
 .include "U.dom"
 .include "T.dom"
 
-.bddvarorder V0xV1_U0xU1_H0xF0_T0
+.bddvarorder C0_V0xV1_U0xU1_H0xF0_T0
 
 ###################
 # INPUT: DYNAMIC CALLGRAPH
@@ -37,6 +38,13 @@ StorePrim(u:V,f:F,v:U) input
 LoadPrim(y:U,x:V,f:F) input
 
 ###################
+# INPUT: ALLOC
+###################
+
+Alloc(v:V,h:H) input
+CH(o:C,h:H) input
+
+###################
 # INPUT: TYPEFILTER
 ###################
 
@@ -54,6 +62,12 @@ StorePrimArr(u:V,v:U) output
 LoadPrimArr(y:U,x:V) output
 
 ###################
+# OUTPUT: ALLOC
+###################
+
+AllocNew(v:V,h:H) output
+
+###################
 # OUTPUT: TYPEFILTER
 ###################
 
@@ -68,6 +82,12 @@ LoadArr(v,u) :- Load(v,u,0).
 
 StorePrimArr(v,u) :- StorePrim(v,0,u).
 LoadPrimArr(v,u) :- LoadPrim(v,u,0).
+
+###################
+# RULES: ALLOC
+###################
+
+AllocNew(v,h) :- Alloc(v,h), CH(_,h).
 
 ###################
 # RULES: TYPEFILTER

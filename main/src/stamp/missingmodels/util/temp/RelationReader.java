@@ -8,6 +8,7 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 public abstract class RelationReader {
 	public abstract void addEdge(String[] tuple, GraphBuilder gb);
 
+	/*
 	public static RelationReader getReaderByName(String name) {
 		switch(name) { 
 		case "Alloc":
@@ -24,6 +25,11 @@ public abstract class RelationReader {
 			return storeRelationReader;
 		}
 		throw new RuntimeException("Invalid relation!");
+	}
+	*/
+	
+	public static RelationReader getReaderByName(String name) {
+		return null;
 	}
 	
 	public static RelationReader allocRelationReader = new RelationReader() {

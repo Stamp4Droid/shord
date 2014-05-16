@@ -215,6 +215,14 @@ public final class Graph {
 		public boolean filter(Edge edge);
 	}
 	
+	public Graph getFilteredGraph(EdgeFilter filter) {
+		GraphBuilder gb = new GraphBuilder(this.contextFreeGrammar);
+		for(Edge edge : this.getEdges(filter)) {
+			gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, edge.context, edge.getInfo());
+		}
+		return gb.toGraph();
+	}
+	
 	public Set<Edge> getEdges(EdgeFilter filter) {
 		Set<Edge> edges = new HashSet<Edge>();
 		for(Vertex vertex : this.verticesByName.values()) {

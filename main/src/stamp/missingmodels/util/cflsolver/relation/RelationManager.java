@@ -2,7 +2,6 @@ package stamp.missingmodels.util.cflsolver.relation;
 
 import java.util.Set;
 
-import stamp.analyses.RelationPrinterAnalysis.Relation;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
@@ -13,7 +12,7 @@ public class RelationManager {
 	
 	public static RelationManager relations = new RelationManager();
 	static {
-		relations.add(new IndexRelation("Alloc", "H", 1, "V", 0, "alloc"));
+		relations.add(new IndexRelation("AllocNew", "H", 1, "V", 0, "alloc"));
 		
 		relations.add(new IndexRelation("Assign", "V", 1, "V", 0, "assign"));
 		
@@ -61,6 +60,12 @@ public class RelationManager {
 
 		relations.add(new IndexRelation("StorePrimArr", "U", 1, "V", 0, "storePrimArr"));
 		relations.add(new IndexRelation("LoadPrimArr", "V", 1, "U", 0, "loadPrimArr"));
+
+		relations.add(new IndexRelation("dynparam", "V", 1, "V", 0, "param", 2, true));
+		relations.add(new IndexRelation("dynreturn", "V", 1, "V", 0, "return", 2, false));
+		
+		relations.add(new IndexRelation("dynparamPrim", "U", 1, "U", 0, "paramPrim", 2, true));
+		relations.add(new IndexRelation("dynreturnPrim", "U", 1, "U", 0, "returnPrim", 2, false));
 	}
 	
 	private final MultivalueMap<String,Relation> relationsByName = new MultivalueMap<String,Relation>();

@@ -34,6 +34,14 @@ public class AbductiveInference {
 		this.initialCutEdges = initialCutEdges;
 	}
 	
+	/*
+	private String filename = null;
+	private PrintWriter pw = null;
+	public void printInferenceProblem(String filename) {
+		this.filename = filename;
+	}
+	*/
+	
 	private void setObjective() {
 		Set<Coefficient<Edge>> coefficients = new HashSet<Coefficient<Edge>>();
 		for(Edge edge : this.baseEdges) {
@@ -46,12 +54,26 @@ public class AbductiveInference {
 			coefficients.add(new Coefficient<Edge>(edge, edge.getInfo().weight));
 		}
 		this.lp.setObjective(ObjectiveType.MINIMIZE, coefficients);
+		/*
+		if(this.pw != null) {
+			for(Edge edge : this.baseEdges) {
+				pw.println("base " + edge);
+			}
+		}
+		*/
 	}
 	
 	private void setInitialCutEdges() {
 		for(Edge edge : this.initialCutEdges) {
 			this.lp.addConstraint(ConstraintType.GEQ, 1.0, new Coefficient<Edge>(edge, 1.0));
 		}
+		/*
+		if(this.pw != null) {
+			for(Edge edge : this.initialCutEdges) {
+				this.pw.println("cut " + edge);
+			}
+		}
+		*/
 	}
 	
 	private void addCutEdge(Edge edge) {
@@ -64,12 +86,22 @@ public class AbductiveInference {
 	private void addProduction(Edge target, Edge input) {
 		this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Edge>(target, 1.0), new Coefficient<Edge>(input, -1.0));
 		this.addCutEdge(input);
+		/*
+		if(this.pw != null) {
+			this.pw.println(target + " :- " + input);
+		}
+		*/
 	}
 
 	private void addProduction(Edge target, Edge firstInput, Edge secondInput) {
 		this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Edge>(target, 1.0), new Coefficient<Edge>(firstInput, -1.0), new Coefficient<Edge>(secondInput, -1.0));
 		this.addCutEdge(firstInput);
 		this.addCutEdge(secondInput);
+		/*
+		if(this.pw != null) {
+			this.pw.println(target + " :- " + firstInput + " " + secondInput);
+		}
+		*/
 	}
 	
 	private void processProduction(UnaryProduction unaryProduction, Edge target) {
@@ -148,6 +180,16 @@ public class AbductiveInference {
 	// returns 1 if the edge is in the cut, 0 if the edge is not in the cut
 	private Map<Edge,Boolean> result = null;
 	public Map<Edge,Boolean> solve() throws LpSolveException {
+		/*
+		if(this.filename != null) {
+			try {
+				this.pw = new PrintWriter(this.filename);
+			} catch(IOException e) {
+				this.pw = null;
+				e.printStackTrace();
+			}
+		}
+		*/
 		if(this.result == null) {
 			// STEP 1: Break initial edges
 			this.setInitialCutEdges();
@@ -171,10 +213,15 @@ public class AbductiveInference {
 			for(Edge edge : solution.variableValues.keySet()) {
 				//System.out.println(edge + ": " + solution.variableValues.get(edge));
 				if(this.baseEdges.contains(edge)) {
-					this.result.put(edge, (double)solution.variableValues.get(edge) > 0.5);
+					this.result.put(edge, solution.variableValues.get(edge) >= 0.01);
 				}
 			}
 		}
+		/*
+		if(this.pw != null) {
+			this.pw.close();
+		}
+		*/
 		return this.result;
 	}
 }

@@ -2,6 +2,7 @@ package stamp.missingmodels.util.abduction;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -242,7 +243,7 @@ public class LinearProgram<T> {
 		
 		// Set variables to be integer valued
 		for(int i=1; i<=problem.getNcolumns(); i++) {
-			problem.setInt(i, true);
+			//problem.setInt(i, true);
 			problem.setUpbo(i, 1.0);
 		}
 		
