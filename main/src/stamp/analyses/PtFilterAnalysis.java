@@ -16,7 +16,7 @@ import chord.project.Chord;
 	   signs = { "C0,V0,C1:C0xC1_V0" }
 	   )
 public class PtFilterAnalysis extends JavaAnalysis {
-	private static final double PROBABILITY = 0.125;
+	private static final double PROBABILITY = 0.5;
 	
 	@Override
 	public void run() {

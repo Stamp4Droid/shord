@@ -1,0 +1,1 @@
+./stamp analyze ../stamptest/DarpaApps/1C_tomdroid/
