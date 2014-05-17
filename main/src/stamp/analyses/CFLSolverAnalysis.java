@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -187,6 +190,22 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
+	public static void printGraphEdges(Graph g, final String symbol) {
+		Set<String> edges = new HashSet<String>();
+		for(Edge edge : g.getEdges(new EdgeFilter() {
+			@Override
+			public boolean filter(Edge edge) {
+				return edge.getSymbol().equals(symbol); 
+			}})) {
+			edges.add(edge.sink.name.substring(1) + " " + edge.source.name.substring(1));
+		}
+		List<String> edgeList = new ArrayList<String>(edges);
+		Collections.sort(edgeList);
+		for(String edge : edgeList) {
+			System.out.println(edge);
+		}
+	}
+	
 	public static void printGraphStatics(Graph g) {
 		for(int symbolInt=0; symbolInt<g.getContextFreeGrammar().getNumLabels(); symbolInt++) {
 			final String symbol = g.getContextFreeGrammar().getSymbol(symbolInt);
@@ -199,13 +218,6 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				}})) {
 				edges.add(edge.sink.name.substring(1) + " " + edge.source.name.substring(1));
 			}
-			/*
-			List<String> edgeList = new ArrayList<String>(edges);
-			Collections.sort(edgeList);
-			for(String edge : edgeList) {
-				System.out.println(edge);
-			}
-			*/
 			System.out.println(symbol + ": " + edges.size());
 		}
 		System.out.println("total edges: " + g.getEdges().size());
@@ -230,16 +242,19 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	
 	public static void main(String[] args) throws LpSolveException {
 		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_shord_apps_samples_MultipleLeaks/cfl";
-		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_SysMon/cfl";
+		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_SysMon/cfl";
 		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_Butane/cfl";
-		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1C_tomdroid/cfl";
+		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1C_tomdroid/cfl";
 		//printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)));
 		
-		long time = System.currentTimeMillis();
-		printGraphStatics(new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult());
+		//long time = System.currentTimeMillis();
+
+		Graph g = new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult();
+		//printGraphStatics(g);
+		printGraphEdges(g, "Flow");
+
 		//printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)));
-		//new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult();
-		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
+		//System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 	}
 
 	private static void readRelation(GraphBuilder gb, Relation relation) {

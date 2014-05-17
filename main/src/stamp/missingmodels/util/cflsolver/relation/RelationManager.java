@@ -97,7 +97,18 @@ public class RelationManager {
 		public abstract EdgeInfo getInfo(int[] tuple);
 		
 		public void addEdge(GraphBuilder gb, int[] tuple) {
-			gb.addEdge(this.getSource(tuple), this.getSink(tuple), this.getSymbol(), this.getField(tuple), this.getContext(tuple), this.getInfo(tuple));
+			String source = this.getSource(tuple);
+			String sink = this.getSink(tuple);
+			String symbol = this.getSymbol();
+			Field field = this.getField(tuple);
+			Context context = this.getContext(tuple);
+			
+			EdgeInfo curInfo = gb.toGraph().getInfo(source, sink, symbol, field, context);
+			EdgeInfo newInfo = this.getInfo(tuple);
+			
+			if(curInfo == null || curInfo.weight > newInfo.weight) {
+				gb.addEdge(source, sink, symbol, field, context, newInfo);
+			}
 		}
 	}
 	

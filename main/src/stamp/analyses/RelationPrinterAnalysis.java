@@ -20,7 +20,7 @@ public class RelationPrinterAnalysis extends JavaAnalysis {
 	public static final Set<Relation> relations = new HashSet<Relation>();
 	static {
 		// pt
-		relations.add(new Relation("Alloc"));
+		relations.add(new Relation("AllocNew"));
 		
 		relations.add(new Relation("Assign"));
 		
@@ -71,17 +71,18 @@ public class RelationPrinterAnalysis extends JavaAnalysis {
 
 		relations.add(new Relation("Src2Label"));
 		relations.add(new Relation("Sink2Label"));
-		
-		// TODO: "dynAssign"
-		
-		relations.add(new Relation("HVFilter"));
-		//relations.add(new Relation("CH"));
 
-		//relations.add(new Relation("pt"));
-		//relations.add(new Relation("fpt"));
-		//relations.add(new Relation("fptStat"));
+		relations.add(new Relation("HVFilter"));
 		
-		//relations.add(new Relation("ptdf"));
+		// dynAssign
+
+		relations.add(new Relation("dynparam"));
+		relations.add(new Relation("dynreturn"));
+
+		relations.add(new Relation("dynparamPrim"));
+		relations.add(new Relation("dynreturnPrim"));		
+		
+		relations.add(new Relation("ptd"));
 	}
 	
 	public static class Relation {
