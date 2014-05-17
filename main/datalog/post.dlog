@@ -17,7 +17,7 @@
 ## INPUT RELATIONS ============================================================
 
 # Points-to information
-CM(c:C,m:M) input
+reachableCM(c:C,m:M) input
 
 # Method invocations
 chaIM(i:I,m:M) input
@@ -59,7 +59,7 @@ out_taintedStub(m:M) output
 
 ## RULES ======================================================================
 
-out_reachableM(m) :- CM(_,m).
+out_reachableM(m) :- reachableCM(_,m).
 
 out_taintedPrimVar(l,v) :- labelPrim(_,v,l).
 out_taintedRefVar(l,v) :- labelRef(_,v,l).

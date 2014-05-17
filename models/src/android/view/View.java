@@ -28,10 +28,6 @@ class View
 				});
 	}
 
-	public final android.view.View findViewById(int id) {
-        return new android.view.View(null);
-    }
-
     public  void setOnFocusChangeListener(final android.view.View.OnFocusChangeListener l) 
 	{ 
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
@@ -40,6 +36,7 @@ class View
 						l.onFocusChange(View.this, false);
 					}
 				});
+		
 	}
 	
     // Callback classes and callback setter methods                                                                                                                            

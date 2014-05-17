@@ -4,19 +4,15 @@ import java.util.List;
 import java.io.File;
 
 import shord.project.ClassicProject;
-import shord.project.ModernProject;
+
+import shord.project.Config;
+import shord.project.Messages;
+import shord.project.ITask;
 
 import chord.bddbddb.Rel;
 import chord.bddbddb.RelSign;
-import chord.project.Config;
-import chord.project.ICtrlCollection;
-import chord.project.IDataCollection;
-import chord.project.IStepCollection;
 import chord.util.Utils;
-import chord.project.Messages;
-import chord.project.ITask;
 
-import CnCHJ.api.ItemCollection;
 
 /**
  * Generic implementation of a program relation (a specialized kind of Java task).
@@ -37,50 +33,15 @@ public class ProgramRel extends Rel implements ITask {
         fill();
         save();
     }
-    @Override
-    public void run(Object ctrl, IStepCollection sc) {
-        ModernProject p = ModernProject.g();
-        Object[] allConsumes = p.runPrologue(ctrl, sc);
-        RelSign sign = p.getSign(name);
-        assert (sign != null);
-        int numUniqDoms = sign.getDomKinds().length;
-        ProgramDom[] uniqDoms = new ProgramDom[numUniqDoms];
-        for (int i = 0; i < numUniqDoms; i++) {
-            uniqDoms[i] = (ProgramDom) allConsumes[i];
-        }
-        int n = allConsumes.length - numUniqDoms;
-        consumes = new Object[n];
-        for (int i = 0; i < n; i++) {
-            consumes[i] = allConsumes[numUniqDoms + i];
-        }
-        String[] domNames = sign.getDomNames();
-        int m = domNames.length;
-        ProgramDom[] doms = new ProgramDom[m];
-        for (int i = 0; i < m; i++) {
-            String domName = Utils.trimNumSuffix(domNames[i]);
-            for (ProgramDom dom : uniqDoms) {
-                if (dom.getName().equals(domName)) {
-                    doms[i] = dom;
-                    break;
-                }
-            }
-            assert (doms[i] != null);
-        }
-        setSign(sign);
-        setDoms(doms);
-        run();
-        p.runEpilogue(ctrl, sc, new Object[] { this }, null);
-    }
     public void init() { }
     public void save() {
-        if (Config.verbose >= 1)
+        if (Config.v().verbose >= 1)
             System.out.println("SAVING rel " + name + " size: " + size());
-        super.save(Config.bddbddbWorkDirName);
-        if (Config.classic)
-            ClassicProject.g().setTrgtDone(this);
+        super.save(Config.v().bddbddbWorkDirName);
+		ClassicProject.g().setTrgtDone(this);
     }
     public void load() {
-        super.load(Config.bddbddbWorkDirName);
+        super.load(Config.v().bddbddbWorkDirName);
     }
 
     public void fill()
@@ -89,7 +50,7 @@ public class ProgramRel extends Rel implements ITask {
 	}
 
     public void print() {
-        super.print(Config.outDirName);
+        super.print(Config.v().outDirName);
     }
     public String toString() {
         return name;

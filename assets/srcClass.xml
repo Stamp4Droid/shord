@@ -4,6 +4,7 @@
   <src desc="Audio" class="PII" id="3" priority="high">$audio</src>
   <src desc="Browser" class="PII" id="4" priority="high">$browser</src>
   <src desc="Browser" class="PII" id="5" priority="high">$browser.bookmarks</src>
+  <src desc="Browser" class="PII" id="61" priority="high">$browser.visitedurls</src>
   <src desc="Call Log" class="PII" id="6" priority="high">$calllog</src>
   <src desc="Calendar" class="PII" id="7" priority="high">$calendar</src>
   <src desc="Photos" class="PII" id="8" priority="high">$camera.picture</src>

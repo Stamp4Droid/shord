@@ -5,9 +5,53 @@ class Intent
 	//add by yu.
 	private static android.os.Bundle extras = new android.os.Bundle(true);
 
+	public java.lang.String name; 
+	public java.lang.String action; 
+	public java.lang.String type; 
+
+
 	@STAMP(flows = {@Flow(from="uri",to="!this")})
 	public  Intent(java.lang.String action, android.net.Uri uri) 
 	{ 
+		this.action = action;
+	}
+
+	public Intent(java.lang.String action) {
+		this.action = action;
+	}
+
+	public Intent(android.content.Context packageContext, java.lang.Class<?> cls) {
+		this.name = cls.name;
+	}
+
+	public Intent(java.lang.String action, android.net.Uri uri, android.content.Context packageContext, java.lang.Class<?> cls) {
+		this.name = cls.name;
+		this.action = action;
+	}
+
+	public android.content.Intent setComponent(android.content.ComponentName component) {
+		this.name = component.name;
+		return this;
+	}
+
+	public android.content.Intent setClassName(android.content.Context packageContext, java.lang.String className) {
+		this.name = className;
+		return this;
+	}
+
+	public android.content.Intent setClassName(java.lang.String packageName, java.lang.String className) {
+		this.name = className;
+		return this;
+	}
+
+	public android.content.Intent setClass(android.content.Context packageContext, java.lang.Class<?> cls) {
+		this.name = cls.name;
+		return this;
+	}
+
+	public android.content.Intent setAction(java.lang.String action) {
+		this.action = action;
+		return this;
 	}
 
 	@STAMP(flows={@Flow(from="$getExtras",to="@return"),@Flow(from="this",to="@return")})
@@ -25,8 +69,24 @@ class Intent
 	@STAMP(flows = {@Flow(from="data",to="!this")})
 	public  android.content.Intent setDataAndType(android.net.Uri data, java.lang.String type) 
 	{ 
+        this.type = type;
 		return this;
 	}
+
+    public android.content.Intent setType(java.lang.String type) {
+        this.type = type;
+		return this;
+    }
+
+    public android.content.Intent setTypeAndNormalize(java.lang.String type) {
+        this.type = type;
+		return this;
+    }
+
+    public android.content.Intent setDataAndTypeAndNormalize(android.net.Uri data, java.lang.String type) {
+        this.type = type;
+		return this;
+    }
 
     //Getter.
 	@STAMP(flows={@Flow(from="$getExtras",to="@return")})

@@ -92,7 +92,7 @@ public class Category extends Tuple {
 		return newCat;
 	}
 	
-	public void write(PrintWriter writer) {
+	protected void write(PrintWriter writer) {
 		if(type != null)
 			writer.println("<category type=\""+type+"\">");
 		else

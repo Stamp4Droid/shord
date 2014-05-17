@@ -29,7 +29,8 @@ public class ApplicationDriver
 
 	public static void registerCallback(Callback cb)
 	{
-		callbacks.add(cb);
+		cb.run();
+		//callbacks.add(cb);
 	}
 
 	public static void callCallbacks()

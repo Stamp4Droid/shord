@@ -19,17 +19,17 @@ import chord.project.Chord;
 @Chord(name = "dynfeatures-java")
 public class DynamicFeaturesAnalysis extends JavaAnalysis
 {
+	public int stmtCount = 0;
+	public int invokeCount = 0;
+	public int readFieldCount = 0;
+
 	public void run()
 	{
 		measureReflection();
 	}
 	
-	void measureReflection()
+	public void measureReflection()
 	{
-		int stmtCount = 0;
-		int invokeCount = 0;
-		int readFieldCount = 0;
-
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();

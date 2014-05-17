@@ -81,7 +81,7 @@ public class Tuple {
 		return this;
 	}
 	
-	public void write(PrintWriter writer) {
+	protected void write(PrintWriter writer) {
 		writer.print("<tuple"+(attrs != null ? attrs : ""));
 		if(str != null){
 			writer.println(">");

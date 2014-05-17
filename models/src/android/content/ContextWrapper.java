@@ -1,5 +1,14 @@
 class ContextWrapper
 {
+	protected Context mBase;
+	
+	public ContextWrapper(android.content.Context base) {
+		mBase = base;
+	}
+
+    protected void attachBaseContext(android.content.Context base) {
+        mBase = base;
+    }
 
     private android.content.ContentResolver contentResolver = new android.test.mock.MockContentResolver();
 
@@ -109,4 +118,9 @@ class ContextWrapper
     public java.io.FileOutputStream openFileOutput(java.lang.String name, int mode) throws java.io.FileNotFoundException {
 		return new java.io.FileOutputStream(name);
     }
+
+	public  java.lang.Object getSystemService(java.lang.String name) 
+	{
+		return mBase.getSystemService(name);
+	}
 }

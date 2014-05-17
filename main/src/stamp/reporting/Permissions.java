@@ -11,8 +11,8 @@ import org.w3c.dom.*;
 import org.xml.sax.*;
 
 import stamp.util.SHAFileChecksum;
-import stamp.harnessgen.PersonalNamespaceContext;
-import stamp.harnessgen.UTF8ToAnsiUtils;
+import stamp.app.PersonalNamespaceContext;
+import stamp.app.UTF8ToAnsiUtils;
 
 /*
  * @author Saswat Anand

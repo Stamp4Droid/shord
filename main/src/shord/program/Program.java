@@ -9,36 +9,42 @@ import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
 import soot.jimple.toolkits.callgraph.CallGraphBuilder;
 import soot.tagkit.Tag;
+import soot.toolkits.scalar.LocalSplitter;
+import soot.dexpler.DalvikThrowAnalysis;
 
 import java.util.*;
 import java.io.*;
 
 import shord.analyses.ContainerTag;
 
+import stamp.app.App;
+
 public class Program
 {
 	private static Program g;
 	private SootMethod mainMethod;
+	private App app;
 
 	public static Program g()
 	{
 		if(g == null){
 			g = new Program();
-			g.build();
 		}
 		return g;
 	}
 
-	private Program(){}
+	private Program()
+	{
+	}
 
-	private void build()
+	public void build(List<String> harnesses)
 	{
         try {
 			StringBuilder options = new StringBuilder();
 			options.append("-full-resolver");
 			options.append(" -allow-phantom-refs");
 			options.append(" -src-prec apk");
-			options.append(" -p jb.tr use-older-type-assigner:true"); 
+			//options.append(" -p jb.tr use-older-type-assigner:true"); 
 			//options.append(" -p cg implicit-entry:false");
 			options.append(" -force-android-jar "+System.getProperty("user.dir"));
 			options.append(" -soot-classpath "+System.getProperty("stamp.android.jar")+File.pathSeparator+System.getProperty("chord.class.path"));
@@ -57,25 +63,56 @@ public class Program
 
             Scene.v().loadBasicClasses();
 
-			String mainClassName = System.getProperty("chord.main.class");
-			SootClass mainClass = Scene.v().loadClassAndSupport(mainClassName);
-			Scene.v().setMainClass(mainClass);
+			for(String h : harnesses){
+				Scene.v().loadClassAndSupport(h);
+			}
 
-			mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
+			//String mainClassName = System.getProperty("chord.main.class");
+			//SootClass mainClass = Scene.v().loadClassAndSupport(mainClassName);
+			//Scene.v().setMainClass(mainClass);
 
-			Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
+			//mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
+
+			//Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
+
+
 			Scene.v().loadDynamicClasses();
-        } catch (CompilationDeathException e) {
-            if(e.getStatus()!=CompilationDeathException.COMPILATION_SUCCEEDED)
-                throw e;
-            else
-                return;
+
+			LocalSplitter localSplitter = new LocalSplitter(DalvikThrowAnalysis.v());
+
+			for(SootClass klass : Scene.v().getClasses()){
+				for(SootMethod meth : klass.getMethods()){
+					if(!meth.isConcrete())
+						continue;
+					localSplitter.transform(meth.retrieveActiveBody());
+				}
+			}
+
+        } catch (Exception e) {
+			throw new Error(e);
         }
+	}
+
+	public void setMainClass(String harness)
+	{
+		SootClass mainClass = Scene.v().getSootClass(harness);
+		mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
+		Scene.v().setMainClass(mainClass);
+
+		List entryPoints = new ArrayList();
+		entryPoints.add(mainMethod);
+
+		//workaround soot bug
+		if(mainClass.declaresMethodByName("<clinit>"))
+			entryPoints.add(mainClass.getMethodByName("<clinit>"));
+
+		Scene.v().setEntryPoints(entryPoints);
 	}
 
 	public void buildCallGraph()
 	{
 		//run CHA
+		Scene.v().releaseCallGraph();
 		CallGraphBuilder cg = new CallGraphBuilder(DumbPointerAnalysis.v());
 		cg.build();
 	}
@@ -135,5 +172,17 @@ public class Program
 	public static String unitToString(Unit u) {
 		SootMethod m = (u instanceof Stmt) ? containerMethod((Stmt) u) : null;
 		return (m == null) ? u.toString() : u + "@" + m;
+	}
+	
+	public App app()
+	{
+		if(app == null){
+			String apktoolOutDir = System.getProperty("stamp.apktool.out.dir");
+			String apkPath = System.getProperty("stamp.apk.path");
+			app = App.readApp(apkPath, apktoolOutDir);
+			app.findLayouts();
+			System.out.println(app.toString());
+		}
+		return app;
 	}
 }

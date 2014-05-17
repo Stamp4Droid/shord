@@ -6,13 +6,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import shord.project.Messages;
+import shord.project.Config;
+import shord.project.TrgtInfo;
+import shord.project.analyses.ProgramRel;
+
 import chord.bddbddb.RelSign;
 import chord.util.Utils;
-import chord.project.Messages;
-import chord.project.Config;
-import chord.project.TrgtInfo;
-
-import shord.project.analyses.ProgramRel;
 
 public class TrgtParser {
     private static final String DOM_NAMES_INCONSISTENT = 
@@ -139,7 +139,7 @@ public class TrgtParser {
     }
     
     private void inconsistentDomOrders(String relName, String order1, String order2, String loc1, String loc2) {
-        if (Config.verbose >= 2) Messages.log(DOM_ORDERS_INCONSISTENT, relName,
+        if (Config.v().verbose >= 2) Messages.log(DOM_ORDERS_INCONSISTENT, relName,
             order1, order2, loc1, loc2);
     }
 
