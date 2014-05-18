@@ -85,11 +85,7 @@ public class Launcher
 					e.printStackTrace();
 				}
 			}
+			System.out.println("Worker thread: finished analyzing "+apkName);
 		}
-
-				System.out.println("Worker thread: finished analyzing "+apkName);
-			}
-			System.out.println("Worker thread: done");
-		}
-    }
+	}
 }

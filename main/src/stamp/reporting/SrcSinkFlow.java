@@ -105,10 +105,12 @@ public class SrcSinkFlow extends XMLReport {
 		relCtxtFlows.close();
 
 	}
+	}
 
 	private String ctxtToString(Ctxt context) {
 		StringBuilder stmtbuilder = new StringBuilder();
 		StringBuilder srcbuilder = new StringBuilder();
+		/*
 		for(Unit unit : context.getElems()) {
 			Stmt stmt = (Stmt)unit;
 
@@ -121,5 +123,7 @@ public class SrcSinkFlow extends XMLReport {
 			srcbuilder.append(filename+' '+lineNum).append('~');
 		}
 		return stmtbuilder.toString() + "~~~" + srcbuilder.toString();
+		*/
+		return "ERROR";
 	}
 }

@@ -91,7 +91,7 @@ import stamp.missingmodels.util.Util.MultivalueMap;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
-	             "Stub", "Framework"
+	             "Stub", "Framework",
 				 "SpecIM", "StatIM", "VirtIM",
 				 "SubSig", "Dispatch",
                  "ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
