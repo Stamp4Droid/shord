@@ -75,7 +75,7 @@ public interface EdgeData {
 	
 	public static final class Context implements EdgeData {
 		public static final Context DEFAULT_CONTEXT = new Context(true);
-		private static final int MAX_CONTEXT_DEPTH = 1;
+		private static final int MAX_CONTEXT_DEPTH = 2;
 
 		private final LinkedList<Integer> contexts = new LinkedList<Integer>();
 		private final boolean isForward;

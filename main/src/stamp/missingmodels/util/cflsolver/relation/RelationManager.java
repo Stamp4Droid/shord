@@ -17,7 +17,7 @@ public class RelationManager {
 		relations.add(new IndexRelation("Assign", "V", 1, "V", 0, "assign"));
 		
 		relations.add(new IndexRelation("param", "V", 1, "V", 0, "param", 2, true, 1));
-		relations.add(new IndexRelation("return", "V", 1, "V", 0, "return", 2, false, 1));
+		relations.add(new IndexRelation("return", "V", 1, "V", 0, "return", 2, false));
 
 		relations.add(new IndexRelation("Store", "V", 2, "V", 0, "store", 1));
 		relations.add(new IndexRelation("Load", "V", 1, "V", 0, "load", 2));
@@ -28,7 +28,7 @@ public class RelationManager {
 		relations.add(new IndexRelation("AssignPrim", "U", 1, "U", 0, "assignPrim"));
 		
 		relations.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", 2, true, 1));
-		relations.add(new IndexRelation("returnPrim", "U", 1, "U", 0, "returnPrim", 2, false, 1));
+		relations.add(new IndexRelation("returnPrim", "U", 1, "U", 0, "returnPrim", 2, false));
 		
 		relations.add(new IndexRelation("StorePrim", "U", 2, "V", 0, "storePrim", 1));
 		relations.add(new IndexRelation("LoadPrim", "V", 1, "U", 0, "loadPrim", 2));

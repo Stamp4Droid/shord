@@ -51,7 +51,7 @@ public class Postmortem extends JavaAnalysis {
 		Class[] allReports = new Class[]{
 			SrcFlow.class
 			,ArgSinkFlow.class
-			,SrcSinkFlow.class
+			//,SrcSinkFlow.class
 			//,SrcSinkFlowViz.class
 			//,ReachableStub.class,
 			,TaintedStub.class
@@ -66,7 +66,7 @@ public class Postmortem extends JavaAnalysis {
 
 		Class[] finalReport = new Class[]{
 			PotentialCallbacks.class
-			,SrcSinkFlow.class
+			//,SrcSinkFlow.class
 		};
 
 		Class[] dontShowReports = new Class[]{

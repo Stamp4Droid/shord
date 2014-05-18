@@ -26,11 +26,13 @@ import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.abduction.AbductiveInference;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
 import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
@@ -120,7 +122,6 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	
 	public static Map<Edge,Boolean> runInference(Graph g, TypeFilter t) throws LpSolveException {		
 		// STEP 1: Run reachability solver
-		
 		long time = System.currentTimeMillis();
 		System.out.println("Computing transitive closure");
 		
@@ -129,15 +130,25 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 		System.out.println("Num edges: " + gbar.getEdges().size());
 		
-		// STEP 2: Run the abductive inference algorithm
-		Set<Edge> baseEdges = gbar.getEdges(new EdgeFilter() {
+		// STEP 2: Transform graph
+		GraphTransformer gt = new GraphTransformer() {
+			@Override
+			public void process(GraphBuilder gb, Edge edge) {
+				gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, Context.DEFAULT_CONTEXT, edge.getInfo());
+			}
+		};
+		
+		Graph gbart = gt.transform(gbar);
+		
+		// STEP 3: Run the abductive inference algorithm
+		Set<Edge> baseEdges = gbart.getEdges(new EdgeFilter() {
 			@Override
 			public boolean filter(Edge edge) {
 				return edge.getSymbol().equals("param") || edge.getSymbol().equals("return");
 			}
 		});
 		System.out.println("Num base edges: " + baseEdges.size());
-		Set<Edge> initialCutEdges = gbar.getEdges(new EdgeFilter() {
+		Set<Edge> initialCutEdges = gbart.getEdges(new EdgeFilter() {
 			private boolean added = false;
 			@Override
 			public boolean filter(Edge edge) {
@@ -150,7 +161,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		});
 		System.out.println("Num initial edges: " + initialCutEdges.size());
 		
-		return new AbductiveInference(gbar, baseEdges, initialCutEdges).solve();
+		return new AbductiveInference(gbart, baseEdges, initialCutEdges).solve();
 	}
 	
 	private static String getMethodSig(String name) {
@@ -180,12 +191,11 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	}
 
 	public static void printResultShord(Map<Edge,Boolean> result) {
-		DomI domI = (DomI)ClassicProject.g().getTrgt("I");
 		for(Edge edge : result.keySet()) {
 			if(result.get(edge)) {
 				System.out.println("remove: " + edge);
 				System.out.println("caller: " + getMethodSig(edge.source.name));
-				System.out.println("callee: " + domI.get(edge.context.getContexts().get(0)));
+				System.out.println("callee: " + getMethodSig(edge.sink.name));
 			}
 		}
 	}
@@ -242,21 +252,19 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	
 	public static void main(String[] args) throws LpSolveException {
 		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_shord_apps_samples_MultipleLeaks/cfl";
-		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_SysMon/cfl";
 		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_Butane/cfl";
 		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1C_tomdroid/cfl";
-		//printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)));
 		
 		//long time = System.currentTimeMillis();
-
-		Graph g = new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult();
+		
+		//Graph g = new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult();
 		//printGraphStatics(g);
-		printGraphEdges(g, "Flow");
-
-		//printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)));
+		//printGraphEdges(g, "Flow");
+		
+		printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)));
 		//System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 	}
-
+	
 	private static void readRelation(GraphBuilder gb, Relation relation) {
 		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relation.getName());
 		rel.load();
