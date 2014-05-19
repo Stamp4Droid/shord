@@ -371,6 +371,8 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		labels.add("!sendDataMessage");
 		labels.add("!sendMultipartTextMessage");
 		
+		labels.add("$CONTENT_PROVIDER");
+		
 		GraphTransformer gt = new GraphTransformer() {
 			@Override
 			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
@@ -382,6 +384,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
 				}
 				if(name != null && !labels.contains(name)) {
+					System.out.println("Removing: " + name);
 					return;
 				}
 				gb.addEdge(edgeStruct, weight);
