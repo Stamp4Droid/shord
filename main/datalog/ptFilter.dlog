@@ -1,0 +1,167 @@
+##################
+# Points-to analysis
+##################
+
+# name=pt-filter-dlog
+
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+.include "F.dom"
+.include "I.dom"
+
+.bddvarorder M0_C0xC1xC2_V0xV1_H0xF0_I0
+
+Assign(v:V,u:V)     input   # v = u
+Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+Load(y:V,x:V,f:F)   input   # y = x.f
+Store(u:V,f:F,v:V)  input   # u.f = v
+LoadStat(y:V,f:F)   input   # y = f
+StoreStat(f:F,v:V)  input   # f = v
+return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
+
+MV(m:M,v:V) input         # v is a variable in method m
+CM(c:C,m:M) input         # c is a context of method m
+CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
+CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack c
+CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
+
+###################
+# FILTER SPECIFIC VARIABLES
+###################
+
+paramFilter1(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+
+ptFilter1(c:C,v:V,o:C) output
+fptFilter1(o1:C,f:F,o2:C) output
+fptStatFilter1(f:F,o:C) output
+
+###################
+#    RULES
+###################
+
+ptFilter1(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+ptFilter1(c,v,o) :- ptFilter1(c,u,o), Assign(v,u), typeFilter(v,o).
+ptFilter1(d,u,o) :- ptFilter1(c,v,o), paramFilter1(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
+ptFilter1(c,u,o) :- ptFilter1(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
+fptFilter1(o1,f,o2) :- ptFilter1(c,v,o2), Store(u,f,v), ptFilter1(c,u,o1).
+ptFilter1(c,y,o2) :- ptFilter1(c,x,o1), Load(y,x,f), fptFilter1(o1,f,o2).
+fptStatFilter1(f,o) :- ptFilter1(_,v,o), StoreStat(f,v).
+ptFilter1(c,y,o) :- LoadStat(y,f), fptStatFilter1(f,o), MV(m,y), CM(c,m).
+
+###################
+# FILTER SPECIFIC VARIABLES
+###################
+
+paramFilter2(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+
+ptFilter2(c:C,v:V,o:C) output
+fptFilter2(o1:C,f:F,o2:C) output
+fptStatFilter2(f:F,o:C) output
+
+###################
+#    RULES
+###################
+
+ptFilter2(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+ptFilter2(c,v,o) :- ptFilter2(c,u,o), Assign(v,u), typeFilter(v,o).
+ptFilter2(d,u,o) :- ptFilter2(c,v,o), paramFilter2(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
+ptFilter2(c,u,o) :- ptFilter2(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
+fptFilter2(o1,f,o2) :- ptFilter2(c,v,o2), Store(u,f,v), ptFilter2(c,u,o1).
+ptFilter2(c,y,o2) :- ptFilter2(c,x,o1), Load(y,x,f), fptFilter2(o1,f,o2).
+fptStatFilter2(f,o) :- ptFilter2(_,v,o), StoreStat(f,v).
+ptFilter2(c,y,o) :- LoadStat(y,f), fptStatFilter2(f,o), MV(m,y), CM(c,m).
+
+###################
+# FILTER SPECIFIC VARIABLES
+###################
+
+paramFilter3(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+
+ptFilter3(c:C,v:V,o:C) output
+fptFilter3(o1:C,f:F,o2:C) output
+fptStatFilter3(f:F,o:C) output
+
+###################
+#    RULES
+###################
+
+ptFilter3(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+ptFilter3(c,v,o) :- ptFilter3(c,u,o), Assign(v,u), typeFilter(v,o).
+ptFilter3(d,u,o) :- ptFilter3(c,v,o), paramFilter3(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
+ptFilter3(c,u,o) :- ptFilter3(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
+fptFilter3(o1,f,o2) :- ptFilter3(c,v,o2), Store(u,f,v), ptFilter3(c,u,o1).
+ptFilter3(c,y,o2) :- ptFilter3(c,x,o1), Load(y,x,f), fptFilter3(o1,f,o2).
+fptStatFilter3(f,o) :- ptFilter3(_,v,o), StoreStat(f,v).
+ptFilter3(c,y,o) :- LoadStat(y,f), fptStatFilter3(f,o), MV(m,y), CM(c,m).
+
+###################
+# FILTER SPECIFIC VARIABLES
+###################
+
+paramFilter4(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+
+ptFilter4(c:C,v:V,o:C) output
+fptFilter4(o1:C,f:F,o2:C) output
+fptStatFilter4(f:F,o:C) output
+
+###################
+#    RULES
+###################
+
+ptFilter4(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+ptFilter4(c,v,o) :- ptFilter4(c,u,o), Assign(v,u), typeFilter(v,o).
+ptFilter4(d,u,o) :- ptFilter4(c,v,o), paramFilter4(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
+ptFilter4(c,u,o) :- ptFilter4(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
+fptFilter4(o1,f,o2) :- ptFilter4(c,v,o2), Store(u,f,v), ptFilter4(c,u,o1).
+ptFilter4(c,y,o2) :- ptFilter4(c,x,o1), Load(y,x,f), fptFilter4(o1,f,o2).
+fptStatFilter4(f,o) :- ptFilter4(_,v,o), StoreStat(f,v).
+ptFilter4(c,y,o) :- LoadStat(y,f), fptStatFilter4(f,o), MV(m,y), CM(c,m).
+
+###################
+# FILTER SPECIFIC VARIABLES
+###################
+
+paramFilter5(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+
+ptFilter5(c:C,v:V,o:C) output
+fptFilter5(o1:C,f:F,o2:C) output
+fptStatFilter5(f:F,o:C) output
+
+###################
+#    RULES
+###################
+
+ptFilter5(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+ptFilter5(c,v,o) :- ptFilter5(c,u,o), Assign(v,u), typeFilter(v,o).
+ptFilter5(d,u,o) :- ptFilter5(c,v,o), paramFilter5(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
+ptFilter5(c,u,o) :- ptFilter5(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
+fptFilter5(o1,f,o2) :- ptFilter5(c,v,o2), Store(u,f,v), ptFilter5(c,u,o1).
+ptFilter5(c,y,o2) :- ptFilter5(c,x,o1), Load(y,x,f), fptFilter5(o1,f,o2).
+fptStatFilter5(f,o) :- ptFilter5(_,v,o), StoreStat(f,v).
+ptFilter5(c,y,o) :- LoadStat(y,f), fptStatFilter5(f,o), MV(m,y), CM(c,m).
+
+###################
+# FILTER SPECIFIC VARIABLES
+###################
+
+paramFilter6(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+
+ptFilter6(c:C,v:V,o:C) output
+fptFilter6(o1:C,f:F,o2:C) output
+fptStatFilter6(f:F,o:C) output
+
+###################
+#    RULES
+###################
+
+ptFilter6(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+ptFilter6(c,v,o) :- ptFilter6(c,u,o), Assign(v,u), typeFilter(v,o).
+ptFilter6(d,u,o) :- ptFilter6(c,v,o), paramFilter6(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
+ptFilter6(c,u,o) :- ptFilter6(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
+fptFilter6(o1,f,o2) :- ptFilter6(c,v,o2), Store(u,f,v), ptFilter6(c,u,o1).
+ptFilter6(c,y,o2) :- ptFilter6(c,x,o1), Load(y,x,f), fptFilter6(o1,f,o2).
+fptStatFilter6(f,o) :- ptFilter6(_,v,o), StoreStat(f,v).
+ptFilter6(c,y,o) :- LoadStat(y,f), fptStatFilter6(f,o), MV(m,y), CM(c,m).

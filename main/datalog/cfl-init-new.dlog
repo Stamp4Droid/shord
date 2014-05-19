@@ -15,7 +15,7 @@
 .include "U.dom"
 .include "T.dom"
 
-.bddvarorder C0xC1_V0xV1_U0xU1_H0xF0_T0
+.bddvarorder C0_V0xV1_U0xU1_H0xF0_T0
 
 ###################
 # INPUT: DYNAMIC CALLGRAPH
@@ -52,12 +52,6 @@ VT(v:V,t:T) input
 HTFilter(h:H,t:T) input
 
 ###################
-# INPUT: PT DEBUG
-###################
-
-pt(c:C,v:V,o:C) input
-
-###################
 # OUTPUT: ARR
 ###################
 
@@ -80,12 +74,6 @@ AllocNew(v:V,h:H) output
 HVFilter(v:V,h:H) output
 
 ###################
-# OUTPUT: PT DEBUG
-###################
-
-ptd(v:V,h:H) output
-
-###################
 # RULES: ARR
 ###################
 
@@ -106,10 +94,3 @@ AllocNew(v,h) :- Alloc(v,h), CH(_,h).
 ###################
 
 HVFilter(v,h) :- VT(v,t), HTFilter(h,t).
-
-###################
-# OUTPUT: PT DEBUG
-###################
-
-ptd(v,h) :- pt(_,v,o), CH(o,h).
-

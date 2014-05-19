@@ -2,7 +2,6 @@ package stamp.missingmodels.util.abduction;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -221,6 +220,10 @@ public class LinearProgram<T> {
 		System.out.println("Number of variables: " + numVariables);
 		System.out.println("Number of constraints: " + numConstraints);
 		
+		if(numVariables > 15000 || numConstraints > 20000) {
+			throw new Error("Too many variables and constraints!");
+		}
+		
 		System.out.println("Setting up LP");
 		long time = System.currentTimeMillis();
 		
@@ -268,10 +271,11 @@ public class LinearProgram<T> {
 		problem.deleteLp();
 
 		System.out.println("Solved LP");
-
+		
 		LinearProgramResult<T> result = new LinearProgramResult<T>(solution[0]);
 		for(int i=solution.length-numVariables; i<solution.length; i++) {
 			result.variableValues.put(variableNames.get(i-1-numConstraints), solution[i]);
+			//System.out.println(variableNames.get(i-1-numConstraints) + " = " + solution[i]);
 		}
 		return result;
 	}

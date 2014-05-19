@@ -4,6 +4,7 @@ import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;
 
 public class GraphBuilder {
@@ -15,6 +16,14 @@ public class GraphBuilder {
 
 	public Graph toGraph() {
 		return this.graph;
+	}
+
+	public Edge addEdge(EdgeStruct edgeStruct) {
+		return this.graph.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.context, new EdgeInfo());
+	}
+	
+	public Edge addEdge(EdgeStruct edgeStruct, int weight) {
+		return this.graph.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.context, new EdgeInfo(weight));
 	}
 	
 	public Edge addEdge(Vertex source, Vertex sink, int symbolInt, Field field, Context context, EdgeInfo info) {

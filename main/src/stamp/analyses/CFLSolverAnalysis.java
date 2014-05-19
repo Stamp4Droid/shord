@@ -13,7 +13,6 @@ import java.util.Set;
 
 import lpsolve.LpSolveException;
 import shord.analyses.CastVarNode;
-import shord.analyses.DomI;
 import shord.analyses.DomU;
 import shord.analyses.DomV;
 import shord.analyses.LocalVarNode;
@@ -31,6 +30,7 @@ import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
@@ -120,7 +120,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		taintGrammar.addBinaryProduction("Label2PrimFldStat", "Label2Prim", "storeStatPrim");
 	}
 	
-	public static Map<Edge,Boolean> runInference(Graph g, TypeFilter t) throws LpSolveException {		
+	public static Map<EdgeStruct,Boolean> runInference(Graph g, TypeFilter t) throws LpSolveException {
 		// STEP 1: Run reachability solver
 		long time = System.currentTimeMillis();
 		System.out.println("Computing transitive closure");
@@ -131,20 +131,20 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		System.out.println("Num edges: " + gbar.getEdges().size());
 		
 		// STEP 2: Transform graph
-		GraphTransformer gt = new GraphTransformer() {
+		GraphTransformer gtStripContext = new GraphTransformer() {
 			@Override
-			public void process(GraphBuilder gb, Edge edge) {
-				gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, Context.DEFAULT_CONTEXT, edge.getInfo());
+			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
+				gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT, new EdgeInfo(weight));
 			}
 		};
 		
-		Graph gbart = gt.transform(gbar);
+		Graph gbart = gtStripContext.transform(gbar);
 		
 		// STEP 3: Run the abductive inference algorithm
 		Set<Edge> baseEdges = gbart.getEdges(new EdgeFilter() {
 			@Override
 			public boolean filter(Edge edge) {
-				return edge.getSymbol().equals("param") || edge.getSymbol().equals("return");
+				return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
 			}
 		});
 		System.out.println("Num base edges: " + baseEdges.size());
@@ -161,7 +161,51 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		});
 		System.out.println("Num initial edges: " + initialCutEdges.size());
 		
-		return new AbductiveInference(gbart, baseEdges, initialCutEdges).solve();
+		// print initial cut edges
+		DomL dom = (DomL)ClassicProject.g().getTrgt("L");
+		for(Edge edge : initialCutEdges) {			
+			String source = dom.get(Integer.parseInt(edge.source.name.substring(1)));
+			String sink = dom.get(Integer.parseInt(edge.sink.name.substring(1)));
+			System.out.println("Cutting Src2Sink edge: " + edge.toString());
+			System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
+		}
+		
+		final Map<EdgeStruct,Boolean> result = new AbductiveInference(gbart, baseEdges, initialCutEdges).solve();
+		
+		// STEP 4: Remove the edges and run solver again
+		System.out.println("Printing remaining src-sink edges:");
+		final Set<EdgeStruct> baseEdgeStructs = new HashSet<EdgeStruct>();
+		for(Edge edge : baseEdges) {
+			baseEdgeStructs.add(edge.getStruct());
+		}
+		GraphTransformer gtNew = new GraphTransformer() {
+			@Override
+			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
+				EdgeStruct tempStruct = new EdgeStruct(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT);
+				if(result.get(tempStruct) != null && result.get(tempStruct)) {
+					//System.out.println(edgeStruct);
+					return;
+				}
+				if(!baseEdgeStructs.contains(tempStruct) && weight > 0) {
+					return;
+				}
+				gb.addEdge(edgeStruct);
+			}
+		};
+		Graph gnew = gtNew.transform(gbar);
+		Graph gnewBar = new ReachabilitySolver(gnew, t).getResult();
+		for(Edge edge : gnewBar.getEdges(new EdgeFilter() {
+			@Override
+			public boolean filter(Edge edge) {
+				return edge.getSymbol().equals("Src2Sink");
+			}
+		})) {
+			System.out.println("src2sink edge: " + edge);
+			System.out.println("weight: " + edge.getInfo().weight);
+		}
+		System.out.println("Done!");
+		
+		return result;
 	}
 	
 	private static String getMethodSig(String name) {
@@ -190,14 +234,17 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 
-	public static void printResultShord(Map<Edge,Boolean> result) {
-		for(Edge edge : result.keySet()) {
-			if(result.get(edge)) {
-				System.out.println("remove: " + edge);
-				System.out.println("caller: " + getMethodSig(edge.source.name));
-				System.out.println("callee: " + getMethodSig(edge.sink.name));
+	public static void printResultShord(Map<EdgeStruct,Boolean> result) {
+		int totalCut = 0;
+		for(EdgeStruct edgeStruct : result.keySet()) {
+			if(result.get(edgeStruct)) {
+				System.out.println("remove: " + edgeStruct);
+				System.out.println("caller: " + getMethodSig(edgeStruct.sourceName));
+				System.out.println("callee: " + getMethodSig(edgeStruct.sinkName));
+				totalCut++;
 			}
 		}
+		System.out.println("total cut: " + totalCut);
 	}
 	
 	public static void printGraphEdges(Graph g, final String symbol) {
@@ -216,7 +263,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	public static void printGraphStatics(Graph g) {
+	public static void printGraphStatistcs(Graph g) {
 		for(int symbolInt=0; symbolInt<g.getContextFreeGrammar().getNumLabels(); symbolInt++) {
 			final String symbol = g.getContextFreeGrammar().getSymbol(symbolInt);
 			if(!symbol.equals(symbol)) continue;
@@ -233,12 +280,15 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		System.out.println("total edges: " + g.getEdges().size());
 	}
 	
-	public static void printResult(Map<Edge,Boolean> result) {
-		for(Edge edge : result.keySet()) {
-			if(result.get(edge)) {
-				System.out.println("remove: " + edge);
+	public static void printResult(Map<EdgeStruct,Boolean> result) {
+		int totalCut = 0;
+		for(EdgeStruct edgeStruct : result.keySet()) {
+			if(result.get(edgeStruct)) {
+				System.out.println("remove: " + edgeStruct);
+				totalCut++;
 			}
 		}
+		System.out.println("total cut: " + totalCut);
 	}
 	
 	@Override
@@ -253,6 +303,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	public static void main(String[] args) throws LpSolveException {
 		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_shord_apps_samples_MultipleLeaks/cfl";
 		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_Butane/cfl";
+		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_ConnectBot/cfl";
 		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1C_tomdroid/cfl";
 		
 		//long time = System.currentTimeMillis();
@@ -280,7 +331,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	public static TypeFilter getTypeFilterFromShord() {
 		TypeFilter t = new TypeFilter(taintGrammar);
 		
-		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt("HVFilter");
+		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt("ptd");
 		rel.load();
 		
 		Iterable<int[]> res = rel.getAryNIntTuples();
@@ -288,7 +339,8 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			t.add("H" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
 		}
 		
-		rel.close();
+		rel.close();		
+		
 		return t;
 	}
 	
@@ -301,7 +353,42 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				readRelation(gb, relation);
 			}
 		}
-		return gb.toGraph();
+		
+		final Set<String> labels = new HashSet<String>();
+		labels.add("$LOCATION");
+		labels.add("$getLatitude");
+		labels.add("$getLongitude");
+		labels.add("$FINE_LOCATION");
+		labels.add("$ACCOUNTS");
+		labels.add("$getDeviceId");
+		labels.add("$SMS");
+		labels.add("$CONTACTS");
+		labels.add("$CALENDAR");
+		labels.add("!SOCKET");
+		labels.add("!INTERNET");
+		labels.add("!sendTextMessage");
+		labels.add("!destinationAddress");
+		labels.add("!sendDataMessage");
+		labels.add("!sendMultipartTextMessage");
+		
+		GraphTransformer gt = new GraphTransformer() {
+			@Override
+			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
+				DomL dom = (DomL)ClassicProject.g().getTrgt("L");
+				String name = null;
+				if(edgeStruct.sourceName.startsWith("L")) {
+					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
+				} else if(edgeStruct.sinkName.startsWith("L")) {
+					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
+				}
+				if(name != null && !labels.contains(name)) {
+					return;
+				}
+				gb.addEdge(edgeStruct, weight);
+			}
+		};
+		
+		return gt.transform(gb.toGraph());
 	}
 	
 	private static void readRelation(BufferedReader br, GraphBuilder gb, String relationName) throws IOException {
@@ -322,7 +409,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	public static TypeFilter getTypeFilterFromFiles(String directoryName) {
 		TypeFilter t = new TypeFilter(taintGrammar);
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(directoryName + File.separator + "HVFilter.txt"));
+			BufferedReader br = new BufferedReader(new FileReader(directoryName + File.separator + "ptd.txt"));
 			br.readLine();
 			String line;
 			while((line = br.readLine()) != null) {

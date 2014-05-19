@@ -72,6 +72,86 @@ public final class Graph {
 			this(null, null, 0);
 		}
 	}
+	
+	public final static class EdgeStruct {
+		public final String sourceName;
+		public final String sinkName;
+		public final String symbol;
+		public final Field field;
+		public final Context context;
+		
+		public EdgeStruct(String sourceName, String sinkName, String symbol, Field field, Context context) {
+			this.sourceName = sourceName;
+			this.sinkName = sinkName;
+			this.symbol = symbol;
+			this.field = field;
+			this.context = context;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append(this.sourceName).append("-");
+			sb.append(this.symbol).append("[");
+			sb.append(this.field.toString()).append("][");
+			sb.append(this.context).append("]");
+			sb.append("-").append(this.sinkName);
+			return sb.toString();
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result
+					+ ((context == null) ? 0 : context.hashCode());
+			result = prime * result + ((field == null) ? 0 : field.hashCode());
+			result = prime * result
+					+ ((sinkName == null) ? 0 : sinkName.hashCode());
+			result = prime * result
+					+ ((sourceName == null) ? 0 : sourceName.hashCode());
+			result = prime * result
+					+ ((symbol == null) ? 0 : symbol.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			EdgeStruct other = (EdgeStruct) obj;
+			if (context == null) {
+				if (other.context != null)
+					return false;
+			} else if (!context.equals(other.context))
+				return false;
+			if (field == null) {
+				if (other.field != null)
+					return false;
+			} else if (!field.equals(other.field))
+				return false;
+			if (sinkName == null) {
+				if (other.sinkName != null)
+					return false;
+			} else if (!sinkName.equals(other.sinkName))
+				return false;
+			if (sourceName == null) {
+				if (other.sourceName != null)
+					return false;
+			} else if (!sourceName.equals(other.sourceName))
+				return false;
+			if (symbol == null) {
+				if (other.symbol != null)
+					return false;
+			} else if (!symbol.equals(other.symbol))
+				return false;
+			return true;
+		}
+	}
 
 	public final class Edge {
 		public final Vertex source;
@@ -94,6 +174,21 @@ public final class Graph {
 		
 		public EdgeInfo getInfo() {
 			return this.source.outgoingEdgesBySymbol[this.symbolInt].get(this);
+		}
+		
+		public EdgeStruct getStruct() {
+			return new EdgeStruct(this.source.name, this.sink.name, this.getSymbol(), this.field, this.context);
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append(this.source.toString()).append("-");
+			sb.append(contextFreeGrammar.getSymbol(this.symbolInt)).append("[");
+			sb.append(this.field.toString()).append("][");
+			sb.append(this.context).append("]");
+			sb.append("-").append(this.sink.toString());
+			return sb.toString();
 		}
 
 		@Override
@@ -145,17 +240,6 @@ public final class Graph {
 			if (symbolInt != other.symbolInt)
 				return false;
 			return true;
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder sb = new StringBuilder();
-			sb.append(this.source.toString()).append("-");
-			sb.append(contextFreeGrammar.getSymbol(this.symbolInt)).append("[");
-			sb.append(this.field.toString()).append("][");
-			sb.append(this.context).append("]");
-			sb.append("-").append(this.sink.toString());
-			return sb.toString();
 		}
 
 		private Graph getOuterType() {
@@ -234,7 +318,7 @@ public final class Graph {
 				}
 			}
 		}
-		return edges;		
+		return edges;
 	}
 	
 	public Set<Edge> getEdges() {

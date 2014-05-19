@@ -17,6 +17,7 @@ import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.BinaryProduct
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;
 
 public class AbductiveInference {
@@ -178,8 +179,8 @@ public class AbductiveInference {
 	}
 	
 	// returns 1 if the edge is in the cut, 0 if the edge is not in the cut
-	private Map<Edge,Boolean> result = null;
-	public Map<Edge,Boolean> solve() throws LpSolveException {
+	private Map<EdgeStruct,Boolean> result = null;
+	public Map<EdgeStruct,Boolean> solve() throws LpSolveException {
 		/*
 		if(this.filename != null) {
 			try {
@@ -209,11 +210,11 @@ public class AbductiveInference {
 			LinearProgramResult<Edge> solution = this.lp.solve();
 			
 			// STEP 5: Set up the result
-			this.result = new HashMap<Edge,Boolean>();
+			this.result = new HashMap<EdgeStruct,Boolean>();
 			for(Edge edge : solution.variableValues.keySet()) {
 				//System.out.println(edge + ": " + solution.variableValues.get(edge));
 				if(this.baseEdges.contains(edge)) {
-					this.result.put(edge, solution.variableValues.get(edge) >= 0.01);
+					this.result.put(edge.getStruct(), solution.variableValues.get(edge) >= 0.01);
 				}
 			}
 		}
