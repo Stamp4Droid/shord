@@ -20,6 +20,7 @@ TUPLE_TAG(SRC);
 TUPLE_TAG(DST);
 TUPLE_TAG(TAG);
 TUPLE_TAG(COMP);
+TUPLE_TAG(BOX);
 TUPLE_TAG(STATE);
 TUPLE_TAG(CP_FROM);
 TUPLE_TAG(CP_TO);
@@ -478,6 +479,7 @@ private:
 	assert(!tgts.empty());
     }
     bool merge(const Component& comp, const std::set<Ref<Node>>& new_tgts);
+    void dump_node(std::ostream& out, const Node& n) const;
 public:
     explicit Worker(Ref<Node> start, const Component& comp)
 	: start(start), comp(comp), top_level(true) {}
@@ -517,11 +519,14 @@ struct Position {
 // and retrieve the effects when dequeing. One problem is that we might
 // duplicate work (TODO: guard against this).
 class WorkerWorklist {
+public:
+    typedef mi::Index<DST, Ref<Node>,
+		mi::Index<STATE, Ref<State>,
+		    EffectRTL>>
+	SummsByPos;
 private:
     const bool fwd_only;
-    mi::Index<DST, Ref<Node>,
-	mi::Index<STATE, Ref<State>,
-	    EffectRTL>> reached;
+    SummsByPos reached_;
     std::deque<Position> queue;
 public:
     WorkerWorklist(bool fwd_only) : fwd_only(fwd_only) {}
@@ -530,7 +535,7 @@ public:
     }
     bool enqueue(Ref<Node> dst, Ref<State> state, const EffectRTL& efft) {
 	// TODO: Check that the provided effect agrees with our directionality.
-	if (reached.copy(efft, dst, state)) {
+	if (reached_.copy(efft, dst, state)) {
 	    queue.push_back(Position{dst, state});
 	    return true;
 	}
@@ -538,7 +543,7 @@ public:
     }
     bool enqueue(Ref<Node> dst, Ref<State> state, const EffectRTL& l_efft,
 		 const EffectLTR& r_efft) {
-	if (compose(l_efft, r_efft, reached.follow(dst).follow(state),
+	if (compose(l_efft, r_efft, reached_.follow(dst).follow(state),
 		    fwd_only)) {
 	    queue.push_back(Position{dst, state});
 	    return true;
@@ -550,8 +555,11 @@ public:
 	queue.pop_front();
 	return res;
     }
+    const SummsByPos& reached() const {
+	return reached_;
+    }
     const EffectRTL& effect_at(const Position& pos) const {
-	return reached[pos.dst][pos.state];
+	return reached_[pos.dst][pos.state];
     }
 };
 

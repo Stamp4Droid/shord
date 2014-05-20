@@ -756,6 +756,22 @@ bool Worker::merge(const Component& comp,
     return tgts.size() > old_sz;
 }
 
+const RSM* glob_pri = NULL;
+const Registry<Symbol>* glob_syms = NULL;
+const Registry<Tag>* glob_tags = NULL;
+
+void Worker::dump_node(std::ostream& out, const Node& n) const {
+    std::string shape = (n.ref == start) ? "octagon" : "ellipse";
+    std::string fillcolor = (n.ref == start) ? "lightcyan" : "white";
+    unsigned int peripheries = (tgts.count(n.ref) > 0) ? 2 : 1;
+    out << n.name
+	<< " [id=\"" << n.name << "\""
+	<< ",tooltip=\"" << n.name << "\""
+	<< ",shape=\"" << shape << "\""
+	<< ",fillcolor=\"" << fillcolor << "\""
+	<< ",peripheries=\"" << peripheries << "\"];" << std::endl;
+}
+
 Worker::Result Worker::handle(const Graph& graph,
 			      const Registry<Symbol>& symbol_reg,
 			      const RSM& sec) const {
@@ -770,6 +786,23 @@ Worker::Result Worker::handle(const Graph& graph,
     } else {
 	worklist.enqueue(start, comp.get_initial(), sec.id_efft());
     }
+
+#ifdef VIZ
+    mi::Index<SRC, Ref<Node>,
+	      mi::Index<DST, Ref<Node>,
+			mi::Index<REV, bool,
+				  mi::Index<SYMBOL, Ref<Symbol>,
+					    mi::Table<TAG, Ref<Tag>>>>>>
+	reached_edges;
+    mi::Index<SRC, Ref<Node>,
+	      mi::Index<DST, Ref<Node>,
+			mi::Table<BOX, Ref<Box>>>>
+	reached_summs;
+    mi::Index<DST, Ref<Node>,
+	      mi::Index<BOX, Ref<Box>,
+			EffectRTL>>
+	reached_borders;
+#endif
 
     while (!worklist.empty()) {
 	Position pos = worklist.dequeue();
@@ -795,7 +828,16 @@ Worker::Result Worker::handle(const Graph& graph,
 	    FOR_CNSTR(e, graph.search(e_symb.ref, e_rev, pos.dst), maybe_tag) {
 		const EffectLTR& e_efft =
 		    sec.effect_of(e_symb, e_rev, e.get<TAG>());
-		worklist.enqueue(e.get<DST>(), t.to, efft, e_efft);
+		if (worklist.enqueue(e.get<DST>(), t.to, efft, e_efft)) {
+
+#ifdef VIZ
+		    if (!top_level) {
+			reached_edges.insert(pos.dst, e.get<DST>(), e_rev,
+					     e_symb.ref, e.get<TAG>());
+		    }
+#endif
+
+		}
 	    }
 	}
 
@@ -819,6 +861,14 @@ Worker::Result Worker::handle(const Graph& graph,
 		    continue;
 		}
 
+#ifdef VIZ
+		if (!top_level) {
+		    reached_edges.insert(pos.dst, in_node, e_in_rev,
+					 e_in_symb.ref, call_tag);
+		    reached_borders.copy(in_efft, in_node, entry.to);
+		}
+#endif
+
 		// If this is a self-reference, record our dependence on it
 		// (otherwise it must refer to a component further down the
 		// tree, which has already been fully summarized).
@@ -837,6 +887,13 @@ Worker::Result Worker::handle(const Graph& graph,
 		    if (!compose(in_efft, summ_efft, out_efft, top_level)) {
 			continue;
 		    }
+
+#ifdef VIZ
+		    if (!top_level) {
+			reached_summs.insert(in_node, out_node, entry.to);
+			reached_borders.copy(out_efft, out_node, entry.to);
+		    }
+#endif
 
 		    // Cross through exit edges compatible with the previously
 		    // entered entry edge.
@@ -857,14 +914,133 @@ Worker::Result Worker::handle(const Graph& graph,
 			// Exit the box.
 			FOR(e_out, graph.search(e_out_symb.ref, e_out_rev,
 						out_node)[call_tag]) {
-			    worklist.enqueue(e_out.get<DST>(), exit.to,
-					     full_efft);
+			    if (worklist.enqueue(e_out.get<DST>(), exit.to,
+						 full_efft)) {
+
+#ifdef VIZ
+				if (!top_level) {
+				    reached_edges.insert(out_node,
+							 e_out.get<DST>(),
+							 e_out_rev,
+							 e_out_symb.ref,
+							 call_tag);
+				}
+#endif
+
+			    }
 			}
 		    }
 		}
 	    }
 	}
     }
+
+#ifdef VIZ
+    if (!top_level) {
+	std::ostringstream ss;
+	ss << "dump/" << graph.nodes[start].name << ".dot";
+	std::cout << "Dumping " << ss.str() << std::endl;
+	std::ofstream fout(ss.str());
+	EXPECT((bool) fout);
+
+	fout << "digraph __GRAPH {" << std::endl;
+	fout << "id=\"__GRAPH\";" << std::endl;
+	fout << "node [style=\"filled\"];" << std::endl;
+
+	for (const auto& n_pair : worklist.reached()) {
+	    if (n_pair.second.empty()) {
+		continue;
+	    }
+	    dump_node(fout, graph.nodes[n_pair.first]);
+	}
+
+	for (const auto& n_pair : reached_borders) {
+	    if (n_pair.second.empty()) {
+		continue;
+	    }
+	    dump_node(fout, graph.nodes[n_pair.first]);
+	}
+
+	for (const auto& src_p : reached_edges) {
+	    const std::string& src = graph.nodes[src_p.first].name;
+	    for (const auto& dst_p : src_p.second) {
+		const std::string& dst = graph.nodes[dst_p.first].name;
+		fout << src << " -> " << dst
+		     << " [id=\"" << src << "->" << dst << "\""
+		     << ",tooltip=\"";
+		FOR(tup, dst_p.second) {
+		    Label label((*glob_syms)[tup.get<SYMBOL>()],
+				tup.get<REV>(), tup.get<TAG>());
+		    label.print(fout, *glob_syms, *glob_tags);
+		    fout << " ";
+		}
+		fout << "\"];" << std::endl;
+	    }
+	}
+
+	for (const auto& src_p : reached_summs) {
+	    const std::string& src = graph.nodes[src_p.first].name;
+	    for (const auto& dst_p : src_p.second) {
+		const std::string& dst = graph.nodes[dst_p.first].name;
+		fout << src << " -> " << dst
+		     << " [id=\"" << src << "=>" << dst << "\""
+		     << ",color=\"green\""
+		     << ",tooltip=\"";
+		FOR(tup, dst_p.second) {
+		    Ref<Component> sub_comp = comp.boxes[tup.get<BOX>()].comp;
+		    fout << glob_pri->components[sub_comp].name << " ";
+		}
+		fout << "\"];" << std::endl;
+	    }
+	}
+
+	fout << "}" << std::endl;
+    }
+
+    if (!top_level) {
+	std::ostringstream ss;
+	ss << "dump/" << graph.nodes[start].name << ".summs";
+	std::ofstream fout;
+	std::cout << "Dumping " << ss.str() << std::endl;
+	fout.open(ss.str());
+	EXPECT((bool) fout);
+
+	for (const auto& dst_pair : worklist.reached()) {
+	    Ref<Node> dst = dst_pair.first;
+	    for (const auto& pri_st_pair : dst_pair.second) {
+		Ref<State> pri_st = pri_st_pair.first;
+		std::string prefix = (graph.nodes[dst].name + " " +
+				      comp.name + ":" +
+				      comp.get_states()[pri_st].name + " ");
+		print_effect(fout, prefix, pri_st_pair.second,
+			     sec.components, *glob_tags);
+	    }
+	}
+
+	for (const auto& dst_pair : reached_borders) {
+	    Ref<Node> dst = dst_pair.first;
+	    for (const auto& box_pair : dst_pair.second) {
+		Ref<Box> box = box_pair.first;
+		std::string prefix = (graph.nodes[dst].name + " " +
+				      comp.name + ":" +
+				      comp.boxes[box].name + " ");
+		print_effect(fout, prefix, box_pair.second,
+			     sec.components, *glob_tags);
+	    }
+	}
+
+	FOR(tup, reached_summs) {
+	    std::string prefix = (graph.nodes[tup.get<SRC>()].name + "=>" +
+				  graph.nodes[tup.get<DST>()].name + " " +
+				  comp.name + ":" +
+				  comp.boxes[tup.get<BOX>()].name + " ");
+	    print_effect(fout, prefix,
+			 graph.summaries[comp.boxes[tup.get<BOX>()].comp]
+					[tup.get<SRC>()][tup.get<DST>()],
+			 sec.components, *glob_tags);
+	}
+    }
+#endif
 
     return res;
 }
@@ -920,6 +1096,9 @@ int main(int argc, char* argv[]) {
     std::cout << "Parsing primary RSM from " << pri_dir
 	      << ", secondary RSM from " << sec_dir << std::endl;
     Analysis spec(pri_dir, sec_dir);
+    glob_pri = &(spec.pri);
+    glob_syms = &(spec.symbols);
+    glob_tags = &(spec.tags);
     std::cout << "Parsing graph from " << graph_dir << std::endl;
     Graph graph(spec.symbols, spec.tags, graph_dir);
     graph.print_stats(std::cout);
