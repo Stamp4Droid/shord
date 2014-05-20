@@ -181,6 +181,8 @@ public class ReadApk {
     } // end of getIntents
 
     public static void main(String[] args) {
-	getIntents("10163c1477513d7fb29e92d49a3d432a.apk");
+	for(String arg : args) {
+	    getIntents(arg);
+	}
     }
 }

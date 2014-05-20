@@ -25,12 +25,20 @@ if __name__ == "__main__":
         app = apkdir+appname
         print("Profiling "+app)
 
+        # Get app package
+        appManifest = subprocess.check_output(["java", "ReadApk", app]).split('\n')
+        for line in appManifest:
+            if 'package=' in line:
+                packageName = re.search('package="([^"]*)"', line).group(1)
+                break
+        print 'package name: ' + packageName
+
+
         # Install App
         subprocess.call(["adb", "install", app])
 
         # Get App Package / Process name
         badging = subprocess.check_output([build_tools_dir+"aapt", "dump", "badging", app])#, "|", "grep", "package", "|", "sed", "s/package: name\='\([^']*\).*/\\1/"])
-        print 'BADGING: ' + badging
         m = re.search("package: name='([^']*)", badging)
         if m:
             packagename = m.group(1)
@@ -41,7 +49,8 @@ if __name__ == "__main__":
         # Get all package names to pass to monkey (hax)
         ddoutput = subprocess.check_output([build_tools_dir+"dexdump", "-l", "xml", app])
         ddoutputlist = re.findall('package name="([^"]+)',ddoutput)
-        ddoutputliststr = ' -p '.join(ddoutputlist[0:29])
+        #ddoutputliststr = ' -p '.join(ddoutputlist[0:29])
+        ddoutputliststr = packageName
         ddoutputliststr = ddoutputliststr.lstrip().rstrip()
         # TODO limit length of list
         
