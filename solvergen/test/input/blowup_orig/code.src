@@ -1,0 +1,27 @@
+    main():
+ 1:   x = instantiate()
+
+    instantiate():
+ 2:     bse = new BackStackRecord
+ 3:     while (...):
+ 4:         op = new Op
+ 5:         al = new ArrayList
+ 6:         op.removed = al
+ 7:         addOp(bse, op)
+ 8:     bumpBackStackNesting(bse)
+ 9:     return bse
+
+    addOp(a, o):
+10:     if (...):
+11:         a.mHead = o
+12:         a.mTail = o
+13:     else:
+14:         t = a.mTail
+15:         o.prev = t
+16:         t.next = o
+17:         a.mTail = o
+
+    bumpBackStackNesting(b):
+18:     l = b.mHead
+19:     while (...):
+20:         l = l.next
