@@ -1,4 +1,0 @@
-base B
-cut A
-A B C
-
