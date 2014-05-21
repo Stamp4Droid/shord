@@ -220,8 +220,8 @@ public class LinearProgram<T> {
 		System.out.println("Number of variables: " + numVariables);
 		System.out.println("Number of constraints: " + numConstraints);
 		
-		if(numVariables > 15000 || numConstraints > 20000) {
-			throw new Error("Too many variables and constraints!");
+		if(numConstraints > 25000) {
+			throw new Error("Too many constraints!");
 		}
 		
 		System.out.println("Setting up LP");

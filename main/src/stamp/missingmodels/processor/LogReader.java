@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogProcessor {
+public class LogReader {
 	public interface Processor {
 		public void process(String appName, String line);
 		public void process(String appName, int appLinesOfCode, int frameworkLinesOfCode);
@@ -17,12 +17,12 @@ public class LogProcessor {
 	private final String rootPath;
 	private final List<Processor> processors;
 	
-	public LogProcessor(String rootPath, List<Processor> processors) {
+	public LogReader(String rootPath, List<Processor> processors) {
 		this.rootPath = rootPath;
 		this.processors = processors;
 	}
 	
-	public LogProcessor(String rootPath, Processor processor) {
+	public LogReader(String rootPath, Processor processor) {
 		this.rootPath = rootPath;
 		this.processors = new ArrayList<Processor>();
 		this.processors.add(processor);

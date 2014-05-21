@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import stamp.missingmodels.processor.LogProcessor.Processor;
+import stamp.missingmodels.processor.LogReader.Processor;
 
 /**
  * Retrieve LP running time, total cut size, and lines of code from loc and log files 
@@ -122,7 +122,7 @@ public class TestsProcessor implements Processor {
 	
 	public static void main(String[] args) {
 		TestsProcessor tp = new TestsProcessor();
-		new LogProcessor("../stamp_output", tp).run();
+		new LogReader("../stamp_output", tp).run();
 		System.out.println(tp.getHeader());
 		for(String appName : tp.getAppNames()) {
 			System.out.println(tp.getInfoFor(appName));

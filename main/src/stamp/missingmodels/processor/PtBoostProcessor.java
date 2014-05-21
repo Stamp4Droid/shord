@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import stamp.missingmodels.processor.LogProcessor.Processor;
+import stamp.missingmodels.processor.LogReader.Processor;
 
 public class PtBoostProcessor implements Processor {
 	private final List<String> appNames = new ArrayList<String>();
@@ -142,7 +142,7 @@ public class PtBoostProcessor implements Processor {
 	
 	public static void main(String[] args) {
 		PtBoostProcessor pbp = new PtBoostProcessor();
-		new LogProcessor("../stamp_output", pbp).run();
+		new LogReader("../stamp_output", pbp).run();
 		System.out.println(pbp.getHeader());
 		for(String appName : pbp.getAppNames()) {
 			System.out.println(pbp.getInfoFor(appName));

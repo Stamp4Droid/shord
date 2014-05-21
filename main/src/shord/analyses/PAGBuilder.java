@@ -1,73 +1,75 @@
 package shord.analyses;
 
-import soot.Scene;
-import soot.SootClass;
-import soot.SootMethod;
-import soot.SootField;
-import soot.Local;
-import soot.Immediate;
-import soot.Value;
-import soot.ValueBox;
-import soot.Unit;
-import soot.Body;
-import soot.Type;
-import soot.RefType;
-import soot.ArrayType;
-import soot.RefLikeType;
-import soot.PrimType;
-import soot.VoidType;
-import soot.NullType;
-import soot.AnySubType;
-import soot.UnknownType;
-import soot.FastHierarchy;
-import soot.PatchingChain;
-import soot.jimple.Constant;
-import soot.jimple.StringConstant;
-import soot.jimple.ClassConstant;
-import soot.jimple.Stmt;
-import soot.jimple.AssignStmt;
-import soot.jimple.IdentityStmt;
-import soot.jimple.ReturnStmt;
-import soot.jimple.AnyNewExpr;
-import soot.jimple.ThrowStmt;
-import soot.jimple.InvokeExpr;
-import soot.jimple.InstanceInvokeExpr;
-import soot.jimple.CastExpr;
-import soot.jimple.FieldRef;
-import soot.jimple.InstanceFieldRef;
-import soot.jimple.ParameterRef;
-import soot.jimple.ThisRef;
-import soot.jimple.ArrayRef;
-import soot.jimple.BinopExpr;
-import soot.jimple.NegExpr;
-import soot.jimple.NewExpr;
-import soot.jimple.VirtualInvokeExpr;
-import soot.jimple.StaticInvokeExpr;
-import soot.jimple.SpecialInvokeExpr;
-import soot.jimple.InterfaceInvokeExpr;
-import soot.jimple.spark.pag.SparkField;
-import soot.jimple.spark.pag.ArrayElement;
-import soot.jimple.toolkits.callgraph.CallGraph;
-import soot.jimple.toolkits.callgraph.Edge;
-import soot.tagkit.Tag;
-import soot.util.NumberedSet;
-import stamp.missingmodels.jimplesrcmapper.Printer;
-import soot.jimple.toolkits.callgraph.ReachableMethods;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import shord.program.Program;
+import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
-import shord.project.analyses.ProgramDom;
-import shord.project.ClassicProject;
-import shord.program.Program;
-
+import soot.AnySubType;
+import soot.ArrayType;
+import soot.Body;
+import soot.FastHierarchy;
+import soot.Immediate;
+import soot.Local;
+import soot.NullType;
+import soot.PatchingChain;
+import soot.PrimType;
+import soot.RefLikeType;
+import soot.RefType;
+import soot.Scene;
+import soot.SootClass;
+import soot.SootField;
+import soot.SootMethod;
+import soot.Type;
+import soot.Unit;
+import soot.UnknownType;
+import soot.Value;
+import soot.ValueBox;
+import soot.VoidType;
+import soot.jimple.AnyNewExpr;
+import soot.jimple.ArrayRef;
+import soot.jimple.AssignStmt;
+import soot.jimple.BinopExpr;
+import soot.jimple.CastExpr;
+import soot.jimple.ClassConstant;
+import soot.jimple.Constant;
+import soot.jimple.FieldRef;
+import soot.jimple.IdentityStmt;
+import soot.jimple.InstanceFieldRef;
+import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.InterfaceInvokeExpr;
+import soot.jimple.InvokeExpr;
+import soot.jimple.NegExpr;
+import soot.jimple.NewExpr;
+import soot.jimple.ParameterRef;
+import soot.jimple.ReturnStmt;
+import soot.jimple.SpecialInvokeExpr;
+import soot.jimple.Stmt;
+import soot.jimple.StringConstant;
+import soot.jimple.ThisRef;
+import soot.jimple.ThrowStmt;
+import soot.jimple.VirtualInvokeExpr;
+import soot.jimple.spark.pag.ArrayElement;
+import soot.jimple.spark.pag.SparkField;
+import soot.jimple.toolkits.callgraph.CallGraph;
+import soot.jimple.toolkits.callgraph.Edge;
+import soot.jimple.toolkits.callgraph.ReachableMethods;
+import soot.tagkit.Tag;
+import soot.util.NumberedSet;
 import stamp.analyses.SootUtils;
-import stamp.harnessgen.*;
-
-import chord.project.Chord;
-
-import java.io.*;
-import java.util.*;
+import stamp.missingmodels.jimplesrcmapper.Printer;
+import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.MultivalueMap;
+import chord.project.Chord;
 
 /*
  * @author Saswat Anand
@@ -958,28 +960,41 @@ public class PAGBuilder extends JavaAnalysis
 	}
 
 	void populateCallgraph() {
-	    /*
-	     * Here, we read the dynamic callgraph from a file
-	     * TODO: specify file using a command line option
-	     */
-	    MultivalueMap<String,String> dyncg = new MultivalueMap<String,String>();
-	    try {
-		BufferedReader br = new BufferedReader(new FileReader("cg.txt"));
-		String line;
-		while((line = br.readLine()) != null) {
-		    if(line.contains("CG")) {
-			String[] tokens = line.split("#");
-			String srcSig = tokens[tokens.length-2];
-			String tgtSig = tokens[tokens.length-1];
-			SootMethod src = Scene.v().getMethod(srcSig);
-			SootMethod tgt = Scene.v().getMethod(tgtSig);
-			dyncg.add(src.toString(), tgt.toString());
-		    }
+		/*
+		 * Here, we read the dynamic callgraph from a file
+		 * TODO: specify file using a command line option
+		 */
+		/*
+		MultivalueMap<String,String> dyncg = new MultivalueMap<String,String>();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("cg.txt"));
+			String line;
+			while((line = br.readLine()) != null) {
+				if(line.contains("CG")) {
+					String[] tokens = line.split("#");
+					String srcSig = tokens[tokens.length-2];
+					String tgtSig = tokens[tokens.length-1];
+					SootMethod src = Scene.v().getMethod(srcSig);
+					SootMethod tgt = Scene.v().getMethod(tgtSig);
+					dyncg.add(src.toString(), tgt.toString());
+				}
+			}
+		} catch(Exception e) {
+			System.out.println("ERROR BUILDING DYNCG");
+			e.printStackTrace();
 		}
-	    } catch(Exception e) {
-		System.out.println("ERROR BUILDING DYNCG");
-		e.printStackTrace();
-	    }
+		*/
+		MultivalueMap<String,String> dyncg;
+		try {
+			System.out.println("DYNCG path: " + new File("../../profiler/traceouts").getCanonicalPath());
+			String[] tokens = System.getProperty("stamp.out.dir").split("_");
+			dyncg = new TraceReader().getCallgraph("../../profiler/traceouts/", tokens[tokens.length-1]);
+		} catch(Exception e) {
+			System.out.println("ERROR BUILDING DYNCG");
+			e.printStackTrace();
+			dyncg = new MultivalueMap<String,String>();
+		}
+		// DONE BUILDING DYNCG
 
 		CallGraph cg = Program.g().scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");

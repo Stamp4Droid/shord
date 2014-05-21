@@ -172,6 +172,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		
 		final Map<EdgeStruct,Boolean> result = new AbductiveInference(gbart, baseEdges, initialCutEdges).solve();
 		
+		/*
 		// STEP 4: Remove the edges and run solver again
 		System.out.println("Printing remaining src-sink edges:");
 		final Set<EdgeStruct> baseEdgeStructs = new HashSet<EdgeStruct>();
@@ -204,6 +205,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			System.out.println("weight: " + edge.getInfo().weight);
 		}
 		System.out.println("Done!");
+		*/
 		
 		return result;
 	}
@@ -384,8 +386,9 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
 				}
 				if(name != null && !labels.contains(name)) {
-					System.out.println("Removing: " + name);
-					return;
+					//if(!name.substring(1).startsWith("http")) {
+						return;
+					//}
 				}
 				gb.addEdge(edgeStruct, weight);
 			}
