@@ -120,7 +120,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		taintGrammar.addBinaryProduction("Label2PrimFldStat", "Label2Prim", "storeStatPrim");
 	}
 	
-	public static Map<EdgeStruct,Boolean> runInference(Graph g, TypeFilter t) throws LpSolveException {
+	public static Map<EdgeStruct,Integer> runInference(Graph g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
 		// STEP 1: Run reachability solver
 		long time = System.currentTimeMillis();
 		System.out.println("Computing transitive closure");
@@ -162,15 +162,17 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		System.out.println("Num initial edges: " + initialCutEdges.size());
 		
 		// print initial cut edges
-		DomL dom = (DomL)ClassicProject.g().getTrgt("L");
-		for(Edge edge : initialCutEdges) {			
-			String source = dom.get(Integer.parseInt(edge.source.name.substring(1)));
-			String sink = dom.get(Integer.parseInt(edge.sink.name.substring(1)));
-			System.out.println("Cutting Src2Sink edge: " + edge.toString());
-			System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
+		if(shord) {
+			DomL dom = (DomL)ClassicProject.g().getTrgt("L");
+			for(Edge edge : initialCutEdges) {			
+				String source = dom.get(Integer.parseInt(edge.source.name.substring(1)));
+				String sink = dom.get(Integer.parseInt(edge.sink.name.substring(1)));
+				System.out.println("Cutting Src2Sink edge: " + edge.toString());
+				System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
+			}
 		}
 		
-		final Map<EdgeStruct,Boolean> result = new AbductiveInference(gbart, baseEdges, initialCutEdges).solve();
+		final Map<EdgeStruct,Integer> result = new AbductiveInference(gbart, baseEdges, initialCutEdges, numCuts).solve();
 		
 		/*
 		// STEP 4: Remove the edges and run solver again
@@ -236,13 +238,16 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 
-	public static void printResultShord(Map<EdgeStruct,Boolean> result) {
+	public static void printResult(Map<EdgeStruct,Integer> result, boolean shord) {
 		int totalCut = 0;
 		for(EdgeStruct edgeStruct : result.keySet()) {
-			if(result.get(edgeStruct)) {
+			if(result.get(edgeStruct) != -1) {
 				System.out.println("remove: " + edgeStruct);
-				System.out.println("caller: " + getMethodSig(edgeStruct.sourceName));
-				System.out.println("callee: " + getMethodSig(edgeStruct.sinkName));
+				System.out.println("in cut: " + result.get(edgeStruct));
+				if(shord) {
+					System.out.println("caller: " + getMethodSig(edgeStruct.sourceName));
+					System.out.println("callee: " + getMethodSig(edgeStruct.sinkName));
+				}
 				totalCut++;
 			}
 		}
@@ -282,39 +287,24 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		System.out.println("total edges: " + g.getEdges().size());
 	}
 	
-	public static void printResult(Map<EdgeStruct,Boolean> result) {
-		int totalCut = 0;
-		for(EdgeStruct edgeStruct : result.keySet()) {
-			if(result.get(edgeStruct)) {
-				System.out.println("remove: " + edgeStruct);
-				totalCut++;
-			}
-		}
-		System.out.println("total cut: " + totalCut);
-	}
-	
 	@Override
 	public void run() {
 		try {
-			printResultShord(runInference(getGraphFromShord(), getTypeFilterFromShord()));
+			printResult(runInference(getGraphFromShord(), getTypeFilterFromShord(), true, 1), true);
 		} catch(LpSolveException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void main(String[] args) throws LpSolveException {
-		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_shord_apps_samples_MultipleLeaks/cfl";
-		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_Butane/cfl";
-		//String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1A_ConnectBot/cfl";
-		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1C_tomdroid/cfl";
+		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_SymcApks_54975175131d44e08fc08811a318c440.apk/cfl";
+		
+		printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName), false, 2), false);
 		
 		//long time = System.currentTimeMillis();
-		
 		//Graph g = new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult();
 		//printGraphStatics(g);
-		//printGraphEdges(g, "Flow");
-		
-		printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)));
+		//printGraphEdges(g, "Flow");		
 		//System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 	}
 	

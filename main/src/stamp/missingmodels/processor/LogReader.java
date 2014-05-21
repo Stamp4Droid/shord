@@ -58,7 +58,7 @@ public class LogReader {
 					processor.finishProcessing(appName);
 				}				
 			} catch(IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
