@@ -36,6 +36,22 @@ def push_covers(x, y):
 def covers(a, b):
     return reqd_covers(a[0], b[0]) and push_covers(a[1], b[1])
 
+def group(sigs):
+    grouped = {}
+    for s in sigs:
+        grouped[s] = [s]
+    fixpoint = False
+    while not fixpoint:
+        fixpoint = True
+        for a in grouped.keys():
+            for b in grouped:
+                if a != b and covers(b, a):
+                    grouped[b].extend(grouped[a])
+                    del grouped[a]
+                    fixpoint = False
+                    break
+    return grouped
+
 full_sigs = []
 str2full = {}
 
@@ -58,25 +74,25 @@ for line in args.summs_file:
     stripped = (l_tags, r_tags)
     append(str2full, stripped, sig)
 
-str2cov = {}
-for s in str2full:
-    str2cov[s] = [s]
-while True:
-    found = None
-    for (a,b) in itertools.permutations(str2cov, 2):
-        if covers(a, b):
-            found = (a,b)
-            break
-    if found is None:
-        break
-    str2cov[found[0]].extend(str2cov[found[1]])
-    del str2cov[found[1]]
 
-print len(full_sigs)
-print len(str2full)
+full2cov = group(full_sigs)
+str2cov = group(str2full)
+
+print 'Full sigs:', len(full_sigs)
+print 79 * '-'
+print 'Stripped sigs:', len(str2full)
 # for s in str2full:
-#     print s, len(str2full[s])
-print len(str2cov)
+#     print s
+#     for f in str2full[s]:
+#         print '   ', f
+print 79 * '-'
+print 'Grouped full sigs:', len(full2cov)
+# for m in full2cov:
+#     print m
+#     for c in full2cov[m]:
+#         print '   ', c
+print 79 * '-'
+print 'Grouped stripped sigs:', len(str2cov)
 # for m in str2cov:
 #     print m
 #     for c in str2cov[m]:
