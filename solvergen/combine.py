@@ -98,15 +98,15 @@ def tgf2svg(tgf_fname):
 parser = argparse.ArgumentParser()
 parser.add_argument('pri_comp')
 parser.add_argument('sec_dir')
-parser.add_argument('app_out_dir')
+parser.add_argument('dump_dir')
+parser.add_argument('dom_maps_dir')
 parser.add_argument('start')
 args = parser.parse_args()
 
-with open(os.path.join(args.app_out_dir, 'dump',
-                       args.start + '.dot')) as graph_dot:
+with open(os.path.join(args.dump_dir, args.start + '.dot')) as graph_dot:
     graph_svg = dot2svg(graph_dot)
 pri_svg = tgf2svg(args.pri_comp)
 sec_svgs = [tgf2svg(c) for c in list_tgfs(args.sec_dir)]
-effects_fname = os.path.join(args.app_out_dir, 'dump', args.start + '.summs')
-vmap_fname = os.path.join(args.app_out_dir, 'chord_output', 'bddbddb', 'V.map')
+effects_fname = os.path.join(args.dump_dir, args.start + '.summs')
+vmap_fname = os.path.join(args.dom_maps_dir, 'V.map')
 print_html(graph_svg, pri_svg, sec_svgs, effects_fname, vmap_fname)
