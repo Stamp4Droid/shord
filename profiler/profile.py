@@ -29,9 +29,9 @@ if __name__ == "__main__":
         appManifest = subprocess.check_output(["java", "ReadApk", app]).split('\n')
         for line in appManifest:
             if 'package=' in line:
-                packageName = re.search('package="([^"]*)"', line).group(1)
+                manifestPackagename = re.search('package="([^"]*)"', line).group(1)
                 break
-        print 'package name: ' + packageName
+        print 'package name: ' + manifestPackagename
 
 
         # Install App
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         ddoutput = subprocess.check_output([build_tools_dir+"dexdump", "-l", "xml", app])
         ddoutputlist = re.findall('package name="([^"]+)',ddoutput)
         #ddoutputliststr = ' -p '.join(ddoutputlist[0:29])
-        ddoutputliststr = packageName
+        ddoutputliststr = manifestPackagename
         ddoutputliststr = ddoutputliststr.lstrip().rstrip()
         # TODO limit length of list
         
@@ -97,4 +97,8 @@ if __name__ == "__main__":
 
         # Convert trace to sequence format
         os.system("dmtracedump -o "+tracedir+appname+".trace > "+traceoutdir+appname+".traceout")
+
+        # Uninstall the app
+        # adb shell pm uninstall packagename
+        subprocess.call(["adb", "shell", "pm", "uninstall", manifestPackagename])
         

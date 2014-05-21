@@ -21,121 +21,56 @@ import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;
 
 public class AbductiveInference {
-	private final LinearProgram<CutEdge> lp = new LinearProgram<CutEdge>();
-	private final Set<Edge> cutEdges = new HashSet<Edge>();
+	private final LinearProgram<Edge> lp = new LinearProgram<Edge>();
+	private final Set<Edge> Edges = new HashSet<Edge>();
 	private final LinkedList<Edge> worklist = new LinkedList<Edge>();
 	
 	private final ContextFreeGrammar contextFreeGrammar;
 	private final Collection<Edge> baseEdges;
-	private final Collection<Edge> initialCutEdges;
-	private final int numCuts;
+	private final Collection<Edge> initialEdges;
 	
-	private static class CutEdge {
-		private final Edge edge;
-		private final int cutNum;
-		
-		private CutEdge(Edge edge, int cutNum) {
-			this.edge = edge;
-			this.cutNum = cutNum;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + cutNum;
-			result = prime * result + ((edge == null) ? 0 : edge.hashCode());
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			CutEdge other = (CutEdge) obj;
-			if (cutNum != other.cutNum)
-				return false;
-			if (edge == null) {
-				if (other.edge != null)
-					return false;
-			} else if (!edge.equals(other.edge))
-				return false;
-			return true;
-		}
-	}
-	
-	public AbductiveInference(Graph graph, Collection<Edge> baseEdges, Collection<Edge> initialCutEdges, int numCuts) {
+	public AbductiveInference(Graph graph, Collection<Edge> baseEdges, Collection<Edge> initialEdges) {
 		this.contextFreeGrammar = graph.getContextFreeGrammar();
 		this.baseEdges = baseEdges;
-		this.initialCutEdges = initialCutEdges;
-		this.numCuts = numCuts;
-	}
-
-	public AbductiveInference(Graph graph, Collection<Edge> baseEdges, Collection<Edge> initialCutEdges) {
-		this(graph, baseEdges, initialCutEdges, 1);
+		this.initialEdges = initialEdges;
 	}
 	
 	private void setObjective() {
-		Set<Coefficient<CutEdge>> coefficients = new HashSet<Coefficient<CutEdge>>();
+		Set<Coefficient<Edge>> coefficients = new HashSet<Coefficient<Edge>>();
 		for(Edge edge : this.baseEdges) {
-			if(!this.cutEdges.contains(edge)) {
+			if(!this.Edges.contains(edge)) {
 				continue;
 			}
 			if(edge.getInfo().weight == 0) {
 				continue;
 			}
-			for(int i=0; i<this.numCuts; i++) {
-				coefficients.add(new Coefficient<CutEdge>(new CutEdge(edge, i), edge.getInfo().weight));
-			}
+			coefficients.add(new Coefficient<Edge>(edge, edge.getInfo().weight));
 		}
 		this.lp.setObjective(ObjectiveType.MINIMIZE, coefficients);
 	}
 	
-	private void setBaseEdgeExclusivity() {
-		if(this.numCuts <= 1) {
-			return;
-		}
-		for(Edge edge : this.baseEdges) {
-			Set<Coefficient<CutEdge>> coefficients = new HashSet<Coefficient<CutEdge>>();
-			for(int i=0; i<this.numCuts; i++) {
-				coefficients.add(new Coefficient<CutEdge>(new CutEdge(edge, i), edge.getInfo().weight));
-			}
-			this.lp.addConstraint(ConstraintType.LEQ, 1.0, coefficients);
+	private void setInitialEdges() {
+		for(Edge edge : this.initialEdges) {
+			this.lp.addConstraint(ConstraintType.GEQ, 1.0, new Coefficient<Edge>(edge, 1.0));
 		}
 	}
 	
-	private void setInitialCutEdges() {
-		for(Edge edge : this.initialCutEdges) {
-			for(int i=0; i<this.numCuts; i++) {
-				this.lp.addConstraint(ConstraintType.GEQ, 1.0, new Coefficient<CutEdge>(new CutEdge(edge, i), 1.0));
-			}
-		}
-	}
-	
-	private void addCutEdge(Edge edge) {
-		if(!this.cutEdges.contains(edge)) {
-			this.cutEdges.add(edge);
+	private void addEdge(Edge edge) {
+		if(!this.Edges.contains(edge)) {
+			this.Edges.add(edge);
 			this.worklist.add(edge);
 		}
 	}
 
 	private void addProduction(Edge target, Edge input) {
-		for(int i=0; i<this.numCuts; i++) {
-			this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<CutEdge>(new CutEdge(target, i), 1.0), new Coefficient<CutEdge>(new CutEdge(input, i), -1.0));
-		}
-		this.addCutEdge(input);
+		this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Edge>(target, 1.0), new Coefficient<Edge>(input, -1.0));
+		this.addEdge(input);
 	}
 
 	private void addProduction(Edge target, Edge firstInput, Edge secondInput) {
-		for(int i=0; i<this.numCuts; i++) {
-			this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<CutEdge>(new CutEdge(target, i), 1.0), new Coefficient<CutEdge>(new CutEdge(firstInput, i), -1.0), new Coefficient<CutEdge>(new CutEdge(secondInput, i), -1.0));
-		}
-		this.addCutEdge(firstInput);
-		this.addCutEdge(secondInput);
+		this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Edge>(target, 1.0), new Coefficient<Edge>(firstInput, -1.0), new Coefficient<Edge>(secondInput, -1.0));
+		this.addEdge(firstInput);
+		this.addEdge(secondInput);
 	}
 	
 	private void processProduction(UnaryProduction unaryProduction, Edge target) {
@@ -198,7 +133,7 @@ public class AbductiveInference {
 		}
 	}
 
-	private void cutEdge(Edge edge) {
+	private void Edge(Edge edge) {
 		if(this.baseEdges.contains(edge)) {
 			return;
 		}
@@ -212,38 +147,32 @@ public class AbductiveInference {
 	}
 	
 	// returns 1 if the edge is in the cut, 0 if the edge is not in the cut
-	private Map<EdgeStruct,Integer> result = null;
-	public Map<EdgeStruct,Integer> solve() throws LpSolveException {
+	private Map<EdgeStruct,Boolean> result = null;
+	public Map<EdgeStruct,Boolean> solve() throws LpSolveException {
 		if(this.result == null) {
 			// STEP 1: Break initial edges
-			this.setInitialCutEdges();
+			this.setInitialEdges();
 			
 			// STEP 2: Cut edges
-			for(Edge edge : this.initialCutEdges) {
-				this.addCutEdge(edge);
+			for(Edge edge : this.initialEdges) {
+				this.addEdge(edge);
 			}
 			while(!this.worklist.isEmpty()) {
-				this.cutEdge(this.worklist.removeFirst());
+				this.Edge(this.worklist.removeFirst());
 			}
 			
 			// STEP 3: Set objective
 			this.setObjective();
 			
-			// STEP 4: Make cuts on base edges exclusive
-			this.setBaseEdgeExclusivity();
+			// STEP 4: Solve the linear program
+			LinearProgramResult<Edge> solution = this.lp.solve();
 			
-			// STEP 5: Solve the linear program
-			LinearProgramResult<CutEdge> solution = this.lp.solve();
-			
-			// STEP 6: Set up the result
-			this.result = new HashMap<EdgeStruct,Integer>();
-			for(Edge edge : this.baseEdges) {
-				this.result.put(edge.getStruct(), -1);
-			}
-			for(CutEdge edge : solution.variableValues.keySet()) {
-				//System.out.println(edge + ": " + solution.variableValues.get(edge));
-				if(this.baseEdges.contains(edge.edge) && solution.variableValues.get(edge) > 0.0) {
-					this.result.put(edge.edge.getStruct(), edge.cutNum);
+			// STEP 5: Set up the result
+			this.result = new HashMap<EdgeStruct,Boolean>();
+			for(Edge edge : solution.variableValues.keySet()) {
+				if(this.baseEdges.contains(edge)) {
+					//System.out.println(edge + ": " + solution.variableValues.get(edge));
+					this.result.put(edge.getStruct(), solution.variableValues.get(edge) > 0.0);
 				}
 			}
 		}

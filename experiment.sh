@@ -82,71 +82,71 @@ echo ./stamp analyze ../stamptest/SymcApks/ca70f4f653a25990c7c74c866a86c897.apk
 ./stamp analyze ../stamptest/SymcApks/ca70f4f653a25990c7c74c866a86c897.apk
 echo ./stamp analyze ../stamptest/SymcApks/ca7b267e7898662ca5b74e55660413af.apk
 ./stamp analyze ../stamptest/SymcApks/ca7b267e7898662ca5b74e55660413af.apk
-#echo ./stamp analyze ../stamptest/SymcApks/ce667f73ac0b980b7fde79d3ac06ccc3.apk
-#./stamp analyze ../stamptest/SymcApks/ce667f73ac0b980b7fde79d3ac06ccc3.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-AFTDMedia-copter1.apk
-#./stamp analyze ../stamptest/SymcApks/com-AFTDMedia-copter1.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com.att.android.attsmartwifi-1.apk
-#./stamp analyze ../stamptest/SymcApks/com.att.android.attsmartwifi-1.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-bacastudio-BeautifulBattery.apk
-#./stamp analyze ../stamptest/SymcApks/com-bacastudio-BeautifulBattery.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-gps-phone-iwz.apk
-#./stamp analyze ../stamptest/SymcApks/com-gps-phone-iwz.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-gp-tiltmazes.apk
-#./stamp analyze ../stamptest/SymcApks/com-gp-tiltmazes.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-hotel.apk
-#./stamp analyze ../stamptest/SymcApks/com-hotel.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-km-launcher.apk
-#./stamp analyze ../stamptest/SymcApks/com-km-launcher.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-magicwach-rdefense.apk
-#./stamp analyze ../stamptest/SymcApks/com-magicwach-rdefense.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-noisysounds.apk
-#./stamp analyze ../stamptest/SymcApks/com-noisysounds.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-ophone-MiniPlayer.apk
-#./stamp analyze ../stamptest/SymcApks/com-ophone-MiniPlayer.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-pintu_puremm.apk
-#./stamp analyze ../stamptest/SymcApks/com-pintu_puremm.apk
-#echo ./stamp analyze ../stamptest/SymcApks/com-typ3studios-airhorn.apk
-#./stamp analyze ../stamptest/SymcApks/com-typ3studios-airhorn.apk
-#echo ./stamp analyze ../stamptest/SymcApks/d7337baadf420151e8f733c288b46ab2.apk
-#./stamp analyze ../stamptest/SymcApks/d7337baadf420151e8f733c288b46ab2.apk
-#echo ./stamp analyze ../stamptest/SymcApks/da8c485bcfa54caa0bf12a61e85b1412.apk
-#./stamp analyze ../stamptest/SymcApks/da8c485bcfa54caa0bf12a61e85b1412.apk
-#echo ./stamp analyze ../stamptest/SymcApks/db70daeb421d19e3c02f7097d7ba5742.apk
-#./stamp analyze ../stamptest/SymcApks/db70daeb421d19e3c02f7097d7ba5742.apk
-#echo ./stamp analyze ../stamptest/SymcApks/e0c432cb2d5d4ed7af4f2fc2ff22918b.apk
-#./stamp analyze ../stamptest/SymcApks/e0c432cb2d5d4ed7af4f2fc2ff22918b.apk
-#echo ./stamp analyze ../stamptest/SymcApks/e1fdc8e10c047aa7875dfc6843b26eca.apk
-#./stamp analyze ../stamptest/SymcApks/e1fdc8e10c047aa7875dfc6843b26eca.apk
-#echo ./stamp analyze ../stamptest/SymcApks/e5c43e56e6e64cdfede981e44b22b3d0.apk
-#./stamp analyze ../stamptest/SymcApks/e5c43e56e6e64cdfede981e44b22b3d0.apk
-#echo ./stamp analyze ../stamptest/SymcApks/e8237a583fe7b2362b4addf01518600b.apk
-#./stamp analyze ../stamptest/SymcApks/e8237a583fe7b2362b4addf01518600b.apk
-#echo ./stamp analyze ../stamptest/SymcApks/egb45-g4gYY.apk
-#./stamp analyze ../stamptest/SymcApks/egb45-g4gYY.apk
-#echo ./stamp analyze ../stamptest/SymcApks/fbd56af85edb619c11f4be2cca16a7cf89744776dcc054168c8b4901265354c2.apk
-#./stamp analyze ../stamptest/SymcApks/fbd56af85edb619c11f4be2cca16a7cf89744776dcc054168c8b4901265354c2.apk
-#echo ./stamp analyze ../stamptest/SymcApks/fhvm-vnnej.apk
-#./stamp analyze ../stamptest/SymcApks/fhvm-vnnej.apk
-#echo ./stamp analyze ../stamptest/SymcApks/game-androng-andmj.apk
-#./stamp analyze ../stamptest/SymcApks/game-androng-andmj.apk
-#echo ./stamp analyze ../stamptest/SymcApks/ggtracker.apk
-#./stamp analyze ../stamptest/SymcApks/ggtracker.apk
-#echo ./stamp analyze ../stamptest/SymcApks/gingermaster.apk
-#./stamp analyze ../stamptest/SymcApks/gingermaster.apk
-#echo ./stamp analyze ../stamptest/SymcApks/golddream.apk
-#./stamp analyze ../stamptest/SymcApks/golddream.apk
-#echo ./stamp analyze ../stamptest/SymcApks/iNJ-CwWkvI.apk
-#./stamp analyze ../stamptest/SymcApks/iNJ-CwWkvI.apk
-#echo ./stamp analyze ../stamptest/SymcApks/kQm-LOfpwpJ.apk
-#./stamp analyze ../stamptest/SymcApks/kQm-LOfpwpJ.apk
-#echo ./stamp analyze ../stamptest/SymcApks/mycalendarmobile_1d147f9e3e8dab05ddf1ed85b9939c13b62d1a007f58a5a2ff8cc7e73754bf27.apk
-#./stamp analyze ../stamptest/SymcApks/mycalendarmobile_1d147f9e3e8dab05ddf1ed85b9939c13b62d1a007f58a5a2ff8cc7e73754bf27.apk
-#echo ./stamp analyze ../stamptest/SymcApks/org-android_iollmnv.apk
-#./stamp analyze ../stamptest/SymcApks/org-android_iollmnv.apk
-#echo ./stamp analyze ../stamptest/SymcApks/pmsz_android_zol.apk
-#./stamp analyze ../stamptest/SymcApks/pmsz_android_zol.apk
-#echo ./stamp analyze ../stamptest/SymcApks/PrivacyLeakMainActivity.apk
-#./stamp analyze ../stamptest/SymcApks/PrivacyLeakMainActivity.apk
-#echo ./stamp analyze ../stamptest/SymcApks/ready2go.apk
-#./stamp analyze ../stamptest/SymcApks/ready2go.apk
+echo ./stamp analyze ../stamptest/SymcApks/ce667f73ac0b980b7fde79d3ac06ccc3.apk
+./stamp analyze ../stamptest/SymcApks/ce667f73ac0b980b7fde79d3ac06ccc3.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-AFTDMedia-copter1.apk
+./stamp analyze ../stamptest/SymcApks/com-AFTDMedia-copter1.apk
+echo ./stamp analyze ../stamptest/SymcApks/com.att.android.attsmartwifi-1.apk
+./stamp analyze ../stamptest/SymcApks/com.att.android.attsmartwifi-1.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-bacastudio-BeautifulBattery.apk
+./stamp analyze ../stamptest/SymcApks/com-bacastudio-BeautifulBattery.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-gps-phone-iwz.apk
+./stamp analyze ../stamptest/SymcApks/com-gps-phone-iwz.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-gp-tiltmazes.apk
+./stamp analyze ../stamptest/SymcApks/com-gp-tiltmazes.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-hotel.apk
+./stamp analyze ../stamptest/SymcApks/com-hotel.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-km-launcher.apk
+./stamp analyze ../stamptest/SymcApks/com-km-launcher.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-magicwach-rdefense.apk
+./stamp analyze ../stamptest/SymcApks/com-magicwach-rdefense.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-noisysounds.apk
+./stamp analyze ../stamptest/SymcApks/com-noisysounds.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-ophone-MiniPlayer.apk
+./stamp analyze ../stamptest/SymcApks/com-ophone-MiniPlayer.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-pintu_puremm.apk
+./stamp analyze ../stamptest/SymcApks/com-pintu_puremm.apk
+echo ./stamp analyze ../stamptest/SymcApks/com-typ3studios-airhorn.apk
+./stamp analyze ../stamptest/SymcApks/com-typ3studios-airhorn.apk
+echo ./stamp analyze ../stamptest/SymcApks/d7337baadf420151e8f733c288b46ab2.apk
+./stamp analyze ../stamptest/SymcApks/d7337baadf420151e8f733c288b46ab2.apk
+echo ./stamp analyze ../stamptest/SymcApks/da8c485bcfa54caa0bf12a61e85b1412.apk
+./stamp analyze ../stamptest/SymcApks/da8c485bcfa54caa0bf12a61e85b1412.apk
+echo ./stamp analyze ../stamptest/SymcApks/db70daeb421d19e3c02f7097d7ba5742.apk
+./stamp analyze ../stamptest/SymcApks/db70daeb421d19e3c02f7097d7ba5742.apk
+echo ./stamp analyze ../stamptest/SymcApks/e0c432cb2d5d4ed7af4f2fc2ff22918b.apk
+./stamp analyze ../stamptest/SymcApks/e0c432cb2d5d4ed7af4f2fc2ff22918b.apk
+echo ./stamp analyze ../stamptest/SymcApks/e1fdc8e10c047aa7875dfc6843b26eca.apk
+./stamp analyze ../stamptest/SymcApks/e1fdc8e10c047aa7875dfc6843b26eca.apk
+echo ./stamp analyze ../stamptest/SymcApks/e5c43e56e6e64cdfede981e44b22b3d0.apk
+./stamp analyze ../stamptest/SymcApks/e5c43e56e6e64cdfede981e44b22b3d0.apk
+echo ./stamp analyze ../stamptest/SymcApks/e8237a583fe7b2362b4addf01518600b.apk
+./stamp analyze ../stamptest/SymcApks/e8237a583fe7b2362b4addf01518600b.apk
+echo ./stamp analyze ../stamptest/SymcApks/egb45-g4gYY.apk
+./stamp analyze ../stamptest/SymcApks/egb45-g4gYY.apk
+echo ./stamp analyze ../stamptest/SymcApks/fbd56af85edb619c11f4be2cca16a7cf89744776dcc054168c8b4901265354c2.apk
+./stamp analyze ../stamptest/SymcApks/fbd56af85edb619c11f4be2cca16a7cf89744776dcc054168c8b4901265354c2.apk
+echo ./stamp analyze ../stamptest/SymcApks/fhvm-vnnej.apk
+./stamp analyze ../stamptest/SymcApks/fhvm-vnnej.apk
+echo ./stamp analyze ../stamptest/SymcApks/game-androng-andmj.apk
+./stamp analyze ../stamptest/SymcApks/game-androng-andmj.apk
+echo ./stamp analyze ../stamptest/SymcApks/ggtracker.apk
+./stamp analyze ../stamptest/SymcApks/ggtracker.apk
+echo ./stamp analyze ../stamptest/SymcApks/gingermaster.apk
+./stamp analyze ../stamptest/SymcApks/gingermaster.apk
+echo ./stamp analyze ../stamptest/SymcApks/golddream.apk
+./stamp analyze ../stamptest/SymcApks/golddream.apk
+echo ./stamp analyze ../stamptest/SymcApks/iNJ-CwWkvI.apk
+./stamp analyze ../stamptest/SymcApks/iNJ-CwWkvI.apk
+echo ./stamp analyze ../stamptest/SymcApks/kQm-LOfpwpJ.apk
+./stamp analyze ../stamptest/SymcApks/kQm-LOfpwpJ.apk
+echo ./stamp analyze ../stamptest/SymcApks/mycalendarmobile_1d147f9e3e8dab05ddf1ed85b9939c13b62d1a007f58a5a2ff8cc7e73754bf27.apk
+./stamp analyze ../stamptest/SymcApks/mycalendarmobile_1d147f9e3e8dab05ddf1ed85b9939c13b62d1a007f58a5a2ff8cc7e73754bf27.apk
+echo ./stamp analyze ../stamptest/SymcApks/org-android_iollmnv.apk
+./stamp analyze ../stamptest/SymcApks/org-android_iollmnv.apk
+echo ./stamp analyze ../stamptest/SymcApks/pmsz_android_zol.apk
+./stamp analyze ../stamptest/SymcApks/pmsz_android_zol.apk
+echo ./stamp analyze ../stamptest/SymcApks/PrivacyLeakMainActivity.apk
+./stamp analyze ../stamptest/SymcApks/PrivacyLeakMainActivity.apk
+echo ./stamp analyze ../stamptest/SymcApks/ready2go.apk
+./stamp analyze ../stamptest/SymcApks/ready2go.apk

@@ -253,7 +253,7 @@ public class LinearProgram<T> {
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 		
 		//problem.printLp();
-		
+	
 		System.out.println("Solving LP");
 		
 		problem.setDebug(true); // set branch & bound debugging to true
@@ -263,7 +263,7 @@ public class LinearProgram<T> {
 		time = System.currentTimeMillis();
 		
 		problem.solve();
-
+		
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 		
 		double[] solution = new double[1+numConstraints+numVariables];
@@ -273,9 +273,8 @@ public class LinearProgram<T> {
 		System.out.println("Solved LP");
 		
 		LinearProgramResult<T> result = new LinearProgramResult<T>(solution[0]);
-		for(int i=solution.length-numVariables; i<solution.length; i++) {
-			result.variableValues.put(variableNames.get(i-1-numConstraints), solution[i]);
-			//System.out.println(variableNames.get(i-1-numConstraints) + " = " + solution[i]);
+		for(int j=solution.length-numVariables; j<solution.length; j++) {
+			result.variableValues.put(variableNames.get(j-1-numConstraints), solution[j]);
 		}
 		return result;
 	}

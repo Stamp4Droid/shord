@@ -23,9 +23,9 @@ import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.abduction.AbductiveInference;
+import stamp.missingmodels.util.Util.Counter;
+import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
@@ -35,7 +35,6 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import chord.project.Chord;
 
@@ -120,98 +119,6 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		taintGrammar.addBinaryProduction("Label2PrimFldStat", "Label2Prim", "storeStatPrim");
 	}
 	
-	public static Map<EdgeStruct,Integer> runInference(Graph g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
-		// STEP 1: Run reachability solver
-		long time = System.currentTimeMillis();
-		System.out.println("Computing transitive closure");
-		
-		Graph gbar = new ReachabilitySolver(g, t).getResult();
-		
-		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
-		System.out.println("Num edges: " + gbar.getEdges().size());
-		
-		// STEP 2: Transform graph
-		GraphTransformer gtStripContext = new GraphTransformer() {
-			@Override
-			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
-				gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT, new EdgeInfo(weight));
-			}
-		};
-		
-		Graph gbart = gtStripContext.transform(gbar);
-		
-		// STEP 3: Run the abductive inference algorithm
-		Set<Edge> baseEdges = gbart.getEdges(new EdgeFilter() {
-			@Override
-			public boolean filter(Edge edge) {
-				return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
-			}
-		});
-		System.out.println("Num base edges: " + baseEdges.size());
-		Set<Edge> initialCutEdges = gbart.getEdges(new EdgeFilter() {
-			private boolean added = false;
-			@Override
-			public boolean filter(Edge edge) {
-				boolean result = (!this.added) && edge.getSymbol().equals("Src2Sink");
-				if(result) {
-					//this.added = true;
-				}
-				return result;
-			}
-		});
-		System.out.println("Num initial edges: " + initialCutEdges.size());
-		
-		// print initial cut edges
-		if(shord) {
-			DomL dom = (DomL)ClassicProject.g().getTrgt("L");
-			for(Edge edge : initialCutEdges) {			
-				String source = dom.get(Integer.parseInt(edge.source.name.substring(1)));
-				String sink = dom.get(Integer.parseInt(edge.sink.name.substring(1)));
-				System.out.println("Cutting Src2Sink edge: " + edge.toString());
-				System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
-			}
-		}
-		
-		final Map<EdgeStruct,Integer> result = new AbductiveInference(gbart, baseEdges, initialCutEdges, numCuts).solve();
-		
-		/*
-		// STEP 4: Remove the edges and run solver again
-		System.out.println("Printing remaining src-sink edges:");
-		final Set<EdgeStruct> baseEdgeStructs = new HashSet<EdgeStruct>();
-		for(Edge edge : baseEdges) {
-			baseEdgeStructs.add(edge.getStruct());
-		}
-		GraphTransformer gtNew = new GraphTransformer() {
-			@Override
-			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
-				EdgeStruct tempStruct = new EdgeStruct(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT);
-				if(result.get(tempStruct) != null && result.get(tempStruct)) {
-					//System.out.println(edgeStruct);
-					return;
-				}
-				if(!baseEdgeStructs.contains(tempStruct) && weight > 0) {
-					return;
-				}
-				gb.addEdge(edgeStruct);
-			}
-		};
-		Graph gnew = gtNew.transform(gbar);
-		Graph gnewBar = new ReachabilitySolver(gnew, t).getResult();
-		for(Edge edge : gnewBar.getEdges(new EdgeFilter() {
-			@Override
-			public boolean filter(Edge edge) {
-				return edge.getSymbol().equals("Src2Sink");
-			}
-		})) {
-			System.out.println("src2sink edge: " + edge);
-			System.out.println("weight: " + edge.getInfo().weight);
-		}
-		System.out.println("Done!");
-		*/
-		
-		return result;
-	}
-	
 	private static String getMethodSig(String name) {
 		VarNode v;
 		if(name.startsWith("V")) {
@@ -239,19 +146,20 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	}
 
 	public static void printResult(Map<EdgeStruct,Integer> result, boolean shord) {
-		int totalCut = 0;
+		Counter<Integer> totalCut = new Counter<Integer>();
 		for(EdgeStruct edgeStruct : result.keySet()) {
 			if(result.get(edgeStruct) != -1) {
-				System.out.println("remove: " + edgeStruct);
-				System.out.println("in cut: " + result.get(edgeStruct));
+				System.out.println("in cut " + result.get(edgeStruct) + ": " + edgeStruct);
 				if(shord) {
 					System.out.println("caller: " + getMethodSig(edgeStruct.sourceName));
 					System.out.println("callee: " + getMethodSig(edgeStruct.sinkName));
 				}
-				totalCut++;
+				totalCut.increment(result.get(edgeStruct));
 			}
 		}
-		System.out.println("total cut: " + totalCut);
+		for(int i : totalCut.keySet()) {
+			System.out.println("total cut " + i + ": " + totalCut.getCount(i));
+		}
 	}
 	
 	public static void printGraphEdges(Graph g, final String symbol) {
@@ -290,7 +198,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		try {
-			printResult(runInference(getGraphFromShord(), getTypeFilterFromShord(), true, 1), true);
+			printResult(AbductiveInferenceRunner.runInference(getGraphFromShord(), getTypeFilterFromShord(), true, 1), true);
 		} catch(LpSolveException e) {
 			e.printStackTrace();
 		}
@@ -298,8 +206,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	
 	public static void main(String[] args) throws LpSolveException {
 		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_SymcApks_54975175131d44e08fc08811a318c440.apk/cfl";
-		
-		printResult(runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName), false, 2), false);
+		printResult(AbductiveInferenceRunner.runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName), false, 3), false);
 		
 		//long time = System.currentTimeMillis();
 		//Graph g = new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult();
