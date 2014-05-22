@@ -16,14 +16,19 @@ def parseargs():
 
 if __name__ == "__main__":
     (apkdir, tracedir, traceoutdir, monkey_presses) = parseargs()
-    build_tools_dir = '/home/obastani/Documents/android-sdk-linux/build-tools/19.0.1/';
+    build_tools_dir = '/home/obastani/Documents/android-sdk-linux/build-tools/19.0.1/'
+    log = open('log.txt', 'w')
 
     apps = os.listdir(apkdir)
     print("Preparing to profile "+str(len(apps))+" apk files")
+    log.write("Preparing to profile "+str(len(apps))+" apk files\n")
 
     for appname in apps:
+        log.flush()
+
         app = apkdir+appname
         print("Profiling "+app)
+        log.write("Profiling "+app+"\n")
 
         # Get app package
         appManifest = subprocess.check_output(["java", "ReadApk", app]).split('\n')
@@ -32,7 +37,7 @@ if __name__ == "__main__":
                 manifestPackagename = re.search('package="([^"]*)"', line).group(1)
                 break
         print 'package name: ' + manifestPackagename
-
+        log.write('package name: ' + manifestPackagename + "\n")
 
         # Install App
         subprocess.call(["adb", "install", app])
@@ -50,7 +55,7 @@ if __name__ == "__main__":
         ddoutput = subprocess.check_output([build_tools_dir+"dexdump", "-l", "xml", app])
         ddoutputlist = re.findall('package name="([^"]+)',ddoutput)
         #ddoutputliststr = ' -p '.join(ddoutputlist[0:29])
-        ddoutputliststr = manifestPackagename
+        ddoutputliststr = manifestPackagename + ' -p '.join(ddoutputlist[0:28])
         ddoutputliststr = ddoutputliststr.lstrip().rstrip()
         # TODO limit length of list
         
@@ -68,8 +73,16 @@ if __name__ == "__main__":
         try:
             pid = filter(len,n.group(1).split(' '))[1]
         except AttributeError:
+
+            print subprocess.list2cmdline(["adb", "shell", "pm", "uninstall", manifestPackagename])
+            uninstall_result = subprocess.check_output(["adb", "shell", "pm", "uninstall", manifestPackagename])
+            print uninstall_result
+            log.write('uninstall result for ' + manifestPackagename + ': ' + uninstall_result + '\n')
+
             continue
+
         print "pid is", pid
+        log.write('pid is: ' + pid + '\n')
 
         # Start Profilining
         subprocess.call(["adb", "shell", "am", "profile", pid, "start", "/sdcard/"+appname+".trace"])
@@ -100,5 +113,11 @@ if __name__ == "__main__":
 
         # Uninstall the app
         # adb shell pm uninstall packagename
-        subprocess.call(["adb", "shell", "pm", "uninstall", manifestPackagename])
+        print subprocess.list2cmdline(["adb", "shell", "pm", "uninstall", manifestPackagename])
+        uninstall_result = subprocess.check_output(["adb", "shell", "pm", "uninstall", manifestPackagename])
+        print uninstall_result
+        log.write('uninstall result for ' + manifestPackagename + ': ' + uninstall_result + '\n')
+                
+    log.flush()
+    log.close()
         
