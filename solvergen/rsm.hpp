@@ -309,6 +309,8 @@ template<class EfftT>
 void print_effect(std::ostream& os, const std::string& prefix,
 		  const EfftT& efft, const Registry<Component>& comp_reg,
 		  const Registry<Tag>& tag_reg);
+std::list<std::pair<EfftReqd,EfftPush>> match(EfftPush l_push,
+					      EfftReqd r_reqd);
 
 bool compose(const EffectRTL& l_efft, const EffectLTR& r_efft,
 	     EffectRTL& res_efft, bool fwd_only);

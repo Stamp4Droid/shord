@@ -627,27 +627,46 @@ public:
     }
 };
 
+namespace detail {
+
+template<unsigned int DEPTH> struct JoinZipHelper {
+    template<class LMap, class RMap, class ZipT>
+    static void handle(LMap& l, RMap& r, const ZipT& zip) {
+	auto l_curr = l.begin();
+	auto r_curr = r.begin();
+	const auto l_end = l.end();
+	const auto r_end = r.end();
+	while (l_curr != l_end && r_curr != r_end) {
+	    int key_rel = compare(l_curr->first, r_curr->first);
+	    if (key_rel == 0) {
+		JoinZipHelper<DEPTH-1>::handle(l_curr->second,
+					       r_curr->second, zip);
+	    }
+	    if (key_rel >= 0) {
+		++r_curr;
+	    }
+	    if (key_rel <= 0) {
+		++l_curr;
+	    }
+	}
+    }
+};
+
+template<> struct JoinZipHelper<0> {
+    template<class LMap, class RMap, class ZipT>
+    static void handle(LMap& l, RMap& r, const ZipT& zip) {
+	zip(l, r);
+    }
+};
+
+} // namespace detail
+
 // TODO:
 // - Also feed the common key to zip?
 // - Should implement using iterators?
-template<class LMap, class RMap, class ZipT>
-void join_zip(const LMap& l, const RMap& r, const ZipT& zip) {
-    auto l_curr = l.begin();
-    auto r_curr = r.begin();
-    const auto l_end = l.end();
-    const auto r_end = r.end();
-    while (l_curr != l_end && r_curr != r_end) {
-	int key_rel = compare(l_curr->first, r_curr->first);
-	if (key_rel == 0) {
-	    zip(l_curr->second, r_curr->second);
-	}
-	if (key_rel >= 0) {
-	    ++r_curr;
-	}
-	if (key_rel <= 0) {
-	    ++l_curr;
-	}
-    }
+template<unsigned int DEPTH, class LMap, class RMap, class ZipT>
+void join_zip(LMap& l, RMap& r, const ZipT& zip) {
+    detail::JoinZipHelper<DEPTH>::handle(l, r, zip);
 }
 
 // OS SERVICES ================================================================
@@ -1429,12 +1448,22 @@ public:
 //   all sub-containers must have the same size
 //   can this be done dynamically?
 //   need variable-size class support?
-// - TopIter on Table iterates over the values
 // - use probabilistic data structures (as long as they're sound)
 // - exploit sharing of bit patterns
 // - disable operator[], only allow constraining the top iterator
 //   then we get a full tuple (but more overhead when iterating?)
 // - "full" observer on index
+// - multi-level remove_if
+// - compress() operation (clean up empty entries)
+//   iterate, or on the current level only?
+//   any useful return value?
+//   this will invalidate iterators
+// - "move" operation (like "copy")
+// - remove operation
+//   could accept partial tuple, and erase everything that matches
+//   alternatively, pattern
+// - follow-if-exists operation
+//   that short-circuits at the first non-existent value
 
 // Uniquing infrastructure:
 // - works for any kind of Index class
@@ -1630,6 +1659,7 @@ template<class Tag, class T> class Table {
 public:
     class Iterator;
     friend Iterator;
+    typedef typename std::set<T>::const_iterator ConstTopIter;
     typedef NamedTuple<Tag,T,Nil> Tuple;
 private:
     std::set<T> store;
@@ -1645,6 +1675,23 @@ public:
 	unsigned int old_sz = size();
 	store.insert(src.store.cbegin(), src.store.cend());
 	return old_sz != size();
+    }
+    ConstTopIter begin() const {
+	return store.cbegin();
+    }
+    ConstTopIter end() const {
+	return store.cend();
+    }
+    template<class Pred>
+    void remove_if(const Pred& pred) {
+	typename std::set<T>::iterator it = store.begin();
+	while (it != store.end()) {
+	    if (pred(*it)) {
+		it = store.erase(it);
+	    } else {
+		++it;
+	    }
+	}
     }
     template<class... Rest>
     Iterator iter(Tuple& tgt, const Rest&... rest) const {
@@ -1711,7 +1758,8 @@ public:
     typedef S Sub;
     class Iterator;
     friend Iterator;
-    typedef typename std::map<Key,Sub>::const_iterator TopIter;
+    typedef typename std::map<Key,Sub>::iterator TopIter;
+    typedef typename std::map<Key,Sub>::const_iterator ConstTopIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     static const Sub dummy;
@@ -1757,10 +1805,16 @@ public:
 	it.migrate(*this);
 	return it;
     }
-    TopIter begin() const {
+    TopIter begin() {
+	return map.begin();
+    }
+    TopIter end() {
+	return map.end();
+    }
+    ConstTopIter begin() const {
 	return map.cbegin();
     }
-    TopIter end() const {
+    ConstTopIter end() const {
 	return map.cend();
     }
     bool empty() const {
@@ -1852,6 +1906,8 @@ public:
     friend Iterator;
     class TopIter;
     friend TopIter;
+    class ConstTopIter;
+    friend ConstTopIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     std::vector<Sub> array;
@@ -1900,11 +1956,17 @@ public:
 	it.migrate(*this);
 	return it;
     }
-    TopIter begin() const {
+    TopIter begin() {
 	return TopIter(*this, false);
     }
-    TopIter end() const {
+    TopIter end() {
 	return TopIter(*this, true);
+    }
+    ConstTopIter begin() const {
+	return ConstTopIter(*this, false);
+    }
+    ConstTopIter end() const {
+	return ConstTopIter(*this, true);
     }
     bool empty() const {
 	for (const Sub& entry : array) {
@@ -2003,7 +2065,38 @@ public:
     };
 
     class TopIter : public std::iterator<std::forward_iterator_tag,
-					 std::pair<const Key,const Sub&>> {
+					 std::pair<const Key,Sub&>> {
+    public:
+	typedef std::pair<const Key,Sub&> Value;
+    private:
+	ConstTopIter real_iter;
+    public:
+	explicit TopIter(FlatIndex& parent, bool at_end)
+	    : real_iter(parent, at_end) {}
+	TopIter(const TopIter& rhs) : real_iter(rhs.real_iter) {}
+	TopIter& operator=(const TopIter& rhs) {
+	    real_iter = rhs.real_iter;
+	    return *this;
+	}
+	Value operator*() const {
+	    typename ConstTopIter::Value cval = *real_iter;
+	    return Value(cval.first, const_cast<Sub&>(cval.second));
+	}
+	TopIter& operator++() {
+	    ++real_iter;
+	    return *this;
+	}
+	bool operator==(const TopIter& rhs) const {
+	    return real_iter == rhs.real_iter;
+	}
+	bool operator!=(const TopIter& rhs) const {
+	    return !(*this == rhs);
+	}
+    };
+
+    class ConstTopIter
+	: public std::iterator<std::forward_iterator_tag,
+			       std::pair<const Key,const Sub&>> {
     public:
 	typedef std::pair<const Key,const Sub&> Value;
     private:
@@ -2016,12 +2109,13 @@ public:
 	    }
 	}
     public:
-	explicit TopIter(const FlatIndex& parent, bool at_end)
+	explicit ConstTopIter(const FlatIndex& parent, bool at_end)
 	    : curr(at_end ? parent.array.size() : 0), parent(parent) {
 	    skip_empty();
 	}
-	TopIter(const TopIter& rhs) : curr(rhs.curr), parent(rhs.parent) {}
-	TopIter& operator=(const TopIter& rhs) {
+	ConstTopIter(const ConstTopIter& rhs)
+	    : curr(rhs.curr), parent(rhs.parent) {}
+	ConstTopIter& operator=(const ConstTopIter& rhs) {
 	    assert(&parent == &(rhs.parent));
 	    curr = rhs.curr;
 	    return *this;
@@ -2029,16 +2123,16 @@ public:
 	Value operator*() const {
 	    return Value(KeyTraits<Key>::from_idx(curr), parent.array[curr]);
 	}
-	TopIter& operator++() {
+	ConstTopIter& operator++() {
 	    ++curr;
 	    skip_empty();
 	    return *this;
 	}
-	bool operator==(const TopIter& rhs) const {
+	bool operator==(const ConstTopIter& rhs) const {
 	    assert(&parent == &(rhs.parent));
 	    return curr == rhs.curr;
 	}
-	bool operator!=(const TopIter& rhs) const {
+	bool operator!=(const ConstTopIter& rhs) const {
 	    return !(*this == rhs);
 	}
     };
@@ -2147,7 +2241,8 @@ public:
     typedef S Sub;
     class Iterator;
     friend Iterator;
-    typedef typename List::const_iterator TopIter;
+    typedef typename List::iterator TopIter;
+    typedef typename List::const_iterator ConstTopIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     static const Sub dummy;
@@ -2212,10 +2307,16 @@ public:
 	it.migrate(*this);
 	return it;
     }
-    TopIter begin() const {
+    TopIter begin() {
+	return list.begin();
+    }
+    TopIter end() {
+	return list.end();
+    }
+    ConstTopIter begin() const {
 	return list.cbegin();
     }
-    TopIter end() const {
+    ConstTopIter end() const {
 	return list.cend();
     }
     bool empty() const {
@@ -2314,7 +2415,7 @@ BiRel<TagA,TagB,T> join(const BiRel<TagA,TagB,T>& l,
 	    }
 	}
     };
-    join_zip(l.b2a, r.a2b, zip);
+    join_zip<1>(l.b2a, r.a2b, zip);
     return res;
 }
 
@@ -2334,6 +2435,7 @@ public:
     class Iterator;
     friend Iterator;
     typedef boost::none_t TopIter; // dummy declaration
+    typedef boost::none_t ConstTopIter; // dummy declaration
     typedef NamedTuple<TagA,T,NamedTuple<TagB,T,Nil>> Tuple;
 private:
     std::map<T,std::set<T>> a2b;
@@ -2538,7 +2640,8 @@ public:
     typedef typename Idx::Sub Sub;
     class Iterator;
     friend Iterator;
-    typedef typename Idx::TopIter TopIter;
+    typedef boost::none_t TopIter; // dummy declaration
+    typedef typename Idx::ConstTopIter ConstTopIter;
     typedef typename Idx::Tuple Tuple;
 private:
     Ref<Immut<Idx>> cell_ref;
@@ -2580,10 +2683,10 @@ public:
 	it.migrate(*this);
 	return it;
     }
-    TopIter begin() const {
+    ConstTopIter begin() const {
 	return real_idx().begin();
     }
-    TopIter end() const {
+    ConstTopIter end() const {
 	return real_idx().end();
     }
     bool empty() const {

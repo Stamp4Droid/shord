@@ -258,11 +258,7 @@ bool compose(const EffectRTL& l_efft, const EffectLTR& r_efft,
 	    }
 	}
     };
-    auto zip = [&](const typename EffectRTL::Sub& a,
-		   const typename EffectLTR::Sub& b) {
-	join_zip(a, b, add_product);
-    };
-    join_zip(l_efft, r_efft, zip);
+    join_zip<2>(l_efft, r_efft, add_product);
     return grew;
 }
 
