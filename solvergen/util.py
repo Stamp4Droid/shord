@@ -392,6 +392,11 @@ def mkdir(path):
 def sort_uniq(seq):
     return [g[0] for g in groupby(sorted(seq))]
 
+def index(d, key, default):
+    if key not in d:
+	d[key] = default
+    return d[key]
+
 class DomMap(BaseClass):
     def __init__(self, map_file):
         self._idx2val = []
