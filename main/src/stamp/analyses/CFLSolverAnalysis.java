@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import lpsolve.LpSolveException;
@@ -20,6 +19,7 @@ import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.Counter;
+import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
@@ -130,16 +130,16 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		return RelationManager.getMethodForVar(v).toString();
 	}
 
-	public static void printResult(Map<EdgeStruct,Integer> result, boolean shord) {
+	public static void printResult(MultivalueMap<EdgeStruct,Integer> result, boolean shord) {
 		Counter<Integer> totalCut = new Counter<Integer>();
 		for(EdgeStruct edgeStruct : result.keySet()) {
-			if(result.get(edgeStruct) != -1) {
-				System.out.println("in cut " + result.get(edgeStruct) + ": " + edgeStruct);
+			for(int cut : result.get(edgeStruct)) {
+				System.out.println("in cut " + cut + ": " + edgeStruct);
 				if(shord) {
 					System.out.println("caller: " + getMethodSig(edgeStruct.sourceName));
 					System.out.println("callee: " + getMethodSig(edgeStruct.sinkName));
 				}
-				totalCut.increment(result.get(edgeStruct));
+				totalCut.increment(cut);
 			}
 		}
 		for(int i : totalCut.keySet()) {
@@ -183,15 +183,17 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		try {
-			printResult(AbductiveInferenceRunner.runInference(getGraphFromShord(), getTypeFilterFromShord(), true, 1), true);
+			printResult(AbductiveInferenceRunner.runInference(getGraphFromShord(), getTypeFilterFromShord(), true, 4), true);
 		} catch(LpSolveException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void main(String[] args) throws LpSolveException {
-		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_SymcApks_54975175131d44e08fc08811a318c440.apk/cfl";
-		printResult(AbductiveInferenceRunner.runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName), false, 3), false);
+		String directoryName;
+		directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_shord_apps_samples_MultipleLeaks/cfl";
+		directoryName = "/home/obastani/Documents/projects/research/stamp/shord/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_SymcApks_03c1b44c94c86c3137862c20f9f745e0f89ce2cdb778dc6466a06a65b7a591ae.apk/cfl";
+		printResult(AbductiveInferenceRunner.runInference(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName), false, 4), false);
 		
 		//long time = System.currentTimeMillis();
 		//Graph g = new ReachabilitySolver(getGraphFromFiles(directoryName), getTypeFilterFromFiles(directoryName)).getResult();
@@ -272,9 +274,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
 				}
 				if(name != null && !labels.contains(name)) {
-					//if(!name.substring(1).startsWith("http")) {
-						return;
-					//}
+					return;
 				}
 				gb.addEdge(edgeStruct, weight);
 			}

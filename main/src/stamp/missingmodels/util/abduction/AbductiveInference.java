@@ -171,8 +171,8 @@ public class AbductiveInference {
 			this.result = new HashMap<EdgeStruct,Boolean>();
 			for(Edge edge : solution.variableValues.keySet()) {
 				if(this.baseEdges.contains(edge)) {
-					//System.out.println(edge + ": " + solution.variableValues.get(edge));
-					this.result.put(edge.getStruct(), solution.variableValues.get(edge) > 0.0);
+					//System.out.println(edge.getStruct() + ": " + solution.variableValues.get(edge));
+					this.result.put(edge.getStruct(), solution.variableValues.get(edge) > 0.5);
 				}
 			}
 		}

@@ -18,7 +18,7 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 public class ReachabilitySolver {
 	private final ContextFreeGrammar c;
 	private final GraphBuilder gb;
-	private final LinkedList<Edge> worklist = new LinkedList<Edge>();
+	private final Heap<Edge> worklist = new BucketHeap<Edge>();
 	private final TypeFilter t;
 	
 	public static class TypeFilter {
@@ -44,7 +44,7 @@ public class ReachabilitySolver {
 		this.t = t;
 		for(Edge edge : g.getEdges()) {
 			Edge newEdge = this.gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, edge.context, new EdgeInfo(edge.getInfo().weight));
-			this.worklist.add(newEdge);
+			this.worklist.add(newEdge, edge.getInfo().weight);
 		}
 	}
 	
@@ -58,13 +58,9 @@ public class ReachabilitySolver {
 		EdgeInfo curInfo = this.gb.toGraph().getInfo(source, sink, symbolInt, field, context);
 		
 		// add the edge if the edge is new or if the weight is smaller
-		if(curInfo == null) {
-			this.worklist.add(this.gb.addEdge(source, sink, symbolInt, field, context, newInfo));
-			//this.worklist.add(this.gb.addEdge(source, sink, symbolInt, data, newInfo), newData.weight);
-		} else if(curInfo.weight > newInfo.weight) {
-			this.gb.addEdge(source, sink, symbolInt, field, context, newInfo);
-			//this.worklist.update(this.gb.addEdge(source, sink, symbolInt, data, newInfo), newData.weight);
-		}		
+		if(curInfo == null || newInfo.weight < curInfo.weight) {
+			this.worklist.add(this.gb.addEdge(source, sink, symbolInt, field, context, newInfo), newInfo.weight);
+		}
 	}
 	
 	private void addEdge(UnaryProduction unaryProduction, Edge input) {

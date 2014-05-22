@@ -1,6 +1,5 @@
 package stamp.missingmodels.util.abduction;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -8,6 +7,7 @@ import java.util.Set;
 import lpsolve.LpSolveException;
 import shord.project.ClassicProject;
 import stamp.analyses.DomL;
+import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
@@ -37,7 +37,10 @@ public class AbductiveInferenceRunner {
 		GraphTransformer gtStripContext = new GraphTransformer() {
 			@Override
 			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
-				gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT, new EdgeInfo(weight));
+				EdgeInfo curInfo = gb.toGraph().getInfo(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT);
+				if(curInfo == null || weight < curInfo.weight) {   
+					gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT, new EdgeInfo(weight));
+				}
 			}
 		};
 		return gtStripContext.transform(gbar);
@@ -74,12 +77,13 @@ public class AbductiveInferenceRunner {
 		System.out.println("Num initial edges: " + initialCutEdges.size());
 
 		// print initial cut edges
-		if(shord) {
-			DomL dom = (DomL)ClassicProject.g().getTrgt("L");
-			for(Edge edge : initialCutEdges) {			
+		DomL dom = shord ? (DomL)ClassicProject.g().getTrgt("L") : null;
+		for(Edge edge : initialCutEdges) {	
+			System.out.println("Cutting Src2Sink edge: " + edge.toString());
+			//System.out.println("Edge weight: " + edge.getInfo().weight);
+			if(dom != null) {
 				String source = dom.get(Integer.parseInt(edge.source.name.substring(1)));
 				String sink = dom.get(Integer.parseInt(edge.sink.name.substring(1)));
-				System.out.println("Cutting Src2Sink edge: " + edge.toString());
 				System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
 			}
 		}
@@ -128,7 +132,7 @@ public class AbductiveInferenceRunner {
 				//System.out.println(edgeStruct);
 				EdgeStruct newEdgeStruct = new EdgeStruct(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT);
 				if(result.get(newEdgeStruct) != null && result.get(newEdgeStruct)) {
-					//System.out.println(newEdgeStruct);
+					//System.out.println("Removing edge: " + newEdgeStruct);
 					newWeight = 0;
 				}
 				gb.addEdge(edgeStruct, newWeight);
@@ -137,19 +141,16 @@ public class AbductiveInferenceRunner {
 		return gt.transform(g);
 	}
 	
-	public static Map<EdgeStruct,Integer> runInference(Graph g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
+	public static MultivalueMap<EdgeStruct,Integer> runInference(Graph g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
 		Graph gcur = g;
-		Map<EdgeStruct,Integer> allResults = new HashMap<EdgeStruct,Integer>();
-		for(Edge edge : getBaseEdges(g)) {
-			allResults.put(edge.getStruct(), -1);
-		}
+		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
 			Graph gbar = computeTransitiveClosure(gcur, t, shord);
 			
 			// STEP 2: Strip contexts
 			Graph gbart = stripContexts(gbar);
-			
+
 			// STEP 3: Run the abductive inference algorithm
 			Map<EdgeStruct,Boolean> result = runAbductiveInference(gbart, shord);
 			
@@ -164,7 +165,7 @@ public class AbductiveInferenceRunner {
 			for(EdgeStruct edge : result.keySet()) {
 				if(result.get(edge)) {
 					//System.out.println("Cut " + i + ": " + edge);
-					allResults.put(edge, i);
+					allResults.add(edge, i);
 				}
 			}
 		}		

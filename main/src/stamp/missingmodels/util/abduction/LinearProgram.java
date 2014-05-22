@@ -246,7 +246,7 @@ public class LinearProgram<T> {
 		
 		// Set variables to be integer valued
 		for(int i=1; i<=problem.getNcolumns(); i++) {
-			//problem.setInt(i, true);
+			problem.setInt(i, true);
 			problem.setUpbo(i, 1.0);
 		}
 		
