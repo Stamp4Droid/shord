@@ -112,7 +112,9 @@ public class ControlDependenceGraph
 								System.out.println("ERROR: Object of type " + obj.getClass() + " is not a block!");
 								l = null;
 							}
-							assert l != null;
+							if(l == null) {
+								throw new RuntimeException("Least common ancestor not found");
+							}
 							//System.out.println(l);
 						}
 					} while(true);
