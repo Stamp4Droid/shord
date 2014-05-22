@@ -22,14 +22,11 @@ import java.util.*;
  */
 public class ControlDependenceGraph
 {
-	private Map<Block,Set<Block>> nodeToDependees = new HashMap();
+	private Map<Object,Set<Object>> nodeToDependees = new HashMap();
 
 	public ControlDependenceGraph(SootMethod method)
 	{
 		BlockGraph cfg = new ExceptionalBlockGraph(method.retrieveActiveBody());
-
-		for(Block block : cfg.getBlocks())
-			nodeToDependees.put(block, new HashSet());
 
 		//Add a super exit node to the cfg
 		HashReversibleGraph reversibleCFG = new HashReversibleGraph(cfg);
@@ -45,6 +42,8 @@ public class ControlDependenceGraph
 			}
 		}
 
+		for(Object block : reversibleCFG.getNodes())
+			nodeToDependees.put(block, new HashSet());
 
 		DominatorsFinder domfinder = new SimpleDominatorsFinder(reversibleCFG.reverse());
 		DominatorTree domlysis = new DominatorTree(domfinder);
@@ -61,38 +60,28 @@ public class ControlDependenceGraph
 		  }
 		 */
 
-		for(Block a : cfg.getBlocks()){
+		for(Object a : reversibleCFG.getNodes()){
 			// Step 1
 			// if node a had more than one successors then 
 			// each successor does not post-dominate a
 			// So S is the set succs
-			List<Block> succs = cfg.getSuccsOf(a);
+			List succs = reversibleCFG.getSuccsOf(a);
 			if(succs.size() > 1){
 
 				// Step 2
 				// for each b in S (i.e., succs) find the
 				// least common ancestor of a and b
 
-				Set<Block> ancestorsA = new HashSet();
-				Block parent = a;
+				Set ancestorsA = new HashSet();
+				Object parent = a;
 				while(parent != null){
 					ancestorsA.add(parent);
-					Object obj = getImmediateDominator(domlysis, parent);
-					if(obj instanceof Block) {
-						parent = (Block) obj;
-					} else if(obj == null) {
-						parent = null;
-					} else {
-						//throw new RuntimeException("ERROR: Object " + obj + " is not a block!");
-						System.out.println("ERROR: Object of type " + obj.getClass() + " is not a block!");
-						parent = null;
-					}
-					//System.out.println("!! " + parent);
+					parent = getImmediateDominator(domlysis, parent);
 				}
 
-				for(Block b : succs){
-					Set<Block> marked = new HashSet();
-					Block l = b;
+				for(Object b : succs){
+					Set marked = new HashSet();
+					Object l = b;
 					do{
 						if(ancestorsA.contains(l)){
 							// l is the least common ancestors
@@ -102,26 +91,14 @@ public class ControlDependenceGraph
 						else{
 							marked.add(l);
 							//System.out.print("Immediate dominator of " + l + " is ");
-							Object obj = getImmediateDominator(domlysis, l);
-							if(obj instanceof Block) {
-								l = (Block) obj;
-							} else if(obj == null) {
-								l = null;
-							} else {
-								//throw new RuntimeException("ERROR: Object " + obj + " is not a block!");
-								System.out.println("ERROR: Object of type " + obj.getClass() + " is not a block!");
-								l = null;
-							}
-							if(l == null) {
-								throw new RuntimeException("Least common ancestor not found");
-							}
+							l = getImmediateDominator(domlysis, l);
 							//System.out.println(l);
 						}
 					} while(true);
 					if(l == a)
 						marked.add(l);
 
-					for(Block node : marked)
+					for(Object node : marked)
 						nodeToDependees.get(node).add(a);
 				}
 			}
@@ -131,11 +108,13 @@ public class ControlDependenceGraph
 	public Map<Unit,Set<Unit>> dependeeToDependentsSetMap()
 	{
 		Map<Unit,Set<Unit>> result = new HashMap();
-		for(Map.Entry<Block,Set<Block>> e : nodeToDependees.entrySet()){
-			Block block = e.getKey();
-			Set<Block> dependees = e.getValue();
-			for(Block dependee : dependees){
-				Unit t = dependee.getTail();
+		for(Map.Entry<Object,Set<Object>> e : nodeToDependees.entrySet()){
+			Object block = e.getKey();
+			Set<Object> dependees = e.getValue();
+			for(Object dependee : dependees){
+				if(dependee instanceof Object)
+					continue; //dependee is the super-exit node
+				Unit t = ((Block) dependee).getTail();
 				if(!t.branches()) 
 					throw new RuntimeException(dependee + " does not branch!");
 				Set<Unit> dependents = result.get(t);
@@ -143,7 +122,7 @@ public class ControlDependenceGraph
 					dependents = new HashSet();
 					result.put(t, dependents);
 				}
-				for(Iterator<Unit> uit = block.iterator(); uit.hasNext();){
+				for(Iterator<Unit> uit = ((Block) block).iterator(); uit.hasNext();){
 					dependents.add(uit.next());
 				}
 			}
