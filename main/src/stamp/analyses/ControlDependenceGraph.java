@@ -22,18 +22,18 @@ import java.util.*;
  */
 public class ControlDependenceGraph
 {
-    private Map<Block,Set<Block>> nodeToDependees = new HashMap();
-    
-    public ControlDependenceGraph(SootMethod method)
-    {
+	private Map<Block,Set<Block>> nodeToDependees = new HashMap();
+
+	public ControlDependenceGraph(SootMethod method)
+	{
 		BlockGraph cfg = new ExceptionalBlockGraph(method.retrieveActiveBody());
-		
+
 		for(Block block : cfg.getBlocks())
 			nodeToDependees.put(block, new HashSet());
-		
+
 		//Add a super exit node to the cfg
 		HashReversibleGraph reversibleCFG = new HashReversibleGraph(cfg);
-		
+
 		List tails = reversibleCFG.getTails();
 		if(tails.size() > 1){
 			Object superExitNode = new Object();
@@ -45,7 +45,7 @@ public class ControlDependenceGraph
 			}
 		}
 
-		
+
 		DominatorsFinder domfinder = new SimpleDominatorsFinder(reversibleCFG.reverse());
 		DominatorTree domlysis = new DominatorTree(domfinder);
 		/*
@@ -59,8 +59,8 @@ public class ControlDependenceGraph
 		  System.out.print("Exit");
 		  System.out.println("  --->  " + a.getIndexInMethod());
 		  }
-		*/
-		
+		 */
+
 		for(Block a : cfg.getBlocks()){
 			// Step 1
 			// if node a had more than one successors then 
@@ -68,19 +68,28 @@ public class ControlDependenceGraph
 			// So S is the set succs
 			List<Block> succs = cfg.getSuccsOf(a);
 			if(succs.size() > 1){
-				
+
 				// Step 2
 				// for each b in S (i.e., succs) find the
 				// least common ancestor of a and b
-				
+
 				Set<Block> ancestorsA = new HashSet();
 				Block parent = a;
 				while(parent != null){
 					ancestorsA.add(parent);
-					parent = (Block) getImmediateDominator(domlysis, parent);
+					Object obj = getImmediateDominator(domlysis, parent);
+					if(obj instanceof Block) {
+						parent = (Block) obj;
+					} else if(obj == null) {
+						parent = null;
+					} else {
+						//throw new RuntimeException("ERROR: Object " + obj + " is not a block!");
+						System.out.println("ERROR: Object of type " + obj.getClass() + " is not a block!");
+						parent = null;
+					}
 					//System.out.println("!! " + parent);
 				}
-				
+
 				for(Block b : succs){
 					Set<Block> marked = new HashSet();
 					Block l = b;
@@ -93,20 +102,29 @@ public class ControlDependenceGraph
 						else{
 							marked.add(l);
 							//System.out.print("Immediate dominator of " + l + " is ");
-							l = (Block) getImmediateDominator(domlysis, l);
+							Object obj = getImmediateDominator(domlysis, l);
+							if(obj instanceof Block) {
+								l = (Block) obj;
+							} else if(obj == null) {
+								l = null;
+							} else {
+								//throw new RuntimeException("ERROR: Object " + obj + " is not a block!");
+								System.out.println("ERROR: Object of type " + obj.getClass() + " is not a block!");
+								l = null;
+							}
 							assert l != null;
 							//System.out.println(l);
 						}
-					}while(true);
+					} while(true);
 					if(l == a)
 						marked.add(l);
-					
+
 					for(Block node : marked)
 						nodeToDependees.get(node).add(a);
 				}
 			}
 		}
-    }
+	}
 
 	public Map<Unit,Set<Unit>> dependeeToDependentsSetMap()
 	{
@@ -117,7 +135,7 @@ public class ControlDependenceGraph
 			for(Block dependee : dependees){
 				Unit t = dependee.getTail();
 				if(!t.branches()) 
-					assert false: dependee + " does not branch!";
+					throw new RuntimeException(dependee + " does not branch!");
 				Set<Unit> dependents = result.get(t);
 				if(dependents == null){
 					dependents = new HashSet();
@@ -130,10 +148,10 @@ public class ControlDependenceGraph
 		}
 		return result;
 	}
-    
-    private Object getImmediateDominator(DominatorTree domlysis, Object node)
-    {
+
+	private Object getImmediateDominator(DominatorTree domlysis, Object node)
+	{
 		DominatorNode n = domlysis.getParentOf(domlysis.getDode(node));
 		if(n == null) return null; else return n.getGode();
-    }    
+	}    
 }

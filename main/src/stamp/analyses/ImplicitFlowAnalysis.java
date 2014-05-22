@@ -1,8 +1,8 @@
 package stamp.analyses;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,8 +17,8 @@ import shord.project.analyses.ProgramRel;
 import soot.Local;
 import soot.SootMethod;
 import soot.Unit;
+import soot.Value;
 import soot.ValueBox;
-import soot.jimple.CastExpr;
 import chord.project.Chord;
 import chord.util.tuple.object.Pair;
 
@@ -26,35 +26,65 @@ import chord.util.tuple.object.Pair;
  * @author obastani
  */
 @Chord(name = "implicit-flow-java",
-consumes = {},
+consumes = { "V", "U" },
 produces = { "RefRefImp", "RefPrimImp", "PrimRefImp", "PrimPrimImp" },
 namesOfTypes = {},
 types = {},
 namesOfSigns = { "RefRefImp", "RefPrimImp", "PrimRefImp", "PrimPrimImp" },
-signs = { "V0,V1:V0xV1", "V0,U0:V0_U0", "U0,V0:U0_V0", "U0,U0:U0xU1" })
+signs = { "V0,V1:V0xV1", "V0,U0:V0_U0", "U0,V0:V0_U0", "U0,U1:U0xU1" })
 public class ImplicitFlowAnalysis extends JavaAnalysis {
 	private ProgramRel relRefRefImp;
 	private ProgramRel relRefPrimImp;
 	private ProgramRel relPrimRefImp;
 	private ProgramRel relPrimPrimImp;
+
+	private void getVarNodesInHelper(Map<Local,LocalVarNode> localToVarNodeMap, Value value, Collection<LocalVarNode> result) {
+		List<ValueBox> boxes = value.getUseBoxes();
+		for(ValueBox box : boxes) {
+			Value childValue = box.getValue();
+			System.out.println("VALUE recurse: " + childValue);
+			if(value instanceof Local) {
+				LocalVarNode varNode = localToVarNodeMap.get((Local)value);
+				if(varNode != null) {
+					result.add(varNode);
+				} else {
+					System.out.println("ERROR: No varnode found for local " + value);
+				}
+			}
+			this.getVarNodesInHelper(localToVarNodeMap, childValue, result);
+			// TODO: any other cases?
+			// TODO: e.g. box instanceof CastExpr
+		}
+	}
 	
 	private Collection<LocalVarNode> getVarNodesIn(Map<Local,LocalVarNode> localToVarNodeMap, Unit unit, boolean isDef) {
-		Collection<LocalVarNode> result = new ArrayList<LocalVarNode>();
+		Collection<LocalVarNode> result = new HashSet<LocalVarNode>();
 		List<ValueBox> boxes = isDef ? unit.getDefBoxes() : unit.getUseBoxes();
 		for(ValueBox box : boxes) {
-			if(box instanceof Local) {
-				result.add(localToVarNodeMap.get((Local)box));
-			} else if(box instanceof CastExpr) {
-				// TODO: do we need to handle this case?
+			Value value = box.getValue();
+			System.out.println("VALUE " + isDef + ": " + value);
+			if(value instanceof Local) {
+				LocalVarNode varNode = localToVarNodeMap.get((Local)value);
+				if(varNode != null) {
+					result.add(varNode);
+				} else {
+					System.out.println("ERROR: No varnode found for local " + value);
+				}
+			}
+			if(!isDef) {
+				this.getVarNodesInHelper(localToVarNodeMap, value, result);
 			}
 			// TODO: any other cases?
+			// TODO: e.g. box instanceof CastExpr
 		}
 		return result;
 	}
 	
 	private void processDependentUnits(Map<Local,LocalVarNode> localToVarNodeMap, LocalsClassifier lc, Unit parent, Unit dependent) {
+		System.out.println("UNIT DEPENDENTS: " + parent + " -> " + dependent);
 		for(LocalVarNode parentVar : this.getVarNodesIn(localToVarNodeMap, parent, false)) {
 			for(LocalVarNode dependentVar : this.getVarNodesIn(localToVarNodeMap, dependent, true)) {
+				System.out.println("LOCAL DEPENDENTS: " + parentVar.local + " -> " + dependentVar.local);				
 				if(lc.nonPrimLocals().contains(parentVar.local)) {
 					if(lc.nonPrimLocals().contains(dependentVar.local)) {
 						this.relRefRefImp.add(parentVar, dependentVar);						
@@ -80,8 +110,10 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 	
 	private Map<SootMethod,Map<Local,LocalVarNode>> localToVarNodeMaps = null;
 	private void constructLocalToVarNodeMaps() {
-		this.localToVarNodeMaps = new HashMap<SootMethod,Map<Local,LocalVarNode>>();		
+		this.localToVarNodeMaps = new HashMap<SootMethod,Map<Local,LocalVarNode>>();
+		
 		ProgramRel relMV = (ProgramRel)ClassicProject.g().getTrgt("MV");
+		relMV.load();
 		for(Pair<Object,Object> pair : relMV.getAry2ValTuples()) {
 			VarNode varNode = (VarNode)pair.val1;
 			if(varNode instanceof LocalVarNode) {
@@ -94,8 +126,31 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 				
 				LocalVarNode localVarNode = (LocalVarNode)varNode;
 				localToVarNodeMap.put(localVarNode.local, localVarNode);
+
+				//System.out.println("ADDED VAR V " + localVarNode.local + " TO METHOD " + method);
 			}
 		}
+		relMV.close();
+
+		ProgramRel relMU = (ProgramRel)ClassicProject.g().getTrgt("MU");
+		relMU.load();
+		for(Pair<Object,Object> pair : relMU.getAry2ValTuples()) {
+			VarNode varNode = (VarNode)pair.val1;
+			if(varNode instanceof LocalVarNode) {
+				SootMethod method = (SootMethod)pair.val0;
+				Map<Local,LocalVarNode> localToVarNodeMap = this.localToVarNodeMaps.get(method);
+				if(localToVarNodeMap == null) {
+					localToVarNodeMap = new HashMap<Local,LocalVarNode>();
+					this.localToVarNodeMaps.put(method, localToVarNodeMap);
+				}
+				
+				LocalVarNode localVarNode = (LocalVarNode)varNode;
+				localToVarNodeMap.put(localVarNode.local, localVarNode);
+				
+				//System.out.println("ADDED VAR U " + localVarNode.local + " TO METHOD " + method);
+			}
+		}
+		relMU.close();
 	}
 	
 	private Map<Local,LocalVarNode> getLocalToVarNodeMap(SootMethod method) {
@@ -113,10 +168,24 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 			return;
 		}
 		
+		Map<Local,LocalVarNode> localToVarNodeMap = this.getLocalToVarNodeMap(method);
+		if(localToVarNodeMap == null) {
+			//System.out.println("ERROR: Local to var node map not found for method " + method);
+			return;
+		}
+		
+		System.out.println("PROCESSING METHOD " + method);
+		
 		LocalsClassifier lc = new LocalsClassifier(method.getActiveBody());
 		
-		ControlDependenceGraph cdgGen = new ControlDependenceGraph(method);
-		Map<Unit,Set<Unit>> cdg = cdgGen.dependeeToDependentsSetMap();
+		Map<Unit,Set<Unit>> cdg;
+		try {
+			ControlDependenceGraph cdgGen = new ControlDependenceGraph(method);
+			cdg = cdgGen.dependeeToDependentsSetMap();
+		} catch(Exception e) {
+			e.printStackTrace();
+			cdg = new HashMap<Unit,Set<Unit>>();
+		}
 		
 		for(Unit parent : cdg.keySet()) {
 			Set<Unit> dependents = cdg.get(parent);
@@ -125,7 +194,7 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 			}
 			
 			for(Unit dependent : dependents) {
-				processDependentUnits(this.getLocalToVarNodeMap(method), lc, parent, dependent);
+				processDependentUnits(localToVarNodeMap, lc, parent, dependent);
 			}
 		}
 	}
@@ -154,10 +223,5 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 		this.relRefPrimImp.save();
 		this.relPrimRefImp.save();
 		this.relPrimPrimImp.save();
-		
-		System.out.println("RefRefImp size: " + this.relRefRefImp.size());
-		System.out.println("RefPrimImp size: " + this.relRefPrimImp.size());
-		System.out.println("PrimRefImp size: " + this.relPrimRefImp.size());
-		System.out.println("PrimPrimImp size: " + this.relPrimPrimImp.size());
 	}
 }
