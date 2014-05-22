@@ -280,6 +280,9 @@ public:
     bool operator==(const Frame& rhs) const {
 	return compare(*this, rhs) == 0;
     }
+    bool operator!=(const Frame& rhs) const {
+	return !(*this == rhs);
+    }
     std::size_t hash_code() const {
 	return hash(comp, box, tag);
     }
@@ -311,12 +314,11 @@ void print_effect(std::ostream& os, const std::string& prefix,
 		  const Registry<Tag>& tag_reg);
 std::list<std::pair<EfftReqd,EfftPush>> match(EfftPush l_push,
 					      EfftReqd r_reqd);
-
 bool compose(const EffectRTL& l_efft, const EffectLTR& r_efft,
 	     EffectRTL& res_efft, bool fwd_only);
-
 bool copy_trans(const EffectRTL& src, EffectLTR& dst, bool accepting_only,
 		const RSM& rsm);
+void group(EffectLTR& efft);
 
 // ANALYSIS SPEC ==============================================================
 

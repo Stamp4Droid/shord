@@ -520,6 +520,26 @@ public:
     bool is_exact() const {
 	return exact;
     }
+    bool covers(const FuzzyStack& rhs) const {
+	if (exact) {
+	    return false;
+	}
+	const Node* l = node;
+	const Node* r = rhs.node;
+	while (true) {
+	    if (at_root(l)) {
+		return !at_root(r) || rhs.exact;
+	    }
+	    if (at_root(r)) {
+		return false;
+	    }
+	    if (value(l) != value(r)) {
+		return false;
+	    }
+	    l = parent(l);
+	    r = parent(r);
+	}
+    }
     const T& top() const {
 	return value(node);
     }
@@ -624,6 +644,10 @@ public:
     }
     bool operator<(const FuzzyStack& rhs) const {
 	return compare(*this, rhs) < 0;
+    }
+    bool operator==(const FuzzyStack& rhs) const {
+	// Stacks are uniqued; this is the only case of equality.
+	return exact == rhs.exact && node == rhs.node;
     }
 };
 
