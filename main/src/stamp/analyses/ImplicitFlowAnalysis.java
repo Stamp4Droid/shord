@@ -31,7 +31,7 @@ produces = { "RefRefImp", "RefPrimImp", "PrimRefImp", "PrimPrimImp" },
 namesOfTypes = {},
 types = {},
 namesOfSigns = { "RefRefImp", "RefPrimImp", "PrimRefImp", "PrimPrimImp" },
-signs = { "V0,V1:V0xV1", "V0,U0:V0_U0", "U0,V0:V0_U0", "U0,U0:U0xU1" })
+signs = { "V0,V1:V0xV1", "V0,U0:V0_U0", "U0,V0:U0_V0", "U0,U0:U0xU1" })
 public class ImplicitFlowAnalysis extends JavaAnalysis {
 	private ProgramRel relRefRefImp;
 	private ProgramRel relRefPrimImp;
@@ -154,5 +154,10 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 		this.relRefPrimImp.save();
 		this.relPrimRefImp.save();
 		this.relPrimPrimImp.save();
+		
+		System.out.println("RefRefImp size: " + this.relRefRefImp.size());
+		System.out.println("RefPrimImp size: " + this.relRefPrimImp.size());
+		System.out.println("PrimRefImp size: " + this.relPrimRefImp.size());
+		System.out.println("PrimPrimImp size: " + this.relPrimPrimImp.size());
 	}
 }
