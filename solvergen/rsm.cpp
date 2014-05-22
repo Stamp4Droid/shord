@@ -631,13 +631,13 @@ Graph::subpath_bounds(const MatchLabel& hd_lab,
     return res;
 }
 
-void Analysis::close(Graph& graph) const {
+void Analysis::close(Graph& graph, const fs::path& dump_dir) const {
     // Components are processed in order of addition, which is guaranteed to be
     // a valid bottom-up order.
     for (const Component& comp : pri.components) {
 	const unsigned int t_summ = current_time();
 	std::cout << "Summarizing " << comp.name << std::endl;
-	summarize(graph, comp);
+	summarize(graph, comp, dump_dir);
 	std::cout << "Done in " << current_time() - t_summ << " ms"
 		  << std::endl << std::endl;
     }
@@ -648,12 +648,13 @@ void Analysis::close(Graph& graph) const {
     const Component& top_comp = pri.components.last();
     const unsigned int t_prop = current_time();
     std::cout << "Propagating over " << top_comp.name << std::endl;
-    propagate(graph, top_comp);
+    propagate(graph, top_comp, dump_dir);
     std::cout << "Done in " << current_time() - t_prop << " ms"
 	      << std::endl << std::endl;
 }
 
-void Analysis::summarize(Graph& graph, const Component& comp) const {
+void Analysis::summarize(Graph& graph, const Component& comp,
+			 const fs::path& dump_dir) const {
     Registry<Worker> workers;
     Index<Table<Dependence>,Ref<Node>,&Dependence::start> deps;
     Worklist<Ref<Worker>,true> worklist;
@@ -697,7 +698,7 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 
     while (!worklist.empty()) {
 	const Worker& w = workers[worklist.dequeue()];
-	Worker::Result res = w.handle(graph, symbols, sec);
+	Worker::Result res = w.handle(graph, symbols, sec, dump_dir);
 
 	// Dependencies must be recorded first, to ensure we re-process the
 	// function in cases of self-recursion.
@@ -721,7 +722,8 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
     std::cout << reschedule_freqs;
 }
 
-void Analysis::propagate(Graph& graph, const Component& comp) const {
+void Analysis::propagate(Graph& graph, const Component& comp,
+			 const fs::path& dump_dir) const {
     // We try starting from each node in the graph. The shape of the top
     // component (or any secondary dimensions) can enforce additional
     // constraints on acceptable sources.
@@ -730,7 +732,7 @@ void Analysis::propagate(Graph& graph, const Component& comp) const {
     for (const Node& start : graph.nodes) {
 	unsigned int t_start = current_time();
 	Worker::Result res =
-	    Worker(start.ref, comp).handle(graph, symbols, sec);
+	    Worker(start.ref, comp).handle(graph, symbols, sec, dump_dir);
 	// Ignore any emitted dependencies, they should have been handled
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
@@ -770,7 +772,7 @@ void Worker::dump_node(std::ostream& out, const Node& n) const {
 
 Worker::Result Worker::handle(const Graph& graph,
 			      const Registry<Symbol>& symbol_reg,
-			      const RSM& sec) const {
+			      const RSM& sec, const fs::path& dump_dir) const {
     Result res;
     WorkerWorklist worklist(top_level);
     if (top_level) {
@@ -933,10 +935,9 @@ Worker::Result Worker::handle(const Graph& graph,
 
 #ifdef VIZ
     if (!top_level) {
-	std::ostringstream ss;
-	ss << "dump/" << graph.nodes[start].name << ".dot";
-	std::cout << "Dumping " << ss.str() << std::endl;
-	std::ofstream fout(ss.str());
+	fs::path out_path = dump_dir/(graph.nodes[start].name + ".dot");
+	std::cout << "Dumping " << out_path << std::endl;
+	std::ofstream fout(out_path.string());
 	EXPECT((bool) fout);
 
 	fout << "digraph __GRAPH {" << std::endl;
@@ -994,11 +995,9 @@ Worker::Result Worker::handle(const Graph& graph,
     }
 
     if (!top_level) {
-	std::ostringstream ss;
-	ss << "dump/" << graph.nodes[start].name << ".summs";
-	std::ofstream fout;
-	std::cout << "Dumping " << ss.str() << std::endl;
-	fout.open(ss.str());
+	fs::path out_path = dump_dir/(graph.nodes[start].name + ".summs");
+	std::cout << "Dumping " << out_path << std::endl;
+	std::ofstream fout(out_path.string());
 	EXPECT((bool) fout);
 
 	for (const auto& dst_pair : worklist.reached()) {
@@ -1105,7 +1104,9 @@ int main(int argc, char* argv[]) {
 	      << std::endl << std::endl;
 
     // Perform actual solving
-    spec.close(graph);
+    fs::path dump_dir = fs::path(summ_dir)/"dump";
+    fs::create_directory(dump_dir);
+    spec.close(graph, dump_dir);
 
     // Timekeeping
     const unsigned int t_output = current_time();

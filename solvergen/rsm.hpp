@@ -359,14 +359,16 @@ public:
     RSM pri;
     RSM sec; // TODO: Exactly one secondary RSM for now
 private:
-    void summarize(Graph& graph, const Component& comp) const;
-    void propagate(Graph& graph, const Component& comp) const;
+    void summarize(Graph& graph, const Component& comp,
+		   const fs::path& dump_dir) const;
+    void propagate(Graph& graph, const Component& comp,
+		   const fs::path& dump_dir) const;
 public:
     explicit Analysis(const std::string& pri_dname,
 		      const std::string& sec_dname)
 	: pri(pri_dname, symbols, tags), sec(sec_dname, symbols, tags) {}
     void print(std::ostream& os) const;
-    void close(Graph& graph) const;
+    void close(Graph& graph, const fs::path& dump_dir) const;
 };
 
 // GRAPH ======================================================================
@@ -486,7 +488,7 @@ public:
     explicit Worker(Ref<Node> start, const Component& comp)
 	: start(start), comp(comp), top_level(true) {}
     Result handle(const Graph& graph, const Registry<Symbol>& symbol_reg,
-		  const RSM& sec) const;
+		  const RSM& sec, const fs::path& dump_dir) const;
 };
 
 // TODO: Should include the component if we support multiple components in SCCs
