@@ -109,7 +109,8 @@ public class TraceReader {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		throw new RuntimeException("No trace file found for: " + apkName);
+		System.out.println("ERROR: no trace file found for: " + apkName);
+		return new TraceReader();
 	}
 	
 	public static MultivalueMap<String,String> getCallgraph(String traceDir, String apkName) {
