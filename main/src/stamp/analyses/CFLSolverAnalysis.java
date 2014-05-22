@@ -133,6 +133,9 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	public static void printResult(MultivalueMap<EdgeStruct,Integer> result, boolean shord) {
 		Counter<Integer> totalCut = new Counter<Integer>();
 		for(EdgeStruct edgeStruct : result.keySet()) {
+			if(result.get(edgeStruct).size() > 1) {
+				System.out.println("ERROR: Multiple cuts for edge " + edgeStruct);
+			}
 			for(int cut : result.get(edgeStruct)) {
 				System.out.println("in cut " + cut + ": " + edgeStruct);
 				if(shord) {
