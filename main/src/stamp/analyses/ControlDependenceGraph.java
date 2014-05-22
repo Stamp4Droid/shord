@@ -18,11 +18,15 @@ import java.util.*;
 
 /** 
     Intra-procedural Control Dependence Graph
+
+	Based on the algorithm given Section 6 in
+    Representation and Analysis of Software, Mary Jean Harrold, Greg Rothermel, Alex Orso
+
 	@author Saswat Ananad
  */
 public class ControlDependenceGraph
 {
-	private Map<Object,Set<Object>> nodeToDependees = new HashMap();
+	private Map<Object,Set<Block>> nodeToDependees = new HashMap();
 
 	public ControlDependenceGraph(SootMethod method)
 	{
@@ -47,6 +51,7 @@ public class ControlDependenceGraph
 
 		DominatorsFinder domfinder = new SimpleDominatorsFinder(reversibleCFG.reverse());
 		DominatorTree domlysis = new DominatorTree(domfinder);
+		
 		/*
 		  System.out.println("**** Postdominator Tree of " + method);
 		  for(Iterator it = cfg.iterator(); it.hasNext();){
@@ -57,15 +62,14 @@ public class ControlDependenceGraph
 		  else
 		  System.out.print("Exit");
 		  System.out.println("  --->  " + a.getIndexInMethod());
-		  }
-		 */
+		  }*/
 
-		for(Object a : reversibleCFG.getNodes()){
+		for(Block a : cfg.getBlocks()){
 			// Step 1
 			// if node a had more than one successors then 
 			// each successor does not post-dominate a
 			// So S is the set succs
-			List succs = reversibleCFG.getSuccsOf(a);
+			List<Block> succs = cfg.getSuccsOf(a);
 			if(succs.size() > 1){
 
 				// Step 2
@@ -79,7 +83,7 @@ public class ControlDependenceGraph
 					parent = getImmediateDominator(domlysis, parent);
 				}
 
-				for(Object b : succs){
+				for(Block b : succs){
 					Set marked = new HashSet();
 					Object l = b;
 					do{
@@ -108,13 +112,13 @@ public class ControlDependenceGraph
 	public Map<Unit,Set<Unit>> dependeeToDependentsSetMap()
 	{
 		Map<Unit,Set<Unit>> result = new HashMap();
-		for(Map.Entry<Object,Set<Object>> e : nodeToDependees.entrySet()){
+		for(Map.Entry<Object,Set<Block>> e : nodeToDependees.entrySet()){
 			Object block = e.getKey();
-			Set<Object> dependees = e.getValue();
-			for(Object dependee : dependees){
-				if(dependee instanceof Object)
-					continue; //dependee is the super-exit node
-				Unit t = ((Block) dependee).getTail();
+			if(!(block instanceof Block))
+				continue; //block is the super-exit node
+			Set<Block> dependees = e.getValue();
+			for(Block dependee : dependees){
+				Unit t = dependee.getTail();
 				if(!t.branches()) 
 					throw new RuntimeException(dependee + " does not branch!");
 				Set<Unit> dependents = result.get(t);
@@ -127,6 +131,17 @@ public class ControlDependenceGraph
 				}
 			}
 		}
+		/*
+		//debug
+		System.out.println(">> CDG");
+		for(Map.Entry<Unit,Set<Unit>> e : result.entrySet()){
+			Unit branchStmt = e.getKey();
+			System.out.println(branchStmt+":");
+			for(Unit s : e.getValue()){
+				System.out.println("\t"+s);
+			}
+		}
+		*/
 		return result;
 	}
 
