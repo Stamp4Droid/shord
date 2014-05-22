@@ -9,7 +9,6 @@ import lpsolve.LpSolveException;
 import shord.project.ClassicProject;
 import stamp.analyses.DomL;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
-import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
@@ -171,5 +170,4 @@ public class AbductiveInferenceRunner {
 		}		
 		return allResults;
 	}
-
 }

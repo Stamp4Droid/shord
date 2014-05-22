@@ -5,17 +5,22 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
 import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.Util.Pair;
 
 public class TraceReader {
 	//private Map<Integer,Integer> stackDepthByThread = new HashMap<Integer,Integer>();
 	private final Map<Integer,Stack<String>> stackByThread = new HashMap<Integer,Stack<String>>();
 	private boolean isProcessingTrace = false;
 	private final MultivalueMap<String,String> callgraph = new MultivalueMap<String,String>();
+	
+	private final List<Pair<String,String>> callgraphList = new ArrayList<Pair<String,String>>();
 	
 	private Stack<String> getStack(int thread) {
 		Stack<String> stack = this.stackByThread.get(thread);
@@ -29,7 +34,11 @@ public class TraceReader {
 	private void enterMethod(int thread, String method) {
 		Stack<String> stack = this.getStack(thread);
 		if(!stack.isEmpty()) {
-			this.callgraph.add(stack.peek(), method);
+			String caller = stack.peek();
+			if(!this.callgraph.get(caller).contains(method)) {
+				this.callgraphList.add(new Pair<String,String>(caller, method));
+				this.callgraph.add(caller, method);
+			}
 		}
 		stack.push(method);
 	}
@@ -83,28 +92,32 @@ public class TraceReader {
 		return true;
 	}
 	
-	private void process(BufferedReader traceReader) throws IOException {
+	private TraceReader process(BufferedReader traceReader) throws IOException {
 		while(this.processLine(traceReader.readLine()));
-	}
-
-	private MultivalueMap<String,String> getCallgraph(BufferedReader traceReader) throws IOException {
-		this.process(traceReader);
-		return this.callgraph;
+		return this;
 	}
 	
-	public MultivalueMap<String,String> getCallgraph(String traceDir, String apkName) {
+	private static TraceReader read(String traceDir, String apkName) {
 		String traceFileName = apkName + ".traceout";
 		try {
 			for(File traceFile : new File(traceDir).listFiles()) {
 				if(traceFile.getName().endsWith(traceFileName)) {
 					System.out.println("Found trace file: " + traceFile.getName());
-					return this.getCallgraph(new BufferedReader(new FileReader(traceFile)));
+					return new TraceReader().process(new BufferedReader(new FileReader(traceFile)));
 				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		throw new RuntimeException("No trace file found for: " + apkName);
+	}
+	
+	public static MultivalueMap<String,String> getCallgraph(String traceDir, String apkName) {
+		return read(traceDir, apkName).callgraph;
+	}
+	
+	public static List<Pair<String,String>> getCallgraphList(String traceDir, String apkName) {
+		return read(traceDir, apkName).callgraphList;
 	}
 	
 	public static void printCallGraph(MultivalueMap<String,String> callgraph, PrintWriter pw) {
@@ -118,10 +131,9 @@ public class TraceReader {
 		System.out.println("callgraph size: " + callgraphSize);
 	}
 	
-	
 	public static void main(String[] args) throws IOException {
-		String traceDir= "../profiler/traceouts/";
+		String traceDir = "../profiler/traceouts/";
 		String apkName = "0ac54ec80dc63f5f6d0334d5eca8bb59.apk";
-		printCallGraph(new TraceReader().getCallgraph(traceDir, apkName), new PrintWriter(System.out));
+		printCallGraph(getCallgraph(traceDir, apkName), new PrintWriter(System.out));
 	}
 }

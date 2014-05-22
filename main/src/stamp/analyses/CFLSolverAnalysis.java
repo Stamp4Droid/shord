@@ -12,17 +12,13 @@ import java.util.Map;
 import java.util.Set;
 
 import lpsolve.LpSolveException;
-import shord.analyses.CastVarNode;
 import shord.analyses.DomU;
 import shord.analyses.DomV;
-import shord.analyses.LocalVarNode;
-import shord.analyses.ParamVarNode;
-import shord.analyses.RetVarNode;
-import shord.analyses.ThisVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
+import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.Counter;
 import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
@@ -35,6 +31,7 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
+import stamp.missingmodels.util.cflsolver.relation.RelationManager.ShordRelationManager;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import chord.project.Chord;
 
@@ -130,19 +127,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		} else {
 			throw new RuntimeException("Unrecognized vertex: " + name);
 		}
-		if(v instanceof ParamVarNode) {
-			return ((ParamVarNode)v).method.toString();
-		} else if(v instanceof RetVarNode) {
-			return ((RetVarNode)v).method.toString();
-		} else if(v instanceof ThisVarNode) {
-			return ((ThisVarNode)v).method.toString();
-		} else if(v instanceof LocalVarNode) {
-			return ((LocalVarNode)v).meth.toString();
-		} else if(v instanceof CastVarNode) {
-			return ((CastVarNode)v).method.toString();
-		} else {
-			throw new RuntimeException("Unrecognized variable: " + v);
-		}
+		return RelationManager.getMethodForVar(v).toString();
 	}
 
 	public static void printResult(Map<EdgeStruct,Integer> result, boolean shord) {
@@ -246,9 +231,13 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	public static Graph getGraphFromShord() {
 		GraphBuilder gb = new GraphBuilder(taintGrammar);
 		int numSymbols = gb.toGraph().getContextFreeGrammar().getNumLabels();
+		
+		String[] tokens = System.getProperty("stamp.out.dir").split("_");
+		RelationManager relations = new ShordRelationManager(TraceReader.getCallgraphList("../../profiler/traceouts/", tokens[tokens.length-1]));
+		
 		for(int i=0; i<numSymbols; i++) {
 			String symbol = gb.toGraph().getContextFreeGrammar().getSymbol(i);
-			for(Relation relation : RelationManager.relations.getRelationsBySymbol(symbol)) {
+			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
 				readRelation(gb, relation);
 			}
 		}
@@ -303,7 +292,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			for(int i=0; i<tuple.length; i++) {
 				tuple[i] = Integer.parseInt(tupleStr[i]);
 			}
-			for(Relation relation : RelationManager.relations.getRelationsByName(relationName)) {
+			for(Relation relation : new ShordRelationManager().getRelationsByName(relationName)) {
 				relation.addEdge(gb, tuple);
 			}
 		}
