@@ -1,20 +1,22 @@
 package stamp.analyses;
 
-import soot.Unit;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import soot.SootMethod;
+import soot.Unit;
 import soot.toolkits.graph.Block;
 import soot.toolkits.graph.BlockGraph;
-import soot.toolkits.graph.DirectedGraph;
-import soot.toolkits.graph.ExceptionalBlockGraph;
-import soot.toolkits.graph.UnitGraph;
-import soot.toolkits.graph.DominatorTree;
 import soot.toolkits.graph.DominatorNode;
+import soot.toolkits.graph.DominatorTree;
 import soot.toolkits.graph.DominatorsFinder;
-import soot.toolkits.graph.SimpleDominatorsFinder;
+import soot.toolkits.graph.ExceptionalBlockGraph;
 import soot.toolkits.graph.HashReversibleGraph;
-import soot.toolkits.scalar.FlowSet;
-import soot.toolkits.scalar.Pair;
-import java.util.*;
+import soot.toolkits.graph.SimpleDominatorsFinder;
 
 /** 
     Intra-procedural Control Dependence Graph

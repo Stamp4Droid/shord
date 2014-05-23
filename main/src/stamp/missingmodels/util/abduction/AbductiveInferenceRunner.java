@@ -80,7 +80,7 @@ public class AbductiveInferenceRunner {
 		DomL dom = shord ? (DomL)ClassicProject.g().getTrgt("L") : null;
 		for(Edge edge : initialCutEdges) {	
 			System.out.println("Cutting Src2Sink edge: " + edge.toString());
-			//System.out.println("Edge weight: " + edge.getInfo().weight);
+			System.out.println("Edge weight: " + edge.getInfo().weight);
 			if(dom != null) {
 				String source = dom.get(Integer.parseInt(edge.source.name.substring(1)));
 				String sink = dom.get(Integer.parseInt(edge.sink.name.substring(1)));
