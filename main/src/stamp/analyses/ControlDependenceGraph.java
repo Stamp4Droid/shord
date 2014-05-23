@@ -121,8 +121,9 @@ public class ControlDependenceGraph
 			Set<Block> dependees = e.getValue();
 			for(Block dependee : dependees){
 				Unit t = dependee.getTail();
-				if(!t.branches()) 
-					throw new RuntimeException(dependee + " does not branch!");
+				//note t is not necessarily a branching statement
+				//a block that can throw some exception will have
+				//multiple successors.
 				Set<Unit> dependents = result.get(t);
 				if(dependents == null){
 					dependents = new HashSet();
