@@ -10,5 +10,8 @@ public class ImplicitFlowGrammar extends TaintGrammar {
 		
 		this.addProduction("Label2ObjX", new String[]{"Label2Prim", "prim2RefImp", "Flow"}, new boolean[]{false, false, true});
 		this.addBinaryProduction("Label2Prim", "Label2Prim", "prim2PrimImp");
+		
+		// debug
+		this.addBinaryProduction("Label2Ref", "Label2Obj", "Flow");
 	}
 }

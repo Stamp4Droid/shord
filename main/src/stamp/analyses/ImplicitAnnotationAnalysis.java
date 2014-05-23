@@ -27,10 +27,10 @@ import chord.util.tuple.object.Pair;
  */
 @Chord(name = "implicit-annotation-java",
 consumes = { "V", "U" },
-produces = { "RefRefImp", "RefPrimImp", "PrimRefImp", "PrimPrimImp" },
+produces = { "Ref2RefImp", "Ref2PrimImp", "Prim2RefImp", "Prim2PrimImp" },
 namesOfTypes = {},
 types = {},
-namesOfSigns = { "RefRefImp", "RefPrimImp", "PrimRefImp", "PrimPrimImp" },
+namesOfSigns = { "Ref2RefImp", "Ref2PrimImp", "Prim2RefImp", "Prim2PrimImp" },
 signs = { "V0,V1:V0xV1", "V0,U0:V0_U0", "U0,V0:V0_U0", "U0,U1:U0xU1" })
 public class ImplicitAnnotationAnalysis extends JavaAnalysis {
 	private ProgramRel relRefRefImp;
@@ -207,10 +207,10 @@ public class ImplicitAnnotationAnalysis extends JavaAnalysis {
 	}
 
 	public void run() {
-		this.relRefRefImp = (ProgramRel)ClassicProject.g().getTrgt("RefRefImp");
-		this.relRefPrimImp = (ProgramRel)ClassicProject.g().getTrgt("RefPrimImp");
-		this.relPrimRefImp = (ProgramRel)ClassicProject.g().getTrgt("PrimRefImp");
-		this.relPrimPrimImp = (ProgramRel)ClassicProject.g().getTrgt("PrimPrimImp");
+		this.relRefRefImp = (ProgramRel)ClassicProject.g().getTrgt("Ref2RefImp");
+		this.relRefPrimImp = (ProgramRel)ClassicProject.g().getTrgt("Ref2PrimImp");
+		this.relPrimRefImp = (ProgramRel)ClassicProject.g().getTrgt("Prim2RefImp");
+		this.relPrimPrimImp = (ProgramRel)ClassicProject.g().getTrgt("Prim2PrimImp");
 		
 		this.relRefRefImp.zero();
 		this.relRefPrimImp.zero();
