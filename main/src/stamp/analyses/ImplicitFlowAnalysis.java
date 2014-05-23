@@ -95,7 +95,7 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 					}
 				} else if(lc.primLocals().contains(parentVar.local)) {
 					if(lc.nonPrimLocals().contains(dependentVar.local)) {
-						this.relPrimRefImp.add(parentVar, dependentVar);						
+						this.relPrimRefImp.add(parentVar, dependentVar);
 					} else if(lc.primLocals().contains(dependentVar.local)) {
 						this.relPrimPrimImp.add(parentVar, dependentVar);
 					} else {
@@ -207,10 +207,10 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 	}
 
 	public void run() {
-		this.relRefRefImp = (ProgramRel)ClassicProject.g().getTrgt("InLabelArg");
-		this.relRefPrimImp = (ProgramRel)ClassicProject.g().getTrgt("InLabelRet");
-		this.relPrimRefImp = (ProgramRel)ClassicProject.g().getTrgt("OutLabelArg");
-		this.relPrimPrimImp = (ProgramRel)ClassicProject.g().getTrgt("OutLabelRet");
+		this.relRefRefImp = (ProgramRel)ClassicProject.g().getTrgt("RefRefImp");
+		this.relRefPrimImp = (ProgramRel)ClassicProject.g().getTrgt("RefPrimImp");
+		this.relPrimRefImp = (ProgramRel)ClassicProject.g().getTrgt("PrimRefImp");
+		this.relPrimPrimImp = (ProgramRel)ClassicProject.g().getTrgt("PrimPrimImp");
 		
 		this.relRefRefImp.zero();
 		this.relRefPrimImp.zero();
