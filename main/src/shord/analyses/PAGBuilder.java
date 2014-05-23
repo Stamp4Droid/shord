@@ -1,6 +1,5 @@
 package shord.analyses;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -67,7 +66,6 @@ import soot.tagkit.Tag;
 import soot.util.NumberedSet;
 import stamp.analyses.SootUtils;
 import stamp.missingmodels.jimplesrcmapper.Printer;
-import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import chord.project.Chord;
 
@@ -83,7 +81,7 @@ produces={"M", "Z", "I", "H", "V", "T", "F", "U",
 		"LoadStat", "StoreStat", 
 		"MmethArg", "MmethRet", 
 		"IinvkRet", "IinvkArg", 
-		"VT", "chaIM", "dynchaIM", 
+		"VT", "chaIM",
 		"HT", "HTFilter", "NewH",
 		"MI", "MH",
 		"MV", "MU",
@@ -104,7 +102,7 @@ namesOfSigns = { "GlobalAlloc", "Alloc", "NewH",
 		"LoadStat", "StoreStat", 
 		"MmethArg", "MmethRet", 
 		"IinvkRet", "IinvkArg", 
-		"VT", "chaIM", "dynchaIM",
+		"VT", "chaIM",
 		"HT", "HTFilter", 
 		"MI", "MH",
 		"MV", "MU",
@@ -123,7 +121,7 @@ signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
 		"V0,F0:F0_V0", "F0,V0:F0_V0",
 		"M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
 		"I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0",
-		"V0,T0:T0_V0", "I0,M0:I0_M0", "I0,M0:I0_M0",
+		"V0,T0:T0_V0", "I0,M0:I0_M0",
 		"H0,T0:H0_T0", "H0,T0:H0_T0",
 		"M0,I0:M0_I0", "M0,H0:M0_H0",
 		"M0,V0:M0_V0", "M0,U0:M0_U0",
@@ -953,50 +951,9 @@ public class PAGBuilder extends JavaAnalysis
 	}
 
 	void populateCallgraph() {
-		/*
-		 * Here, we read the dynamic callgraph from a file
-		 * TODO: specify file using a command line option
-		 */
-		/*
-		MultivalueMap<String,String> dyncg = new MultivalueMap<String,String>();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("cg.txt"));
-			String line;
-			while((line = br.readLine()) != null) {
-				if(line.contains("CG")) {
-					String[] tokens = line.split("#");
-					String srcSig = tokens[tokens.length-2];
-					String tgtSig = tokens[tokens.length-1];
-					SootMethod src = Scene.v().getMethod(srcSig);
-					SootMethod tgt = Scene.v().getMethod(tgtSig);
-					dyncg.add(src.toString(), tgt.toString());
-				}
-			}
-		} catch(Exception e) {
-			System.out.println("ERROR BUILDING DYNCG");
-			e.printStackTrace();
-		}
-		 */
-		/*
-		MultivalueMap<String,String> dyncg;
-		try {
-			System.out.println("DYNCG path: " + new File("../../profiler/traceouts").getCanonicalPath());
-			String[] tokens = System.getProperty("stamp.out.dir").split("_");
-			dyncg = new TraceReader().getCallgraph("../../profiler/traceouts/", tokens[tokens.length-1]);
-		} catch(Exception e) {
-			System.out.println("ERROR BUILDING DYNCG");
-			e.printStackTrace();
-			dyncg = new MultivalueMap<String,String>();
-		}
-		*/
-		MultivalueMap<String,String> dyncg = new MultivalueMap<String,String>();
-		// DONE BUILDING DYNCG
-
 		CallGraph cg = Program.g().scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
-		ProgramRel relDynChaIM = (ProgramRel) ClassicProject.g().getTrgt("dynchaIM");
 		relChaIM.zero();
-		relDynChaIM.zero();
 		Iterator<Edge> edgeIt = cg.listener();
 		while(edgeIt.hasNext()){
 			Edge edge = edgeIt.next();
@@ -1019,14 +976,8 @@ public class PAGBuilder extends JavaAnalysis
 					continue;
 			}
 			relChaIM.add(stmt, tgt);
-
-			if(dyncg.get(src.toString()).contains(tgt.toString())) {
-				relDynChaIM.add(stmt, tgt);
-				System.out.println("dynamic cg: " + src.toString() + " -> " + tgt.toString());
-			}
 		}
 		relChaIM.save();
-		relDynChaIM.save();
 	}
 
 	void populateMethods()

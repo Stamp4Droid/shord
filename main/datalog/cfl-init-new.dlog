@@ -18,16 +18,6 @@
 .bddvarorder C0_V0xV1_U0xU1_H0xF0_T0
 
 ###################
-# INPUT: DYNAMIC CALLGRAPH
-###################
-
-#dynparam(u:V,v:V,i:I) input
-#dynreturn(u:V,v:V,i:I) input
-
-#dynparamPrim(u:U,v:U,i:I) input
-#dynreturnPrim(u:U,v:U,i:I) input
-
-###################
 # INPUT: ARR
 ###################
 

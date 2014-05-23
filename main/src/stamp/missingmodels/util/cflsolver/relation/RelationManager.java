@@ -1,168 +1,15 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
+import java.util.Collections;
 
-import shord.analyses.CastVarNode;
-import shord.analyses.DomU;
-import shord.analyses.DomV;
-import shord.analyses.LocalVarNode;
-import shord.analyses.ParamVarNode;
-import shord.analyses.RetVarNode;
-import shord.analyses.StringConstantVarNode;
-import shord.analyses.ThisVarNode;
-import shord.analyses.VarNode;
-import shord.project.ClassicProject;
-import shord.project.analyses.ProgramRel;
-import soot.SootMethod;
 import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
 import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 
-public class RelationManager {
-	public static SootMethod getMethodForVar(VarNode v) {
-		if(v instanceof ParamVarNode) {
-			return ((ParamVarNode)v).method;
-		} else if(v instanceof RetVarNode) {
-			return ((RetVarNode)v).method;
-		} else if(v instanceof ThisVarNode) {
-			return ((ThisVarNode)v).method;
-		} else if(v instanceof LocalVarNode) {
-			return ((LocalVarNode)v).meth;
-		} else if(v instanceof CastVarNode) {
-			return ((CastVarNode)v).method;
-		} else if(v instanceof StringConstantVarNode) {
-			return ((StringConstantVarNode)v).method;
-		} else {
-			throw new RuntimeException("Unrecognized variable: " + v);
-		}
-	}
-	
-	public static class ShordRelationManager extends RelationManager {
-		public ShordRelationManager(List<Pair<String,String>> dynamicCallgraphList, int numEdges) {
-			this();
-			
-			// STEP 1: Extract the dynamic callgraph
-			MultivalueMap<String,String> dynamicCallgraph = new MultivalueMap<String,String>();
-			int counter = 0;
-			for(Pair<String,String> callgraphEdge : dynamicCallgraphList) {
-				dynamicCallgraph.add(callgraphEdge.getX(), callgraphEdge.getY());
-				if(numEdges != -1 && counter++ > numEdges) {
-					break;
-				}
-			}
-			
-			// STEP 2: Build the callgraph from param edges
-			final MultivalueMap<String,String> dynamicCallgraphConverted = new MultivalueMap<String,String>();
-			
-			ProgramRel paramRel = (ProgramRel)ClassicProject.g().getTrgt("param");
-			DomV domV = (DomV)ClassicProject.g().getTrgt("V");
-			paramRel.load();
-			for(int[] tuple : paramRel.getAryNIntTuples()) {
-				String caller = getMethodForVar(domV.get(tuple[1])).toString();
-				String callee = getMethodForVar(domV.get(tuple[0])).toString();
-				if(dynamicCallgraph.get(caller).contains(callee)) {
-					System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
-					dynamicCallgraphConverted.add("V" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
-				}
-			}
-			paramRel.close();	
-			
-			ProgramRel paramPrimRel = (ProgramRel)ClassicProject.g().getTrgt("paramPrim");
-			DomU domU = (DomU)ClassicProject.g().getTrgt("U");
-			paramPrimRel.load();
-			for(int[] tuple : paramPrimRel.getAryNIntTuples()) {
-				String caller = getMethodForVar(domU.get(tuple[1])).toString();
-				String callee = getMethodForVar(domU.get(tuple[0])).toString();
-				if(dynamicCallgraph.get(caller).contains(callee)) {
-					System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
-					dynamicCallgraphConverted.add("U" + Integer.toString(tuple[1]), "U" + Integer.toString(tuple[0]));
-				}
-			}
-			paramPrimRel.close();
-			
-			// STEP 3: Build the relations			
-			this.add(new IndexRelation("dynparam", "V", 1, "V", 0, "param", 2, true) {
-				@Override
-				public boolean filter(int[] tuple) {
-					return dynamicCallgraphConverted.get(this.getSource(tuple)).contains(this.getSink(tuple));
-				}
-			});		
-			this.add(new IndexRelation("dynparamPrim", "U", 1, "U", 0, "paramPrim", 2, true) {
-				@Override
-				public boolean filter(int[] tuple) {
-					return dynamicCallgraphConverted.get(this.getSource(tuple)).contains(this.getSink(tuple));
-				}
-			});
-		}
-
-		public ShordRelationManager(List<Pair<String,String>> dynamicCallgraphList) {
-			this(dynamicCallgraphList, -1);
-		}
-		
-		public ShordRelationManager() {
-			this.add(new IndexRelation("AllocNew", "H", 1, "V", 0, "alloc"));
-			
-			this.add(new IndexRelation("Assign", "V", 1, "V", 0, "assign"));
-			
-			this.add(new IndexRelation("param", "V", 1, "V", 0, "param", 2, true, 1));
-			this.add(new IndexRelation("return", "V", 1, "V", 0, "return", 2, false));
-	
-			this.add(new IndexRelation("Store", "V", 2, "V", 0, "store", 1));
-			this.add(new IndexRelation("Load", "V", 1, "V", 0, "load", 2));
-			
-			this.add(new IndexRelation("StoreStat", "V", 1, "F", 0, "storeStat"));
-			this.add(new IndexRelation("LoadStat", "F", 1, "V", 0, "loadStat"));
-			
-			this.add(new IndexRelation("AssignPrim", "U", 1, "U", 0, "assignPrim"));
-			
-			this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", 2, true, 1));
-			this.add(new IndexRelation("returnPrim", "U", 1, "U", 0, "returnPrim", 2, false));
-			
-			this.add(new IndexRelation("StorePrim", "U", 2, "V", 0, "storePrim", 1));
-			this.add(new IndexRelation("LoadPrim", "V", 1, "U", 0, "loadPrim", 2));
-			
-			this.add(new IndexRelation("StoreStatPrim", "U", 1, "F", 0, "storeStatPrim"));
-			this.add(new IndexRelation("LoadStatPrim", "F", 1, "U", 0, "loadStatPrim"));
-	
-			this.add(new IndexRelation("Ref2RefT", "V", 1, "V", 2, "ref2RefT"));
-			this.add(new IndexRelation("Ref2PrimT", "V", 1, "U", 2, "ref2PrimT"));
-			this.add(new IndexRelation("Prim2RefT", "U", 1, "V", 2, "prim2RefT"));
-			this.add(new IndexRelation("Prim2PrimT", "U", 1, "U", 2, "prim2PrimT"));
-			
-			this.add(new IndexRelation("Ref2RefF", "V", 1, "V", 2, "ref2RefF"));
-			this.add(new IndexRelation("Ref2PrimF", "V", 1, "U", 2, "ref2PrimF"));
-			this.add(new IndexRelation("Prim2RefF", "U", 1, "V", 2, "prim2RefF"));
-			this.add(new IndexRelation("Prim2PrimF", "U", 1, "U", 2, "prim2PrimF"));
-			
-			this.add(new IndexRelation("Label2RefT", "L", 1, "V", 2, "label2RefT"));
-			this.add(new IndexRelation("Label2PrimT", "L", 1, "U", 2, "label2PrimT"));
-			
-			this.add(new IndexRelation("SinkF2RefF", "L", 1, "V", 2, "sinkF2RefF"));
-			this.add(new IndexRelation("SinkF2PrimF", "L", 1, "U", 2, "sinkF2PrimF"));
-	
-			this.add(new IndexRelation("Src2Label", "L", 0, "L", 0, "src2Label"));
-			this.add(new IndexRelation("Sink2Label", "L", 0, "L", 0, "sink2Label"));
-			
-			this.add(new IndexRelation("StoreArr", "V", 1, "V", 0, "storeArr"));
-			this.add(new IndexRelation("LoadArr", "V", 1, "V", 0, "loadArr"));
-	
-			this.add(new IndexRelation("StorePrimArr", "U", 1, "V", 0, "storePrimArr"));
-			this.add(new IndexRelation("LoadPrimArr", "V", 1, "U", 0, "loadPrimArr"));
-			
-			/*
-			this.add(new IndexRelation("dynparam", "V", 1, "V", 0, "param", 2, true));
-			this.add(new IndexRelation("dynparamPrim", "U", 1, "U", 0, "paramPrim", 2, true));
-			
-			this.add(new IndexRelation("dynreturn", "V", 1, "V", 0, "return", 2, false));
-			this.add(new IndexRelation("dynreturnPrim", "U", 1, "U", 0, "returnPrim", 2, false));
-			*/
-		}
-	}
-	
+public class RelationManager {	
 	private final MultivalueMap<String,Relation> relationsByName = new MultivalueMap<String,Relation>();
 	private final MultivalueMap<String,Relation> relationsBySymbol = new MultivalueMap<String,Relation>();
 	
@@ -171,12 +18,26 @@ public class RelationManager {
 		this.relationsBySymbol.add(relation.getSymbol(), relation);
 	}
 	
-	public Set<Relation> getRelationsByName(String name) {
-		return this.relationsByName.get(name);
+	protected void clearRelationsByName(String name) {
+		for(Relation relation : this.relationsByName.get(name)) {
+			this.relationsBySymbol.get(relation.getSymbol()).remove(relation);
+		}
+		this.relationsByName.remove(name);
 	}
 	
-	public Set<Relation> getRelationsBySymbol(String symbol) {
-		return this.relationsBySymbol.get(symbol);
+	protected void clearRelationsBySymbol(String symbol) {
+		for(Relation relation : this.relationsBySymbol.get(symbol)) {
+			this.relationsByName.get(relation.getName()).remove(relation);
+		}
+		this.relationsBySymbol.remove(symbol);
+	}
+	
+	public Collection<Relation> getRelationsByName(String name) {
+		return Collections.unmodifiableCollection(this.relationsByName.get(name));
+	}
+	
+	public Collection<Relation> getRelationsBySymbol(String symbol) {
+		return Collections.unmodifiableCollection(this.relationsBySymbol.get(symbol));
 	}
 	
 	public static abstract class Relation {
@@ -189,7 +50,7 @@ public class RelationManager {
 		public abstract Context getContext(int[] tuple);
 		public abstract Field getField(int[] tuple);
 		
-		public abstract EdgeInfo getInfo(int[] tuple);
+		public abstract int getWeight(int[] tuple);
 		
 		public boolean filter(int[] tuple) {
 			return true;
@@ -207,10 +68,10 @@ public class RelationManager {
 			Context context = this.getContext(tuple);
 			
 			EdgeInfo curInfo = gb.toGraph().getInfo(source, sink, symbol, field, context);
-			EdgeInfo newInfo = this.getInfo(tuple);
+			int weight = this.getWeight(tuple);
 			
-			if(curInfo == null || curInfo.weight > newInfo.weight) {
-				gb.addEdge(source, sink, symbol, field, context, newInfo);
+			if(curInfo == null || curInfo.weight > weight) {
+				gb.addEdge(source, sink, symbol, field, context, new EdgeInfo(weight));
 			}
 		}
 	}
@@ -228,7 +89,7 @@ public class RelationManager {
 		private final Integer contextIndex;
 		private final boolean contextDirection;
 		
-		private final EdgeInfo info;
+		private final int weight;
 		
 		public IndexRelation(String name, String sourceDom, int sourceIndex, String sinkDom, int sinkIndex, String symbol, Integer fieldIndex, Integer contextIndex, boolean contextDirection, int weight) {
 			this.name = name;
@@ -243,7 +104,7 @@ public class RelationManager {
 			this.contextIndex = contextIndex;
 			this.contextDirection = contextDirection;
 			
-			this.info = new EdgeInfo(weight);
+			this.weight = weight;
 		}
 
 		public IndexRelation(String name, String sourceName, int sourceIndex, String sinkName, int sinkIndex, String symbol, Integer fieldIndex, int weight) {
@@ -307,8 +168,8 @@ public class RelationManager {
 		}
 
 		@Override
-		public EdgeInfo getInfo(int[] tuple) {
-			return this.info;
+		public int getWeight(int[] tuple) {
+			return this.weight;
 		}
 	}
 }

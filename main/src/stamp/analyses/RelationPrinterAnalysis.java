@@ -72,16 +72,7 @@ public class RelationPrinterAnalysis extends JavaAnalysis {
 		relations.add(new Relation("Src2Label"));
 		relations.add(new Relation("Sink2Label"));
 
-		//relations.add(new Relation("HVFilter"));
 		relations.add(new Relation("ptd"));
-		
-		// dynAssign
-
-		relations.add(new Relation("dynparam"));
-		relations.add(new Relation("dynreturn"));
-
-		relations.add(new Relation("dynparamPrim"));
-		relations.add(new Relation("dynreturnPrim"));
 	}
 	
 	public static class Relation {

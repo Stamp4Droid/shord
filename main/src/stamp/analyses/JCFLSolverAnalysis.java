@@ -20,7 +20,7 @@ import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.analysis.ModelClassifier.ModelInfo;
-import stamp.missingmodels.grammars.G;
+import stamp.missingmodels.jgrammars.G;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
 import stamp.missingmodels.util.FileManager;

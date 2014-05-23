@@ -1,4 +1,4 @@
-package stamp.missingmodels.grammars;
+package stamp.missingmodels.jgrammars;
 import stamp.missingmodels.util.jcflsolver.*;
 
 /* Original Grammar:

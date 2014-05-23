@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class ContextFreeGrammar {
+public class ContextFreeGrammar {
 	public final class BinaryProduction {
 		public final int target;
 		public final int firstInput;
