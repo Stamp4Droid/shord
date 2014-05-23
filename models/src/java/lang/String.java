@@ -162,4 +162,7 @@ class String
 	{ 
 		return false;
 	}
+
+    @STAMP(flows = {@Flow(from="this",to="@return")})
+	public char charAt(int index) { return '0'; }
 }
