@@ -64,7 +64,7 @@ public class TaintGrammar extends ContextFreeGrammar {
 		this.addBinaryProduction("Label2Prim", "Label2Prim", "prim2PrimT");
 
 		this.addProduction("Label2Prim", new String[]{"Label2ObjT", "Flow", "loadPrim"}, true);
-		this.addProduction("Label2Prim", new String[]{"Label2ObjX", "Flow", "loadPrim"});
+		this.addProduction("Label2Prim", new String[]{"Label2ObjX", "Flow", "loadPrimArr"});
 		this.addBinaryProduction("Label2Prim", "Label2PrimFldArr", "Obj2PrimT");
 
 		this.addProduction("Label2Prim", new String[]{"Label2PrimFld", "Flow", "loadPrim"});

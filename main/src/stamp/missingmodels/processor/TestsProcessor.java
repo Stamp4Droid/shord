@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import stamp.missingmodels.processor.LogReader.Processor;
+import stamp.missingmodels.util.Util.Pair;
 
 /**
  * Retrieve LP running time, total cut size, and lines of code from loc and log files 
@@ -25,7 +26,7 @@ public class TestsProcessor implements Processor {
 	
 	private final Map<String,Integer> numFlowEdges = new HashMap<String,Integer>();
 	private final Map<String,Integer> numBaseEdges = new HashMap<String,Integer>();
-	private final Map<String,Integer> numCutEdges = new HashMap<String,Integer>();
+	private final Map<String,Map<Integer,Integer>> numCutEdges = new HashMap<String,Map<Integer,Integer>>();
 	
 	private final Map<String,Integer> appLinesOfCode = new HashMap<String,Integer>();
 	private final Map<String,Integer> frameworkLinesOfCode = new HashMap<String,Integer>();
@@ -45,8 +46,16 @@ public class TestsProcessor implements Processor {
 			this.numVariables.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
 		} else if(line.startsWith("Number of constraints:")) {
 			this.numConstraints.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
-		} else if(line.startsWith("total cut:")) {
-			this.numCutEdges.put(appName, Integer.parseInt(line.split(" ")[2].trim()));			
+		} else if(line.startsWith("total cut")) {
+			String[] tokens = line.split(" ");
+			int cutNum = Integer.parseInt(tokens[2].trim().substring(0, tokens[2].length()-1));
+			int numCuts = Integer.parseInt(tokens[3].trim());
+			Map<Integer,Integer> cutMap = this.numCutEdges.get(appName);
+			if(cutMap == null) {
+				cutMap = new HashMap<Integer,Integer>();
+				this.numCutEdges.put(appName, cutMap);
+			}
+			cutMap.put(cutNum, numCuts);
 		}
 	}
 
@@ -92,6 +101,17 @@ public class TestsProcessor implements Processor {
 		return Collections.unmodifiableList(this.appNames);
 	}
 	
+	private int getNumCuts() {
+		int numCuts = 0;
+		for(String appName : this.getAppNames()) {
+			int curNumCuts = this.numCutEdges.get(appName).size();
+			if(curNumCuts > numCuts) {
+				numCuts = curNumCuts;
+			}
+		}
+		return numCuts;
+	}
+	
 	public String getHeader() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("App Name").append(",");
@@ -100,7 +120,9 @@ public class TestsProcessor implements Processor {
 		sb.append("# Constraints").append(",");
 		sb.append("# Flow Edges").append(",");
 		sb.append("# Base Edges").append(",");
-		sb.append("# Cut Edges").append(",");
+		for(int i=0; i<this.getNumCuts(); i++) {
+			sb.append("# Cut Edges " + i).append(",");
+		}
 		sb.append("App Lines of Code").append(",");
 		sb.append("Framework Lines of Code");
 		return sb.toString();		
@@ -114,7 +136,10 @@ public class TestsProcessor implements Processor {
 		sb.append(this.numConstraints.get(appName)).append(",");
 		sb.append(this.numFlowEdges.get(appName)).append(",");
 		sb.append(this.numBaseEdges.get(appName)).append(",");
-		sb.append(this.numCutEdges.get(appName)).append(",");
+		int numCuts = this.getNumCuts();
+		for(int i=0; i<numCuts; i++) {
+			sb.append(this.numCutEdges.get(appName).get(i)).append(",");
+		}
 		sb.append(this.appLinesOfCode.get(appName)).append(",");
 		sb.append(this.frameworkLinesOfCode.get(appName));
 		return sb.toString();

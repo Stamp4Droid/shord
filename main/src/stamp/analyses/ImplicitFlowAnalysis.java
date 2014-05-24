@@ -8,6 +8,7 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
+import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.cflsolver.grammars.ImplicitFlowGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
@@ -21,6 +22,7 @@ import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationR
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import chord.bddbddb.Dom;
 import chord.project.Chord;
+import chord.util.tuple.object.Trio;
 
 /**
  * @author obastani
@@ -51,6 +53,22 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 		}
 	}
 	
+	public static void printRelation(String relationName) {
+		System.out.println("Printing " + relationName);
+		ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relationName);
+		rel.load();
+		for(Object[] tuple : rel.getAryNValTuples()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(relationName).append(", ");
+			for(int i=0; i<tuple.length-1; i++) {
+				sb.append(tuple[i]).append(", ");
+			}
+			sb.append(tuple[tuple.length-1]);
+			System.out.println(sb.toString());
+		}
+		rel.close();
+	}
+	
 	@Override
 	public void run() {
 		RelationReader relationReader = new ShordRelationReader();
@@ -64,5 +82,18 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 
 		System.out.println("Printing edges for implicit taint grammar:");
 		printGraphEdges(gbari, "Src2Sink");
+		/*
+		printGraphEdges(gbari, "Label2Ref");
+		printGraphEdges(gbari, "Label2Prim");
+		printGraphEdges(gbari, "prim2PrimImp");
+		printGraphEdges(gbari, "label2RefT");
+		printGraphEdges(gbari, "Flow");
+		*/
+		printRelation("CM");
+		printRelation("LCL");
+		printRelation("CCL");
+		printRelation("InLabelArg");
+		printRelation("MmethArg");
+		printRelation("Label2RefT");
 	}
 }
