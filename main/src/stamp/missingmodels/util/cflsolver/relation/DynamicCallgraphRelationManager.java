@@ -20,7 +20,6 @@ public class DynamicCallgraphRelationManager extends TaintRelationManager {
 	}
 	
 	public DynamicCallgraphRelationManager() {
-		super();
 		this.setNewWeights();
 	}
 	
@@ -29,8 +28,6 @@ public class DynamicCallgraphRelationManager extends TaintRelationManager {
 	}
 	
 	public DynamicCallgraphRelationManager(List<Pair<String,String>> dynamicCallgraphList, int numEdges) {
-		super();
-		
 		// STEP 0: Make param and paramPrim edges weight 1
 		this.setNewWeights();
 		

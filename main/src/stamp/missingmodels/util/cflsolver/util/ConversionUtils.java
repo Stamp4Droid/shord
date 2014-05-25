@@ -1,5 +1,6 @@
 package stamp.missingmodels.util.cflsolver.util;
 
+import chord.bddbddb.Dom;
 import shord.analyses.CastVarNode;
 import shord.analyses.DomU;
 import shord.analyses.DomV;
@@ -12,7 +13,12 @@ import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import soot.SootMethod;
 
-public class ConversionUtils {	
+public class ConversionUtils {
+	public static String toStringShord(String name) {
+		Dom<?> dom = (Dom<?>)ClassicProject.g().getTrgt(name.substring(0,1));
+		return dom.get(Integer.parseInt(name.substring(1))).toString();
+	}
+	
 	public static String getMethodSig(String name) {
 		VarNode v;
 		if(name.startsWith("V")) {

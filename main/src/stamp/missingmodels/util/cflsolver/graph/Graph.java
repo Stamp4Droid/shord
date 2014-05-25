@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import shord.project.ClassicProject;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
-import chord.bddbddb.Dom;
+import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 
 public final class Graph {
+	
 	public static final class Vertex {
 		public final String name;
 		protected final Map<Edge,EdgeInfo>[] outgoingEdgesBySymbol;
@@ -37,17 +37,17 @@ public final class Graph {
 			return Collections.unmodifiableList(this.incomingEdgesBySymbol[symbol]);
 		}
 		
-		/*
-		private String getShordString() {
-			Dom<?> dom = (Dom<?>)ClassicProject.g().getTrgt(this.name.substring(0,1));
-			return dom.get(Integer.parseInt(this.name.substring(1))).toString();
+		public String toString(boolean shord) {
+			if(shord) {
+				return ConversionUtils.toStringShord(this.name);
+			} else {
+				return this.name;
+			}
 		}
-		*/
 		
 		@Override
 		public String toString() {
-			return this.name;
-			//return this.getShordString();
+			return this.toString(false);
 		}
 	}
 	
@@ -98,15 +98,21 @@ public final class Graph {
 			this.context = context;
 		}
 
-		@Override
-		public String toString() {
+		public String toString(boolean shord) {
+			String convertedSourceName = shord ? ConversionUtils.toStringShord(this.sourceName) : this.sourceName;
+			String convertedSinkName = shord ? ConversionUtils.toStringShord(this.sinkName) : this.sinkName;
 			StringBuilder sb = new StringBuilder();
-			sb.append(this.sourceName).append("-");
+			sb.append(convertedSourceName).append("-");
 			sb.append(this.symbol).append("[");
 			sb.append(this.field.toString()).append("][");
 			sb.append(this.context).append("]");
-			sb.append("-").append(this.sinkName);
+			sb.append("-").append(convertedSinkName);
 			return sb.toString();
+		}
+		
+		@Override
+		public String toString() {
+			return this.toString(false);
 		}
 
 		@Override
@@ -190,15 +196,19 @@ public final class Graph {
 			return new EdgeStruct(this.source.name, this.sink.name, this.getSymbol(), this.field, this.context);
 		}
 
-		@Override
-		public String toString() {
+		public String toString(boolean shord) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(this.source.toString()).append("-");
+			sb.append(this.source.toString(shord)).append("-");
 			sb.append(contextFreeGrammar.getSymbol(this.symbolInt)).append("[");
 			sb.append(this.field.toString()).append("][");
 			sb.append(this.context).append("]");
-			sb.append("-").append(this.sink.toString());
+			sb.append("-").append(this.sink.toString(shord));
 			return sb.toString();
+		}
+
+		@Override
+		public String toString() {
+			return this.toString(false);
 		}
 
 		@Override
@@ -341,12 +351,16 @@ public final class Graph {
 		return edges;
 	}
 
-	@Override
-	public String toString() {
+	public String toString(boolean shord) {
 		StringBuilder sb = new StringBuilder();
 		for(Edge edge : this.getEdges()) {
-			sb.append(edge.toString()).append("\n");
+			sb.append(edge.toString(shord)).append("\n");
 		}
 		return sb.toString();
+	}
+	
+	@Override
+	public String toString() {
+		return this.toString(false);
 	}
 }

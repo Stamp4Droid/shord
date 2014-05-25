@@ -1,7 +1,6 @@
 package stamp.missingmodels.util.cflsolver.solver;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
@@ -108,6 +107,8 @@ public class ReachabilitySolver {
 	}
 	
 	private void solve() {
+		System.out.println("Computing transitive closure...");
+		long time = System.currentTimeMillis();
 		while(!this.worklist.isEmpty()) {
 			Edge edge = this.worklist.removeFirst();
 			// <-, ->
@@ -130,6 +131,7 @@ public class ReachabilitySolver {
 				}
 			}
 		}
+		System.out.println("Done computing transitive closure in: " + (System.currentTimeMillis() - time) + "ms");
 	}
 	
 	private boolean solved = false;	

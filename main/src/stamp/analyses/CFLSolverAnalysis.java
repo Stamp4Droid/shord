@@ -109,8 +109,8 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	public static void main(String[] args) throws LpSolveException {
-		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord_clone/stamp_output/_home_obastani_Documents_projects_research_stamp_shord_clone_apps_samples_ImplicitFlow/cfl";		
+ 	public static void main(String[] args) throws LpSolveException {
+		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord_clone/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1C_tomdroid/cfl";		
 		RelationReader relationReader = new FileRelationReader(new File(directoryName));
 		printResult(AbductiveInferenceRunner.runInference(relationReader.readGraph(new DynamicCallgraphRelationManager(), taintGrammar), relationReader.readTypeFilter(taintGrammar), false, 4), false);
 	}

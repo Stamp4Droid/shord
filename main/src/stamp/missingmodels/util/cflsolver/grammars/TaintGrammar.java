@@ -56,8 +56,4 @@ public class TaintGrammar extends PointsToGrammar {
 		this.addProduction("Label2PrimFldArr", new String[]{"Label2Prim", "storePrimArr", "Flow"}, new boolean[]{false, false, true});
 		this.addBinaryProduction("Label2PrimFldStat", "Label2Prim", "storeStatPrim");
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(new TaintGrammar());
-	}
 }

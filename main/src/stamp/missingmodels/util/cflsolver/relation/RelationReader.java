@@ -41,6 +41,7 @@ public interface RelationReader {
 			labels.add("$ACCOUNTS");
 			labels.add("$getDeviceId");
 			labels.add("$SMS");
+			//labels.add("$AUDIO");
 			labels.add("$CONTACTS");
 			labels.add("$CALENDAR");
 			labels.add("!SOCKET");
