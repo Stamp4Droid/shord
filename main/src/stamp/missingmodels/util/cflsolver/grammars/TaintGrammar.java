@@ -1,25 +1,7 @@
 package stamp.missingmodels.util.cflsolver.grammars;
 
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
-
-public class TaintGrammar extends ContextFreeGrammar {
+public class TaintGrammar extends PointsToGrammar {
 	public TaintGrammar() {
-		// pt rules
-		this.addUnaryProduction("Flow", "alloc");
-		
-		this.addBinaryProduction("Flow", "Flow", "assign");
-		
-		this.addBinaryProduction("Flow", "Flow", "param");
-		this.addBinaryProduction("Flow", "Flow", "return");
-		
-		this.addProduction("FlowField", new String[]{"Flow", "store", "Flow"}, new boolean[]{false, false, true});
-		this.addProduction("Flow", new String[]{"FlowField", "Flow", "load"});
-		
-		this.addBinaryProduction("FlowStatField", "Flow", "storeStat");
-		this.addBinaryProduction("Flow", "FlowStatField", "loadStat");
-		
-		this.addProduction("FlowFieldArr", new String[]{"Flow", "storeArr", "Flow"}, new boolean[]{false, false, true});
-
 		// object annotations
 		this.addBinaryProduction("Obj2RefT", "Flow", "ref2RefT");
 		this.addBinaryProduction("Obj2PrimT", "Flow", "ref2PrimT");
@@ -73,5 +55,9 @@ public class TaintGrammar extends ContextFreeGrammar {
 		this.addProduction("Label2PrimFld", new String[]{"Label2Prim", "storePrim", "Flow"}, new boolean[]{false, false, true});
 		this.addProduction("Label2PrimFldArr", new String[]{"Label2Prim", "storePrimArr", "Flow"}, new boolean[]{false, false, true});
 		this.addBinaryProduction("Label2PrimFldStat", "Label2Prim", "storeStatPrim");
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(new TaintGrammar());
 	}
 }

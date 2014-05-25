@@ -118,7 +118,9 @@ public interface EdgeData {
 
 		@Override
 		public Context produce(UnaryProduction unaryProduction) {
-			if(unaryProduction.isInputBackwards) {
+			if(unaryProduction.ignoreContexts) {
+				return DEFAULT_CONTEXT;
+			} else if(unaryProduction.isInputBackwards) {
 				return new Context(this.contexts, !this.isForward);
 			} else {
 				return this;
@@ -127,6 +129,9 @@ public interface EdgeData {
 
 		@Override
 		public Context produce(BinaryProduction binaryProduction, EdgeData secondData) {
+			if(binaryProduction.ignoreContexts) {
+				return DEFAULT_CONTEXT;
+			}
 			if(secondData instanceof Context) {
 				Context secondContext = (Context)secondData;
 				

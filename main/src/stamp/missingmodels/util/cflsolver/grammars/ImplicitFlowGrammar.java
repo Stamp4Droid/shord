@@ -13,5 +13,7 @@ public class ImplicitFlowGrammar extends TaintGrammar {
 		
 		// debug
 		this.addBinaryProduction("Label2Ref", "Label2Obj", "Flow");
+		this.addBinaryProduction("Label2PrimFldArrRef", "Label2Prim", "storePrimArr");
+		this.addBinaryProduction("Label2PrimFldArrRef2", "Label2PrimFld", "Flow");
 	}
 }

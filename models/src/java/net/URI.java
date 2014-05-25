@@ -41,4 +41,8 @@ class URI
 		return new URL((String) null);
     }
 
+    public java.net.URI normalize() {
+	return this;
+    }
+
 }

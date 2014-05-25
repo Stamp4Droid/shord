@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import shord.project.ClassicProject;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
+import chord.bddbddb.Dom;
 
 public final class Graph {
 	public static final class Vertex {
@@ -35,9 +37,17 @@ public final class Graph {
 			return Collections.unmodifiableList(this.incomingEdgesBySymbol[symbol]);
 		}
 		
+		/*
+		private String getShordString() {
+			Dom<?> dom = (Dom<?>)ClassicProject.g().getTrgt(this.name.substring(0,1));
+			return dom.get(Integer.parseInt(this.name.substring(1))).toString();
+		}
+		*/
+		
 		@Override
 		public String toString() {
 			return this.name;
+			//return this.getShordString();
 		}
 	}
 	

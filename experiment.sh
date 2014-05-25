@@ -8,8 +8,6 @@ echo ./stamp analyze ../stamptest/SymcApks/04c9e05d0f626cc3f47dc0bc9b65a8cf.apk
 ./stamp analyze ../stamptest/SymcApks/04c9e05d0f626cc3f47dc0bc9b65a8cf.apk
 echo ./stamp analyze ../stamptest/SymcApks/05ed925905586ae6f51adee19a16ee7a.apk
 ./stamp analyze ../stamptest/SymcApks/05ed925905586ae6f51adee19a16ee7a.apk
-echo ./stamp analyze ../stamptest/SymcApks/08cffa8f55be4bbed2704395876b618f.apk
-./stamp analyze ../stamptest/SymcApks/08cffa8f55be4bbed2704395876b618f.apk
 echo ./stamp analyze ../stamptest/SymcApks/0ac54ec80dc63f5f6d0334d5eca8bb59.apk
 ./stamp analyze ../stamptest/SymcApks/0ac54ec80dc63f5f6d0334d5eca8bb59.apk
 echo ./stamp analyze ../stamptest/SymcApks/10163c1477513d7fb29e92d49a3d432a.apk
@@ -48,8 +46,6 @@ echo ./stamp analyze ../stamptest/SymcApks/72.apk
 ./stamp analyze ../stamptest/SymcApks/72.apk
 echo ./stamp analyze ../stamptest/SymcApks/748c7aae46a19ef26096450ec74ffe73a7226429cd4af29b56ba3583ead0fe9f.apk
 ./stamp analyze ../stamptest/SymcApks/748c7aae46a19ef26096450ec74ffe73a7226429cd4af29b56ba3583ead0fe9f.apk
-echo ./stamp analyze ../stamptest/SymcApks/75916bd63c15b6f5abece4c726aabacf.apk
-./stamp analyze ../stamptest/SymcApks/75916bd63c15b6f5abece4c726aabacf.apk
 echo ./stamp analyze ../stamptest/SymcApks/7766bdfd3afad45e728a6daf8e7e2c1c428e5fd03165da089e0d323da3e34e41.apk
 ./stamp analyze ../stamptest/SymcApks/7766bdfd3afad45e728a6daf8e7e2c1c428e5fd03165da089e0d323da3e34e41.apk
 echo ./stamp analyze ../stamptest/SymcApks/7d43c8a5a007fe94a965ac2a062e85eb.apk
@@ -84,8 +80,6 @@ echo ./stamp analyze ../stamptest/SymcApks/ce667f73ac0b980b7fde79d3ac06ccc3.apk
 ./stamp analyze ../stamptest/SymcApks/ce667f73ac0b980b7fde79d3ac06ccc3.apk
 echo ./stamp analyze ../stamptest/SymcApks/com-AFTDMedia-copter1.apk
 ./stamp analyze ../stamptest/SymcApks/com-AFTDMedia-copter1.apk
-echo ./stamp analyze ../stamptest/SymcApks/com.att.android.attsmartwifi-1.apk
-./stamp analyze ../stamptest/SymcApks/com.att.android.attsmartwifi-1.apk
 echo ./stamp analyze ../stamptest/SymcApks/com-bacastudio-BeautifulBattery.apk
 ./stamp analyze ../stamptest/SymcApks/com-bacastudio-BeautifulBattery.apk
 echo ./stamp analyze ../stamptest/SymcApks/com-gps-phone-iwz.apk
