@@ -629,37 +629,6 @@ public:
 	}
 	return os;
     }
-    // Stacks are compared lexicographically, from top to bottom.
-    friend int compare(const FuzzyStack& lhs, const FuzzyStack& rhs) {
-	int exact_rel = compare(lhs.exact, rhs.exact);
-	if (exact_rel != 0) {
-	    return exact_rel;
-	}
-	if (lhs.node == rhs.node) {
-	    // Stacks are uniqued; this is the only case of equality.
-	    return 0;
-	}
-	const Node* l = lhs.node;
-	const Node* r = rhs.node;
-	while (true) {
-	    if (at_root(l)) {
-		assert(!at_root(r));
-		return -1;
-	    }
-	    if (at_root(r)) {
-		return 1;
-	    }
-	    int val_rel = compare(value(l), value(r));
-	    if (val_rel != 0) {
-		return val_rel;
-	    }
-	    l = parent(l);
-	    r = parent(r);
-	}
-    }
-    bool operator<(const FuzzyStack& rhs) const {
-	return compare(*this, rhs) < 0;
-    }
     bool operator==(const FuzzyStack& rhs) const {
 	// Stacks are uniqued; this is the only case of equality.
 	return exact == rhs.exact && node == rhs.node;
@@ -1676,17 +1645,6 @@ public:
     ConstTopIter end() const {
 	return store.cend();
     }
-    template<class Pred>
-    void remove_if(const Pred& pred) {
-	typename std::set<T>::iterator it = store.begin();
-	while (it != store.end()) {
-	    if (pred(*it)) {
-		it = store.erase(it);
-	    } else {
-		++it;
-	    }
-	}
-    }
     Iterator iter(Tuple& tgt) const {
 	Iterator it(tgt);
 	it.migrate(*this);
@@ -1863,6 +1821,488 @@ template<class Tag, class K, class S>
 const S Index<Tag,K,S>::dummy;
 
 // SPECIALIZED CONTAINERS =====================================================
+
+template<class Tag, class T, unsigned int LIMIT>
+class Table<Tag,FuzzyStack<T,LIMIT> > {
+public:
+    typedef FuzzyStack<T,LIMIT> Key;
+    class Iterator;
+    friend Iterator;
+    typedef NamedTuple<Tag,Key,Nil> Tuple;
+private:
+    bool at_star = false;
+    bool at_here = false;
+    std::map<T,Table> children;
+public:
+    explicit Table() {}
+    bool insert(const Key& stack) {
+	if (at_star) {
+	    return false;
+	}
+	if (stack.empty()) {
+	    if (stack.is_exact()) {
+		if (at_here) {
+		    return false;
+		}
+		at_here = true;
+		return true;
+	    }
+	    at_star = true;
+	    at_here = false;
+	    children.clear();
+	    return true;
+	}
+	return children[stack.top()].insert(stack.pop());
+    }
+    bool insert(const Tuple& tuple) {
+	return insert(tuple.hd);
+    }
+    void remove(const Key& stack) {
+	if (stack.empty()) {
+	    at_here = false;
+	    if (!stack.is_exact()) {
+		at_star = false;
+		children.clear();
+	    }
+	} else {
+	    auto it = children.find(stack.top());
+	    if (it != children.end()) {
+		it->second.remove(stack.pop());
+	    }
+	}
+    }
+    void remove(const Tuple& tuple) {
+	remove(tuple.hd);
+    }
+    bool copy(const Table& src) {
+	if (at_star) {
+	    return false;
+	}
+	if (src.at_star) {
+	    at_star = true;
+	    at_here = false;
+	    children.clear();
+	    return true;
+	}
+	bool grew = false;
+	if (!at_here && src.at_here) {
+	    at_here = true;
+	    grew = true;
+	}
+	for (const auto& p : src.children) {
+	    if (children[p.first].copy(p.second)) {
+		grew = true;
+	    }
+	}
+	return grew;
+    }
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
+	it.migrate(*this);
+	return it;
+    }
+    bool empty() const {
+	if (at_star || at_here) {
+	    return false;
+	}
+	for (const auto& p : children) {
+	    if (!p.second.empty()) {
+		return false;
+	    }
+	}
+	return true;
+    }
+    bool contains(const Key& stack) const {
+	if (at_star) {
+	    return true;
+	}
+	if (!stack.empty()) {
+	    auto it = children.find(stack.top());
+	    if (it == children.cend()) {
+		return false;
+	    }
+	    return it->second.contains(stack.pop());
+	}
+	if (stack.is_exact()) {
+	    return at_here;
+	}
+	return false;
+    }
+    bool contains(const Tuple& tuple) const {
+	return contains(tuple.hd);
+    }
+    unsigned int size() const {
+	unsigned int sz = at_star + at_here;
+	for (const auto& p : children) {
+	    sz += p.second.size();
+	}
+	return sz;
+    }
+public:
+
+    class Iterator {
+	struct Config {
+	    const Table& tab;
+	    typename std::map<T,Table>::const_iterator ch_curr;
+	    typename std::map<T,Table>::const_iterator ch_end;
+	    Config(const Table& tab) : tab(tab),
+				       ch_curr(tab.children.cbegin()),
+				       ch_end(tab.children.cend()) {}
+	};
+	enum class Phase {STAR, HERE, NEXT_CHILD, FIRST_CHILD};
+    private:
+	std::deque<Config> pos_stack;
+	Key& tgt_fld;
+	Phase phase;
+    public:
+	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
+	void migrate(const Table& tab) {
+	    pos_stack.clear();
+	    pos_stack.emplace_front(tab);
+	    tgt_fld = Key();
+	    phase = Phase::STAR;
+	}
+	bool next() {
+	    while (true) {
+		Config& curr_pos = pos_stack.front();
+		switch (phase) {
+		case Phase::STAR:
+		    tgt_fld = tgt_fld.relax();
+		    phase = Phase::HERE;
+		    if (curr_pos.tab.at_star) {
+			return true;
+		    }
+		    break;
+		case Phase::HERE:
+		    tgt_fld = tgt_fld.tighten();
+		    phase = Phase::FIRST_CHILD;
+		    if (curr_pos.tab.at_here) {
+			return true;
+		    }
+		    break;
+		case Phase::NEXT_CHILD:
+		    ++(curr_pos.ch_curr);
+		    // fall-through
+		case Phase::FIRST_CHILD:
+		    if (curr_pos.ch_curr == curr_pos.ch_end) {
+			pos_stack.pop_front();
+			if (pos_stack.empty()) {
+			    return false;
+			}
+			tgt_fld = tgt_fld.pop_bottom();
+			phase = Phase::NEXT_CHILD;
+		    } else {
+			const auto& p = *(curr_pos.ch_curr);
+			pos_stack.emplace_front(p.second);
+			assert(tgt_fld.is_exact());
+			tgt_fld = Key().push(p.first).append(tgt_fld);
+			phase = Phase::STAR;
+		    }
+		    break;
+		default:
+		    assert(false);
+		}
+	    }
+	}
+    };
+};
+
+template<class Tag, class T, unsigned int LIMIT, class S>
+class Index<Tag,FuzzyStack<T,LIMIT>,S> {
+public:
+    typedef FuzzyStack<T,LIMIT> Key;
+    typedef S Sub;
+    class Iterator;
+    friend Iterator;
+    class ConstTopIter;
+    friend ConstTopIter;
+    typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
+private:
+    static const Sub dummy;
+private:
+    Sub at_star;
+    Sub at_here;
+    std::map<T,Index> children;
+public:
+    explicit Index() {}
+    template<class... Rest>
+    bool insert(const Key& stack, const Rest&... rest) {
+	if (stack.empty() && !stack.is_exact()) {
+	    if (at_star.insert(rest...)) {
+		at_here.remove(rest...);
+		for (auto& p : children) {
+		    p.second.remove(stack, rest...);
+		}
+		return true;
+	    }
+	    return false;
+	}
+	if (at_star.contains(rest...)) {
+	    return false;
+	}
+	if (stack.empty()) {
+	    return at_here.insert(rest...);
+	}
+	return children[stack.top()].insert(stack.pop(), rest...);
+    }
+    bool insert(const Tuple& tuple) {
+	return insert(tuple.hd, tuple.tl);
+    }
+    template<class... Rest>
+    void remove(const Key& stack, const Rest&... rest) {
+	if (stack.empty()) {
+	    at_here.remove(rest...);
+	    if (!stack.is_exact()) {
+		at_star.remove(rest...);
+		for (auto& p : children) {
+		    p.second.remove(stack, rest...);
+		}
+	    }
+	} else {
+	    auto it = children.find(stack.top());
+	    if (it != children.end()) {
+		it->second.remove(stack.pop(), rest...);
+	    }
+	}
+    }
+    void remove(const Tuple& tuple) {
+	remove(tuple.hd, tuple.tl);
+    }
+    bool copy(const Index& src) {
+	bool grew = false;
+	FOR(tup, src) {
+	    if (insert(tup)) {
+		grew = true;
+	    }
+	}
+	return grew;
+    }
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
+	it.migrate(*this);
+	return it;
+    }
+    ConstTopIter begin() const {
+	return ConstTopIter(*this);
+    }
+    ConstTopIter end() const {
+	return ConstTopIter();
+    }
+    bool empty() const {
+	if (!at_star.empty() || !at_here.empty()) {
+	    return false;
+	}
+	for (const auto& p : children) {
+	    if (!p.second.empty()) {
+		return false;
+	    }
+	}
+	return true;
+    }
+    template<class... Rest>
+    bool contains(const Key& stack, const Rest&... rest) const {
+	if (at_star.contains(rest...)) {
+	    return true;
+	}
+	if (stack.empty()) {
+	    if (!stack.is_exact()) {
+		return false;
+	    }
+	    return at_here.contains(rest...);
+	}
+	auto it = children.find(stack.top());
+	if (it == children.cend()) {
+	    return false;
+	}
+	return it->second.contains(stack.pop(), rest...);
+    }
+    bool contains(const Tuple& tuple) const {
+	return contains(tuple.hd, tuple.tl);
+    }
+    unsigned int size() const {
+	unsigned int sz = at_star.size() + at_here.size();
+	for (const auto& p : children) {
+	    sz += p.second.size();
+	}
+	return sz;
+    }
+public:
+
+    class ConstTopIter
+	: public std::iterator<std::forward_iterator_tag,
+			       std::pair<const Key&,const Sub&>> {
+	struct Config {
+	    const Index& idx;
+	    typename std::map<T,Index>::const_iterator ch_curr;
+	    typename std::map<T,Index>::const_iterator ch_end;
+	    Config(const Index& idx) : idx(idx),
+				       ch_curr(idx.children.cbegin()),
+				       ch_end(idx.children.cend()) {}
+	};
+	enum class Phase {BEFORE_STAR, AFTER_STAR, NEXT_CHILD, AFTER_HERE};
+    public:
+	typedef std::pair<const Key&,const Sub&> Value;
+    private:
+	std::deque<Config> pos_stack;
+	Key cached_key;
+	Phase phase;
+    private:
+	void move_to_next() {
+	    while (true) {
+		Config& curr_pos = pos_stack.front();
+		switch (phase) {
+		case Phase::BEFORE_STAR:
+		    cached_key = cached_key.relax();
+		    phase = Phase::AFTER_STAR;
+		    if (!curr_pos.idx.at_star.empty()) {
+			return;
+		    }
+		    break;
+		case Phase::AFTER_STAR:
+		    cached_key = cached_key.tighten();
+		    phase = Phase::AFTER_HERE;
+		    if (!curr_pos.idx.at_here.empty()) {
+			return;
+		    }
+		    break;
+		case Phase::NEXT_CHILD:
+		    ++(curr_pos.ch_curr);
+		    // fall-through
+		case Phase::AFTER_HERE:
+		    if (curr_pos.ch_curr == curr_pos.ch_end) {
+			pos_stack.pop_front();
+			if (pos_stack.empty()) {
+			    return;
+			}
+			cached_key = cached_key.pop_bottom();
+			phase = Phase::NEXT_CHILD;
+		    } else {
+			const auto& p = *(curr_pos.ch_curr);
+			pos_stack.emplace_front(p.second);
+			assert(cached_key.is_exact());
+			cached_key = Key().push(p.first).append(cached_key);
+			phase = Phase::BEFORE_STAR;
+		    }
+		    break;
+		default:
+		    assert(false);
+		}
+	    }
+	}
+    public:
+	explicit ConstTopIter() {}
+	explicit ConstTopIter(const Index& idx) : phase(Phase::BEFORE_STAR) {
+	    pos_stack.emplace_front(idx);
+	    move_to_next();
+	}
+	ConstTopIter(const ConstTopIter& rhs) : pos_stack(rhs.pos_stack),
+						cached_key(rhs.cached_key),
+						phase(rhs.phase) {}
+	ConstTopIter& operator=(const ConstTopIter& rhs) {
+	    pos_stack  = rhs.pos_stack;
+	    cached_key = rhs.cached_key;
+	    phase      = rhs.phase;
+	    return *this;
+	}
+	Value operator*() const {
+	    switch (phase) {
+	    case Phase::AFTER_STAR:
+		return Value(cached_key, pos_stack.front().idx.at_star);
+	    case Phase::AFTER_HERE:
+		return Value(cached_key, pos_stack.front().idx.at_here);
+	    default:
+		assert(false);
+	    }
+	}
+	ConstTopIter& operator++() {
+	    move_to_next();
+	    return *this;
+	}
+	bool operator==(const ConstTopIter& rhs) const {
+	    // XXX: We only support comparisons with past-the-end iterators.
+	    assert(rhs.pos_stack.empty());
+	    return pos_stack.empty();
+	}
+	bool operator!=(const ConstTopIter& rhs) const {
+	    return !(*this == rhs);
+	}
+    };
+
+    class Iterator {
+	struct Config {
+	    const Index& idx;
+	    typename std::map<T,Index>::const_iterator ch_curr;
+	    typename std::map<T,Index>::const_iterator ch_end;
+	    Config(const Index& idx) : idx(idx),
+				       ch_curr(idx.children.cbegin()),
+				       ch_end(idx.children.cend()) {}
+	};
+	enum class Phase {BEFORE_STAR, STAR, HERE, NEXT_CHILD, FIRST_CHILD};
+    private:
+	std::deque<Config> pos_stack;
+	Key& tgt_key;
+	typename Sub::Iterator sub_iter;
+	Phase phase;
+    public:
+	explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
+	void migrate(const Index& idx) {
+	    pos_stack.clear();
+	    pos_stack.emplace_front(idx);
+	    tgt_key = Key();
+	    phase = Phase::BEFORE_STAR;
+	}
+	bool next() {
+	    while (true) {
+		Config& curr_pos = pos_stack.front();
+		switch (phase) {
+		case Phase::BEFORE_STAR:
+		    tgt_key = tgt_key.relax();
+		    sub_iter.migrate(curr_pos.idx.at_star);
+		    phase = Phase::STAR;
+		    break;
+		case Phase::STAR:
+		    if (sub_iter.next()) {
+			return true;
+		    }
+		    tgt_key = tgt_key.tighten();
+		    sub_iter.migrate(curr_pos.idx.at_here);
+		    phase = Phase::HERE;
+		    break;
+		case Phase::HERE:
+		    if (sub_iter.next()) {
+			return true;
+		    }
+		    phase = Phase::FIRST_CHILD;
+		    break;
+		case Phase::NEXT_CHILD:
+		    ++(curr_pos.ch_curr);
+		    // fall-through
+		case Phase::FIRST_CHILD:
+		    if (curr_pos.ch_curr == curr_pos.ch_end) {
+			pos_stack.pop_front();
+			if (pos_stack.empty()) {
+			    return false;
+			}
+			tgt_key = tgt_key.pop_bottom();
+			phase = Phase::NEXT_CHILD;
+		    } else {
+			const auto& p = *(curr_pos.ch_curr);
+			pos_stack.emplace_front(p.second);
+			assert(tgt_key.is_exact());
+			tgt_key = Key().push(p.first).append(tgt_key);
+			phase = Phase::BEFORE_STAR;
+		    }
+		    break;
+		default:
+		    assert(false);
+		}
+	    }
+	}
+    };
+};
+
+template<class Tag, class T, unsigned int LIMIT, class S>
+const S Index<Tag,FuzzyStack<T,LIMIT>,S>::dummy;
 
 template<class Tag, class K, class S> class FlatIndex {
     template<class A, class B, class C> friend class FlatIndex;

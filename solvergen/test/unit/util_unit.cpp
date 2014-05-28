@@ -81,22 +81,6 @@ void print_stack(const Stack& s) {
     std::cout << std::endl;
 }
 
-template<class T> void print_relation(const T& lhs, const T& rhs) {
-    switch (compare(lhs, rhs)) {
-    case 0:
-	std::cout << "equal to:" << std::endl;
-	break;
-    case -1:
-	std::cout << "less than:" << std::endl;
-	break;
-    case 1:
-	std::cout << "greater than:" << std::endl;
-	break;
-    default:
-	assert(false);
-    }
-}
-
 int main() {
     std::cout << std::boolalpha;
 
@@ -219,20 +203,55 @@ int main() {
     wl2.enqueue(1);
     assert(wl2.empty());
 
+    mi::Table<a,Stack> stacks;
+    mi::Index<a,Stack,mi::Table<b,Stack>> id;
+    auto s54 = Stack().push(4).push(5);
+    print_stack(s54);
+    stacks.insert(s54);
+    id.insert(s54, s54);
     auto s321 = Stack().push(1).push(2).push(3);
     print_stack(s321);
-    auto s54 = Stack().push(4).push(5);
-    print_relation(s321, s54);
-    print_stack(s54);
+    stacks.insert(s321);
+    id.insert(s321, s321);
     auto s54321 = s321.append(s54);
-    print_relation(s54, s54321);
     print_stack(s54321);
+    stacks.insert(s54321);
+    id.insert(s54321, s54321);
     auto s5454321 = s54321.append(s54);
-    print_relation(s54321, s5454321);
     print_stack(s5454321);
+    stacks.insert(s5454321);
+    id.insert(s5454321, s5454321);
     auto s5432154 = s54.append(s54321);
-    print_relation(s5454321, s5432154);
     print_stack(s5432154);
+    stacks.insert(s5432154);
+    id.insert(s5432154, s5432154);
+    auto s54_ = Stack().push(4).push(5).relax();
+    print_stack(s54_);
+    stacks.insert(s54_);
+    id.insert(s54_, s54_);
+    std::cout << "As stored in table:" << std::endl;
+    FOR(tup, stacks) {
+	std::cout << "  ";
+	print_stack(tup.get<a>());
+    }
+    std::cout << "Identity:" << std::endl;
+    FOR(tup, id) {
+	std::cout << "  ";
+	print(std::cout, tup.get<a>(), false);
+	std::cout << " ";
+	print(std::cout, tup.get<b>(), false);
+	std::cout << std::endl;
+    }
+    std::cout << "Should be the same as:" << std::endl;
+    for (const auto& a_p : id) {
+	FOR(tup, a_p.second) {
+	    std::cout << "  ";
+	    print(std::cout, a_p.first, false);
+	    std::cout << " ";
+	    print(std::cout, tup.get<b>(), false);
+	    std::cout << std::endl;
+	}
+    }
 
     return 0;
 }

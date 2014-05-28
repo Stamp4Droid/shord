@@ -290,47 +290,6 @@ bool copy_trans(const EffectRTL& src, EffectLTR& dst, bool accepting_only,
     return grew;
 }
 
-// TODO: could do this in two steps?
-// first collect all coverage cases, then process in bulk?
-void group(EffectLTR& efft) {
-    bool relaxed;
-    auto rm_covered = [&](mi::Table<PUSH,EfftPush>& a,
-			  const mi::Table<PUSH,EfftPush>& b) {
-	auto b_covers = [&](const EfftPush& a_push) -> bool {
-	    for (const EfftPush& b_push : b) {
-		if ((relaxed && a_push == b_push) || b_push.covers(a_push)) {
-		    return true;
-		}
-	    }
-	    return false;
-	};
-	a.remove_if(b_covers);
-    };
-
-    for (auto& cp_from_p : efft) {
-	for (auto& st_from_p : cp_from_p.second) {
-	    for (auto& reqd_a_p : st_from_p.second) {
-		// Processing a pair of effects with the same reqd stack: only
-		// remove entries whose push stack is strictly covered.
-		relaxed = false;
-		join_zip<2>(reqd_a_p.second, reqd_a_p.second, rm_covered);
-
-		// Processing a pair of effects (a,b) where b's reqd stack
-		// strictly covers a's: also remove equal push stacks.
-		relaxed = true;
-		for (const auto& reqd_b_p : st_from_p.second) {
-		    if (reqd_b_p.first.covers(reqd_a_p.first)) {
-			assert(&(reqd_a_p.second) != &(reqd_b_p.second));
-			join_zip<2>(reqd_a_p.second, reqd_b_p.second,
-				    rm_covered);
-		    }
-		}
-	    }
-	}
-	// TODO: Clean up empty entries.
-    }
-}
-
 const EffectLTR& RSM::effect_of(const Symbol& symbol, bool rev,
 				Ref<Tag> tag) const {
     // Check that this is a valid Arc.
@@ -692,19 +651,6 @@ void Analysis::close(Graph& graph, const fs::path& dump_dir) const {
     propagate(graph, top_comp, dump_dir);
     std::cout << "Done in " << current_time() - t_prop << " ms"
 	      << std::endl << std::endl;
-
-    // Group all recorded summaries
-    const unsigned int t_group = current_time();
-    std::cout << "Discarding redundant summaries" << std::endl;
-    for (auto& comp_p : graph.summaries) {
-	for (auto& src_p : comp_p.second) {
-	    for (auto& dst_p : src_p.second) {
-		group(dst_p.second);
-	    }
-	}
-    }
-    std::cout << "Done in " << current_time() - t_group << " ms"
-	      << std::endl << std::endl;
 }
 
 void Analysis::summarize(Graph& graph, const Component& comp,
@@ -760,11 +706,6 @@ void Analysis::summarize(Graph& graph, const Component& comp,
 	// function-local propagation; no need to pass them in a separate set.
 	for (Ref<Node> dep_start : res.deps) {
 	    deps.insert(Dependence(dep_start, w.ref));
-	}
-
-	// Group output summaries before recording them.
-	for (auto& dst_p : res.summs) {
-	    group(dst_p.second);
 	}
 
 	// Record summaries, and reschedule workers as necessary.
