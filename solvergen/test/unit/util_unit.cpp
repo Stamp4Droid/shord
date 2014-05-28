@@ -71,42 +71,6 @@ template<> struct KeyTraits<unsigned int> {
 
 } // namespace mi
 
-template<class C, class... Hints>
-void test_ordering(const Hints&... hints) {
-    std::vector<C> sets;
-    sets.emplace_back(hints...); C& s_01_11 = sets.back();
-    s_01_11.insert(0, 1);
-    s_01_11.insert(1, 1);
-    sets.emplace_back(hints...); C& s_00 = sets.back();
-    s_00.insert(0, 0);
-    sets.emplace_back(hints...);
-    sets.emplace_back(hints...); C& s_10_11 = sets.back();
-    s_10_11.insert(1, 0);
-    s_10_11.insert(1, 1);
-    sets.emplace_back(hints...); C& s_00_01_10 = sets.back();
-    s_00_01_10.insert(0, 0);
-    s_00_01_10.insert(0, 1);
-    s_00_01_10.insert(1, 0);
-    sets.emplace_back(hints...); C& s_10 = sets.back();
-    s_10.insert(1, 0);
-    std::cout << "Original sets:" << std::endl;
-    for (const auto& s : sets) {
-	std::cout << "  Set:" << std::endl;
-	FOR(tup, s) {
-	    std::cout << "    " << tup << std::endl;
-	}
-    }
-    sort(sets.begin(), sets.end());
-    std::cout << "Sorted sets:" << std::endl;
-    for (const auto& s : sets) {
-	std::cout << "  Set:" << std::endl;
-	FOR(tup, s) {
-	    std::cout << "    " << tup << std::endl;
-	}
-    }
-    std::cout << std::endl;
-}
-
 typedef FuzzyStack<int,3> Stack;
 
 void print_stack(const Stack& s) {
@@ -215,44 +179,16 @@ int main() {
     FOR(res, nidx[false][bars.find("bbb").ref]) {
 	std::cout << "  " <<  res << std::endl;
     }
-    nidx.copy(nidx[false], true);
+    nidx.of(true).copy(nidx[false]);
     std::cout << "All false tuples copied to true:" << std::endl;
     FOR(res, nidx) {
 	std::cout <<  "  " << res << std::endl;
     }
-    std::cout << "All entries for bbb:" << std::endl;
-    FOR_CNSTR(res, nidx, mi::any, bars.find("bbb").ref) {
-	std::cout << "  " <<  res << std::endl;
-    }
     std::cout << std::endl;
-
-    mi::Index<first, char,
-	      mi::Uniq<mi::BiRel<second, third, int>>> tabs;
-    tabs.insert('a', 1, 2); tabs.insert('a', 1, 3);
-    tabs.insert('b', 2, 1); tabs.insert('b', 3, 1);
-    tabs.insert('b', 3, 4); tabs.insert('b', 4, 4);
-    tabs.insert('c', 5, 5);
-    tabs.copy(join(tabs['a'], tabs['b']), 'c');
-    mi::NamedTuple<second,int,mi::NamedTuple<third,int,mi::Nil>> c_tup;
-    auto c_it = tabs['c'].iter(c_tup);
-    std::cout << "Should see (1,1) (1,4) (5,5):" << std::endl;
-    while (c_it.next()) {
-	std::cout << "  (" << c_tup.get<second>() << ","
-		  << c_tup.get<third>() << ")" << std::endl;
-    }
-    std::cout << std::endl;
-
-    test_ordering<mi::Index<a,int,mi::Table<b,int>>>();
-    test_ordering<mi::FlatIndex<a,unsigned int,
-				mi::BitSet<b,unsigned int>>>(2, 2);
-    test_ordering<mi::Uniq<mi::LightIndex<a,unsigned int,
-					  mi::Table<b,unsigned int>>>>();
 
     mi::Index<first, int, mi::Table<second, int>> int_tab;
-    mi::Uniq<decltype(int_tab)> uniq_tab;
     for (unsigned int i = 0; i < 5; i++) {
 	int_tab.insert(i, i+40);
-	uniq_tab.insert(i, i+40);
     }
     std::cout << "Regular table contents:" << std::endl;
     FOR(tup, int_tab) {
@@ -261,13 +197,6 @@ int main() {
     std::cout << "Contains (1,41): " << int_tab.contains(1, 41) << std::endl;
     std::cout << "Contains (1,43): " << int_tab.contains(1, 43) << std::endl;
     std::cout << "Contains (6,46): " << int_tab.contains(6, 46) << std::endl;
-    std::cout << "Uniq'd table contents:" << std::endl;
-    FOR(tup, uniq_tab) {
-	std::cout << "  " << tup << std::endl;
-    }
-    std::cout << "Contains (1,41): " << uniq_tab.contains(1, 41) << std::endl;
-    std::cout << "Contains (1,43): " << uniq_tab.contains(1, 43) << std::endl;
-    std::cout << "Contains (6,46): " << uniq_tab.contains(6, 46) << std::endl;
     std::cout << std::endl;
 
     Worklist<int,true> wl1;

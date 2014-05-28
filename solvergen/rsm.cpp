@@ -341,7 +341,7 @@ const EffectLTR& RSM::effect_of(const Symbol& symbol, bool rev,
     // dereferencing the map using full labels. Would work better if we
     // indexed Transitions using mi library.
     // XXX: What if the label doesn't appear in the secondary RSM?
-    EffectLTR& res = base_effts.follow(rev).follow(symbol.ref).follow(tag);
+    EffectLTR& res = base_effts.of(rev).of(symbol.ref).of(tag);
     if (res.empty()) {
 	for (const Component& comp : components) {
 
@@ -768,7 +768,7 @@ void Analysis::summarize(Graph& graph, const Component& comp,
 	}
 
 	// Record summaries, and reschedule workers as necessary.
-	if (graph.summaries.copy(res.summs, w.comp.ref, w.start)) {
+	if (graph.summaries.of(w.comp.ref).of(w.start).copy(res.summs)) {
 	    unsigned int reschedules = 0;
 	    for (const Dependence& d : deps[w.start]) {
 		if (worklist.enqueue(d.worker)) {
@@ -803,7 +803,7 @@ void Analysis::propagate(Graph& graph, const Component& comp,
 	}
 	// Reachability information is stored like regular summaries.
 	// TODO: Should separate?
-	graph.summaries.copy(res.summs, comp.ref, start.ref);
+	graph.summaries.of(comp.ref).of(start.ref).copy(res.summs);
     }
 }
 
@@ -874,7 +874,7 @@ Worker::Result Worker::handle(const Graph& graph,
 	    if (top_level || tgts.count(pos.dst) > 0) {
 		// During the final top-down reachability step, we only accept
 		// initial-to-final FSM effects.
-		copy_trans(efft, res.summs.follow(pos.dst), top_level, sec);
+		copy_trans(efft, res.summs.of(pos.dst), top_level, sec);
 	    }
 	}
 
@@ -882,20 +882,30 @@ Worker::Result Worker::handle(const Graph& graph,
 	for (const Transition& t : comp.transitions.primary()[pos.state]) {
 	    const Symbol& e_symb = symbol_reg[t.label.symbol];
 	    bool e_rev = t.label.rev;
-	    boost::optional<Ref<Tag>> maybe_tag =
-		boost::make_optional(t.label.tag.valid(), t.label.tag);
-	    FOR_CNSTR(e, graph.search(e_symb.ref, e_rev, pos.dst), maybe_tag) {
-		const EffectLTR& e_efft =
-		    sec.effect_of(e_symb, e_rev, e.get<TAG>());
-		if (worklist.enqueue(e.get<DST>(), t.to, efft, e_efft)) {
+
+	    auto cross = [&](Ref<Tag> e_tag,
+			     const mi::Table<DST,Ref<Node>>& dsts){
+		const EffectLTR& e_efft = sec.effect_of(e_symb, e_rev, e_tag);
+		for (Ref<Node> e_dst : dsts) {
+		    if (worklist.enqueue(e_dst, t.to, efft, e_efft)) {
 
 #ifdef VIZ
-		    if (!top_level) {
-			reached_edges.insert(pos.dst, e.get<DST>(), e_rev,
-					     e_symb.ref, e.get<TAG>());
-		    }
+			if (!top_level) {
+			    reached_edges.insert(pos.dst, e_dst, e_rev,
+						 e_symb.ref, e_tag);
+			}
 #endif
 
+		    }
+		}
+	    };
+
+	    const auto& slice = graph.search(e_symb.ref, e_rev, pos.dst);
+	    if (t.label.tag.valid()) {
+		cross(t.label.tag, slice[t.label.tag]);
+	    } else {
+		for (const auto& p : slice) {
+		    cross(p.first, p.second);
 		}
 	    }
 	}
@@ -924,7 +934,7 @@ Worker::Result Worker::handle(const Graph& graph,
 		if (!top_level) {
 		    reached_edges.insert(pos.dst, in_node, e_in_rev,
 					 e_in_symb.ref, call_tag);
-		    reached_borders.copy(in_efft, in_node, entry.to);
+		    reached_borders.of(in_node).of(entry.to).copy(in_efft);
 		}
 #endif
 
@@ -950,7 +960,8 @@ Worker::Result Worker::handle(const Graph& graph,
 #ifdef VIZ
 		    if (!top_level) {
 			reached_summs.insert(in_node, out_node, entry.to);
-			reached_borders.copy(out_efft, out_node, entry.to);
+			reached_borders.of(out_node).of(entry.to)
+			    .copy(out_efft);
 		    }
 #endif
 

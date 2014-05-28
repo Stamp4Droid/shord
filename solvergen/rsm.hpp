@@ -541,7 +541,7 @@ public:
     }
     bool enqueue(Ref<Node> dst, Ref<State> state, const EffectRTL& efft) {
 	// TODO: Check that the provided effect agrees with our directionality.
-	if (reached_.copy(efft, dst, state)) {
+	if (reached_.of(dst).of(state).copy(efft)) {
 	    queue.push_back(Position{dst, state});
 	    return true;
 	}
@@ -549,7 +549,7 @@ public:
     }
     bool enqueue(Ref<Node> dst, Ref<State> state, const EffectRTL& l_efft,
 		 const EffectLTR& r_efft) {
-	if (compose(l_efft, r_efft, reached_.follow(dst).follow(state),
+	if (compose(l_efft, r_efft, reached_.of(dst).of(state),
 		    fwd_only)) {
 	    queue.push_back(Position{dst, state});
 	    return true;

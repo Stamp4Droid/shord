@@ -2,7 +2,7 @@
 #define UTIL_HPP
 
 #include <boost/filesystem.hpp>
-#include <boost/optional.hpp>
+#include <boost/none.hpp>
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
@@ -428,11 +428,12 @@ private:
     std::map<T,unsigned int> freqs;
 public:
     void record(const T& val) {
-	unsigned int prev = 0;
-	try {
-	    prev = freqs.at(val);
-	} catch(std::out_of_range& exc) {}
-	freqs[val] = prev + 1;
+	auto bounds = freqs.equal_range(val);
+	if (bounds.first == bounds.second) {
+	    freqs.insert(bounds.first, std::make_pair(val, 1));
+	} else {
+	    bounds.first->second++;
+	}
     }
     friend std::ostream& operator<<(std::ostream& os, const Histogram& ref) {
 	for (const auto& p : ref.freqs) {
@@ -482,6 +483,13 @@ private:
     }
     static Node* parent(Node* node) {
 	return const_cast<Node*>(parent(const_cast<const Node*>(node)));
+    }
+    static Node* skip_bottom(const Node* node) {
+	const Node* p = parent(node);
+	if (at_root(p)) {
+	    return root();
+	}
+	return follow(skip_bottom(p), value(node));
     }
 private:
     bool exact;
@@ -550,6 +558,9 @@ public:
     unsigned int size() const {
 	return height(node);
     }
+    FuzzyStack tighten() const {
+	return FuzzyStack(true, node);
+    }
     FuzzyStack relax() const {
 	return FuzzyStack(false, node);
     }
@@ -559,6 +570,10 @@ public:
 	} else {
 	    return append(FuzzyStack(true, follow(root(), val)));
 	}
+    }
+    FuzzyStack pop_bottom() const {
+	assert(!empty());
+	return FuzzyStack(exact, skip_bottom(node));
     }
     FuzzyStack append(const FuzzyStack& rhs) const {
 	if (empty()) {
@@ -688,6 +703,7 @@ template<> struct JoinZipHelper<0> {
 // TODO:
 // - Also feed the common key to zip?
 // - Should implement using iterators?
+// - Only works for sorted containers
 template<unsigned int DEPTH, class LMap, class RMap, class ZipT>
 void join_zip(LMap& l, RMap& r, const ZipT& zip) {
     detail::JoinZipHelper<DEPTH>::handle(l, r, zip);
@@ -871,13 +887,13 @@ public:
 	return obj;
     }
     template<typename... ArgTs> T& add(const Key& key, ArgTs&&... args) {
-	try {
-	    T& obj = map.at(key);
-	    obj.merge(std::forward<ArgTs>(args)...);
-	    return obj;
-	} catch (const std::out_of_range& exc) {
+	auto it = map.find(key);
+	if (it == map.end()) {
 	    return make(key, std::forward<ArgTs>(args)...);
 	}
+	T& obj = it->second;
+	obj.merge(std::forward<ArgTs>(args)...);
+	return obj;
     }
     T& find(const Key& key) {
 	return map.at(key);
@@ -1106,16 +1122,13 @@ private:
 private:
     Map idx;
 public:
-    Index() {}
+    explicit Index() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	return idx[tuple.*MemPtr].insert(tuple);
     }
     const Wrapped& operator[](const Key& key) const {
-	try {
-	    return idx.at(key);
-	} catch (const std::out_of_range& exc) {
-	    return dummy;
-	}
+	auto it = idx.find(key);
+	return (it == idx.cend()) ? dummy : it->second;
     }
     Iterator begin() const {
 	return Iterator(MappedIter<Map>(idx.begin()),
@@ -1149,7 +1162,7 @@ public:
 private:
     Wrapped array[2];
 public:
-    Index() {}
+    explicit Index() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	return array[tuple.*MemPtr].insert(tuple);
     }
@@ -1185,7 +1198,7 @@ private:
 private:
     PtrArray array;
 public:
-    FlatIndex() {}
+    explicit FlatIndex() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	return (*this)[tuple.*MemPtr].insert(tuple);
     }
@@ -1196,11 +1209,7 @@ public:
 	return *(array[key.value]);
     }
     const Wrapped& operator[](const Ref<C>& key) const {
-	try {
-	    return *(array.at(key.value));
-	} catch (const std::out_of_range& exc) {
-	    return dummy;
-	}
+	return (key.value < array.size()) ? *(array[key.value]) : dummy;
     }
     Iterator begin() const {
 	return Iterator(array.cbegin());
@@ -1254,7 +1263,7 @@ private:
     PriIdxT pri_idx;
     std::tuple<SecIdxTs...> sec_idxs;
 public:
-    MultiIndex() {}
+    explicit MultiIndex() {}
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	auto res = pri_idx.insert(tuple);
 	// Only insert on secondary indices if tuple wasn't already present.
@@ -1286,10 +1295,10 @@ public:
 
 // Features:
 // - Each level handles a specific tag.
-// - Regular iterators iterate through the keys
+// - Regular iterators iterate on the top level only
 //   will attempt to retun only non-empty keys
-// - Iterators fill in a provided record.
-//   Special "FOR" macro provided to do this automatically.
+// - Custom iterators fill in a provided record.
+//   special "FOR" macro provided to do this automatically
 // - Insertion can work with distinct fields, a tuple, or a series of fields
 //   ending with a tuple.
 // - Fields need to be default-constructible
@@ -1302,10 +1311,6 @@ public:
 //   only update it when we move on the current level, not just on sub-levels
 //   (assuming the result tuples doesn't get modified by the client code)
 // - Union operation
-// - Join (static operation)
-//   only works for relations of the form Index<T,Table<T>>
-// - Identity (static operation)
-//   only works for relations where all columns are of the same type
 // - Instantiated nested sets are NOT guaranteed to be non-empty.
 
 // Primary extensions:
@@ -1489,42 +1494,6 @@ public:
 // - follow-if-exists operation
 //   that short-circuits at the first non-existent value
 
-// Uniquing infrastructure:
-// - works for any kind of Index class
-// - objects of a uniq'd class wrap a reference to a const instance of the
-//   underlying class
-// - calls to constant member functions simply get forwarded
-// - modifying operations are first looked up in the corresponding cache
-//   if not found, the operation is performed on a new copy
-//   the new copy is then added to the uniquing set
-
-// Extensions:
-// - automatically include (self,self)->self in union cache when constructing
-// - when performing an insertion, also update the union cache with the
-//   corresponding singleton union operation
-// - can't merge into a nested Index of a uniq'd Index
-// - can't mix fields and tuples when inserting
-//   need the args in a tuple, to cache
-// - constructor for uniq'd Indices can't take arguments
-// - uniquing indices requires that they can be compared
-//   have to implement operator< on all classes
-// - lots of copying:
-//   - the real instance of the Index gets copied when added to the Registry
-//   - two instances of each underlying Index exist:
-//     one on the Registry set, one on the const cell (as the Key)
-//   - args are copied on a fresh tuple when insert is called with references
-//     could save some copying if insert could work with rvalues
-//   - argument tuples are copied on the insert cache
-// - also cache the results of const operations
-//   (store as fields on the corresponding backer cell object)
-//   should have a generic Maybe<> template, which carries the value and a
-//   validity flag
-// - also support uniquing single tables
-// - caches are static variables, this complicates concurrent operation
-// - take advantage of uniquing in operations with special cases
-//   e.g. implement empty() as comparison with the empty-index container
-//   since they'll be uniqued
-
 namespace mi {
 
 // NAMED TUPLES ===============================================================
@@ -1667,17 +1636,11 @@ static const T& id(const T& val) {
 
 // BASE CONTAINERS & OPERATIONS ===============================================
 
-#define FOR_CNSTR(RES, EXPR, ...) \
+#define FOR(RES, EXPR) \
     if (bool cond__ = true) \
 	for (typename std::remove_reference<decltype(EXPR)>::type::Tuple RES; \
 	     cond__; cond__ = false) \
-	    for (auto it__ = (EXPR).iter(RES, __VA_ARGS__); it__.next();)
-
-#define FOR(RES, EXPR) FOR_CNSTR(RES, EXPR, boost::none)
-
-const boost::none_t any = boost::none;
-
-template<class Idx> Idx join(const Idx& l, const Idx& r);
+	    for (auto it__ = (EXPR).iter(RES); it__.next();)
 
 template<class Tag, class T> class Table {
 public:
@@ -1688,15 +1651,22 @@ public:
 private:
     std::set<T> store;
 public:
-    Table() {}
+    explicit Table() {}
     bool insert(const T& val) {
 	return store.insert(val).second;
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
     }
+    void remove(const T& val) {
+	store.erase(val);
+    }
+    void remove(const Tuple& tuple) {
+	remove(tuple.hd);
+    }
     bool copy(const Table& src) {
 	unsigned int old_sz = size();
+	// TODO: Is this optimized for sorted source collections?
 	store.insert(src.store.cbegin(), src.store.cend());
 	return old_sz != size();
     }
@@ -1717,9 +1687,8 @@ public:
 	    }
 	}
     }
-    template<class... Rest>
-    Iterator iter(Tuple& tgt, const Rest&... rest) const {
-	Iterator it(tgt, rest...);
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
     }
@@ -1729,14 +1698,11 @@ public:
     bool contains(const T& val) const {
 	return store.count(val) > 0;
     }
+    bool contains(const Tuple& tuple) const {
+	return contains(tuple.hd);
+    }
     unsigned int size() const {
 	return store.size();
-    }
-    friend int compare(const Table& lhs, const Table& rhs) {
-	return compare(lhs.store, rhs.store);
-    }
-    bool operator<(const Table& rhs) const {
-	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -1745,19 +1711,12 @@ public:
 	typename std::set<T>::const_iterator curr;
 	typename std::set<T>::const_iterator end;
 	T& tgt_fld;
-	const boost::optional<T> cnstr;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
-	explicit Iterator(Tuple& tgt, const boost::optional<T>& cnstr)
-	    : tgt_fld(tgt.hd), cnstr(cnstr) {}
+	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
 	void migrate(const Table& table) {
-	    if (cnstr) {
-		std::tie(curr, end) = table.store.equal_range(*cnstr);
-	    } else {
-		curr = table.store.cbegin();
-		end = table.store.cend();
-	    }
+	    curr = table.store.cbegin();
+	    end = table.store.cend();
 	    before_start = true;
 	}
 	bool next() {
@@ -1776,7 +1735,6 @@ public:
 };
 
 template<class Tag, class K, class S> class Index {
-    template<class A, class B, class C> friend class Index;
 public:
     typedef K Key;
     typedef S Sub;
@@ -1790,42 +1748,42 @@ private:
 private:
     std::map<Key,Sub> map;
 public:
-    Index() {}
-    Sub& follow(const Key& key) {
+    explicit Index() {}
+    Sub& of(const Key& key) {
 	return map[key];
     }
     const Sub& operator[](const Key& key) const {
-	// TODO: Should just create new entries?
-	try {
-	    return map.at(key);
-	} catch (const std::out_of_range& exc) {
-	    return dummy;
-	}
+	auto it = map.find(key);
+	return (it == map.cend()) ? dummy : it->second;
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
-	return follow(key).insert(rest...);
+	return of(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
     }
-    template<class C>
-    bool copy(const Index<Tag,K,C>& src) {
+    template<class... Rest>
+    void remove(const Key& key, const Rest&... rest) {
+	auto it = map.find(key);
+	if (it != map.cend()) {
+	    it->second.remove(rest...);
+	}
+    }
+    void remove(const Tuple& tuple) {
+	remove(tuple.hd, tuple.tl);
+    }
+    bool copy(const Index& src) {
 	bool grew = false;
 	for (const auto& p : src.map) {
-	    if (follow(p.first).copy(p.second)) {
+	    if (of(p.first).copy(p.second)) {
 		grew = true;
 	    }
 	}
 	return grew;
     }
-    template<class C, class... Rest>
-    bool copy(const C& src, const Key& key, const Rest&... rest) {
-	return follow(key).copy(src, rest...);
-    }
-    template<class... Rest>
-    Iterator iter(Tuple& tgt, const Rest&... rest) const {
-	Iterator it(tgt, rest...);
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
     }
@@ -1849,13 +1807,13 @@ public:
 	}
 	return true;
     }
-    bool contains(const Key& key) const {
-	return map.count(key) > 0;
-    }
     template<class... Rest>
     bool contains(const Key& key, const Rest&... rest) const {
-	const Sub& sub = (*this)[key];
-	return &sub != &dummy && sub.contains(rest...);
+	auto it = map.find(key);
+	return (it == map.cend()) ? false : it->second.contains(rest...);
+    }
+    bool contains(const Tuple& tuple) const {
+	return contains(tuple.hd, tuple.tl);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1864,12 +1822,6 @@ public:
 	}
 	return sz;
     }
-    friend int compare(const Index& lhs, const Index& rhs) {
-	return compare(lhs.map, rhs.map);
-    }
-    bool operator<(const Index& rhs) const {
-	return compare(*this, rhs) < 0;
-    }
 public:
 
     class Iterator {
@@ -1877,22 +1829,13 @@ public:
 	typename std::map<Key,Sub>::const_iterator map_curr;
 	typename std::map<Key,Sub>::const_iterator map_end;
 	Key& tgt_key;
-	const boost::optional<Key> cnstr;
 	typename Sub::Iterator sub_iter;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
-	template<class... Rest>
-	explicit Iterator(Tuple& tgt, const boost::optional<Key>& cnstr,
-			  const Rest&... rest)
-	    : tgt_key(tgt.hd), cnstr(cnstr), sub_iter(tgt.tl, rest...) {}
+	explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
 	void migrate(const Index& idx) {
-	    if (cnstr) {
-		std::tie(map_curr, map_end) = idx.map.equal_range(*cnstr);
-	    } else {
-		map_curr = idx.map.cbegin();
-		map_end = idx.map.cend();
-	    }
+	    map_curr = idx.map.cbegin();
+	    map_end = idx.map.cend();
 	    before_start = true;
 	}
 	bool next() {
@@ -1940,7 +1883,7 @@ public:
     explicit FlatIndex(const typename KeyTraits<Key>::SizeHint& hint,
 		       const Rest&... rest)
 	: array(KeyTraits<Key>::extract_size(hint), Sub(rest...)) {}
-    Sub& follow(const Key& key) {
+    Sub& of(const Key& key) {
 	return const_cast<Sub&>((*this)[key]);
     }
     const Sub& operator[](const Key& key) const {
@@ -1953,13 +1896,19 @@ public:
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
-	return follow(key).insert(rest...);
+	return of(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
     }
-    template<class C>
-    bool copy(const FlatIndex<Tag,K,C>& src) {
+    template<class... Rest>
+    void remove(const Key& key, const Rest&... rest) {
+	of(key).remove(rest...);
+    }
+    void remove(const Tuple& tuple) {
+	remove(tuple.hd, tuple.tl);
+    }
+    bool copy(const FlatIndex& src) {
 	unsigned int lim = src.array.size();
 	assert(array.size() == lim);
 	bool grew = false;
@@ -1970,13 +1919,8 @@ public:
 	}
 	return grew;
     }
-    template<class C, class... Rest>
-    bool copy(const C& src, const Key& key, const Rest&... rest) {
-	return follow(key).copy(src, rest...);
-    }
-    template<class... Rest>
-    Iterator iter(Tuple& tgt, const Rest&... rest) const {
-	Iterator it(tgt, rest...);
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
     }
@@ -2000,17 +1944,12 @@ public:
 	}
 	return true;
     }
-    bool contains(const Key& key) const {
-	unsigned int i = KeyTraits<Key>::extract_idx(key);
-#ifdef NDEBUG
-	return array[i].empty();
-#else
-	return array.at(i).empty();
-#endif
-    }
     template<class... Rest>
     bool contains(const Key& key, const Rest&... rest) const {
 	return (*this)[key].contains(rest...);
+    }
+    bool contains(const Tuple& tuple) const {
+	return contains(tuple.hd, tuple.tl);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -2018,20 +1957,6 @@ public:
 	    sz += entry.size();
 	}
 	return sz;
-    }
-    friend int compare(const FlatIndex& lhs, const FlatIndex& rhs) {
-	unsigned int lim = rhs.array.size();
-	assert(lhs.array.size() == lim);
-	for (unsigned int i = 0; i < lim; i++) {
-	    int sub_rel = compare(lhs.array[i], rhs.array[i]);
-	    if (sub_rel != 0) {
-		return sub_rel;
-	    }
-	}
-	return 0;
-    }
-    bool operator<(const FlatIndex& rhs) const {
-	return compare(*this, rhs) < 0;
     }
 public:
 
@@ -2041,30 +1966,14 @@ public:
 	typename std::vector<Sub>::const_iterator arr_curr;
 	typename std::vector<Sub>::const_iterator arr_end;
 	Key& tgt_key;
-	const boost::optional<unsigned int> cnstr;
 	typename Sub::Iterator sub_iter;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
-	template<class... Rest>
-	explicit Iterator(Tuple& tgt, const boost::optional<Key>& cnstr,
-			  const Rest&... rest)
-	    : tgt_key(tgt.hd),
-	      cnstr(cnstr
-		    ? boost::make_optional(KeyTraits<Key>::extract_idx(*cnstr))
-		    : boost::optional<unsigned int>()),
-	      sub_iter(tgt.tl, rest...) {}
+	explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
 	void migrate(const FlatIndex& idx) {
-	    if (cnstr) {
-		arr_idx = *cnstr;
-		assert(arr_idx < idx.array.size());
-		arr_curr = idx.array.cbegin() + arr_idx;
-		arr_end = arr_curr + 1;
-	    } else {
-		arr_idx = 0;
-		arr_curr = idx.array.cbegin();
-		arr_end = idx.array.cend();
-	    }
+	    arr_idx = 0;
+	    arr_curr = idx.array.cbegin();
+	    arr_end = idx.array.cend();
 	    before_start = true;
 	}
 	bool next() {
@@ -2186,14 +2095,21 @@ public:
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
     }
+    void remove(const T& val) {
+	unsigned int idx = KeyTraits<T>::extract_idx(val);
+	assert(idx < sizeof(Store) * 8);
+	bits &= ~(top_bit >> idx);
+    }
+    void remove(const Tuple& tuple) {
+	remove(tuple.hd);
+    }
     bool copy(const BitSet& src) {
 	Store prev_bits = bits;
 	bits |= src.bits;
 	return prev_bits != bits;
     }
-    template<class... Rest>
-    Iterator iter(Tuple& tgt, const Rest&... rest) const {
-	Iterator it(tgt, rest...);
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
     }
@@ -2204,6 +2120,9 @@ public:
 	unsigned int idx = KeyTraits<T>::extract_idx(val);
 	return bits & (top_bit >> idx);
     }
+    bool contains(const Tuple& tuple) const {
+	return contains(tuple.hd);
+    }
     unsigned int size() const {
 	Store v = bits;
 	unsigned int count = 0;
@@ -2212,30 +2131,20 @@ public:
 	}
 	return count;
     }
-    friend int compare(const BitSet& lhs, const BitSet& rhs) {
-	return compare(lhs.bits, rhs.bits);
-    }
-    bool operator<(const BitSet& rhs) const {
-	return bits < rhs.bits;
-    }
 public:
 
     class Iterator {
     private:
 	unsigned int curr;
 	const unsigned int lim;
-	const bool constrained;
 	T& tgt_fld;
 	const typename BitSet::Store* bits;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
-	explicit Iterator(Tuple& tgt, const boost::optional<T>& cnstr)
-	    : lim(cnstr ? KeyTraits<T>::extract_idx(*cnstr) + 1
-		  : sizeof(typename BitSet::Store) * 8),
-	      constrained(cnstr), tgt_fld(tgt.hd) {}
+	explicit Iterator(Tuple& tgt)
+	    : lim(sizeof(typename BitSet::Store) * 8), tgt_fld(tgt.hd) {}
 	void migrate(const BitSet& set) {
-	    curr = constrained ? lim - 1 : 0;
+	    curr = 0;
 	    bits = &(set.bits);
 	    before_start = true;
 	}
@@ -2258,7 +2167,6 @@ public:
 };
 
 template<class Tag, class K, class S> class LightIndex {
-    template<class A, class B, class C> friend class LightIndex;
     typedef std::forward_list<std::pair<const K,S>> List;
 public:
     typedef K Key;
@@ -2287,8 +2195,8 @@ private:
 	return false;
     }
 public:
-    LightIndex() {}
-    Sub& follow(const Key& key) {
+    explicit LightIndex() {}
+    Sub& of(const Key& key) {
 	typename List::const_iterator cpos;
 	typename List::iterator pos =
 	    find(key, cpos)
@@ -2299,35 +2207,36 @@ public:
     }
     const Sub& operator[](const Key& key) const {
 	typename List::const_iterator pos;
-	if (!find(key, pos)) {
-	    return dummy;
-	}
-	return pos->second;
+	return find(key, pos) ? pos->second : dummy;
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
-	return follow(key).insert(rest...);
+	return of(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
     }
-    template<class C>
-    bool copy(const LightIndex<Tag,K,C>& src) {
+    template<class... Rest>
+    void remove(const Key& key, const Rest&... rest) {
+	typename List::const_iterator pos;
+	if (find(key, pos)) {
+	    pos->second.remove(rest...);
+	}
+    }
+    void remove(const Tuple& tuple) {
+	remove(tuple.hd, tuple.tl);
+    }
+    bool copy(const LightIndex& src) {
 	bool grew = false;
 	for (const auto& p : src.list) {
-	    if (follow(p.first).copy(p.second)) {
+	    if (of(p.first).copy(p.second)) {
 		grew = true;
 	    }
 	}
 	return grew;
     }
-    template<class C, class... Rest>
-    bool copy(const C& src, const Key& key, const Rest&... rest) {
-	return follow(key).copy(src, rest...);
-    }
-    template<class... Rest>
-    Iterator iter(Tuple& tgt, const Rest&... rest) const {
-	Iterator it(tgt, rest...);
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
     }
@@ -2351,14 +2260,13 @@ public:
 	}
 	return true;
     }
-    bool contains(const Key& key) const {
-	typename List::const_iterator dummy;
-	return find(key, dummy);
-    }
     template<class... Rest>
     bool contains(const Key& key, const Rest&... rest) const {
-	const Sub& sub = (*this)[key];
-	return &sub != &dummy && sub.contains(rest...);
+	typename List::const_iterator pos;
+	return find(key, pos) ? pos->second.contains(rest...) : false;
+    }
+    bool contains(const Tuple& tuple) const {
+	return contains(tuple.hd, tuple.tl);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -2367,12 +2275,6 @@ public:
 	}
 	return sz;
     }
-    friend int compare(const LightIndex& lhs, const LightIndex& rhs) {
-	return map_compare(lhs.list, rhs.list);
-    }
-    bool operator<(const LightIndex& rhs) const {
-	return compare(*this, rhs) < 0;
-    }
 public:
 
     class Iterator {
@@ -2380,26 +2282,13 @@ public:
 	typename List::const_iterator list_curr;
 	typename List::const_iterator list_end;
 	Key& tgt_key;
-	const boost::optional<Key> cnstr;
 	typename Sub::Iterator sub_iter;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
-	template<class... Rest>
-	explicit Iterator(Tuple& tgt, const boost::optional<Key>& cnstr,
-			  const Rest&... rest)
-	    : tgt_key(tgt.hd), cnstr(cnstr), sub_iter(tgt.tl, rest...) {}
+	explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
 	void migrate(const LightIndex& idx) {
-	    if (cnstr) {
-		bool found = idx.find(*cnstr, list_curr);
-		list_end = list_curr;
-		if (found) {
-		    ++list_end;
-		}
-	    } else {
-		list_curr = idx.list.cbegin();
-		list_end = idx.list.cend();
-	    }
+	    list_curr = idx.list.cbegin();
+	    list_end = idx.list.cend();
 	    before_start = true;
 	}
 	bool next() {
@@ -2425,327 +2314,6 @@ public:
 
 template<class Tag, class K, class S>
 const S LightIndex<Tag,K,S>::dummy;
-
-template<class TagA, class TagB, class T> class BiRel;
-
-template<class TagA, class TagB, class T>
-BiRel<TagA,TagB,T> join(const BiRel<TagA,TagB,T>& l,
-			const BiRel<TagA,TagB,T>& r) {
-    BiRel<TagA,TagB,T> res;
-    auto zip = [&](const std::set<T>& as, const std::set<T>& bs) {
-	for (const T& a : as) {
-	    for (const T& b : bs) {
-		res.insert(a, b);
-	    }
-	}
-    };
-    join_zip<1>(l.b2a, r.a2b, zip);
-    return res;
-}
-
-// TODO: Not offering visibility into the nested container.
-// Missing operations:
-// - merging into nested table
-// - operator[]
-// - key iteration
-// - key contains
-// Could fix this by storing a2b and b2a as Index<Table>.
-// (this is a special case of a multi-index)
-template<class TagA, class TagB, class T> class BiRel {
-    friend BiRel join<>(const BiRel& l, const BiRel& r);
-public:
-    typedef T Key;
-    typedef boost::none_t Sub; // dummy declaration
-    class Iterator;
-    friend Iterator;
-    typedef boost::none_t TopIter; // dummy declaration
-    typedef boost::none_t ConstTopIter; // dummy declaration
-    typedef NamedTuple<TagA,T,NamedTuple<TagB,T,Nil>> Tuple;
-private:
-    std::map<T,std::set<T>> a2b;
-    std::map<T,std::set<T>> b2a;
-public:
-    BiRel() {}
-    bool insert(const T& a, const T& b) {
-	if (a2b[a].insert(b).second) {
-	    bool added = b2a[b].insert(a).second;
-	    assert(added);
-	    return true;
-	}
-	return false;
-    }
-    bool insert(const Tuple& tuple) {
-	return insert(tuple.hd, tuple.tl.hd);
-    }
-    bool copy(const BiRel& src) {
-	bool grew = false;
-	for (const auto& p : src.a2b) {
-	    const T& a = p.first;
-	    for (const T& b : p.second) {
-		if (insert(a, b)) {
-		    grew = true;
-		}
-	    }
-	}
-	return grew;
-    }
-    template<class... Rest>
-    Iterator iter(Tuple& tgt, const Rest&... rest) const {
-	Iterator it(tgt, rest...);
-	it.migrate(*this);
-	return it;
-    }
-    bool empty() const {
-	for (const auto& p : a2b) {
-	    if (!p.second.empty()) {
-		return false;
-	    }
-	}
-	return true;
-    }
-    unsigned int size() const {
-	unsigned int sz = 0;
-	for (const auto& p : a2b) {
-	    sz += p.second.size();
-	}
-	return sz;
-    }
-    friend int compare(const BiRel& lhs, const BiRel& rhs) {
-	return compare(lhs.a2b, rhs.a2b);
-    }
-    bool operator<(const BiRel& rhs) const {
-	return compare(*this, rhs) < 0;
-    }
-public:
-
-    // TODO: Could use the b2a container instead, if b_cnstr && !a_cnstr
-    class Iterator {
-    private:
-	typename std::map<T,std::set<T>>::const_iterator map_curr;
-	typename std::map<T,std::set<T>>::const_iterator map_end;
-	typename std::set<T>::const_iterator set_curr;
-	typename std::set<T>::const_iterator set_end;
-	T& a_tgt;
-	T& b_tgt;
-	const boost::optional<T> a_cnstr;
-	const boost::optional<T> b_cnstr;
-	bool before_start = true;
-    private:
-	bool set_sub_iter() {
-	    if (map_curr == map_end) {
-		return false;
-	    }
-	    a_tgt = map_curr->first;
-	    if (b_cnstr) {
-		std::tie(set_curr, set_end) =
-		    map_curr->second.equal_range(*b_cnstr);
-	    } else {
-		set_curr = map_curr->second.cbegin();
-		set_end  = map_curr->second.cend();
-	    }
-	    return true;
-	}
-    public:
-	explicit Iterator(Tuple& tgt,
-			  const boost::optional<T>& a_cnstr = boost::none,
-			  const boost::optional<T>& b_cnstr = boost::none)
-	    : a_tgt(tgt.hd), b_tgt(tgt.tl.hd),
-	      a_cnstr(a_cnstr), b_cnstr(b_cnstr) {}
-	void migrate(const BiRel& birel) {
-	    if (a_cnstr) {
-		std::tie(map_curr, map_end) = birel.a2b.equal_range(*a_cnstr);
-	    } else {
-		map_curr = birel.a2b.cbegin();
-		map_end  = birel.a2b.cend();
-	    }
-	    before_start = true;
-	}
-	bool next() {
-	    if (before_start) {
-		before_start = false;
-		if (!set_sub_iter()) {
-		    return false;
-		}
-	    }
-	    while (set_curr == set_end) {
-		++map_curr;
-		if (!set_sub_iter()) {
-		    return false;
-		}
-	    }
-	    b_tgt = *set_curr;
-	    ++set_curr;
-	    return true;
-	}
-    };
-};
-
-// UNIQUING INFRASTRUCTURE ====================================================
-
-template<class Idx> class Immut;
-template<class Idx> class Uniq;
-
-template<class Idx>
-Uniq<Idx> join(const Uniq<Idx>& l, const Uniq<Idx>& r) {
-    static std::map<std::pair<Ref<Immut<Idx>>,Ref<Immut<Idx>>>,
-		    Ref<Immut<Idx>>> cache;
-    Ref<Immut<Idx>>& cached = cache[std::make_pair(l.cell_ref, r.cell_ref)];
-    if (!cached.valid()) {
-	Idx idx = join(l.real_idx(), r.real_idx());
-	cached = Immut<Idx>::unique(idx);
-    }
-    return Uniq<Idx>(cached);
-}
-
-template<class Idx> class Immut {
-    friend Registry<Immut>;
-    typedef Idx Key;
-private:
-    // Can't simply declare this as a static field, because of initialization
-    // order issues.
-    static Registry<Immut>& store() {
-	static Registry<Immut> store;
-	return store;
-    }
-public:
-    static Ref<Immut> unique(const Idx& idx) {
-	return store().add(idx).ref;
-    }
-    static Immut& cell_for(Ref<Immut> ref) {
-	return store()[ref];
-    }
-    static Ref<Immut> zero() {
-	static Ref<Immut> cached;
-	if (!cached.valid()) {
-	    cached = unique(Idx());
-	}
-	return cached;
-    }
-private:
-    std::map<typename Idx::Tuple,Ref<Immut>> insert_cache;
-    std::map<Ref<Immut>,Ref<Immut>> copy_cache;
-public:
-    const Idx backer;
-    const Ref<Immut> ref;
-private:
-    explicit Immut(const Idx& backer, Ref<Immut> ref)
-	: backer(backer), ref(ref) {}
-    bool merge() const {
-	return false;
-    }
-public:
-    Ref<Immut> insert(const typename Idx::Tuple& tuple) {
-	Ref<Immut>& cached = insert_cache[tuple];
-	if (!cached.valid()) {
-	    Idx new_idx = backer;
-	    new_idx.insert(tuple);
-	    cached = unique(new_idx);
-	}
-	return cached;
-    }
-    Ref<Immut> copy(Ref<Immut> src) {
-	Ref<Immut>& cached = copy_cache[src];
-	if (!cached.valid()) {
-	    cached = copy(cell_for(src).backer);
-	}
-	return cached;
-    }
-    Ref<Immut> copy(const Idx& src) {
-	Idx new_idx = backer;
-	new_idx.copy(src);
-	return unique(new_idx);
-    }
-};
-
-template<class Idx> class Uniq {
-    friend Uniq join<>(const Uniq& r, const Uniq& s);
-public:
-    typedef typename Idx::Key Key;
-    typedef typename Idx::Sub Sub;
-    class Iterator;
-    friend Iterator;
-    typedef boost::none_t TopIter; // dummy declaration
-    typedef typename Idx::ConstTopIter ConstTopIter;
-    typedef typename Idx::Tuple Tuple;
-private:
-    Ref<Immut<Idx>> cell_ref;
-private:
-    Immut<Idx>& immut_cell() {
-	return Immut<Idx>::cell_for(cell_ref);
-    }
-    const Idx& real_idx() const {
-	return Immut<Idx>::cell_for(cell_ref).backer;
-    }
-    explicit Uniq(Ref<Immut<Idx>> cell_ref) : cell_ref(cell_ref) {}
-public:
-    explicit Uniq() : Uniq(Immut<Idx>::zero()) {}
-    const Sub& operator[](const Key& key) const {
-	return real_idx()[key];
-    }
-    template<class... Rest>
-    bool insert(const Key& key, const Rest&... rest) {
-	return insert(Tuple(key, rest...));
-    }
-    bool insert(const Tuple& tuple) {
-	Ref<Immut<Idx>> old_cell = cell_ref;
-	cell_ref = immut_cell().insert(tuple);
-	return old_cell != cell_ref;
-    }
-    bool copy(const Uniq& src) {
-	Ref<Immut<Idx>> old_cell = cell_ref;
-	cell_ref = immut_cell().copy(src.cell_ref);
-	return old_cell != cell_ref;
-    }
-    bool copy(const Idx& src) {
-	Ref<Immut<Idx>> old_cell = cell_ref;
-	cell_ref = immut_cell().copy(src);
-	return old_cell != cell_ref;
-    }
-    template<class... Rest>
-    Iterator iter(Tuple& tgt, const Rest&... rest) const {
-	Iterator it(tgt, rest...);
-	it.migrate(*this);
-	return it;
-    }
-    ConstTopIter begin() const {
-	return real_idx().begin();
-    }
-    ConstTopIter end() const {
-	return real_idx().end();
-    }
-    bool empty() const {
-	return real_idx().empty();
-    }
-    template<class... Rest>
-    bool contains(const Key& key, const Rest&... rest) const {
-	return real_idx().contains(key, rest...);
-    }
-    unsigned int size() const {
-	return real_idx().size();
-    }
-    friend int compare(const Uniq& lhs, const Uniq& rhs) {
-	return compare(lhs.real_idx(), rhs.real_idx());
-    }
-    bool operator<(const Uniq& rhs) const {
-	return real_idx() < rhs.real_idx();
-    }
-public:
-
-    class Iterator {
-    private:
-	typename Idx::Iterator real_iter;
-    public:
-	template<class... Rest>
-	explicit Iterator(Tuple& tgt, const Rest&... rest)
-	    : real_iter(tgt, rest...) {}
-	void migrate(const Uniq& uniqd) {
-	    real_iter.migrate(uniqd.real_idx());
-	}
-	bool next() {
-	    return real_iter.next();
-	}
-    };
-};
 
 } // namespace mi
 
