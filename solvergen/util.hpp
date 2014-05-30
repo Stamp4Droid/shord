@@ -443,168 +443,112 @@ public:
     }
 };
 
+namespace mi {
+template<class Tag, class T> class Table;
+template<class Tag, class K, class S> class Index;
+}
+
+// CAUTION: Contents are destroyed lazily!
 template<class T, unsigned int LIMIT> class FuzzyStack {
+    // TODO: These should be with K == FuzzyStack<T,LIMIT>, but partial
+    // specialization is not allowed on friend class declarations.
+    template<class Tag, class K> friend class mi::Table;
+    template<class Tag, class K, class S> friend class mi::Index;
 private:
-    class Contents;
-    typedef std::map<T,Contents> Map;
-    typedef typename Map::value_type Node; // std::pair<const T,Contents>
-    class Contents {
-    public:
-	Node* const parent;
-	Map children;
-    public:
-	Contents(Node* parent = NULL) : parent(parent) {}
-    };
-private:
-    static Node* root() {
-	static Node root;
-	return &root;
-    }
-    static bool at_root(const Node* node) {
-	return node->second.parent == NULL;
-    }
-    static unsigned int height(const Node* node) {
-	unsigned int h = 0;
-	for (; !at_root(node); node = parent(node)) {
-	    h++;
-	}
-	return h;
-    }
-    static Node* follow(Node* node, const T& val) {
-	return &(*(node->second.children.emplace(val, node).first));
-    }
-    static const T& value(const Node* node) {
-	return node->first;
-    }
-    static const Node* parent(const Node* node) {
-	Node* p = node->second.parent;
-	assert(p != NULL);
-	return p;
-    }
-    static Node* parent(Node* node) {
-	return const_cast<Node*>(parent(const_cast<const Node*>(node)));
-    }
-    static Node* skip_bottom(const Node* node) {
-	const Node* p = parent(node);
-	if (at_root(p)) {
-	    return root();
-	}
-	return follow(skip_bottom(p), value(node));
-    }
-private:
-    bool exact;
-    Node* node;
-private:
-    void append(const Node* other, unsigned int left) {
-	if (at_root(other)) {
-	    return;
-	}
-	if (left == 0) {
-	    exact = false;
-	    return;
-	}
-	append(parent(other), left - 1);
-	node = follow(node, value(other));
-    }
-    void append(const Node* l, const Node* r, unsigned int left) {
-	if (at_root(r)) {
-	    append(l, left);
-	    return;
-	}
-	if (left == 0) {
-	    exact = false;
-	    return;
-	}
-	append(l, parent(r), left - 1);
-	node = follow(node, value(r));
-    }
-    // CAUTION: Not checking if the depth is low enough for exact matching.
-    explicit FuzzyStack(bool exact, Node* node) : exact(exact), node(node) {}
+    T contents_[LIMIT];
+    unsigned char size_ = 0;
+    bool exact_ = true;
 public:
-    explicit FuzzyStack() : FuzzyStack(true, root()) {}
+    explicit FuzzyStack() {}
+    FuzzyStack(const FuzzyStack& rhs) : size_(rhs.size_), exact_(rhs.exact_) {
+	std::copy_backward(rhs.contents_ + LIMIT - size_,
+			   rhs.contents_ + LIMIT,
+			   contents_ + LIMIT);
+    }
+    FuzzyStack& operator=(const FuzzyStack& rhs) {
+	size_  = rhs.size_;
+	exact_ = rhs.exact_;
+	std::copy_backward(rhs.contents_ + LIMIT - size_,
+			   rhs.contents_ + LIMIT,
+			   contents_ + LIMIT);
+	return *this;
+    }
     bool empty() const {
-	return at_root(node);
-    }
-    bool is_exact() const {
-	return exact;
-    }
-    bool covers(const FuzzyStack& rhs) const {
-	if (exact) {
-	    return false;
-	}
-	const Node* l = node;
-	const Node* r = rhs.node;
-	while (true) {
-	    if (at_root(l)) {
-		return !at_root(r) || rhs.exact;
-	    }
-	    if (at_root(r)) {
-		return false;
-	    }
-	    if (value(l) != value(r)) {
-		return false;
-	    }
-	    l = parent(l);
-	    r = parent(r);
-	}
-    }
-    const T& top() const {
-	return value(node);
-    }
-    FuzzyStack pop() const {
-	assert(!empty());
-	return FuzzyStack(exact, parent(node));
+	return size_ == 0;
     }
     unsigned int size() const {
-	return height(node);
+	return size_;
     }
-    FuzzyStack tighten() const {
-	return FuzzyStack(true, node);
+    bool exact() const {
+	return exact_;
     }
-    FuzzyStack relax() const {
-	return FuzzyStack(false, node);
-    }
-    FuzzyStack push(const T& val) const {
-	if (height(node) < LIMIT) {
-	    return FuzzyStack(exact, follow(node, val));
-	} else {
-	    return append(FuzzyStack(true, follow(root(), val)));
-	}
-    }
-    FuzzyStack pop_bottom() const {
+    const T& top() const {
 	assert(!empty());
-	return FuzzyStack(exact, skip_bottom(node));
+	return contents_[LIMIT - size_];
     }
-    FuzzyStack append(const FuzzyStack& rhs) const {
-	if (empty()) {
-	    if (exact) {
-		return rhs;
-	    } else {
-		return rhs.relax();
-	    }
+    void push(const T& val) {
+	if (size_ == LIMIT) {
+	    pop_bottom();
+	    exact_ = false;
 	}
-	if (!rhs.exact) {
-	    return rhs;
+	size_++;
+	contents_[LIMIT - size_] = val;
+    }
+    void pop() {
+	assert(!empty());
+	size_--;
+    }
+    void append(const FuzzyStack& rhs) {
+	if (!rhs.exact_) {
+	    *this = rhs;
+	    return;
 	}
-	if (rhs.empty()) {
-	    return *this;
+	if (size_ + rhs.size_ > LIMIT) {
+	    pop_bottom(size_ + rhs.size_ - LIMIT);
+	    exact_ = false;
 	}
-	FuzzyStack res(exact, root());
-	res.append(node, rhs.node, LIMIT);
-	return res;
+	std::copy_backward(rhs.contents_ + LIMIT - rhs.size_,
+			   rhs.contents_ + LIMIT,
+			   contents_ + LIMIT - size_);
+	size_ += rhs.size_;
+    }
+    void clear() {
+	size_ = 0;
+	exact_ = true;
+    }
+    const T* begin() const {
+	return contents_ + LIMIT - size_;
+    }
+    const T* end() const {
+	return contents_ + LIMIT;
+    }
+    void push_bottom(const T& val) {
+	assert(size_ < LIMIT);
+	std::move(contents_ + LIMIT - size_,
+		  contents_ + LIMIT,
+		  contents_ + LIMIT - size_ - 1);
+	contents_[LIMIT - 1] = val;
+	size_++;
+    }
+    void pop_bottom(unsigned int num = 1) {
+	assert(size_ >= num);
+	std::move_backward(contents_ + LIMIT - size_,
+			   contents_ + LIMIT - num,
+			   contents_ + LIMIT);
+	size_ -= num;
     }
     template<class... ArgTs>
     friend void print(std::ostream& os, const FuzzyStack& s, bool reverse,
 		      const ArgTs&... args) {
-	if (!s.exact && reverse) {
+	if (!s.exact_ && reverse) {
 	    os << " *";
 	}
 	std::list<T> stage;
-	for (const Node* n = s.node; !at_root(n); n = parent(n)) {
+	for (const T& slot : s) {
 	    if (reverse) {
-		stage.push_front(value(n));
+		stage.push_front(slot);
 	    } else {
-		stage.push_back(value(n));
+		stage.push_back(slot);
 	    }
 	}
 	for (const T& val : stage) {
@@ -616,22 +560,18 @@ public:
 		os << " ";
 	    }
 	}
-	if (!s.exact && !reverse) {
+	if (!s.exact_ && !reverse) {
 	    os << "* ";
 	}
     }
     friend std::ostream& operator<<(std::ostream& os, const FuzzyStack& s) {
-	for (const Node* n = s.node; !at_root(n); n = parent(n)) {
-	    os << value(n) << " ";
+	for (const T& slot : s) {
+	    os << slot << " ";
 	}
-	if (!s.exact) {
+	if (!s.exact_) {
 	    os << "* ";
 	}
 	return os;
-    }
-    bool operator==(const FuzzyStack& rhs) const {
-	// Stacks are uniqued; this is the only case of equality.
-	return exact == rhs.exact && node == rhs.node;
     }
 };
 
@@ -764,7 +704,7 @@ unsigned int current_time() {
 // }
 
 namespace mi {
-    template<typename T> struct KeyTraits;
+template<typename T> struct KeyTraits;
 }
 template<typename T> class Ref;
 template<typename T> class Registry;
@@ -1836,39 +1776,44 @@ private:
 public:
     explicit Table() {}
     bool insert(const Key& stack) {
-	if (at_star) {
+	Table* node = this;
+	if (node->at_star) {
 	    return false;
 	}
-	if (stack.empty()) {
-	    if (stack.is_exact()) {
-		if (at_here) {
-		    return false;
-		}
-		at_here = true;
-		return true;
+	for (const T& slot : stack) {
+	    node = &(node->children[slot]);
+	    if (node->at_star) {
+		return false;
 	    }
-	    at_star = true;
-	    at_here = false;
-	    children.clear();
+	}
+	if (stack.exact()) {
+	    if (node->at_here) {
+		return false;
+	    }
+	    node->at_here = true;
 	    return true;
 	}
-	return children[stack.top()].insert(stack.pop());
+	node->at_star = true;
+	node->at_here = false;
+	node->children.clear();
+	return true;
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
     }
     void remove(const Key& stack) {
-	if (stack.empty()) {
-	    at_here = false;
-	    if (!stack.is_exact()) {
-		at_star = false;
-		children.clear();
+	Table* node = this;
+	for (const T& slot : stack) {
+	    auto it = node->children.find(slot);
+	    if (it == node->children.end()) {
+		return;
 	    }
-	} else {
-	    auto it = children.find(stack.top());
-	    if (it != children.end()) {
-		it->second.remove(stack.pop());
-	    }
+	    node = &(it->second);
+	}
+	node->at_here = false;
+	if (!stack.exact()) {
+	    node->at_star = false;
+	    node->children.clear();
 	}
     }
     void remove(const Tuple& tuple) {
@@ -1913,20 +1858,21 @@ public:
 	return true;
     }
     bool contains(const Key& stack) const {
-	if (at_star) {
+	const Table* node = this;
+	if (node->at_star) {
 	    return true;
 	}
-	if (!stack.empty()) {
-	    auto it = children.find(stack.top());
-	    if (it == children.cend()) {
+	for (const T& slot : stack) {
+	    auto it = node->children.find(slot);
+	    if (it == node->children.cend()) {
 		return false;
 	    }
-	    return it->second.contains(stack.pop());
+	    node = &(it->second);
+	    if (node->at_star) {
+		return true;
+	    }
 	}
-	if (stack.is_exact()) {
-	    return at_here;
-	}
-	return false;
+	return stack.exact() && node->at_here;
     }
     bool contains(const Tuple& tuple) const {
 	return contains(tuple.hd);
@@ -1959,7 +1905,7 @@ public:
 	void migrate(const Table& tab) {
 	    pos_stack.clear();
 	    pos_stack.emplace_front(tab);
-	    tgt_fld = Key();
+	    tgt_fld.clear();
 	    phase = Phase::STAR;
 	}
 	bool next() {
@@ -1967,14 +1913,14 @@ public:
 		Config& curr_pos = pos_stack.front();
 		switch (phase) {
 		case Phase::STAR:
-		    tgt_fld = tgt_fld.relax();
+		    tgt_fld.exact_ = false;
 		    phase = Phase::HERE;
 		    if (curr_pos.tab.at_star) {
 			return true;
 		    }
 		    break;
 		case Phase::HERE:
-		    tgt_fld = tgt_fld.tighten();
+		    tgt_fld.exact_ = true;
 		    phase = Phase::FIRST_CHILD;
 		    if (curr_pos.tab.at_here) {
 			return true;
@@ -1989,13 +1935,13 @@ public:
 			if (pos_stack.empty()) {
 			    return false;
 			}
-			tgt_fld = tgt_fld.pop_bottom();
+			tgt_fld.pop_bottom();
 			phase = Phase::NEXT_CHILD;
 		    } else {
 			const auto& p = *(curr_pos.ch_curr);
 			pos_stack.emplace_front(p.second);
-			assert(tgt_fld.is_exact());
-			tgt_fld = Key().push(p.first).append(tgt_fld);
+			assert(tgt_fld.exact());
+			tgt_fld.push_bottom(p.first);
 			phase = Phase::STAR;
 		    }
 		    break;
@@ -2023,46 +1969,60 @@ private:
     Sub at_star;
     Sub at_here;
     std::map<T,Index> children;
+private:
+    template<class... Rest>
+    void clear(const Rest&... rest) {
+	at_star.remove(rest...);
+	at_here.remove(rest...);
+	clear_children(rest...);
+    }
+    template<class... Rest>
+    void clear_children(const Rest&... rest) {
+	for (auto& p : children) {
+	    p.second.clear(rest...);
+	}
+    }
 public:
     explicit Index() {}
     template<class... Rest>
     bool insert(const Key& stack, const Rest&... rest) {
-	if (stack.empty() && !stack.is_exact()) {
-	    if (at_star.insert(rest...)) {
-		at_here.remove(rest...);
-		for (auto& p : children) {
-		    p.second.remove(stack, rest...);
-		}
+	Index* node = this;
+	for (const T& slot : stack) {
+	    if (node->at_star.contains(rest...)) {
+		return false;
+	    }
+	    node = &(node->children[slot]);
+	}
+	if (!stack.exact()) {
+	    if (node->at_star.insert(rest...)) {
+		node->at_here.remove(rest...);
+		node->clear_children(rest...);
 		return true;
 	    }
 	    return false;
 	}
-	if (at_star.contains(rest...)) {
+	if (node->at_star.contains(rest...)) {
 	    return false;
 	}
-	if (stack.empty()) {
-	    return at_here.insert(rest...);
-	}
-	return children[stack.top()].insert(stack.pop(), rest...);
+	return node->at_here.insert(rest...);
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
     }
     template<class... Rest>
     void remove(const Key& stack, const Rest&... rest) {
-	if (stack.empty()) {
+	Index* node = this;
+	for (const T& slot : stack) {
+	    auto it = node->children.find(slot);
+	    if (it == node->children.end()) {
+		return;
+	    }
+	    node = &(it->second);
+	}
+	if (stack.exact()) {
 	    at_here.remove(rest...);
-	    if (!stack.is_exact()) {
-		at_star.remove(rest...);
-		for (auto& p : children) {
-		    p.second.remove(stack, rest...);
-		}
-	    }
 	} else {
-	    auto it = children.find(stack.top());
-	    if (it != children.end()) {
-		it->second.remove(stack.pop(), rest...);
-	    }
+	    node->clear(rest...);
 	}
     }
     void remove(const Tuple& tuple) {
@@ -2101,20 +2061,21 @@ public:
     }
     template<class... Rest>
     bool contains(const Key& stack, const Rest&... rest) const {
-	if (at_star.contains(rest...)) {
+	const Index* node = this;
+	if (node->at_star.contains(rest...)) {
 	    return true;
 	}
-	if (stack.empty()) {
-	    if (!stack.is_exact()) {
+	for (const T& slot : stack) {
+	    auto it = node->children.find(slot);
+	    if (it == node->children.cend()) {
 		return false;
 	    }
-	    return at_here.contains(rest...);
+	    node = &(it->second);
+	    if (node->at_star.contains(rest...)) {
+		return true;
+	    }
 	}
-	auto it = children.find(stack.top());
-	if (it == children.cend()) {
-	    return false;
-	}
-	return it->second.contains(stack.pop(), rest...);
+	return stack.exact() && node->at_here.contains(rest...);
     }
     bool contains(const Tuple& tuple) const {
 	return contains(tuple.hd, tuple.tl);
@@ -2152,14 +2113,14 @@ public:
 		Config& curr_pos = pos_stack.front();
 		switch (phase) {
 		case Phase::BEFORE_STAR:
-		    cached_key = cached_key.relax();
+		    cached_key.exact_ = false;
 		    phase = Phase::AFTER_STAR;
 		    if (!curr_pos.idx.at_star.empty()) {
 			return;
 		    }
 		    break;
 		case Phase::AFTER_STAR:
-		    cached_key = cached_key.tighten();
+		    cached_key.exact_ = true;
 		    phase = Phase::AFTER_HERE;
 		    if (!curr_pos.idx.at_here.empty()) {
 			return;
@@ -2174,13 +2135,13 @@ public:
 			if (pos_stack.empty()) {
 			    return;
 			}
-			cached_key = cached_key.pop_bottom();
+			cached_key.pop_bottom();
 			phase = Phase::NEXT_CHILD;
 		    } else {
 			const auto& p = *(curr_pos.ch_curr);
 			pos_stack.emplace_front(p.second);
-			assert(cached_key.is_exact());
-			cached_key = Key().push(p.first).append(cached_key);
+			assert(cached_key.exact());
+			cached_key.push_bottom(p.first);
 			phase = Phase::BEFORE_STAR;
 		    }
 		    break;
@@ -2248,7 +2209,7 @@ public:
 	void migrate(const Index& idx) {
 	    pos_stack.clear();
 	    pos_stack.emplace_front(idx);
-	    tgt_key = Key();
+	    tgt_key.clear();
 	    phase = Phase::BEFORE_STAR;
 	}
 	bool next() {
@@ -2256,7 +2217,7 @@ public:
 		Config& curr_pos = pos_stack.front();
 		switch (phase) {
 		case Phase::BEFORE_STAR:
-		    tgt_key = tgt_key.relax();
+		    tgt_key.exact_ = false;
 		    sub_iter.migrate(curr_pos.idx.at_star);
 		    phase = Phase::STAR;
 		    break;
@@ -2264,7 +2225,7 @@ public:
 		    if (sub_iter.next()) {
 			return true;
 		    }
-		    tgt_key = tgt_key.tighten();
+		    tgt_key.exact_ = true;
 		    sub_iter.migrate(curr_pos.idx.at_here);
 		    phase = Phase::HERE;
 		    break;
@@ -2283,13 +2244,13 @@ public:
 			if (pos_stack.empty()) {
 			    return false;
 			}
-			tgt_key = tgt_key.pop_bottom();
+			tgt_key.pop_bottom();
 			phase = Phase::NEXT_CHILD;
 		    } else {
 			const auto& p = *(curr_pos.ch_curr);
 			pos_stack.emplace_front(p.second);
-			assert(tgt_key.is_exact());
-			tgt_key = Key().push(p.first).append(tgt_key);
+			assert(tgt_key.exact());
+			tgt_key.push_bottom(p.first);
 			phase = Phase::BEFORE_STAR;
 		    }
 		    break;
@@ -2305,7 +2266,6 @@ template<class Tag, class T, unsigned int LIMIT, class S>
 const S Index<Tag,FuzzyStack<T,LIMIT>,S>::dummy;
 
 template<class Tag, class K, class S> class FlatIndex {
-    template<class A, class B, class C> friend class FlatIndex;
 public:
     typedef K Key;
     typedef S Sub;

@@ -75,7 +75,7 @@ typedef FuzzyStack<int,3> Stack;
 
 void print_stack(const Stack& s) {
     std::cout << "size: " << s.size()
-	      << ", exact: " << s.is_exact()
+	      << ", exact: " << s.exact()
 	      << ", contents: ";
     print(std::cout, s, false);
     std::cout << std::endl;
@@ -205,27 +205,33 @@ int main() {
 
     mi::Table<a,Stack> stacks;
     mi::Index<a,Stack,mi::Table<b,Stack>> id;
-    auto s54 = Stack().push(4).push(5);
+    Stack s54;
+    s54.push(4); s54.push(5);
     print_stack(s54);
     stacks.insert(s54);
     id.insert(s54, s54);
-    auto s321 = Stack().push(1).push(2).push(3);
+    Stack s321;
+    s321.push(1); s321.push(2); s321.push(3);
     print_stack(s321);
     stacks.insert(s321);
     id.insert(s321, s321);
-    auto s54321 = s321.append(s54);
+    Stack s54321 = s321;
+    s54321.append(s54);
     print_stack(s54321);
     stacks.insert(s54321);
     id.insert(s54321, s54321);
-    auto s5454321 = s54321.append(s54);
+    Stack s5454321 = s54321;
+    s5454321.append(s54);
     print_stack(s5454321);
     stacks.insert(s5454321);
     id.insert(s5454321, s5454321);
-    auto s5432154 = s54.append(s54321);
+    Stack s5432154 = s54;
+    s5432154.append(s54321);
     print_stack(s5432154);
     stacks.insert(s5432154);
     id.insert(s5432154, s5432154);
-    auto s54_ = Stack().push(4).push(5).relax();
+    Stack s54_ = s5432154;
+    s54_.pop_bottom();
     print_stack(s54_);
     stacks.insert(s54_);
     id.insert(s54_, s54_);

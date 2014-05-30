@@ -174,7 +174,7 @@ std::list<std::pair<EfftReqd,EfftPush>> match(EfftPush l_push,
     std::list<std::pair<EfftReqd,EfftPush>> res;
     while (true) {
 	if (l_push.empty()) {
-	    if (l_push.is_exact()) {
+	    if (l_push.exact()) {
 		// α|- + γ|δ = αγ|δ
 		res.emplace_back(r_reqd, l_push);
 		break;
@@ -183,14 +183,14 @@ std::list<std::pair<EfftReqd,EfftPush>> match(EfftPush l_push,
 		// α|* + -|δ = α|*δ
 		// α|* + *|δ = α|*δ, ...
 		res.emplace_back(EfftReqd(), l_push);
-		if (!r_reqd.is_exact()) {
+		if (!r_reqd.exact()) {
 		    // α|* + *|δ = ..., α*|δ
 		    res.emplace_back(r_reqd, EfftPush());
 		}
 		break;
 	    }
 	    // α|* + xγ|δ = α|* + γ|δ
-	    r_reqd = r_reqd.pop();
+	    r_reqd.pop();
 	    continue;
 	}
 
@@ -198,18 +198,18 @@ std::list<std::pair<EfftReqd,EfftPush>> match(EfftPush l_push,
 	    // α|βx + -|δ = α|βxδ
 	    // α|βx + *|δ = α|βxδ, ...
 	    res.emplace_back(EfftReqd(), l_push);
-	    if (r_reqd.is_exact()) {
+	    if (r_reqd.exact()) {
 		break;
 	    }
 	    // α|βx + *|δ = ..., α|β + *|δ
-	    l_push = l_push.pop();
+	    l_push.pop();
 	    continue;
 	}
 
 	if (l_push.top() == r_reqd.top()) {
 	    // α|βx + xγ|δ = α|β + γ|δ
-	    l_push = l_push.pop();
-	    r_reqd = r_reqd.pop();
+	    l_push.pop();
+	    r_reqd.pop();
 	    continue;
 	}
 
@@ -235,15 +235,17 @@ bool compose(const EffectRTL& l_efft, const EffectLTR& r_efft,
 		}
 		FOR(l, l_push_pair.second) {
 		    assert(!fwd_only || (l.get<REQD>().empty() &&
-					 l.get<REQD>().is_exact()));
+					 l.get<REQD>().exact()));
 		    FOR(r, r_reqd_pair.second) {
 			for (const auto& p : base) {
-			    EfftReqd res_reqd = p.first.append(l.get<REQD>());
+			    EfftReqd res_reqd = p.first;
+			    res_reqd.append(l.get<REQD>());
 			    if (fwd_only && (!res_reqd.empty() ||
-					     !res_reqd.is_exact())) {
+					     !res_reqd.exact())) {
 				continue;
 			    }
-			    EfftPush res_push = p.second.append(r.get<PUSH>());
+			    EfftPush res_push = p.second;
+			    res_push.append(r.get<PUSH>());
 			    if (res_efft.insert(r.get<CP_TO>(),
 						r.get<ST_TO>(),
 						res_push,
@@ -329,8 +331,8 @@ const EffectLTR& RSM::effect_of(const Symbol& symbol, bool rev,
 								rev)]) {
 		    Ref<Component> cp_to = comp.boxes[e.to].comp;
 		    Ref<State> st_to = components[cp_to].get_initial();
-		    EfftPush push =
-			EfftPush().push(Frame{comp.ref, e.to, tag});
+		    EfftPush push;
+		    push.push(Frame{comp.ref, e.to, tag});
 		    res.insert(comp.ref, e.from, EfftReqd(),
 			       cp_to,    st_to,  push);
 		}
@@ -341,8 +343,8 @@ const EffectLTR& RSM::effect_of(const Symbol& symbol, bool rev,
 		    Ref<Component> cp_from = comp.boxes[e.from].comp;
 		    for (Ref<State> st_from :
 			     components[cp_from].get_final()) {
-			EfftReqd reqd =
-			    EfftReqd().push(Frame{comp.ref, e.from, tag});
+			EfftReqd reqd;
+			reqd.push(Frame{comp.ref, e.from, tag});
 			res.insert(cp_from,  st_from, reqd,
 				   comp.ref, e.to,    EfftPush());
 		    }
