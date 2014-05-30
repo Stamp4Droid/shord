@@ -18,7 +18,7 @@ PRI="$3"
 SEC="$4"
 
 if [ "$VERSION" == "cfg" ]; then
-    REL_SOLVER="bin/cfg/$CLASS@$PRI^$SEC#-DLOGGING-DPATH_RECORDING"
+    REL_SOLVER="bin/cfg/$CLASS@$PRI^$SEC#-DLOGGING,-DPATH_RECORDING"
 else
     REL_SOLVER="bin/rsm#-O3"
 fi

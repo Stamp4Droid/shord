@@ -1,3 +1,5 @@
+comma = ,
+
 CFG_PY = cfg_parser.py fsm.py util.py
 CFG_SRC = engine.cpp solvergen.hpp
 RSM_PY = rsm.py fsm.py util.py
@@ -10,7 +12,7 @@ RSM_LIBS = -lboost_system -lboost_filesystem -lboost_program_options -lboost_reg
 first = $(firstword $(subst $(1), ,$(2)))
 last = $(lastword $(subst $(1), ,$(2)))
 class = $(call first,@,$(1))
-flags = $(subst -, -,$(call last,\#,$(1)))
+flags = $(subst $(comma), ,$(call last,\#,$(1)))
 analysis = $(call first,\#,$(1))
 pri = $(call first,^,$(call last,@,$(call first,\#,$(1))))
 sec = $(call last,^,$(call last,@,$(call first,\#,$(1))))
@@ -45,12 +47,12 @@ gen/%.cpp: $(CFG_PY) cfg/$$(call class,$$*)/$$(call pri,$$*).cfg \
 	python cfg_parser.py cfg/$(call class,$*)/$(call pri,$*).cfg \
 	    fsm/$(call class,$*)/$(call sec,$*) gen/
 
-# bin/cfg/cls@pri^sec#-DFLAG1-DFLAG2: ... gen/cls@pri^sec.cpp
+# bin/cfg/cls@pri^sec#-DFLAG1,-DFLAG2: ... gen/cls@pri^sec.cpp
 # compiled with -DFLAG1 -DFLAG2
 bin/cfg/%: $(CFG_SRC) gen/$$(call class,$$*)@$$(call pri,$$*)^$$(call sec,$$*).cpp
 	$(CC) -O3 -o $@ $(call flags,$*) -I . $(filter %.cpp,$^)
 
-# bin/rsm#-DFLAG1-DFLAG2: ...
+# bin/rsm#-DFLAG1,-DFLAG2: ...
 # compiled with -DFLAG1 -DFLAG2
 bin/rsm\#%: $(RSM_SRC)
-	$(CC) $(subst -, -,$*) -o $@ -I . $(filter %.cpp,$^) $(RSM_LIBS)
+	$(CC) $(subst $(comma), ,$*) -o $@ -I . $(filter %.cpp,$^) $(RSM_LIBS)
