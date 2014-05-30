@@ -792,9 +792,8 @@ Worker::Result Worker::handle(const Graph& graph,
 #ifdef VIZ
     mi::Index<SRC, Ref<Node>,
 	      mi::Index<DST, Ref<Node>,
-			mi::Index<REV, bool,
-				  mi::Index<SYMBOL, Ref<Symbol>,
-					    mi::Table<TAG, Ref<Tag>>>>>>
+		  mi::Index<SYMBOL, Ref<Symbol>,
+		      mi::Table<TAG, Ref<Tag>>>>>
 	reached_edges;
     mi::Index<SRC, Ref<Node>,
 	      mi::Index<DST, Ref<Node>,
@@ -834,7 +833,8 @@ Worker::Result Worker::handle(const Graph& graph,
 
 #ifdef VIZ
 			if (!top_level) {
-			    reached_edges.insert(pos.dst, e_dst, e_rev,
+			    reached_edges.insert(e_rev ? e_dst : pos.dst,
+						 e_rev ? pos.dst : e_dst,
 						 e_symb.ref, e_tag);
 			}
 #endif
@@ -875,7 +875,8 @@ Worker::Result Worker::handle(const Graph& graph,
 
 #ifdef VIZ
 		if (!top_level) {
-		    reached_edges.insert(pos.dst, in_node, e_in_rev,
+		    reached_edges.insert(e_in_rev ? in_node : pos.dst,
+					 e_in_rev ? pos.dst : in_node,
 					 e_in_symb.ref, call_tag);
 		    reached_borders.of(in_node).of(entry.to).copy(in_efft);
 		}
@@ -932,11 +933,12 @@ Worker::Result Worker::handle(const Graph& graph,
 
 #ifdef VIZ
 				if (!top_level) {
-				    reached_edges.insert(out_node,
-							 e_out.get<DST>(),
-							 e_out_rev,
-							 e_out_symb.ref,
-							 call_tag);
+				    reached_edges
+					.insert(e_out_rev
+						? e_out.get<DST>() : out_node,
+						e_out_rev
+						? out_node : e_out.get<DST>(),
+						e_out_symb.ref, call_tag);
 				}
 #endif
 
@@ -982,7 +984,7 @@ Worker::Result Worker::handle(const Graph& graph,
 		     << ",tooltip=\"";
 		FOR(tup, dst_p.second) {
 		    Label label((*glob_syms)[tup.get<SYMBOL>()],
-				tup.get<REV>(), tup.get<TAG>());
+				false, tup.get<TAG>());
 		    label.print(fout, *glob_syms, *glob_tags);
 		    fout << " ";
 		}
