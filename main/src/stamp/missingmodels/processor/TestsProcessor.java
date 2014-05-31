@@ -38,13 +38,21 @@ public class TestsProcessor implements Processor {
 		} else if(line.startsWith("Solving LP")) {
 			this.isLpRunningTime = true;
 		} else if(line.startsWith("Num initial edges:")) {
-			this.numFlowEdges.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
+			if(this.numFlowEdges.get(appName) == null) {
+				this.numFlowEdges.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
+			}
 		} else if(line.startsWith("Num base edges:")) {
-			this.numBaseEdges.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
+			if(this.numBaseEdges.get(appName) == null) {
+				this.numBaseEdges.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
+			}
 		} else if(line.startsWith("Number of variables:")) {
-			this.numVariables.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
+			if(this.numVariables.get(appName) == null) {
+				this.numVariables.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
+			}
 		} else if(line.startsWith("Number of constraints:")) {
-			this.numConstraints.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
+			if(this.numConstraints.get(appName) == null) {
+				this.numConstraints.put(appName, Integer.parseInt(line.split(" ")[3].trim()));
+			}
 		} else if(line.startsWith("total cut")) {
 			String[] tokens = line.split(" ");
 			int cutNum = Integer.parseInt(tokens[2].trim().substring(0, tokens[2].length()-1));
@@ -146,7 +154,7 @@ public class TestsProcessor implements Processor {
 	
 	public static void main(String[] args) {
 		TestsProcessor tp = new TestsProcessor();
-		new LogReader("../stamp_output", tp).run();
+		new LogReader("../results_no_log", tp).run();
 		System.out.println(tp.getHeader());
 		for(String appName : tp.getAppNames()) {
 			System.out.println(tp.getInfoFor(appName));
