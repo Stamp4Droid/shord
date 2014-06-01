@@ -37,6 +37,7 @@ public class TraceReader {
 			String caller = stack.peek();
 			if(!this.callgraph.get(caller).contains(method)) {
 				this.callgraphList.add(new Pair<String,String>(caller, method));
+				System.out.println("trace cg edge: " + caller + " -> " + method);
 				this.callgraph.add(caller, method);
 			}
 		}

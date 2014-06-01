@@ -154,7 +154,7 @@ public class TestsProcessor implements Processor {
 	
 	public static void main(String[] args) {
 		TestsProcessor tp = new TestsProcessor();
-		new LogReader("../results_no_log", tp).run();
+		new LogReader("../stamp_output", tp).run();
 		System.out.println(tp.getHeader());
 		for(String appName : tp.getAppNames()) {
 			System.out.println(tp.getInfoFor(appName));
