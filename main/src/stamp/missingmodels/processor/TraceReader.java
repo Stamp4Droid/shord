@@ -7,10 +7,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
+import shord.project.ClassicProject;
+import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
 
@@ -37,7 +41,6 @@ public class TraceReader {
 			String caller = stack.peek();
 			if(!this.callgraph.get(caller).contains(method)) {
 				this.callgraphList.add(new Pair<String,String>(caller, method));
-				System.out.println("trace cg edge: " + caller + " -> " + method);
 				this.callgraph.add(caller, method);
 			}
 		}
@@ -120,6 +123,34 @@ public class TraceReader {
 	
 	public static List<Pair<String,String>> getCallgraphList(String traceDir, String apkName) {
 		return read(traceDir, apkName).callgraphList;
+	}
+	
+	public static Set<String> getReachableMethods(MultivalueMap<String,String> callgraph) {
+		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("reachableM");
+		relReachableM.load();
+		Set<String> filter = new HashSet<String>();
+		for(Object tuple : relReachableM.getAry1ValTuples()) {
+			filter.add(tuple.toString());
+		}
+		
+		Set<String> callEdges = new HashSet<String>();
+		for(String caller : callgraph.keySet()) {
+			callEdges.add(caller);
+			callEdges.addAll(callgraph.get(caller));
+		}
+		
+		Set<String> filteredCallEdges = new HashSet<String>();
+		for(String callEdge : callEdges) {
+			if(filter.contains(callEdge)) {
+				filteredCallEdges.add(callEdge);
+			}
+		}
+		
+		return filteredCallEdges;
+	}
+	
+	public static Set<String> getReachableMethods(String traceDir, String apkName) {
+		return getReachableMethods(read(traceDir, apkName).callgraph);
 	}
 	
 	public static void printCallGraph(MultivalueMap<String,String> callgraph, PrintWriter pw) {

@@ -31,6 +31,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			//RelationManager relations = new DynamicCallgraphRelationManager(DroidRecordReader.getCallgraphList("../../callgraphs/", tokens[tokens.length-1]));
 			Graph g = relationReader.readGraph(relations, taintGrammar);
 			TypeFilter t = relationReader.readTypeFilter(taintGrammar);
+			System.out.println("Method coverage: " + TraceReader.getReachableMethods("../../profiler/traceouts/", tokens[tokens.length-1]).size());
 			PrintingUtils.printAbductionResult(AbductiveInferenceRunner.runInference(g, t, true, 4), true);
 		} catch(LpSolveException e) {
 			e.printStackTrace();
