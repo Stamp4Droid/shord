@@ -126,7 +126,7 @@ public class TraceReader {
 	}
 	
 	public static Set<String> getReachableMethods(MultivalueMap<String,String> callgraph) {
-		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("reachableM");
+		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
 		relReachableM.load();
 		Set<String> filter = new HashSet<String>();
 		for(Object tuple : relReachableM.getAry1ValTuples()) {
