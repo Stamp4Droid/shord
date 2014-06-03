@@ -180,6 +180,17 @@ public class ReadApk {
 	}
     } // end of getIntents
 
+    public static void printXml(String path) {
+	try {
+	    InputStream is = new FileInputStream(path);
+	    byte[] xml = new byte[is.available()];
+	    int br = is.read(xml);
+	    decompressXML(xml);
+	} catch(Exception ex) {
+	    prt("printXml, ex: " + ex); ex.printStackTrace();
+	}
+    }
+
     public static void main(String[] args) {
 	for(String arg : args) {
 	    getIntents(arg);

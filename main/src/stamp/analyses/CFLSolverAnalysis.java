@@ -14,7 +14,6 @@ import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.FileRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.cflsolver.util.PrintingUtils;
 import chord.project.Chord;
@@ -33,11 +32,6 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			Graph g = relationReader.readGraph(relations, taintGrammar);
 			TypeFilter t = relationReader.readTypeFilter(taintGrammar);
 			PrintingUtils.printAbductionResult(AbductiveInferenceRunner.runInference(g, t, true, 4), true);
-			
-			Graph gbar = new ReachabilitySolver(g, t).getResult();
-			PrintingUtils.printGraphEdges(gbar, "Label2Prim", true);
-			PrintingUtils.printGraphEdges(gbar, "Label2Ref", true);
-			PrintingUtils.printGraphEdges(gbar, "return", true);
 		} catch(LpSolveException e) {
 			e.printStackTrace();
 		}
