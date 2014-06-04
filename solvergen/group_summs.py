@@ -3,6 +3,7 @@
 import argparse
 import itertools
 import re
+import sys
 import util
 
 def rm_box(s):
@@ -48,6 +49,11 @@ def group(sigs):
                     break
     return grouped
 
+def print_stacks(s):
+    (l,r) = s
+    print ('<' + ''.join([e + ' ' for e in l]) +
+           '|' + ''.join([' ' + e for e in r]) + '>')
+
 # =============================================================================
 
 class SigSet(util.BaseClass):
@@ -57,6 +63,7 @@ class SigSet(util.BaseClass):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('summs_file', type=argparse.FileType('r'))
+parser.add_argument('tgt_ctxt', nargs='?')
 parser.add_argument('-v', '--verbose', action='count')
 args = parser.parse_args()
 
@@ -65,7 +72,10 @@ ctxt2sigs = {}
 for line in args.summs_file:
     toks = line.split('<')
     assert len(toks) == 2
-    sig_set = util.index(ctxt2sigs, toks[0].strip(), SigSet())
+    ctxt = toks[0].strip()
+    if args.tgt_ctxt is not None and ctxt != args.tgt_ctxt:
+        continue
+    sig_set = util.index(ctxt2sigs, ctxt, SigSet())
 
     (l_str,r_str) = toks[1][:-2].split('|')
     l_toks = tuple(l_str.split())
@@ -100,21 +110,27 @@ for ctxt in ctxt2sigs:
         print 4 * ' ' + 'Stripped sigs:', len(sig_set.str2full)
         if args.verbose >= 2:
             for s in sig_set.str2full:
-                print 7 * ' ', s
+                sys.stdout.write(8 * ' ')
+                print_stacks(s)
                 for f in sig_set.str2full[s]:
-                    print 11 * ' ', f
+                    sys.stdout.write(12 * ' ')
+                    print_stacks(f)
         print 4 * ' ' + 'Grouped full sigs:', len(full2cov)
         if args.verbose >= 2:
             for m in full2cov:
-                print 7 * ' ', m
+                sys.stdout.write(8 * ' ')
+                print_stacks(m)
                 for c in full2cov[m]:
-                    print 11 * ' ', c
+                    sys.stdout.write(12 * ' ')
+                    print_stacks(c)
         print 4 * ' ' + 'Grouped stripped sigs:', len(str2cov)
         if args.verbose >= 2:
             for m in str2cov:
-                print 7 * ' ', m
+                sys.stdout.write(8 * ' ')
+                print_stacks(m)
                 for c in str2cov[m]:
-                    print 11 * ' ', c
+                    sys.stdout.write(12 * ' ')
+                    print_stacks(c)
 
 print 'Totals:'
 print 4 * ' ' + 'Full sigs:', total_full
