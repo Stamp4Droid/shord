@@ -35,6 +35,9 @@ public class PtBoostProcessor implements Processor {
 	}
 	
 	@Override
+	public void startProcessing(String appName) {}
+	
+	@Override
 	public void process(String appName, String line) {
 		if(line.startsWith("SOLVE_TIME=")) {
 			this.solveTime = Integer.parseInt(line.substring("SOLVE_TIME=".length()));

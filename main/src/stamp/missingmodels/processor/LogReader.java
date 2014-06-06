@@ -10,6 +10,7 @@ import java.util.List;
 public class LogReader {
 	public interface Processor {
 		public void process(String appName, String line);
+		public void startProcessing(String appName);
 		public void process(String appName, int appLinesOfCode, int frameworkLinesOfCode);
 		public void finishProcessing(String appName); // clean up in case of failure
 	}
@@ -40,6 +41,11 @@ public class LogReader {
 				
 				File resultFile = new File(appDir, "log.txt");
 				BufferedReader br = new BufferedReader(new FileReader(resultFile));
+				
+				for(Processor processor : this.processors) {
+					processor.startProcessing(appName);
+				}
+				
 				String line;
 				while((line = br.readLine()) != null) {
 					for(Processor processor : this.processors) {

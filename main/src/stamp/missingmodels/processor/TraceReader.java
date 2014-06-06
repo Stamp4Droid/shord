@@ -16,7 +16,6 @@ import java.util.Stack;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
 
 public class TraceReader {
 	//private Map<Integer,Integer> stackDepthByThread = new HashMap<Integer,Integer>();
@@ -24,7 +23,8 @@ public class TraceReader {
 	private boolean isProcessingTrace = false;
 	private final MultivalueMap<String,String> callgraph = new MultivalueMap<String,String>();
 	
-	private final List<Pair<String,String>> callgraphList = new ArrayList<Pair<String,String>>();
+	private final Set<String> methodSet = new HashSet<String>();
+	private final List<String> methodList = new ArrayList<String>();
 	
 	private Stack<String> getStack(int thread) {
 		Stack<String> stack = this.stackByThread.get(thread);
@@ -39,9 +39,9 @@ public class TraceReader {
 		Stack<String> stack = this.getStack(thread);
 		if(!stack.isEmpty()) {
 			String caller = stack.peek();
-			if(!this.callgraph.get(caller).contains(method)) {
-				this.callgraphList.add(new Pair<String,String>(caller, method));
-				this.callgraph.add(caller, method);
+			this.callgraph.add(caller, method);
+			if(!this.methodSet.contains(method)) {
+				this.methodList.add(method);
 			}
 		}
 		stack.push(method);
@@ -121,23 +121,33 @@ public class TraceReader {
 		return read(traceDir, apkName).callgraph;
 	}
 	
-	public static List<Pair<String,String>> getCallgraphList(String traceDir, String apkName) {
-		return read(traceDir, apkName).callgraphList;
+	public static List<String> getMethodList(String traceDir, String apkName) {
+		return read(traceDir, apkName).methodList;
 	}
 	
-	public static Set<String> getReachableMethods(MultivalueMap<String,String> callgraph) {
-		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
-		relReachableM.load();
-		Set<String> filter = new HashSet<String>();
-		for(Object tuple : relReachableM.getAry1ValTuples()) {
-			filter.add(tuple.toString());
-		}
-		
+	public static Set<String> getReachableMethods(MultivalueMap<String,String> callgraph) {		
 		Set<String> callEdges = new HashSet<String>();
 		for(String caller : callgraph.keySet()) {
 			callEdges.add(caller);
 			callEdges.addAll(callgraph.get(caller));
 		}
+
+		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
+		relReachableM.load();
+		Set<String> filter = new HashSet<String>();
+		for(Object tuple : relReachableM.getAry1ValTuples()) {
+			filter.add(tuple.toString());
+			if(!callEdges.contains(tuple.toString())) {
+				System.out.println("Unreached reachable method: " + tuple.toString());
+			}
+		}
+		for(Object tuple : relReachableM.getAry1ValTuples()) {
+			filter.add(tuple.toString());
+			if(callEdges.contains(tuple.toString())) {
+				System.out.println("Reachable reachable method: " + tuple.toString());
+			}
+		}
+		relReachableM.close();
 		
 		Set<String> filteredCallEdges = new HashSet<String>();
 		for(String callEdge : callEdges) {
