@@ -36,13 +36,13 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		return numReachableMethods;
 	}
 	
-	private static MultivalueMap<String,String> getFilteredCallgraph(MultivalueMap<String,String> callgraph, List<String> listMethods, int numMethods) {
+	private static MultivalueMap<String,String> getFilteredCallgraph(MultivalueMap<String,String> callgraph, List<String> methodsList, int numMethods) {
 		Set<String> includedMethods = new HashSet<String>();
 		for(int i=0; i<numMethods; i++) {
-			if(i>=listMethods.size()) {
+			if(i>=methodsList.size()) {
 				break;
 			}
-			includedMethods.add(listMethods.get(i));
+			includedMethods.add(methodsList.get(i));
 		}
 		MultivalueMap<String,String> filteredCallgraph = new MultivalueMap<String,String>();
 		int filteredCallgraphSize = 0;
@@ -65,28 +65,32 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		try {
 			RelationReader relationReader = new ShordRelationReader();
 			String[] tokens = System.getProperty("stamp.out.dir").split("_");
-			int reachedMethods = TraceReader.getReachableMethods("../../profiler/traceouts/", tokens[tokens.length-1]).size();
+			List<String> reachedMethods = TraceReader.getReachableMethods("../../profiler/traceouts/", tokens[tokens.length-1]);
 			int numReachableMethods = getNumReachableMethods();
-			System.out.println("Method coverage: " + reachedMethods);
-			System.out.println("Average method coverage: " + (double)reachedMethods/numReachableMethods);
+			System.out.println("Method coverage: " + reachedMethods.size());
+			System.out.println("Number of reachable methods: " + numReachableMethods);
+			System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
 			
 			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("../../profiler/traceouts/", tokens[tokens.length-1]);
-			List<String> listMethods = TraceReader.getMethodList("../../profiler/traceouts/", tokens[tokens.length-1]);
 			
 			double fractionMethodIncrement = 0.1;
 			int numMethods = 0;
 			while(true) {
-				System.out.println("Running method coverage: " + (double)numMethods/numReachableMethods);
-				RelationManager relations = new DynamicCallgraphRelationManager(getFilteredCallgraph(callgraph, listMethods, numMethods));
+				if(numMethods >= reachedMethods.size()) {
+					System.out.println("Running method coverage: " + (double)reachedMethods.size()/numReachableMethods);
+				} else {
+					System.out.println("Running method coverage: " + (double)numMethods/numReachableMethods);
+				}
+				RelationManager relations = new DynamicCallgraphRelationManager(getFilteredCallgraph(callgraph, reachedMethods, numMethods));
 				//RelationManager relations = new DynamicCallgraphRelationManager(DroidRecordReader.getCallgraphList("../../callgraphs/", tokens[tokens.length-1]));
 				Graph g = relationReader.readGraph(relations, taintGrammar);
 				TypeFilter t = relationReader.readTypeFilter(taintGrammar);
 				PrintingUtils.printAbductionResult(AbductiveInferenceRunner.runInference(g, t, true, 3), true);
 				
-				if(numMethods > listMethods.size()) {
+				if(numMethods >= reachedMethods.size()) {
 					break;
 				}
-				numMethods += (int)(fractionMethodIncrement*listMethods.size()); 
+				numMethods += (int)(fractionMethodIncrement*numReachableMethods); 
 			}
 		} catch(LpSolveException e) {
 			e.printStackTrace();

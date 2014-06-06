@@ -42,6 +42,7 @@ public class TraceReader {
 			this.callgraph.add(caller, method);
 			if(!this.methodSet.contains(method)) {
 				this.methodList.add(method);
+				this.methodSet.add(method);
 			}
 		}
 		stack.push(method);
@@ -125,42 +126,24 @@ public class TraceReader {
 		return read(traceDir, apkName).methodList;
 	}
 	
-	public static Set<String> getReachableMethods(MultivalueMap<String,String> callgraph) {		
-		Set<String> callEdges = new HashSet<String>();
-		for(String caller : callgraph.keySet()) {
-			callEdges.add(caller);
-			callEdges.addAll(callgraph.get(caller));
-		}
-
+	public static List<String> getReachableMethods(List<String> methodList) {		
 		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
 		relReachableM.load();
-		Set<String> filter = new HashSet<String>();
+		List<String> result = new ArrayList<String>();
 		for(Object tuple : relReachableM.getAry1ValTuples()) {
-			filter.add(tuple.toString());
-			if(!callEdges.contains(tuple.toString())) {
+			if(methodList.contains(tuple.toString())) {
+				//System.out.println("Reached reachable method: " + tuple.toString());
+				result.add(tuple.toString());
+			} else {
 				System.out.println("Unreached reachable method: " + tuple.toString());
 			}
 		}
-		for(Object tuple : relReachableM.getAry1ValTuples()) {
-			filter.add(tuple.toString());
-			if(callEdges.contains(tuple.toString())) {
-				System.out.println("Reachable reachable method: " + tuple.toString());
-			}
-		}
 		relReachableM.close();
-		
-		Set<String> filteredCallEdges = new HashSet<String>();
-		for(String callEdge : callEdges) {
-			if(filter.contains(callEdge)) {
-				filteredCallEdges.add(callEdge);
-			}
-		}
-		
-		return filteredCallEdges;
+		return result;
 	}
 	
-	public static Set<String> getReachableMethods(String traceDir, String apkName) {
-		return getReachableMethods(read(traceDir, apkName).callgraph);
+	public static List<String> getReachableMethods(String traceDir, String apkName) {
+		return getReachableMethods(getMethodList(traceDir, apkName));
 	}
 	
 	public static void printCallGraph(MultivalueMap<String,String> callgraph, PrintWriter pw) {

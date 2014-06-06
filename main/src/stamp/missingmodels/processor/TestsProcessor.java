@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import stamp.missingmodels.processor.LogReader.Processor;
 import stamp.missingmodels.util.Util.MultivalueMap;
@@ -131,8 +130,10 @@ public class TestsProcessor implements Processor {
 		return Collections.unmodifiableList(this.appNames);
 	}
 	
-	public Set<Double> getCoverages(String appName) {
-		return Collections.unmodifiableSet(this.coverages.get(appName));
+	public List<Double> getCoverages(String appName) {
+		List<Double> coveragesList = new ArrayList<Double>(this.coverages.get(appName));
+		Collections.sort(coveragesList);
+		return Collections.unmodifiableList(coveragesList);
 	}
 	
 	private int getNumCuts(double coverage) {
