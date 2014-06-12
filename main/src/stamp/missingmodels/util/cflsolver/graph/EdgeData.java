@@ -205,6 +205,7 @@ public interface EdgeData {
 			int result = 1;
 			result = prime * result
 					+ ((contexts == null) ? 0 : contexts.hashCode());
+			result = prime * result + (isForward ? 1231 : 1237);
 			return result;
 		}
 
@@ -222,7 +223,9 @@ public interface EdgeData {
 					return false;
 			} else if (!contexts.equals(other.contexts))
 				return false;
+			if (isForward != other.isForward)
+				return false;
 			return true;
-		}	
+		}
 	}	
 }

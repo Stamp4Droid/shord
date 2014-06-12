@@ -1,5 +1,8 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import shord.analyses.DomU;
 import shord.analyses.DomV;
 import shord.project.ClassicProject;
@@ -20,6 +23,19 @@ public class DynamicParamRelationManager extends TaintRelationManager {
 		this.setNewWeights();
 	}
 	
+	private static Set<String> stampMethods = new HashSet<String>();
+	static {
+		stampMethods.add("<java.net.StampURLConnection: void connect()>");
+		stampMethods.add("<java.net.StampURLConnection: java.io.InputStream getInputStream()>");
+		stampMethods.add("<edu.stanford.stamp.harness.Callback: void <init>()>");
+		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void <init>()>");
+		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>");
+		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>");
+		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>");
+		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void <clinit>()>");
+		stampMethods.add("<android.content.StampSharedPreferences: void <clinit>()>");		
+	}
+	
 	public DynamicParamRelationManager(MultivalueMap<String,String> dynamicCallgraph) {
 		// STEP 0: Make param and paramPrim edges weight 1
 		this.setNewWeights();
@@ -33,7 +49,7 @@ public class DynamicParamRelationManager extends TaintRelationManager {
 		for(int[] tuple : paramRel.getAryNIntTuples()) {
 			String caller = ConversionUtils.getMethodForVar(domV.get(tuple[1])).toString();
 			String callee = ConversionUtils.getMethodForVar(domV.get(tuple[0])).toString();
-			if(dynamicCallgraph.get(caller).contains(callee)) {
+			if(dynamicCallgraph.get(caller).contains(callee) || stampMethods.contains(caller) || stampMethods.contains(callee)) {
 				System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
 				dynamicCallgraphConverted.add("V" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
 			}
