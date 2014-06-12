@@ -51,7 +51,8 @@ public class AbductiveInferenceRunner {
 		return gbart.getEdges(new EdgeFilter() {
 			@Override
 			public boolean filter(Edge edge) {
-				return edge.getSymbol().equals("callgraph");
+				//return edge.getSymbol().equals("callgraph");
+				return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
 			}
 		});
 	}
