@@ -34,13 +34,14 @@ public interface RelationReader {
 			}
 			
 			final Set<String> labels = new HashSet<String>();
-			//labels.add("$LOCATION");
-			//labels.add("$getLatitude");
-			//labels.add("$getLongitude");
-			//labels.add("$FINE_LOCATION");
+			labels.add("$LOCATION");
+			labels.add("$getLatitude");
+			labels.add("$getLongitude");
+			labels.add("$FINE_LOCATION");
 			labels.add("$ACCOUNTS");
 			labels.add("$getDeviceId");
 			labels.add("$SMS");
+			//labels.add("$AUDIO");
 			labels.add("$CONTACTS");
 			labels.add("$CALENDAR");
 			labels.add("!SOCKET");
@@ -50,7 +51,6 @@ public interface RelationReader {
 			labels.add("!sendDataMessage");
 			labels.add("!sendMultipartTextMessage");
 			
-			//labels.add("$AUDIO");
 			//labels.add("$CONTENT_PROVIDER");
 			//labels.add("!WebView");
 			

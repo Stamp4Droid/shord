@@ -94,9 +94,6 @@ public class AbductiveInference {
 			if(!input.context.produce(unaryProduction).equals(target.context)) {
 				continue;
 			}
-			if(!input.objectContext.produce(unaryProduction).equals(target.objectContext)) {
-				continue;
-			}
 			// add edge
 			this.addProduction(target, input);
 		}
@@ -123,9 +120,6 @@ public class AbductiveInference {
 					continue;
 				}
 				if(!target.context.equals(firstInput.context.produce(binaryProduction, secondInput.context))) {
-					continue;
-				}
-				if(!target.objectContext.equals(firstInput.objectContext.produce(binaryProduction, secondInput.objectContext))) {
 					continue;
 				}
 				// add edge
@@ -161,9 +155,6 @@ public class AbductiveInference {
 					continue;
 				}
 				if(!target.context.equals(input.context.produce(auxProduction, auxInput.context))) {
-					continue;
-				}
-				if(!target.objectContext.equals(input.objectContext.produce(auxProduction, auxInput.objectContext))) {
 					continue;
 				}
 				// add edge

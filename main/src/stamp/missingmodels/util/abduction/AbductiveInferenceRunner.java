@@ -8,9 +8,7 @@ import lpsolve.LpSolveException;
 import shord.project.ClassicProject;
 import stamp.analyses.DomL;
 import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
-import stamp.missingmodels.util.cflsolver.graph.EdgeData.ObjectContext;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
@@ -20,6 +18,7 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.cflsolver.util.PrintingUtils;
 
 public class AbductiveInferenceRunner {
 	
@@ -39,9 +38,9 @@ public class AbductiveInferenceRunner {
 		GraphTransformer gtStripContext = new GraphTransformer() {
 			@Override
 			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
-				EdgeInfo curInfo = gb.toGraph().getInfo(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT, ObjectContext.DEFAULT_OBJECT_CONTEXT);
+				EdgeInfo curInfo = gb.toGraph().getInfo(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT);
 				if(curInfo == null || weight < curInfo.weight) {   
-					gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT, ObjectContext.DEFAULT_OBJECT_CONTEXT, new EdgeInfo(weight));
+					gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT, new EdgeInfo(weight));
 				}
 			}
 		};
@@ -52,8 +51,7 @@ public class AbductiveInferenceRunner {
 		return gbart.getEdges(new EdgeFilter() {
 			@Override
 			public boolean filter(Edge edge) {
-				//return edge.getSymbol().equals("callgraph");
-				return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
+				return edge.getSymbol().equals("callgraph");
 			}
 		});
 	}
@@ -103,7 +101,7 @@ public class AbductiveInferenceRunner {
 		GraphTransformer gtNew = new GraphTransformer() {
 			@Override
 			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
-				EdgeStruct tempStruct = new EdgeStruct(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT, ObjectContext.DEFAULT_OBJECT_CONTEXT);
+				EdgeStruct tempStruct = new EdgeStruct(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT);
 				if(result.get(tempStruct) != null && result.get(tempStruct)) {
 					return;
 				}
@@ -133,7 +131,7 @@ public class AbductiveInferenceRunner {
 			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
 				int newWeight = weight;
 				//System.out.println(edgeStruct);
-				EdgeStruct newEdgeStruct = new EdgeStruct(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT, ObjectContext.DEFAULT_OBJECT_CONTEXT);
+				EdgeStruct newEdgeStruct = new EdgeStruct(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT);
 				if(result.get(newEdgeStruct) != null && result.get(newEdgeStruct)) {
 					//System.out.println("Removing edge: " + newEdgeStruct);
 					newWeight = 0;
@@ -156,12 +154,8 @@ public class AbductiveInferenceRunner {
 				System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
 			}
 			System.out.println("STARTING EDGE PATH");
-			for(Pair<Edge,Boolean> pathEdgePair : edge.getPath()) {
-				Edge pathEdge = pathEdgePair.getX();
-				boolean pathDirection = pathEdgePair.getY();
-				//if(pathEdge.getSymbol().equals("param") || pathEdge.getSymbol().equals("paramPrim") || pathEdge.getSymbol().equals("return") || pathEdge.getSymbol().equals("returnPrim")) {
-					System.out.println("weight " + pathEdge.getInfo().weight + ", direction " + pathDirection + ": " + pathEdge.toString(shord));
-				//}
+			for(Edge pathEdge : edge.getPath()) {
+				System.out.println("weight " + pathEdge.getInfo().weight + ": " + pathEdge.toString(shord));
 			}
 			System.out.println("ENDING EDGE PATH");
 		}		
