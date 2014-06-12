@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
@@ -197,21 +198,61 @@ public final class Graph {
 			return new EdgeStruct(this.source.name, this.sink.name, this.getSymbol(), this.field, this.context);
 		}
 		
-		private void getPathHelper(List<Edge> path) {
+		private void getPathHelper(List<Pair<Edge,Boolean>> path, boolean isForward) {
 			EdgeInfo info = this.getInfo();
 			if(info.firstInput == null) {
-				path.add(this);
+				path.add(new Pair<Edge,Boolean>(this, isForward));
 			} else {
-				info.firstInput.getPathHelper(path);
-				if(info.secondInput != null) {
-					info.secondInput.getPathHelper(path);
+				if(this.source.equals(info.firstInput.source) && this.sink.equals(info.firstInput.sink)) {
+					info.firstInput.getPathHelper(path, isForward);
+				} else if(this.source.equals(info.firstInput.sink) && this.sink.equals(info.firstInput.source)) { 
+					info.firstInput.getPathHelper(path, !isForward);
+				} else {
+					Edge comesFirst = this.source.equals(info.firstInput.source) || this.source.equals(info.firstInput.sink) ? info.firstInput : info.secondInput;
+					Edge comesSecond = this.source.equals(info.firstInput.source) || this.source.equals(info.firstInput.sink) ? info.secondInput : info.firstInput;
+					
+					boolean comesFirstIsForward = this.source.equals(comesFirst.source); 
+					boolean comesSecondIsForward = this.sink.equals(comesSecond.sink);
+					
+					Edge processFirst = isForward ? comesFirst : comesSecond;
+					Edge processSecond = isForward ? comesSecond : comesFirst;
+					
+					boolean processFirstIsForward = isForward ? comesFirstIsForward : !comesSecondIsForward;
+					boolean processSecondIsForward = isForward ? comesSecondIsForward : !comesFirstIsForward;
+					
+					processFirst.getPathHelper(path, processFirstIsForward);
+					processSecond.getPathHelper(path, processSecondIsForward);
 				}
 			}
 		}
 		
-		public List<Edge> getPath() {
-			List<Edge> path = new ArrayList<Edge>();
-			this.getPathHelper(path);
+		private String toStringPath(List<Pair<Edge,Boolean>> path) {
+			StringBuilder sb = new StringBuilder();
+			for(Pair<Edge,Boolean> pathEdgePair : path) {
+				sb.append(pathEdgePair.toString()).append("\n");
+			}
+			return sb.toString();
+		}
+		
+		private boolean checkPath(List<Pair<Edge,Boolean>> path) {
+			Vertex prevVertex = null;
+			for(Pair<Edge,Boolean> pathEdgePair : path) {
+				Vertex checkVertex = pathEdgePair.getY() ? pathEdgePair.getX().source : pathEdgePair.getX().sink;
+				if(prevVertex != null && !prevVertex.equals(checkVertex)) {
+					System.out.println("PATH ERROR AT: " + checkVertex.name);
+					System.out.println(toStringPath(path));
+					System.out.println("END PATH ERROR: " + checkVertex.name);
+					return false;
+				}
+				prevVertex = pathEdgePair.getY() ? pathEdgePair.getX().sink : pathEdgePair.getX().source;
+			}
+			return true;
+		}
+		
+		public List<Pair<Edge,Boolean>> getPath() {
+			List<Pair<Edge,Boolean>> path = new ArrayList<Pair<Edge,Boolean>>();
+			this.getPathHelper(path, true);
+			this.checkPath(path);
 			return path;
 		}
 

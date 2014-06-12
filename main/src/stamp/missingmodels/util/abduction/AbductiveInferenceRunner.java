@@ -8,6 +8,7 @@ import lpsolve.LpSolveException;
 import shord.project.ClassicProject;
 import stamp.analyses.DomL;
 import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
@@ -18,7 +19,6 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
-import stamp.missingmodels.util.cflsolver.util.PrintingUtils;
 
 public class AbductiveInferenceRunner {
 	
@@ -154,8 +154,8 @@ public class AbductiveInferenceRunner {
 				System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
 			}
 			System.out.println("STARTING EDGE PATH");
-			for(Edge pathEdge : edge.getPath()) {
-				System.out.println("weight " + pathEdge.getInfo().weight + ": " + pathEdge.toString(shord));
+			for(Pair<Edge,Boolean> pathEdgePair : edge.getPath()) {
+				System.out.println("weight " + pathEdgePair.getX().getInfo().weight + ", " + "isForward " + pathEdgePair.getY() + ": " + pathEdgePair.getX().toString(shord));
 			}
 			System.out.println("ENDING EDGE PATH");
 		}		
