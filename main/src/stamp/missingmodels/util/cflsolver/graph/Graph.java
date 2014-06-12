@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
+import stamp.missingmodels.util.cflsolver.graph.EdgeData.ObjectContext;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 
 public final class Graph {
@@ -90,13 +92,15 @@ public final class Graph {
 		public final String symbol;
 		public final Field field;
 		public final Context context;
+		public final ObjectContext objectContext;
 		
-		public EdgeStruct(String sourceName, String sinkName, String symbol, Field field, Context context) {
+		public EdgeStruct(String sourceName, String sinkName, String symbol, Field field, Context context, ObjectContext objectContext) {
 			this.sourceName = sourceName;
 			this.sinkName = sinkName;
 			this.symbol = symbol;
 			this.field = field;
 			this.context = context;
+			this.objectContext = objectContext;
 		}
 
 		public String toString(boolean shord) {
@@ -106,7 +110,8 @@ public final class Graph {
 			sb.append(convertedSourceName).append("-");
 			sb.append(this.symbol).append("[");
 			sb.append(this.field.toString()).append("][");
-			sb.append(this.context).append("]");
+			sb.append(this.context).append("][");
+			sb.append(this.objectContext).append("]");
 			sb.append("-").append(convertedSinkName);
 			return sb.toString();
 		}
@@ -176,13 +181,15 @@ public final class Graph {
 		public final int symbolInt;
 		public final Field field;
 		public final Context context;
+		public final ObjectContext objectContext;
 		
-		private Edge(Vertex source, Vertex sink, int symbolInt, Field field, Context context) {
+		private Edge(Vertex source, Vertex sink, int symbolInt, Field field, Context context, ObjectContext objectContext) {
 			this.source = source;
 			this.sink = sink;
 			this.symbolInt = symbolInt;
 			this.field = field;
 			this.context = context;
+			this.objectContext = objectContext;
 		}
 		
 		public String getSymbol() {
@@ -194,24 +201,64 @@ public final class Graph {
 		}
 		
 		public EdgeStruct getStruct() {
-			return new EdgeStruct(this.source.name, this.sink.name, this.getSymbol(), this.field, this.context);
+			return new EdgeStruct(this.source.name, this.sink.name, this.getSymbol(), this.field, this.context, this.objectContext);
 		}
 		
-		private void getPathHelper(List<Edge> path) {
+		private void getPathHelper(List<Pair<Edge,Boolean>> path, boolean isForward) {
 			EdgeInfo info = this.getInfo();
 			if(info.firstInput == null) {
-				path.add(this);
+				path.add(new Pair<Edge,Boolean>(this, isForward));
 			} else {
-				info.firstInput.getPathHelper(path);
-				if(info.secondInput != null) {
-					info.secondInput.getPathHelper(path);
+				if(this.source.equals(info.firstInput.source) && this.sink.equals(info.firstInput.sink)) {
+					info.firstInput.getPathHelper(path, isForward);
+				} else if(this.source.equals(info.firstInput.sink) && this.sink.equals(info.firstInput.source)) { 
+					info.firstInput.getPathHelper(path, !isForward);
+				} else {
+					Edge comesFirst = this.source.equals(info.firstInput.source) || this.source.equals(info.firstInput.sink) ? info.firstInput : info.secondInput;
+					Edge comesSecond = this.source.equals(info.firstInput.source) || this.source.equals(info.firstInput.sink) ? info.secondInput : info.firstInput;
+					
+					boolean comesFirstIsForward = this.source.equals(comesFirst.source); 
+					boolean comesSecondIsForward = this.sink.equals(comesSecond.sink);
+					
+					Edge processFirst = isForward ? comesFirst : comesSecond;
+					Edge processSecond = isForward ? comesSecond : comesFirst;
+					
+					boolean processFirstIsForward = isForward ? comesFirstIsForward : !comesSecondIsForward;
+					boolean processSecondIsForward = isForward ? comesSecondIsForward : !comesFirstIsForward;
+					
+					processFirst.getPathHelper(path, processFirstIsForward);
+					processSecond.getPathHelper(path, processSecondIsForward);
 				}
 			}
 		}
 		
-		public List<Edge> getPath() {
-			List<Edge> path = new ArrayList<Edge>();
-			this.getPathHelper(path);
+		private String toStringPath(List<Pair<Edge,Boolean>> path) {
+			StringBuilder sb = new StringBuilder();
+			for(Pair<Edge,Boolean> pathEdgePair : path) {
+				sb.append(pathEdgePair.toString()).append("\n");
+			}
+			return sb.toString();
+		}
+		
+		private boolean checkPath(List<Pair<Edge,Boolean>> path) {
+			Vertex prevVertex = null;
+			for(Pair<Edge,Boolean> pathEdgePair : path) {
+				Vertex checkVertex = pathEdgePair.getY() ? pathEdgePair.getX().source : pathEdgePair.getX().sink;
+				if(prevVertex != null && !prevVertex.equals(checkVertex)) {
+					System.out.println("PATH ERROR AT: " + checkVertex.name);
+					System.out.println(toStringPath(path));
+					System.out.println("END PATH ERROR: " + checkVertex.name);
+					return false;
+				}
+				prevVertex = pathEdgePair.getY() ? pathEdgePair.getX().sink : pathEdgePair.getX().source;
+			}
+			return true;
+		}
+		
+		public List<Pair<Edge,Boolean>> getPath() {
+			List<Pair<Edge,Boolean>> path = new ArrayList<Pair<Edge,Boolean>>();
+			this.getPathHelper(path, true);
+			this.checkPath(path);
 			return path;
 		}
 
@@ -220,7 +267,8 @@ public final class Graph {
 			sb.append(this.source.toString(shord)).append("-");
 			sb.append(contextFreeGrammar.getSymbol(this.symbolInt)).append("[");
 			sb.append(this.field.toString()).append("][");
-			sb.append(this.context).append("]");
+			sb.append(this.context).append("][");
+			sb.append(this.objectContext).append("]");
 			sb.append("-").append(this.sink.toString(shord));
 			return sb.toString();
 		}
@@ -302,8 +350,8 @@ public final class Graph {
 		return vertex;
 	}
 	
-	protected Edge addEdge(Vertex source, Vertex sink, int symbolInt, Field field, Context context, EdgeInfo edgeInfo) {
-		Edge edge = new Edge(source, sink, symbolInt, field, context);
+	protected Edge addEdge(Vertex source, Vertex sink, int symbolInt, Field field, Context context, ObjectContext objectContext, EdgeInfo edgeInfo) {
+		Edge edge = new Edge(source, sink, symbolInt, field, context, objectContext);
 		if(!source.outgoingEdgesBySymbol[symbolInt].containsKey(edge)) {
 			sink.incomingEdgesBySymbol[symbolInt].add(edge);
 		}
@@ -311,23 +359,23 @@ public final class Graph {
 		return edge;
 	}
 	
-	protected Edge addEdge(String source, String sink, String symbol, Field field, Context context, EdgeInfo edgeInfo) {
+	protected Edge addEdge(String source, String sink, String symbol, Field field, Context context, ObjectContext objectContext, EdgeInfo edgeInfo) {
 		Vertex sourceVertex = this.getVertex(source);
 		Vertex sinkVertex = this.getVertex(sink);		
 		int symbolInt = this.contextFreeGrammar.getSymbolInt(symbol);
-		return this.addEdge(sourceVertex, sinkVertex, symbolInt, field, context, edgeInfo);
+		return this.addEdge(sourceVertex, sinkVertex, symbolInt, field, context, objectContext, edgeInfo);
 	}
 	
-	public EdgeInfo getInfo(Vertex source, Vertex sink, int symbolInt, Field field, Context context) {
-		Edge edge = new Edge(source, sink, symbolInt, field, context);
+	public EdgeInfo getInfo(Vertex source, Vertex sink, int symbolInt, Field field, Context context, ObjectContext objectContext) {
+		Edge edge = new Edge(source, sink, symbolInt, field, context, objectContext);
 		return source.outgoingEdgesBySymbol[symbolInt].get(edge);
 	}
 	
-	public EdgeInfo getInfo(String source, String sink, String symbol, Field field, Context context) {
+	public EdgeInfo getInfo(String source, String sink, String symbol, Field field, Context context, ObjectContext objectContext) {
 		Vertex sourceVertex = this.getVertex(source);
 		Vertex sinkVertex = this.getVertex(sink);
 		int symbolInt = this.contextFreeGrammar.getSymbolInt(symbol);
-		return this.getInfo(sourceVertex, sinkVertex, symbolInt, field, context);
+		return this.getInfo(sourceVertex, sinkVertex, symbolInt, field, context, objectContext);
 	}
 
 	public ContextFreeGrammar getContextFreeGrammar() {
@@ -341,7 +389,7 @@ public final class Graph {
 	public Graph getFilteredGraph(EdgeFilter filter) {
 		GraphBuilder gb = new GraphBuilder(this.contextFreeGrammar);
 		for(Edge edge : this.getEdges(filter)) {
-			gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, edge.context, edge.getInfo());
+			gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, edge.context, edge.objectContext, edge.getInfo());
 		}
 		return gb.toGraph();
 	}

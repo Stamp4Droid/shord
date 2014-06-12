@@ -91,15 +91,15 @@ public interface EdgeData {
 			this.isForward = isForward;
 		}
 		
-		public Context(int context, boolean direction) {
+		public Context(int context, boolean isForward) {
 			this.contexts.add(context);
-			this.isForward = direction;
+			this.isForward = isForward;
 			this.trim();
 		}
 		
-		public Context(List<Integer> contexts, boolean direction) {
+		public Context(List<Integer> contexts, boolean isForward) {
 			this.contexts.addAll(contexts);
-			this.isForward = direction;
+			this.isForward = isForward;
 			this.trim();
 		}
 		
@@ -224,5 +224,156 @@ public interface EdgeData {
 				return false;
 			return true;
 		}	
-	}	
+	}
+
+	public static final class ObjectContext implements EdgeData {
+		public static final ObjectContext DEFAULT_OBJECT_CONTEXT = new ObjectContext(true);
+		private static final int MAX_CONTEXT_DEPTH = 1;
+
+		private final LinkedList<Integer> contexts = new LinkedList<Integer>();
+		private final boolean isForward;
+		
+		public ObjectContext(boolean isForward) {
+			this.isForward = isForward;
+		}
+		
+		public ObjectContext(int context, boolean isForward) {
+			this.contexts.add(context);
+			this.isForward = isForward;
+			this.trim();
+		}
+		
+		public ObjectContext(List<Integer> contexts, boolean isFoward) {
+			this.contexts.addAll(contexts);
+			this.isForward = isFoward;
+			this.trim();
+		}
+		
+		private void add(int context) {
+			this.contexts.add(context);
+			this.trim();
+		}
+		
+		private void addAll(List<Integer> contexts) {
+			this.contexts.addAll(contexts);
+			this.trim();
+		}
+		
+		private void trim() {
+			while(this.contexts.size() > MAX_CONTEXT_DEPTH) {
+				this.contexts.removeLast();
+			}
+		}
+		
+		public List<Integer> getContexts() {
+			return Collections.unmodifiableList(this.contexts);
+		}
+
+		@Override
+		public ObjectContext produce(UnaryProduction unaryProduction) {
+			if(unaryProduction.ignoreContexts) {
+				return DEFAULT_OBJECT_CONTEXT;
+			} else if(unaryProduction.isInputBackwards) {
+				return new ObjectContext(this.contexts, !this.isForward);
+			} else {
+				return this;
+			}
+		}
+
+		@Override
+		public ObjectContext produce(BinaryProduction binaryProduction, EdgeData secondData) {
+			if(binaryProduction.ignoreContexts) {
+				return DEFAULT_OBJECT_CONTEXT;
+			}
+			if(secondData instanceof ObjectContext) {
+				ObjectContext secondContext = (ObjectContext)secondData;
+				
+				// -> -> => -> or <- <- => <-
+				// <- -> => match + <-
+				// -> <- => error
+				if((this.isForward ^ binaryProduction.isFirstInputBackwards) == (secondContext.isForward ^ binaryProduction.isSecondInputBackwards)) {
+					boolean newDirection = this.isForward ^ binaryProduction.isFirstInputBackwards;
+					LinkedList<Integer> firstContextList = newDirection ? this.contexts : secondContext.contexts;
+					LinkedList<Integer> secondContextList = newDirection ? secondContext.contexts : this.contexts;
+					ObjectContext newContext = new ObjectContext(firstContextList, newDirection);
+					newContext.addAll(secondContextList);
+					//System.out.println(binaryProduction);
+					//System.out.println(newContext + " :- " + this + ", " + secondData + ".");
+					return newContext;
+				} else if((!this.isForward) ^ binaryProduction.isFirstInputBackwards) {
+					int thisSize = this.contexts.size();
+					int secondSize = secondContext.contexts.size();
+					int minSize = Math.min(thisSize, secondSize);
+					for(int i=0; i<minSize; i++) {
+						if(!this.contexts.get(i).equals(secondContext.contexts.get(i))) {
+							System.out.println(binaryProduction);
+							System.out.println("null :- " + this + ", " + secondData + ".");
+							//return null;
+							return DEFAULT_OBJECT_CONTEXT;
+						}
+					}
+					ObjectContext newContext = new ObjectContext(true);
+					for(int i=minSize; i<thisSize; i++) {
+						newContext.add(this.contexts.get(i));
+					}
+					//System.out.println(binaryProduction);
+					//System.out.println(newContext + " :- " + this + ", " + secondData + ".");
+					return newContext;
+				} else {
+					//System.out.println("Unhandled case");
+					return DEFAULT_OBJECT_CONTEXT;
+				}
+			} else {
+				throw new RuntimeException("Mismatched context data!");
+			}
+		}
+
+		@Override
+		public ObjectContext produce(AuxProduction auxProduction, EdgeData auxData) {
+			return auxProduction.ignoreContexts ? DEFAULT_OBJECT_CONTEXT : this;
+		}	
+		
+		@Override
+		public String toString() {
+			if(this.contexts.size() == 0) {
+				return "default";
+			}
+			StringBuilder sb = new StringBuilder();
+			sb.append(this.isForward ? "" : "_");
+			for(int i=0; i<this.contexts.size()-1; i++) {
+				sb.append(this.contexts.get(i)).append(",");
+			}
+			sb.append(this.contexts.getLast());
+			return sb.toString();
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result
+					+ ((contexts == null) ? 0 : contexts.hashCode());
+			result = prime * result + (isForward ? 1231 : 1237);
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ObjectContext other = (ObjectContext) obj;
+			if (contexts == null) {
+				if (other.contexts != null)
+					return false;
+			} else if (!contexts.equals(other.contexts))
+				return false;
+			if (isForward != other.isForward)
+				return false;
+			return true;
+		}
+	}
 }

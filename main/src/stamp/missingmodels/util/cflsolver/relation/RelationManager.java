@@ -6,6 +6,7 @@ import java.util.Collections;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
+import stamp.missingmodels.util.cflsolver.graph.EdgeData.ObjectContext;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
 import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 
@@ -48,6 +49,7 @@ public class RelationManager {
 		public abstract String getSymbol();
 		
 		public abstract Context getContext(int[] tuple);
+		public abstract ObjectContext getObjectContext(int[] tuple);
 		public abstract Field getField(int[] tuple);
 		
 		public abstract int getWeight(int[] tuple);
@@ -66,12 +68,13 @@ public class RelationManager {
 			String symbol = this.getSymbol();
 			Field field = this.getField(tuple);
 			Context context = this.getContext(tuple);
+			ObjectContext objectContext = this.getObjectContext(tuple);
 			
-			EdgeInfo curInfo = gb.toGraph().getInfo(source, sink, symbol, field, context);
+			EdgeInfo curInfo = gb.toGraph().getInfo(source, sink, symbol, field, context, objectContext);
 			int weight = this.getWeight(tuple);
 			
 			if(curInfo == null || curInfo.weight > weight) {
-				gb.addEdge(source, sink, symbol, field, context, new EdgeInfo(weight));
+				gb.addEdge(source, sink, symbol, field, context, objectContext, new EdgeInfo(weight));
 			}
 		}
 	}
@@ -165,6 +168,11 @@ public class RelationManager {
 		@Override
 		public Context getContext(int[] tuple) {
 			return this.contextIndex == null ? Context.DEFAULT_CONTEXT : new Context(tuple[this.contextIndex], this.contextDirection);
+		}
+
+		@Override
+		public ObjectContext getObjectContext(int[] tuple) {
+			return this.contextIndex == null ? ObjectContext.DEFAULT_OBJECT_CONTEXT : new ObjectContext(tuple[this.contextIndex], this.contextDirection);
 		}
 
 		@Override
