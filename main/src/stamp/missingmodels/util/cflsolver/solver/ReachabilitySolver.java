@@ -9,6 +9,7 @@ import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.BinaryProduct
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
+import stamp.missingmodels.util.cflsolver.graph.EdgeData.ObjectContext;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
@@ -43,23 +44,23 @@ public class ReachabilitySolver {
 		this.gb = new GraphBuilder(this.c);
 		this.t = t;
 		for(Edge edge : g.getEdges()) {
-			Edge newEdge = this.gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, edge.context, new EdgeInfo(edge.getInfo().weight));
+			Edge newEdge = this.gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, edge.context, edge.objectContext, new EdgeInfo(edge.getInfo().weight));
 			this.worklist.add(newEdge, edge.getInfo().weight);
 		}
 	}
 	
-	private void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, Field field, Context context, EdgeInfo newInfo) {
+	private void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, Field field, Context context, ObjectContext objectContext, EdgeInfo newInfo) {
 		// make sure field and context are not null
-		if(field == null || context == null) {
+		if(field == null || context == null || objectContext == null) {
 			return;
 		}
 		
 		// check if edge exists
-		EdgeInfo curInfo = this.gb.toGraph().getInfo(source, sink, symbolInt, field, context);
+		EdgeInfo curInfo = this.gb.toGraph().getInfo(source, sink, symbolInt, field, context, objectContext);
 		
 		// add the edge if the edge is new or if the weight is smaller
 		if(curInfo == null || newInfo.weight < curInfo.weight) {
-			this.worklist.add(this.gb.addEdge(source, sink, symbolInt, field, context, newInfo), newInfo.weight);
+			this.worklist.add(this.gb.addEdge(source, sink, symbolInt, field, context, objectContext, newInfo), newInfo.weight);
 		}
 	}
 	
@@ -77,12 +78,13 @@ public class ReachabilitySolver {
 		// get edge data
 		Field field = input.field.produce(unaryProduction);
 		Context context = input.context.produce(unaryProduction);
+		ObjectContext objectContext = input.objectContext.produce(unaryProduction);
 		
 		// get edge info
 		EdgeInfo newInfo = new EdgeInfo(input, input.getInfo().weight);	
 		
 		// add edge
-		this.addEdgeHelper(source, sink, symbolInt, field, context, newInfo);
+		this.addEdgeHelper(source, sink, symbolInt, field, context, objectContext, newInfo);
 	}
 
 	private void addEdge(BinaryProduction binaryProduction, Edge firstInput, Edge secondInput) {
@@ -99,12 +101,13 @@ public class ReachabilitySolver {
 		// get edge data
 		Field field = firstInput.field.produce(binaryProduction, secondInput.field);
 		Context context = firstInput.context.produce(binaryProduction, secondInput.context);
+		ObjectContext objectContext = firstInput.objectContext.produce(binaryProduction, secondInput.objectContext);
 		
 		// get edge info
 		EdgeInfo newInfo = new EdgeInfo(firstInput, secondInput, firstInput.getInfo().weight + secondInput.getInfo().weight);
 
 		// add edge
-		this.addEdgeHelper(source, sink, symbolInt, field, context, newInfo);
+		this.addEdgeHelper(source, sink, symbolInt, field, context, objectContext, newInfo);
 	}
 
 	private void addEdge(AuxProduction auxProduction, Edge input, Edge auxInput) {
@@ -121,12 +124,13 @@ public class ReachabilitySolver {
 		// get edge data
 		Field field = input.field.produce(auxProduction, auxInput.field);
 		Context context = input.context.produce(auxProduction, auxInput.context);
+		ObjectContext objectContext = input.objectContext.produce(auxProduction, auxInput.objectContext);
 		
 		// get edge info
 		EdgeInfo newInfo = new EdgeInfo(input, auxInput, input.getInfo().weight + auxInput.getInfo().weight);
 
 		// add edge
-		this.addEdgeHelper(source, sink, symbolInt, field, context, newInfo);
+		this.addEdgeHelper(source, sink, symbolInt, field, context, objectContext, newInfo);
 	}
 	
 	private void solve() {
