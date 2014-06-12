@@ -19,6 +19,7 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.cflsolver.util.PrintingUtils;
 
 public class AbductiveInferenceRunner {
 	
@@ -168,6 +169,7 @@ public class AbductiveInferenceRunner {
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
 			Graph gbar = computeTransitiveClosure(gcur, t, shord);
+			PrintingUtils.printGraphStatistics(gbar);
 			printPaths(gbar, getInitialCutEdges(gbar), shord);
 			
 			// STEP 2: Strip contexts

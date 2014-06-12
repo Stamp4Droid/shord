@@ -227,5 +227,201 @@ public interface EdgeData {
 				return false;
 			return true;
 		}
-	}	
+	}
+	
+	public static final class NewContext implements EdgeData {
+		public static final NewContext DEFAULT_CONTEXT = new NewContext();
+		private static final int MAX_CONTEXT_DEPTH = 1;
+		
+		/*
+		 * A context is )) ... ((
+		 * Forward contexts are (( and backward contexts are )) (this is to denote the direction)
+		 * The closeContexts are )) and openContexts are the (( (this is to denote start/end of stack)
+		 * The context depth is the length of the )) and (( (in this example, 2)
+		 * )a)b ... (c(d + )e)f ... (g(h = d==e && c==f ? )a)b ... (g(h
+		 */
+		
+		private final LinkedList<Integer> openContexts = new LinkedList<Integer>();
+		private final LinkedList<Integer> closeContexts = new LinkedList<Integer>();
+		
+		private boolean openOverflow = false;
+		private boolean closeOverflow = false;
+		
+		public NewContext() {}
+		
+		public NewContext(int context, boolean isForward) {
+			if(isForward) {
+				this.openContexts.add(context);
+			} else {
+				this.closeContexts.add(context);
+			}
+			this.trim();
+		}
+		
+		private boolean pushClose(int closeContext) {
+			if(this.openContexts.isEmpty()) {
+				if(!this.openOverflow && !this.closeOverflow) { 
+					this.closeContexts.addLast(closeContext);
+				}
+				return true;
+			} else {
+				int openContext = this.openContexts.removeLast();
+				return closeContext == openContext;
+			}
+		}
+		
+		private void pushCloseAny() {
+			this.openContexts.clear();
+		}
+		
+		private void pushOpenAny() {
+			this.openContexts.clear();
+			this.openOverflow = true;
+		}
+		
+		private void pushOpen(int openContext) {
+			this.openContexts.addLast(openContext);
+		}
+		
+		private void trim() {
+			while(this.openContexts.size() > MAX_CONTEXT_DEPTH) {
+				this.openContexts.removeFirst();
+				this.openOverflow = true;
+			}
+			while(this.closeContexts.size() > MAX_CONTEXT_DEPTH) {
+				this.closeContexts.removeLast();
+				this.closeOverflow = true;
+			}
+		}
+		
+		private NewContext getCopy() {
+			NewContext context = new NewContext();
+			context.openContexts.addAll(this.openContexts);
+			context.closeContexts.addAll(this.closeContexts);
+			context.openOverflow = this.openOverflow;
+			context.closeOverflow = this.closeOverflow;
+			return context;
+		}
+		
+		private NewContext getReverse() {
+			NewContext context = new NewContext();
+			context.openContexts.addAll(this.closeContexts);
+			context.closeContexts.addAll(this.openContexts);
+			context.openOverflow = this.closeOverflow;
+			context.closeOverflow = this.openOverflow;
+			return context;
+		}
+
+		@Override
+		public NewContext produce(UnaryProduction unaryProduction) {
+			if(unaryProduction.ignoreContexts) {
+				return DEFAULT_CONTEXT;
+			} else if(unaryProduction.isInputBackwards) {
+				return this.getReverse();
+			} else {
+				return this;
+			}
+		}
+
+		@Override
+		public NewContext produce(BinaryProduction binaryProduction, EdgeData secondData) {
+			if(binaryProduction.ignoreContexts) {
+				return DEFAULT_CONTEXT;
+			}
+			if(secondData instanceof NewContext) {
+				// STEP 1: Get the first and second contexts in the right direction
+				NewContext firstContext = binaryProduction.isFirstInputBackwards ? this.getReverse() : this;
+				NewContext secondContext = binaryProduction.isSecondInputBackwards ? ((NewContext)secondData).getReverse() : (NewContext)secondData;
+				
+				// STEP 2: Initialize the new context as a copy of the first context
+				NewContext newContext = firstContext.getCopy();
+				
+				// STEP 3: Push the close contexts, and clear the new open contexts if they are overflowed
+				for(int closeContext : secondContext.closeContexts) {
+					if(!newContext.pushClose(closeContext)) {
+						return null;
+					}
+				}
+				if(secondContext.closeOverflow){
+					newContext.pushCloseAny();
+				}
+				
+				// STEP 4: Clear the new open contexts if they are overflowed, and push the open contexts
+				if(secondContext.openOverflow) {
+					newContext.pushOpenAny();
+				}
+				for(int openContext : secondContext.openContexts) {
+					newContext.pushOpen(openContext);
+				}
+				
+				// STEP 5: Trim the context
+				newContext.trim();
+				
+				return newContext;
+			} else {
+				throw new RuntimeException("Mismatched context data!");
+			}
+		}
+
+		@Override
+		public NewContext produce(AuxProduction auxProduction, EdgeData auxData) {
+			return auxProduction.ignoreContexts ? DEFAULT_CONTEXT : this;
+		}
+		
+		@Override
+		public String toString() {
+			/*
+			if(this.contexts.size() == 0) {
+				return "default";
+			}
+			StringBuilder sb = new StringBuilder();
+			sb.append(this.isForward ? "" : "_");
+			for(int i=0; i<this.contexts.size()-1; i++) {
+				sb.append(this.contexts.get(i)).append(",");
+			}
+			sb.append(this.contexts.getLast());
+			return sb.toString();
+			*/
+			return "";
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result
+					+ ((closeContexts == null) ? 0 : closeContexts.hashCode());
+			result = prime * result + (closeOverflow ? 1231 : 1237);
+			result = prime * result
+					+ ((openContexts == null) ? 0 : openContexts.hashCode());
+			result = prime * result + (openOverflow ? 1231 : 1237);
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			NewContext other = (NewContext) obj;
+			if (closeContexts == null) {
+				if (other.closeContexts != null)
+					return false;
+			} else if (!closeContexts.equals(other.closeContexts))
+				return false;
+			if (closeOverflow != other.closeOverflow)
+				return false;
+			if (openContexts == null) {
+				if (other.openContexts != null)
+					return false;
+			} else if (!openContexts.equals(other.openContexts))
+				return false;
+			if (openOverflow != other.openOverflow)
+				return false;
+			return true;
+		}
+	}
 }

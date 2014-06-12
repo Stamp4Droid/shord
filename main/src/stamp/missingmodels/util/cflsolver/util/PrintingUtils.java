@@ -85,7 +85,7 @@ public class PrintingUtils {
 		}
 	}
 	
-	public static void printGraphStatistcs(Graph g) {
+	public static void printGraphStatistics(Graph g) {
 		for(int symbolInt=0; symbolInt<g.getContextFreeGrammar().getNumLabels(); symbolInt++) {
 			final String symbol = g.getContextFreeGrammar().getSymbol(symbolInt);
 			if(!symbol.equals(symbol)) continue;
