@@ -12,7 +12,7 @@ import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
-import stamp.missingmodels.util.cflsolver.grammars.DebugTaintGrammar;
+import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
@@ -26,7 +26,7 @@ import chord.project.Chord;
 
 @Chord(name = "cflsolver")
 public class CFLSolverAnalysis extends JavaAnalysis {
-	private static ContextFreeGrammar taintGrammar = new DebugTaintGrammar();
+	private static ContextFreeGrammar taintGrammar = new CallgraphTaintGrammar();
 	
 	private static int getNumReachableMethods() {
 		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
@@ -56,6 +56,8 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				}
 			}
 		}
+		filteredCallgraph.add("<android.app.Activity: void <init>()>", "<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>");
+		
 		System.out.println("Current callgraph size: " + filteredCallgraphSize);
 		return filteredCallgraph;
 	}
@@ -72,9 +74,10 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
 			
 			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("../../profiler/traceouts/", tokens[tokens.length-1]);
+			PrintingUtils.printRelation("callgraph");
 			
 			double fractionMethodIncrement = 0.1;
-			int numMethods = 0;
+			int numMethods = reachedMethods.size();
 			while(true) {
 				if(numMethods >= reachedMethods.size()) {
 					System.out.println("Running method coverage: " + (double)reachedMethods.size()/numReachableMethods);
@@ -90,7 +93,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				if(numMethods >= reachedMethods.size()) {
 					break;
 				}
-				numMethods += (int)(fractionMethodIncrement*numReachableMethods); 
+				numMethods += (int)(fractionMethodIncrement*numReachableMethods);
 			}
 		} catch(LpSolveException e) {
 			e.printStackTrace();

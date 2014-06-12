@@ -13,6 +13,7 @@ import stamp.missingmodels.util.abduction.LinearProgram.ConstraintType;
 import stamp.missingmodels.util.abduction.LinearProgram.LinearProgramResult;
 import stamp.missingmodels.util.abduction.LinearProgram.ObjectiveType;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.AuxProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
@@ -104,13 +105,13 @@ public class AbductiveInference {
 		for(Edge firstInput : potentialFirstInputs) {
 			// iterate over potential second inputs
 			Collection<Edge> potentialSecondInputs = binaryProduction.isSecondInputBackwards ? target.sink.getOutgoingEdges(binaryProduction.secondInput) : target.sink.getIncomingEdges(binaryProduction.secondInput);
-			for(Edge secondInput : potentialSecondInputs) {		
+			for(Edge secondInput : potentialSecondInputs) {
 				// only add production if the intermediate is correct
 				Vertex firstIntermediate = binaryProduction.isFirstInputBackwards ? firstInput.source : firstInput.sink;
 				Vertex secondIntermediate = binaryProduction.isSecondInputBackwards ? secondInput.sink : secondInput.source;
 				if(!firstIntermediate.equals(secondIntermediate)) {
 					continue;
-				}	
+				}
 				// only add production for inputs with positive weight
 				boolean includeFirstInput = firstInput.getInfo().weight > 0;
 				boolean includeSecondInput = secondInput.getInfo().weight > 0;
@@ -133,7 +134,42 @@ public class AbductiveInference {
 		}
 	}
 
-	private void Edge(Edge edge) {
+	private void processProduction(AuxProduction auxProduction, Edge target) {
+		// iterate over potential inputs
+		Collection<Edge> potentialInputs = auxProduction.isInputBackwards ? target.source.getIncomingEdges(auxProduction.input) : target.source.getOutgoingEdges(auxProduction.input);
+		for(Edge input : potentialInputs) {
+			// only add production if intermediate matches
+			Vertex toCheck = auxProduction.isInputBackwards ? input.source : input.sink;
+			if(!target.sink.equals(toCheck)) {
+				continue;
+			}
+			// iterate over potential aux inputs
+			Vertex auxIntermediate = auxProduction.isAuxInputFirst ? target.source : target.sink;
+			Collection<Edge> potentialAuxInputs = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? auxIntermediate.getOutgoingEdges(auxProduction.auxInput) : auxIntermediate.getIncomingEdges(auxProduction.auxInput);
+			for(Edge auxInput : potentialAuxInputs) {
+				// only add production for inputs with positive weight
+				boolean includeInput = input.getInfo().weight > 0;
+				boolean includeAuxInput = auxInput.getInfo().weight > 0;
+				// only add production if edge data are equal
+				if(!target.field.equals(input.field.produce(auxProduction, auxInput.field))) {
+					continue;
+				}
+				if(!target.context.equals(input.context.produce(auxProduction, auxInput.context))) {
+					continue;
+				}
+				// add edge
+				if(includeInput && includeAuxInput) {
+					this.addProduction(target, input, auxInput);
+				} else if(includeInput) {
+					this.addProduction(target, input);
+				} else if(includeAuxInput) {
+					this.addProduction(target, auxInput);
+				}
+			}
+		}
+	}
+
+	private void processEdge(Edge edge) {
 		if(this.baseEdges.contains(edge)) {
 			return;
 		}
@@ -143,6 +179,9 @@ public class AbductiveInference {
 		}
 		for(BinaryProduction binaryProduction : this.contextFreeGrammar.binaryProductionsByTarget.get(edge.symbolInt)) {
 			this.processProduction(binaryProduction, edge);
+		}
+		for(AuxProduction auxProduction : this.contextFreeGrammar.auxProductionsByTarget.get(edge.symbolInt)) {
+			this.processProduction(auxProduction, edge);
 		}
 	}
 	
@@ -158,7 +197,7 @@ public class AbductiveInference {
 				this.addEdge(edge);
 			}
 			while(!this.worklist.isEmpty()) {
-				this.Edge(this.worklist.removeFirst());
+				this.processEdge(this.worklist.removeFirst());
 			}
 			
 			// STEP 3: Set objective

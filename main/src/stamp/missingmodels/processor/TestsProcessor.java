@@ -34,8 +34,14 @@ public class TestsProcessor implements Processor {
 	private final Map<String,Integer> appLinesOfCode = new HashMap<String,Integer>();
 	private final Map<String,Integer> frameworkLinesOfCode = new HashMap<String,Integer>();
 	
+	private boolean isZerothCutEdge = false;
+	private String zerothCutEdgeCaller = null;
+	private final Map<String,MultivalueMap<Double,String>> zerothCut = new HashMap<String,MultivalueMap<Double,String>>();
+	
 	@Override
 	public void startProcessing(String appName) {
+		this.currentCoverage = -1.0;
+		
 		this.lpRunningTimes.put(appName, new HashMap<Double,Integer>());
 		
 		this.numVariables.put(appName, new HashMap<Double,Integer>());
@@ -44,6 +50,8 @@ public class TestsProcessor implements Processor {
 		this.numFlowEdges.put(appName, new HashMap<Double,Integer>());
 		this.numBaseEdges.put(appName, new HashMap<Double,Integer>());
 		this.numCutEdges.put(appName, new HashMap<Double,Map<Integer,Integer>>());
+		
+		this.zerothCut.put(appName, new MultivalueMap<Double,String>());
 	}
 	
 	@Override
@@ -82,6 +90,17 @@ public class TestsProcessor implements Processor {
 				this.numCutEdges.get(appName).put(this.currentCoverage, cutMap);
 			}
 			cutMap.put(cutNum, numCuts);
+		} else if(this.isZerothCutEdge) {
+			if(this.zerothCutEdgeCaller == null) {
+				this.zerothCutEdgeCaller = line.split("caller:")[1].trim();
+			} else {
+				String callee = line.split("callee:")[1].trim();
+				this.zerothCut.get(appName).add(this.currentCoverage, this.zerothCutEdgeCaller + " -> " + callee);
+				this.isZerothCutEdge = false;
+				this.zerothCutEdgeCaller = null;
+			}
+		} else if(line.startsWith("in cut 0:")) {
+			this.isZerothCutEdge = true;
 		}
 	}
 
@@ -136,17 +155,6 @@ public class TestsProcessor implements Processor {
 		return Collections.unmodifiableList(coveragesList);
 	}
 	
-	private int getNumCuts(double coverage) {
-		int numCuts = 0;
-		for(String appName : this.getAppNames()) {
-			int curNumCuts = this.numCutEdges.get(appName).get(coverage).size();
-			if(curNumCuts > numCuts) {
-				numCuts = curNumCuts;
-			}
-		}
-		return numCuts;
-	}
-	
 	private int getMaxNumCuts() {
 		int numCuts = 0;
 		for(String appName : this.getAppNames()) {
@@ -186,7 +194,7 @@ public class TestsProcessor implements Processor {
 		sb.append(this.numConstraints.get(appName).get(coverage)).append(",");
 		sb.append(this.numFlowEdges.get(appName).get(coverage)).append(",");
 		sb.append(this.numBaseEdges.get(appName).get(coverage)).append(",");
-		int numCuts = this.getNumCuts(coverage);
+		int numCuts = this.getMaxNumCuts();
 		for(int i=0; i<numCuts; i++) {
 			sb.append(this.numCutEdges.get(appName).get(coverage).get(i)).append(",");
 		}
@@ -195,14 +203,33 @@ public class TestsProcessor implements Processor {
 		return sb.toString();
 	}
 	
-	public static void main(String[] args) {
+	public static void printSummary() {
 		TestsProcessor tp = new TestsProcessor();
-		new LogReader("../stamp_output", tp).run();
+		new LogReader("../results_good", tp).run();
 		System.out.println(tp.getHeader());
 		for(String appName : tp.getAppNames()) {
 			for(double coverage : tp.getCoverages(appName)) {
 				System.out.println(tp.getInfoFor(appName, coverage));
 			}
 		}
+	}
+	
+	public static void printEdges() {
+		TestsProcessor tp = new TestsProcessor();
+		new LogReader("../results_good", tp).run();
+		System.out.println("App#Coverage#Calledge");
+		for(String appName : tp.getAppNames()) {
+			for(double coverage : tp.getCoverages(appName)) {
+				List<String> calledges = new ArrayList<String>(tp.zerothCut.get(appName).get(coverage));
+				Collections.sort(calledges);
+				for(String calledge : calledges) {
+					System.out.println(appName + "#" + coverage + "#" + calledge);
+				}
+			}
+		}		
+	}
+	
+	public static void main(String[] args) {
+		printSummary();
 	}
 }

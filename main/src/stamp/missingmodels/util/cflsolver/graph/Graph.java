@@ -1,5 +1,6 @@
 package stamp.missingmodels.util.cflsolver.graph;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -194,6 +195,24 @@ public final class Graph {
 		
 		public EdgeStruct getStruct() {
 			return new EdgeStruct(this.source.name, this.sink.name, this.getSymbol(), this.field, this.context);
+		}
+		
+		private void getPathHelper(List<Edge> path) {
+			EdgeInfo info = this.getInfo();
+			if(info.firstInput == null) {
+				path.add(this);
+			} else {
+				info.firstInput.getPathHelper(path);
+				if(info.secondInput != null) {
+					info.secondInput.getPathHelper(path);
+				}
+			}
+		}
+		
+		public List<Edge> getPath() {
+			List<Edge> path = new ArrayList<Edge>();
+			this.getPathHelper(path);
+			return path;
 		}
 
 		public String toString(boolean shord) {

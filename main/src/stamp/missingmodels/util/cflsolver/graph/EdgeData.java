@@ -4,12 +4,14 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.AuxProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.UnaryProduction;
 
 public interface EdgeData {
 	public EdgeData produce(UnaryProduction unaryProduction);
 	public EdgeData produce(BinaryProduction binaryProduction, EdgeData secondData);
+	public EdgeData produce(AuxProduction auxProduction, EdgeData auxData);
 	
 	public static final class Field implements EdgeData {
 		public final static Field DEFAULT_FIELD = new Field(-1);
@@ -70,6 +72,11 @@ public interface EdgeData {
 			if (field != other.field)
 				return false;
 			return true;
+		}
+
+		@Override
+		public Field produce(AuxProduction auxProduction, EdgeData auxData) {
+			return auxProduction.ignoreFields ? DEFAULT_FIELD : this;
 		}
 	}
 	
@@ -172,6 +179,11 @@ public interface EdgeData {
 				throw new RuntimeException("Mismatched context data!");
 			}
 		}
+
+		@Override
+		public Context produce(AuxProduction auxProduction, EdgeData auxData) {
+			return auxProduction.ignoreContexts ? DEFAULT_CONTEXT : this;
+		}	
 		
 		@Override
 		public String toString() {
@@ -211,6 +223,6 @@ public interface EdgeData {
 			} else if (!contexts.equals(other.contexts))
 				return false;
 			return true;
-		}		
+		}	
 	}	
 }

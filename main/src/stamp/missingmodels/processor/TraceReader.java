@@ -132,7 +132,7 @@ public class TraceReader {
 		List<String> result = new ArrayList<String>();
 		for(Object tuple : relReachableM.getAry1ValTuples()) {
 			if(methodList.contains(tuple.toString())) {
-				//System.out.println("Reached reachable method: " + tuple.toString());
+				System.out.println("Reached reachable method: " + tuple.toString());
 				result.add(tuple.toString());
 			} else {
 				System.out.println("Unreached reachable method: " + tuple.toString());

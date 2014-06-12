@@ -18,6 +18,7 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.cflsolver.util.PrintingUtils;
 
 public class AbductiveInferenceRunner {
 	
@@ -50,7 +51,7 @@ public class AbductiveInferenceRunner {
 		return gbart.getEdges(new EdgeFilter() {
 			@Override
 			public boolean filter(Edge edge) {
-				return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
+				return edge.getSymbol().equals("callgraph");
 			}
 		});
 	}
@@ -141,12 +142,32 @@ public class AbductiveInferenceRunner {
 		return gt.transform(g);
 	}
 	
+	private static void printPaths(Graph g, Set<Edge> edges, boolean shord) {
+		System.out.println("Initial cut edges before context strip: " + edges.size());
+		DomL dom = shord ? (DomL)ClassicProject.g().getTrgt("L") : null;
+		for(Edge edge : edges) {	
+			System.out.println("Cutting Src2Sink edge: " + edge.toString());
+			System.out.println("Edge weight: " + edge.getInfo().weight);
+			if(dom != null) {
+				String source = dom.get(Integer.parseInt(edge.source.name.substring(1)));
+				String sink = dom.get(Integer.parseInt(edge.sink.name.substring(1)));
+				System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
+			}
+			System.out.println("STARTING EDGE PATH");
+			for(Edge pathEdge : edge.getPath()) {
+				System.out.println("weight " + pathEdge.getInfo().weight + ": " + pathEdge.toString(shord));
+			}
+			System.out.println("ENDING EDGE PATH");
+		}		
+	}
+	
 	public static MultivalueMap<EdgeStruct,Integer> runInference(Graph g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
 		Graph gcur = g;
 		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
 			Graph gbar = computeTransitiveClosure(gcur, t, shord);
+			printPaths(gbar, getInitialCutEdges(gbar), shord);
 			
 			// STEP 2: Strip contexts
 			Graph gbart = stripContexts(gbar);

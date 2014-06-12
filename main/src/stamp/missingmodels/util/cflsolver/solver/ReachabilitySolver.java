@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.AuxProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
@@ -105,6 +106,28 @@ public class ReachabilitySolver {
 		// add edge
 		this.addEdgeHelper(source, sink, symbolInt, field, context, newInfo);
 	}
+
+	private void addEdge(AuxProduction auxProduction, Edge input, Edge auxInput) {
+		// get edge base
+		Vertex source = auxProduction.isInputBackwards ? input.sink : input.source;
+		Vertex sink = auxProduction.isInputBackwards ? input.source : input.sink;
+		int symbolInt = auxProduction.target;
+		
+		// check filter
+		if(!this.t.filter(source, sink, symbolInt)) {
+			return;
+		}
+		
+		// get edge data
+		Field field = input.field.produce(auxProduction, auxInput.field);
+		Context context = input.context.produce(auxProduction, auxInput.context);
+		
+		// get edge info
+		EdgeInfo newInfo = new EdgeInfo(input, auxInput, input.getInfo().weight + auxInput.getInfo().weight);
+
+		// add edge
+		this.addEdgeHelper(source, sink, symbolInt, field, context, newInfo);
+	}
 	
 	private void solve() {
 		System.out.println("Computing transitive closure...");
@@ -128,6 +151,21 @@ public class ReachabilitySolver {
 				Collection<Edge> firstEdges = binaryProduction.isFirstInputBackwards ? intermediate.getOutgoingEdges(binaryProduction.firstInput) : intermediate.getIncomingEdges(binaryProduction.firstInput);
 				for(Edge firstEdge : firstEdges) {
 					this.addEdge(binaryProduction, firstEdge, edge);
+				}
+			}
+			// <- <-, <- ->, -> <-, -> ->
+			for(AuxProduction auxProduction : this.c.auxProductionsByInput.get(edge.symbolInt)) {
+				Vertex intermediate = (!auxProduction.isAuxInputFirst) ^ auxProduction.isInputBackwards ? edge.sink : edge.source;
+				Collection<Edge> auxEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? intermediate.getOutgoingEdges(auxProduction.auxInput) : intermediate.getIncomingEdges(auxProduction.auxInput);
+				for(Edge auxEdge : auxEdges) {
+					this.addEdge(auxProduction, edge, auxEdge);
+				}
+			}
+			for(AuxProduction auxProduction : this.c.auxProductionsByAuxInput.get(edge.symbolInt)) {
+				Vertex intermediate = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? edge.source : edge.sink;
+				Collection<Edge> inputEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isInputBackwards ? intermediate.getIncomingEdges(auxProduction.input) : intermediate.getOutgoingEdges(auxProduction.input);
+				for(Edge inputEdge : inputEdges) {
+					this.addEdge(auxProduction, inputEdge, edge);
 				}
 			}
 		}

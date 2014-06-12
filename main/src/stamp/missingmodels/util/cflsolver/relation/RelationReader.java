@@ -51,7 +51,7 @@ public interface RelationReader {
 			labels.add("!sendDataMessage");
 			labels.add("!sendMultipartTextMessage");
 			
-			labels.add("$CONTENT_PROVIDER");
+			//labels.add("$CONTENT_PROVIDER");
 			//labels.add("!WebView");
 			
 			GraphTransformer gt = new GraphTransformer() {

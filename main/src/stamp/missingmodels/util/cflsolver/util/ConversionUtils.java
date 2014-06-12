@@ -1,7 +1,7 @@
 package stamp.missingmodels.util.cflsolver.util;
 
-import chord.bddbddb.Dom;
 import shord.analyses.CastVarNode;
+import shord.analyses.DomM;
 import shord.analyses.DomU;
 import shord.analyses.DomV;
 import shord.analyses.LocalVarNode;
@@ -12,6 +12,7 @@ import shord.analyses.ThisVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import soot.SootMethod;
+import chord.bddbddb.Dom;
 
 public class ConversionUtils {
 	public static String toStringShord(String name) {
@@ -27,6 +28,9 @@ public class ConversionUtils {
 		} else if(name.startsWith("U")) {
 			DomU dom = (DomU)ClassicProject.g().getTrgt(name.substring(0,1).toUpperCase());
 			v = dom.get(Integer.parseInt(name.substring(1)));
+		} else if(name.startsWith("M")) {
+			DomM dom = (DomM)ClassicProject.g().getTrgt(name.substring(0,1).toUpperCase());
+			return dom.get(Integer.parseInt(name.substring(1))).toString();
 		} else {
 			throw new RuntimeException("Unrecognized vertex: " + name);
 		}
