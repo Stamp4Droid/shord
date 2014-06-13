@@ -89,7 +89,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				//RelationManager relations = new DynamicCallgraphRelationManager(DroidRecordReader.getCallgraphList("../../callgraphs/", tokens[tokens.length-1]));
 				Graph g = relationReader.readGraph(relations, taintGrammar);
 				TypeFilter t = relationReader.readTypeFilter(taintGrammar);
-				PrintingUtils.printAbductionResult(AbductiveInferenceRunner.runInference(g, t, true, 3), true);
+				PrintingUtils.printAbductionResult(AbductiveInferenceRunner.runInference(g, t, true, 2), true);
 				
 				if(numMethods >= reachedMethods.size()) {
 					break;
@@ -104,6 +104,6 @@ public class CFLSolverAnalysis extends JavaAnalysis {
  	public static void main(String[] args) throws LpSolveException {
 		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord_clone/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1C_tomdroid/cfl";		
 		RelationReader relationReader = new FileRelationReader(new File(directoryName));
-		PrintingUtils.printAbductionResult(AbductiveInferenceRunner.runInference(relationReader.readGraph(new DynamicCallgraphRelationManager(), taintGrammar), relationReader.readTypeFilter(taintGrammar), false, 3), false);
+		PrintingUtils.printAbductionResult(AbductiveInferenceRunner.runInference(relationReader.readGraph(new DynamicCallgraphRelationManager(), taintGrammar), relationReader.readTypeFilter(taintGrammar), false, 2), false);
 	}
 }

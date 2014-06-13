@@ -38,11 +38,11 @@ public interface RelationReader {
 			labels.add("$getLatitude");
 			labels.add("$getLongitude");
 			labels.add("$FINE_LOCATION");
-			labels.add("$ACCOUNTS");
-			labels.add("$getDeviceId");
+			//labels.add("$ACCOUNTS");
+			//labels.add("$getDeviceId");
 			labels.add("$SMS");
 			//labels.add("$AUDIO");
-			labels.add("$CONTACTS");
+			//labels.add("$CONTACTS");
 			labels.add("$CALENDAR");
 			labels.add("!SOCKET");
 			labels.add("!INTERNET");
