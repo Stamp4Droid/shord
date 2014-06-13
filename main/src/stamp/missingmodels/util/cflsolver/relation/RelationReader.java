@@ -39,7 +39,7 @@ public interface RelationReader {
 			labels.add("$getLongitude");
 			labels.add("$FINE_LOCATION");
 			//labels.add("$ACCOUNTS");
-			//labels.add("$getDeviceId");
+			labels.add("$getDeviceId");
 			labels.add("$SMS");
 			//labels.add("$AUDIO");
 			//labels.add("$CONTACTS");

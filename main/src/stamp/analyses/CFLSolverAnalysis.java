@@ -12,7 +12,7 @@ import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
-import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
+import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar.TaintPointsToGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
@@ -27,7 +27,7 @@ import chord.project.Chord;
 
 @Chord(name = "cflsolver")
 public class CFLSolverAnalysis extends JavaAnalysis {
-	private static ContextFreeGrammar taintGrammar = new TaintGrammar();
+	private static ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
 	
 	private static int getNumReachableMethods() {
 		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");

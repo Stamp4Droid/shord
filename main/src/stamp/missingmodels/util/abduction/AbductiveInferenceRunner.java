@@ -135,7 +135,7 @@ public class AbductiveInferenceRunner {
 				//System.out.println(edgeStruct);
 				EdgeStruct newEdgeStruct = new EdgeStruct(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, Context.DEFAULT_CONTEXT);
 				if(result.get(newEdgeStruct) != null && result.get(newEdgeStruct)) {
-					System.out.println("Removing edge: " + newEdgeStruct);
+					//System.out.println("Removing edge: " + newEdgeStruct);
 					newWeight = 0;
 				}
 				gb.addEdge(edgeStruct, newWeight);

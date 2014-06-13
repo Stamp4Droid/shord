@@ -175,19 +175,3 @@ Varg(v) :- Stub(m), MmethArg(m,_,v).
 Vret(v) :- Stub(m), MmethRet(m,_,v).
 
 phAlloc(v,c) :- Stub(m), MmethRet(m,_,v), CM(c,m).
-
-##################
-# TEMP
-##################
-
-Flow(o:C,v:V,c:C) output
-FlowField(o1:C,f:F,o2:C) output
-FlowStatField(o:C,f:F) output
-
-Flow(o,v,c) :- NewCtxt(c,v,o).
-Flow(o,u,c) :- Flow(o,v,c), AssignCtxt(c,u,v).
-Flow(o,u,d) :- Flow(o,v,c), AssignCCtxt(d,u,c,v).
-FlowField(o1,f,o2) :- Flow(o1,v,c), StoreCtxt(c,u,f,v), Flow(o2,u,c).
-Flow(o1,u,c) :- FlowField(o1,f,o2), Flow(o2,v,c), LoadCtxt(c,u,v,f).
-FlowStatField(o,f) :- Flow(o,v,c), StoreStatCtxt(c,f,v).
-Flow(o,v,c) :- FlowStatField(o,f), LoadStatCtxt(c,v,f).

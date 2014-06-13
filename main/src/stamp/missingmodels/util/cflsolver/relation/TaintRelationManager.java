@@ -1,7 +1,13 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
-public class TaintRelationManager extends PointsToRelationManager {	
-	public TaintRelationManager() {		
+public class TaintRelationManager extends PointsToRelationManager {
+	public static class TaintPointsToRelationManager extends UnionRelationManager {	
+		public TaintPointsToRelationManager() {
+			super(new PointsToRelationManager(), new TaintRelationManager());
+		}
+	}
+	
+	public TaintRelationManager() {
 		this.add(new IndexRelation("AssignPrim", "U", 1, "U", 0, "assignPrim"));
 		
 		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", 2, true));

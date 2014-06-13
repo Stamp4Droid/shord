@@ -1,6 +1,12 @@
 package stamp.missingmodels.util.cflsolver.grammars;
 
 public class TaintGrammar extends PointsToGrammar {
+	public static class TaintPointsToGrammar extends UnionGrammar {
+		public TaintPointsToGrammar() {
+			super(new PointsToGrammar(), new TaintGrammar());
+		}
+	}
+	
 	public TaintGrammar() {
 		// object annotations
 		this.addBinaryProduction("Obj2RefT", "Flow", "ref2RefT");

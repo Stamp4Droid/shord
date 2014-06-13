@@ -1,7 +1,8 @@
 package stamp.missingmodels.util.cflsolver.grammars;
 
+import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar.TaintPointsToGrammar;
 
-public class ImplicitFlowGrammar extends TaintGrammar {
+public class ImplicitFlowGrammar extends TaintPointsToGrammar {
 	public ImplicitFlowGrammar() {
 		this.addBinaryProduction("Obj2RefT", "Flow", "ref2RefImp");
 		this.addBinaryProduction("Obj2PrimT", "Flow", "ref2PrimImp");

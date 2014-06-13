@@ -8,9 +8,10 @@ import shord.analyses.DomV;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 
-public class DynamicParamRelationManager extends TaintRelationManager {
+public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 	private void setNewWeights() {
 		this.clearRelationsByName("param");
 		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", 2, true, 1));

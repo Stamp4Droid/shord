@@ -2,6 +2,7 @@ package stamp.missingmodels.util.cflsolver.relation;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
@@ -30,6 +31,14 @@ public class RelationManager {
 			this.relationsByName.get(relation.getName()).remove(relation);
 		}
 		this.relationsBySymbol.remove(symbol);
+	}
+	
+	public Set<String> getRelationNames() {
+		return Collections.unmodifiableSet(this.relationsByName.keySet());
+	}
+	
+	public Set<String> getRelationSymbols() {
+		return Collections.unmodifiableSet(this.relationsBySymbol.keySet());
 	}
 	
 	public Collection<Relation> getRelationsByName(String name) {
@@ -170,6 +179,98 @@ public class RelationManager {
 		@Override
 		public int getWeight(int[] tuple) {
 			return this.weight;
+		}
+	}
+
+	public static class IndexWithContextRelation extends Relation {
+		private final String name;
+		
+		private final String sourceName;
+		private final String sinkName;
+
+		private final int sourceIndex;
+		private final int sinkIndex;
+
+		private final String symbol;
+		
+		private final int sourceContextIndex;
+		private final int sinkContextIndex;
+		private final int fieldIndex;
+
+		private final int weight;
+
+		private final boolean hasSourceContext;
+		private final boolean hasSinkContext;
+		private final boolean hasField;
+		
+		public IndexWithContextRelation(String relationName, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol, Integer fieldIndex, Integer weight) {
+			this.name = relationName;
+
+			this.hasSourceContext = sourceContextIndex != null;
+			this.hasSinkContext = sinkContextIndex != null;
+			this.hasField = fieldIndex != null;
+
+			this.sourceIndex = sourceIndex;
+			this.sourceContextIndex = this.hasSourceContext ? sourceContextIndex : 0;
+
+			this.sinkIndex = sinkIndex;
+			this.sinkContextIndex = this.hasSinkContext ? sinkContextIndex : 0;
+			
+			this.symbol = symbol;
+
+			this.fieldIndex = this.hasField ? fieldIndex : 0;
+
+			this.weight = weight == null ? 0 : weight; 
+
+			this.sourceName = sourceName;
+			this.sinkName = sinkName;
+		}
+		
+		public IndexWithContextRelation(String name, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol, Integer fieldIndex) {
+			this(name, sourceName, sourceIndex, sourceContextIndex, sinkName, sinkIndex, sinkContextIndex, symbol, fieldIndex, null);
+		}
+		
+		public IndexWithContextRelation(String name, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol) {
+			this(name, sourceName, sourceIndex, sourceContextIndex, sinkName, sinkIndex, sinkContextIndex, symbol, null, null);
+		}
+
+		@Override
+		public String getName() {
+			return this.name;
+		}
+
+		@Override
+		public String getSymbol() {
+			return this.symbol;
+		}
+
+		@Override
+		public String getSource(int[] tuple) {
+			return this.sourceName + Integer.toString(tuple[this.sourceIndex]) + (this.hasSourceContext ? "_" + Integer.toString(tuple[this.sourceContextIndex]) : "");
+		}
+
+		@Override
+		public String getSink(int[] tuple) {
+			return this.sinkName + Integer.toString(tuple[this.sinkIndex]) + (this.hasSinkContext ? "_" + Integer.toString(tuple[this.sinkContextIndex]) : "");
+		}
+
+		@Override
+		public Field getField(int[] tuple) {
+			return new Field(tuple[fieldIndex]);
+		}
+		
+		@Override
+		public int getWeight(int[] tuple) {
+			return this.weight;
+		}
+
+		@Override
+		public boolean filter(int[] tuple) {
+			return true;
+		}
+		@Override
+		public Context getContext(int[] tuple) {
+			return Context.DEFAULT_CONTEXT;
 		}
 	}
 }

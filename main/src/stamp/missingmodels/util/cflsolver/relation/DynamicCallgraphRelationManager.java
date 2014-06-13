@@ -4,8 +4,9 @@ import shord.analyses.DomM;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPointsToRelationManager;
 
-public class DynamicCallgraphRelationManager extends TaintRelationManager {
+public class DynamicCallgraphRelationManager extends TaintPointsToRelationManager {
 	private void setNewWeights() {
 		this.clearRelationsByName("param");
 		this.add(new IndexRelation("param", "V", 1, "V", 0, "paramInput", 2, true));

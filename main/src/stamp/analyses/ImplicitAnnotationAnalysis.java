@@ -23,8 +23,6 @@ import soot.ValueBox;
 import soot.jimple.ArrayRef;
 import soot.jimple.AssignStmt;
 import soot.jimple.Stmt;
-import soot.jimple.spark.pag.ArrayElement;
-import soot.jimple.spark.pag.SparkField;
 import chord.project.Chord;
 import chord.util.tuple.object.Pair;
 
