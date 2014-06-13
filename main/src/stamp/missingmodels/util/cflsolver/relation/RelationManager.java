@@ -211,14 +211,14 @@ public class RelationManager {
 			this.hasField = fieldIndex != null;
 
 			this.sourceIndex = sourceIndex;
-			this.sourceContextIndex = this.hasSourceContext ? sourceContextIndex : 0;
+			this.sourceContextIndex = this.hasSourceContext ? sourceContextIndex : -1;
 
 			this.sinkIndex = sinkIndex;
-			this.sinkContextIndex = this.hasSinkContext ? sinkContextIndex : 0;
+			this.sinkContextIndex = this.hasSinkContext ? sinkContextIndex : -1;
 			
 			this.symbol = symbol;
 
-			this.fieldIndex = this.hasField ? fieldIndex : 0;
+			this.fieldIndex = this.hasField ? fieldIndex : -1;
 
 			this.weight = weight == null ? 0 : weight; 
 
@@ -256,7 +256,7 @@ public class RelationManager {
 
 		@Override
 		public Field getField(int[] tuple) {
-			return new Field(tuple[fieldIndex]);
+			return this.hasField ? new Field(tuple[fieldIndex]) : Field.DEFAULT_FIELD;
 		}
 		
 		@Override
@@ -268,6 +268,7 @@ public class RelationManager {
 		public boolean filter(int[] tuple) {
 			return true;
 		}
+		
 		@Override
 		public Context getContext(int[] tuple) {
 			return Context.DEFAULT_CONTEXT;

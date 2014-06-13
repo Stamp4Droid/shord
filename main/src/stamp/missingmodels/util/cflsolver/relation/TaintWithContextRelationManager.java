@@ -1,8 +1,8 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
-public class TaintWithContextRelationManager extends PointsToRelationManager {	
+public class TaintWithContextRelationManager extends RelationManager {	
 	public TaintWithContextRelationManager() {
-		this.add(new IndexWithContextRelation("pt", "O", 2, null, "V", 1, 0, "Flow"));
+		this.add(new IndexWithContextRelation("pt", "C", 2, null, "V", 1, 0, "Flow"));
 		
 		this.add(new IndexWithContextRelation("AssignPrimCtxt", "U", 2, 0, "U", 1, 0, "assignPrim"));
 		this.add(new IndexWithContextRelation("AssignPrimCCtxt", "U", 3, 2, "U", 1, 0, "assignPrim"));

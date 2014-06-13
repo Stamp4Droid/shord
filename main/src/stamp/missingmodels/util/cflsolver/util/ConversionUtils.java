@@ -17,7 +17,12 @@ import chord.bddbddb.Dom;
 public class ConversionUtils {
 	public static String toStringShord(String name) {
 		Dom<?> dom = (Dom<?>)ClassicProject.g().getTrgt(name.substring(0,1));
-		return dom.get(Integer.parseInt(name.substring(1))).toString();
+		if(name.contains("_")) {
+			String newName = name.split("_")[0];
+			return dom.get(Integer.parseInt(newName.substring(1))).toString();
+		} else {
+			return dom.get(Integer.parseInt(name.substring(1))).toString();
+		}
 	}
 	
 	public static String getMethodSig(String name) {

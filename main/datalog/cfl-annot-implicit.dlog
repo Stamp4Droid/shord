@@ -42,6 +42,6 @@ Prim2PrimImpCtxt(c:C,v:U,u:U) output
 ###################
 
 Ref2RefImpCtxt(c,v,u) :- Ref2RefImp(v,u), MV(m,v), CM(c,m).
-Ref2PrimImpCtxt(c,v,u) :- Ref2PrimImpCtxt(v,u), MV(m,v), CM(c,m).
+Ref2PrimImpCtxt(c,v,u) :- Ref2PrimImp(v,u), MV(m,v), CM(c,m).
 Prim2RefImpCtxt(c,v,u) :- Prim2RefImp(v,u), MU(m,v), CM(c,m).
 Prim2PrimImpCtxt(c,v,u) :- Prim2PrimImp(v,u), MU(m,v), CM(c,m).
