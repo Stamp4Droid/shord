@@ -38,20 +38,22 @@ public interface RelationReader {
 			labels.add("$getLatitude");
 			labels.add("$getLongitude");
 			labels.add("$FINE_LOCATION");
-			//labels.add("$ACCOUNTS");
+
 			labels.add("$getDeviceId");
-			labels.add("$SMS");
-			//labels.add("$AUDIO");
+			labels.add("$AUDIO");
+
+			//labels.add("$SMS");
+			//labels.add("$ACCOUNTS");
 			//labels.add("$CONTACTS");
-			labels.add("$CALENDAR");
+			//labels.add("$CALENDAR");
+			//labels.add("$CONTENT_PROVIDER");
+
 			labels.add("!SOCKET");
 			labels.add("!INTERNET");
 			labels.add("!sendTextMessage");
 			labels.add("!destinationAddress");
 			labels.add("!sendDataMessage");
-			labels.add("!sendMultipartTextMessage");
-			
-			//labels.add("$CONTENT_PROVIDER");
+			labels.add("!sendMultipartTextMessage");			
 			//labels.add("!WebView");
 			
 			GraphTransformer gt = new GraphTransformer() {

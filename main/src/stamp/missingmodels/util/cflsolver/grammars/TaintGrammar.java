@@ -1,6 +1,8 @@
 package stamp.missingmodels.util.cflsolver.grammars;
 
-public class TaintGrammar extends PointsToGrammar {
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
+
+public class TaintGrammar extends ContextFreeGrammar {
 	public static class TaintPointsToGrammar extends UnionGrammar {
 		public TaintPointsToGrammar() {
 			super(new PointsToGrammar(), new TaintGrammar());

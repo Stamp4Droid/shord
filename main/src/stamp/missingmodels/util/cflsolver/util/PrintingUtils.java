@@ -16,7 +16,6 @@ import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
-import chord.bddbddb.Dom;
 
 public class PrintingUtils {
 	// if shord = true, prints "edgeSymbol: sourceToString -> sinkToString"
@@ -30,9 +29,9 @@ public class PrintingUtils {
 			}})) {
 			
 			if(shord) {
-				Dom<?> domSource = (Dom<?>)ClassicProject.g().getTrgt(Character.toString(edge.source.name.charAt(0)));
-				Dom<?> domSink = (Dom<?>)ClassicProject.g().getTrgt(Character.toString(edge.sink.name.charAt(0)));
-				edges.put(edge.getSymbol() + ": " + domSource.get(Integer.parseInt(edge.source.name.substring(1))) + " -> " + domSink.get(Integer.parseInt(edge.sink.name.substring(1))), edge);
+				String source = ConversionUtils.toStringShord(edge.source.name);
+				String sink = ConversionUtils.toStringShord(edge.sink.name);
+				edges.put(edge.getSymbol() + ": " + source + " -> " + sink, edge);
 			} else {
 				edges.put(edge.sink.name.substring(1) + " " + edge.source.name.substring(1), edge);
 			}
@@ -43,7 +42,7 @@ public class PrintingUtils {
 		for(String edge : edgeList) {
 			System.out.println(edge);
 			if(shord) {
-				System.out.println(edges.get(edge));
+				System.out.println(edges.get(edge) + ", weight: " + edges.get(edge).getInfo().weight);
 			}
 		}
 	}
