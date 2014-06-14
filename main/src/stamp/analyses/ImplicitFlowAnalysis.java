@@ -31,6 +31,5 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 		
 		System.out.println("Printing edges for implicit taint grammar:");
 		PrintingUtils.printGraphEdges(gbari, "Src2Sink", true);
- 
 	}
 }

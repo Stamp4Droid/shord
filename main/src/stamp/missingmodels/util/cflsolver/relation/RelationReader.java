@@ -39,8 +39,8 @@ public interface RelationReader {
 			labels.add("$getLongitude");
 			labels.add("$FINE_LOCATION");
 
-			labels.add("$getDeviceId");
-			labels.add("$AUDIO");
+			//labels.add("$getDeviceId");
+			//labels.add("$AUDIO");
 
 			//labels.add("$SMS");
 			//labels.add("$ACCOUNTS");
