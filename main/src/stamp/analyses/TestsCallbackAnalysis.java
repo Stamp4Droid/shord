@@ -14,9 +14,9 @@ import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
+import stamp.missingmodels.util.cflsolver.relation.CallbackRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
@@ -74,11 +74,15 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		try {
-			AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(getUnion(getGraphEdgesFromFile("param", "graph"), getGraphEdgesFromFile("paramPrim", "graph")), getGraphEdgesFromFile("Src2Sink", "graph")) : new DefaultAbductiveInferenceHelper();
+			MultivalueMap<String,String> paramEdges = getGraphEdgesFromFile("param", "graph");
+			MultivalueMap<String,String> paramPrimEdges = getGraphEdgesFromFile("paramPrim", "graph");
+			MultivalueMap<String,String> sourceSinkEdges = getGraphEdgesFromFile("Src2Sink", "graph");
+			AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(getUnion(paramEdges, paramPrimEdges), sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
 			
 			ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
 			RelationReader relationReader = new ShordRelationReader();
-			Graph g = relationReader.readGraph(new TaintPointsToRelationManager(), taintGrammar);
+			//Graph g = relationReader.readGraph(new CallbackRelationManager(paramEdges, paramPrimEdges), taintGrammar);
+			Graph g = relationReader.readGraph(new CallbackRelationManager(paramEdges, paramPrimEdges), taintGrammar);
 			TypeFilter t = relationReader.readTypeFilter(taintGrammar);
 			IOUtils.printAbductionResult(AbductiveInferenceRunner.runInference(h, g, t, true, 2), true);
 
