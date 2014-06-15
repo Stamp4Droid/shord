@@ -3,7 +3,7 @@ package java.nio;
 import edu.stanford.stamp.annotation.STAMP;
 import edu.stanford.stamp.annotation.Flow;
 
-class StampByteBuffer extends ByteBuffer 
+public class StampByteBuffer extends ByteBuffer 
 {
 	@STAMP(flows = {@Flow(from="this",to="@return")})
     public java.nio.CharBuffer asCharBuffer(){ return new StampCharBuffer(); }

@@ -1,23 +1,30 @@
 package shord.program;
 
-import soot.*;
-import soot.options.Options;
-import soot.util.Chain;
-import soot.util.ArrayNumberer;
-import soot.jimple.Stmt;
-import soot.jimple.toolkits.callgraph.ReachableMethods;
-import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
-import soot.jimple.toolkits.callgraph.CallGraphBuilder;
-import soot.tagkit.Tag;
-import soot.toolkits.scalar.LocalSplitter;
-import soot.dexpler.DalvikThrowAnalysis;
-
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import shord.analyses.ContainerTag;
-
+import soot.CompilationDeathException;
+import soot.PackManager;
+import soot.Scene;
+import soot.SootClass;
+import soot.SootMethod;
+import soot.Type;
+import soot.Unit;
+import soot.dexpler.DalvikThrowAnalysis;
+import soot.jimple.Stmt;
+import soot.jimple.toolkits.callgraph.CallGraphBuilder;
+import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
+import soot.options.Options;
+import soot.tagkit.Tag;
+import soot.toolkits.scalar.LocalSplitter;
+import soot.util.ArrayNumberer;
+import soot.util.Chain;
 import stamp.app.App;
+import stamp.missingmodels.callgraph.PotentialCallbacksBuilder;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 public class Program
 {
@@ -92,7 +99,7 @@ public class Program
 			throw new Error(e);
         }
 	}
-
+	
 	public void setMainClass(String harness)
 	{
 		SootClass mainClass = Scene.v().getSootClass(harness);
@@ -105,6 +112,16 @@ public class Program
 		//workaround soot bug
 		if(mainClass.declaresMethodByName("<clinit>"))
 			entryPoints.add(mainClass.getMethodByName("<clinit>"));
+		
+		if(IOUtils.graphEdgesFileExists("param", "graph")) {
+			System.out.println("param file found -- adding potential callbacks");
+			for(SootMethod potentialCallback : PotentialCallbacksBuilder.getPotentialCallbacks()) {
+				System.out.println("adding potential callback to entry points: " + potentialCallback.toString());
+				entryPoints.add(potentialCallback);
+			}
+		} else {
+			System.out.println("param file not yet generated -- ignoring potential callbacks!");
+		}
 
 		Scene.v().setEntryPoints(entryPoints);
 	}

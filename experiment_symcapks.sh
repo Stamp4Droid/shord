@@ -12,8 +12,8 @@ echo ./stamp analyze ../stamptest/SymcApks/0ac54ec80dc63f5f6d0334d5eca8bb59.apk
 ./stamp analyze ../stamptest/SymcApks/0ac54ec80dc63f5f6d0334d5eca8bb59.apk
 echo ./stamp analyze ../stamptest/SymcApks/10163c1477513d7fb29e92d49a3d432a.apk
 ./stamp analyze ../stamptest/SymcApks/10163c1477513d7fb29e92d49a3d432a.apk
-echo ./stamp analyze ../stamptest/SymcApks/19780dca7c7b51891fb8962c1d9718e1.apk
-./stamp analyze ../stamptest/SymcApks/19780dca7c7b51891fb8962c1d9718e1.apk
+#echo ./stamp analyze ../stamptest/SymcApks/19780dca7c7b51891fb8962c1d9718e1.apk
+#./stamp analyze ../stamptest/SymcApks/19780dca7c7b51891fb8962c1d9718e1.apk
 echo ./stamp analyze ../stamptest/SymcApks/19c5a07446d8575ff0261b1ee1a57da36d1362ecfa5a59ad6d6862a435bec09d.apk
 ./stamp analyze ../stamptest/SymcApks/19c5a07446d8575ff0261b1ee1a57da36d1362ecfa5a59ad6d6862a435bec09d.apk
 echo ./stamp analyze ../stamptest/SymcApks/24feff7f70fc1f4369069d64a9998d43.apk

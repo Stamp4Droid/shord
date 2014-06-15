@@ -12,8 +12,6 @@ import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
-import soot.Modifier;
-import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
 import soot.UnitBox;
@@ -22,11 +20,10 @@ import soot.ValueBox;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Host;
 import soot.tagkit.Tag;
-import soot.util.NumberedString;
 import soot.util.Switch;
+import stamp.missingmodels.callgraph.PotentialCallbacksBuilder;
 import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.cflsolver.util.PrintingUtils;
-import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
 /**
@@ -34,70 +31,16 @@ import chord.project.Chord;
  * @author obastani
  *
  */
-@Chord(name = "potential-callback-java",
+@Chord(name = "potential-callbacks",
 consumes = { "M", "I" },
 produces = { "potentialCallback", "potentialCallbackIM" },
 namesOfTypes = {},
 types = {},
 namesOfSigns = { "potentialCallback", "potentialCallbackIM" },
 signs = { "M0:M0", "I0,M0:M0_I0" })
-public class CallbackRelationAnalysis extends JavaAnalysis {
-	private MultivalueMap<SootMethod,SootMethod> frameworkMethodsToCallbacks = new MultivalueMap<SootMethod,SootMethod>();
+public class PotentialCallbacksAnalysis extends JavaAnalysis {
 	private Set<String> invocationTargetSignatures = new HashSet<String>();
 	
-	private static boolean isInteresting(SootMethod method) {
-		return method.isConcrete() && !method.isPrivate() && !method.isStatic() && !method.getName().equals("<init>");
-	}
-	
-	private static boolean canBeOverridden(SootMethod method) {
-		return !Modifier.isFinal(method.getModifiers()) && !method.isPrivate() && !method.isStatic() && !method.getName().equals("<init>");
-	}
-	
-	private void findCallbacksHelper(SootClass klass, Map<NumberedString,SootMethod> signaturesToMethods) {
-		if(AbstractSourceInfo.isFrameworkClass(klass)) {
-			if(!klass.getName().equals("java.lang.Object")) {
-				for(SootMethod superMethod : klass.getMethods()) {
-					if(canBeOverridden(superMethod)) {
-						NumberedString superMethodSignature = superMethod.getNumberedSubSignature();
-						SootMethod method = signaturesToMethods.get(superMethodSignature);
-						if(method != null && !this.invocationTargetSignatures.contains(method.toString())) {
-							this.frameworkMethodsToCallbacks.add(superMethod, method);
-						}
-					}
-				}
-			}
-		}
-		this.findCallbacks(klass, signaturesToMethods);
-	}
-	
-	private void findCallbacks(SootClass klass, Map<NumberedString,SootMethod> signaturesToMethods) {
-		if(klass.hasSuperclass()) {		
-			this.findCallbacksHelper(klass.getSuperclass(), signaturesToMethods);
-		}
-		for(SootClass iface : klass.getInterfaces()) {
-			this.findCallbacksHelper(iface, signaturesToMethods);
-		}
-	}
-	
-	private void processClass(SootClass klass) {
-		if(AbstractSourceInfo.isFrameworkClass(klass)) {
-			return;
-		}
-		
-		Map<NumberedString,SootMethod> signaturesToMethods = new HashMap<NumberedString,SootMethod>();
-		for(SootMethod method : klass.getMethods()) {
-			if(isInteresting(method)) {
-				NumberedString signature = method.getNumberedSubSignature();
-				signaturesToMethods.put(signature, method);
-			}
-		}
-		
-		findCallbacks(klass, signaturesToMethods);
-	}
-	
-	/*
-	 * Copied from code to produce chaIM
-	 */
 	private MultivalueMap<SootMethod,SootMethod> findCallgraph() {
 		MultivalueMap<SootMethod,SootMethod> callgraph = new MultivalueMap<SootMethod,SootMethod>();
 		Iterator<Edge> edgeIter = Program.g().scene().getCallGraph().listener();
@@ -128,20 +71,21 @@ public class CallbackRelationAnalysis extends JavaAnalysis {
 			for(SootMethod target : callgraph.get(source)) {
 				this.invocationTargetSignatures.add(target.toString());
 			}
-		}		
+		}
 		
-		for(SootClass klass : Program.g().getClasses()) {
-			processClass(klass);
+		Set<SootMethod> potentialCallbacks = new HashSet<SootMethod>();
+		for(SootMethod potentialCallback : PotentialCallbacksBuilder.getPotentialCallbacks()) {
+			if(!this.invocationTargetSignatures.contains(potentialCallback.toString())) {
+				potentialCallbacks.add(potentialCallback);
+			}
 		}
 		
 		DomI domI = (DomI)ClassicProject.g().getTrgt("I");
 		Map<SootMethod,Unit> unitsByMethod = new HashMap<SootMethod,Unit>();
-		for(SootMethod superMethod : this.frameworkMethodsToCallbacks.keySet()) {
-			for(SootMethod method : this.frameworkMethodsToCallbacks.get(superMethod)) {
-				Unit mockUnit = new MockUnit(method);
-				unitsByMethod.put(method, mockUnit);
-				domI.add(mockUnit);
-			}
+		for(SootMethod potentialCallback : potentialCallbacks) {
+			Unit mockUnit = new MockUnit(potentialCallback);
+			unitsByMethod.put(potentialCallback, mockUnit);
+			domI.add(mockUnit);
 		}
 		domI.save();
 		
@@ -149,17 +93,15 @@ public class CallbackRelationAnalysis extends JavaAnalysis {
 		ProgramRel relPotentialCallbackIM = (ProgramRel)ClassicProject.g().getTrgt("potentialCallbackIM");
 		relPotentialCallback.zero();
 		relPotentialCallbackIM.zero();
-		for(SootMethod superMethod : this.frameworkMethodsToCallbacks.keySet()) {
-			for(SootMethod method : this.frameworkMethodsToCallbacks.get(superMethod)) {
-				relPotentialCallback.add(method);
-				relPotentialCallbackIM.add(unitsByMethod.get(method), method);
-			}
+		for(SootMethod potentialCallback : potentialCallbacks) {
+			relPotentialCallback.add(potentialCallback);
+			relPotentialCallbackIM.add(unitsByMethod.get(potentialCallback), potentialCallback);
 		}
 		relPotentialCallback.save();
 		relPotentialCallbackIM.save();
 		
-		PrintingUtils.printRelation("potentialCallback");
-		PrintingUtils.printRelation("potentialCallbackIM");
+		IOUtils.printRelation("potentialCallback");
+		IOUtils.printRelation("potentialCallbackIM");
 	}
 	
 	public static class MockUnit implements Unit {
