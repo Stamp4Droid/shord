@@ -24,6 +24,8 @@ import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 
 public class IOUtils {
+	private static final String SEPARATOR = "##";
+	
 	public static File getAppOutputDirectory() {
 		// stamp output directory
 		File stampDirectory = new File(System.getProperty("stamp.out.dir"));
@@ -45,7 +47,9 @@ public class IOUtils {
 	
 	public static void printRelation(String relationName) {
 		System.out.println("Printing " + relationName);
-		printRelation(relationName, new PrintWriter(System.out), true);
+		PrintWriter pw = new PrintWriter(System.out);
+		printRelation(relationName, pw, true);
+		pw.flush();
 	}
 	
 	public static void printRelationToFile(String relationName, String extension) throws IOException {
@@ -63,7 +67,7 @@ public class IOUtils {
 		BufferedReader bw = new BufferedReader(new FileReader(new File(getAppOutputDirectory(), relationName + "." + extension)));
 		String line;
 		while((line = bw.readLine()) != null) {
-			relationTuples.add(line.split("#"));
+			relationTuples.add(line.split(SEPARATOR));
 		}
 		bw.close();
 		return relationTuples;
@@ -71,7 +75,9 @@ public class IOUtils {
 	
 	public static void printGraphEdges(Graph g, String symbol, boolean shord) {
 		System.out.println("Printing edges: " + symbol);
-		printGraphEdges(g, symbol, shord, new PrintWriter(System.out), true);
+		PrintWriter pw = new PrintWriter(System.out);
+		printGraphEdges(g, symbol, shord, pw, true);
+		pw.flush();
 	}
 	
 	public static void printGraphEdgesToFile(Graph g, String symbol, boolean shord, String extension) throws IOException {
@@ -89,7 +95,7 @@ public class IOUtils {
 		BufferedReader br = new BufferedReader(new FileReader(new File(getAppOutputDirectory(), symbol + "." + extension)));
 		String line;
 		while((line = br.readLine()) != null) {
-			String[] tokens = line.split("#");
+			String[] tokens = line.split(SEPARATOR);
 			edges.put(new Pair<String,String>(tokens[0], tokens[1]), Integer.parseInt(tokens[2]));
 		}
 		br.close();
@@ -103,10 +109,10 @@ public class IOUtils {
 		for(Object[] tuple : rel.getAryNValTuples()) {
 			StringBuilder sb = new StringBuilder();
 			if(prependRelationName) {
-				sb.append(relationName).append("#");
+				sb.append(relationName).append(SEPARATOR);
 			}
 			for(int i=0; i<tuple.length-1; i++) {
-				sb.append(tuple[i]).append("#");
+				sb.append(tuple[i]).append(SEPARATOR);
 			}
 			sb.append(tuple[tuple.length-1]);
 			pw.println(sb.toString());
@@ -125,10 +131,10 @@ public class IOUtils {
 			}})) {
 			StringBuilder sb = new StringBuilder();
 			if(prependRelationName) {
-				sb.append(edge.getSymbol()).append("#");
+				sb.append(edge.getSymbol()).append(SEPARATOR);
 			}
-			sb.append(shord ? ConversionUtils.toStringShord(edge.source.name) : edge.source.name.substring(1)).append("#");
-			sb.append(shord ? ConversionUtils.toStringShord(edge.sink.name) : edge.sink.name.substring(1)).append("#");
+			sb.append(shord ? ConversionUtils.toStringShord(edge.source.name) : edge.source.name.substring(1)).append(SEPARATOR);
+			sb.append(shord ? ConversionUtils.toStringShord(edge.sink.name) : edge.sink.name.substring(1)).append(SEPARATOR);
 			sb.append(edge.getInfo().weight);
 			edgeStrings.add(sb.toString());
 		}

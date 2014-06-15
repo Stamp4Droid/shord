@@ -1,7 +1,5 @@
 package stamp.analyses;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,13 +14,10 @@ import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar.TaintPointsToGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
-import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.DynamicParamRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
-import stamp.missingmodels.util.cflsolver.relation.RelationReader.FileRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
@@ -59,8 +54,7 @@ public class TestsAnalysis extends JavaAnalysis {
 				}
 			}
 		}
-		filteredCallgraph.add("<android.app.Activity: void <init>()>", "<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>");
-		
+				
 		System.out.println("Current callgraph size: " + filteredCallgraphSize);
 		return filteredCallgraph;
 	}
@@ -70,8 +64,10 @@ public class TestsAnalysis extends JavaAnalysis {
 		try {
 			RelationReader relationReader = new ShordRelationReader();
 			String[] tokens = System.getProperty("stamp.out.dir").split("_");
+			
 			List<String> reachedMethods = TraceReader.getReachableMethods("../../profiler/traceouts/", tokens[tokens.length-1]);
 			int numReachableMethods = getNumReachableMethods();
+			
 			System.out.println("Method coverage: " + reachedMethods.size());
 			System.out.println("Number of reachable methods: " + numReachableMethods);
 			System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
@@ -82,13 +78,11 @@ public class TestsAnalysis extends JavaAnalysis {
 			double fractionMethodIncrement = 0.1;
 			int numMethods = reachedMethods.size();
 			while(true) {
-				if(numMethods >= reachedMethods.size()) {
-					System.out.println("Running method coverage: " + (double)reachedMethods.size()/numReachableMethods);
-				} else {
-					System.out.println("Running method coverage: " + (double)numMethods/numReachableMethods);
-				}
+				double trueSize = numMethods >= reachedMethods.size() ? (double)reachedMethods.size() : (double)numMethods;
+				System.out.println("Running method coverage: " + trueSize/numReachableMethods);
+
 				RelationManager relations = new DynamicParamRelationManager(getFilteredCallgraph(callgraph, reachedMethods, numMethods));
-				//RelationManager relations = new DynamicCallgraphRelationManager(DroidRecordReader.getCallgraphList("../../callgraphs/", tokens[tokens.length-1]));
+				//RelationManager relations = new DynamicParamRelationManager(DroidRecordReader.getCallgraphList("../../callgraphs/", tokens[tokens.length-1]));
 				Graph g = relationReader.readGraph(relations, taintGrammar);
 				TypeFilter t = relationReader.readTypeFilter(taintGrammar);
 				IOUtils.printAbductionResult(AbductiveInferenceRunner.runInference(g, t, true, 2), true);
@@ -98,26 +92,8 @@ public class TestsAnalysis extends JavaAnalysis {
 				}
 				numMethods += (int)(fractionMethodIncrement*numReachableMethods);
 			}
-			
-			RelationManager relations = new DynamicParamRelationManager(getFilteredCallgraph(callgraph, reachedMethods, numMethods));
-			Graph gbar = new ReachabilitySolver(relationReader.readGraph(relations, taintGrammar), relationReader.readTypeFilter(taintGrammar)).getResult();
-			try {
-				String extension = IOUtils.graphEdgesFileExists("param", "graph") ? "graph_new" : "graph";
-				System.out.println("printing param file: param." + extension);
-				IOUtils.printGraphEdgesToFile(gbar, "param", true, extension);
-				IOUtils.printGraphEdgesToFile(gbar, "Src2Sink", true, extension);
-				System.out.println("done!");
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
 		} catch(LpSolveException e) {
 			e.printStackTrace();
 		}
-	}
-	
- 	public static void main(String[] args) throws LpSolveException {
-		String directoryName = "/home/obastani/Documents/projects/research/stamp/shord_clone/stamp_output/_home_obastani_Documents_projects_research_stamp_stamptest_DarpaApps_1C_tomdroid/cfl";		
-		RelationReader relationReader = new FileRelationReader(new File(directoryName));
-		IOUtils.printAbductionResult(AbductiveInferenceRunner.runInference(relationReader.readGraph(new DynamicCallgraphRelationManager(), taintGrammar), relationReader.readTypeFilter(taintGrammar), false, 2), false);
 	}
 }

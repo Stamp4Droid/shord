@@ -23,6 +23,40 @@ import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 public class AbductiveInferenceRunner {
 	
+	public interface AbductiveInferenceHelper {
+		public Set<Edge> getBaseEdges(Graph g);
+		public Set<Edge> getInitialCutEdges(Graph g);
+	}
+	
+	public static class DefaultAbductiveInferenceHelper implements AbductiveInferenceHelper {
+		@Override
+		public Set<Edge> getBaseEdges(Graph gbart) {
+			return gbart.getEdges(new EdgeFilter() {
+				@Override
+				public boolean filter(Edge edge) {
+					return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
+					//return edge.getSymbol().equals("callgraph");
+				}
+			});
+		}
+		
+		@Override
+		public Set<Edge> getInitialCutEdges(Graph gbart) {
+			return gbart.getEdges(new EdgeFilter() {
+				//private boolean added = false;
+				@Override
+				public boolean filter(Edge edge) {
+					//boolean result = (!this.added) && edge.getSymbol().equals("Src2Sink");
+					//if(result) {
+					//	this.added = true;
+					//}
+					//return result;
+					return edge.getSymbol().equals("Src2Sink");
+				}
+			});
+		}
+	}
+	
 	private static Graph computeTransitiveClosure(Graph g, TypeFilter t, boolean shord) {
 		long time = System.currentTimeMillis();
 		System.out.println("Computing transitive closure");
@@ -48,35 +82,11 @@ public class AbductiveInferenceRunner {
 		return gtStripContext.transform(gbar);
 	}
 	
-	private static Set<Edge> getBaseEdges(Graph gbart) {
-		return gbart.getEdges(new EdgeFilter() {
-			@Override
-			public boolean filter(Edge edge) {
-				//return edge.getSymbol().equals("callgraph");
-				return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
-			}
-		});
-	}
-	
-	private static Set<Edge> getInitialCutEdges(Graph gbart) {
-		return gbart.getEdges(new EdgeFilter() {
-			private boolean added = false;
-			@Override
-			public boolean filter(Edge edge) {
-				boolean result = (!this.added) && edge.getSymbol().equals("Src2Sink");
-				if(result) {
-					//this.added = true;
-				}
-				return result;
-			}
-		});
-	}
-	
-	private static Map<EdgeStruct,Boolean> runAbductiveInference(Graph gbart, boolean shord) throws LpSolveException {
-		Set<Edge> baseEdges = getBaseEdges(gbart);
+	private static Map<EdgeStruct,Boolean> runAbductiveInference(AbductiveInferenceHelper h, Graph gbart, boolean shord) throws LpSolveException {
+		Set<Edge> baseEdges = h.getBaseEdges(gbart);
 		System.out.println("Num base edges: " + baseEdges.size());
 		
-		Set<Edge> initialCutEdges = getInitialCutEdges(gbart);
+		Set<Edge> initialCutEdges = h.getInitialCutEdges(gbart);
 		System.out.println("Num initial edges: " + initialCutEdges.size());
 
 		// print initial cut edges
@@ -163,20 +173,20 @@ public class AbductiveInferenceRunner {
 		}		
 	}
 	
-	public static MultivalueMap<EdgeStruct,Integer> runInference(Graph g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
+	public static MultivalueMap<EdgeStruct,Integer> runInference(AbductiveInferenceHelper h, Graph g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
 		Graph gcur = g;
 		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
 			Graph gbar = computeTransitiveClosure(gcur, t, shord);
 			IOUtils.printGraphStatistics(gbar);
-			printPaths(gbar, getInitialCutEdges(gbar), shord);
+			printPaths(gbar, h.getInitialCutEdges(gbar), shord);
 			
 			// STEP 2: Strip contexts
 			Graph gbart = stripContexts(gbar);
 
 			// STEP 3: Run the abductive inference algorithm
-			Map<EdgeStruct,Boolean> result = runAbductiveInference(gbart, shord);
+			Map<EdgeStruct,Boolean> result = runAbductiveInference(h, gbart, shord);
 			
 			// STEP 4: Transform graph to remove cut edges
 			gcur = removeResultingEdges(gcur, result);
@@ -194,5 +204,9 @@ public class AbductiveInferenceRunner {
 			}
 		}		
 		return allResults;
+	}
+	
+	public static MultivalueMap<EdgeStruct,Integer> runInference(Graph g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
+		return runInference(new DefaultAbductiveInferenceHelper(), g, t, shord, numCuts);
 	}
 }

@@ -34,7 +34,7 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>");
 		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>");
 		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void <clinit>()>");
-		stampMethods.add("<android.content.StampSharedPreferences: void <clinit>()>");		
+		stampMethods.add("<android.content.StampSharedPreferences: void <clinit>()>");
 	}
 	
 	public DynamicParamRelationManager(MultivalueMap<String,String> dynamicCallgraph) {

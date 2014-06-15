@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import shord.analyses.DomI;
+import shord.analyses.DomM;
 import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
@@ -27,6 +28,7 @@ import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
 /**
+ * 
  * Copied from stamp.reporting.PotentialCallbacks
  * @author obastani
  *
@@ -89,16 +91,32 @@ public class PotentialCallbacksAnalysis extends JavaAnalysis {
 		}
 		domI.save();
 		
+		DomM domM = (DomM)ClassicProject.g().getTrgt("M");
+		SootMethod stampHarness = domM.get(0);
+		
 		ProgramRel relPotentialCallback = (ProgramRel)ClassicProject.g().getTrgt("potentialCallback");
 		ProgramRel relPotentialCallbackIM = (ProgramRel)ClassicProject.g().getTrgt("potentialCallbackIM");
+		ProgramRel relChaIM = (ProgramRel)ClassicProject.g().getTrgt("chaIM");
+		ProgramRel relStatIM = (ProgramRel)ClassicProject.g().getTrgt("StatIM");
+		ProgramRel relMI = (ProgramRel)ClassicProject.g().getTrgt("MI");
 		relPotentialCallback.zero();
 		relPotentialCallbackIM.zero();
+		relChaIM.load();
+		relStatIM.load();
+		relMI.load();
 		for(SootMethod potentialCallback : potentialCallbacks) {
 			relPotentialCallback.add(potentialCallback);
-			relPotentialCallbackIM.add(unitsByMethod.get(potentialCallback), potentialCallback);
+			Unit potentialCallbackI = unitsByMethod.get(potentialCallback);
+			relPotentialCallbackIM.add(potentialCallbackI, potentialCallback);
+			relChaIM.add(potentialCallbackI, potentialCallback);
+			relStatIM.add(potentialCallbackI, potentialCallback);
+			relMI.add(stampHarness, potentialCallbackI);
 		}
 		relPotentialCallback.save();
 		relPotentialCallbackIM.save();
+		relChaIM.save();
+		relStatIM.save();
+		relMI.save();
 		
 		IOUtils.printRelation("potentialCallback");
 		IOUtils.printRelation("potentialCallbackIM");
@@ -111,7 +129,7 @@ public class PotentialCallbacksAnalysis extends JavaAnalysis {
 		}
 		@Override
 		public String toString() {
-			return this.target.toString();
+			return "MockCall(" + this.target.toString() + ")";
 		}
 		
 		private static final long serialVersionUID = 1L;

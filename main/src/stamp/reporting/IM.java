@@ -1,20 +1,20 @@
 package stamp.reporting;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.Stmt;
-
-import chord.util.tuple.object.Pair;
-
+import stamp.analyses.PotentialCallbacksAnalysis.MockUnit;
 import stamp.srcmap.SyntheticMethodMap;
-import stamp.srcmap.sourceinfo.SourceInfo;
-
-import java.util.*;
+import chord.util.tuple.object.Pair;
 
 /**
  * @author Saswat Anand
@@ -37,6 +37,9 @@ public class IM extends XMLReport
 
 		Iterable<Pair<Unit,SootMethod>> res = relIM.getAry2ValTuples();
 		for(Pair<Unit,SootMethod> pair : res) {
+			if(pair.val0 instanceof MockUnit) {
+				continue;
+			}
 			Stmt stmt = (Stmt) pair.val0;
 
 			//if(SourceInfo.isSyntheticMethod(quad.getMethod()))
