@@ -50,12 +50,17 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 		};
 	}
 	
-	private static MultivalueMap<String,String> getGraphEdgesFromFile(String relationName, String extension) throws IOException {
-		MultivalueMap<String,String> result = new MultivalueMap<String,String>();
-		for(Pair<String,String> pair : IOUtils.readGraphEdgesFromFile(relationName, extension).keySet()) {
-			result.add(pair.getX(), pair.getY());
+	private static MultivalueMap<String,String> getGraphEdgesFromFile(String relationName, String extension) {
+		try {
+			MultivalueMap<String,String> result = new MultivalueMap<String,String>();
+			for(Pair<String,String> pair : IOUtils.readGraphEdgesFromFile(relationName, extension).keySet()) {
+				result.add(pair.getX(), pair.getY());
+			}
+			return result;
+		} catch(IOException e) {
+			e.printStackTrace();
+			return new MultivalueMap<String,String>();
 		}
-		return result;
 	}
 	
 	@SafeVarargs
