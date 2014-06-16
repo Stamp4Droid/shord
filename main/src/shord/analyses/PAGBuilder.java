@@ -65,7 +65,9 @@ import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
 import stamp.analyses.SootUtils;
+import stamp.missingmodels.callgraph.PotentialCallbacksAdder;
 import stamp.missingmodels.jimplesrcmapper.Printer;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
 /*
@@ -289,14 +291,23 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethRet.save();
 		relIinvkRet.save();
 		relIinvkArg.save();
+		
+		if(this.usePotentialCallbacksAdder) {
+			this.potentialCallbacksAdder.addRelIM(relSpecIM);
+		}
 
-		relSpecIM.save();
+		relSpecIM.save();		
 		relStatIM.save();
 		relVirtIM.save();
 
 		relVT.save();
 		relHT.save();
 		relHTFilter.save();
+
+		if(this.usePotentialCallbacksAdder) {
+			this.potentialCallbacksAdder.addRelMI(relMI);
+		}
+		
 		relMI.save();
 		relMH.save();
 		relMV.save();
@@ -976,6 +987,9 @@ public class PAGBuilder extends JavaAnalysis
 			}
 			relChaIM.add(stmt, tgt);
 		}
+		if(this.usePotentialCallbacksAdder) {
+			this.potentialCallbacksAdder.addRelIM(relChaIM);
+		}
 		relChaIM.save();
 	}
 
@@ -1074,6 +1088,11 @@ public class PAGBuilder extends JavaAnalysis
 		domH.save();
 		domZ.save();
 		domV.save();
+
+		if(this.usePotentialCallbacksAdder) {
+			this.potentialCallbacksAdder.addDomI(domI);
+		}
+		
 		domI.save();
 		domU.save();
 	}
@@ -1315,9 +1334,15 @@ public class PAGBuilder extends JavaAnalysis
 		return node;
 	}
 	 */
+	
+	private PotentialCallbacksAdder potentialCallbacksAdder;
+	private boolean usePotentialCallbacksAdder = false;
 
 	public void run()
 	{
+		this.potentialCallbacksAdder = new PotentialCallbacksAdder();
+		this.usePotentialCallbacksAdder = IOUtils.graphEdgesFileExists("param", "graph");
+		
 		Program program = Program.g();		
 		//for(SootClass k : program.getClasses()) System.out.println("kk "+k + (k.hasSuperclass() ? k.getSuperclass() : ""));
 		program.buildCallGraph();

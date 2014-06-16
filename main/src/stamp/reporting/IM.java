@@ -12,7 +12,8 @@ import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.Stmt;
-import stamp.analyses.PotentialCallbacksAnalysis.MockUnit;
+import stamp.analyses.PotentialCallbacksAnalysis;
+import stamp.missingmodels.callgraph.PotentialCallbacksAdder;
 import stamp.srcmap.SyntheticMethodMap;
 import chord.util.tuple.object.Pair;
 
@@ -37,7 +38,7 @@ public class IM extends XMLReport
 
 		Iterable<Pair<Unit,SootMethod>> res = relIM.getAry2ValTuples();
 		for(Pair<Unit,SootMethod> pair : res) {
-			if(pair.val0 instanceof MockUnit) {
+			if(pair.val0 instanceof PotentialCallbacksAnalysis.MockUnit || pair.val0 instanceof PotentialCallbacksAdder.MockUnit) {
 				continue;
 			}
 			Stmt stmt = (Stmt) pair.val0;
