@@ -120,4 +120,9 @@ public class Activity
 				});
     }
 
+	@STAMP(flows = {@Flow(from="this",to="@return")})
+	public  android.content.Intent getIntent() { 
+		return new android.content.Intent();
+	}
+
 }
