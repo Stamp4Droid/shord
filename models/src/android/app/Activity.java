@@ -6,6 +6,8 @@ import edu.stanford.stamp.harness.Callback;
  
 public class Activity
 {
+	public java.lang.String name;
+
     public  Activity() 
 	{
 		ApplicationDriver.getInstance().
@@ -122,7 +124,9 @@ public class Activity
 
 	@STAMP(flows = {@Flow(from="this",to="@return")})
 	public  android.content.Intent getIntent() { 
-		return new android.content.Intent();
+		android.content.Intent i = new android.content.Intent();
+		i.name = this.name;
+		return i;
 	}
 
 }

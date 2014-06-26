@@ -73,6 +73,17 @@ public class Harness
 		//call the constructor of the comp
 		Local c = init(compClass, Collections.EMPTY_LIST, Collections.EMPTY_LIST);
 
+		if(comp.type == Component.Type.activity){
+			//add c.
+			Local s = Jimple.v().newLocal("s"+count++, RefType.v("java.lang.String"));
+			locals.add(s);
+			units.add(Jimple.v().newAssignStmt(s, StringConstant.v(comp.name)));
+
+			SootField nameField = Scene.v().getField("<android.app.Activity: java.lang.String name>");			
+			units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(c, nameField.makeRef()), s));
+		}
+
+
 		for(Layout layout : layouts) {
 			//call the callbacks defined in XML
 			for(String cbName : layout.callbacks){

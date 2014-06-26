@@ -161,14 +161,13 @@ public class ContextsAnalysis extends JavaAnalysis
 
 		for(int hIdx = 0; hIdx < HtoM.length; hIdx++){
 			AllocNode alloc = HtoQ[hIdx];
-			if(alloc instanceof GlobalAllocNode || alloc instanceof StubAllocNode){
-				//we dont track GlobalAllocNode or StubAllocNode during k-cfa
-				//so dont add to CH
-				/*
+			if(alloc instanceof GlobalAllocNode){
 				Object[] newElems = combine(K, alloc, emptyElems);
 				Ctxt newCtxt = domC.setCtxt(newElems);
 				relCH.add(newCtxt, alloc);
-				*/
+			} else if(alloc instanceof StubAllocNode){
+				//we dont track GlobalAllocNode or StubAllocNode during k-cfa
+				//so dont add to CH
 			} else {
 				int mIdx = HtoM[hIdx];
 				Set<Ctxt> ctxts = methToCtxts[mIdx];
