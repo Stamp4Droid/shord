@@ -1,0 +1,47 @@
+#################################
+# Interface extraction
+#################################
+# name=iface-dlog
+
+
+.include "M.dom"
+.include "I.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+.include "F.dom"
+.include "COMP.dom"
+.include "SC.dom"
+.include "Z.dom"
+
+.bddvarorder M0_Z0_I0_V0_C0xC1xC2_H0_F0_COMP0_SC0
+
+SCH(sc:SC,h:H) input
+IntentTgtField(f:F) input
+CSC(c:COMP,sc:SC) input
+
+CH(o:C,h:H) input 
+IinvkArg(i:I,n:Z,v:V) input
+pt(c:C,v:V,o:C)    input  # in context c, v points to o.
+fpt(o1:C,f:F,o2:C) input
+CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
+
+ObjSC(o:C,sc:SC) output
+CMComp(c:C,m:M,act:COMP)
+
+MmethArg(m:M,z:Z,v:V) input
+GetIntentExtraMeths(m:M) input
+
+getExtraInvkComp(i:I,a:COMP) output
+
+test(c:C,m:M,o:C) output
+
+###################
+#    RULES
+###################
+
+ObjSC(o,sc) :- CH(o,h), SCH(sc,h).
+test(c,m,o2) :- GetIntentExtraMeths(m), MmethArg(m,0,th), pt(c,th,o1), fpt(o1,f,o2), IntentTgtField(f).
+CMComp(c,m,act) :- GetIntentExtraMeths(m), MmethArg(m,0,th), pt(c,th,o1), fpt(o1,f,o2), IntentTgtField(f), ObjSC(o2,sc), CSC(act,sc).
+getExtraInvkComp(i,act) :- CICM(_,i,c,m), CMComp(c,m,act).
+ 
