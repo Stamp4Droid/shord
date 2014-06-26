@@ -4,10 +4,16 @@ import java.util.*;
 import java.util.jar.*;
 import java.io.*;
 
+/*
 import org.jf.dexlib.ClassDefItem;
 import org.jf.dexlib.ClassDataItem;
 import org.jf.dexlib.TypeIdItem;
 import org.jf.dexlib.DexFile; 
+*/
+
+import org.jf.dexlib2.iface.ClassDef;
+import org.jf.dexlib2.iface.DexFile;
+import org.jf.dexlib2.DexFileFactory;
 
 import soot.Modifier;
 import soot.jimple.Stmt;
@@ -166,9 +172,11 @@ public class App
 
 		try{
 			File f = new File(apkPath);
-			DexFile dexFile = new DexFile(f);
-			for (ClassDefItem defItem : dexFile.ClassDefsSection.getItems()) {
-				String className = defItem.getClassType().getTypeDescriptor();
+			DexFile dexFile = DexFileFactory.loadDexFile(f, 1);
+			//for (ClassDefItem defItem : dexFile.ClassDefsSection.getItems()) {
+			//String className = defItem.getClassType().getTypeDescriptor();
+			for(ClassDef defItem : dexFile.getClasses()){
+				String className = defItem.getType();
 				if(className.charAt(0) == 'L'){
 					int len = className.length();
 					assert className.charAt(len-1) == ';';

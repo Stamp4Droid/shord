@@ -26,7 +26,7 @@ pt(c:C,v:V,o:C)    input  # in context c, v points to o.
 fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
 
-ObjSC(o:C,sc:SC) output
+ObjSC(o:C,sc:SC) 
 CMComp(c:C,m:M,act:COMP)
 
 MmethArg(m:M,z:Z,v:V) input
@@ -34,14 +34,14 @@ GetIntentExtraMeths(m:M) input
 
 getExtraInvkComp(i:I,a:COMP) output
 
-test(c:C,m:M,o:C) output
+#test(c:C,m:M,o:C) output
 
 ###################
 #    RULES
 ###################
 
 ObjSC(o,sc) :- CH(o,h), SCH(sc,h).
-test(c,m,o2) :- GetIntentExtraMeths(m), MmethArg(m,0,th), pt(c,th,o1), fpt(o1,f,o2), IntentTgtField(f).
+#test(c,m,o2) :- GetIntentExtraMeths(m), MmethArg(m,0,th), pt(c,th,o1), fpt(o1,f,o2), IntentTgtField(f).
 CMComp(c,m,act) :- GetIntentExtraMeths(m), MmethArg(m,0,th), pt(c,th,o1), fpt(o1,f,o2), IntentTgtField(f), ObjSC(o2,sc), CSC(act,sc).
 getExtraInvkComp(i,act) :- CICM(_,i,c,m), CMComp(c,m,act).
  

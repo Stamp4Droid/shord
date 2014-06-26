@@ -17,7 +17,7 @@ import java.util.*;
  * @author Saswat Anand
  */
 
-@Chord(name="iface-java",
+@Chord(name="iface-java-1",
 	   consumes={"M"},
        produces={"GetIntentExtraMeths"},
        namesOfSigns = {"GetIntentExtraMeths"},
