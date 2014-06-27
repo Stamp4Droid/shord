@@ -23,7 +23,13 @@ public class Activity
 						Activity.this.onDestroy();
 						Activity.this.onRestoreInstanceState(null);
 						Activity.this.onPostCreate(null);
-						Activity.this.onNewIntent(null);
+
+						{
+							android.content.Intent i = new android.content.Intent();
+							i.name = Activity.this.name;
+							Activity.this.onNewIntent(i);
+						}
+
 						Activity.this.onSaveInstanceState(null);
 						Activity.this.onUserLeaveHint();
 						Activity.this.onCreateThumbnail(null, null);

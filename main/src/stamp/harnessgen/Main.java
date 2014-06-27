@@ -49,8 +49,8 @@ public class Main
 			Harness h = new Harness(harnessClassName, comps);
 			for(int j = 0; j < numCompsPerHarness && i < numComps; j++, i++){
 				Component comp = comps.get(i);
-				if(comp.exported)
-					h.addComponent(comp);
+				//if(comp.exported)
+				h.addComponent(comp);
 			}
 
 			File harnessClassFile = new File(driverDirName, harnessClassName.replace('.','/').concat(".class"));

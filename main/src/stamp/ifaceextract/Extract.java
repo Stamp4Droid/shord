@@ -15,6 +15,7 @@ import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import shord.project.ClassicProject;
+import shord.analyses.IfaceAnalysis;
 
 import chord.bddbddb.Rel.RelView;
 import chord.project.Chord;
@@ -101,7 +102,7 @@ public class Extract extends JavaAnalysis
 		else if(name.equals("putExtras"))
 			;//TODO
 		else if(name.startsWith("put"))
-			return "Key: " + reachingDefs(ie, 0, stmt, src) + " ParameterType: " + getType(stmt);
+			return "Key: " + reachingDefs(ie, 0, stmt, src) + " ParameterType: " + getType(stmt, m);
 
 		return iface;
 	}
@@ -121,7 +122,7 @@ public class Extract extends JavaAnalysis
 			return concat(vals);
 	}
 
-	private String getType(Unit invkUnit)
+	private String getType(Unit invkUnit, SootMethod m)
 	{
 		/*
 		String name = m.getName();		
@@ -136,10 +137,13 @@ public class Extract extends JavaAnalysis
 		else { System.out.println("debug: "+ m.getSignature());
 			return m.getParameterType(1).toString(); }
 		*/
-		RelView view = relExtraInvkCompositeArg.getView();
-        view.selectAndDelete(0, invkUnit);
-        Iterable<Type> types = view.getAry1ValTuples();
-		return concat(types);
+		if(IfaceAnalysis.putCompositeIntentExtraMeths.contains(m.getSubSignature())){
+			RelView view = relExtraInvkCompositeArg.getView();
+			view.selectAndDelete(0, invkUnit);
+			Iterable<Type> types = view.getAry1ValTuples();
+			return concat(types);
+		} else
+			return "["+m.getParameterType(1).toString()+"]";
 	}
 
 	private String concat(Iterable vals)
