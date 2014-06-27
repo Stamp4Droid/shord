@@ -386,7 +386,11 @@ public class Printer {
 	 *   @param out a PrintWriter instance to print to.
 	 */
 	public void printTo(Body b, PrintWriter out) {
-		b.validate();
+		try{
+			b.validate();
+		}catch(Exception e){
+			out.println("****** Validation error *****");
+		}
 
 		boolean isPrecise = !useAbbreviations();
 

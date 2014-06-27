@@ -19,13 +19,14 @@ import java.util.*;
 
 @Chord(name="iface-java-1",
 	   consumes={"M"},
-       produces={"GetIntentExtraMeths"},
-       namesOfSigns = {"GetIntentExtraMeths"},
-       signs = {"M0:M0"}
+       produces={"IntentExtraMeths", "PutCompositeIntentExtraMeths"},
+       namesOfSigns = {"IntentExtraMeths", "PutCompositeIntentExtraMeths"},
+       signs = {"M0:M0", "M0:M0"}
        )
 public class IfaceAnalysis extends JavaAnalysis
 {
-    private List<String> getIntentExtraMeths = Arrays.asList(new String[] {
+    public static final List<String> intentExtraMeths = Arrays.asList(new String[] {
+			//get methods
 			"int getIntExtra(java.lang.String,int)", 
 			"float getFloatExtra(java.lang.String,float)", 
 			"double getDoubleExtra(java.lang.String,double)", 
@@ -53,22 +54,82 @@ public class IfaceAnalysis extends JavaAnalysis
 			"java.io.Serializable getSerializableExtra(java.lang.String)", 
 			"short[] getShortArrayExtra(java.lang.String)", 
 			"java.lang.String[] getStringArrayExtra(java.lang.String)", 
-			"java.util.ArrayList getStringArrayListExtra(java.lang.String)" 
+			"java.util.ArrayList getStringArrayListExtra(java.lang.String)", 
+
+			//put methods for non-composite types
+			"android.content.Intent putExtra(java.lang.String,int)", 
+			"android.content.Intent putExtra(java.lang.String,float)", 
+			"android.content.Intent putExtra(java.lang.String,double)", 
+			"android.content.Intent putExtra(java.lang.String,long)", 
+			"android.content.Intent putExtra(java.lang.String,short)", 
+			"android.content.Intent putExtra(java.lang.String,char)", 
+			"android.content.Intent putExtra(java.lang.String,byte)",
+			"android.content.Intent putExtra(java.lang.String,boolean)",
+			"android.content.Intent putExtra(java.lang.String,java.lang.String)", 
+			"android.content.Intent putExtra(java.lang.String,boolean[])", 
+			"android.content.Intent putExtra(java.lang.String,byte[])",
+			"android.content.Intent putExtra(java.lang.String,char[])",  
+			"android.content.Intent putExtra(java.lang.String,java.lang.CharSequence)", 
+			"android.content.Intent putExtra(java.lang.String,double[])", 
+			"android.content.Intent putExtra(java.lang.String,float[])", 
+			"android.content.Intent putExtra(java.lang.String,int[])", 
+			"android.content.Intent putExtra(java.lang.String,long[])", 
+			"android.content.Intent putExtra(java.lang.String,short[])", 
+			"android.content.Intent putExtra(java.lang.String,java.lang.String[])", 
+
+			//set methods
+			"android.content.Intent setData(android.net.Uri)",
+			"android.content.Intent setDataAndNormalize(android.net.Uri)",
+			"android.content.Intent setDataAndType(android.net.Uri,java.lang.String)",
+			"android.content.Intent setDataAndTypeAndNormalize(android.net.Uri,java.lang.String)"
+		});
+
+	public static final List<String> putIntentExtrasMeths = Arrays.asList(new String[] {
+			"android.content.Intent putExtras(android.os.Bundle)",
+			"android.content.Intent putExtras(android.content.Intent)"
+		});
+		
+	public static final List<String> putCompositeIntentExtraMeths = Arrays.asList(new String[] {
+			"android.content.Intent putExtra(java.lang.String,android.os.Bundle)", 
+			"android.content.Intent putExtra(java.lang.String,android.os.Parcelable)",
+			"android.content.Intent putExtra(java.lang.String,java.io.Serializable)",
+
+			"android.content.Intent putStringArrayListExtra(java.lang.String,java.util.ArrayList)", 
+			"android.content.Intent putCharSequenceArrayListExtra(java.lang.String,java.util.ArrayList)", 
+			"android.content.Intent putIntegerArrayListExtra(java.lang.String,java.util.ArrayList)",
+			"android.content.Intent putParcelableArrayListExtra(java.lang.String,java.util.ArrayList)"
 		});
 	
 			
 	private void populateExtraMeths()
 	{
-        ProgramRel relExtraMeth = (ProgramRel) ClassicProject.g().getTrgt("GetIntentExtraMeths");
+        ProgramRel relExtraMeth = (ProgramRel) ClassicProject.g().getTrgt("IntentExtraMeths");
         relExtraMeth.zero();
 
 		SootClass intentClass = Scene.v().getSootClass("android.content.Intent");
-		for(String methName : getIntentExtraMeths){
+		for(String methName : intentExtraMeths){
+			SootMethod m = intentClass.getMethod(methName);
+			relExtraMeth.add(m);
+		}
+		for(String methName : putIntentExtrasMeths){
 			SootMethod m = intentClass.getMethod(methName);
 			relExtraMeth.add(m);
 		}
 
+		for(String methName : putCompositeIntentExtraMeths){
+			SootMethod m = intentClass.getMethod(methName);
+			relExtraMeth.add(m);
+		}
 		relExtraMeth.save();
+
+		ProgramRel relCompositeExtraMeth = (ProgramRel) ClassicProject.g().getTrgt("PutCompositeIntentExtraMeths");
+        relCompositeExtraMeth.zero();
+		for(String methName : putCompositeIntentExtraMeths){
+			SootMethod m = intentClass.getMethod(methName);
+			relCompositeExtraMeth.add(m);
+		}
+		relCompositeExtraMeth.save();
+
 	}
 
     public void run()

@@ -13,26 +13,30 @@
 .include "COMP.dom"
 .include "SC.dom"
 .include "Z.dom"
+.include "T.dom"
 
-.bddvarorder M0_Z0_I0_V0_C0xC1xC2_H0_F0_COMP0_SC0
+.bddvarorder M0_T0_Z0_I0_V0_C0xC1xC2_H0_F0_COMP0_SC0
 
 SCH(sc:SC,h:H) input
 IntentTgtField(f:F) input
 CSC(c:COMP,sc:SC) input
 
 CH(o:C,h:H) input 
-IinvkArg(i:I,n:Z,v:V) input
 pt(c:C,v:V,o:C)    input  # in context c, v points to o.
 fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
+HT(h:H,t:T) input
 
 ObjSC(o:C,sc:SC) 
 CMComp(c:C,m:M,act:COMP)
+CMObj(c:C,m:M,o:C)
 
 MmethArg(m:M,z:Z,v:V) input
-GetIntentExtraMeths(m:M) input
+IntentExtraMeths(m:M) input
+PutCompositeIntentExtraMeths(m:M) input
 
-getExtraInvkComp(i:I,a:COMP) output
+extraInvkComp(i:I,a:COMP) output
+extraInvkCompositeArg(i:I,t:T) output
 
 #test(c:C,m:M,o:C) output
 
@@ -42,6 +46,8 @@ getExtraInvkComp(i:I,a:COMP) output
 
 ObjSC(o,sc) :- CH(o,h), SCH(sc,h).
 #test(c,m,o2) :- GetIntentExtraMeths(m), MmethArg(m,0,th), pt(c,th,o1), fpt(o1,f,o2), IntentTgtField(f).
-CMComp(c,m,act) :- GetIntentExtraMeths(m), MmethArg(m,0,th), pt(c,th,o1), fpt(o1,f,o2), IntentTgtField(f), ObjSC(o2,sc), CSC(act,sc).
-getExtraInvkComp(i,act) :- CICM(_,i,c,m), CMComp(c,m,act).
+CMComp(c,m,act) :- IntentExtraMeths(m), MmethArg(m,0,th), pt(c,th,o1), fpt(o1,f,o2), IntentTgtField(f), ObjSC(o2,sc), CSC(act,sc).
+extraInvkComp(i,act) :- CICM(_,i,c,m), CMComp(c,m,act).
  
+CMObj(c,m,o) :- PutCompositeIntentExtraMeths(m), MmethArg(m,2,a), pt(c,a,o).
+extraInvkCompositeArg(i,t) :- CICM(_,i,c,m), CMObj(c,m,o), CH(o,h), HT(h,t).

@@ -259,6 +259,13 @@ public class Slicer
 				//slice.add(s); //System.out.println(stmtStr(s));
 				addToSlice(s, dfnStmt, useStmt);
 				mLocalList.add(new Pair(rcvr, dfnStmt));
+			} else if(mSig.equals("<android.net.Uri: android.net.Uri parse(java.lang.String)>")){
+				Immediate arg = (Immediate) ie.getArg(0);
+				Statement s = new Assign(arg, local, dfnStmt);
+				//slice.add(s); //System.out.println(stmtStr(s));
+				addToSlice(s, dfnStmt, useStmt);
+				if(arg instanceof Local)
+					mLocalList.add(new Pair((Local) arg, dfnStmt));
 			} else if(mSig.equals("<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>") ||
 					  mSig.equals("<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>")){
 				Immediate arg = (Immediate) ie.getArg(0);
