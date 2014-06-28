@@ -39,7 +39,9 @@ import shord.program.Program;
 public class App
 {
 	private List<Component> comps = new ArrayList();
-	private Map<Integer,Layout> layouts = new HashMap();
+	//private Map<Integer,Layout> layouts = new HashMap();
+	private List<Layout> layouts = new ArrayList();
+	private PublicXml publicXml;
 	private Set<String> permissions = new HashSet();
 
 	private String pkgName;
@@ -54,14 +56,16 @@ public class App
 		ParseManifest pmf = new ParseManifest(manifestFile, app);
 
 		File resDir = new File(apktoolOutDir, "res");
-		List<Layout> layouts = new ParseLayout().process(resDir);
+		app.publicXml = new PublicXml(new File(resDir, "values/public.xml"));
+		//List<Layout> layouts = new ParseLayout().process(resDir);
+		app.layouts = new ParseLayout().process(resDir);
 
-		app.process(apkPath, apktoolOutDir, layouts);
+		app.process(apkPath, apktoolOutDir/*, layouts*/);
 		
 		return app;
 	}
 
-	public void process(String apkPath, String apktoolOutDir, List<Layout> layouts)
+	public void process(String apkPath, String apktoolOutDir/*, List<Layout> layouts*/)
 	{
 		if(iconPath != null){
 			if(iconPath.startsWith("@drawable/")){
@@ -104,7 +108,7 @@ public class App
 		}
 
 		for(Layout layout : layouts){
-			this.layouts.put(layout.id, layout);
+			//this.layouts.put(layout.id, layout);
 			
 			Set<String> widgets = layout.customWidgets;
 			for(Iterator<String> it = widgets.iterator(); it.hasNext();){
@@ -128,7 +132,13 @@ public class App
 
 	public Layout layoutWithId(int id)
 	{
-		return layouts.get(id);
+		PublicXml.Entry e = publicXml.entryFor(id);
+		String name = e.name;
+		assert "layout".equals(e.type);
+		for(Layout layout : layouts)
+			if(name.equals(layout.fileName))
+				return layout;
+		return null;
 	}
 
 	public void setPackageName(String pkgName)
@@ -187,7 +197,7 @@ public class App
 				//String tmp = className.replace('$', '.');
 				if(compNames.contains(tmp)) {
 					compNamesAvailable.add(tmp);
-					System.out.println("%% "+tmp);
+					//System.out.println("%% "+tmp);
 					//componentNameToCallbacks.put(className, findCallbackMethods(defItem));
 					//componentNameToLayoutId.put(className, findLayoutId(defItem));
 				}

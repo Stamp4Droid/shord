@@ -21,7 +21,7 @@ public class ParseLayout
 
 	List<Layout> process(File resDir)
 	{
-		mapLayoutToId(new File(resDir, "values/public.xml"));
+		//mapLayoutToId(new File(resDir, "values/public.xml"));
 
 		mapIdToStringValue(new File(resDir, "values/strings.xml"));
 
@@ -47,9 +47,10 @@ public class ParseLayout
 		String layoutFileName = layoutFile.getName();
 		layoutFileName = layoutFileName.substring(0, layoutFileName.length()-4); //drop ".xml"
 		//System.out.println("++ "+layoutFileName);
-		Integer id = layoutToId.get(layoutFileName);
+		//Integer id = layoutToId.get(layoutFileName);
 		
-		Layout layout = new Layout(id, layoutFile.getName());
+		//Layout layout = new Layout(id,layoutFile.getName());
+		Layout layout = new Layout(/*layoutFile.getName()*/layoutFileName);
 
 		try{
 			File tmpFile = File.createTempFile("stamp_android_layout", null, null);
@@ -113,36 +114,6 @@ public class ParseLayout
 		}
 	}
 	
-	private void mapLayoutToId(File publicXmlFile)
-	{
-		try{
-			File tmpFile = File.createTempFile("stamp_android_public_xml", null, null);
-			tmpFile.deleteOnExit();
-			UTF8ToAnsiUtils.main(new String[]{publicXmlFile.getAbsolutePath(), tmpFile.getAbsolutePath()});
-			publicXmlFile = tmpFile;
-
-			DocumentBuilder builder =
-				DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Reader reader =
-				new InputStreamReader(new FileInputStream(publicXmlFile), "Cp1252");
-			Document document = builder.parse(new InputSource(reader));
-
-			XPath xpath = XPathFactory.newInstance().newXPath();
-
-			NodeList nodes = (NodeList)
-				xpath.evaluate("/resources/public[@type=\"layout\"]", document, XPathConstants.NODESET);
-			//System.out.println("nodes.size() = "+nodes.getLength());
-			for(int i = 0; i < nodes.getLength(); i++) {
-				Element elem = (Element) nodes.item(i);
-				String layout = elem.getAttribute("name");
-				Integer id = Integer.decode(elem.getAttribute("id"));
-				layoutToId.put(layout, id);
-				//System.out.println("## "+layout+" "+id);
-			}
-		}catch(Exception e){
-			throw new Error(e);
-		}		
-	}
 	
 	private void mapIdToStringValue(File stringXmlFile)
 	{
