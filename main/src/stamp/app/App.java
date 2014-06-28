@@ -41,8 +41,9 @@ public class App
 	private List<Component> comps = new ArrayList();
 	//private Map<Integer,Layout> layouts = new HashMap();
 	private List<Layout> layouts = new ArrayList();
-	private PublicXml publicXml;
 	private Set<String> permissions = new HashSet();
+	private Map<String,Widget> idToWidget = new HashMap();
+	private PublicXml publicXml;
 
 	private String pkgName;
 	private String version;
@@ -86,7 +87,11 @@ public class App
 
 		Set<String> widgetNames = new HashSet();
 		for(Layout layout : layouts){
-			widgetNames.addAll(layout.customWidgets);
+			for(Widget w : layout.widgets){
+				widgetNames.add(w.name);
+				if(w.id != null)
+					idToWidget.put(w.id, w);
+			}
 		}
 
 		List<Component> comps = this.comps;
@@ -109,12 +114,9 @@ public class App
 
 		for(Layout layout : layouts){
 			//this.layouts.put(layout.id, layout);
-			
-			Set<String> widgets = layout.customWidgets;
-			for(Iterator<String> it = widgets.iterator(); it.hasNext();){
-				String widget = it.next();
-				if(!widgetNames.contains(widget))
-					it.remove();
+			for(Widget w : layout.widgets){
+				if(widgetNames.contains(w.name))
+					w.setCustom();
 			}
 		}
 		
@@ -139,6 +141,14 @@ public class App
 			if(name.equals(layout.fileName))
 				return layout;
 		return null;
+	}
+
+	public Widget widgetWithId(int id)
+	{
+		PublicXml.Entry e = publicXml.entryFor(id);
+		String name = e.name;
+		assert "id".equals(e.type);
+		return idToWidget.get(name);
 	}
 
 	public void setPackageName(String pkgName)

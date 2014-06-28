@@ -68,7 +68,7 @@ public class ParseLayout
 			xpath.setNamespaceContext(new PersonalNamespaceContext());
 
 			findCallbacks(document, xpath, layout.callbacks);
-			findWidgets(document, xpath, layout.customWidgets);
+			findWidgets(document, xpath, layout.widgets);
 
 			return layout;
 		}catch(Exception e){
@@ -76,16 +76,22 @@ public class ParseLayout
 		}
 	}
 
-	private void findWidgets(Document document, XPath xpath, Set<String> widgets) throws javax.xml.xpath.XPathExpressionException
+	private void findWidgets(Document document, XPath xpath, List<Widget> widgets) throws javax.xml.xpath.XPathExpressionException
 	{		
 		NodeList nodes = (NodeList)
 			xpath.evaluate("//*", document, XPathConstants.NODESET);
 		//System.out.println("nodes.size() = "+nodes.getLength());
 		for(int i = 0; i < nodes.getLength(); i++) {
 			//System.out.println("HELLO");
-			Node node = nodes.item(i);
+			Element elem = (Element) nodes.item(i);
 			//System.out.println("Widget: "+node.getNodeName());
-			widgets.add(node.getNodeName());
+			String name = elem.getNodeName();
+			Widget w;
+			if(elem.hasAttribute("android:id"))
+				w = new Widget(name, elem.getAttribute("android:id"));
+			else
+				w = new Widget(name);
+			widgets.add(w);
 		}
 	}
 	

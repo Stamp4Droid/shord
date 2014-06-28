@@ -37,6 +37,7 @@ import java.util.Collections;
 
 import stamp.app.Component;
 import stamp.app.Layout;
+import stamp.app.Widget;
 
 public class Harness
 {
@@ -94,9 +95,12 @@ public class Harness
                     System.out.println("ERROR**********Invalid callback:" + cbName);
                 }
 			}
-
+ 
 			//initialize the custom widgets used in this comp
-			for(String widgetClassName : layout.customWidgets){
+			for(Widget w : layout.widgets){
+				if(!w.isCustom())
+					continue;
+				String widgetClassName = w.name;
 				SootClass wClass = Scene.v().getSootClass(widgetClassName);
 				
 				//one constructor

@@ -1,11 +1,10 @@
 package stamp.app;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 public class Layout
 {
-	public final Set<String> customWidgets = new HashSet();
+	public final List<Widget> widgets = new ArrayList();
 	public final Set<String> callbacks = new HashSet();
 	//public final int id;
 	public final String fileName;
