@@ -29,6 +29,7 @@ public class Extract extends JavaAnalysis
 {
 	private ProgramRel relExtraInvkComp;
 	private ProgramRel relExtraInvkCompositeArg;
+	private ProgramRel relExtraInvkPutTaint;
 	private ProgramRel relMI;
 	private ProgramRel relIM;
 
@@ -41,6 +42,9 @@ public class Extract extends JavaAnalysis
 
 		relExtraInvkCompositeArg = (ProgramRel) ClassicProject.g().getTrgt("extraInvkCompositeArg");
 		relExtraInvkCompositeArg.load();
+
+		relExtraInvkPutTaint = (ProgramRel) ClassicProject.g().getTrgt("extraInvkPutTaint");
+		relExtraInvkPutTaint.load();
 
 		relIM = (ProgramRel) ClassicProject.g().getTrgt("ci_IM");
 		relIM.load();
@@ -85,6 +89,7 @@ public class Extract extends JavaAnalysis
 
 		relExtraInvkComp.close();
 		relExtraInvkCompositeArg.close();
+		relExtraInvkPutTaint.close();
 	}
 
 	private String ifaceStr(SootMethod m, Stmt stmt, SootMethod src)
@@ -102,7 +107,7 @@ public class Extract extends JavaAnalysis
 		else if(name.equals("putExtras"))
 			;//TODO
 		else if(name.startsWith("put"))
-			return "Key: " + reachingDefs(ie, 0, stmt, src) + " ParameterType: " + getType(stmt, m);
+			return "Key: " + reachingDefs(ie, 0, stmt, src) + " ParameterType: " + getType(stmt, m) + " Labels: "+getLabels(stmt);
 
 		return iface;
 	}
@@ -144,6 +149,14 @@ public class Extract extends JavaAnalysis
 			return concat(types);
 		} else
 			return "["+m.getParameterType(1).toString()+"]";
+	}
+
+	private String getLabels(Unit invkUnit)
+	{
+		RelView view = relExtraInvkPutTaint.getView();
+		view.selectAndDelete(0, invkUnit);
+		Iterable<String> labels = view.getAry1ValTuples();
+		return concat(labels);
 	}
 
 	private String concat(Iterable vals)

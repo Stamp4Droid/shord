@@ -14,8 +14,10 @@
 .include "SC.dom"
 .include "Z.dom"
 .include "T.dom"
+.include "L.dom"
+.include "CL.dom"
 
-.bddvarorder M0_T0_Z0_I0_V0_C0xC1xC2_H0_F0_COMP0_SC0
+.bddvarorder M0_T0_Z0_I0_V0_C0xC1xC2_H0_F0_COMP0_SC0_L0_CL0
 
 SCH(sc:SC,h:H) input
 IntentTgtField(f:F) input
@@ -27,16 +29,23 @@ fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
 HT(h:H,t:T) input
 
+LCL(l:L,cl:CL) input
+labelRef(c:C,v:V,l:CL)  input
+
 ObjSC(o:C,sc:SC) 
 CMComp(c:C,m:M,act:COMP)
 CMObj(c:C,m:M,o:C)
+#CML(c:C,m:M,l:L)
 
+IinvkArg(i:I,n:Z,v:V) input
 MmethArg(m:M,z:Z,v:V) input
 IntentExtraMeths(m:M) input
 PutCompositeIntentExtraMeths(m:M) input
+PutSimpleIntentExtraMeths(m:M) input
 
 extraInvkComp(i:I,a:COMP) output
 extraInvkCompositeArg(i:I,t:T) output
+extraInvkPutTaint(i:I,l:L) output
 
 #test(c:C,m:M,o:C) output
 
@@ -51,3 +60,8 @@ extraInvkComp(i,act) :- CICM(_,i,c,m), CMComp(c,m,act).
  
 CMObj(c,m,o) :- PutCompositeIntentExtraMeths(m), MmethArg(m,2,a), pt(c,a,o).
 extraInvkCompositeArg(i,t) :- CICM(_,i,c,m), CMObj(c,m,o), CH(o,h), HT(h,t).
+
+#CML(c,m,l):- PutSimpleIntentExtraMeths(m), MmethArg(m,2,a), labelRef(c,a,cl), LCL(l,cl).
+#extraInvkPutTaint(i,l) :- CICM(_,i,c,m), CML(c,m,l).
+
+extraInvkPutTaint(i,l) :- CICM(c,i,_,m), PutSimpleIntentExtraMeths(m), IinvkArg(i,2,v), labelRef(c,v,cl), LCL(l,cl).

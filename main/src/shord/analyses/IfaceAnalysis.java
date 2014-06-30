@@ -7,8 +7,10 @@ import soot.Scene;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import shord.project.ClassicProject;
+import shord.program.Program;
 
 import chord.project.Chord;
+import chord.util.tuple.object.Pair;
 
 import java.util.*;
 
@@ -19,9 +21,9 @@ import java.util.*;
 
 @Chord(name="iface-java-1",
 	   consumes={"M"},
-       produces={"IntentExtraMeths", "PutCompositeIntentExtraMeths"},
-       namesOfSigns = {"IntentExtraMeths", "PutCompositeIntentExtraMeths"},
-       signs = {"M0:M0", "M0:M0"}
+       produces={"IntentExtraMeths", "PutSimpleIntentExtraMeths", "PutCompositeIntentExtraMeths"},
+       namesOfSigns = {"IntentExtraMeths", "PutSimpleIntentExtraMeths", "PutCompositeIntentExtraMeths"},
+       signs = {"M0:M0", "M0:M0", "M0:M0"}
        )
 public class IfaceAnalysis extends JavaAnalysis
 {
@@ -56,6 +58,14 @@ public class IfaceAnalysis extends JavaAnalysis
 			"java.lang.String[] getStringArrayExtra(java.lang.String)", 
 			"java.util.ArrayList getStringArrayListExtra(java.lang.String)", 
 
+			//set methods
+			"android.content.Intent setData(android.net.Uri)",
+			"android.content.Intent setDataAndNormalize(android.net.Uri)",
+			"android.content.Intent setDataAndType(android.net.Uri,java.lang.String)",
+			"android.content.Intent setDataAndTypeAndNormalize(android.net.Uri,java.lang.String)"
+		});
+
+	public static final List<String> putSimpleIntentExtraMeths = Arrays.asList(new String[] {
 			//put methods for non-composite types
 			"android.content.Intent putExtra(java.lang.String,int)", 
 			"android.content.Intent putExtra(java.lang.String,float)", 
@@ -75,13 +85,7 @@ public class IfaceAnalysis extends JavaAnalysis
 			"android.content.Intent putExtra(java.lang.String,int[])", 
 			"android.content.Intent putExtra(java.lang.String,long[])", 
 			"android.content.Intent putExtra(java.lang.String,short[])", 
-			"android.content.Intent putExtra(java.lang.String,java.lang.String[])", 
-
-			//set methods
-			"android.content.Intent setData(android.net.Uri)",
-			"android.content.Intent setDataAndNormalize(android.net.Uri)",
-			"android.content.Intent setDataAndType(android.net.Uri,java.lang.String)",
-			"android.content.Intent setDataAndTypeAndNormalize(android.net.Uri,java.lang.String)"
+			"android.content.Intent putExtra(java.lang.String,java.lang.String[])"
 		});
 
 	public static final List<String> putIntentExtrasMeths = Arrays.asList(new String[] {
@@ -99,8 +103,7 @@ public class IfaceAnalysis extends JavaAnalysis
 			"android.content.Intent putIntegerArrayListExtra(java.lang.String,java.util.ArrayList)",
 			"android.content.Intent putParcelableArrayListExtra(java.lang.String,java.util.ArrayList)"
 		});
-	
-			
+
 	private void populateExtraMeths()
 	{
         ProgramRel relExtraMeth = (ProgramRel) ClassicProject.g().getTrgt("IntentExtraMeths");
@@ -112,6 +115,11 @@ public class IfaceAnalysis extends JavaAnalysis
 			relExtraMeth.add(m);
 		}
 		for(String methName : putIntentExtrasMeths){
+			SootMethod m = intentClass.getMethod(methName);
+			relExtraMeth.add(m);
+		}
+
+		for(String methName : putSimpleIntentExtraMeths){
 			SootMethod m = intentClass.getMethod(methName);
 			relExtraMeth.add(m);
 		}
@@ -129,6 +137,14 @@ public class IfaceAnalysis extends JavaAnalysis
 			relCompositeExtraMeth.add(m);
 		}
 		relCompositeExtraMeth.save();
+
+		ProgramRel relSimpleExtraMeth = (ProgramRel) ClassicProject.g().getTrgt("PutSimpleIntentExtraMeths");
+        relSimpleExtraMeth.zero();
+		for(String methName : putSimpleIntentExtraMeths){
+			SootMethod m = intentClass.getMethod(methName);
+			relSimpleExtraMeth.add(m);
+		}
+		relSimpleExtraMeth.save();
 
 	}
 

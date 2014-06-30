@@ -20,31 +20,39 @@ import shord.project.ClassicProject;
 import shord.program.Program;
 import shord.analyses.DomM;
 
+import stamp.ifaceextract.TaintTextInputs;
+
 import chord.project.Chord;
 
 /**
  * @author Saswat Anand
 **/
 @Chord(name = "annot-java",
-	   consumes = { "M", "Z" },
+	   consumes = { "M", "Z", "V" },
 	   produces = { "L",
 					"ArgArgTransfer", "ArgRetTransfer", 
 					"ArgArgFlow",
 					"SrcLabel", "SinkLabel",
 					"InLabelArg", "InLabelRet",
-					"OutLabelArg", "OutLabelRet" },
+					"OutLabelArg", "OutLabelRet",
+                    "VarLabel"
+	               },
 	   namesOfTypes = { "L" },
 	   types = { DomL.class },
 	   namesOfSigns = { "ArgArgTransfer", "ArgRetTransfer", 
 						"ArgArgFlow",
 						"SrcLabel", "SinkLabel",
 						"InLabelArg", "InLabelRet",
-						"OutLabelArg", "OutLabelRet" },
+						"OutLabelArg", "OutLabelRet",
+                        "VarLabel"
+                      },
 	   signs = { "M0,Z0,Z1:M0_Z0_Z1", "M0,Z0:M0_Z0", 
 				 "M0,Z0,Z1:M0_Z0_Z1",
 				 "L0:L0", "L0:L0",
 				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0",
-				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0" }
+				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0",
+                 "V0,L0:V0_L0"
+               }
 	   )
 public class AnnotationReader extends JavaAnalysis
 {
@@ -65,15 +73,19 @@ public class AnnotationReader extends JavaAnalysis
 		//fill ArgArgTransfer, ArgRetTransfer, ArgArgFlow
 		process(srcLabels, sinkLabels, worklist);
 
+		TaintTextInputs tti = new TaintTextInputs();
+		tti.run();
+
 		//fill DomL
 		DomL domL = (DomL) ClassicProject.g().getTrgt("L");
 		for(String l : srcLabels)
 			domL.add(l);
 		for(String l : sinkLabels)
 			domL.add(l);
+		tti.populateDomL();
 		domL.save();
-
-		//fille SrcLabel
+		
+		//fill SrcLabel
 		ProgramRel relSrcLabel = (ProgramRel) ClassicProject.g().getTrgt("SrcLabel");
 		relSrcLabel.zero();
 		for(String l : srcLabels)
@@ -106,6 +118,9 @@ public class AnnotationReader extends JavaAnalysis
 		relInLabelRet.save();
 		relOutLabelArg.save();
 		relOutLabelRet.save();
+
+		//fill VarLabel
+		tti.populateVarLabel();
 	}
 
 	private String[] split(String line)

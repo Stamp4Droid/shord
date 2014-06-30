@@ -1,6 +1,8 @@
 package stamp.analyses;
 
 import shord.analyses.Ctxt;
+import shord.analyses.LocalVarNode;
+import shord.analyses.VarNode;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
@@ -14,7 +16,7 @@ import chord.util.tuple.object.Pair;
 import chord.util.tuple.object.Trio;
 
 @Chord(name = "context-label-java",
-	   consumes = { "InLabelArg", "InLabelRet", "OutLabelArg", "OutLabelRet", "CM" },
+	   consumes = { "InLabelArg", "InLabelRet", "OutLabelArg", "OutLabelRet", "VarLabel", "CM" },
 	   produces = { "CL", "CCL", "LCL" },
 	   namesOfTypes = { "CL" },
 	   types = { DomCL.class },
@@ -60,8 +62,7 @@ public class ContextLabelAnalysis extends JavaAnalysis
 		Iterable<Trio<String,SootMethod,Integer>> it1 = relLabelArg.getAry3ValTuples();
 		for(Trio<String,SootMethod,Integer> trio : it1) {
 			String label = trio.val0;
-			SootMethod meth = trio.val1;
-			
+			SootMethod meth = trio.val1;			
 			for(Ctxt ctxt : getContexts(meth)){
 				domCL.getOrAdd(new Pair(label,ctxt));
 			}
@@ -77,12 +78,28 @@ public class ContextLabelAnalysis extends JavaAnalysis
 		for(Pair<String,SootMethod> pair : it2) {
 			String label = pair.val0;
 			SootMethod meth = pair.val1;
-			
 			for(Ctxt ctxt : getContexts(meth)){
 				domCL.getOrAdd(new Pair(label,ctxt));
 			}
 		}
 		relLabelRet.close();
+	}
+
+	private void processVarLabel()
+	{
+		ProgramRel relVarLabel = (ProgramRel) ClassicProject.g().getTrgt("VarLabel");
+		relVarLabel.load();
+		Iterable<Pair<VarNode,String>> it2 = relVarLabel.getAry2ValTuples();
+		for(Pair<VarNode,String> pair : it2) {
+			VarNode vn = pair.val0; 
+			String label = pair.val1;
+			SootMethod meth = ((LocalVarNode) vn).meth;			
+			for(Ctxt ctxt : getContexts(meth)){
+				domCL.getOrAdd(new Pair(label,ctxt));
+			}
+		}
+		relVarLabel.close();
+		
 	}
 
 	private void CL()
@@ -92,6 +109,8 @@ public class ContextLabelAnalysis extends JavaAnalysis
 
 		processLabelRet("InLabelRet");
 		processLabelRet("OutLabelRet");
+
+		processVarLabel();
 
 		domCL.save();
 	}

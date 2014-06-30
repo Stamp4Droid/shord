@@ -38,6 +38,7 @@ OutLabelArg(l:L,m:M,z:Z)      input
 ArgRetTransfer(m:M,z:Z)       input
 ArgArgTransfer(m:M,z0:Z,z1:Z) input
 ArgArgFlow(m:M,z0:Z,z1:Z)     input
+VarLabel(v:V,l:L)             input
 
 MmethArg(m:M,z:Z,v:V)     input
 MmethRet(m:M,z:Z,v:V)     input
@@ -92,6 +93,7 @@ reachableCI(c:C,i:I)
 # translation of annotation facts
 varInLabel(v,l)     :- InLabelRet(l,m), MmethRet(m,_,v).
 varInLabel(v,l)     :- InLabelArg(l,m,z), MmethArg(m,z,v).
+varInLabel(v,l)     :- VarLabel(v,l).
 varInLabelPrim(v,l) :- InLabelRet(l,m), MmethPrimRet(m,_,v).
 varInLabelPrim(v,l) :- InLabelArg(l,m,z), MmethPrimArg(m,z,v).
 

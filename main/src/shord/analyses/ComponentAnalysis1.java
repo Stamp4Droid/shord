@@ -139,7 +139,7 @@ public class ComponentAnalysis1 extends JavaAnalysis
 		domSC.save();
     }
 
-	NumberedSet frameworkClasses()
+	public static NumberedSet frameworkClasses()
 	{
 		Scene scene = Scene.v();
 		NumberedSet frameworkClasses = new NumberedSet(scene.getClassNumberer());

@@ -148,6 +148,7 @@ public class App
 		PublicXml.Entry e = publicXml.entryFor(id);
 		String name = e.name;
 		assert "id".equals(e.type);
+		name = "@"+e.type+"/"+name;
 		return idToWidget.get(name);
 	}
 
@@ -311,6 +312,7 @@ public class App
 					Layout layout = layoutWithId(layoutId);
 					if(layout != null){
 						comp.addLayout(layout);
+						layout.addComponent(comp);
 						System.out.println("Layout: "+comp.name+" "+layout.fileName);
 					}
 					else
