@@ -4,10 +4,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Hello World, Main"
-    />
+<EditText
+   android:id="@+id/textbox1"
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content">
+</EditText>
+<EditText
+   android:id="@+id/textbox2"
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content">
+</EditText>
 </LinearLayout>
 
