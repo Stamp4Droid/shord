@@ -9,7 +9,7 @@ import soot.SootMethod;
  */
 public class StubAllocNode extends AllocNode
 {
-	private final SootMethod meth;
+	public final SootMethod meth;
 
 	public StubAllocNode(Type t, SootMethod meth)
 	{

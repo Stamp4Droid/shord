@@ -16,6 +16,10 @@ import shord.analyses.DomH;
 import shord.analyses.DomI;
 import shord.analyses.DomM;
 import shord.analyses.DomV;
+import shord.analyses.GlobalAllocNode;
+import shord.analyses.SiteAllocNode;
+import shord.analyses.StubAllocNode;
+import shord.analyses.ThisVarNode;
 import shord.analyses.VarNode;
 import shord.program.Program;
 import shord.project.ClassicProject;
@@ -24,6 +28,7 @@ import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import soot.SootMethod;
 import soot.Unit;
+import soot.tagkit.EnclosingMethodTag;
 import chord.bddbddb.Rel.RelView;
 import chord.project.Chord;
 import chord.util.ArraySet;
@@ -126,14 +131,48 @@ public class CtxtsAnalysis extends JavaAnalysis {
     private ProgramRel relKcfaSenM;
     private ProgramRel relKobjSenM;
     private ProgramRel relCtxtCpyM;
-    
-    private SootMethod getMethod(Unit u) {
-    }
-    
-    private SootMethod getMethod(AllocNode n) {
-    }
 
-    private VarNode getThisVar(SootMethod method) {
+    private static Map<String, SootMethod> methodBySig = null;
+    private static SootMethod getMethod(Unit u) {
+    	if (methodBySig == null) {
+    		methodBySig = new HashMap<String, SootMethod>();
+    		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
+    		for (int i=0; i<domM.size(); i++) {
+    			SootMethod m = domM.get(i);
+    			methodBySig.put(m.getSignature(), m);
+    		}
+    	}
+    	EnclosingMethodTag tag = (EnclosingMethodTag) u.getTag("EnclosingMethodTag");
+    	return methodBySig.get(tag.getEnclosingMethodSig());
+    }
+    
+    private static SootMethod getMethod(AllocNode n) {
+    	if (n instanceof SiteAllocNode) {
+    		SiteAllocNode siteN = (SiteAllocNode) n;
+    		return getMethod(siteN.getUnit());
+    	} else if (n instanceof StubAllocNode) {
+    		StubAllocNode stubN = (StubAllocNode) n;
+    		return stubN.meth;
+    	} else if (n instanceof GlobalAllocNode) {
+    		return null;
+    	}
+    	return null;
+    }
+    
+    private static Map<SootMethod, VarNode> thisByMethod = null;
+    private static VarNode getThisVar(SootMethod method) {
+    	if (thisByMethod == null) {
+    		thisByMethod = new HashMap<SootMethod, VarNode>();
+    		DomV domV = (DomV) ClassicProject.g().getTrgt("V");
+    		for (int i=0; i<domV.size(); i++) {
+    			VarNode v = domV.get(i);
+    			if (v instanceof ThisVarNode) {
+    				ThisVarNode thisV = (ThisVarNode) v;
+    				thisByMethod.put(thisV.method, thisV);
+    			}
+    		}
+    	}
+    	return thisByMethod.get(method);
     }
 
     public void run() {
@@ -195,7 +234,9 @@ public class CtxtsAnalysis extends JavaAnalysis {
 				kobjValue[i] = kobjK;
 				AllocNode site = (AllocNode) domH.get(i);
 				SootMethod m = getMethod(site);
-				HtoM[i] = domM.indexOf(m);
+				if (m != null) {
+					HtoM[i] = domM.indexOf(m);
+				}
 				HtoQ[i] = site;
 			}
 			kcfaValue = new int[numI];
@@ -431,7 +472,10 @@ public class CtxtsAnalysis extends JavaAnalysis {
                 VarNode thisVar = getThisVar(meth);
                 Iterable<AllocNode> pts = getPointsTo(thisVar);
                 for (AllocNode inst : pts) {
-                    predMeths.add(getMethod(inst));
+                	SootMethod m = getMethod(inst);
+                	if (m != null) {
+                		predMeths.add(getMethod(inst));
+                	}
                     int hIdx = domH.indexOf(inst);
                     rcvSites.add(hIdx);
                 }
@@ -563,12 +607,14 @@ public class CtxtsAnalysis extends JavaAnalysis {
                 AllocNode rcv = HtoQ[hIdx];
                 int k = kobjValue[hIdx];
                 int clrIdx = HtoM[hIdx];
-                Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];
-                for (Ctxt oldCtxt : rcvCtxts) {
-                    Object[] oldElems = oldCtxt.getElems();
-                    Object[] newElems = combine(k, rcv, oldElems);
-                    Ctxt newCtxt = domC.setCtxt(newElems);
-                    newCtxts.add(newCtxt);
+                if (clrIdx >= 0) {
+	                Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];
+	                for (Ctxt oldCtxt : rcvCtxts) {
+	                    Object[] oldElems = oldCtxt.getElems();
+	                    Object[] newElems = combine(k, rcv, oldElems);
+	                    Ctxt newCtxt = domC.setCtxt(newElems);
+	                    newCtxts.add(newCtxt);
+	                }
                 }
             }
             break;
