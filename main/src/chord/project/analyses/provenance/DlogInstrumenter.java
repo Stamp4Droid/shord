@@ -74,6 +74,7 @@ public class DlogInstrumenter extends JavaAnalysis {
 
 	@Override
 	public void run() {
+		System.setProperty(DLOG, "taint-lim-dlog");
 		dlogName = System.getProperty(DLOG);
 		ruleFilter = Boolean.parseBoolean(System.getProperty(RULE_FILTER, "false"));
 		if(ruleFilter)

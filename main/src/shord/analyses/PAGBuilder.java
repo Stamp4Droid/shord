@@ -81,9 +81,9 @@ produces={"M", "Z", "K", "I", "H", "V", "T", "F", "U",
 		"Assign", "Load", "Store", 
 		"LoadStat", "StoreStat", 
 		"MmethArg", "MmethRet", 
-		"IinvkRet", "IinvkArg", 
+		"IinvkRet", "IinvkArg", "IinvkArg2", 
 		"VT", "chaIM",
-		"HT", "HTFilter", "NewH",
+		"HT", "HT2", "HTFilter", "NewH",
 		"MI", "MH",
 		"MV", "MU",
 		"AssignPrim", 
@@ -102,9 +102,9 @@ namesOfSigns = { "GlobalAlloc", "Alloc", "NewH",
 		"Assign", "Load", "Store", 
 		"LoadStat", "StoreStat", 
 		"MmethArg", "MmethRet", 
-		"IinvkRet", "IinvkArg", 
+		"IinvkRet", "IinvkArg", "IinvkArg2", 
 		"VT", "chaIM",
-		"HT", "HTFilter", 
+		"HT", "HT2", "HTFilter", 
 		"MI", "MH",
 		"MV", "MU",
 		"AssignPrim", 
@@ -121,9 +121,9 @@ signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
 		"V0,V1:V0xV1", "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 		"V0,F0:F0_V0", "F0,V0:F0_V0",
 		"M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
-		"I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0",
+		"I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V1:I0_V1_Z0",
 		"V0,T0:T0_V0", "I0,M0:I0_M0",
-		"H0,T0:H0_T0", "H0,T0:H0_T0",
+		"H0,T0:H0_T0", "H0,T1:H0_T1", "H0,T0:H0_T0",
 		"M0,I0:M0_I0", "M0,H0:M0_H0",
 		"M0,V0:M0_V0", "M0,U0:M0_U0",
 		"U0,U1:U0xU1",
@@ -151,6 +151,7 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relMmethRet;//(m:M,z:Z,v:V)
 	private ProgramRel relIinvkRet;//(i:I,n:Z,v:V)
 	private ProgramRel relIinvkArg;//(i:I,n:Z,v:V)
+	private ProgramRel relIinvkArg2;//(i:I,n:Z,v:V)
 
 	private ProgramRel relAssignPrim;//(l:U,r:U)
 	private ProgramRel relLoadPrim;//(l:U,b:V,f:F)
@@ -169,6 +170,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	private ProgramRel relVT;
 	private ProgramRel relHT;
+	private ProgramRel relHT2;
 	private ProgramRel relHTFilter;
 	private ProgramRel relMI;
 	private ProgramRel relMH;
@@ -232,6 +234,8 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkRet.zero();
 		relIinvkArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkArg");
 		relIinvkArg.zero();
+		relIinvkArg2 = (ProgramRel) ClassicProject.g().getTrgt("IinvkArg2");
+		relIinvkArg2.zero();
 
 		relSpecIM = (ProgramRel) ClassicProject.g().getTrgt("SpecIM");
 		relSpecIM.zero();
@@ -244,6 +248,8 @@ public class PAGBuilder extends JavaAnalysis
 		relVT.zero();
 		relHT = (ProgramRel) ClassicProject.g().getTrgt("HT");
 		relHT.zero();
+		relHT2 = (ProgramRel) ClassicProject.g().getTrgt("HT2");
+		relHT2.zero();
 		relHTFilter = (ProgramRel) ClassicProject.g().getTrgt("HTFilter");
 		relHTFilter.zero();
 		relMI = (ProgramRel) ClassicProject.g().getTrgt("MI");
@@ -297,6 +303,7 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethRet.save();
 		relIinvkRet.save();
 		relIinvkArg.save();
+		relIinvkArg2.save();
 		
 		if(this.usePotentialCallbacksAdder) {
 			this.potentialCallbacksAdder.addRelIM(relSpecIM);
@@ -308,6 +315,7 @@ public class PAGBuilder extends JavaAnalysis
 
 		relVT.save();
 		relHT.save();
+		relHT2.save();
 		relHTFilter.save();
 
 		if(this.usePotentialCallbacksAdder) {
@@ -412,6 +420,7 @@ public class PAGBuilder extends JavaAnalysis
 		if(v == null)
 			return;
 		relIinvkArg.add(invkUnit, new Integer(index), v);
+		relIinvkArg2.add(invkUnit, new Integer(index), v);
 	}
 
 	void IinvkRet(Unit invkUnit, LocalVarNode v)
@@ -1257,6 +1266,7 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		Type type = an.getType();			
 		relHT.add(an, type);
+		relHT2.add(an, type);
 
 		Iterator<Type> typesIt = Program.g().getTypes().iterator();
 		while(typesIt.hasNext()){

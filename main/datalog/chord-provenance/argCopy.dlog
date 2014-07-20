@@ -18,7 +18,7 @@
 ###
 
 IM(i:I,m:M) input
-IinvkArg(i:I0,n:Z0,v:V1) input
+IinvkArg2(i:I0,n:Z0,v:V1) input
 MmethArg(m:M0,n:Z0,v:V0) input
 kobjSenM(m:M) input
 
@@ -35,6 +35,6 @@ MspcMethArg(m,v)   :- MmethArg(m,0,v), kobjSenM(m).
 MordMethArg(m,0,v) :- MmethArg(m,0,v), !MspcMethArg(m,v).
 MordMethArg(m,z,v) :- MmethArg(m,z,v), z!=0.
 
-argCopy(i,u,m,v) :- IM(i,m), IinvkArg(i,z,u), MordMethArg(m,z,v).
-#argCopy(i,u,m,v) :- IM(i,m), IinvkArg(i,z,u), MmethArg(m,z,v).
+argCopy(i,u,m,v) :- IM(i,m), IinvkArg2(i,z,u), MordMethArg(m,z,v).
+#argCopy(i,u,m,v) :- IM(i,m), IinvkArg2(i,z,u), MmethArg(m,z,v).
 

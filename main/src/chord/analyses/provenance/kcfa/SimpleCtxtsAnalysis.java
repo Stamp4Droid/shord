@@ -82,7 +82,7 @@ import chord.util.tuple.object.Pair;
 @Chord(name = "simple-pro-ctxts-java",
        consumes = { "IM", "VH", "IK", "HK", "OK"},
        produces = { "C", "epsilonM", "kcfaSenM", "kobjSenM", "ctxtCpyM", "initCIC", "initCHC", "initCOC",
-		"truncCKC", "roots", "CH", "CI", "CL" },
+		"truncCKC", "roots", "CH", "CI", "CL2" },
        namesOfTypes = { "C" },
        types = { DomC.class }
 )
@@ -219,7 +219,7 @@ public class SimpleCtxtsAnalysis extends JavaAnalysis {
         relRoots = (ProgramRel) ClassicProject.g().getTrgt("roots");
         relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");
         relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
-        relCL = (ProgramRel) ClassicProject.g().getTrgt("CL");
+        relCL = (ProgramRel) ClassicProject.g().getTrgt("CL2");
 
         relEpsilonM = (ProgramRel) ClassicProject.g().getTrgt("epsilonM");
         relKcfaSenM = (ProgramRel) ClassicProject.g().getTrgt("kcfaSenM");
