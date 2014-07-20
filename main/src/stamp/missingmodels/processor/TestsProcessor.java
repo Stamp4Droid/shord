@@ -31,8 +31,7 @@ public class TestsProcessor implements Processor {
 	
 	private final MultivalueMap<String,Double> coverages = new MultivalueMap<String,Double>();
 	
-	private final Map<String,Integer> appLinesOfCode = new HashMap<String,Integer>();
-	private final Map<String,Integer> frameworkLinesOfCode = new HashMap<String,Integer>();
+	private final Map<String,Integer> linesOfCode = new HashMap<String,Integer>();
 	
 	private boolean isZerothCutEdge = false;
 	private String zerothCutEdgeCaller = null;
@@ -106,8 +105,7 @@ public class TestsProcessor implements Processor {
 
 	@Override
 	public void process(String appName, int appLinesOfCode, int frameworkLinesOfCode) {
-		this.appLinesOfCode.put(appName, appLinesOfCode);
-		this.frameworkLinesOfCode.put(appName, frameworkLinesOfCode);
+		this.linesOfCode.put(appName, appLinesOfCode+frameworkLinesOfCode);
 	}
 
 	@Override
@@ -118,8 +116,7 @@ public class TestsProcessor implements Processor {
 				&& this.numFlowEdges.get(appName).get(this.currentCoverage) != null
 				&& this.numBaseEdges.get(appName).get(this.currentCoverage) != null
 				&& this.numCutEdges.get(appName).get(this.currentCoverage) != null
-				&& this.appLinesOfCode.get(appName) != null
-				&& this.frameworkLinesOfCode != null) {
+				&& this.linesOfCode.get(appName) != null) {
 			this.appNames.add(appName);
 			if(this.coverages.get(appName).isEmpty()) {
 				this.coverages.add(appName, this.currentCoverage);
@@ -131,16 +128,16 @@ public class TestsProcessor implements Processor {
 		Collections.sort(this.appNames, new Comparator<String>() {
 			@Override
 			public int compare(String o1, String o2) {
-				if(appLinesOfCode.get(o1) == appLinesOfCode.get(o2)) {
+				if(linesOfCode.get(o1) == linesOfCode.get(o2)) {
 					return 0;
 				}
-				if(appLinesOfCode.get(o1) == null) {
+				if(linesOfCode.get(o1) == null) {
 					return 1;
 				}
-				if(appLinesOfCode.get(o2) == null) {
+				if(linesOfCode.get(o2) == null) {
 					return -1;
 				}
-				if(appLinesOfCode.get(o1) < appLinesOfCode.get(o2)) {
+				if(linesOfCode.get(o1) < linesOfCode.get(o2)) {
 					return 1;
 				}
 				return -1;				
@@ -180,8 +177,7 @@ public class TestsProcessor implements Processor {
 		for(int i=0; i<this.getMaxNumCuts(); i++) {
 			sb.append("# Cut Edges " + i).append(",");
 		}
-		sb.append("App Lines of Code").append(",");
-		sb.append("Framework Lines of Code");
+		sb.append("Lines of Code").append(",");
 		return sb.toString();		
 	}
 	
@@ -198,14 +194,14 @@ public class TestsProcessor implements Processor {
 		for(int i=0; i<numCuts; i++) {
 			sb.append(this.numCutEdges.get(appName).get(coverage).get(i)).append(",");
 		}
-		sb.append(this.appLinesOfCode.get(appName)).append(",");
-		sb.append(this.frameworkLinesOfCode.get(appName));
+		sb.append(this.linesOfCode.get(appName));
 		return sb.toString();
 	}
 	
 	public static void printSummary() {
 		TestsProcessor tp = new TestsProcessor();
-		new LogReader("../results_good", tp).run();
+		new LogReader("../results_experiment2_with_pcs", tp).run();
+		//new LogReader("../results_experiment1", tp).run();
 		System.out.println(tp.getHeader());
 		for(String appName : tp.getAppNames()) {
 			for(double coverage : tp.getCoverages(appName)) {

@@ -38,6 +38,12 @@ public class PotentialCallbacksAdder {
 			domI.add(unit);
 		}
 	}
+	
+	public void addRelM(ProgramRel relM) {
+		for(SootMethod potentialCallback : this.unitsByMethod.keySet()) {
+			relM.add(potentialCallback);
+		}
+	}
 
 	public void addRelIM(ProgramRel relIM) {
 		for(Map.Entry<SootMethod,Unit> entry : this.unitsByMethod.entrySet()) {
@@ -62,12 +68,13 @@ public class PotentialCallbacksAdder {
 		public String toString() {
 			return "MockCall(" + this.target.toString() + ")";
 		}
-
-		private static final long serialVersionUID = 1L;
+		
 		@Override
-		public Unit clone() {
-			return null;
+		public MockUnit clone() {
+			return new MockUnit(this.target);
 		}
+
+		private static final long serialVersionUID = 5751889841030513201L;
 		@Override
 		public void apply(Switch arg0) {}
 		@Override

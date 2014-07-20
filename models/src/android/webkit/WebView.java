@@ -28,4 +28,8 @@ class WebView
 	public  android.webkit.WebSettings getSettings() { 
 		return new StampWebSettings();
 	}
+
+    public void setWebViewClient(WebChromeClient client) {
+	client.onJsPrompt(this, "url", "message", "defaultValue", null);
+    }
 }

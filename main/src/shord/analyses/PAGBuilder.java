@@ -76,7 +76,7 @@ import chord.project.Chord;
  */
 @Chord(name="base-java", 
 consumes={"SC"},
-produces={"M", "Z", "I", "H", "V", "T", "F", "U",
+produces={"M", "Z", "K", "I", "H", "V", "T", "F", "U",
 		"GlobalAlloc", "Alloc", "NewH",
 		"Assign", "Load", "Store", 
 		"LoadStat", "StoreStat", 
@@ -95,9 +95,9 @@ produces={"M", "Z", "I", "H", "V", "T", "F", "U",
 		"SpecIM", "StatIM", "VirtIM",
 		"SubSig", "Dispatch",
 		"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
-		"SCH"},
-namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S", "SC"},
-types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomSC.class},
+		"SCH", "potentialCallback"},
+namesOfTypes = { "M", "Z", "K", "I", "H", "V", "T", "F", "U", "S", "SC"},
+types = { DomM.class, DomZ.class, DomK.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomSC.class},
 namesOfSigns = { "GlobalAlloc", "Alloc", "NewH",
 		"Assign", "Load", "Store", 
 		"LoadStat", "StoreStat", 
@@ -116,7 +116,7 @@ namesOfSigns = { "GlobalAlloc", "Alloc", "NewH",
 		"SpecIM", "StatIM", "VirtIM",
 		"SubSig", "Dispatch",
 		"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
-		"SCH"},
+		"SCH", "potentialCallback"},
 signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
 		"V0,V1:V0xV1", "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 		"V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -135,7 +135,7 @@ signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
 		"I0,M0:I0_M0", "I0,M0:I0_M0", "I0,M0:I0_M0",
 		"M0,S0:M0_S0", "T0,S0,M0:T0_M0_S0",
 		"T0:T0", "T0,T1:T0_T1", "T0,M0:T0_M0", "T0,F0:F0_T0", "T0,M0:T0_M0",
-		"SC0,H0:SC0_H0"})
+		"SC0,H0:SC0_H0", "M0:M0"})
 public class PAGBuilder extends JavaAnalysis
 {
 	private ProgramRel relGlobalAlloc;//(l:V,h:H)
@@ -176,11 +176,14 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relMU;
 
 	private ProgramRel relSCH;
+	
+	private ProgramRel relPotentialCallback;
 
 	private DomV domV;
 	private DomU domU;
 	private DomH domH;
 	private DomZ domZ;
+	private DomK domK;
 	private DomI domI;
 	private DomM domM;
 	private DomF domF;
@@ -274,6 +277,9 @@ public class PAGBuilder extends JavaAnalysis
 
 		relSCH = (ProgramRel) ClassicProject.g().getTrgt("SCH");
 		relSCH.zero();
+		
+		relPotentialCallback = (ProgramRel) ClassicProject.g().getTrgt("potentialCallback");
+		relPotentialCallback.zero();
 	}
 
 	void saveRels()
@@ -325,6 +331,11 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkPrimArg.save();
 
 		relSCH.save();
+		
+		if(this.usePotentialCallbacksAdder) {
+			this.potentialCallbacksAdder.addRelM(this.relPotentialCallback);
+		}
+		relPotentialCallback.save();
 	}
 
 	void GlobalAlloc(VarNode l, GlobalAllocNode h)
@@ -1061,6 +1072,10 @@ public class PAGBuilder extends JavaAnalysis
 	void populateDomains(List<MethodPAGBuilder> mpagBuilders)
 	{
 		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
+		domK = (DomK) ClassicProject.g().getTrgt("K");
+		for (int i=0; i<32; i++) {
+			domK.add(i);
+		}
 
 		populateMethods();
 		populateFields();
@@ -1087,6 +1102,7 @@ public class PAGBuilder extends JavaAnalysis
 
 		domH.save();
 		domZ.save();
+		domK.save();
 		domV.save();
 
 		if(this.usePotentialCallbacksAdder) {

@@ -50,7 +50,7 @@ Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 ###################
 ci_reachableT(t:T) 
 interprocAssign(u:V,v:V) 
-ci_reachableI(i:I) 
+ci_reachableI(i:I)  output
 IHM(i:I,h:H,m:M) 
 ci_fpt(o1:H,f:F,o2:H)
 ci_fptStat(f:F,o:H)
@@ -77,6 +77,7 @@ IHM(i,h,m2) :- VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2), HT(h,t).
 ci_IM(i,m) :- ci_reachableI(i), IinvkArg(i,0,v), ci_pt(v,o), IHM(i,o,m). 
 ci_IM(i,m) :- ci_reachableI(i), StatIM(i,m).
 ci_IM(i,m) :- ci_reachableI(i), SpecIM(i,m).
+ci_IM(i,m) :- ci_reachableI(i), VirtIM(i,m).
 
 interprocAssign(u,v) :- ci_IM(i,m), IinvkArg(i,z,v), MmethArg(m,z,u).
 interprocAssign(u,v) :- ci_IM(i,m), IinvkRet(i,z,u), MmethRet(m,z,v).

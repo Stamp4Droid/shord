@@ -36,3 +36,8 @@ ci_reachableM(m:M) input
 reachableBase(m:M) output
 reachableBase(0).
 reachableBase(m) :- ClinitTM(_,m), ci_reachableM(m).
+
+potentialCallback(m:M) input
+potentialCallbackDependent(m0:M0,m1:M1) output
+potentialCallbackDependent(m0,m1) :- potentialCallback(m0), m0 = m1.
+potentialCallbackDependent(m0,m1) :- potentialCallbackDependent(m0,m2), callgraph(m2,m1).

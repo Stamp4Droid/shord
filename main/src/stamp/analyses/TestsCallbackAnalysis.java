@@ -84,13 +84,17 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 			MultivalueMap<String,String> sourceSinkEdges = getGraphEdgesFromFile("Src2Sink", "graph");
 			AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(getUnion(paramEdges, paramPrimEdges), sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
 			
+			IOUtils.printRelation("ci_reachableM");
+			IOUtils.printRelation("callgraph");
+			IOUtils.printRelation("potentialCallbackDependent");
+			
 			ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
 			RelationReader relationReader = new ShordRelationReader();
 			//Graph g = relationReader.readGraph(new CallbackRelationManager(paramEdges, paramPrimEdges), taintGrammar);
 			Graph g = relationReader.readGraph(new CallbackRelationManager(paramEdges, paramPrimEdges), taintGrammar);
 			TypeFilter t = relationReader.readTypeFilter(taintGrammar);
-			IOUtils.printAbductionResult(AbductiveInferenceRunner.runInference(h, g, t, true, 2), true);
-
+			IOUtils.printCallgraphAbductionResult(AbductiveInferenceRunner.runInference(h, g, t, true, 2), true);
+			
 			Graph gbar = new ReachabilitySolver(g, t).getResult();
 			String extension = IOUtils.graphEdgesFileExists("param", "graph") ? "graph_new" : "graph";
 			IOUtils.printGraphEdgesToFile(gbar, "param", true, extension);

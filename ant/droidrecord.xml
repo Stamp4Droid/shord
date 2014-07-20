@@ -6,7 +6,7 @@
     <property name="stamp.droidrecord.cmd.readlog" value="${stamp.dir}/droidrecord/droidrecord-readlog" />
     <property name="stamp.dynamic.device.arg" value="" />
     <property name="stamp.droidrecord.auto.avdname" value="stampdevice" />
-    <property name="stamp.android.buildtools.dir" value="/opt/android-sdk-linux/build-tools/19.0.0/" />
+    <property name="stamp.android.buildtools.dir" value="/home/obastani/Documents/android-sdk-linux/build-tools/19.0.1" />
   
     <target name="-android-project-update">
       <if>
@@ -212,7 +212,7 @@
         <exec executable="${stamp.android.buildtools.dir}/dx"
           spawn="false"
     	  failonerror="true">
-          <arg value="-JXmx${env.JavaHeap}"/>
+          <arg value="-JXmx4g"/>
           <arg value="--dex"/>
           <arg value="--output=${droidrecord.out.dir}/apk/classes.dex"/>
           <arg value="${stamp.dir}/droidrecord/jars/droidrecord_lib.jar"/>
