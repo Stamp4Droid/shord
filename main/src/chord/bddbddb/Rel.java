@@ -577,6 +577,9 @@ public class Rel {
         public AryNIterable getAryNValTuples() {
             return new AryNIterable(b, keptDoms);
         }
+        public IntAryNIterable getAryNIntTuples() {
+            return new IntAryNIterable(b, keptDoms);
+        }
         /**
          * Frees this view.
          */

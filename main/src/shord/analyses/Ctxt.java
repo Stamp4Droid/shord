@@ -99,12 +99,12 @@ public class Ctxt implements Serializable
 		return builder.toString();
 	}
 
-	/*
 	public int length()
 	{
 		return elems.length;
 	}
 
+	/*
 	public SootMethod containerMethod(int index)
 	{
 		Object c = elems[index];
