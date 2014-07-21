@@ -74,8 +74,8 @@ public class DlogInstrumenter extends JavaAnalysis {
 	private int id;
 	
 	private void init() {
-		new ArrayList<InferenceRule>();
-		new ArrayList<InferenceRule>();
+		rulesToInstr = new ArrayList<InferenceRule>();
+		proRuleList = new ArrayList<InferenceRule>();
 		proRelList = new ArrayList<List<Relation>>();
 		outputRelations = new HashSet<Relation>();
 		instrumentedRelations = new HashSet<Relation>();
@@ -87,14 +87,17 @@ public class DlogInstrumenter extends JavaAnalysis {
 	public void run() {
 		run("taint-lim-chord-dlog");
 		
+		/*
 		run("cspa_kobj.dlog");
 		run("kobj-bit-init.dlog");
 		
 		run("cspa_kcfa.dlog");
 		run("kcfa-bit-init-dlog");
+		*/
 	}
 	
 	public void run(String name) {
+		init();
 		dlogName = name;
 		ruleFilter = Boolean.parseBoolean(System.getProperty(RULE_FILTER, "false"));
 		if(ruleFilter)
