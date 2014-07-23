@@ -204,7 +204,7 @@ public class SimpleCtxtsAnalysis extends JavaAnalysis {
         domH = (DomH) ClassicProject.g().getTrgt("H");
         domC = (DomC) ClassicProject.g().getTrgt("C");
         domK = (DomK) ClassicProject.g().getTrgt("K");
-        ClassicProject.g().runTask(domK);
+        //ClassicProject.g().runTask(domK);
 
         relIM = (ProgramRel) ClassicProject.g().getTrgt("IM");
         relVH = (ProgramRel) ClassicProject.g().getTrgt("VH");

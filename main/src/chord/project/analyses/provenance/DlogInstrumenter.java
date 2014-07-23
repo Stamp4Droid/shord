@@ -58,12 +58,12 @@ public class DlogInstrumenter extends JavaAnalysis {
 	private Collection inputRelations;
 	private IndexMap allRelations;
 	private List rules;
-	private List<InferenceRule> rulesToInstr;
-	private List<InferenceRule> proRuleList;
-	private List<List<Relation>> proRelList;
-	private Set<Relation> outputRelations;
-	private Set<Relation> instrumentedRelations;
-	private String header;
+	private List<InferenceRule> rulesToInstr = new ArrayList<InferenceRule>();
+	private List<InferenceRule> proRuleList = new ArrayList<InferenceRule>();
+	private List<List<Relation>> proRelList = new ArrayList<List<Relation>>();
+	private Set<Relation> outputRelations = new HashSet<Relation>();
+	private Set<Relation> instrumentedRelations = new HashSet<Relation>();
+	private String header = "";
 	private String[] paramTuples;
 
 	private Solver solver;
@@ -71,34 +71,11 @@ public class DlogInstrumenter extends JavaAnalysis {
 	private PrintWriter dlogOut;
 	private PrintWriter configOut;
 	
-	private int id;
-	
-	private void init() {
-		rulesToInstr = new ArrayList<InferenceRule>();
-		proRuleList = new ArrayList<InferenceRule>();
-		proRelList = new ArrayList<List<Relation>>();
-		outputRelations = new HashSet<Relation>();
-		instrumentedRelations = new HashSet<Relation>();
-		header = "";	
-		id = (int)(Math.random()*100.00);
-	}
+	private int id = (int)(Math.random()*100.00);
 
 	@Override
 	public void run() {
-		run("taint-lim-chord-dlog");
-		
-		/*
-		run("cspa_kobj.dlog");
-		run("kobj-bit-init.dlog");
-		
-		run("cspa_kcfa.dlog");
-		run("kcfa-bit-init-dlog");
-		*/
-	}
-	
-	public void run(String name) {
-		init();
-		dlogName = name;
+		dlogName = "taint-lim-chord-dlog";
 		ruleFilter = Boolean.parseBoolean(System.getProperty(RULE_FILTER, "false"));
 		if(ruleFilter)
 			paramTuples = System.getProperty(PARAM).split(",");

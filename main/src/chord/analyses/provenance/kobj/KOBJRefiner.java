@@ -20,12 +20,12 @@ import shord.project.Config;
 import shord.project.ITask;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
+import soot.Unit;
 import chord.project.Chord;
 import chord.project.analyses.provenance.DefaultModel;
 import chord.project.analyses.provenance.MaxSatGenerator;
 import chord.project.analyses.provenance.Model;
 import chord.project.analyses.provenance.Tuple;
-import chord.util.tuple.object.Quad;
 
 /**
  * A general class to run experiments based on k-obj analysis.
@@ -49,7 +49,7 @@ public class KOBJRefiner extends JavaAnalysis {
 	DomI domI;
 	DomH domH;
 	DomK domK;
-	Map<Tuple, Map<Quad, Integer>> absMap;
+	Map<Tuple, Map<Unit, Integer>> absMap;
 	Set<Tuple> unresolvedQs = new HashSet<Tuple>();
 	Set<Tuple> impossiQs = new HashSet<Tuple>();
 	MaxSatGenerator gen;
@@ -96,24 +96,9 @@ public class KOBJRefiner extends JavaAnalysis {
 			throw new RuntimeException(e);
 		}
 		
-		String client = System.getProperty("chord.provenance.client");
-		if (client.equals("polysite")) {
-			this.client = 0;
-			clientFile = "polysite-dlog_XZ89_";
-			clientConfigPath = "src/chord/analyses/provenance/monosite/polysite-dlog_XZ89_.config";
-			queryRelName = "polySite";
-		} else if (client.equals("downcast")) {
-			this.client = 1;
-			clientFile = "pro-downcast-dlog_XZ89_";
-			clientConfigPath = "src/chord/analyses/provenance/downcast/pro-downcast-dlog_XZ89_.config";
-			queryRelName = "unsafeDowncast";
-		} else if (client.equals("datarace")){
-			this.client = 2;
-			clientFile = "pro-datarace-dlog_XZ89_";
-			clientConfigPath = "src/chord/analyses/provenance/race/pro-datarace-dlog_XZ89_.config";
-			queryRelName = "racePairs";
-		}else
-			throw new RuntimeException("Unknown client: " + this.client);
+		clientFile = "taint-lim-chord-dlog_XZ89_";
+		clientConfigPath = "datalog/chord-provenance/inst/taint-lim-chord-dlog_XZ89_.config";
+		queryRelName = "flow";
 
 		//The analyses we need to run
 		tasks = new ArrayList<ITask>();
@@ -148,11 +133,11 @@ public class KOBJRefiner extends JavaAnalysis {
 		ClassicProject.g().runTask(domI);
 		ClassicProject.g().runTask(domK);
 		ClassicProject.g().runTask(domH);
-		absMap = new HashMap<Tuple, Map<Quad, Integer>>();
+		absMap = new HashMap<Tuple, Map<Unit, Integer>>();
 
 		IKRel.zero();
 		for (int i = 0; i < domI.size(); i++) {
-			Quad I = (Quad) domI.get(i);
+			Unit I = (Unit) domI.get(i);
 			IKRel.add(I,0);
 		}
 		IKRel.save();	
@@ -198,7 +183,7 @@ public class KOBJRefiner extends JavaAnalysis {
 		}
 		
 		for (Tuple t : unresolvedQs) {// put empty abstraction map for each query
-			absMap.put(t, new HashMap<Quad, Integer>());
+			absMap.put(t, new HashMap<Unit, Integer>());
 		}
 		if (opt.equals("all")) {
 			runAll();
@@ -255,9 +240,9 @@ public class KOBJRefiner extends JavaAnalysis {
 			statPW.flush();
 			printlnInfo("++++++++++++++++++++++++++++++++++++++++++++++");
 			printlnInfo("Abstraction used: ");
-			Map<Quad, Integer> abs = absMap.get(unresolvedQs.iterator().next());
+			Map<Unit, Integer> abs = absMap.get(unresolvedQs.iterator().next());
 			int totalKs = 0;
-			for(Map.Entry<Quad, Integer> entry : abs.entrySet())
+			for(Map.Entry<Unit, Integer> entry : abs.entrySet())
 				totalKs += entry.getValue();
 			printlnInfo("Total k values: "+totalKs);
 			printlnInfo(abs.toString());
@@ -294,7 +279,7 @@ public class KOBJRefiner extends JavaAnalysis {
 		int provNum = 0;
 		printlnInfo("Impossible Qs: " + impossiQs);
 		System.out.println("Proven Qs: ");
-		for (Map.Entry<Tuple, Map<Quad, Integer>> entry : absMap.entrySet()) {
+		for (Map.Entry<Tuple, Map<Unit, Integer>> entry : absMap.entrySet()) {
 			Tuple t = entry.getKey();
 			if (!impossiQs.contains(t)) {
 				printlnInfo("Query: " + t + ", " + entry.getValue());
@@ -329,16 +314,16 @@ public class KOBJRefiner extends JavaAnalysis {
 
 	private void updateAbsMap(Set<Tuple> qts, Set<Tuple> tupleToEli) {
 		for (Tuple t : qts) {
-			Map<Quad, Integer> abs = absMap.get(t);
+			Map<Unit, Integer> abs = absMap.get(t);
 			if (abs == null) {
-				abs = new HashMap<Quad, Integer>();
+				abs = new HashMap<Unit, Integer>();
 				absMap.put(t, abs);
 			}
 			if(!ifMono)
 				abs.clear();
 			for (Tuple t1 : tupleToEli) {
 				if (t1.getRelName().equals("DenyO")) {
-					Quad H = (Quad) t1.getValue(0);
+					Unit H = (Unit) t1.getValue(0);
 					Integer K = (Integer) t1.getValue(1);
 					if(ifBool)
 						K = invkK;
@@ -349,7 +334,7 @@ public class KOBJRefiner extends JavaAnalysis {
 						if(K > ek)
 							abs.put(H, K);
 				} else if (t1.getRelName().equals("DenyH")) {
-					Quad H = (Quad) t1.getValue(0);
+					Unit H = (Unit) t1.getValue(0);
 					Integer K = (Integer) t1.getValue(1);
 					if(ifBool)
 						K = allocK;
@@ -391,7 +376,7 @@ public class KOBJRefiner extends JavaAnalysis {
 	 * Run the analysis with the abstraction map specified in the parameter
 	 * @param abs
 	 */
-	private void runAnalysis(Map<Quad, Integer> abs) {
+	private void runAnalysis(Map<Unit, Integer> abs) {
 		HKRel.zero();
 		allowHRel.zero();
 		denyHRel.zero();
@@ -504,7 +489,7 @@ public class KOBJRefiner extends JavaAnalysis {
 			printlnInfo("===============================================");
 			printlnInfo("===============================================");
 			printlnInfo("Iteration: " + numIter);
-			Map<Quad, Integer> abs = absMap.get(q);
+			Map<Unit, Integer> abs = absMap.get(q);
 			printlnInfo("Abstraction used: " + abs);
 			runAnalysis(abs);
 			if (updateQuery(q,numIter)) {
