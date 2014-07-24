@@ -27,10 +27,10 @@ import shord.project.ClassicProject;
 import shord.project.Config;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
+import soot.PatchingChain;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.Stmt;
-import soot.tagkit.EnclosingMethodTag;
 import chord.bddbddb.Rel.RelView;
 import chord.project.Chord;
 import chord.util.ArraySet;
@@ -154,18 +154,23 @@ public class SimpleCtxtsAnalysis extends JavaAnalysis {
     private ProgramRel relKobjSenM;
     private ProgramRel relCtxtCpyM;
 
-    private static Map<String, SootMethod> methodBySig = null;
+    private static Map<Unit, SootMethod> unitToContainingMethod = null;
     private static SootMethod getMethod(Unit u) {
-    	if (methodBySig == null) {
-    		methodBySig = new HashMap<String, SootMethod>();
+    	if (unitToContainingMethod == null) {
+    		unitToContainingMethod = new HashMap<Unit, SootMethod>();
     		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
     		for (int i=0; i<domM.size(); i++) {
     			SootMethod m = domM.get(i);
-    			methodBySig.put(m.getSignature(), m);
+    			if (m.hasActiveBody()) {
+	                PatchingChain<Unit> units = m.getActiveBody().getUnits();
+	                for (Unit unit : units) {
+	                	unitToContainingMethod.put(unit, m);
+	                }
+    			}
     		}
     	}
-    	EnclosingMethodTag tag = (EnclosingMethodTag) u.getTag("EnclosingMethodTag");
-    	return methodBySig.get(tag.getEnclosingMethodSig());
+    	SootMethod m = unitToContainingMethod.get(u);
+    	return m;
     }
     
     private static SootMethod getMethod(AllocNode n) {
@@ -204,6 +209,9 @@ public class SimpleCtxtsAnalysis extends JavaAnalysis {
         domH = (DomH) ClassicProject.g().getTrgt("H");
         domC = (DomC) ClassicProject.g().getTrgt("C");
         domK = (DomK) ClassicProject.g().getTrgt("K");
+
+        domC.clear();
+
         //ClassicProject.g().runTask(domK);
 
         relIM = (ProgramRel) ClassicProject.g().getTrgt("IM");
@@ -679,7 +687,7 @@ public class SimpleCtxtsAnalysis extends JavaAnalysis {
     private Object[] combine(int k, Object invk, Object[] oldElems) {
         int oldLen = oldElems.length;
         int newLen = Math.min(k - 1, oldLen) + 1;
-        Object[] newElems = new Stmt[newLen];
+        Object[] newElems = new Object[newLen];
         if (newLen > 0) newElems[0] = invk;
         if (newLen > 1)
             System.arraycopy(oldElems, 0, newElems, 1, newLen - 1);

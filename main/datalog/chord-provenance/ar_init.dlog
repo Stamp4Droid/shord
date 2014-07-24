@@ -15,7 +15,6 @@
 # Outputs
 
 VH(v:V,h:H) output
-IinvkArg0(i:I,v:V1) output
 roots(m:M) output
 
 cha(n:M1,t:T1,m:M0) output
@@ -43,6 +42,10 @@ classT(t:T) output
 staticTM(t:T,m:M) output
 staticTF(t:T,f:F) output
 clinitTM(t:T,m:M) output
+IinvkArg0(i:I0,v:V1) output
+argCopy(i:I0,u:V1,m:M0,v:V0) output
+retCopy(i:I0,u:V0,m:M0,v:V1) output
+VCfilter(v:V,c:C) output
 
 # Rules
 
