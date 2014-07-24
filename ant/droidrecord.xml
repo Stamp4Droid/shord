@@ -197,8 +197,9 @@
 		
         <property name="droidrecord.in.apk" value="${app.loc}"/>
 		<property name="droidrecord.out.jar" value="${droidrecord.out.dir}/app.jar"/>
-		<property name="droidrecord.android.jar" value="${stamp.dir}/bin/api-${apilevel}/"/>
+		<property name="droidrecord.android.jar" value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
 		<property name="droidrecord.lib.jars" value="${droidrecord.libraryjars}"/>
+		<property name="droidrecord.policy.file" location="${stamp.dir}/droidrecord/policy/droidrecord-apps.policy"/>
 		<property name="droidrecord.out.template" value="${stamp.droidrecord.logfile.template}"/>
 		<property name="droidrecord.debug.dump_jimple" value="true"/>
 		<property name="droidrecord.debug.jimple.dir" location="${droidrecord.out.dir}/jimple"/>
