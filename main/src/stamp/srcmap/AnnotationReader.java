@@ -19,7 +19,26 @@ public class AnnotationReader extends ASTVisitor
 	}
 
 	public boolean visit(MethodDeclaration node) 
-	{		
+	{
+		Map<String,Integer> nameToIndex = new HashMap();
+		String chordSig = process(node, nameToIndex);
+		
+		String sootSig = ParseUtil.chordToSootMethodSignature(chordSig);
+		// Modelgen code and ParseUtil sanity check:
+		String mgChordSig = ParseUtil.sootToChordMethodSignature(sootSig);
+		if(!chordSig.equals(mgChordSig)) {
+			System.out.println("Signature parsing error");
+			System.out.println("Original Chord Signature: " + chordSig);
+			System.out.println("Soot Signature: " + sootSig);
+			System.out.println("Recovered Chord Signature: " + mgChordSig);
+		}
+		
+		boolean inModelgen = false;
+		if(ModelgenGlobalCache.hasEntryForMethod(sootSig)) {
+			System.out.println("STAMP model pre-empted by existing modelgen model for: " + sootSig);
+			inModelgen = true;
+		}
+				
 		// get annotation position
 		List<IExtendedModifier> modifiers = (List<IExtendedModifier>) node.modifiers();
 		for(IExtendedModifier modifier : modifiers) {
@@ -28,8 +47,6 @@ public class AnnotationReader extends ASTVisitor
 			Annotation annotation = (Annotation)modifier;
 			if(!(annotation.getTypeName().getFullyQualifiedName().equals("STAMP")))
 				continue;
-			Map<String,Integer> nameToIndex = new HashMap();
-			String chordSig = process(node, nameToIndex);				
 			MemberValuePair mvp = (MemberValuePair) ((NormalAnnotation) annotation).values().get(0);
 			assert mvp.getName().getIdentifier().equals("flows");
 			ArrayInitializer arrayInitializer = (ArrayInitializer) mvp.getValue();
@@ -49,6 +66,16 @@ public class AnnotationReader extends ASTVisitor
 						to = ((StringLiteral) mvp1.getValue()).getLiteralValue();
 				}
 				try{
+					// Note: from can be a sink or source, to can only be a sink
+					boolean srcOrSink = from.contains("$") || from.contains("!") || to.contains("!");
+					if(!srcOrSink && inModelgen) {
+						System.out.println("Skipping annotation: " + chordSig + " " + 
+									processEndPoint(from, nameToIndex) + " " + 
+									processEndPoint(to, nameToIndex));
+						System.out.println("srcOrSink: " + srcOrSink);
+						System.out.println("inModelgen: " + inModelgen);
+						continue;
+					}
 					Main.writeAnnot(chordSig + " " + 
 									processEndPoint(from, nameToIndex) + " " + 
 									processEndPoint(to, nameToIndex));
@@ -91,6 +118,35 @@ public class AnnotationReader extends ASTVisitor
 			return false;
 		}
 		return true;
+	}
+	
+	private String toSootSig(MethodDeclaration node) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("<");
+		IMethodBinding methodBinding = node.resolveBinding();
+		
+		builder.append(methodBinding.getDeclaringClass().getErasure().getBinaryName());
+		
+		builder.append(": ");
+		if(node.isConstructor()){
+			builder.append("void");
+		} else {
+			builder.append(methodBinding.getReturnType().getErasure().getQualifiedName());
+		}
+		builder.append(" ");
+		builder.append(methodBinding.getName());
+		builder.append("(");
+		ITypeBinding[] params = methodBinding.getTypeParameters();
+		for(int i = 0; i < params.length; i++){
+			ITypeBinding p = params[i];
+			
+			String ptype = p.getErasure().getQualifiedName();
+			//if(p.isVarargs()) ptype += "[]";
+			if(i != 0) builder.append(",");
+			builder.append(ptype);
+		}
+		builder.append(")>");
+		return builder.toString();
 	}
 
 	private String process(MethodDeclaration node, Map<String,Integer> nameToIndex)

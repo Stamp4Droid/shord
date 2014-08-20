@@ -25,6 +25,8 @@ public class Main {
 	private static File srcMapDir;
 	private static PrintWriter writer;
 	private static Set<String> oldAnnots = new HashSet();
+	
+	private static final boolean USE_MODELGEN = true;
 
 	public static void process(String srcRootPath, File javaFile) throws IOException {
 		String canonicalPath = javaFile.getCanonicalPath();
@@ -152,9 +154,20 @@ public class Main {
 			System.out.println("classpath: " + p);
 
 		String androidDir = null;
-		if(args.length > 3) 
+		if(args.length > 3) {
 			androidDir = args[3];
+			System.out.println("androiddir: " + androidDir);
+		}
 		openWriter(androidDir);
+		
+		if(args.length == 3 && USE_MODELGEN) {
+			// Processing android classes, inject modelgen models
+			String modelgenPath = srcpathEntries[0] + "/../../modelgen_models.txt";
+			modelgenPath = new File(modelgenPath).getCanonicalPath();
+			System.out.println("modelgenfile: " + modelgenPath);
+			ModelgenGlobalCache.load(modelgenPath);
+			writeModelgenModels();
+		}
 
 		try{
 			for(String srcRootPath : srcpathEntries)
@@ -165,7 +178,7 @@ public class Main {
 		}
 
 		writer.close();
-	}	
+	}
 
 	private static void processDir(String srcRootPath, File dir) throws Exception {
 		//System.out.println("** " + dir);
@@ -210,5 +223,14 @@ public class Main {
 		if(oldAnnots.contains(annot))
 			return;
 		writer.println(annot);
+	}
+
+	private static void writeModelgenModels() {
+		for(String method: ModelgenGlobalCache.listMethods()) {
+                        if(method.contains("parseNumericAddressNoThrow")) continue;
+			for(String line: ModelgenGlobalCache.linesForMethod(method)) {
+				writer.println(line);
+			}
+		}
 	}
 }

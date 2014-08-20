@@ -160,8 +160,8 @@ public class AnnotationReader extends JavaAnalysis
 		Scene scene = Program.g().scene();
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(new File(System.getProperty("stamp.out.dir"), "stamp_annotations.txt")));
-			String line = reader.readLine();
-			while(line != null){
+			String line;
+			while((line = reader.readLine()) != null){
 				final String[] tokens = split(line);
 				String chordMethodSig = tokens[0];
 				int atSymbolIndex = chordMethodSig.indexOf('@');
@@ -169,6 +169,7 @@ public class AnnotationReader extends JavaAnalysis
 				if(scene.containsClass(className)){
 					SootClass klass = scene.getSootClass(className);
 					String subsig = SootUtils.getSootSubsigFor(chordMethodSig.substring(0,atSymbolIndex));
+					if(!klass.declaresMethod(subsig)) continue;
 					SootMethod meth = klass.getMethod(subsig);
 					
 					if(domM.indexOf(meth) >= 0){
@@ -192,7 +193,6 @@ public class AnnotationReader extends JavaAnalysis
 						}
 					}
 				}
-				line = reader.readLine();
 			}
 			reader.close();
 		}catch(IOException e){
