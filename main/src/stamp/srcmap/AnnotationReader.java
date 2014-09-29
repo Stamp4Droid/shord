@@ -69,11 +69,11 @@ public class AnnotationReader extends ASTVisitor
 					// Note: from can be a sink or source, to can only be a sink
 					boolean srcOrSink = from.contains("$") || from.contains("!") || to.contains("!");
 					if(!srcOrSink && inModelgen) {
-						System.out.println("Skipping annotation: " + chordSig + " " + 
+						/*System.out.println("Skipping annotation: " + chordSig + " " + 
 									processEndPoint(from, nameToIndex) + " " + 
 									processEndPoint(to, nameToIndex));
 						System.out.println("srcOrSink: " + srcOrSink);
-						System.out.println("inModelgen: " + inModelgen);
+						System.out.println("inModelgen: " + inModelgen);*/
 						continue;
 					}
 					Main.writeAnnot(chordSig + " " + 
