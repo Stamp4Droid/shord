@@ -487,7 +487,15 @@ public class ChordAdapterNew extends ASTVisitor {
 		assert v.isField() : v.toString();
 		ITypeBinding declKlass = v.getDeclaringClass();
 		assert declKlass != null : v.toString();
-		return v.getName()+":"+toChordType(v.getType())+"@"+chordClassName(declKlass.getErasure());
+		String declKlassName;
+		if(declKlass == null){
+			//The field length of an array type has no declaring class.
+			assert v.toString().equals("public final int length") : v.toString();
+			declKlassName = "[]";
+			
+		} else
+			declKlassName = chordClassName(declKlass.getErasure());
+		return v.getName()+":"+toChordType(v.getType())+"@"+declKlassName;
 	}
 
 	public static String chordSigFor(IMethodBinding callee) {
