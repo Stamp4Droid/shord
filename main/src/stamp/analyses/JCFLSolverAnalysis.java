@@ -20,8 +20,7 @@ import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.analysis.ModelClassifier.ModelInfo;
-import stamp.missingmodels.grammars.G;
-import stamp.missingmodels.ml.Classifier;
+import stamp.missingmodels.jgrammars.G;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
 import stamp.missingmodels.util.FileManager;
@@ -34,6 +33,7 @@ import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.classifier.Classifier;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationInputFile;
@@ -181,7 +181,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	public static void run(FileManager manager, RelationAdder relationAdder) {		
+	public static void run(FileManager manager, RelationAdder relationAdder) {
 		// STEP 1: Set up the graph and load the stub model set if applicable.
 		StubModelSet m;
 		try {
@@ -204,11 +204,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		String appDir = outputDir.getParentFile().getName();
 		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir, loc.getX(), loc.getY());
 
-		
-
 		//setGroundTruth(experiment.j().g(), experiment.j().s(), m);
 		//runStubModelClassifier(m);
-		
 		
 		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
 		j = experiment.j();

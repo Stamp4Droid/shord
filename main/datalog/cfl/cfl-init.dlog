@@ -1,0 +1,177 @@
+##################
+# CFL Initialization
+##################
+
+###################
+# CONFIGURATION
+###################
+
+# name=cfl-init-dlog
+
+.include "Z.dom"
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+.include "U.dom"
+.include "F.dom"
+.include "I.dom"
+.include "T.dom"
+
+.bddvarorder Z0_M0_C0xC1_V0xV1_U0xU1_H0xF0_I0_T0
+
+###################
+# INPUT: TAINT HELPER
+###################
+
+MU(m:M,u:U) input # u is a prim type variable in m
+MV(m:M,v:V) input # v is a ref type variable in m
+CM(c:C,m:M) input # c is a context of method m
+CH(o:C,h:H) input # context’ified abstract location o corresponds to new stmt h
+CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
+CC(c:C,d:C) input # there exists i s.t. c++[i] = d
+
+# new
+Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
+
+# assign
+Assign(v:V,u:V)     input # v = u
+param(u:V,v:V,i:I)  input # u: formal param, v: actual arg, i: invocation stmt
+return(u:V,v:V,i:I) input # u: lhs at callsite, v: return var, i: invocation stmt
+
+# store/load
+Store(v:V,f:F,u:V)  input   # v.f = u
+StoreStat(f:F,v:V)  input   # C.f = v
+
+Load(v:V,u:V,f:F)   input   # v = u.f
+LoadStat(v:V,f:F)   input   # v = C.f
+
+# prim assign
+AssignPrim(v:U,u:U)     input # v = u
+paramPrim(u:U,v:U,i:I)  input # u: formal param, v: actual arg, i: invocation stmt
+returnPrim(u:U,v:U,i:I) input # u: lhs at callsite, v: return var, i: invocation stmt
+
+# prim store/load
+StorePrim(u:V,f:F,v:U)  input # u.f = v
+StoreStatPrim(f:F,v:U)  input # f = v
+
+LoadPrim(y:U,x:V,f:F)   input # y = x.f
+LoadStatPrim(y:U,f:F)   input # y = f
+
+# fpt
+fpt(o1:C,f:F,o2:C) input
+
+###################
+# INPUT: PHANTOM ALLOCATIONS
+###################
+
+MmethArg(m:M,z:Z,v:V)     input
+MmethRet(m:M,z:Z,v:V)     input
+
+# stub information
+Stub(m:M) input
+
+###################
+# OUTPUT: TAINT HELPER
+###################
+
+# new
+NewCtxt(c:C,v:V,o:C) output # v = new X() // o
+TypeFilter(c:C,v:V,o:C) output
+
+# assign
+AssignCtxt(c:C,v:V,u:V) output          # v = u
+AssignArgCCtxt(c:C,v:V,d:C,u:V) output  # v = u
+AssignRetCCtxt(c:C,v:V,d:C,u:V) output  # v = u
+AssignCCtxt(c:C,v:V,d:C,u:V) output     # v = u
+
+# store/load
+StoreCtxt(c:C,v:V,f:F,u:V) output      # v.f = u
+StoreStatCtxt(c:C,f:F,v:V) output      # C.f = v
+StoreCtxtArr(c:C,v:V,u:V) output       # v[i] = u
+
+LoadCtxt(c:C,v:V,u:V,f:F) output       # v = u.f
+LoadStatCtxt(c:C,v:V,f:F) output       # v = C.f
+LoadCtxtArr(c:C,v:V,u:V) output        # v = u[i]
+
+# prim assign
+AssignPrimCtxt(c:C,v:U,u:U) output
+AssignPrimArgCCtxt(c:C,v:U,d:C,u:U) output
+AssignPrimRetCCtxt(c:C,v:U,d:C,u:U) output
+AssignPrimCCtxt(c:C,v:U,d:C,u:U) output
+
+# prim store/load
+StorePrimCtxt(c:C,v:V,f:F,u:U) output
+StoreStatPrimCtxt(c:C,f:F,v:U) output
+StorePrimCtxtArr(c:C,v:V,u:U) output
+
+LoadPrimCtxt(c:C,v:U,u:V,f:F) output
+LoadStatPrimCtxt(c:C,v:U,f:F) output
+LoadPrimCtxtArr(c:C,v:U,u:V) output
+
+# fpt
+fptArr(o1:C,o2:C) output
+
+###################
+# OUTPUT: PHANTOM ALLOCATIONS
+###################
+
+# phantom allocations
+Varg(v:V)  output
+Vret(v:V)  output
+
+phAlloc(v:V,c:C) output
+
+###################
+# RULES: TAINT HELPER
+###################
+
+# new
+NewCtxt(c,v,o)    :- Alloc(v,h), CH(o,h), MV(m,v), CC(c,o), CM(c,m).
+TypeFilter(c,v,o) :- typeFilter(v,o), MV(m,v), CM(c,m).
+
+# assign
+AssignCtxt(c,v,u)       :- Assign(v,u), MV(m,v), CM(c,m).
+AssignArgCCtxt(c,v,d,u) :- param(v,u,i), CC(d,c), CI(c,i).
+AssignRetCCtxt(c,v,d,u) :- return(v,u,i), CC(c,d), CI(d,i).
+AssignCCtxt(c,v,d,u)    :- AssignArgCCtxt(c,v,d,u).
+AssignCCtxt(c,v,d,u)    :- AssignRetCCtxt(c,v,d,u).
+
+# store/load
+StoreCtxt(c,v,f,u)   :- Store(v,f,u), MV(m,v), CM(c,m).
+StoreStatCtxt(c,f,v) :- StoreStat(f,v), MV(m,v), CM(c,m).
+StoreCtxtArr(c,v,u)  :- StoreCtxt(c,v,0,u).
+
+LoadCtxt(c,v,u,f)    :- Load(v,u,f), MV(m,v), CM(c,m).
+LoadStatCtxt(c,v,f)  :- LoadStat(v,f), MV(m,v), CM(c,m).
+LoadCtxtArr(c,v,u)   :- LoadCtxt(c,v,u,0).
+
+# prim assign
+AssignPrimCtxt(c,v,u)       :- AssignPrim(v,u), MU(m,v), CM(c,m).
+AssignPrimArgCCtxt(c,v,d,u) :- paramPrim(v,u,i), CC(d,c), CI(c,i).
+AssignPrimRetCCtxt(c,v,d,u) :- returnPrim(v,u,i), CC(c,d), CI(d,i).
+AssignPrimCCtxt(c,v,d,u)    :- AssignPrimArgCCtxt(c,v,d,u).
+AssignPrimCCtxt(c,v,d,u)    :- AssignPrimRetCCtxt(c,v,d,u).
+
+# prim store/load
+StorePrimCtxt(c,v,f,u)     :- StorePrim(v,f,u), MV(m,v), CM(c,m).
+StoreStatPrimCtxt(c,f,v)   :- StoreStatPrim(f,v), MU(m,v), CM(c,m).
+StorePrimCtxtArr(c,v,u)    :- StorePrimCtxt(c,v,0,u).
+
+LoadPrimCtxt(c,v,u,f)      :- LoadPrim(v,u,f), MV(m,u), CM(c,m).
+LoadStatPrimCtxt(c,v,f)    :- LoadStatPrim(v,f), MU(m,v), CM(c,m).
+LoadPrimCtxtArr(c,v,u)     :- LoadPrimCtxt(c,v,u,0).
+
+# fpt
+fptArr(o1,o2)              :- fpt(o1,0,o2).
+
+##################
+# RULES: PHANTOM ALLOCATIONS
+##################
+
+# phantom allocations
+Varg(v) :- Stub(m), MmethArg(m,_,v).
+Vret(v) :- Stub(m), MmethRet(m,_,v).
+
+phAlloc(v,c) :- Stub(m), MmethRet(m,_,v), CM(c,m).
