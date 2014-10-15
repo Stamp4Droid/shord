@@ -22,6 +22,7 @@ import soot.jimple.Constant;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
 import soot.jimple.IdentityStmt;
+import soot.jimple.InvokeStmt;
 import soot.jimple.ReturnStmt;
 import soot.jimple.AnyNewExpr;
 import soot.jimple.ThrowStmt;
@@ -787,7 +788,6 @@ public class PAGBuilder extends JavaAnalysis
 			SootMethod m = mIt.next();
 			growZIfNeeded(m.getParameterCount());
 			if(isStub(m)){
-				//System.out.println("stub: "+ m);
 				stubMethods.add(m);
 			}
 			if(isFramework(m)) {
@@ -883,6 +883,15 @@ public class PAGBuilder extends JavaAnalysis
 		Unit unit = units.getFirst();
 		while(unit instanceof IdentityStmt)
 			unit = units.getSuccOf(unit);
+
+		//if method is <init>, then next stmt could be a call to super.<init>
+		if(method.getName().equals("<init>")){
+		    if(unit instanceof InvokeStmt){
+			if(((InvokeStmt) unit).getInvokeExpr().getMethod().getName().equals("<init>"))
+			    unit = units.getSuccOf(unit);
+		    }
+		}
+
 
 		if(!(unit instanceof AssignStmt))
 			return false;
