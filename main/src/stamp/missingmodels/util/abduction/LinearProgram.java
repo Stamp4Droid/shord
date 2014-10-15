@@ -186,8 +186,12 @@ public class LinearProgram<T> {
 	}
 	
 	public LinearProgramResult<T> solve() throws LpSolveException {
-		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55.so");
-		System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55j.so");
+		try {
+			System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55.so");
+			System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55j.so");
+		} catch (Error e) {
+			e.printStackTrace();
+		}
 
 		System.out.println("Setting up constraints");
 		
