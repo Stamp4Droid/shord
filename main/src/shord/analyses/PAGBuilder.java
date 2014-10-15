@@ -42,7 +42,9 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
+import stamp.missingmodels.callgraph.PotentialCallbacksAdder;
 import stamp.missingmodels.jimplesrcmapper.Printer;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -70,7 +72,7 @@ import java.util.*;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
-	             "Stub", "Framework"},
+	             "Stub", "Framework", "potentialCallback"},
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class},
 	   namesOfSigns = { "Alloc", "Assign", 
@@ -87,7 +89,7 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
-                        "Stub", "Framework"},
+                        "Stub", "Framework", "potentialCallback"},
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -102,7 +104,7 @@ import java.util.*;
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
-                 "M0:M0", "M0:M0" }
+                 "M0:M0", "M0:M0", "M0:M0"}
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -136,6 +138,8 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relMH;
 	private ProgramRel relMV;
 	private ProgramRel relMU;
+
+	private ProgramRel relPotentialCallback;
 
 	private DomV domV;
 	private DomU domU;
@@ -207,6 +211,9 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkPrimRet.zero();
 		relIinvkPrimArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkPrimArg");
 		relIinvkPrimArg.zero();
+		
+		relPotentialCallback = (ProgramRel) ClassicProject.g().getTrgt("potentialCallback");
+		relPotentialCallback.zero();
 	}
 	
 	void saveRels()
@@ -225,6 +232,11 @@ public class PAGBuilder extends JavaAnalysis
 		relVT.save();
 		relHT.save();
 		relHTFilter.save();
+		
+		if(this.usePotentialCallbacksAdder) {
+			this.potentialCallbacksAdder.addRelMI(relMI);
+		}
+		
 		relMI.save();
 		relMH.save();
 		relMV.save();
@@ -240,6 +252,11 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethPrimRet.save();
 		relIinvkPrimRet.save();
 		relIinvkPrimArg.save();
+
+		if(this.usePotentialCallbacksAdder) {
+			this.potentialCallbacksAdder.addRelM(this.relPotentialCallback);
+		}
+		relPotentialCallback.save();
 	}
 
 	void Alloc(LocalVarNode l, Stmt h)
@@ -773,6 +790,9 @@ public class PAGBuilder extends JavaAnalysis
 			}
 			relChaIM.add(stmt, tgt);
 		}
+		if(this.usePotentialCallbacksAdder) {
+			this.potentialCallbacksAdder.addRelIM(relChaIM);
+		}
 		relChaIM.save();
 	}
 
@@ -865,6 +885,11 @@ public class PAGBuilder extends JavaAnalysis
 		domH.save();
 		domZ.save();
 		domV.save();
+
+		if(this.usePotentialCallbacksAdder) {
+			this.potentialCallbacksAdder.addDomI(domI);
+		}
+		
 		domI.save();
 		domU.save();
 	}
@@ -937,9 +962,15 @@ public class PAGBuilder extends JavaAnalysis
         if(varType instanceof AnySubType) return false;
         return fh.canStoreType(objType, varType);
     }
+	
+	private PotentialCallbacksAdder potentialCallbacksAdder;
+	private boolean usePotentialCallbacksAdder = false;
 
 	public void run()
 	{
+		this.potentialCallbacksAdder = new PotentialCallbacksAdder();
+		this.usePotentialCallbacksAdder = IOUtils.graphEdgesFileExists("param", "graph");
+		
 		Program program = Program.g();		
 		//for(SootClass k : program.getClasses()) System.out.println("kk "+k + (k.hasSuperclass() ? k.getSuperclass() : ""));
 		program.buildCallGraph();

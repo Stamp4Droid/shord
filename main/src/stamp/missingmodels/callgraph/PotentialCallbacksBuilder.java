@@ -70,13 +70,16 @@ public class PotentialCallbacksBuilder extends JavaAnalysis {
 	}
 	
 	public static Set<SootMethod> getPotentialCallbacks() {
+		System.out.println("Processing potential callbacks");
 		PotentialCallbacksBuilder potentialCallbacksBuilder = new PotentialCallbacksBuilder();
 		for(SootClass klass : Program.g().getClasses()) {
 			potentialCallbacksBuilder.processClass(klass);
 		}
 		Set<SootMethod> potentialCallbacks = new HashSet<SootMethod>();
 		for(SootMethod superMethod : potentialCallbacksBuilder.frameworkMethodsToCallbacks.keySet()) {
+			System.out.println("Processing potential callbacks for: " + superMethod.toString());
 			for(SootMethod potentialCallback : potentialCallbacksBuilder.frameworkMethodsToCallbacks.get(superMethod)) {
+				System.out.println("Adding potential callback: " + potentialCallback.toString());
 				potentialCallbacks.add(potentialCallback);
 			}
 		}

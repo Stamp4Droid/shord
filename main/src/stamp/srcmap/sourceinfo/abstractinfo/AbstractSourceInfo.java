@@ -42,7 +42,7 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 	private Map<String,ClassInfo> classInfos = new HashMap<String,ClassInfo>();
 	private AnonymousClassMap anonymousClassMap;
 	
-	private static Set<String> frameworkClassNames = new HashSet();
+	private static Set<String> frameworkClassNames;
 
 	public AbstractSourceInfo() {		
 		this.anonymousClassMap = new AnonymousClassMap(this);

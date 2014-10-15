@@ -1,19 +1,27 @@
 package shord.program;
 
-import soot.*;
-import soot.options.Options;
-import soot.util.Chain;
-import soot.util.ArrayNumberer;
-import soot.jimple.Stmt;
-import soot.jimple.toolkits.callgraph.ReachableMethods;
-import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
-import soot.jimple.toolkits.callgraph.CallGraphBuilder;
-import soot.tagkit.Tag;
-
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import shord.analyses.ContainerTag;
+import soot.CompilationDeathException;
+import soot.PackManager;
+import soot.Scene;
+import soot.SootClass;
+import soot.SootMethod;
+import soot.Type;
+import soot.Unit;
+import soot.jimple.Stmt;
+import soot.jimple.toolkits.callgraph.CallGraphBuilder;
+import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
+import soot.options.Options;
+import soot.tagkit.Tag;
+import soot.util.ArrayNumberer;
+import soot.util.Chain;
+import stamp.missingmodels.callgraph.PotentialCallbacksBuilder;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 public class Program
 {
@@ -38,7 +46,7 @@ public class Program
 			options.append("-full-resolver");
 			options.append(" -allow-phantom-refs");
 			options.append(" -src-prec apk");
-			options.append(" -p jb.tr use-older-type-assigner:true"); 
+			//options.append(" -p jb.tr use-older-type-assigner:true"); 
 			//options.append(" -p cg implicit-entry:false");
 			options.append(" -force-android-jar "+System.getProperty("user.dir"));
 			options.append(" -soot-classpath "+System.getProperty("stamp.android.jar")+File.pathSeparator+System.getProperty("chord.class.path"));
@@ -58,13 +66,34 @@ public class Program
             Scene.v().loadBasicClasses();
 
 			String mainClassName = System.getProperty("chord.main.class");
-			SootClass mainClass = Scene.v().loadClassAndSupport(mainClassName);
+			Scene.v().loadClassAndSupport(mainClassName);
+
+			Scene.v().loadDynamicClasses();
+			
+			SootClass mainClass = Scene.v().getSootClass(mainClassName);
+			mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
 			Scene.v().setMainClass(mainClass);
 
-			mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
+			//Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
+			
+			List entryPoints = new ArrayList();
+			entryPoints.add(mainMethod);
 
-			Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
-			Scene.v().loadDynamicClasses();
+			//workaround soot bug
+			if(mainClass.declaresMethodByName("<clinit>"))
+				entryPoints.add(mainClass.getMethodByName("<clinit>"));
+			
+			if(IOUtils.graphEdgesFileExists("param", "graph")) {
+				System.out.println("param file found -- adding potential callbacks");
+				for(SootMethod potentialCallback : PotentialCallbacksBuilder.getPotentialCallbacks()) {
+					entryPoints.add(potentialCallback);
+				}
+			} else {
+				System.out.println("param file not yet generated -- ignoring potential callbacks!");
+			}
+
+			Scene.v().setEntryPoints(entryPoints);
+
         } catch (CompilationDeathException e) {
             if(e.getStatus()!=CompilationDeathException.COMPILATION_SUCCEEDED)
                 throw e;
@@ -76,6 +105,7 @@ public class Program
 	public void buildCallGraph()
 	{
 		//run CHA
+		Scene.v().releaseCallGraph();
 		CallGraphBuilder cg = new CallGraphBuilder(DumbPointerAnalysis.v());
 		cg.build();
 	}

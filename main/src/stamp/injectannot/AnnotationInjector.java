@@ -39,14 +39,8 @@ public class AnnotationInjector extends JavaAnalysis
 		try{			
 			String stampOutDir = System.getProperty("stamp.out.dir");
 			File annotFile = new File(stampOutDir, "stamp_annotations.txt");
-			String icdfFlag = System.getProperty("stamp.icdf");
 			
 			writer = new PrintWriter(new FileWriter(annotFile, true));
-			
-			if ("true".equals(icdfFlag)) {
-				visitorClasses = Arrays.copyOf(visitorClasses, visitorClasses.length + 1);
-			    visitorClasses[visitorClasses.length-1] = InterComponentInstrument.class;
-			}
 			Visitor[] visitors = new Visitor[visitorClasses.length];
 			int i = 0;
 			for(Class visitorClass : visitorClasses){
@@ -62,11 +56,6 @@ public class AnnotationInjector extends JavaAnalysis
 				for(Visitor v : visitors){
 					v.visit(klass);
 				}
-			}
-			
-			if ("true".equals(icdfFlag)) {
-                //at the very end we need to add load/store stmt to put/getUnknown to reason unknown src
-			    InterComponentInstrument.injectUnknownSrc();
 			}
 
 			writer.close();

@@ -8,6 +8,7 @@ import shord.analyses.DomI;
 import shord.analyses.DomM;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import soot.Scene;
 import soot.SootMethod;
 import soot.Unit;
 import soot.UnitBox;
@@ -47,13 +48,14 @@ public class PotentialCallbacksAdder {
 
 	public void addRelIM(ProgramRel relIM) {
 		for(Map.Entry<SootMethod,Unit> entry : this.unitsByMethod.entrySet()) {
+			System.out.println("ADDING CALL EDGE: " + entry.getValue().toString() + " -> " + entry.getKey().toString());
 			relIM.add(entry.getValue(), entry.getKey());
 		}
 	}
 
 	public void addRelMI(ProgramRel relMI) {
 		DomM domM = (DomM)ClassicProject.g().getTrgt("M");
-		SootMethod stampHarness = domM.get(0);
+		SootMethod stampHarness = Scene.v().getMainMethod();
 		for(Unit unit : this.unitsByMethod.values()) {
 			relMI.add(stampHarness, unit);
 		}		

@@ -1,24 +1,14 @@
 package stamp.reporting;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import shord.project.ClassicProject;
-import shord.project.analyses.ProgramRel;
-import stamp.analyses.DomL;
-import stamp.analyses.JCFLSolverAnalysis;
 import shord.analyses.Ctxt;
 import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import soot.Unit;
-import soot.jimple.Stmt;
 import soot.SootClass;
 import soot.SootMethod;
-
-import chord.bddbddb.Rel.RelView;
-import chord.util.tuple.object.Trio;
+import soot.Unit;
+import soot.jimple.Stmt;
+import stamp.missingmodels.callgraph.PotentialCallbacksAdder.MockUnit;
 import chord.util.tuple.object.Pair;
 
 /*
@@ -128,6 +118,11 @@ public class SrcSinkFlow extends XMLReport {
 		StringBuilder stmtbuilder = new StringBuilder();
 		StringBuilder srcbuilder = new StringBuilder();
 		for(Unit unit : context.getElems()) {
+			if (unit instanceof MockUnit) {
+				stmtbuilder.append(unit.toString()).append(",");
+				srcbuilder.append("MockUnit").append("~");
+				continue;
+			}
 			Stmt stmt = (Stmt)unit;
 
 			SootMethod method = Program.containerMethod(stmt);

@@ -265,6 +265,15 @@ public class ContextsAnalysis extends JavaAnalysis
 				methToCtxts[mIdx] = emptyCtxtSet;
 			}
 		}
+		
+		for(SootMethod caller : methToPredsMap.keySet()) {
+			for(SootMethod callee : methToPredsMap.get(caller)) {
+				if(!methToPredsMap.containsKey(callee)) {
+					System.out.println("FAILURE: " + caller.toString() + " <- " + callee.toString());
+				}
+			}
+		}
+		
 		process(roots, methToPredsMap);
 	}
 
