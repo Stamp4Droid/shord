@@ -63,7 +63,6 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	@SafeVarargs
 	private static MultivalueMap<String,String> getUnion(MultivalueMap<String,String> ... maps) {
 		MultivalueMap<String,String> result = new MultivalueMap<String,String>();
 		for(MultivalueMap<String,String> map : maps) {
