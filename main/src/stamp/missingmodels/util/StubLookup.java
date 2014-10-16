@@ -101,11 +101,11 @@ public class StubLookup extends HashMap<StubLookupKey,StubLookupValue> {
 			if(arg == null) {
 				return "return";
 			} else if(this.method.isStatic()) {
-				return "arg" + this.firstArg.toString();
-			} else if(this.firstArg == 0) {
+				return "arg" + arg.toString();
+			} else if(arg == 0) {
 				return "this";
 			} else {
-				return "arg" + Integer.toString(this.firstArg-1);
+				return "arg" + Integer.toString(arg-1);
 			}
 		}
 		
