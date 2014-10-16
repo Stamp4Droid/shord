@@ -730,8 +730,8 @@
                             return;
                         }
                         var ctxtSplit = /(.+)~~~(.+)/;
-                        var reSplit = /(.+),(.+)/;
-                        var reEntry = /.*<.* (\S+ .*)>.*<.* (\S+ .*)>.*/;
+                        //var reSplit = /(.+)>,(.+)/;
+                        //var reEntry = /.*<.* (\S+ .*)>.*<.* (\S+ .*)>.*/;
                         var sourceline = htmlDecode(clines[0].name);
                         var sinkline = htmlDecode(clines[1].name);
 
@@ -740,32 +740,32 @@
                             return;
                         }
 
-                        var source = sourceline.match(ctxtSplit);
-                        var sink = sinkline.match(ctxtSplit);
+                        var source = sourceline.split('~~~');
+                        var sink = sinkline.split('~~~');
 
-                        if (!reSplit.test(source[1]) || !reSplit.test(sink[1])) {
-                            console.log("Error: Regex failure on context parse");
-                            return;
-                        }
+                        //if (!reSplit.test(source[1]) || !reSplit.test(sink[1])) {
+                        //    console.log("Error: Regex failure on context parse");
+                        //    return;
+                        //}
 
-                        var source_ctxts = source[1].match(reSplit);
-                        var sink_ctxts = sink[1].match(reSplit);
+                        var source_ctxts = source[0].split('~~');//console.log('0? '+source_ctxts[0] + ' 1? '+source_ctxts[1]+' 2? '+source_ctxts[2]);
+                        var sink_ctxts = sink[0].split('~~');//console.log('0? '+sink_ctxts[0] + ' 1? '+sink_ctxts[1]+' 2? '+sink_ctxts[2]);
                         console.log("lengths source "+source_ctxts.length + " sink "+sink_ctxts.length);
                         var entry = [];
 
-                        var source_files = source[2].split('~');
-                        var sink_files = sink[2].split('~');
+                        console.log("source: "+source[1]);
+                        console.log("sink: "+sink[1]);
+                        var source_files = source[1].split('~~');//console.log('0? '+source_files[0] + ' 1? '+source_files[1]+' 2? '+source_files[2]);
+                        var sink_files = sink[1].split('~~');//console.log('0? '+sink_files[0] + ' 1? '+sink_files[1]+' 2? '+sink_files[2]);
             
-                        for (var i = 1; i <= 2; ++i) {
-                            var sourcem = source_ctxts[i].match(reEntry);
-                            var sinkm = sink_ctxts[i].match(reEntry);
-                            
-                            for (var j = i; j <= 2; ++j) {
-                                entry.push('<tr>');
-                                entry.push('<td'+((source_files[j-1]!=null)?' source="'+source_files[j-1]+'"':'')+'>'+escTags((sourcem!=null)?sourcem[j]:'')+'</td>');
-                                entry.push('<td'+((sink_files[j-1]!=null)?' source="'+sink_files[j-1]+'"':'')+'>'+escTags((sinkm!=null)?sinkm[j]:'')+'</td>');
-                                entry.push('</tr>');
-                            }
+                        for (var i = 0; i < 2; ++i) {
+                            var sourcem = source_ctxts[i];//.match(reEntry);
+                            var sinkm = sink_ctxts[i];//.match(reEntry);
+
+                            entry.push('<tr>');
+                            entry.push('<td'+((source_files[i]!=null)?' source="'+source_files[i]+'"':'')+'>'+escTags((sourcem!=null)?sourcem:'')+'</td>');
+                            entry.push('<td'+((sink_files[i]!=null)?' source="'+sink_files[i]+'"':'')+'>'+escTags((sinkm!=null)?sinkm:'')+'</td>');
+                            entry.push('</tr>');
                         }
                         return entry.join('\n');;
                 
