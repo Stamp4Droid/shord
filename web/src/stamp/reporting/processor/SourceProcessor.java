@@ -328,7 +328,7 @@ public class SourceProcessor
 	    }
 
 	    @Override public String toString() {
-	        return "<span id='"+key+getPosition()+"' name='"+key+"' flows='"+flowNumbers+"'>";
+	        return "<span id='"+key+java.util.UUID.randomUUID().toString().replaceAll("-", "")+"' name='"+key+"' flows='"+flowNumbers+"'>";
 	    }
     }
 
