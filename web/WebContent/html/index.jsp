@@ -319,15 +319,15 @@
                                 var ssspan = $(taintedVariables[i]).find(".srcSinkSpan")[0];
                                 var ssdata = jQuery.parseJSON(atob($(ssspan).attr("data-stamp-srcsink")));
 			    	var taintedFlows = flowString.split(':');
-                                if (ssTainted(ssdata)) {
-			    	if (flowString === 'null' || anyTaintedFlowShowing(taintedFlows)) {
-						taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
-					} else if (taintedVariables[i].hasAttribute('style')) {
-						taintedVariables[i].removeAttribute('style');
-					}
-                                } else if (taintedVariables[i].hasAttribute('style')) {
-                                        taintedVariables[i].removeAttribute('style');
-                                }
+                    if (true/*ssTainted(ssdata)*/) {
+						if (flowString === 'null' || true/*anyTaintedFlowShowing(taintedFlows)*/) {
+							taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
+						} else if (taintedVariables[i].hasAttribute('style')) {
+							taintedVariables[i].removeAttribute('style');
+						}
+                    } else if (taintedVariables[i].hasAttribute('style')) {
+                    	taintedVariables[i].removeAttribute('style');
+                    }
 			    }
 			}
 
