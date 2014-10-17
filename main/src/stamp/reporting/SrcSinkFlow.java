@@ -127,6 +127,7 @@ public class SrcSinkFlow extends XMLReport {
 	private String ctxtToString(Ctxt context) {
 		StringBuilder stmtbuilder = new StringBuilder();
 		StringBuilder srcbuilder = new StringBuilder();
+		boolean first = true;
 		for(Unit unit : context.getElems()) {
 			Stmt stmt = (Stmt)unit;
 
@@ -135,8 +136,25 @@ public class SrcSinkFlow extends XMLReport {
 			String filename = sourceInfo.filePath(klass);
 			int lineNum = sourceInfo.stmtLineNum(stmt);
 
-			stmtbuilder.append(Program.unitToString(unit)).append(',');
-			srcbuilder.append(filename+' '+lineNum).append('~');
+			if(!first){
+			    stmtbuilder.append("~~");
+			    srcbuilder.append("~~");
+			}else{
+			    first = false;
+			}
+
+			/*
+			String invkExpr = sourceInfo.srcInvkExprFor(stmt);
+			if(invkExpr == null)
+			    invkExpr = sourceInfo.javaLocStr(stmt);
+			invkExpr = "![CDATA["+invkExpr+"]]";
+			*/
+
+			stmtbuilder.append(filename+", "+lineNum+": ");			
+			SootMethod callee = stmt.getInvokeExpr().getMethod();
+			stmtbuilder.append(callee.getDeclaringClass().getName()+"."+callee.getName());
+
+			srcbuilder.append(filename+' '+lineNum);
 		}
 		return stmtbuilder.toString() + "~~~" + srcbuilder.toString();
 	}

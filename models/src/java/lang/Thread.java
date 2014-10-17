@@ -16,4 +16,13 @@ class Thread
     { 
 		r.run();
     }
+
+    public static void setDefaultUncaughtExceptionHandler(final java.lang.Thread.UncaughtExceptionHandler handler) {
+	edu.stanford.stamp.harness.ApplicationDriver.getInstance().
+	    registerCallback(new edu.stanford.stamp.harness.Callback(){
+		    public void run() {
+			handler.uncaughtException(null, null);
+                    }
+		});
+    }
 }
