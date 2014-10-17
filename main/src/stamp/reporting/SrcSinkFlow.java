@@ -149,7 +149,11 @@ public class SrcSinkFlow extends XMLReport {
 			    invkExpr = sourceInfo.javaLocStr(stmt);
 			invkExpr = "![CDATA["+invkExpr+"]]";
 			*/
-			stmtbuilder.append(filename+": "+lineNum);
+
+			stmtbuilder.append(filename+", "+lineNum+": ");			
+			SootMethod callee = stmt.getInvokeExpr().getMethod();
+			stmtbuilder.append(callee.getDeclaringClass().getName()+"."+callee.getName());
+
 			srcbuilder.append(filename+' '+lineNum);
 		}
 		return stmtbuilder.toString() + "~~~" + srcbuilder.toString();
