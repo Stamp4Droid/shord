@@ -379,7 +379,7 @@
 			  		  $('#rightbar').load('/stamp/html/imList.jsp',
 			  		            {chordSig: chordSig, type: 'method'},
 				    		    function () { 
-									editNotes(chordSig);
+									;//editNotes(chordSig);
 								}
 						);
 								
@@ -410,8 +410,8 @@
 			    		    {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum}, 
 			    		    function () { 
 								rightBarAddDynamicData(drDataParams);
-								hideElement("#notes_pane")
-								showNotes(); 
+								//hideElement("#notes_pane")
+								//showNotes(); 
 							})
 							
 							// Added by Patrick
