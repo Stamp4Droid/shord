@@ -751,24 +751,27 @@
                         var source_ctxts = source[0].split('~~');//console.log('0? '+source_ctxts[0] + ' 1? '+source_ctxts[1]+' 2? '+source_ctxts[2]);
                         var sink_ctxts = sink[0].split('~~');//console.log('0? '+sink_ctxts[0] + ' 1? '+sink_ctxts[1]+' 2? '+sink_ctxts[2]);
                         console.log("lengths source "+source_ctxts.length + " sink "+sink_ctxts.length);
-                        var entry = [];
+                        var entries = [];
 
-                        console.log("source: "+source[1]);
-                        console.log("sink: "+sink[1]);
+                        //console.log("source: "+source[1]); console.log("sink: "+sink[1]);
                         var source_files = source[1].split('~~');//console.log('0? '+source_files[0] + ' 1? '+source_files[1]+' 2? '+source_files[2]);
                         var sink_files = sink[1].split('~~');//console.log('0? '+sink_files[0] + ' 1? '+sink_files[1]+' 2? '+sink_files[2]);
             
+                        var source_entry = [];
                         for (var i = 0; i < 2; ++i) {
                             var sourcem = source_ctxts[i];//.match(reEntry);
-                            var sinkm = sink_ctxts[i];//.match(reEntry);
-
-                            entry.push('<tr>');
-                            entry.push('<td'+((source_files[i]!=null)?' source="'+source_files[i]+'"':'')+'>'+escTags((sourcem!=null)?sourcem:'')+'</td>');
-                            entry.push('<td'+((sink_files[i]!=null)?' source="'+sink_files[i]+'"':'')+'>'+escTags((sinkm!=null)?sinkm:'')+'</td>');
-                            entry.push('</tr>');
+                            source_entry.push('<tr><td'+((source_files[i]!=null)?' source="'+source_files[i]+'"':'')+'>'+escTags((sourcem!=null)?sourcem:'')+'</td></tr>');
                         }
-                        return entry.join('\n');;
-                
+                        entries.push(source_entry.join('\n'));
+
+                        var sink_entry = [];
+                        for (var i = 0; i < 2; ++i) {
+                            var sinkm = sink_ctxts[i];//.match(reEntry);
+                            sink_entry.push('<tr><td'+((sink_files[i]!=null)?' source="'+sink_files[i]+'"':'')+'>'+escTags((sinkm!=null)?sinkm:'')+'</td></tr>');
+                        }
+						entries.push(sink_entry.join('\n'));
+
+                        return entries;                
                 }
 
                 $('#'+id).on('opened', function () {
@@ -807,6 +810,7 @@
 	                                    $('#flowctxttable').remove();
 	                                }
 
+                                    /*
 	                                var table = ['<table class="table table-condensed" id="flowctxttable" style="font-size: small; word-break: break-all; word-wrap: break-word">',
 	                                                '<thead>',
 	                                                     '<th>Source</th>',
@@ -814,8 +818,17 @@
 	                                                '</thead>',
 	                                                '<tbody>'];
 	                                table.push(newTableEntries(contexts));
-	                                table.push('</tbody>');
-	                                table.push('</table>');
+	                                table.push('</tbody>')
+								    */
+                                    var entries = newTableEntries(contexts);
+                                    var table = [];
+                                    table.push('<table class="table" id="flowctxttable" style="font-size: small; word-break: break-all; word-wrap: break-word">');
+                                    table.push('<tbody>');
+                                    table.push('<tr><td><table class="table-condensed table-striped"><thead><th>Source Context</th></thead><tbody>'+entries[0]+'</tbody></table></td></tr>');
+                                    table.push('<tr></tr>');
+                                    table.push('<tr><td><table class="table-condensed table-striped"><thead><th>Sink Context</th></thead><tbody>'+entries[1]+'</tbody></table></td></tr>');
+	                                table.push('</tbody></table>');
+                                    console.log(table.join('\n'));
 	                                $('#'+id).append(table.join('\n'));
 	                                if (id === 'rightside') {
 	                                	compactFlowCtxtTable($('#'+id+' #flowctxttable'));
