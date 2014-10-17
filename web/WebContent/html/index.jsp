@@ -554,6 +554,7 @@
 							url: "/stamp/html/viewResult.jsp",
 							data: {resultFileName: this.resultFileName, nodeId: options.nodeId}
 						}).done(function (response) {
+							response = response.replace(/-&gt;/g,"&#10148;");
 							callback({data: $.parseJSON(response)});
 							});
 						}
