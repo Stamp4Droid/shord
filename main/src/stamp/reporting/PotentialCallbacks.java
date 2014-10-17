@@ -44,7 +44,7 @@ public class PotentialCallbacks extends XMLReport
 				sigs.add(s);
 				sigToMethod.put(s, m);
 			}
-
+			//System.out.println("findCallbacks: "+c.getName());
 			findCallbacks(c);
 		}
 
@@ -124,7 +124,7 @@ public class PotentialCallbacks extends XMLReport
 	{
 		if(uninteresting(m) || Modifier.isFinal(m.getModifiers()))
 			return false;
-		return false;
+		return true;
 	}
 
 }
