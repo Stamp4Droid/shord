@@ -811,23 +811,19 @@
 	                                    $('#flowctxttable').remove();
 	                                }
 
-                                    /*
-	                                var table = ['<table class="table table-condensed" id="flowctxttable" style="font-size: small; word-break: break-all; word-wrap: break-word">',
-	                                                '<thead>',
-	                                                     '<th>Source</th>',
-	                                                     '<th>Sink</th>',   
-	                                                '</thead>',
-	                                                '<tbody>'];
-	                                table.push(newTableEntries(contexts));
-	                                table.push('</tbody>')
-								    */
                                     var entries = newTableEntries(contexts);
                                     var table = [];
-                                    table.push('<table class="table" id="flowctxttable" style="font-size: small; word-break: break-all; word-wrap: break-word">');
+                                    table.push('<table class="table" id="flowctxttable" border="0">');
                                     table.push('<tbody>');
-                                    table.push('<tr><td><table class="table-condensed table-striped"><thead><th>Source Context</th></thead><tbody>'+entries[0]+'</tbody></table></td></tr>');
-                                    table.push('<tr></tr>');
-                                    table.push('<tr><td><table class="table-condensed table-striped"><thead><th>Sink Context</th></thead><tbody>'+entries[1]+'</tbody></table></td></tr>');
+
+                                    //source
+								    table.push('<tr><td><span class="label label-info">Source Context</span></td></tr>');
+                                    table.push('<tr><td><table class="table-condensed table-striped"  style="font-size: small; word-break: break-all; word-wrap: break-word"><tbody>'+entries[0]+'</tbody></table></td></tr>');
+
+                                    //sink
+								    table.push('<tr><td><span class="label label-info">Sink Context</span></td></tr>');
+                                    table.push('<tr><td><table class="table-condensed table-striped"  style="font-size: small; word-break: break-all; word-wrap: break-word"><tbody>'+entries[1]+'</tbody></table></td></tr>');
+
 	                                table.push('</tbody></table>');
                                     console.log(table.join('\n'));
 	                                $('#'+id).append(table.join('\n'));

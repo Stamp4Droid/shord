@@ -150,10 +150,9 @@ public class SrcSinkFlow extends XMLReport {
 			invkExpr = "![CDATA["+invkExpr+"]]";
 			*/
 
-			stmtbuilder.append(filename+", "+lineNum+": ");			
 			SootMethod callee = stmt.getInvokeExpr().getMethod();
 			stmtbuilder.append(callee.getDeclaringClass().getName()+"."+callee.getName());
-
+			stmtbuilder.append("("+filename.substring(filename.lastIndexOf('/')+1)+":"+lineNum+")");			
 			srcbuilder.append(filename+' '+lineNum);
 		}
 		return stmtbuilder.toString() + "~~~" + srcbuilder.toString();
