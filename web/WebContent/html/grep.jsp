@@ -46,11 +46,16 @@ for(int i = 0; i < lines.length; i++){
 
 %>
 	
-	
-<span class='label label-info'> grep results </span> 
+
+<!-- Span for both elements exists to make them sit on the same horizontal line -->
+<span style="width:100%">	
+<span class='label label-info' style="float:left"> grep results </span>
+<span style="float:right"> <button type="button" class="close" onclick="close_grep()">&times;</button> </span> 
+</span>
 <table class='table'><tbody>
-	
+
 <% 
+try{
 for(int i = 0; i < lines.length; i++){ 
 	String[] split = lines[i].split(":");
 	String loc = split[0].substring(srcPath.length()+1);
@@ -66,7 +71,22 @@ for(int i = 0; i < lines.length; i++){
 </td></tr>
 <% 
 } 
+} catch(Exception e){
+    // Bad hack to address cases when no results are found
+    %>
+    <tr><td>
+        No results found
+    </td></tr>
+    <%
+}
 %>
 	
 	
 </tbody></table>
+
+<script>
+    // TODO - move this to grep.js
+    function close_grep(){
+        $("#rightbar").html("");
+    }
+</script>
