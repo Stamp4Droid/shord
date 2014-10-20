@@ -1,0 +1,59 @@
+##################
+# CFL Initialization
+##################
+
+###################
+# CONFIGURATION
+###################
+
+# name=cfl-debug-dlog
+
+.include "V.dom"
+.include "H.dom"
+.include "C.dom"
+.include "I.dom"
+.include "M.dom"
+.include "T.dom"
+
+.bddvarorder M0xM1_T0_I0_C0xC1_V0_H0
+
+###################
+# DEBUG RELATIONS
+###################
+
+reflect(i:I) input
+pt(c:C,v:V,o:C) input
+fpt(o1:C,f:F,o2:C) input
+HT(h:H,t:T) input
+VT(v:V,t:T) input
+CH(c:C,h:H) input
+MI(m:M,i:I) input
+chaIM(i:I,m:M) input
+MmethArg(m:M,z:Z,v:V) input
+MmethRet(m:M,z:Z,v:V) input
+IinvkArg(i:I,z:Z,v;V) input
+IinvkRet(i:I,z:Z,v:V) input
+HTFilter(h:H,t:T) input
+
+ReflectArgType(i:I,t:T) output
+ReflectRetType(i:I,t:T) output
+NotReflectTgt(i:I,m:M) output
+ReflectTgt(i:I,m:M) output
+
+# reflection argument types
+ReflectArgObj(i,o2) :- reflect(i), IinvkArg(i,_,v), pt(_,v,o1), fpt(o1,0,o2), CH(o2,h).
+
+# reflection return types
+ReflectRetType(i,t) :- reflect(i), IinvkRet(i,_,v), VT(v,t).
+
+# argument z of method m has a match with the reflection call at invocation site i
+ReflectArgMatch(i,z,m) :- MmethArg(m,_,v), VT(v,t), ReflectArgObj(i,h), HTFilter(h,t).
+
+# return value of method m has a match with the reflection call at invocation site i
+ReflectRetMatch(i,m) :- MmethRet(m,_,v), pt(_,v,o), CH(o,h), ReflectRetType(i,t), HTFilter(h,t).
+
+# flip the arg relation to get the arg mismatches
+ReflectArgMismatch(i,z,m) :- !ReflectArgMatch(i,z,m).
+ReflectAnyArgMismatch(i,m) :- ReflectArgMismatch(i,_,m).
+
+ReflectMatch(i,m) :- ReflectRetMatch(i,m), !ReflectAnyArgMismatch(i,m).

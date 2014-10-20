@@ -72,7 +72,7 @@ import java.util.*;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
-	             "Stub", "Framework", "potentialCallback"},
+	             "Stub", "Framework", "potentialCallback", "reflect"},
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class},
 	   namesOfSigns = { "Alloc", "Assign", 
@@ -89,7 +89,7 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
-                        "Stub", "Framework", "potentialCallback"},
+                        "Stub", "Framework", "potentialCallback", "reflect"},
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -104,7 +104,7 @@ import java.util.*;
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
-                 "M0:M0", "M0:M0", "M0:M0"}
+                 "M0:M0", "M0:M0", "M0:M0", "I0:I0"}
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -770,6 +770,8 @@ public class PAGBuilder extends JavaAnalysis
 		CallGraph cg = Program.g().scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
         relChaIM.zero();
+        ProgramRel relReflect = (ProgramRel) ClassicProject.g().getTrgt("reflect");
+        relReflect.zero();
 		Iterator<Edge> edgeIt = cg.listener();
 		while(edgeIt.hasNext()){
 			Edge edge = edgeIt.next();
@@ -784,6 +786,10 @@ public class PAGBuilder extends JavaAnalysis
 			if(tgt.isPhantom())
 				continue;
 			//System.out.println("stmt: "+stmt+" tgt: "+tgt+ "abstract: "+ tgt.isAbstract());
+			if ("<java.lang.Class: java.lang.reflect.Method getMethod(java.lang.String,java.lang.Class[])>".equals(tgt.toString())) {
+				System.out.println("REFLECTION: " + stmt.toString());
+				relReflect.add(stmt);
+			}
 			if(ignoreStubs){
 				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
 					continue;
