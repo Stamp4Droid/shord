@@ -35,10 +35,14 @@ IinvkArg(i:I,z:Z,v;V) input
 IinvkRet(i:I,z:Z,v:V) input
 HTFilter(h:H,t:T) input
 
-ReflectArgType(i:I,t:T) output
+ReflectArgObj(i:I,o:C) output
 ReflectRetType(i:I,t:T) output
-NotReflectTgt(i:I,m:M) output
-ReflectTgt(i:I,m:M) output
+ReflectArgMatch(i:I,z:Z,m:M) output
+ReflectRetMatch(i:I,m:M) output
+ReflectArgMismatch(i:I,z:Z,m:M) output
+ReflectAnyArgMismatch(i:I,m:M) output
+ReflectArgAnyMatch(i:I,m:M) output
+ReflectMatch(i:I,m:M) output
 
 # reflection argument types
 ReflectArgObj(i,o2) :- reflect(i), IinvkArg(i,_,v), pt(_,v,o1), fpt(o1,0,o2), CH(o2,h).
@@ -56,4 +60,6 @@ ReflectRetMatch(i,m) :- MmethRet(m,_,v), pt(_,v,o), CH(o,h), ReflectRetType(i,t)
 ReflectArgMismatch(i,z,m) :- !ReflectArgMatch(i,z,m).
 ReflectAnyArgMismatch(i,m) :- ReflectArgMismatch(i,_,m).
 
-ReflectMatch(i,m) :- ReflectRetMatch(i,m), !ReflectAnyArgMismatch(i,m).
+# invocation site i can target method m
+ReflectArgAnyMatch(i,m) :- !ReflectAnyArgMismatch(i,m). # change so that this runs even without using the method as an entry point (need MmethArg, VT)
+ReflectMatch(i,m) :- ReflectRetMatch(i,m), ReflectArgAnyMatch(i,m).

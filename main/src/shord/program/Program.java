@@ -83,6 +83,14 @@ public class Program
 			if(mainClass.declaresMethodByName("<clinit>"))
 				entryPoints.add(mainClass.getMethodByName("<clinit>"));
 			
+			if("true".equals(System.getProperty("reflect"))) {
+				for(SootClass klass : g().getClasses()) {
+					for(SootMethod method : klass.getMethods()) {
+						entryPoints.add(method);
+					}
+				}
+			}
+			
 			if(IOUtils.graphEdgesFileExists("param", "graph")) {
 				System.out.println("param file found -- adding potential callbacks");
 				for(SootMethod potentialCallback : PotentialCallbacksBuilder.getPotentialCallbacks()) {
