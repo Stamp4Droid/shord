@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
 """**Random DFA generation**
 
 ICDFA Random generation binding
@@ -7,11 +7,15 @@ ICDFA Random generation binding
 
 .. *This is part of FAdo project*  http://fado.dcc.fc.up.pt
 
-.. *Version:* 0.9.5
+.. *Version:* 0.9.8
 
-.. *Copyright:* 1999-2012 Rogério Reis & Nelma Moreira {rvr,nam}@dcc.fc.up.pt
+.. *Copyright:* 1999-2013 Rogério Reis & Nelma Moreira {rvr,nam}@dcc.fc.up.pt
 
 .. versionchanged:: 0.9.4 Interface python to the C code
+
+.. versionchanged:: 0.9.6 Working with incomplete automata
+
+.. versionchanged:: 0.9.8 distinct classes for complete and incomplete ICDFA
 
 .. Contributions by
   - Marco Almeida
@@ -32,39 +36,64 @@ ICDFA Random generation binding
 
 import generator
 import fa
+from common import *
 
-class ICDFArnd(object):
-  """ICDFA Random Generator class
 
-  This is the class for the uniform random generator for Initially Connected DFAs
+class ICDFArgen(object):
+    """Generic ICDFA random generator class
 
-  :var n: number of states
-  :type n: integer
-  :var k: size of the alphabet
-  :type k: integer
+    .. seealso:: Marco Almeida, Nelma Moreira, and Rogério Reis. Enumeration and generation with a string automata
+       representation. Theoretical Computer Science, 387(2):93-102, 2007"""
+    def next(self):
+        """Get the next generated DFA
 
-  .. seealso:: Marco Almeida, Nelma Moreira, and Rogério Reis. Enumeration and generation with a string automata
-     representation. Theoretical Computer Science, 387(2):93-102, 2007
+        :returns: a random generated ICDFA
+        :rtype: DFA"""
+        a = self.gen.next()
+        return fa.stringToDFA(a[0], a[1], self.n, self.k)
 
-  .. versionchanged:: 0.9.6 Working with incomplete automata"""
-  def __init__(self,n,k,complete=True):
-    """
-    :param n: number of states
+
+class ICDFArnd(ICDFArgen):
+    """ Complete ICDFA random generator class
+
+    This is the class for the uniform random generator for Initially Connected DFAs
+
+    :var n: number of states
     :type n: integer
-    :param k: size of alphabet
+    :var k: size of the alphabet
     :type k: integer
-    :param complete: sould ICDFAs be complete
-    :type comple: Boolean"""
-    i = 0 if complete else 1
-    self.gen = generator.icdfaRndGen(n,k,i)
-    self.n, self.k = n, k
 
-  def __str__(self):
-    return "ICDFArnd %d %d"%(self.n,self.k)
+    .. note::
+        This is an abstract class, not to be used directly"""
 
-  def next(self):
-    """
-    :returns: a random generated ICDFA
-    :rtype: DFA"""
-    a = self.gen.next()
-    return fa.stringToDFA(a[0],a[1],self.n,self.k)
+    def __init__(self, n, k):
+        self.gen = generator.icdfaRndGen(n, k)
+        self.n, self.k = n, k
+
+    def __str__(self):
+        return "ICDFArnd %d %d" % (self.n, self.k)
+
+
+class ICDFArndIncomplete(ICDFArgen):
+    """ Incomplete ICDFA random generator class
+
+    :var n: number of states
+    :type n: integer
+    :var k: size of alphabet
+    :type k: integer
+    :var bias: how often must the gost sink state appear (default None)
+    :type bias: float
+
+    :raises IllegalBias: if a bias >=1 or <=0 is provided"""
+    def __init__(self, n, k, bias=None):
+        if bias is None:
+            self.gen = generator.icdfaRndGen(n, k, 1, 1)
+        elif bias <= 0 or bias >= 1:
+            raise IllegalBias()
+        else:
+            m = int((bias * n) / (1 - bias))
+            self.gen = generator.icdfaRndGen(n, k, 1, m)
+        self.n, self.k, self.bias = n, k, bias
+
+    def __str__(self):
+        return "ICDFArndIncomplete %d %d %d"%(self.n, self.k, self.bias)

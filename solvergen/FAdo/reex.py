@@ -8,32 +8,33 @@ Regular expression classes and manipulation
 .. Contributions by
     - Marco Almeida
     - Hugo Gouveia
+    - Eva Maia
 
 .. *This is part of FAdo project*   http://fado.dcc.fc.up.pt
 
-.. *Version:* 0.9.5
+.. *Version:* 0.9.8
 
-.. *Copyright:* 1999-2012 Rogério Reis & Nelma Moreira {rvr,nam}@dcc.fc.up.pt
+.. *Copyright:* 1999-2013 Rogério Reis & Nelma Moreira {rvr,nam}@dcc.fc.up.pt
 
 
-.. This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+.. This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
+   License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any
+   later version.
 
-   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+   warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+   details.
 
-   You should have received a copy of the GNU General Public Licensealong with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA."""
 
-#__package__ = "FAdo"
-
-__all__ = ["regexp", "disj", "concat", "power", "star", "position", "epsilon",
-           "emptyset", "str2regexp", "rpn2regexp", "ParseReg",
-           "ParseReg1", "ParseReg2"]
+   You should have received a copy of the GNU General Public Licensealong with this program; if not, write to the
+   Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA."""
 
 from collections import deque
 
+from yappy_parser import *
+
 from common import *
 import fa
-from yappy.parser import *
-import re
 import copy
 
 
@@ -43,7 +44,9 @@ class regexp(object):
     Used directly to represent a symbol. The type of the symbol is arbitrary.
 
     :var Sigma: alphabet set of strings
-    :var val: the actual symbol"""
+    :var val: the actual symbol
+
+    .. inheritance-diagram:: regexp"""
 
     def __init__(self, val, sigma=None):
         """Constructor of a regular expression symbol.
@@ -54,13 +57,19 @@ class regexp(object):
 
     def __repr__(self):
         """Representation of the regular expression's syntactical tree."""
-        return "regexp(%s)" % repr(self.val)
+        return 'regexp({0:>s})'.format(self.__str__())
 
     def __str__(self):
         """String representation of the regular expression."""
         return str(self.val)
 
     _strP = __str__
+
+    def __len__(self):
+        """Size of the RE (the tree length)
+
+        :rtype: int"""
+        return self.treeLength()
 
     def rpn(self):
         """RPN representation
@@ -83,28 +92,41 @@ class regexp(object):
         return hash(repr(self))
 
     def __copy__(self):
-        """Reconstruct the regular expression's syntactical tree, or, in other words, perform a shallow copy of the tree.
+        """Reconstruct the regular expression's syntactical tree, or, in other words,
+           perform a shallow copy of the tree.
         :return: regular expression
 
         .. note::
            References to the expression's symbols in the leafs are preserved.
 
-        .. attention:: Raw modifications on the regular expression's tree should be performed over a copy returned by
-         this method, so that cached methods do not interfere."""
+        .. attention:: Raw modifications on the regular expression's tree should be performed over
+        a copy returned by this method, so that cached methods do not interfere."""
 
         return regexp(self.val)
 
     def setSigma(self, symbolSet, strict=False):
-        """ Set the alphabet for a regular expression
+        """ Set the alphabet for a regular expression and all its nodes
 
-        :arg symbolSet: accepted symbols
-        :type symbolSet: list or set of string
+        :arg symbolSet: accepted symbols. If None, alphabet is unset.
+        :type symbolSet: list or set of str
         :arg strict: if True checks if setOfSymbols is included in symbolSet
-        :type strict: Boolean"""
-        if symbolSet is not None and strict:
-            if not (self.setOfSymbols() <= symbolSet):
+        :type strict: bool
+
+        ..attention: Normally this attribute is not defined in a regexp()"""
+        if symbolSet is not None:
+            if strict and not (self.setOfSymbols() <= symbolSet):
                 raise regexpInvalidSymbols()
-        self.Sigma = set(symbolSet)
+            self.Sigma = set(symbolSet)
+        else:
+            self.Sigma = None
+        self._setSigma(strict)
+
+    def _setSigma(self, strict=False):
+        """
+
+        :param strict:
+        """
+        pass
 
     def setOfSymbols(self):
         """Set of symbols that occur in a regular expression..
@@ -198,7 +220,7 @@ class regexp(object):
     _reducedS = reduced
 
     def linearP(self):
-        """Whether the regular expression is linear; i.e., the occurence of a symbol in the expression is unique.
+        """Whether the regular expression is linear; i.e., the occurrence of a symbol in the expression is unique.
 
         :rtype: boolean"""
         return len(self.setOfSymbols()) is self.alphabeticLength()
@@ -223,23 +245,6 @@ class regexp(object):
             return [self]
         parent_last.append(self)
         return parent_last
-
-    def _cross(self, lists):
-        """ Computes the pairs lastxfirst and firstxlast of the argumets
-
-        :return: pairs as a dictionary
-        :rtype: dictionary"""
-        for symbol in self.arg1.last():
-            if not symbol in lists:
-                lists[symbol] = self.arg2.first()
-            else:
-                lists[symbol] += self.arg2.first()
-        for symbol in self.arg2.last():
-            if not symbol in lists:
-                lists[symbol] = self.arg1.first()
-            else:
-                lists[symbol] += self.arg1.first()
-        return lists
 
     def followLists(self, lists=None):
         """Map of each symbol's follow list in the regular expression.
@@ -273,7 +278,8 @@ class regexp(object):
            disjoint
 
         .. seealso:: Sabine Broda, António Machiavelo, Nelma Moreira, and Rogério Reis. On the average size of
-            glushkov and partial derivative automata. International Journal of Foundations of Computer Science, 2012.
+            glushkov and partial derivative automata. International Journal of Foundations of Computer Science,
+            23(5):969-984, 2012.
             """
         if lists is None:
             return {self: []}
@@ -284,6 +290,7 @@ class regexp(object):
     def followListsStar(self, lists=None):
         """Map of each symbol's follow list in the regular expression under a star.
 
+        :param lists:
         :return: map of symbols' follow lists
         :rtype: {symbol: list of symbols}"""
         if lists is None:
@@ -302,7 +309,9 @@ class regexp(object):
         :rtype: regexp
 
         .. seealso:: R. McNaughton and H. Yamada, Regular Expressions and State Graphs for Automata,
-            IEEE Transactions on Electronic Computers, V.9 pp:39-47, 1960"""
+            IEEE Transactions on Electronic Computers, V.9 pp:39-47, 1960
+
+        ..attention: mark and unmark do not preserve the alphabet, neither set the new alphabet """
         return self._marked(0)[0]
 
     def _marked(self, pos):
@@ -326,12 +335,13 @@ class regexp(object):
            matched against the string representation of the regular expression's symbol.
 
         .. seealso:: J. A. Brzozowski, Derivatives of Regular Expressions. J. ACM 11(4): 481-494 (1964)"""
-        if sigma == str(self):
+        if str(sigma) == str(self):
             return epsilon(self.Sigma)
         return emptyset(self.Sigma)
 
     def wordDerivative(self, word):
-        """Derivative of the regular expression in relation to the given word, which is represented by a list of symbols.
+        """Derivative of the regular expression in relation to the given word,
+           which is represented by a list of symbols.
 
         :param word: list of arbitrary symbols.
         :rtype: regular expression
@@ -339,7 +349,7 @@ class regexp(object):
         .. seealso:: J. A. Brzozowski, Derivatives of Regular Expressions. J. ACM 11(4): 481-494 (1964)
 
         .. note: semantically, the list represents a catenation of symbols (word), and its alphabet is not checked."""
-        d = self
+        d = copy.deepcopy(self)
         for sigma in word:
             d = d.derivative(sigma)
         return d
@@ -363,10 +373,10 @@ class regexp(object):
         :rtype: {symbol: set([regular expressions])}
 
         .. seealso:: Antimirov, 95"""
-        return {str(self): {epsilon(self.Sigma)}}
+        return {self.val: {epsilon(self.Sigma)}}
 
     def PD(self):
-        """Closure of partial derivatives of the regular expression in relation to all symbols occuring in them.
+        """Closure of partial derivatives of the regular expression in relation to all words.
 
         :return: set of regular expressions
         :rtype: set
@@ -384,13 +394,24 @@ class regexp(object):
                         stack.append(tail)
         return pd
 
+    def support(self):
+        """'Support of a regular expression.
+
+        :return: set of regular expressions
+        :rtype: set
+
+        .. seealso::
+            Champarnaud, J.M., Ziadi, D.: From Mirkin's prebases to Antimirov's word partial derivative.
+            Fundam. Inform. 45(3), 195-205 (2001)"""
+        return {epsilon()}
+
     def _delAttr(self, attr):
         if hasattr(self, attr):
             delattr(self, attr)
 
     def _memoLF(self):
         if not hasattr(self, "_lf"):
-            self._lf = {str(self): {epsilon(self.Sigma)}}
+            self._lf = {self.val: {epsilon(self.Sigma)}}
 
     def emptyP(self):
         """Whether the regular expression is the empty set.
@@ -442,9 +463,10 @@ class regexp(object):
 
         :param trim:
         :return: NFA possibly with epsilon transitions
-        :rtype: NFA
+        :rtype: NFAe
 
-        .. seealso:: Ilie & Yu, 2003"""
+        .. seealso:: Ilie & Yu, Follow automta, Inf. Comp. ,v. 186 (1),140-162,2003
+        .. _a link: http://dx.doi.org/10.1016/S0890-5401(03)00090-7"""
         nfa = fa.NFAr()
         initial = nfa.addState("Initial")
         final = nfa.addState("Final")
@@ -473,10 +495,10 @@ class regexp(object):
         nfa.addTransition(initial, self.val, final)
 
     def nfaGlushkov(self):
-        """
+        """ Position or Glushkov automaton of the regular expression. Recursive method.
 
 
-        :return:
+        :return: NFA
         """
         nfa = fa.NFA()
         initial = nfa.addState("Initial")
@@ -488,11 +510,18 @@ class regexp(object):
         return nfa
 
     def _nfaGlushkovStep(self, nfa, initial, final):
+        """
+
+        :param nfa:
+        :param initial:
+        :param final:
+        :return:
+        """
         try:
             target = nfa.addState(self.val)
-        except DFAstateRepeated:
+        except DuplicateName:
             target = nfa.addState()
-        #      target = nfa.stateName(self.val)
+            # target = nfa.stateIndex(self.val)
         for source in initial:
             nfa.addTransition(source, self.val, target)
         final.add(target)
@@ -505,7 +534,7 @@ class regexp(object):
 
         .. note:: Included for testing purposes.
 
-        .. seealso:: Ilie & Yu (Follow Automata, 03)"""
+        .. seealso:: Ilie & Yu (Follow Automata, 2003)"""
         return self.snf().marked().nfaGlushkov().minimal().unmark()
 
     def nfaFollow(self):
@@ -534,7 +563,8 @@ class regexp(object):
         return nfa
 
     def nfaPD(self):
-        """NFA that accepts the regular expression's language, and which is constructed from the expression's partial derivatives.
+        """NFA that accepts the regular expression's language,
+           and which is constructed from the expression's partial derivatives.
 
         :return: partial derivatives [or equation] automaton
         :rtype: NFA
@@ -560,8 +590,8 @@ class regexp(object):
                     else:
                         try:
                             pd_idx = nfa.addState(pd)
-                        except DFAstateRepeated:
-                            pd_idx = nfa.stateName(pd)
+                        except DuplicateName:
+                            pd_idx = nfa.stateIndex(pd)
                         added_states[pd] = pd_idx
                         stack.append((pd, pd_idx))
                     nfa.addTransition(state_idx, head, pd_idx)
@@ -569,9 +599,11 @@ class regexp(object):
                 nfa.addFinal(state_idx)
         return nfa
 
-    def _nfaPDnew(self):
+    def nfaPDO(self):
         """NFA that accepts the regular expression's language, and which is constructed from the expression's partial
          derivatives.
+
+        .. note:: optimized version
 
         :return: partial derivatives [or equation] automaton
         :rtype: NFA"""
@@ -624,7 +656,8 @@ class regexp(object):
 
         :raise common.DFAnotNFAFAdo: if not DFA
 
-        .. note:: If this expression is not linear (cf. linearP()), exception may be raised on non-deterministic transitions.
+        .. note:: If this expression is not linear (cf. linearP()), exception may be raised
+                  on non-deterministic transitions.
 
         .. seealso:  Glushkov, 61"""
         dfa = fa.DFA()
@@ -634,19 +667,19 @@ class regexp(object):
             dfa.setSigma(self.Sigma)
         return self.marked()._faPosition(dfa, initial)
 
-    def _faPosition(self, fa, initial, lstar=True):
+    def _faPosition(self, aut, initial, lstar=True):
         if self.ewp():
-            fa.addFinal(initial)
+            aut.addFinal(initial)
         stack = []
         added_states = {}
         for sym in self.first():
             try:
-                state_idx = fa.addState(str(sym))
-            except DFAstateRepeated:
-                state_idx = fa.stateName(str(sym))
+                state_idx = aut.addState(str(sym))
+            except DuplicateName:
+                state_idx = aut.stateIndex(str(sym))
             added_states[sym] = state_idx
             stack.append((sym, state_idx))
-            fa.addTransition(initial, sym.symbol(), state_idx)
+            aut.addTransition(initial, sym.symbol(), state_idx)
         if lstar is False:
             follow_sets = self.followLists()
         else:
@@ -657,17 +690,17 @@ class regexp(object):
                 if sym in added_states:
                     next_state_idx = added_states[sym]
                 else:
-                    next_state_idx = fa.addState(str(sym))
+                    next_state_idx = aut.addState(str(sym))
                     added_states[sym] = next_state_idx
                     stack.append((sym, next_state_idx))
-                fa.addTransition(state_idx, sym.symbol(), next_state_idx)
+                aut.addTransition(state_idx, sym.symbol(), next_state_idx)
         for sym in self.last():
             if sym in added_states:
-                fa.addFinal(added_states[sym])
-        return fa
+                aut.addFinal(added_states[sym])
+        return aut
 
     def nfaPSNF(self):
-        """Glushkov automaton of the regular expression constructed from the expression's star normal form.
+        """Position or Glushkov automaton of the regular expression constructed from the expression's star normal form.
 
         :return: position automaton
         :rtype: NFA
@@ -681,11 +714,14 @@ class regexp(object):
         :return: word derivatives automaton
         :rtype: DFA
 
-        .. seeall: @see: J. A. Brzozowski, Derivatives of Regular Expressions. J. ACM 11(4): 481-494 (1964)"""
+        .. attention:
+             This is a probably non terminating method. Must be removed. (nam)
+        .. seealso:
+            J. A. Brzozowski, Derivatives of Regular Expressions. J. ACM 11(4): 481-494 (1964)"""
         dfa = fa.DFA()
         initial = self
         initial_idx = dfa.addState(initial)
-        dfa.setInitial([initial_idx])
+        dfa.setInitial(initial_idx)
         if self.Sigma is not None:
             dfa.setSigma(self.Sigma)
         dfa.setSigma(initial.setOfSymbols())
@@ -698,13 +734,13 @@ class regexp(object):
                     d_idx = dfa.addState(d)
                     stack.append((d, d_idx))
                 else:
-                    d_idx = dfa.stateName(d)
+                    d_idx = dfa.stateIndex(d)
                 dfa.addTransition(state_idx, sigma, d_idx)
             if state.ewp():
                 dfa.addFinal(state_idx)
         return dfa
 
-    def toNFA(self, nfa_method="nfaPosition"):
+    def toNFA(self, nfa_method="nfaPD"):
         """NFA that accepts the regular expression's language.
         :param nfa_method: """
         return self.__getattribute__(nfa_method)()
@@ -731,7 +767,9 @@ class regexp(object):
         :rtype: bool
 
         .. versionadded: 0.9.6"""
-        return self.compare(other) == True
+        if issubclass(type(other), fa.OFA):
+            return other.equivalentP(self)
+        return self.compare(other)
 
     def compareMinimalDFA(self, r, nfa_method="nfaPosition"):
         """Compare with another regular expression for equivalence through minimal DFAs.
@@ -741,23 +779,50 @@ class regexp(object):
         fa1 = r.toNFA(nfa_method).toDFA()
         return fa0 == fa1
 
+    def evalWordP(self, word):
+        """Verifies if a word is a member of the language represented by the regular expression.
+
+        :param str word: the word
+        :rtype: bool"""
+
+        return self.wordDerivative(word).ewp()
+
+    def reversal(self):
+        """
+            Reversal of regexp
+        :rtype: regexp"""
+        return self.__copy__()
+
 
 class specialConstant(regexp):
-    """Base class for Epsilon and EmptySet"""
+    """Base class for Epsilon and EmptySet
+
+    .. inheritance-diagram:: specialConstant"""
 
     def __init__(self, sigma=None):
+        """
+        :param sigma: """
         self.Sigma = sigma
 
     def __copy__(self):
+        """
+        :return: """
         return self
 
     def setOfSymbols(self):
+        """
+        :return: """
         return set()
 
     def alphabeticLength(self):
+        """
+        :return: """
         return 0
 
     def _marked(self, pos):
+        """
+        :param pos:
+        :return: """
         return self, pos
 
     def unmarked(self):
@@ -768,81 +833,142 @@ class specialConstant(regexp):
         return self
 
     def first(self, parent_first=None):
+        """
+        :param parent_first:
+        :return: """
         if parent_first is None:
             return []
         return parent_first
 
     def last(self, parent_last=None):
+        """
+        :param parent_last:
+        :return: """
         if parent_last is None:
             return []
         return parent_last
 
     def followLists(self, lists=None):
+        """
+        :param lists:
+        :return: """
         if lists is None:
             return {}
         return lists
 
     def followListsD(self, lists=None):
+        """
+        :param lists:
+        :return: """
         if lists is None:
             return {}
         return lists
 
     def followListsStar(self, lists=None):
+        """
+        :param lists:
+        :return: """
         if lists is None:
             return {}
         return lists
 
     def derivative(self, sigma):
+        """
+        :param sigma:
+        :return: """
         return emptyset(self.Sigma)
 
     def wordDerivative(self, word):
+        """
+        :param word:
+        :return: """
         return self
 
     def linearForm(self):
+        """
+        :return: """
         return {}
 
     def _memoLF(self):
+        """
+        :return: """
         return self._lf
 
     def _delAttr(self, attr):
+        """
+
+        :param attr:
+        :return:"""
         pass
 
     _lf = {}
 
+    def support(self):
+        """
+        :return:"""
+        return set()
+
+    def reversal(self):
+        """
+            Reversal of regexp
+        :rtype: regexp"""
+        return self.__copy__()
 
 class epsilon(specialConstant):
-    """Class that represents the empty word."""
+    """Class that represents the empty word.
+
+    .. inheritance-diagram:: epsilon"""
 
     def __repr__(self):
+        """
+        :return: str"""
         return "epsilon()"
 
     def __str__(self):
+        """
+        :return: str"""
         return Epsilon
 
     _strP = __str__
 
     def rpn(self):
+        """
+        :return: str"""
         return Epsilon
 
     def __hash__(self):
+        """
+        :return: """
         return hash(Epsilon)
 
     def epsilonP(self):
+        """
+        :rtype: bool"""
         return True
 
     def measure(self, from_parent=None):
-        if not from_parent: return [0, 1, 1, 0]
+        """
+        :param from_parent:
+        :return: measures"""
+        if not from_parent:
+            return [0, 1, 1, 0]
         from_parent[1] += 1
         from_parent[2] += 1
         return from_parent
 
     def epsilonLength(self):
+        """
+        :rtype: int """
         return 1
 
     def ewp(self):
+        """
+        :rtype: bool"""
         return True
 
     def nfaThompson(self):
+        """
+        :rtype: NFA """
         aut = fa.NFA()
         s0 = aut.addState()
         s1 = aut.addState()
@@ -856,54 +982,90 @@ class epsilon(specialConstant):
         return aut
 
     def _nfaGlushkovStep(self, nfa, initial, final):
+        """
+        :param nfa:
+        :param initial:
+        :param final:
+        :return: """
         final.update(initial)
         return initial, final
 
     def _nfaFollowEpsilonStep(self, conditions):
+        """
+        :param conditions:
+        :return: """
         nfa, initial, final = conditions
         nfa.addTransition(initial, Epsilon, final)
 
     def snf(self, _hollowdot=False):
+        """
+        :param _hollowdot:
+        :return: """
         if _hollowdot:
             return emptyset(self.Sigma)
         return self
 
     def partialDerivatives(self, sigma):
+        """
+        :param sigma:
+        :return: """
         return set()
 
 
 class emptyset(specialConstant):
-    """Class that represents the empty set."""
+    """Class that represents the empty set.
+
+    .. inheritance-diagram:: emptyset"""
 
     def __repr__(self):
+        """
+        :return: """
         return "emptyset()"
 
     def __str__(self):
+        """
+        :return: """
         return EmptySet
 
     def rpn(self):
+        """
+        :return: """
         return EmptySet
 
     _strP = __str__
 
     def __hash__(self):
+        """
+        :return: """
         return hash(EmptySet)
 
     def emptyP(self):
+        """
+        :return: """
         return True
 
     def epsilonP(self):
+        """
+        :return: """
         return False
 
     def measure(self, from_parent=None):
-        if not from_parent: return [0, 1, 0, 0]
+        """
+        :param from_parent:
+        :return: """
+        if not from_parent:
+            return [0, 1, 0, 0]
         from_parent[1] += 1
         return from_parent
 
     def epsilonLength(self):
+        """
+        :return: """
         return 0
 
     def ewp(self):
+        """
+        :return: """
         return False
 
     def nfaThompson(self):
@@ -930,7 +1092,9 @@ class emptyset(specialConstant):
 
 
 class connective(regexp):
-    """Base class for concatenation, and disjunction operations."""
+    """Base class for concatenation, and disjunction operations.
+
+    .. inheritance-diagram:: connective"""
 
     def __init__(self, arg1, arg2, sigma=None):
         self.arg1 = arg1
@@ -942,7 +1106,19 @@ class connective(regexp):
                               repr(self.arg1), repr(self.arg2))
 
     def __copy__(self):
-        return self.__class__(self.arg1.__copy__(), self.arg2.__copy__())
+        return self.__class__(self.arg1.__copy__(), self.arg2.__copy__(), copy.copy(self.Sigma))
+
+    def _setSigma(self, s):
+        self.arg1.setSigma(self.Sigma, s)
+        self.arg2.setSigma(self.Sigma, s)
+
+    def unmarked(self):
+        return self.__class__(self.arg1.unmarked(), self.arg2.unmarked())
+
+    def _marked(self, pos):
+        (r1, pos1) = self.arg1._marked(pos)
+        (r2, pos2) = self.arg2._marked(pos1)
+        return self.__class__(r1, r2), pos2
 
     def setOfSymbols(self):
         setOS = self.arg1.setOfSymbols()
@@ -950,12 +1126,13 @@ class connective(regexp):
         return setOS
 
     def measure(self, from_parent=None):
-        if not from_parent: from_parent = [0, 0, 0, 0]
+        if not from_parent:
+            from_parent = [0, 0, 0, 0]
         measure = self.arg1.measure(from_parent)
-        star, measure[3] = measure[3], 0
+        starh, measure[3] = measure[3], 0
         measure = self.arg2.measure(measure)
         measure[1] += 1
-        measure[3] = max(measure[3], star)
+        measure[3] = max(measure[3], starh)
         return measure
 
     def alphabeticLength(self):
@@ -970,9 +1147,29 @@ class connective(regexp):
     def starHeight(self):
         return max(self.arg1.starHeight(), self.arg2.starHeight())
 
+    def _cross(self, lists):
+        """ Computes the pairs lastxfirst and firstxlast of the arguments
+
+        :param lists:
+        :return: pairs as a dictionary
+        :rtype: dictionary"""
+        for symbol in self.arg1.last():
+            if not symbol in lists:
+                lists[symbol] = self.arg2.first()
+            else:
+                lists[symbol] += self.arg2.first()
+        for symbol in self.arg2.last():
+            if not symbol in lists:
+                lists[symbol] = self.arg1.first()
+            else:
+                lists[symbol] += self.arg1.first()
+        return lists
+
 
 class disj(connective):
-    """Class for disjuction operation on regular expressions."""
+    """Class for disjuction operation on regular expressions.
+
+    .. inheritance-diagram:: disj"""
 
     def __str__(self):
         return "%s + %s" % (self.arg1._strP(), self.arg2._strP())
@@ -1013,14 +1210,6 @@ class disj(connective):
         self.arg2.followListsStar(lists)
         return self._cross(lists)
 
-    def unmarked(self):
-        return disj(self.arg1.unmarked(), self.arg2.unmarked())
-
-    def _marked(self, pos):
-        (r1, pos1) = self.arg1._marked(pos)
-        (r2, pos2) = self.arg2._marked(pos1)
-        return disj(r1, r2), pos2
-
     def reduced(self, hasEpsilon=False):
         left = self.arg1.reduced(hasEpsilon or self.arg2.ewp())
         right = self.arg2.reduced(hasEpsilon or left.ewp())
@@ -1034,7 +1223,7 @@ class disj(connective):
             return left
         if left is self.arg1 and right is self.arg2:
             return self
-        reduced = disj(left, right)
+        reduced = disj(left, right, self.Sigma)
         reduced._reduced = True
         return reduced
 
@@ -1043,7 +1232,7 @@ class disj(connective):
     def derivative(self, sigma):
         left = self.arg1.derivative(sigma)
         right = self.arg2.derivative(sigma)
-        return disj(left, right)
+        return disj(left, right, self.Sigma)
 
     def partialDerivatives(self, sigma):
         pdset = self.arg1.partialDerivatives(sigma)
@@ -1081,7 +1270,7 @@ class disj(connective):
                 self._lf[head] = set(self.arg2._lf[head])
 
     def snf(self, hollowdot=False):
-        return disj(self.arg1.snf(hollowdot), self.arg2.snf(hollowdot))
+        return disj(self.arg1.snf(hollowdot), self.arg2.snf(hollowdot), self.Sigma)
 
     def nfaThompson(self):
         """ Returns an NFA (Thompson) that accepts the RE.
@@ -1122,9 +1311,16 @@ class disj(connective):
         self.arg1._nfaFollowEpsilonStep(conditions)
         self.arg2._nfaFollowEpsilonStep(conditions)
 
+    def reversal(self):
+        """
+            Reversal of regexp
+        :rtype: regexp"""
+        return disj(self.arg1.reversal(), self.arg2.reversal(), sigma=self.Sigma)
 
 class power(regexp):
-    """Class for iteration operation (aka Kleene star, or Kleene closure) on regular expressions."""
+    """Class for power operation  on regular expressions.
+
+    .. inheritance-diagram:: power"""
 
     def __init__(self, arg, n=1, sigma=None):
         self.arg = arg
@@ -1140,14 +1336,22 @@ class power(regexp):
         return "power(%s,%s)" % repr(self.arg, self.pw)
 
     def __copy__(self):
-        return power(copy.copy(self.arg), self.pw)
+        return power(copy.copy(self.arg), self.pw, copy.copy(self.Sigma))
 
     def setOfSymbols(self):
         return self.arg.setOfSymbols()
 
+    def reversal(self):
+        """
+            Reversal of regexp
+        :rtype: regexp"""
+        return power(self.arg.reversal(), self.pw, self.Sigma)
+
 
 class star(regexp):
-    """Class for iteration operation (aka Kleene star, or Kleene closure) on regular expressions."""
+    """Class for iteration operation (aka Kleene star, or Kleene closure) on regular expressions.
+
+    .. inheritance-diagram:: star"""
 
     def __init__(self, arg, sigma=None):
         self.arg = arg
@@ -1162,13 +1366,16 @@ class star(regexp):
         return "star(%s)" % repr(self.arg)
 
     def __copy__(self):
-        return star(copy.copy(self.arg))
+        return star(copy.copy(self.arg), copy.copy(self.Sigma))
 
     def rpn(self):
         return "*%s" % self.arg.rpn()
 
     def setOfSymbols(self):
         return self.arg.setOfSymbols()
+
+    def _setSigma(self, s):
+        self.arg.setSigma(self.Sigma, s)
 
     def measure(self, from_parent=None):
         if not from_parent: from_parent = [0, 0, 0, 0]
@@ -1223,7 +1430,7 @@ class star(regexp):
             return epsilon(self.Sigma)
         if self.arg is rarg:
             return self
-        reduced = star(rarg)
+        reduced = star(rarg, self.Sigma)
         return reduced
 
     # noinspection PyUnusedLocal
@@ -1232,7 +1439,7 @@ class star(regexp):
 
     def derivative(self, sigma):
         d = self.arg.derivative(sigma)
-        return concat(d, self)
+        return concat(d, self, self.Sigma)
 
     def partialDerivatives(self, sigma):
         arg_pdset = self.arg.partialDerivatives(sigma)
@@ -1243,7 +1450,7 @@ class star(regexp):
             elif pd.epsilonP():
                 pds.add(self)
             else:
-                pds.add(concat(pd, self))
+                pds.add(concat(pd, self, self.Sigma))
         return pds
 
     def linearForm(self):
@@ -1257,7 +1464,7 @@ class star(regexp):
                 elif tail.epsilonP():
                     lf[head].add(self)
                 else:
-                    lf[head].add(concat(tail, self))
+                    lf[head].add(concat(tail, self, self.Sigma))
         return lf
 
     def _delAttr(self, attr):
@@ -1279,7 +1486,7 @@ class star(regexp):
                 elif tail.epsilonP():
                     pd_set.add(self)
                 else:
-                    pd_set.add(concat(tail, self))
+                    pd_set.add(concat(tail, self, self.Sigma))
 
     def ewp(self):
         return True
@@ -1287,7 +1494,7 @@ class star(regexp):
     def snf(self, _hollowdot=False):
         if _hollowdot:
             return self.arg.snf(True)
-        return star(self.arg.snf(True))
+        return star(self.arg.snf(True), self.Sigma)
 
     def nfaThompson(self):
         """ Returns a NFA that accepts the RE.
@@ -1351,9 +1558,17 @@ class star(regexp):
             nfa.addTransition(initial, Epsilon, iter_state)
             nfa.addTransition(iter_state, Epsilon, final)
 
+    def reversal(self):
+        """
+            Reversal of regexp
+        :rtype: regexp"""
+        return star(self.arg.reversal(), sigma=self.Sigma)
+
 
 class concat(connective):
-    """Class for catenation operation on regular expressions."""
+    """Class for catenation operation on regular expressions.
+
+    .. inheritance-diagram:: concat"""
 
     def __str__(self):
         return "%s %s" % (self.arg1._strP(), self.arg2._strP())
@@ -1417,14 +1632,6 @@ class concat(connective):
             self.arg2.followListsD(lists)
         return self._cross(lists)
 
-    def unmarked(self):
-        return concat(self.arg1.unmarked(), self.arg2.unmarked())
-
-    def _marked(self, pos):
-        (r1, pos1) = self.arg1._marked(pos)
-        (r2, pos2) = self.arg2._marked(pos1)
-        return concat(r1, r2), pos2
-
     def reduced(self, hasEpsilon=False):
         left = self.arg1.reduced()
         right = self.arg2.reduced()
@@ -1440,16 +1647,16 @@ class concat(connective):
             return left
         if left is self.arg1 and right is self.arg2:
             return self
-        reduced = concat(left, right)
+        reduced = concat(left, right, self.Sigma)
         return reduced
 
     _reducedS = reduced
 
     def derivative(self, sigma):
-        left = concat(self.arg1.derivative(sigma), self.arg2)
+        left = concat(self.arg1.derivative(sigma), self.arg2, self.Sigma)
         if self.arg1.ewp():
             right = self.arg2.derivative(sigma)
-            return disj(left, right)
+            return disj(left, right, self.Sigma)
         return left
 
     def partialDerivatives(self, sigma):
@@ -1460,7 +1667,7 @@ class concat(connective):
             elif pd.epsilonP():
                 pds.add(self.arg2)
             else:
-                pds.add(concat(pd, self.arg2))
+                pds.add(concat(pd, self.arg2, self.Sigma))
         if self.arg1.ewp():
             pds.update(self.arg2.partialDerivatives(sigma))
         return pds
@@ -1476,7 +1683,7 @@ class concat(connective):
                 elif tail.epsilonP():
                     lf[head].add(self.arg2)
                 else:
-                    lf[head].add(concat(tail, self.arg2))
+                    lf[head].add(concat(tail, self.arg2, self.Sigma))
         if self.arg1.ewp():
             arg2_lf = self.arg2.linearForm()
             for head in arg2_lf:
@@ -1500,7 +1707,7 @@ class concat(connective):
                 elif tail.epsilonP():
                     pd_set.add(self.arg2)
                 else:
-                    pd_set.add(concat(tail, self.arg2))
+                    pd_set.add(concat(tail, self.arg2, self.Sigma))
         if self.arg1.ewp():
             self.arg2._memoLF()
             for head in self.arg2._lf:
@@ -1511,14 +1718,14 @@ class concat(connective):
 
     def snf(self, _hollowdot=False):
         if not _hollowdot:
-            return concat(self.arg1.snf(), self.arg2.snf())
+            return concat(self.arg1.snf(), self.arg2.snf(), self.Sigma)
         if self.ewp():
-            return disj(self.arg1.snf(True), self.arg2.snf(True))
+            return disj(self.arg1.snf(True), self.arg2.snf(True), self.Sigma)
         if self.arg1.ewp():
-            return concat(self.arg1.snf(), self.arg2.snf(True))
+            return concat(self.arg1.snf(), self.arg2.snf(True), self.Sigma)
         if self.arg2.ewp():
-            return concat(self.arg1.snf(True), self.arg2.snf())
-        return concat(self.arg1.snf(), self.arg2.snf())
+            return concat(self.arg1.snf(True), self.arg2.snf(), self.Sigma)
+        return concat(self.arg1.snf(), self.arg2.snf(), self.Sigma)
 
     def nfaThompson(self):  # >(0)--arg1-->(1)--->(2)--arg2-->((3))
         au = fa.NFA()
@@ -1555,19 +1762,30 @@ class concat(connective):
         if target is not None:
             nfa.mergeStates(target, interm)
 
+    def reversal(self):
+        """
+            Reversal of regexp
+        :rtype: regexp"""
+        return concat(self.arg2.reversal(), self.arg1.reversal(), sigma=self.Sigma)
+
 
 class position(regexp):
-    """Class for marked regular expression symbols."""
+    """Class for marked regular expression symbols.
 
-    def __init__(self, (sym, pos), Sigma=None):
+    .. inheritance-diagram:: position"""
+
+    def __init__(self, (sym, pos), sigma=None):
         self.val = (sym, pos)
-        self.Sigma = Sigma
+        self.Sigma = sigma
 
     def __repr__(self):
         return "position%s" % repr(self.val)
 
     def __copy__(self):
         return position(self.val)
+
+    def setOfSymbols(self):
+        return {self.val}
 
     def unmarked(self):
         return regexp(self.val[0])
@@ -1577,7 +1795,9 @@ class position(regexp):
 
 
 class ParseReg1(Yappy):
-    """ """
+    """
+
+    .. inheritance-diagram:: ParseReg1"""
 
     def __init__(self, no_table=0, table='.tablereg'):
         """  """
@@ -1606,23 +1826,39 @@ class ParseReg1(Yappy):
         return lst[0]
 
     def BaseSemRule(self, lst, context=None):
+        if "sigma" in context:
+            sigma = context["sigma"]
+        else:
+            sigma = None
         if lst[0] == Epsilon:
-            return epsilon()
+            return epsilon(sigma)
         if lst[0] == EmptySet:
-            return emptyset()
-        return regexp(lst[0])
+            return emptyset(sigma)
+        return regexp(lst[0], sigma)
 
     def ParSemRule(self, lst, context=None):
         return lst[1]
 
     def OrSemRule(self, lst, context=None):
-        return disj(lst[0], lst[2])
+        if "sigma" in context:
+            sigma = context["sigma"]
+        else:
+            sigma = None
+        return disj(lst[0], lst[2], sigma)
 
     def ConcatSemRule(self, lst, context=None):
-        return concat(lst[0], lst[1])
+        if "sigma" in context:
+            sigma = context["sigma"]
+        else:
+            sigma = None
+        return concat(lst[0], lst[1], sigma)
 
     def StarSemRule(self, lst, context=None):
-        return star(lst[0])
+        if "sigma" in context:
+            sigma = context["sigma"]
+        else:
+            sigma = None
+        return star(lst[0], sigma)
 
     def DoPrint(self, lst, context=None):
         print lst[0]
@@ -1630,6 +1866,10 @@ class ParseReg1(Yappy):
 
 
 class ParseReg(ParseReg1):
+    """
+
+    .. inheritance-diagram:: ParseReg"""
+
     def __init__(self, no_table=0, table='tableambreg'):
         """A parser for regular expressions with ambiguous rules: not working  """
 
@@ -1652,6 +1892,10 @@ class ParseReg(ParseReg1):
 
 
 class ParseReg2(ParseReg1):
+    """
+
+    .. inheritance-diagram:: ParseReg2"""
+
     def __init__(self, no_table=0, table='tableambreg2'):
         grammar = """
     reg -> reg + reg {{ self.OrSemRule}}|
@@ -1689,11 +1933,13 @@ def str2regexp(s, parser=ParseReg1, no_table=1, sigma=None, strict=False):
     s = re.sub("\s+", "", s)
     d = parser(no_table)
     try:
-        reg = d.input(s)
+        reg = d.input(s, context={"sigma": sigma})
     except LRParserError:
         raise regexpInvalid(s)
     if sigma is not None:
         reg.setSigma(sigma, strict)
+    elif strict:
+        reg.setSigma(reg.setOfSymbols())
     return reg
 
 
@@ -1709,24 +1955,32 @@ def rpn2regexp(s, sigma=None, strict=False):
     :rtype: regexp
 
     .. note:: This method uses python stack... thus depdth limitations apply"""
-    (nf, reg) = _rpn2re(re.sub("@epsilon", "@", s), 0)
+    (nf, reg) = _rpn2re(re.sub("@epsilon", "@", s), 0, sigma)
     if sigma is not None:
         reg.setSigma(sigma, strict)
+    elif strict:
+        reg.setSigma(reg.setOfSymbols())
     return reg
 
 
-def _rpn2re(s, i):
+def _rpn2re(s, i, sigma=None):
+    """
+
+    :param s:
+    :param i:
+    :return:
+    """
     if s[i] in "+.":
         (i1, arg1) = _rpn2re(s, i + 1)
         (i2, arg2) = _rpn2re(s, i1)
         if s[i] == ".":
-            return i2, concat(arg1, arg2)
+            return i2, concat(arg1, arg2, sigma)
         else:
-            return i2, disj(arg1, arg2)
+            return i2, disj(arg1, arg2, sigma)
     if s[i] == "*":
         (i1, arg1) = _rpn2re(s, i + 1)
-        return i1, star(arg1)
+        return i1, star(arg1, sigma)
     if s[i] == "@":
-        return i + 1, epsilon()
+        return i + 1, epsilon(sigma)
     else:
-        return i + 1, regexp(s[i])
+        return i + 1, regexp(s[i], sigma)

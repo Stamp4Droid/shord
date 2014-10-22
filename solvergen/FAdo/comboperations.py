@@ -58,11 +58,10 @@ def starConcat(fa1, fa2, strict=False):
             d1.setInitial(new)
             d1.addFinal(new)
             for sym in d1.Sigma:
-                d1.addTransition(new, sym, d1, delta[iold][sym])
+                d1.addTransition(new, sym, d1.delta[iold][sym])
                 for s in d1.Final:
                     d1.delta[s][sym] = s
             return d1
-            # Epsilon automaton
         c = DFA()
         c.setSigma(d1.Sigma)
         s0, s1 = c.addState(0), c.addState(1)
@@ -127,17 +126,17 @@ def starConcat(fa1, fa2, strict=False):
             if stn[1] & d2.Final != set([]):
                 c.addFinal(new)
         else:
-            new = c.stateName(stn)
+            new = c.stateIndex(stn)
         c.addTransition(i, sym, new)
     if len(c.States) == 1:
         return c
     j = 1
     while True:
         stu = lStates[j]
-        s = c.stateName(stu)
+        s = c.stateIndex(stu)
         for sym in c.Sigma:
-            stn = (d1._evalSymbolL(stu[0], sym),
-                   d2._evalSymbolL(stu[1], sym))
+            stn = (d1.evalSymbolL(stu[0], sym),
+                   d2.evalSymbolL(stu[1], sym))
             if stn[0] & d1.Final != set([]):
                 stn[1].add(d2.Initial)
                 if d2.finalP(d2.Initial):
@@ -152,7 +151,7 @@ def starConcat(fa1, fa2, strict=False):
                 if stn[1] & d2.Final != set([]):
                     c.addFinal(new)
             else:
-                new = c.stateName(stn)
+                new = c.stateIndex(stn)
             c.addTransition(s, sym, new)
         if j == len(lStates) - 1:
             break
@@ -204,7 +203,7 @@ def concatWStar(fa1, fa2, strict=False):
     F0 = d2.Final - {d2.Initial}
     while True:
         stu = lStates[j]
-        s = c.stateName(stu)
+        s = c.stateIndex(stu)
         for sym in c.Sigma:
             s1 = d1.evalSymbol(stu[0], sym)
             if d1.finalP(s1):
@@ -218,7 +217,7 @@ def concatWStar(fa1, fa2, strict=False):
                     s3.add(d2.Initial)
             else:
                 s3 = set([])
-            s4 = d2._evalSymbolL(stu[2], sym)
+            s4 = d2.evalSymbolL(stu[2], sym)
             if s4 & F0 != set([]):
                 s4.add(d2.Initial)
             stn = (s1, s2, s3.union(s4))
@@ -228,7 +227,7 @@ def concatWStar(fa1, fa2, strict=False):
                 if stn[1] == 1 or (d2.Final & stn[2] != set([])):
                     c.addFinal(new)
             else:
-                new = c.stateName(stn)
+                new = c.stateIndex(stn)
             c.addTransition(s, sym, new)
         if j == len(lStates) - 1:
             break
@@ -273,15 +272,15 @@ def starWConcat(fa1, fa2, strict=False):
         while True:
             s = c.States[j]
             for sym in c.Sigma:
-                stn = (d1.evalSymbol(s[0], sym), d2._evalSymbolL(s[1], sym))
+                stn = (d1.evalSymbol(s[0], sym), d2.evalSymbolL(s[1], sym))
                 if d1.initialP(s[0]):
                     stn[1].add(d2.Initial)
                 try:
                     new = c.addState(stn)
                     if stn[1] & d2.Final != set([]):
                         c.addFinal(new)
-                except DFAstateRepeated:
-                    new = c.stateName(stn)
+                except DuplicateName:
+                    new = c.stateIndex(stn)
                 c.addTransition(s, sym, new)
             if j == len(c.States) - 1:
                 break
@@ -296,7 +295,7 @@ def starWConcat(fa1, fa2, strict=False):
     while True:
         s = c.States[j]
         for sym in c.Sigma:
-            stn = (d1._evalSymbolL(s[0], sym), d2._evalSymbolL(s[1], sym))
+            stn = (d1.evalSymbolL(s[0], sym), d2.evalSymbolL(s[1], sym))
             if stn[0] & d1.Final != set([]):
                 stn[1].add(d2.Initial)
                 stn[0].add(d1.Initial)
@@ -304,8 +303,8 @@ def starWConcat(fa1, fa2, strict=False):
                 new = c.addState(stn)
                 if stn[1] & d2.Final != set([]):
                     c.addFinal(new)
-            except DFAstateRepeated:
-                new = c.stateName(stn)
+            except DuplicateName:
+                new = c.stateIndex(stn)
             c.addTransition(j, sym, new)
         if j == len(c.States) - 1:
             break
@@ -358,16 +357,16 @@ def starDisj(fa1, fa2, strict=False):
             if stn[0] & d1.Final or stn[1] & d2.Final:
                 c.addFinal(new)
         else:
-            new = c.stateName(stn)
+            new = c.stateIndex(stn)
         c.addTransition(j, sym, new)
     if len(lStates) < 2:
         return c
     j = 1
     while True:
         stu = lStates[j]
-        s = c.stateName(stu)
+        s = c.stateIndex(stu)
         for sym in c.Sigma:
-            stn = (d1._evalSymbolL(stu[0], sym), d2._evalSymbolL(stu[1], sym))
+            stn = (d1.evalSymbolL(stu[0], sym), d2.evalSymbolL(stu[1], sym))
             if stn[0] & d1.Final or stn[1] & d2.Final:
                 stn[0].add(d1.Initial)
                 stn[1].add(d2.Initial)
@@ -377,7 +376,7 @@ def starDisj(fa1, fa2, strict=False):
                 if stn[0] & d1.Final or stn[1] & d2.Final:
                     c.addFinal(new)
             else:
-                new = c.stateName(stn)
+                new = c.stateIndex(stn)
             c.addTransition(s, sym, new)
         if j == len(lStates) - 1:
             break
@@ -430,16 +429,16 @@ def starInter0(fa1, fa2, strict=False):
             if stn[0] & d1.Final and stn[1] & d2.Final:
                 c.addFinal(new)
         else:
-            new = c.stateName(stn)
+            new = c.stateIndex(stn)
         c.addTransition(j, sym, new)
     if len(lStates) < 2:
         return c
     j = 1
     while True:
         stu = lStates[j]
-        s = c.stateName(stu)
+        s = c.stateIndex(stu)
         for sym in c.Sigma:
-            stn = (d1._evalSymbolL(stu[0], sym), d2._evalSymbolL(stu[1], sym))
+            stn = (d1.evalSymbolL(stu[0], sym), d2.evalSymbolL(stu[1], sym))
             if stn[0] & d1.Final and stn[1] & d2.Final:
                 stn[0].add(d1.Initial)
                 stn[1].add(d2.Initial)
@@ -449,7 +448,7 @@ def starInter0(fa1, fa2, strict=False):
                 if stn[0] & d1.Final and stn[1] & d2.Final:
                     c.addFinal(new)
             else:
-                new = c.stateName(stn)
+                new = c.stateIndex(stn)
             c.addTransition(s, sym, new)
         if j == len(lStates) - 1:
             break
@@ -501,14 +500,14 @@ def starInter(fa1, fa2, strict=False):
                     c.addFinal(new)
                     break
         else:
-            new = c.stateName(stn)
+            new = c.stateIndex(stn)
         c.addTransition(j, sym, new)
     if len(lStates) < 2:
         return c
     j = 1
     while True:
         stu = lStates[j]
-        s = c.stateName(stu)
+        s = c.stateIndex(stu)
         for sym in c.Sigma:
             stn = set([])
             flag = 1
@@ -526,7 +525,7 @@ def starInter(fa1, fa2, strict=False):
                         c.addFinal(new)
                         break
             else:
-                new = c.stateName(stn)
+                new = c.stateIndex(stn)
             c.addTransition(s, sym, new)
         if j == len(lStates) - 1:
             break
@@ -549,6 +548,8 @@ def disjWStar(f1, f2, strict=True):
     .. seealso::
        Yuan Gao and Sheng Yu. 'State complexity of union and intersection combined with star and reversal'. CoRR,
        abs/1006.3755, 2010."""
+    if strict and f1.Sigma != f2.Sigma:
+        raise DFAdifferentSigma
     return f1.star() | f2
 
 
@@ -566,4 +567,6 @@ def interWStar(f1, f2, strict=True):
     .. seealso::
        Yuan Gao and Sheng Yu. 'State complexity of union and intersection combined with star and reversal'. CoRR,
        abs/1006.3755, 2010."""
+    if strict and f1.Sigma != f2.Sigma:
+        raise DFAdifferentSigma
     return f1.star() & f2

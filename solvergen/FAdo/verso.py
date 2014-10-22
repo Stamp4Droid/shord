@@ -54,12 +54,15 @@ this language to interface with it.
 """
 
 import sys
+
 from fa import *
-import fa
 from common import *
-from yappy.parser import grules
-from yappy.parser import Yappy
+from yappy_parser import grules
+from yappy_parser import Yappy
+
 #from yappy.parser import LR1table
+from fio import ParserFAdo
+
 
 class ParserVerso(Yappy):
   """A parser for FAdo standard automata descriptions
@@ -167,7 +170,7 @@ class ParserVerso(Yappy):
         foo += s + " "
       else:
         foo += "%d"%s + " "
-    parser = fa.ParserFAdo()
+    parser = ParserFAdo()
     parser.input(foo.replace("&","\n"))
     a = parser.result()[0]
     if not isinstance(a,lst[1]):

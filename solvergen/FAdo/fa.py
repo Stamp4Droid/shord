@@ -7,7 +7,7 @@ Deterministic and non-deterministic automata manipulation, conversion and evalua
 
 .. *This is part of FAdo project*   http://fado.dcc.fc.up.pt.
 
-.. *Copyright:* 1999-2013 Rogério Reis & Nelma Moreira {rvr,nam}@dcc.fc.up.pt
+.. *Copyright:* 1999-2014 Rogério Reis & Nelma Moreira {rvr,nam}@dcc.fc.up.pt
 
 .. This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as published
@@ -22,28 +22,91 @@ Deterministic and non-deterministic automata manipulation, conversion and evalua
    You should have received a copy of the GNU General Public License along
    with this program; if not, write to the Free Software Foundation, Inc.,
    675 Mass Ave, Cambridge, MA 02139, USA."""
-
-__all__ = ["FA", "NFA", "NFAr", "DFA", "GFA", "readFromFile", "saveToFile", "saveToString", "stringToDFA"]
-
-#__package__ = "FAdo"
+from copy import copy
+from collections import deque
 
 import reex
-from copy import copy, deepcopy
 from common import *
 from unionFind import UnionFind
-from yappy.parser import grules
-from yappy.parser import Yappy
+import graphs
+
+
+class SemiDFA(Drawable):
+    """Class of automata without initial or final states
+
+        :var States: list of states
+        :type States: list of objects
+        :var delta: transition function
+        :type delta: dict
+        :var Sigma: alphabet set
+        :type Sigma: set of str"""
+
+    def __init__(self):
+        self.States = []
+        self.delta = {}
+        self.Sigma = set()
+
+    def dotDrawState(self, sti, sep="\n"):
+        """Dot representation of a state
+
+        :param sti: state index
+        :type sti: int
+        :param sep: separator
+        :type sep: str        
+        :rtype: str """
+        return "node [shape = circle]; \"{0:s}\";{1:s}".format(self.States[sti].__str__(), sep)
+
+    @staticmethod
+    def dotDrawTransition(st1, lbl1, st2, sep="\n"):
+        """Draw a transition in dot format
+
+        :param st1: departing state
+        :type st1: str
+        :param lbl1: label
+        :type lbl1: str
+        :param st2: arriving state
+        :type st2: str
+        :param sep: separator
+        :type sep: str
+        :rtype: str """
+        return "\"{0:s}\" -> \"{1:s}\" [label = \"{2:s}\"];{3:s} ".format(st1, st2, lbl1, sep)
+
+    def dotFormat(self, size="20,20", direction="LR", sep="\n"):
+        """Dot format of automata
+
+        :param size: image size
+        :type size: str
+        :param direction: direction of drawing
+        :type size: str
+        :param sep: separator
+        :type sep: str
+        :rtype: str """
+        s = "digraph finite_state_machine {{{0:s}".format(sep)
+        s += "rankdir={0:s};{1:s}".format(direction, sep)
+        s += "size=\"{0:s}\";{1:s}".format(size, sep)
+        for si in range(len(self.States)):
+            sn = str(self.States[si])
+            s += "node [shape = point]; \"dummy{0:s}\"{1:s}".format(sn, sep)
+            s += self.dotDrawState(si)
+            s += "\"dummy{0:s}\" -> \"{1:s}\";{2:s}".format(sn, str(self.States[si]), sep)
+        for si in range(len(self.States)):
+            for s1 in self.Sigma:
+                s += self.dotDrawTransition(str(self.States[si]), str(s1), str(self.States[self.delta[si][s1]]))
+        s += "}}{0:s}".format(sep)
+        return s
 
 
 #noinspection PyUnresolvedReferences
-class FA(object):
+class FA(Drawable):
     """Base class for Finite Automata.
 
-    :var States: list of states
-    :type States: list
-    :var Sigma: alphabet set of str
+    :var States: set of states
+    :type States: list of objects
+    :var Sigma: alphabet set
+    :type Sigma: set of str
     :var Initial: the initial state
     :var Final: set of final states
+    :type Final: set of int
     :var delta: the transition function
 
     .. note::
@@ -67,8 +130,38 @@ class FA(object):
         """'Informal' string representation
 
         :rtype: str"""
-        return str((self.States, list(self.Sigma), self._lstInitial(), [self.States[i] for i in self.Final],
-                    self._lstTransitions()))
+        #noinspection PyProtectedMember
+        a = self._s_States
+        b = self._s_Sigma
+        c = self._s_lstInitial()
+        d = self._s_Final
+        e = str(self._lstTransitions())
+        return str((a, b, c, d, e))
+
+    @abstractmethod
+    def __eq__(self, other):
+        pass
+
+    @abstractmethod
+    def __ne__(self, other):
+        pass
+
+    @abstractmethod
+    def evalSymbol(self):
+        """Evaluation of a single symbol"""
+        pass
+
+    @property
+    def _s_States(self):
+        return [str(x) for x in self.States]
+
+    @property
+    def _s_Sigma(self):
+        return [str(x) for x in self.Sigma]
+
+    @property
+    def _s_Final(self):
+        return [str(self.States[x]) for x in self.Final]
 
     def __len__(self):
         """Size: number of states
@@ -76,26 +169,43 @@ class FA(object):
         :rtype: int"""
         return len(self.States)
 
-    def dump(self):
-        """Returns a python representation of the object
+    def dotDrawState(self, sti, sep="\n"):
+        """ Draw a state in dot format
 
-        :returns: the python representation
-        :rtype: 6-uple (Tags,States,Sigma,delta,Initial,Final)"""
-        tags = self._getTags()
-        sig = list(self.Sigma)
-        I = [i for i in forceIterable(self.Initial)]
-        F = [i for i in self.Final]
-        # l = self.__len__()
-        dt = []
-        for i in xrange(self.__len__()):
-            for c in self.delta.get(i, []):
-                if c == Epsilon:
-                    ci = -1
-                else:
-                    ci = sig.index(c)
-                for j in forceIterable(self.delta[i][c]):
-                    dt.append((i, ci, j))
-        return tags, self.States, sig, dt, I, F
+        :arg sti: index of the state
+        :arg sep: separator
+        :type sep: str
+        :type sti: int
+        :rtype: str """
+        if sti in self.Final:
+            return "node [shape = doublecircle]; \"{0:s}\";".format(str(self.States[sti]), sep)
+        else:
+            return "node [shape = circle]; \"{0:s}\";{1:s}".format(str(self.States[sti]), sep)
+
+    def same_nullability(self, s1, s2):
+        """Tests if this two states have the same nullability
+
+        :param s1: state index
+        :param s2: state index
+        :type s1: int
+        :type s2: int
+        :rtype: bool"""
+        return (s1 in self.Final) is (s2 in self.Final)
+
+    @abstractmethod
+    def succintTransitions(self):
+        """Colapsed transitions"""
+        pass
+
+    @abstractmethod
+    def dotDrawTransition(self, st1, sym, st2, sep):
+        """Draw a transition in dot format
+
+        :param str st1: departing state
+        :param str sym: label
+        :param str st2: arriving state
+        :param str sep: separator"""
+        pass
 
     def initialSet(self):
         """The set of initial states
@@ -107,18 +217,25 @@ class FA(object):
     def initialP(self, state):
         """ Tests if a state is initial
 
-        :param state: state index
-        :type state: int
-        :rtype: boolean"""
+        :param int state: state index
+        :rtype: bool"""
         return state in self.Initial
 
     def finalP(self, state):
         """ Tests if a state is final
 
-        :param state: state index
-        :type state: int
-        :rtype: boolean"""
+        :param int state: state index
+        :rtype: bool"""
         return state in self.Final
+
+    def finalsP(self, states):
+        """ Tests if al the states in a set are final
+
+        :param set states: set of state indexes
+        :rtype: bool
+
+        .. versionadded:: 1.0"""
+        return states.issubset(self.Final)
 
     def _namesToString(self):
         """All state names are transformed in strings"""
@@ -131,9 +248,8 @@ class FA(object):
     def hasStateIndexP(self, st):
         """Checks if a state index pertains to an FA
 
-        :param st: index of the state
-        :type st: int
-        :rtype: boolean"""
+        :param int st: index of the state
+        :rtype: bool"""
         if st > (len(self.States) - 1):
             return False
         else:
@@ -142,28 +258,28 @@ class FA(object):
     def addState(self, name=None):
         """Adds a new state to an FA. If no name is given a new name is created.
 
-        :param name: Name of the state to be added
-        :type name: object
+        :param object name: Name of the state to be added
         :returns: Current number of states (the new state index)
         :rtype: int
-        :raises DFAstateRepeated: if a state with that name already exists"""
+        :raises DuplicateName: if a state with that name already exists"""
         if name is None:
             iname = len(self.States)
             name = str(iname)
-            while iname in self.States:
+            while iname in self.States or name in self.States:
                 iname += 1
                 name = str(iname)
-        if name in self.States:
-            raise DFAstateRepeated(self.stateName(name))
+            self.States.append(name)
+            return len(self.States) - 1
+        elif name in self.States:
+            raise DuplicateName(self.stateIndex(name))
         else:
             self.States.append(name)
-        return len(self.States) - 1
+            return len(self.States) - 1
 
     def deleteState(self, sti):
-        """Remove given state and transitions related with that state.
+        """Remove the given state and the transitions related with that state.
 
-        :param sti: index of the state to be removed
-        :type sti: int
+        :param int sti: index of the state to be removed
         :raises DFAstateUnknown: if state index does not exist"""
         if sti >= len(self.States):
             raise DFAstateUnknown(sti)
@@ -181,10 +297,37 @@ class FA(object):
                     self.Final.remove(s)
                     self.Final.add(s - 1)
             for j in xrange(sti + 1, len(self.States)):
-                if j in self.delta.keys():
+                if j in self.delta:
                     self.delta[j - 1] = self.delta[j]
                     del self.delta[j]
             del self.States[sti]
+
+    def words(self, stringo=True):
+        """Lexicografical word generator
+
+        .. attention:: does not generate the empty word
+
+        :param bool stringo: are words strings?
+
+        .. versionadded:: 0.9.8"""
+        def _translate(l, r, s1=True):
+            if s1:
+                s = ""
+                for z in l:
+                    s += r[z]
+                return s
+            else:
+                return [r[y] for y in l]
+
+        import itertools
+        ss = list(self.Sigma)
+        ss.sort()
+        n = len(ss)
+        n0 = 1
+        while True:
+            for x in itertools.product(range(n), repeat=n0):
+                yield _translate(x, ss, stringo)
+            n0 += 1
 
     def equivalentP(self, other):
         """Test equivalence
@@ -192,21 +335,19 @@ class FA(object):
         :param other: the other automata
         :rtype: bool
 
-        .. versionadded: 0.9.6"""
+        .. versionadded:: 0.9.6"""
         return self == other
 
     def setInitial(self, stateindex):
         """Sets the initial state of a FA
 
-        :param stateindex: index of the initial state
-        :type stateindex: int"""
+        :param int stateindex: index of the initial state"""
         self.Initial = stateindex
 
     def setFinal(self, statelist):
         """Sets the final states of the FA
 
-        :param statelist: a list (or set) of final states (indexes)
-        :type statelist: list (or set) of int
+        :param int|list|set statelist: a list (or set) of final states indexes
 
         .. caution::
            it erases any previous definition of the final state set."""
@@ -220,63 +361,50 @@ class FA(object):
         self.Final.add(stateindex)
 
     def delFinals(self):
-        """Deletes all the information about -final states."""
+        """Deletes all the information about final states."""
         self.Final = set([])
 
     def delFinal(self, st):
-        """Delete state from the final states list
+        """Deletes a state from the final states list
 
-        :param st: state to be marked as not final
-        :type st: int"""
+        :param int st: state to be marked as not final"""
         self.Final = self.Final - {st}
-
-    def _deleteRefTo(self, src, sym, dest):
-        """Delete transition
-
-        :param src: source state
-        :type src: int
-        :type sym: str
-        :param sym: label
-        ;param dest: target state
-        :type dest: int"""
-        if self.delta.get(src, {}).get(sym, None) == dest:
-            del (self.delta[src][sym])
 
     def setSigma(self, symbolSet):
         """Defines the alphabet for the FA.
 
-        :param symbolSet: accepted symbols
-        :type symbolSet: list or set of str"""
+        :param list|set symbolSet: alphabet symbols"""
         self.Sigma = set(symbolSet)
 
     def addSigma(self, sym):
         """Adds a new symbol to the alphabet.
 
-        :param sym: symbol to be added
-        :type sym: str
-        :raises DFAstateUnknown: if state index does not exist
+        :param str sym: symbol to be added
+        :raises DFAepsilonRedefenition: if sym is Epsilon
 
-    .. note::
-       * There is no problem with duplicate symbols because Sigma is a Set.
-       * No symbol Epsilon can be added."""
-
+        .. note::
+            * There is no problem with duplicate symbols because Sigma is a Set.
+            * No symbol Epsilon can be added."""
         if sym == Epsilon:
             raise DFAepsilonRedefinition()
         self.Sigma.add(sym)
 
-    def stateName(self, name, autoCreate=False):
+    def stateIndex(self, name, autoCreate=False):
         """Index of given state name.
 
-        :param name: name of the state
-        :type name: object
-        :param autoCreate: flag to create state if not already done
-        :type autoCreate: boolean
+        :param object name: name of the state
+        :param bool autoCreate: flag to create state if not already done
         :returns: state index
         :rtype: int
         :raises DFAstateUnknown: if the state name is unknown and autoCreate==False
 
         .. note::
-           If the state name is not known and flag is set creates it on the fly"""
+           Replaces stateName
+
+        .. note::
+           If the state name is not known and flag is set creates it on the fly
+
+        .. versionadded:: 1.0"""
         if name in self.States:
             return self.States.index(name)
         else:
@@ -285,37 +413,36 @@ class FA(object):
             else:
                 raise DFAstateUnknown(name)
 
+    @deprecated
+    def stateName(self, name, autoCreate=False):
+        """Index of given state name.
+
+        :param object name: name of the state
+        :param bool autoCreate: flag to create state if not already done
+        :returns: state index
+        :rtype: int
+        :raises DFAstateUnknown: if the state name is unknown and autoCreate==False
+
+        .. deprecated:: 1.0
+           Use: :func:`stateIndex` instead"""
+        return self.stateIndex(name, autoCreate)
+
     def indexList(self, lstn):
         """Converts a list of stateNames into a set of stateIndexes.
 
-        :param lstn: list of names
-        :type lstn: list of str
+        :param list lstn: list of names
         :returns: the list of state indexes
         :rtype: Set of int
         :raises DFAstateUnknown: if a state name is unknown"""
         lst = set()
         for s in lstn:
-            lst.add(self.stateName(s))
+            lst.add(self.stateIndex(s))
         return lst
-
-    def completeP(self):
-        """Checks if it is a complete FA (if delta is total)
-
-        :return: boolean"""
-        if self.Sigma == set([]):
-            return True
-        for s in xrange(0, len(self.States)):
-            if s not in self.delta.keys():
-                return False
-            ni = set(self.delta[s].keys())
-            if ni != self.Sigma:
-                return False
-        return True
 
     def plus(self):
         """Plus of a FA (star without the adding of epsilon)
 
-        .. versionadded: 0.9.6"""
+        .. versionadded:: 0.9.6"""
         return self.star(True)
 
     def disjunction(self, other):
@@ -326,10 +453,16 @@ class FA(object):
 
     def disj(self, other):
         """Another simple literate invocation of __or__
-        :param other: the other FA
-        :type other: FA
 
-        .. versionadded: 0.9.6"""
+        :param other: the other FA
+
+        .. versionadded:: 0.9.6"""
+        return self.__or__(other)
+
+    def union(self, other):
+        """A simple literate invocation of __or__
+
+        :param other: right hand operand"""
         return self.__or__(other)
 
     def conjunction(self, other):
@@ -337,104 +470,67 @@ class FA(object):
 
         :param other: the other FA
 
-        .. versionadded: 0.9.6"""
+        .. versionadded:: 0.9.6"""
         return self.__and__(other)
 
-    def complete(self):
-        """Transforms the automata into a complete one.
+    def renameState(self, st, name):
+        """Rename a given state.
 
-        :return: the complete FA
-        :rtype: DFA
+        :param int st: state index
+        :param object name: name
+        :return: self
 
         .. note::
-           Adds a dead state (if necessary) so that any word can be processed
-           with the automata. The new state is named ``dead``, so this name should
-           never be used for other purposes.
-
-        .. attention::
-           The object is modified in place."""
-        if self.completeP():
-            return
-        Bin = self.stateName("dead", True)
-        for s in xrange(0, len(self.States)):
-            if s not in self.delta.keys():
-                self.delta[s] = {}
-            ni = self.delta[s].keys()
-            if len(ni) != len(self.Sigma):
-                for c in self.Sigma:
-                    if c not in ni:
-                        self.addTransition(s, c, Bin)
-
-    def renameState(self, st, name):
-        """Rename a given state
-
-        :param st: state
-        :type st: int
-        :param name: name
+            Deals gacefully both with int and str names in the case of name collision.
 
         .. attention::
            the object is modified in place"""
-        if name in self.States:
-            if isinstance(name, int):
-                while name in self.States:
-                    name += name + 1
-            elif isinstance(name, str):
-                while name in self.States:
-                    name += "+"
-            else:
-                raise DFAstateRepeated
-        self.States[st] = name
+        if name != self.States[st]:
+            if name in self.States:
+                if isinstance(name, int):
+                    while name in self.States:
+                        name += name + 1
+                elif isinstance(name, str):
+                    while name in self.States:
+                        name += "+"
+                else:
+                    raise DuplicateName
+            self.States[st] = name
+        return self
 
     def renameStates(self, nameList=None):
         """Renames all states using a new list of names.
 
-        :param nameList: list of new names
-        :type nameList: list of str
+        :param list nameList: list of new names
         :raises DFAerror: if provided list is too short
+        :return: self
 
         .. note::
-           If no list of names is given, numbers are used.
+           If no list of names is given, state indexes are used.
 
         .. attention::
            the object is modified in place"""
         if nameList is None:
-            nameList = [str(i) for i in xrange(len(self.States))]
-        if len(nameList) < len(self.States):
-            raise DFAerror
+            self.States = range(len(self.States))
         else:
-            for i in xrange(len(self.States)):
-                self.renameState(i, nameList[i])
+            if len(nameList) < len(self.States):
+                raise DFAerror
+            else:
+                for i in xrange(len(self.States)):
+                    self.renameState(i, nameList[i])
+        return self
 
     def noBlankNames(self):
         """Eliminates blank names
+
+        :return: self
 
         .. attention::
            in place transformation"""
         for i in xrange(len(self.States)):
             if self.States[i] == "":
                 self.States[i] = str(i)
-
-    def trim(self):
-        """Remove states that do not lead to a final state, or, inclusively,
-        that can't be reached from the initial state. Only useful states
-        remain.
-
-        .. attention::
-           in place transformation"""
-        useful = self.usefulStates()
-        del_states = [s for s in xrange(len(self.States))
-                      if s not in useful]
-        if del_states:
-            self.deleteStates(del_states)
-
-    def trimP(self):
-        """Tests if FA is trim: initially connected and co-accessible
-
-        :returns: boolean"""
-        for s in xrange(len(self.States)):
-            if not self.finalCompP(s):
-                return False
-        return len(self.States) == len(self.initialComp())
+        return self
 
     def reversal(self):
         """Returns a NFA that recognizes the reversal of the language
@@ -449,28 +545,281 @@ class FA(object):
         rev.setInitial(self.Final)
         return rev
 
+    def countTransitions(self):
+        """Evaluates the size of FA transitionwise
+
+        :returns: the number of transitions
+        :rtype: int
+
+        .. versionchanged:: 1.0"""
+        return sum([len(self.delta[i]) for i in self.delta])
+
+    def inputS(self, i):
+        """Input labels coming out of state i
+
+        :param int i: state
+        :returns: set of input labels
+        :rtype: set of str
+
+        .. versionadded:: 1.0"""
+        return set(self.delta.get(i, {}))
+
+    @abstractmethod
+    def succintTransitions(self):
+        """Collapsed transitions
+        :rtype: list"""
+        pass
+
+    def dotFormat(self, size="20,20", direction="LR", sep="\n"):
+        """ A dot representation
+
+        :param str direction: direction of drawing
+        :param str size: size of image
+        :param str sep: line separator
+        :return: the dot representation
+        :rtype: str
+
+        .. versionadded:: 0.9.6
+
+        .. versionchanged:: 0.9.8"""
+        s = "digraph finite_state_machine {{{0:s}".format(sep)
+        s += "rankdir={0:s};{1:s}".format(direction, sep)
+        s += "size=\"{0:s}\";{1:s}".format(size, sep)
+        s += "node [shape = point]; dummy{0:s}".format(sep)
+        niStates = [i for i in range(len(self.States)) if i != self.Initial]
+        s += self.dotDrawState(self.Initial)
+        s += "dummy -> \"{0:s}\"{1:s}".format(str(self.States[self.Initial]), sep)
+        for sti in niStates:
+            s += self.dotDrawState(sti)
+        for si in self.succintTransitions():
+            s += self.dotDrawTransition(si[0], si[1], si[2])
+        s += "}}{0:s}".format(sep)
+        return s
+
+
+class OFA(FA):
+    """ Base class for one-way automata
+    .. inheritance-diagram:: OFA"""
+    @abstractmethod
+    def succintTransitions(self):
+        """Collapsed transitions"""
+        pass
+
+    @abstractmethod
+    def evalSymbol(self):
+        """Eval symbol"""
+        pass
+
+    @abstractmethod
+    def addTransition(self, st1, sym, st2):
+        """Add transition
+        :param int st1: departing state
+        :param str sym: label
+        :param int st2: arriving state"""
+        pass
+
+    @abstractmethod
+    def __ne__(self, other):
+        pass
+
+    @abstractmethod
+    def __eq__(self, other):
+        pass
+
+    @abstractmethod
+    def stateChildren(self, s):
+        """ To be implemented below
+
+        :param s: state
+        :rtype: list"""
+        pass
+
+    def _deleteRefTo(self, src, sym, dest):
+        """Delete transition
+
+        :param int src: source state
+        :param str sym: label
+        :param int dest: target state"""
+        if self.delta.get(src, {}).get(sym, None) == dest:
+            del (self.delta[src][sym])
+
+    @staticmethod
+    def dotDrawTransition(st1, label, st2, sep="\n"):
+        """ Draw a transition in Dot Format
+
+        :param str st1: starting state
+        :param str st2: ending state
+        :param str label: symbol
+        :param str sep: separator
+        :rtype: str"""
+        return "\"{0:s}\" -> \"{1:s}\" [label = \"{2:s}\"];{3:s} ".format(st1, st2, label, sep)
+
+    @abstractmethod
+    def initialComp(self):
+        """Initial component
+
+        :rtype: list"""
+        pass
+
+    @abstractmethod
+    def _getTags(self):
+        pass
+
+    @abstractmethod
+    def usefulStates(self):
+        """ To be implemented below """
+        pass
+
+    @abstractmethod
+    def deleteStates(self, del_states):
+        """ To be implemented below
+
+        :param del_states: states to be deleted
+        :type del_states: list
+        """
+        pass
+
+    @abstractmethod
+    def toGFA(self):
+        """ To be implemented below
+        """
+        pass
+
+    @abstractmethod
+    def finalCompP(self, s):
+        """To be implemented below
+
+        :param s: state
+        :rtype: list"""
+        pass
+
+    @abstractmethod
+    def uniqueRepr(self):
+        """Abstract method"""
+        pass
+
+    def emptyP(self):
+        """ Tests if the automaton accepts a empty language
+
+        :rtype: bool
+
+        .. versionadded:: 1.0"""
+        a = self.initialComp()
+        for s in a:
+            if self.finalP(s):
+                return False
+        return True
+
+    def dump(self):
+        """Returns a python representation of the object
+
+        :returns: the python representation (Tags,States,Sigma,delta,Initial,Final)
+        :rtype: tuple """
+        tags = self._getTags()
+        sig = list(self.Sigma)
+        I = [i for i in forceIterable(self.Initial)]
+        F = [i for i in self.Final]
+        dt = []
+        for i in xrange(self.__len__()):
+            for c in self.delta.get(i, []):
+                if c == Epsilon:
+                    ci = -1
+                else:
+                    ci = sig.index(c)
+                for j in forceIterable(self.delta[i][c]):
+                    dt.append((i, ci, j))
+        return tags, self.States, sig, dt, I, F
+
+    def completeP(self):
+        """Checks if it is a complete FA (if delta is total)
+
+        :return: bool"""
+        if not self.Sigma:
+            return True
+        ss = len(self.Sigma)
+        for s, _ in enumerate(self.States):
+            if s not in self.delta:
+                return False
+            ni = set(self.delta[s])
+            if len(ni) != ss:
+                return False
+        return True
+
+    def complete(self, dead="dead"):
+        """Transforms the automata into a complete one.
+
+        :param str dead: dead state name
+        :return: the complete FA
+        :rtype: DFA
+
+        .. note::
+           Adds a dead state (if necessary) so that any word can be processed with the automata. The new state is
+           named ``dead``, so this name should never be used for other purposes.
+
+        .. attention::
+           The object is modified in place.
+
+        .. versionchanged:: 1.0"""
+        if self.completeP():
+            return self
+        ss = len(self.Sigma)
+        f = True
+        Bin = self.stateIndex("dead", True)
+        for s, _ in enumerate(self.States):
+            if s not in self.delta:
+                self.delta[s] = {}
+            ni = self.delta[s].keys()
+            if len(ni) != ss:
+                for c in self.Sigma:
+                    if c not in ni:
+                        self.addTransition(s, c, Bin)
+                        f = False
+        if f:
+            self.deleteState(Bin)
+        return self
+
+    def trim(self):
+        """Removes the states that do not lead to a final state, or, inclusively,
+        that can't be reached from the initial state. Only useful states
+        remain.
+
+        .. attention::
+           in place transformation"""
+        useful = self.usefulStates()
+        del_states = [s for s in xrange(len(self.States)) if s not in useful]
+        if del_states:
+            self.deleteStates(del_states)
+        return self
+
+    def trimP(self):
+        """Tests if the FA is trim: initially connected and co-accessible
+
+        :return: bool"""
+        for s, _ in enumerate(self.States):
+            if not self.finalCompP(s):
+                return False
+        return len(self.States) == len(self.initialComp())
+
     def minimalBrzozowski(self):
-        """Constructs the equivalent minimal complete DFA using Brzozowski's
+        """Constructs the equivalent minimal DFA using Brzozowski's
         algorithm
 
-        :returns: equivalent minimal DFA
+        :return: equivalent minimal DFA
         :rtype: DFA"""
-        c = self.reversal().toDFA().reversal().toDFA()
-        return c
+        return self.reversal().toDFA().reversal().toDFA()
 
     def minimalBrzozowskiP(self):
         """Tests if the FA is minimal using Brzozowski's algorithm
 
-        :rtype: boolean"""
+        :rtype: bool"""
         x = self.minimalBrzozowski()
         x.complete()
         return self.uniqueRepr() == x.uniqueRepr()
 
     def regexpSE(self):
-        """A regular expression obtained by state elimination algorithm whose
-        language is recognised by the FA.
+        """A regular expression obtained by state elimination algorithm whose language is recognised by the FA.
 
-        :returns: the equivalent regular expression
+        :return: the equivalent regular expression
         :rtype: regexp"""
         new = self.dup()
         new.trim()
@@ -518,41 +867,25 @@ class FA(object):
         #(a + bd*c)* bd*
         return reex.concat(reex.star(re2, copy(self.Sigma)), re1, copy(self.Sigma)).reduced()
 
-    def countTransitions(self):
-        """Evaluatess size of FA transitionwise
-
-        :returns: the number of transitions
-        :rtype: int"""
-        t = 0
-        for i in self.delta.keys():
-            t += len(self.delta[i].keys())
-        return t
-
     def allRegExps(self):
         """Evaluates the alphabetic length of the equivalent regular expression using every possible order of state
         elimination.
 
         :rtype: list of tuples (int, list of states)"""
         from itertools import permutations
-
         new = self.dup()
         new.trim()
         gfa = new.toGFA()
         for order in permutations(range(len(gfa.States))):
-            # temp = self.dup()
             return self.re_stateElimination(copy(list(order))).alphabeticLength(), order
 
     def _isAcyclic(self, s, visited, strict):
         """Determines if from state s a cyclic is reached
-    
-        :param s: state
-        :type s: int
-        :param visited: marks visited states
-        :type visited: dictionary
-        :returns: True if yes
-        :param strict: if not True loops are allowed
-        :type strict: boolean
-        :rtype: boolean"""
+
+        :param int s: state
+        :param dict visited: marks visited states
+        :param bool strict: if not True loops are allowed
+        :rtype: bool"""
         if s not in visited:
             visited[s] = 1
             if s in self.delta:
@@ -573,9 +906,9 @@ class FA(object):
         """ Checks if the FA is acyclic
 
         :param strict: if not True loops are allowed
-        :type strict: boolean
-        :returns: True if FA is acyclic
-        :rtype: boolean"""
+        :type strict: bool
+        :returns: True if the FA is acyclic
+        :rtype: bool"""
         visited = {}
         for s in xrange(len(self.States)):
             acyclic = self._isAcyclic(s, visited, strict)
@@ -588,14 +921,15 @@ class FA(object):
         if s not in visited:
             visited.append(s)
             if s in self.delta:
+                # noinspection PyTypeChecker
                 for dest in self.stateChildren(s, True):
                     self._topoSort(dest, visited, L)
             L.insert(0, s)
 
     def topoSort(self):
-        """Topological order for FA
+        """Topological order for the FA
 
-        :returns: List of states
+        :returns: List of state indexes
         :rtype: list of int
 
         .. note::
@@ -675,7 +1009,7 @@ class FA(object):
         return gfa
 
     def SPRegExp(self):
-        """ Checks if FA is SP, and if so returns the regexp whose language is recognised by the FA
+        """ Checks if FA is SP (Serial-PArallel), and if so returns the regular expression whose language is recognised by the FA
 
         :returns: equivalent regular expression
         :rtype: regexp
@@ -700,6 +1034,7 @@ class FA(object):
         for v in topoOrder:  # States should be topologically ordered
             i = len(gfa.predecessors[v])
             while i > 1:
+                #noinspection PyProtectedMember
                 i = gfa._simplify(v, i)
             if len(gfa.predecessors[v]):
                 track = gfa.lab[(list(gfa.predecessors[v])[0], v)]
@@ -708,13 +1043,14 @@ class FA(object):
                 track = SPLabel([])
                 rp = reex.epsilon(copy(self.Sigma))
             try:
+                #noinspection PyProtectedMember
                 gfa._do_edges(v, track, rp)
             except KeyError:
                 pass
         return gfa.delta[list(gfa.predecessors[v])[0]][v]
 
     def reCG(self):
-        """Regular expression from state elimination whose language is recognised by FA. Uses a heuristic to choose
+        """Regular expression from state elimination whose language is recognised by the FA. Uses a heuristic to choose
         the order of elimination.
 
         :returns: the equivalent regular expression
@@ -757,7 +1093,7 @@ class FA(object):
         return gfa.delta[gfa.Initial][list(gfa.Final)[0]].reduced()
 
     def reCG_nn(self):
-        """Regular expression from state elimination whose language is recognised by FA. Uses a heuristic to choose
+        """Regular expression from state elimination whose language is recognised by the FA. Uses a heuristic to choose
         the order of elimination. The FA is not normalized before the state elimination.
 
         :returns: the equivalent regular expression
@@ -814,10 +1150,11 @@ class FA(object):
         gfa.completeDelta()
         if n == 1:
             return reex.star(gfa.delta[gfa.Initial][gfa.Initial], copy(self.Sigma)).reduced()
+        #noinspection PyProtectedMember
         return gfa._re0()
 
     def re_stateElimination(self, order=None):
-        """Regular expression from state elimination whose language is recognised by FA. The FA is normalized before
+        """Regular expression from state elimination whose language is recognised by the FA. The FA is normalized before
         the state elimination.
 
         :param order: state elimination sequence
@@ -843,16 +1180,16 @@ class FA(object):
         return gfa.delta[gfa.Initial][list(gfa.Final)[0]]
 
     def reDynamicCycleHeuristic(self):
-        """ State elminimation Heuristic based on the number of cycles that passes through each state. Here those
+        """ State elimination Heuristic based on the number of cycles that passes through each state. Here those
         numbers are evaluated dynamically after each elimination step
-    
+
+        :returns: an equivalent regular expression
+        :rtype: regexp
+
         .. seealso::
            Nelma Moreira, Davide Nabais, and Rogério Reis. State elimination ordering strategies: Some experimental
            results. Proc. of 11th Workshop on Descriptional Complexity of Formal Systems (DCFS10),
-           pages 169-180.2010. DOI: 10.4204/EPTCS.31.16
-    
-        :returns: a equivalent regular expression
-        :rtype: regexp"""
+           pages 169-180.2010. DOI: 10.4204/EPTCS.31.16"""
         if not len(self.Final):
             return reex.emptyset(copy(self.Sigma))
         new = self.dup()
@@ -907,19 +1244,20 @@ class FA(object):
         gfa.completeDelta()
         if n == 1:
             return reex.star(gfa.delta[gfa.Initial][gfa.Initial], copy(self.Sigma))
+        #noinspection PyProtectedMember
         return gfa._re0()
 
     def reStaticCycleHeuristic(self):
-        """State elminimation Heuristic based on the number of cycles that passes through each state. Here those
+        """State elimination Heuristic based on the number of cycles that passes through each state. Here those
         numbers are evaluated statically in the beginning of the process
+
+        :returns: a equivalent regular expression
+        :rtype: regexp
 
         .. seealso::
            Nelma Moreira, Davide Nabais, and Rogério Reis. State elimination ordering strategies: Some experimental
            results. Proc. of 11th Workshop on Descriptional Complexity of Formal Systems (DCFS10),
-           pages 169-180.2010. DOI: 10.4204/EPTCS.31.16
-    
-        :returns: a equivalent regular expression
-        :rtype: regexp"""
+           pages 169-180.2010. DOI: 10.4204/EPTCS.31.16"""
         if not len(self.Final):
             return reex.emptyset(copy(self.Sigma))
         new = self.dup()
@@ -960,7 +1298,6 @@ class FA(object):
                 if a != m:
                     preds.add(a)
             gfa.eliminate(m)
-            # update predecessors for weight(st)...
             for s in succs:
                 gfa.predecessors[s].remove(m)
                 for s1 in preds:
@@ -973,10 +1310,11 @@ class FA(object):
         gfa.completeDelta()
         if n == 1:
             return reex.star(gfa.delta[gfa.Initial][gfa.Initial], copy(self.Sigma))
+        #noinspection PyProtectedMember
         return gfa._re0()
 
     def re_stateElimination_nn(self, order=None):
-        """Regular expression from state elimination whose language is recognised by FA. The FA is not normalized
+        """Regular expression from state elimination whose language is recognised by the FA. The FA is not normalized
         before the state elimination.
 
         :param order: state elimination sequence
@@ -1056,7 +1394,6 @@ class FA(object):
         for i in newEdges:
             if i[0] not in gfa.delta[i[1]]:
                 gfa.delta[i[1]][i[0]] = 'x'
-
         # initializations needed for cut point detection
         gfa.c = 1
         gfa.num = {}
@@ -1084,18 +1421,17 @@ class FA(object):
     def evalNumberOfStateCycles(self):
         """Evaluates the number of cycles each state participates
 
-        :returns: state->list of cycle lenths
+        :returns: state->list of cycle lengths
         :rtype: dict"""
         cycles = {}
         seen = []
-        for i in xrange(len(self.States)):
+        for i, _ in enumerate(self.States):
             cycles[i] = 0
         (bkE, multipl) = self._DFSBackEdges()
         for (x, y) in bkE:
             self._chkForCycles(y, x, cycles, seen, multipl)
         return cycles
 
-    # noinspection PyTypeChecker
     def _chkForCycles(self, y, x, cycles, seen, multipl):
         """Used in evalNumberOfStateCycles"""
         s = y
@@ -1117,7 +1453,7 @@ class FA(object):
                 if bar not in seen:
                     seen.append(bar)
                     m = 1
-                    for i in xrange(len(path) - 1):
+                    for i in range(len(path) - 1):
                         m *= max(1, multipl[(path[i], path[i + 1])])
                     m *= max(1, multipl[(path[-1], path[0])])
                     for i in path:
@@ -1129,10 +1465,11 @@ class FA(object):
             stack.append(self.stateChildren(s).keys())
         return cycles
 
-    def _normalizeCycle(self, c):
+    @staticmethod
+    def _normalizeCycle(c):
         """Normalizes a cycle with its first element at the begining
-        :param c: cycle
-        :type c: dict"""
+
+        :param list c: cycle"""
         m = min(c)
         i = c.index(m)
         return c[i:] + c[:i]
@@ -1140,6 +1477,7 @@ class FA(object):
     def _DFSBackEdges(self):
         """Returns a pair (BE, M) whee BE is the set of backedges form a DFS starting with the initial state as pairs
          (s, d) and M is a map (i, j)->multiplicity
+
         :returns: as said above
         :rtype: tuple"""
         mStates = set()
@@ -1155,6 +1493,7 @@ class FA(object):
         while pool:
             s = pool.pop()
             child = self.stateChildren(s)
+            # noinspection PyTypeChecker
             for r in child:
                 multipl[(s, r)] = child[r]
             l = child.keys()
@@ -1169,22 +1508,33 @@ class FA(object):
     def eliminateStout(self, st):
         """Eliminate all transitions outgoing from a given state
 
-        :param st: the state to loose all outgoing transitions
-        :type st: int
+        :param int st: the state index to loose all outgoing transitions
 
         .. attention::
            performs in place alteration of the automata
 
         .. versionadded:: 0.9.6"""
-        if st in self.delta:
+        if st in self.delta.keys():
             del (self.delta[st])
+        return self
+
+    def dup(self):
+        """ Duplicate OFA
+
+        :returns: duplicate object
+        """
+        return deepcopy(self)
 
 
-# noinspection PyTypeChecker,PyUnresolvedReferences
-class NFA(FA):
+class NFA(OFA):
     """Class for Non-deterministic Finite Automata (epsilon-transitions allowed).
 
     .. inheritance-diagram:: NFA"""
+
+    def uniqueRepr(self):
+        """Dummy representation. Used DFA.uniqueRepr()
+        :rtype: tuple"""
+        return self.toDFA().uniqueRepr()
 
     def __init__(self):
         FA.__init__(self)
@@ -1204,13 +1554,17 @@ class NFA(FA):
                     l.append((self.States[x], k, self.States[y]))
         return l
 
+    def _s_lstInitial(self):
+        return [str(self.States[x]) for x in self.Initial]
+
     def _lstInitial(self):
         if self.Initial is None:
             raise DFAnoInitial()
         else:
             return [self.States[i] for i in self.Initial]
 
-    def vDescription(self):
+    @staticmethod
+    def vDescription():
         """Generation of Verso interface description
 
         .. versionadded:: 0.9.5
@@ -1226,83 +1580,122 @@ class NFA(FA):
     def __or__(self, other):
         """ Disjunction of automata:  X | Y.
 
-        :param other: the right hand operand
-        :type other: NFA
-        :rtype: NFA
+        :param NFA|DFA other: the right hand operand
         :raises FAdoGeneralError: if any operand is not an NFA"""
-        if type(other) != type(self):
+        if isinstance(other, DFA):
+            par2 = other.toNFA()
+        elif not isinstance(other, NFA):
             raise FAdoGeneralError("Incompatible objects")
-        new = self._copySkell(other)
+        else:
+            par2 = other
+        new = self._copySkell(par2)
         ini = new.addState()
         new.addInitial(ini)
         for s in self.Initial:
-            si = new.stateName("A{0:d}".format(s))
+            si = new.stateIndex((0, s))
             new.addTransition(ini, Epsilon, si)
-        for s in other.Initial:
-            si = new.stateName("B{0:d}".format(s))
+        for s in par2.Initial:
+            si = new.stateIndex((1, s))
             new.addTransition(ini, Epsilon, si)
         fin = new.addState()
         new.addFinal(fin)
         for s in self.Final:
-            si = new.stateName("A{0:d}".format(s))
+            si = new.stateIndex((0, s))
             new.addTransition(si, Epsilon, fin)
-        for s in other.Final:
-            si = new.stateName("B{0:d}".format(s))
+        for s in par2.Final:
+            si = new.stateIndex((1, s))
             new.addTransition(si, Epsilon, fin)
         return new
 
     def __and__(self, other):
         """Conjunction of automata
 
-        :param other: the right hand operand
-        :type other: NFA
+        :param NFA|DFA other: the right hand operand
         :rtype: NFA
         :raises FAdoGeneralError: if any operand is not an NFA"""
-        if type(other) != type(self):
+        if isinstance(other, DFA):
+            par2 = other.toNFA()
+        elif type(other) != type(self):
             raise FAdoGeneralError("Incompatible objects")
-        new = self.product(other)
-        for x in [(self.States[a], other.States[b]) for a in self.Final for b in other.Final]:
+        else:
+            par2 = other
+        new = self.product(par2)
+        for x in [(self.States[a], par2.States[b]) for a in self.Final for b in other.Final]:
             if x in new.States:
-                new.addFinal(new.stateName(x))
+                new.addFinal(new.stateIndex(x))
         return new._namesToString()
 
-    def _getTags(self):
+    def __invert__(self):
+        """Complement of the NFA (through conversion to DFA)
+
+        :rtype: NFA"""
+        foo = self.toDFA()
+        return foo.__invert__().toNFA()
+
+    @staticmethod
+    def _getTags():
         """returns Tags for dump
 
         :rtype: list of str"""
         return ["NFA"]
 
-    def concat(self, other):
+    def concat(self, other, middle="middle"):
         """Concatenation of NFA
 
-        :param other: the other NFA
-        :type other: NFA
+        :param str middle: glue state name
+        :param NFA|DFA other: the other NFA
         :returns: the result of the concatenation
         :rtype: NFA"""
-        new = self._copySkell(other)
+        if isinstance(other, DFA):
+            par2 = other.toNFA()
+        else:
+            par2 = other
+        new = self._copySkell(par2)
         for i in self.Initial:
-            new.addInitial(new.stateName("A{0:d}".format(i)))
-        m = new.addState("middle")
+            new.addInitial(new.stateIndex((0, i)))
+        m = new.addState(middle)
         for i in self.Final:
-            new.addTransition(new.stateName("A{0:d}".format(i)), Epsilon, m)
-        for i in other.Initial:
-            new.addTransition(m, Epsilon, new.stateName("B{0:d}".format(i)))
-        for i in other.Final:
-            new.addFinal(new.stateName("B{0:d}".format(i)))
+            new.addTransition(new.stateIndex((0, i)), Epsilon, m)
+        for i in par2.Initial:
+            new.addTransition(m, Epsilon, new.stateIndex((1, i)))
+        for i in par2.Final:
+            new.addFinal(new.stateIndex((1, i)))
         return new
+
+    def witness(self):
+        """Witness of non emptyness
+
+        :return: word
+        :rtype: str"""
+        done = set()
+        notDone = set()
+        pref = dict()
+        for si in self.Initial:
+            pref[si] = Epsilon
+            notDone.add(si)
+        while notDone:
+            si = notDone.pop()
+            done.add(si)
+            if si in self.Final:
+                return pref[si]
+            for syi in self.delta.get(si, []):
+                for so in self.delta[si][syi]:
+                    if so in done or so in notDone:
+                        continue
+                    pref[so] = sConcat(pref[si], syi)
+                    notDone.add(so)
+        return None
 
     def shuffle(self, other):
         """Shuffle of a NFA
 
-        :param other: an FA
-        :type other: NFA
+        :param NFA|DFA other: an FA
         :returns: the resulting NFA
         :rtype: NFA"""
         if len(self.Initial) > 1:
             d1 = self._toNFASingleInitial().elimEpsilonO()
         else:
             d1 = self
-
         if type(other) == NFA:
             if len(other.Initial) > 1:
                 d2 = self._toNFASingleInitial().elimEpsilonO()
@@ -1315,22 +1708,22 @@ class NFA(FA):
         NSigma = d1.Sigma.union(d2.Sigma)
         c.setSigma(NSigma)
         c.States = [(i, j) for i in xrange(len(d1.States)) for j in xrange(len(d2.States))]
-        c.addInitial(c.stateName((list(d1.Initial)[0], list(d2.Initial)[0])))
+        c.addInitial(c.stateIndex((list(d1.Initial)[0], list(d2.Initial)[0])))
         for st in c.States:
-            si = c.stateName(st)
+            si = c.stateIndex(st)
             if d1.finalP(st[0]) and d2.finalP(st[1]):
                 c.addFinal(si)
             for sym in c.Sigma:
                 try:
                     lq = d1.evalSymbol([st[0]], sym)
                     for q in lq:
-                        c.addTransition(si, sym, c.stateName((q, st[1])))
+                        c.addTransition(si, sym, c.stateIndex((q, st[1])))
                 except (DFAstopped, DFAsymbolUnknown):
                     pass
                 try:
                     lq = d2.evalSymbol([st[1]], sym)
                     for q in lq:
-                        c.addTransition(si, sym, c.stateName((st[0], q)))
+                        c.addTransition(si, sym, c.stateIndex((st[0], q)))
                 except (DFAstopped, DFAsymbolUnknown):
                     pass
         return c
@@ -1368,7 +1761,7 @@ class NFA(FA):
 
         :param other: the other NFA
         :type other: NFA
-        :rtype: boolean"""
+        :rtype: bool"""
         return self.toDFA() == other.toDFA()
 
     def __ne__(self, other):
@@ -1376,65 +1769,76 @@ class NFA(FA):
 
         :param other: the other NFA
         :type other: NFA
-        :rtype: boolean"""
+        :rtype: bool"""
         return not self == other
 
-    def _copySkell(self, other, st1="A", st2="B"):
-        """Creates a new NFA with the skells of both NFAs Each state is nammed with its previous index preceded by
-        st1 and st2 respectively
+    def _copySkell(self, other):
+        """Creates a new NFA with the skells of both NFAs
 
-        :param other: the other NFA
-        :type other: NFA
-        :param st1: prefix for first NFA
-        :type st1: str
-        :param st2: prefix for second NFA
-        :type st2: str
+        Each state is nammed with its previous index is incribed in a tuple (0,_) and (1,_) respectively
+
+        :param NFA other: the other NFA
+        :rtype: NFA
 
         .. attention::
            No initial and final states are assigned in the resulting NFA."""
         new = NFA()
         s = len(self.States)
-        for i in xrange(s):
-            new.addState("{0:>s}{1:d}".format(st1, i))
+        for i in range(s):
+            new.addState((0, i))
         for i in self.delta:
             for c in self.delta[i]:
                 for j in self.delta[i][c]:
-                    new.addTransition(new.stateName("{0:>s}{1:d}".format(st1, i)),
-                                      c, new.stateName("{0:>s}{1:d}".format(st1, j)))
+                    new.addTransition(new.stateIndex((0, i)), c, new.stateIndex((0, j)))
         s = len(other.States)
-        for i in xrange(s):
-            new.addState("{0:>s}{1:d}".format(st2, i))
+        for i in range(s):
+            new.addState((1, i))
         for i in other.delta:
             for c in other.delta[i]:
                 for j in other.delta[i][c]:
-                    new.addTransition(new.stateName("{0:>s}{1:d}".format(st2, i)),
-                                      c, new.stateName("{0:>s}{1:d}".format(st2, j)))
+                    new.addTransition(new.stateIndex((1, i)), c, new.stateIndex((1, j)))
         return new
 
     def setInitial(self, statelist):
         """Sets the initial states of an NFA
 
-        :param statelist: an iterable of initial state indexes
-        :type statelist: iterable of int"""
+        :param set|list|int statelist: an iterable of initial state indexes"""
         self.Initial = set(statelist)
 
     def addInitial(self, stateindex):
         """Add a new state to the set of initial states.
 
-        :param stateindex: index of new initial state
-        :type stateindex: int"""
+        :param int stateindex: index of new initial state"""
         self.Initial.add(stateindex)
 
+    def succintTransitions(self):
+        """ Collects the transition information in a concat way suitable for graphical representation.
+        :rtype: list"""
+        foo = dict()
+        for s in self.delta:
+            for c in self.delta[s]:
+                for s1 in self.delta[s][c]:
+                    k = (s, s1)
+                    if k not in foo:
+                        foo[k] = []
+                    foo[k].append(c)
+        l = []
+        for k in foo:
+            cs = foo[k]
+            s = "%s" % graphvizTranslate(str(cs[0]))
+            for c in cs[1:]:
+                s += ", %s" % graphvizTranslate(str(c))
+            l.append((str(self.States[k[0]]), str(self.States[k[1]]), s))
+        return l
+
     def deleteStates(self, del_states):
-        """Delete given iterable collection of states from the
-    automaton.
+        """Delete given iterable collection of states from the automaton.
 
-    :param del_states: collection of int representing states
-    :type del_states: set or list of int
+        :param set|list del_states: collection of int representing states
 
-    .. note::
-       delta function will always be rebuilt, regardless of whether the states list to remove is a suffix,
-       or a sublist, of the automaton's states list."""
+        .. note::
+           delta function will always be rebuilt, regardless of whether the states list to remove is a suffix,
+           or a sublist, of the automaton's states list."""
         rename_map = {}
         new_delta = {}
         new_final = set()
@@ -1442,7 +1846,7 @@ class NFA(FA):
         for state in del_states:
             if state in self.Initial:
                 self.Initial.remove(state)
-        for state in xrange(len(self.States)):
+        for state in range(len(self.States)):
             if not state in del_states:
                 rename_map[state] = len(new_states)
                 new_states.append(self.States[state])
@@ -1467,12 +1871,9 @@ class NFA(FA):
         """Adds a new transition. Transition is from ``sti1`` to ``sti2`` consuming symbol ``sym``. ``sti2`` is a
         unique state, not a set of them.
 
-        :param sti1: state index of departure
-        :type sti1: int
-        :param sti2: state index of arrival
-        :type sti2: int
-        :param sym: symbol consumed
-        :type sym: str"""
+        :param int sti1: state index of departure
+        :param int sti2: state index of arrival
+        :param str sym: symbol consumed"""
         if sym != Epsilon:
             self.Sigma.add(sym)
         if sti1 not in self.delta:
@@ -1482,17 +1883,39 @@ class NFA(FA):
         else:
             self.delta[sti1][sym].add(sti2)
 
+    def addEpsilonLoops(self):
+        """Add epsilon loops to every state
+        :return: self
+
+        .. attention:: in-place modification
+
+        .. versionadded:: 1.0"""
+        for i in range(len(self.States)):
+            self.addTransition(i, Epsilon, i)
+        return self
+
+    def addTransitionQ(self, srcI, dest, symb, qfuture, qpast):
+        """Add transition to the new transducer instance.
+
+        :param set qpast: past queue
+        :param set qfuture: future queue
+        :param symb: symbol
+        :param dest: destination state
+        :param int srcI: source state
+
+        .. versionadded:: 1.0"""
+        if dest not in qpast:
+            qfuture.add(dest)
+        i = self.stateIndex(dest, True)
+        self.addTransition(srcI, symb, i)
+
     def delTransition(self, sti1, sym, sti2, _no_check=False):
         """Remove a transition if existing and perform cleanup on the transition function's internal data structure.
 
-        :param sti1: state index of departure
-        :type sti1: int
-        :param sti2: state index of arrival
-        :type sti2: int
-        :param sym: symbol consumed
-        :type sym: str
-        :param _no_check: dismiss secure code
-        :type _no_check: boolean
+        :param int sti1: state index of departure
+        :param int sti2: state index of arrival
+        :param str sym: symbol consumed
+        :param bool _no_check: dismiss secure code
 
         .. note::
            unused alphabet symbols will be discarded from Sigma."""
@@ -1529,12 +1952,12 @@ class NFA(FA):
            dictionary does not have to be complete"""
         if len(dicti.keys()) != len(self.States):
             for i in xrange(len(self.States)):
-                if i not in dicti.keys():
+                if i not in dicti:
                     dicti[i] = i
         delta = {}
-        for s in self.delta.keys():
+        for s in self.delta:
             delta[dicti[s]] = {}
-            for c in self.delta[s].keys():
+            for c in self.delta[s]:
                 delta[dicti[s]][c] = set()
                 for st in self.delta[s][c]:
                     delta[dicti[s]][c].add(dicti[st])
@@ -1552,14 +1975,13 @@ class NFA(FA):
     def epsilonP(self):
         """Whether this NFA has epsilon-transitions
 
-        :rtype: boolean"""
+        :rtype: bool"""
         return any(map(lambda x: Epsilon in x, self.delta.itervalues()))
 
     def epsilonClosure(self, st):
         """Returns the set of states epsilon-connected to from given state or set of states.
 
-        :param st: state index or set of state indexes
-        :type st: int or set
+        :param int|set st: state index or set of state indexes
         :returns: the list of state indexes epsilon connected to ``st``
         :rtype: set of int
 
@@ -1579,8 +2001,7 @@ class NFA(FA):
     def closeEpsilon(self, st):
         """Add all non epsilon transitions from the states in the epsilon closure of given state to given state.
 
-        :param st: state index
-        :type st: int"""
+        :param int st: state index"""
         targets = self.epsilonClosure(st)
         targets.remove(st)
         if not targets:
@@ -1602,8 +2023,7 @@ class NFA(FA):
     def eliminateTSymbol(self, symbol):
         """Delete all trasitions through a given symbol
 
-        :param symbol: the symbol to be excluded from delta
-        :type symbol: str
+        :param str symbol: the symbol to be excluded from delta
 
         .. attention::
            in place alteration of the automata
@@ -1622,13 +2042,13 @@ class NFA(FA):
            performs in place modification of automaton"""
         for state in self.delta:
             self.closeEpsilon(state)
+        return self
 
     def evalWordP(self, word):
         """Verify if the NFA recognises given word.
 
-        :param word: word to be recognised
-        :type word: list of symbols.
-        :rtype: boolean"""
+        :param str word: word to be recognised
+        :rtype: bool"""
         ilist = self.epsilonClosure(self.Initial)
         for c in word:
             ilist = self.evalSymbol(ilist, c)
@@ -1642,10 +2062,8 @@ class NFA(FA):
     def evalSymbol(self, stil, sym):
         """Set of states reacheable from given states through given symbol and epsilon closure.
 
-        :param stil: set of current states
-        :type stil: set of int or list of int
-        :param sym: symbol to be consumed
-        :type sym: str
+        :param set|list stil: set of current states
+        :param str sym: symbol to be consumed
         :returns: set of reached states
         :rtype: set of int
         :raises DFAsymbolUnknown: if symbol is not in alphabet"""
@@ -1666,7 +2084,7 @@ class NFA(FA):
         return res
 
     def minimal(self):
-        """Evaluates the equivalent minimal complete DFA
+        """Evaluates the equivalent minimal DFA
 
         :returns:  equivalent minimal DFA
         :rtype: DFA"""
@@ -1688,9 +2106,9 @@ class NFA(FA):
         new.States = self.States[:]
         new.Initial = self.Initial.copy()
         new.Final = self.Final.copy()
-        for s in self.delta.keys():
+        for s in self.delta:
             new.delta[s] = {}
-            for c in self.delta[s].keys():
+            for c in self.delta[s]:
                 new.delta[s][c] = self.delta[s][c].copy()
         return new
 
@@ -1705,17 +2123,17 @@ class NFA(FA):
         .. note::
            State names are not preserved."""
         for s in xrange(len(self.States)):
-            self.States[s] = ''
+            self.States[s] = (0, self.States[s])
         for c in fa.Sigma:
             self.addSigma(c)
         for s in xrange(len(fa.States)):
-            self.addState(s)
-        for s in fa.delta.keys():
-            for c in fa.delta[s].keys():
+            self.addState((1, s))
+        for s in fa.delta:
+            for c in fa.delta[s]:
                 for t in fa.delta[s][c]:
-                    self.addTransition(self.stateName(s), c, self.stateName(t))
-        return (self.stateName(list(fa.Initial)[0]),
-                self.stateName(list(fa.Final)[0]))
+                    self.addTransition(self.stateIndex((1, s)), c, self.stateIndex((1, t)))
+        return (self.stateIndex((1, uSet(fa.Initial))),
+                self.stateIndex((1, uSet(fa.Final))))
 
     def reverseTransitions(self, rev):
         """Evaluate reverse transition function.
@@ -1753,7 +2171,7 @@ class NFA(FA):
 
         :param s: state index
         :type s: int
-        :returns: :: boolean"""
+        :returns: :: bool"""
         if s in self.Final:
             return True
         lst = [s]
@@ -1776,7 +2194,7 @@ class NFA(FA):
     def deterministicP(self):
         """Verify whether this NFA is actually deterministic
 
-        :rtype: boolean"""
+        :rtype: bool"""
         if len(self.Initial) != 1:
             return False
         for st in self.delta:
@@ -1799,12 +2217,12 @@ class NFA(FA):
         s = len(old.States)
         for i in xrange(s):
             new.addState(str(i))
-        for i in old.delta.keys():
-            for c in old.delta[i].keys():
-                new.addTransition(new.stateName(str(i)), c, new.stateName("{0:d}".format(uSet(old.delta[i][c]))))
-        new.setInitial(new.stateName(str(uSet(old.Initial))))
+        for i in old.delta:
+            for c in old.delta[i]:
+                new.addTransition(new.stateIndex(str(i)), c, new.stateIndex("{0:d}".format(uSet(old.delta[i][c]))))
+        new.setInitial(new.stateIndex(str(uSet(old.Initial))))
         for i in old.Final:
-            new.addFinal(new.stateName(str(i)))
+            new.addFinal(new.stateIndex(str(i)))
         return new
 
     def homogenousP(self, x):
@@ -1812,29 +2230,87 @@ class NFA(FA):
         are through the same symbol.
 
         :param x: dummy parameter to agree with the method in DFAr
-        :rtype: boolean"""
+        :rtype: bool"""
         return self.toNFAr().homogenousP(True)
 
-    def dotFormat(self, sep="\n"):
-        """Representation in DOT format
+    def stronglyConnectedComponents(self):
+        """Strong components
 
-        :param sep: line separator
+        :rtype: list
 
-        .. versionadded: 0.9.6"""
-        st = "digraph NFA {0:s}{1:s}".format('{', sep)
-        for s in self.delta:
-            d = {}
-            for c in self.delta[s]:
-                for t in self.delta[s][c]:
-                    d[t] = d.setdefault(t, []) + [c]
-            for t in d:
-                rep = ""
-                for a in d[t]:
-                    rep += a + ','
-                rep = rep[:-1]
-                st += '{0:d} -> {1:d} [label="{2:>s}"]{3:>s}'.format(str(s), str(t), rep, sep)
-        st += "{0:s}{1:s}".format('}', sep)
-        return st
+        .. versionadded:: 1.0"""
+        def _strongConnect(st):
+            indices[st] = index[0]
+            lowlink[st] = index[0]
+            index[0] += 1
+            s.append(st)
+            inIndices[st] = True
+            inS[st] = True
+            links = [x for k in self.delta.get(st, {}) for x in self.delta[st][k]]
+            # links = [self.delta[state][k] for k in self.delta.get(state, {})]
+            for l in links:
+                if not inIndices[l]:
+                    _strongConnect(l)
+                    lowlink[st] = min(lowlink[st], lowlink[l])
+                elif inS[l]:
+                    lowlink[st] = min(lowlink[st], indices[l])
+            if lowlink[st] == indices[st]:
+                component = []
+                while True:
+                    l = s.pop()
+                    inS[l] = False
+                    component.append(l)
+                    if l == st:
+                        break
+                result.append(component)
+
+        index = [0]
+        indices = []
+        lowlink = []
+        s = []
+        result = []
+        inIndices = []
+        inS = []
+        for _ in self.States:
+            inIndices.append(False)
+            inS.append(False)
+            indices.append(-1)
+            lowlink.append(-1)
+        for state in self.delta:
+            if not inIndices[state]:
+                _strongConnect(state)
+        return result
+
+    def dotFormat(self, size="20,20", direction="LR", sep="\n"):
+        """ A dot representation
+        :arg direction: direction of drawing
+        :arg size: size of image
+        :arg sep: line separator
+        :return: the dot representation
+        type sep: str
+        :type direction: str
+        :type size: str
+        :rtype: str
+
+        .. versionadded:: 0.9.6
+
+        .. versionchanged:: 0.9.8"""
+
+        s = "digraph finite_state_machine {{{0:s}".format(sep)
+        s += "rankdir={0:s};{1:s}".format(direction, sep)
+        s += "size=\"{0:s}\";{1:s}".format(size, sep)
+        for si in self.Initial:
+            sn = str(self.States[si])
+            s += "node [shape = point]; \"dummy{0:s}\"{1:s}".format(sn, sep)
+            s += self.dotDrawState(si)
+            s += "\"dummy{0:s}\" -> \"{1:s}\";{2:s}".format(sn, str(self.States[si]), sep)
+        niStates = [i for i in range(len(self.States)) if i not in self.Initial]
+        for sti in niStates:
+            s += self.dotDrawState(sti)
+        for si in self.succintTransitions():
+            s += self.dotDrawTransition(si[0], si[2], si[1])
+        s += "}}{0:s}".format(sep)
+        return s
 
     def wordImage(self, word, ist=None):
         """Evaluates the set of states reached consuming given word
@@ -1844,7 +2320,8 @@ class NFA(FA):
         :param ist: starting state index (or set of)
         :type ist: int
         :returns: the set of ending states
-        :rtype: Set of int"""
+        :rtype: Set of int
+        """
         if not ist:
             ist = self.Initial
         ilist = self.epsilonClosure(ist)
@@ -1870,21 +2347,21 @@ class NFA(FA):
 
         def _sN(a, s):
             try:
-                i = a.stateName(s)
+                j = a.stateIndex(s)
             except DFAstateUnknown:
                 return None
-            return i
+            return j
 
-        def _kS(a, i):
+        def _kS(a, j):
             """
 
             :param a:
-            :param i:
+            :param j:
             :return:"""
-            if i is None:
+            if j is None:
                 return set()
             try:
-                ks = a.delta[i].keys()
+                ks = a.delta[j].keys()
             except KeyError:
                 return set()
             return set(ks)
@@ -1898,7 +2375,7 @@ class NFA(FA):
                 iN = new.addState(dest)
                 notDone.append(dest)
             else:
-                iN = new.stateName(dest)
+                iN = new.stateIndex(dest)
             new.addTransition(srcI, k, iN)
 
         new = NFA()
@@ -1909,14 +2386,14 @@ class NFA(FA):
             for s2 in [other.States[x] for x in other.Initial]:
                 sname = (s1, s2)
                 new.addState(sname)
-                new.addInitial(new.stateName(sname))
+                new.addInitial(new.stateIndex(sname))
                 if (s1, s2) not in notDone:
                     notDone.append((s1, s2))
         while notDone:
             state = notDone.pop()
             done.append(state)
             (s1, s2) = state
-            i = new.stateName(state)
+            i = new.stateIndex(state)
             (i1, i2) = (_sN(self, s1), _sN(other, s2))
             (k1, k2) = (_kS(self, i1), _kS(other, i2))
             for k in k1.intersection(k2):
@@ -1951,7 +2428,7 @@ class NFA(FA):
         :type sym: int
         :param dest: destination state
         :type dest: int"""
-        if dest in self.delta.get(src, {}).get(sym, set()):
+        if dest in self.delta[src][sym]:
             self.delta[src][sym].remove(dest)
         for k in xrange(dest + 1, len(self.States)):
             if k in self.delta[dest][sym]:
@@ -1973,6 +2450,12 @@ class NFA(FA):
             if sti < s:
                 self.Initial.remove(s)
                 self.Initial.add(s - 1)
+
+    def toNFA(self):
+        """ Dummy identity function
+
+        :rtype: NFA"""
+        return self
 
     def toDFA(self):
         """Construct a DFA equivalent to this NFA, by the subset construction method.
@@ -1996,7 +2479,7 @@ class NFA(FA):
         index = 0
         while True:
             slist = lStates[index]
-            si = dfa.stateName(slist)
+            si = dfa.stateIndex(slist)
             for s in self.Sigma:
                 stl = self.evalSymbol(slist, s)
                 if not stl:
@@ -2009,7 +2492,7 @@ class NFA(FA):
                             dfa.addFinal(foo)
                             break
                 else:
-                    foo = dfa.stateName(stl)
+                    foo = dfa.stateIndex(stl)
                 dfa.addTransition(si, s, foo)
             if index == len(lStates) - 1:
                 break
@@ -2028,7 +2511,7 @@ class NFA(FA):
         :param target: optional target state
         :type target: int
         :returns: if there is a transition
-        :rtype: boolean"""
+        :rtype: bool"""
         if state not in self.delta:
             return False
         if symbol is None:
@@ -2105,6 +2588,7 @@ class NFA(FA):
                 for s1 in foo:
                     self.delTransition(s, Epsilon, s1)
         self.trim()
+        return self
 
     #noinspection PyUnusedLocal
     def autobisimulation(self):
@@ -2125,15 +2609,15 @@ class NFA(FA):
             if (a in self.Final) != (b in self.Final):
                 marked.add(pair)
 
-        def _desc_marked(desc_p, symbol, q, marked):
+        def _desc_marked(d_p, sym, q1, mrkd):
             """
 
-            :param desc_p:
-            :param symbol:
-            :param q:
-            :param marked:"""
-            for desc_q in self.delta[q][symbol]:
-                yield frozenset((desc_p, desc_q)) in marked
+            :param d_p:
+            :param sym:
+            :param q1:
+            :param mrkd:"""
+            for d_q in self.delta[q1][sym]:
+                yield frozenset((d_p, d_q)) in mrkd
 
         changed_marked = True
         while changed_marked:
@@ -2142,7 +2626,7 @@ class NFA(FA):
             for pair in undecided_pairs:
                 p, q = pair
                 if p in self.delta:
-                    if q not in self.delta or (self.delta[p].keys() != self.delta[q].keys()):
+                    if q not in self.delta or (set(self.delta[p].keys()) != set(self.delta[q].keys())):
                         marked.add(pair)
                         changed_marked = True
                     else:
@@ -2184,17 +2668,17 @@ class NFA(FA):
                 if (i in self.Final) != (j in self.Final):
                     marked.add((i, j))
 
-        def _all_desc_marked(p, q, marked):
+        def _all_desc_marked(p, q, mrkd):
             """
 
             :param p:
             :param q:
-            :param marked:"""
+            :param mrkd:"""
             for s in self.delta[p]:
                 for desc_p in self.delta[p][s]:
                     all_marked = True
                     for desc_q in self.delta[q][s]:
-                        if (desc_p, desc_q) not in marked and (desc_q, desc_p) not in marked:
+                        if (desc_p, desc_q) not in mrkd and (desc_q, desc_p) not in mrkd:
                             all_marked = False
                             break
                     yield all_marked
@@ -2209,7 +2693,7 @@ class NFA(FA):
                         continue
                     if i not in self.delta and j not in self.delta:
                         continue
-                    if self.delta.get(i, {}).keys() != self.delta.get(j, {}).keys():
+                    if set(self.delta.get(i, {}).keys()) != set(self.delta.get(j, {}).keys()):
                         marked.add((i, j))
                         changed_marked = True
                         continue
@@ -2375,7 +2859,7 @@ class NFA(FA):
         gfa.setSigma(self.Sigma)
         #this should be optimized
         fa = self._toNFASingleInitial()
-        gfa.Initial = list(fa.Initial)[0]
+        gfa.Initial = uSet(fa.Initial)
         gfa.States = fa.States[:]
         gfa.setFinal(fa.Final)
         gfa.predecessors = {}
@@ -2391,7 +2875,7 @@ class NFA(FA):
         """Set of children of a state
 
         :param strict: if not strict a state is never its own child even if a self loop is in place
-        :type strict: boolean
+        :type strict: bool
         :param state: state id queried
         :type state: int
         :returns: children states
@@ -2400,7 +2884,7 @@ class NFA(FA):
         if state not in self.delta.keys():
             return l
         for c in self.Sigma:
-            if c in self.delta[state].keys():
+            if c in self.delta[state]:
                 l += self.delta[state][c]
         if not strict:
             if state in l:
@@ -2421,8 +2905,8 @@ class NFA(FA):
             if n1.__str__() == "@empty_set" or n2.__str__() == "@empty_set":
                 l.append((n1, n2))
             if n1.__str__() == n2.__str__():
-                a3.addFinal(a3.stateName((n1, n2)))
-        a3.deleteStates(map(a3.stateName, l))
+                a3.addFinal(a3.stateIndex((n1, n2)))
+        a3.deleteStates(map(a3.stateIndex, l))
         return a3
 
     def _starTransitions(self):
@@ -2485,10 +2969,9 @@ class NFAr(NFA):
         :param sym: symbol consumed
         :type sym: str
         :param _no_check: dismiss secure code
-        :type _no_check: boolean"""
+        :type _no_check: bool"""
         super(NFAr, self).delTransition(sti1, sym, sti2, _no_check)
-        if not _no_check and (sti2 not in self.deltaReverse or
-                              sym not in self.deltaReverse[sti2]):
+        if not _no_check and (sti2 not in self.deltaReverse or sym not in self.deltaReverse[sti2]):
             return
         self.deltaReverse[sti2][sym].discard(sti1)
         if not self.deltaReverse[sti2][sym]:
@@ -2621,9 +3104,9 @@ class NFAr(NFA):
         """Checks is the automaton is homogenous, i.e.the transitions that reaches a state have all the same label.
 
         :arg inplace: if True performs epsilon transitions elimination
-        :type inplace: boolean
+        :type inplace: bool
         :return: True if homogenous
-        :rtype: boolean"""
+        :rtype: bool"""
         nfa = self
         if self.epsilonP():
             if inplace:
@@ -2637,9 +3120,12 @@ class NFAr(NFA):
         """Eliminate epsilon-transitions from this automaton, with reduction of states through elimination of
         epsilon-cycles, and single epsilon-transition cases.
 
+        :returns: itself
+        :rtype:
+
         .. attention::
            performs inplace modification of automaton"""
-        for state in self.delta.keys():
+        for state in self.delta:
             if state not in self.delta:
                 continue
             merge_states = self.epsilonPaths(state, state)
@@ -2653,6 +3139,7 @@ class NFAr(NFA):
                     self.mergeStatesSet(merge_states)
         super(NFAr, self).elimEpsilon()
         self.trim()
+        return self
 
     def unlinkSoleIncoming(self, state):
         """If given state has only one incoming transition (indegree is one), and it's through epsilon,
@@ -2703,12 +3190,18 @@ class NFAr(NFA):
 
 
 # noinspection PyTypeChecker
-class DFA(FA):
+class DFA(OFA):
     """ Class for Deterministic Finite Automata.
 
     .. inheritance-diagram:: DFA"""
 
-    def vDescription(self):
+    def __init__(self):
+        super(DFA, self).__init__()
+        self.delta_inv = None
+        self.i = None
+
+    @staticmethod
+    def vDescription():
         """Generation of Verso interface description
 
         .. versionadded:: 0.9.5
@@ -2717,7 +3210,7 @@ class DFA(FA):
         return [("DFA", "Deterministic Finite Automata"),
                 [("DFAFAdo", lambda x: saveToString(x), "FAdo"),
                  ("DFAdot", lambda x: x.dotFormat("&"), "dot")],
-                ("DFA-complete-minimal", ("Complete minimal automata", "Complete minimal automata"), 1, "DFA", None,
+                ("DFA-complete-minimal", ("Complete minimal automata", "Complete minimal automata"), 1, "DFA", "DFA",
                  lambda *x: x[0].completeMinimal()),
                 ("DFA-concatenation", ("Concatenate two DFAs", "Concatenate two DFAs"), 2, "DFA", "DFA", "DFA",
                  lambda *x: x[0].concat(x[1])),
@@ -2739,8 +3232,7 @@ class DFA(FA):
                  lambda *x: x[0].minimalBrzozowskiP()),
                 ("DFA-regexp-SE", ("Convert to RE", "Convert to RE by state elimination"), 1, "DFA", "RE",
                  lambda *x: x[0].regexpSE()),
-                ("DFA-dump", ("dump", "dump"), 1, "DFA", "str", lambda *x: saveToString(x[0]))
-                ]
+                ("DFA-dump", ("dump", "dump"), 1, "DFA", "str", lambda *x: saveToString(x[0]))]
 
     def __repr__(self):
         """ DFA informal string representation"
@@ -2748,15 +3240,37 @@ class DFA(FA):
         :rtype: str"""
         return 'DFA({0:>s})'.format(self.__str__())
 
+    def succintTransitions(self):
+        """ Collects the transition information in a compact way suitable for graphical representation.
+        :rtype: list of tupples
+
+        .. versionadded:: 0.9.8"""
+        foo = dict()
+        for s in self.delta:
+            for c in self.delta[s]:
+                k = (s, self.delta[s][c])
+                if k not in foo:
+                    foo[k] = []
+                foo[k].append(c)
+        l = []
+        for k in foo:
+            cs = foo[k]
+            s = "%s" % str(cs[0])
+            for c in cs[1:]:
+                s += ", %s" % str(c)
+            l.append((str(self.States[k[0]]), s, str(self.States[k[1]])))
+        return l
+
     def initialP(self, state):
-        """ Tests if a state ins initial
+        """ Tests if a state is initial
 
         :param state: state index
         :type state: int
-        :rtype: boolean"""
+        :rtype: bool"""
         return self.Initial == state
 
-    def _getTags(self):
+    @staticmethod
+    def _getTags():
         """returns Tags for dump
 
         :rtype: list of str"""
@@ -2841,6 +3355,7 @@ class DFA(FA):
         self.States = new_states
         self.Final = new_final
         if self.Initial is not None:
+            #noinspection PyNoneFunctionAssignment
             self.Initial = rename_map.get(self.Initial, None)
 
     def addTransition(self, sti1, sym, sti2):
@@ -2852,7 +3367,7 @@ class DFA(FA):
         :type sti2: int
         :param sym: symbol consumed
         :type sym: str
-        :raises DFAnotNFA: if one tries to add a non deterterministic transition"""
+        :raises DFAnotNFA: if one tries to add a non deterministic transition"""
         if sym == Epsilon:
             raise DFAnotNFA("Invalid epsilon transition from {0:>s} to {1:>s}.".format(str(sti1), str(sti2)))
         self.Sigma.add(sym)
@@ -2866,16 +3381,17 @@ class DFA(FA):
     def delTransition(self, sti1, sym, sti2, _no_check=False):
         """Remove a transition if existing and perform cleanup on the transition function's internal data structure.
 
-        .. note::
-           Unused alphabet symbols will be discarded from Sigma.
-
-        :param _no_check: use unsecure code
+        :param _no_check: use unsecure code?
+        :type _no_check: Boolean
         :param sti1: state index of departure
         :param sti2: state index of arrival
         :param sym: symbol consumed
         :type sti2: int
         :type sti1: int
-        :type sym: str"""
+        :type sym: str
+
+        .. note::
+           Unused alphabet symbols will be discarded from Sigma."""
         if not _no_check and (sti1 not in self.delta or sym not in self.delta[sti1]):
             return
         if self.delta[sti1][sym] is not sti2:
@@ -2887,7 +3403,7 @@ class DFA(FA):
             del self.delta[sti1]
 
     def inDegree(self, st):
-        """Returns the in-degree of some state in an FA
+        """Returns the in-degree of a given state in an FA
 
         :param st: index of the state
         :type st: int
@@ -2904,9 +3420,9 @@ class DFA(FA):
         return in_deg
 
     def syncPower(self):
-        """Evaluates the power automata for the action od each symbol
+        """Evaluates the power automata for the action of each symbol
 
-        :return: The power automata being the set of all states the initial state ans all singleton states final.
+        :return: The power automata being the set of all states the initial state and all singleton states final.
         :rtype: DFA"""
         new = DFA()
         new.setSigma(self.Sigma)
@@ -2917,7 +3433,7 @@ class DFA(FA):
         new.setInitial(ia)
         while tbd:
             a = tbd.pop()
-            ia = new.stateName(a)
+            ia = new.stateIndex(a)
             done.append(a)
             for sy in new.Sigma:
                 b = set([self.Delta(s, sy) for s in a])
@@ -2929,11 +3445,170 @@ class DFA(FA):
                         if len(b) == 1:
                             new.addFinal(ib)
                     else:
-                        ib = new.stateName(b)
+                        ib = new.stateIndex(b)
                     new.addTransition(ia, sy, ib)
                 else:
-                    new.addTransition(ia, sy, new.stateName(b))
+                    new.addTransition(ia, sy, new.stateIndex(b))
         return new
+
+    def pairGraph(self):
+        """Returns pair graph
+
+        :rtype: DiGraphVM
+
+        .. seealso::
+           A graph theoretic approach to automata minimality. Antonio Restivo and Roberto Vaglica. Theoretical
+           Computer Science, 429 (2012) 282-291. doi:10.1016/j.tcs.2011.12.049 Theoretical Computer Science,
+           2012 vol. 429 (C) pp. 282-291. http://dx.doi.org/10.1016/j.tcs.2011.12.049"""
+        g = graphs.DiGraphVm()
+        for s1 in range(len(self.States)):
+            for s2 in range(s1, len(self.States)):
+                i1 = g.vertexIndex((self.States[s1], self.States[s2]), True)
+                for sy in self.delta[s1]:
+                    if sy in self.delta[s2]:
+                        foo = [self.delta[s1][sy], self.delta[s2][sy]]
+                        foo.sort()
+                        i2 = g.vertexIndex((self.States[foo[0]], self.States[1]), True)
+                        g.addEdge(i1, i2)
+        return g
+
+    def suff(self):
+        """ Returns a dfa that recognizes suff(L(self))
+
+        :rtype: DFA
+
+        .. versionadded:: 0.9.8"""
+        d = DFA()
+        d.setSigma(self.Sigma)
+        ini = self.usefulStates()
+        lStates = []
+        d.setInitial(d.addState(ini))
+        lStates.append(ini)
+        if not self.Final.isdisjoint(ini):
+            d.addFinal(0)
+        index = 0
+        while True:
+            slist = lStates[index]
+            si = d.stateIndex(slist)
+            for s in self.Sigma:
+                stl = set([self.evalSymbol(s1, s) for s1 in slist if s in self.delta[s1]])
+                if not stl:
+                    continue
+                if stl not in lStates:
+                    lStates.append(stl)
+                    foo = d.addState(stl)
+                    if not self.Final.isdisjoint(stl):
+                        d.addFinal(foo)
+                else:
+                    foo = d.stateIndex(stl)
+                d.addTransition(si, s, foo)
+            if index == len(lStates) - 1:
+                break
+            else:
+                index += 1
+        return d
+
+    def hasTrapStateP(self):
+        """ Tests if the automata has a dead trap (sead) state
+
+        :rtype: bool
+
+        .. versionadded:: 1.1"""
+        foo = self.minimal()
+        for i in range(len(foo.States)):
+            if foo.finalP(i):
+                continue
+            for c in foo.delta[i]:
+                if foo.delta[i][c] != i:
+                    break
+                return False
+        return True
+
+    def dist(self):
+        """Evaluate the distinguishability language for a DFA
+
+        :rtype: DFA
+
+        .. versionadded:: 0.9.8"""
+        d = DFA()
+        d.setSigma(self.Sigma)
+        #sini = a.usefulStates()
+        ini = set(range(len(self.States)))
+        lStates = []
+        d.setInitial(d.addState(ini))
+        lStates.append(ini)
+        if not self.Final.isdisjoint(ini) and not ini.issubset(self.Final):
+            d.addFinal(0)
+        index = 0
+        while True:
+            slist = lStates[index]
+            si = d.stateIndex(slist)
+            for s in self.Sigma:
+                stl = set([self.evalSymbol(s1, s) for s1 in slist if s in self.delta[s1]])
+                if not stl:
+                    continue
+                if stl not in lStates:
+                    lStates.append(stl)
+                    foo = d.addState(stl)
+                    if not self.Final.isdisjoint(stl) and not stl.issubset(self.Final):
+                        d.addFinal(foo)
+                else:
+                    foo = d.stateIndex(stl)
+                d.addTransition(si, s, foo)
+            if index == len(lStates) - 1:
+                break
+            else:
+                index += 1
+        return d
+
+    def distMin(self):
+        """ Evaluates the list of minimal words that distinguish each pair of states
+
+        :returns: set of minimal distinguishing words
+        :rtype: FL
+
+        .. versionadded:: 0.9.8
+
+        .. attention::
+            If the DFA is not minimal, the method loops forever"""
+        import fl
+        sz = len(self.States)
+        if sz == 1:
+            return fl.FL()
+        distList = set()
+        todo = [(s, s1) for s in range(sz) for s1 in range(s + 1, sz)]
+        wrds = self.words()
+        l = []
+        for (i, j) in todo:
+            if (i in self.Final) ^ (j in self.Final):
+                l.append((i, j))
+                distList.add(Epsilon)
+        delFromList(todo, l)
+        while True:
+            for w in wrds:
+                l = []
+                for (i, j) in todo:
+                    if self.evalWordP(w, i) ^ self.evalWordP(w, j):
+                        l.append((i, j))
+                        distList.add(w)
+                delFromList(todo, l)
+                if not todo:
+                    return fl.FL(distList, self.Sigma)
+
+    def completeProduct(self, other):
+        """Product structure
+
+        :param other: the other DFA
+        """
+        n = SemiDFA()
+        n.States = set([(x, y) for x in self.States for y in other.States])
+        n.Sigma = copy(self.Sigma)
+        for (x, y) in n.States:
+            for s in n.Sigma:
+                if (x, y) not in n.delta:
+                    n.delta[(x, y)] = {}
+                n.delta[(x, y)][s] = (self.delta[x][s], other.delta[y][s])
+        return n
 
     def syncWords(self):
         """Evaluates the regular expression corresponding to the synchronizing pwords of the automata.
@@ -2942,13 +3617,18 @@ class DFA(FA):
         :rtype: regexp"""
         return self.syncPower().reCG()
 
-    def evalWordP(self, word):
-        """Verify if the DFA recognises given word
+    def evalWordP(self, word, initial=None):
+        """Verifies if the DFA recognises a given word
 
         :param word: word to be recognised
         :type word: list of symbols.
-        :rtype: boolean"""
-        state = self.Initial
+        :param initial: starting state index
+        :type initial: int
+        :rtype: bool"""
+        if initial is None:
+            state = self.Initial
+        else:
+            state = initial
         for c in word:
             try:
                 state = self.evalSymbol(state, c)
@@ -2960,9 +3640,9 @@ class DFA(FA):
             return False
 
     def evalSymbol(self, init, sym):
-        """Set of states reacheable from given states through given symbol and epsilon closure.
+        """Returns the  state reached from given state through a given symbol.
 
-        :param init: set of current states
+        :param init: set of current states indexes
         :type init: set or list of int
         :param sym: symbol to be consumed
         :type sym: str
@@ -2980,15 +3660,15 @@ class DFA(FA):
             raise DFAstopped()
         return Next
 
-    def _evalSymbolL(self, ls, sym):
-        """Eval a set of states for dfas by a symbol
+    def evalSymbolL(self, ls, sym):
+        """Returns the set of states reached from a given set of states through a given symbol
 
-        :param ls: set of state (indexes)
-        :type ls: set
+        :param ls: set of states indexes
+        :type ls: set of int
         :param sym: symbol to be read
         :type sym: str
-        :returns: set of states reacheable
-        :rtype: set"""
+        :returns: set of reached states
+        :rtype: set of int"""
         return set([self.evalSymbol(s, sym) for s in ls])
 
     def reverseTransitions(self, rev):
@@ -3020,19 +3700,27 @@ class DFA(FA):
             if i >= len(lst):
                 return lst
 
-    def minimal(self, method="minimalHopcroft"):
+    def minimal(self, method="minimalHopcroft", complete=True):
         """Evaluates the equivalent minimal complete DFA
 
         :param method: method to use in the minimization
+        :param complete: should the result be completed?
+        :type complete: bool
         :returns: equivalent minimal DFA
         :rtype: DFA"""
-        return self.__getattribute__(method)()
+        if complete:
+            foo = self.__getattribute__(method)()
+            foo.completeMinimal()
+            return foo
+        else:
+            return self.__getattribute__(method)()
 
-    def minimalP(self):
+    def minimalP(self, method="minimalHopcroft"):
         """Tests if the DFA is minimal
 
-        :rtype: boolean"""
-        foo = self.minimal()
+        :param method: the minimization algorithm to be used
+        :rtype: bool"""
+        foo = self.minimal(method)
         if self.completeP():
             foo.complete()
         return len(foo) == len(self)
@@ -3044,7 +3732,7 @@ class DFA(FA):
            John E. Hopcroft and Jeffrey D. Ullman, Introduction to Automata Theory, Languages, and Computation, AW,
            1979
 
-        :returns: minimal DFA
+        :returns: minimal complete DFA
         :rtype: DFA"""
         trashIdx = None  # just to satisfy the checker
         scc = set(self.initialComp())
@@ -3076,7 +3764,9 @@ class DFA(FA):
                     if i is None:
                         xi = None
                     else:
+                        #noinspection PyNoneFunctionAssignment
                         xi = self.delta.get(i, {}).get(c, None)
+                    #noinspection PyNoneFunctionAssignment
                     xj = self.delta.get(j, {}).get(c, None)
                     p = _sortWithNone(xi, xj)
                     if xi != xj and p not in equiv:
@@ -3098,9 +3788,9 @@ class DFA(FA):
         if Complete:
             for i in [x for x in xrange(len(self.States)) if x not in removed]:
                 for c in self.Sigma:
-                    xi = new.stateName(i)
+                    xi = new.stateIndex(i)
                     j = self.delta[i][c]
-                    xj = new.stateName(nStatEquiv.get(j, j))
+                    xj = new.stateIndex(nStatEquiv.get(j, j))
                     new.addTransition(xi, c, xj)
         else:
             if None not in removed:
@@ -3108,17 +3798,18 @@ class DFA(FA):
                 for c in self.Sigma:
                     new.addTransition(trashIdx, c, trashIdx)
             for i in [x for x in xrange(len(self.States)) if x not in removed]:
-                xi = new.stateName(i)
+                xi = new.stateIndex(i)
                 for c in self.Sigma:
+                    #noinspection PyNoneFunctionAssignment
                     j = self.delta.get(i, {}).get(c, None)
                     if j is not None:
-                        xj = new.stateName(nStatEquiv.get(j, j))
+                        xj = new.stateIndex(nStatEquiv.get(j, j))
                         new.addTransition(xi, c, xj)
                     else:
                         new.addTransition(xi, c, trashIdx)
         for i in self.Final:
             if i not in removed:
-                xi = new.stateName(nStatEquiv.get(i, i))
+                xi = new.stateIndex(nStatEquiv.get(i, i))
                 new.addFinal(xi)
         new.setInitial(nStatEquiv.get(self.Initial, self.Initial))
         new.renameStates([nNames.get(x, x) for x in xrange(len(new.States) - 1)] + ["Dead"])
@@ -3129,7 +3820,10 @@ class DFA(FA):
         if the minimal complete has only one more state.
 
         :returns: True if not minimal
-        :rtype: boolean"""
+        :rtype: bool
+
+        .. attention::
+            obsolete: use minimalP"""
         foo = self.minimal()
         foo.complete()
         if self.completeP():
@@ -3138,12 +3832,16 @@ class DFA(FA):
             return len(foo) == (len(self) + 1)
 
     def completeMinimal(self):
-        """Completes a DFA assuming it is a minimal and avoiding de destruction of its minimality If the automata is
+        """Completes a DFA assuming it is a minimal and avoiding de destruction of its minimality If the automaton is
         not complete, all the non final states are checked to see if tey are not already a dead state. Only in the
-        negative case a new (dead) state is added to the automata.
+        negative case a new (dead) state is added to the automaton.
+
+        :rtype: DFA
 
         .. attention::
-           The object is modified in place."""
+           The object is modified in place. If the alphabet is empty nothing is done"""
+        if not self.Sigma:
+            return
         self.trim()
         deadS = None
         complete = True
@@ -3172,6 +3870,7 @@ class DFA(FA):
                 for d in self.Sigma:
                     if s not in self.delta or d not in self.delta[s]:
                         self.addTransition(s, d, deadS)
+        return self
 
     def minimalMooreSq(self):
         """Evaluates the equivalent minimal complete DFA using Moore's (quadratic) algorithm
@@ -3179,7 +3878,7 @@ class DFA(FA):
         .. seealso::
            John E. Hopcroft and Jeffrey D. Ullman, Introduction to Automata Theory, Languages, and Computation, AW,
            1979
-    
+
         :returns: equivalent minimal DFA
         :rtype: DFA"""
         duped = self.dup()
@@ -3217,11 +3916,12 @@ class DFA(FA):
     def minimalMooreSqP(self):
         """Tests if a DFA is minimal using the quadratic version of Moore's algorithm
 
-        :rtype: boolean"""
+        :rtype: bool"""
         foo = self.minimalMooreSq()
         foo.complete()
         return self.uniqueRepr() == foo.uniqueRepr()
 
+    #noinspection PyProtectedMember
     def _mooreMarkList(self, p, q):
         """ Marks pairs of states already known to be not non-equivalent
 
@@ -3241,6 +3941,7 @@ class DFA(FA):
         # eqstates = []
         for p in xrange(len(self.States)):
             for q in xrange(p + 1, len(self.States)):
+                #noinspection PyProtectedMember
                 if not self._mooreMarked[(p, q)]:
                     A = uf.find(p)
                     B = uf.find(q)
@@ -3257,7 +3958,7 @@ class DFA(FA):
     def _compute_delta_inv(self):
         """Adds a delta_inv feature. Used by minimalHopcroft."""
         self.delta_inv = {}
-        for s in xrange(len(self.States)):  # self.delta.keys():
+        for s in xrange(len(self.States)):
             self.delta_inv[s] = dict([(a, []) for a in self.Sigma])
         for s1, to in self.delta.items():
             for a, s2 in to.items():
@@ -3287,13 +3988,13 @@ class DFA(FA):
 
     def minimalHopcroft(self):
         """Evaluates the equivalent minimal complete DFA using Hopcroft algorithm
-    
-        .. seealso::
-           John Hopcroft,An n\log{n} algorithm for minimizing states in a  finite automaton.The Theory of Machines
-           and Computations.AP. 1971
 
         :returns: equivalent minimal DFA
-        :rtype: DFA"""
+        :rtype: DFA
+
+        .. seealso::
+           John Hopcroft,An n\log{n} algorithm for minimizing states in a  finite automaton.The Theory of Machines
+           and Computations.AP. 1971"""
         duped = self.dup()
         duped.complete()
         duped._compute_delta_inv()
@@ -3334,7 +4035,7 @@ class DFA(FA):
     def minimalHopcroftP(self):
         """Tests if a DFA is minimal
 
-        :rtype: boolean"""
+        :rtype: bool"""
         foo = self.minimalHopcroft()
         foo.complete()
         return self.uniqueRepr() == foo.uniqueRepr()
@@ -3342,7 +4043,7 @@ class DFA(FA):
     def minimalNotEquivP(self):
         """Tests if the DFA is minimal by computing the set of distinguishable (not equivalent) pairs of states
 
-        :rtype: boolean"""
+        :rtype: bool"""
         all_pairs = set()
         for i in self.States:
             for j in xrange(i + 1, len(self.States)):
@@ -3372,15 +4073,14 @@ class DFA(FA):
     def minimalHKP(self):
         """Tests the DFA's minimality using Hopcroft and Karp's state equivalence algorithm
 
+        :returns: bool
+
         .. seealso::
            J. E. Hopcroft and R. M. Karp.A Linear Algorithm for Testing Equivalence of Finite Automata.TR 71--114. U.
            California. 1971
 
         .. attention::
-           automaton must be complete
-
-        :returns: boolean
-        """
+           The automaton must be complete."""
         pairs = set()
         for i in xrange(len(self.States)):
             for j in xrange(i + 1, len(self.States)):
@@ -3410,12 +4110,13 @@ class DFA(FA):
         """Minimizes the DFA with an incremental method using the Union-Find algorithm and memoized non-equivalence
         intermediate results
 
-        .. seealso::
-           M. Almeida and N. Moreira and and R. Reis.Incremental DFA minimisation. CIAA 2010. LNCS 6482. pp 39-48. 2010
-
-        :param minimal_test: start verifying that the automaton is not minimal
+        :param minimal_test: starts by verifying that the automaton is not minimal?
+        :type minimal_test: bool
         :returns: equivalent minimal DFA
-        :rtype: DFA"""
+        :rtype: DFA
+
+        .. seealso::
+           M. Almeida and N. Moreira and and R. Reis.Incremental DFA minimisation. CIAA 2010. LNCS 6482. pp 39-48. 2010"""
         duped = self.dup()
         duped.complete()
         duped.minimalIncr_neq = set()
@@ -3490,7 +4191,7 @@ class DFA(FA):
     def minimalIncrementalP(self):
         """Tests if a DFA is minimal
 
-        :rtype: boolean"""
+        :rtype: bool"""
         foo = self.minimalIncremental(minimal_test=True)
         if foo is None:
             return False
@@ -3500,7 +4201,7 @@ class DFA(FA):
         """Evaluates the equivalent minimal complete DFA using Waton's incremental algorithm
 
         :param test_only: is it only to test minimality
-        :type test_only: boolean
+        :type test_only: bool
         :returns: equivalent minimal DFA
         :rtype: DFA
 
@@ -3561,7 +4262,7 @@ class DFA(FA):
     def minimalWatsonP(self):
         """Tests if a DFA is minimal using Watson's incremental algorithm
 
-        :rtype: boolean"""
+        :rtype: bool"""
         foo = self.minimalWatson(test_only=True)
         if foo is None:
             return False
@@ -3613,17 +4314,17 @@ class DFA(FA):
                 self.setInitial(sl[0])
             for s in sl[1:]:
                 subst[s] = sl[0]
-        for s in self.delta.keys():
-            for c in self.delta[s].keys():
-                if self.delta[s][c] in subst.keys():
+        for s in self.delta:
+            for c in self.delta[s]:
+                if self.delta[s][c] in subst:
                     self.delta[s][c] = subst[self.delta[s][c]]
         for sl in lst:
             for s in sl[1:]:
                 try:
                     foo = self.delta[s].keys()
                     for c in foo:
-                        if c not in self.delta[subst[s]].keys():
-                            if self.delta[s][c] in subst.keys():
+                        if c not in self.delta[subst[s]]:
+                            if self.delta[s][c] in subst:
                                 self.delta[subst[s]][c] = subst[self.delta[s][c]]
                             else:
                                 self.delta[subst[s]][c] = self.delta[s][c]
@@ -3671,17 +4372,17 @@ class DFA(FA):
         new.Final = self.Final.copy()
         for s in self.delta.keys():
             new.delta[s] = {}
-            for c in self.delta[s].keys():
+            for c in self.delta[s]:
                 new.delta[s][c] = self.delta[s][c]
         return new
 
     def equal(self, other):
         """Verify if the two automata are equivalent. Both are verified to be minimum and complete,
-        and then one is matched agains the other... Doesn't destroy either dfa...
+        and then one is matched against the other... Doesn't destroy either dfa...
 
         :param other: the other DFA
         :type other: DFA
-        :rtype: boolean"""
+        :rtype: bool"""
         return self.__eq__(other)
 
     def __eq__(self, other):
@@ -3689,7 +4390,7 @@ class DFA(FA):
 
         :param other: the other DFA
         :type other: DFA
-        :return: boolean"""
+        :return: bool"""
         dfa1, dfa2 = self.dup(), other.dup()
         dfa1 = dfa1.minimal()
         dfa2 = dfa2.minimal()
@@ -3710,38 +4411,46 @@ class DFA(FA):
         return l
 
     def _lstInitial(self):
-        if  self.Initial is None:
+        """
+        :return:
+        :raise: DFAnoInitial if no initial state is defined """
+        if self.Initial is None:
             raise DFAnoInitial()
         else:
             return self.States[self.Initial]
+
+    def _s_lstInitial(self):
+        return str(self._lstInitial())
 
     def notequal(self, other):
         """ Test non  equivalence of two DFAs
 
         :param other: the other DFA
         :type other: DFA
-        :rtype: boolean"""
+        :rtype: bool"""
         return self.__ne__(other)
 
     def __ne__(self, other):
         """ Tests non-equivalence of two DFAs
+
         :param other: the other DFA
         :type other: DFA
-        :rtype: boolean"""
+        :rtype: bool"""
         return not self == other
 
     def hyperMinimal(self, strict=False):
         """ Hyperminization of a minimal DFA
-        :param strict: if True first minimize DFA
-        :type: bool
+
+        :param strict: if strict=True it first minimizes the DFA
+        :type  strict: bool
         :returns: an hyperminimal DFA
         :rtype: DFA
 
         .. seealso::
-           Holzer and A. Maletti, An nlogn Algorithm for Hyper-Minimizing a (Minimized) Deterministic Automata,
+           M. Holzer and A. Maletti, An nlogn Algorithm for Hyper-Minimizing a (Minimized) Deterministic Automata,
            TCS 411(38-39): 3404-3413 (2010)
 
-        .. note:: if strict False minimality is assumed"""
+        .. note:: if strict=False minimality is assumed"""
         if strict:
             m = self.minimal()
         else:
@@ -3762,13 +4471,13 @@ class DFA(FA):
             except KeyError:
                 q = aequiv[b].pop()
             for p in aequiv[b] - ker:
-                self.mergeStates(self.stateName(p), self.stateName(q))
+                self.mergeStates(self.stateIndex(p), self.stateIndex(q))
 
     def computeKernel(self):
         """ The Kernel of a ICDFA is the set of states that accept  a non finite language.
 
-        :returns: triple (comp, center , mark) where comp are thr strongly connected components,
-                  center the set of center states abd mark the kernel states
+        :returns: triple (comp, center , mark) where comp are the strongly connected components,
+                  center the set of center states and mark the kernel states
         :rtype: tuple
 
         .. note:
@@ -3778,32 +4487,34 @@ class DFA(FA):
            Holzer and A. Maletti, An nlogn Algorithm for Hyper-Minimizing a (Minimized) Deterministic Automata,
            TCS 411(38-39): 3404-3413 (2010)"""
 
-        def _SCC(s):
-            ind[s] = self.i
-            low[s] = self.i
+        def _SCC(t):
+            ind[t] = self.i
+            low[t] = self.i
             self.i += 1
-            stack.append(s)
-            for a in self.Sigma:
-                s1 = self.delta.get(s, {}).get(a, None)
-                if s1 is not None and s1 not in ind:
-                    _SCC(s1)
-                    low[s] = min([low[s], low[s1]])
+            stack.append(t)
+            for b in self.Sigma:
+                #noinspection PyNoneFunctionAssignment
+                t1 = self.delta.get(t, {}).get(b, None)
+                if t1 is not None and t1 not in ind:
+                    _SCC(t1)
+                    low[t] = min([low[t], low[t1]])
                 else:
-                    if s1 in stack:
-                        low[s] = min([low[s], ind[s1]])
-            if low[s] == ind[s]:
-                comp[s] = [s]
+                    if t1 in stack:
+                        low[t] = min([low[t], ind[t1]])
+            if low[t] == ind[t]:
+                comp[t] = [t]
                 p = stack.pop()
-                while p != s:
-                    comp[s].append(p)
+                while p != t:
+                    comp[t].append(p)
                     p = stack.pop()
 
-        def _DFS(s):
-            mark[s] = 1
-            for a in self.Sigma:
-                s1 = self.delta.get(s, {}).get(a, None)
-                if s1 is not None and s1 not in mark:
-                    _DFS(s1)
+        def _DFS(t):
+            mark[t] = 1
+            for a1 in self.Sigma:
+                #noinspection PyNoneFunctionAssignment
+                t1 = self.delta.get(t, {}).get(a1, None)
+                if t1 is not None and t1 not in mark:
+                    _DFS(t1)
 
         ind = {}
         low = {}
@@ -3820,6 +4531,7 @@ class DFA(FA):
             mark[s] = 1
         for s in center:
             for a in self.Sigma:
+                #noinspection PyNoneFunctionAssignment
                 s1 = self.delta.get(s, {}).get(a, None)
                 if s1 is not None and s1 not in mark:
                     _DFS(s1)
@@ -3827,7 +4539,7 @@ class DFA(FA):
         return comp, center, mark
 
     def aEquiv(self):
-        """ Computes almost equivalence, Used by hyperMinimial
+        """ Computes almost equivalence, used by hyperMinimial
 
         :returns: partition of states
         :rtype: dictionary
@@ -3844,16 +4556,16 @@ class DFA(FA):
         dupped._compute_delta_inv()
         while I != set([]):
             q = I.pop()
-            succ = tuple([dupped.States[dupped.delta[dupped.stateName(q)][a]] for a in dupped.Sigma
-                          if dupped.stateName(q) in dupped.delta and a in dupped.delta[dupped.stateName(q)]])
+            succ = tuple([dupped.States[dupped.delta[dupped.stateIndex(q)][a]] for a in dupped.Sigma
+                          if dupped.stateIndex(q) in dupped.delta and a in dupped.delta[dupped.stateIndex(q)]])
             if succ in h:
                 p = h[succ]
                 if len(pi[p]) >= len(pi[q]):
                     p, q = q, p
                 P.remove(p)
                 I.update([r for r in P for a in dupped.Sigma
-                          if dupped.stateName(r) in dupped.delta_inv[dupped.stateName(p)][a]])
-                dupped.mergeStates(dupped.stateName(p), dupped.stateName(q))
+                          if dupped.stateIndex(r) in dupped.delta_inv[dupped.stateIndex(p)][a]])
+                dupped.mergeStates(dupped.stateIndex(p), dupped.stateIndex(q))
                 dupped._compute_delta_inv()
                 pi[q] = pi[q].union(pi[p])
                 del (pi[p])
@@ -3861,7 +4573,7 @@ class DFA(FA):
         return pi
 
     def mergeStates(self, f, t):
-        """Merge the first given state into the second. If first state is an initial state the second becomes the
+        """Merge the first given state into the second. If the first state is an initial state the second becomes the
         initial state.
 
         :param f: index of state to be absorbed
@@ -3904,12 +4616,13 @@ class DFA(FA):
         while i <= j:
             lst = []
             for c in SSigma:
+                #noinspection PyNoneFunctionAssignment
                 foo = self.delta.get(tr[i], {}).get(c, None)
                 # foo = self.delta[tr[i]][c]
                 if foo is None:
                     lst.append(-1)
                 else:
-                    if foo not in tf.keys():
+                    if foo not in tf:
                         j += 1
                         tf[foo], tr[j] = j, foo
                     lst.append(tf[foo])
@@ -3928,7 +4641,7 @@ class DFA(FA):
            TCS 387(2):93-102, 2007 http://www.ncc.up.pt/~nam/publica/tcsamr06.pdf
 
         :returns: normalised representation
-        :rtype: list of int
+        :rtype: list
 
         :raises DFAnotComplete: if DFA is not complete"""
         try:
@@ -3990,7 +4703,7 @@ class DFA(FA):
 
         :param other: the other DFA
         :param complete: evaluate product as a complete DFA
-        :type complete: boolean
+        :type complete: bool
         :rtype: DFA"""
         NSigma = self.Sigma.union(other.Sigma)
         fa1, fa2 = self.dup(), other.dup()
@@ -4007,26 +4720,51 @@ class DFA(FA):
             i1, i2 = fa.States[i]
             for c in fa.Sigma:
                 new = (fa1.delta[i1][c], fa2.delta[i2][c])
-                foo = fa.stateName(new, True)
+                foo = fa.stateIndex(new, True)
                 fa.addTransition(i, c, foo)
             i += 1
             if i == len(fa.States):
                 break
         if not complete:
-            d1 = fa1.stateName("dead")
-            d2 = fa2.stateName("dead")
+            d1 = fa1.stateIndex("dead")
+            d2 = fa2.stateIndex("dead")
             try:
-                d = fa.stateName((d1, d2))
+                d = fa.stateIndex((d1, d2))
             except DFAstateUnknown:
                 pass
             else:
                 fa.deleteState(d)
         return fa
 
+    def witness(self):
+        """Witness of non emptyness
+
+        :return: word
+        :rtype: str"""
+        done = set()
+        notDone = set()
+        pref = dict()
+        si = self.Initial
+        pref[si] = Epsilon
+        notDone.add(si)
+        while notDone:
+            si = notDone.pop()
+            done.add(si)
+            if si in self.Final:
+                return pref[si]
+            for syi in self.delta.get(si, []):
+                so = self.delta[si][syi]
+                if so in done or so in notDone:
+                    continue
+                pref[so] = sConcat(pref[si], syi)
+                notDone.add(so)
+        return None
+
     def concat(self, fa2, strict=False):
         """Concatenation of two DFAs. If DFAs are not complete, they are completed.
 
-        :param strict:
+        :param strict: should alphabets be checked?
+        :type strict: Boolean
         :param fa2: the second DFA
         :type fa2: DFA
         :returns: the result of the concatenation
@@ -4051,13 +4789,13 @@ class DFA(FA):
                 new.States = d1.States[:]
                 new.Initial = d1.Initial
                 new.Final = d1.Final.copy()
-                for s in d1.delta.keys():
+                for s in d1.delta:
                     new.delta[s] = {}
                     if new.finalP(s):
-                        for c in d1.delta[s].keys():
+                        for c in d1.delta[s]:
                             new.delta[s][c] = s
                     else:
-                        for c in d1.delta[s].keys():
+                        for c in d1.delta[s]:
                             new.delta[s][c] = d1.delta[s][c]
                 return new
         c = DFA()
@@ -4073,9 +4811,9 @@ class DFA(FA):
                 c.addFinal(j)
         while True:
             stu = lStates[j]
-            s = c.stateName(stu)
+            s = c.stateIndex(stu)
             for sym in d1.Sigma:
-                stn = (d1.evalSymbol(stu[0], sym), d2._evalSymbolL(stu[1], sym))
+                stn = (d1.evalSymbol(stu[0], sym), d2.evalSymbolL(stu[1], sym))
                 if d1.finalP(stn[0]):
                     stn[1].add(d2.Initial)
                 if stn not in lStates:
@@ -4084,7 +4822,7 @@ class DFA(FA):
                     if d2.Final & stn[1] != set([]):
                         c.addFinal(new)
                 else:
-                    new = c.stateName(stn)
+                    new = c.stateIndex(stn)
                 c.addTransition(s, sym, new)
             if j == len(lStates) - 1:
                 break
@@ -4098,7 +4836,7 @@ class DFA(FA):
         ..versionchanged: 0.9.6
 
         :param flag: plus instead of star
-        :type flag: boolean
+        :type flag: bool
         :returns: the result of the star
         :rtype: DFA"""
         j = None  # to keep the checker happy
@@ -4134,7 +4872,7 @@ class DFA(FA):
                     if d.Final & stn != set([]):
                         c.addFinal(new)
                 else:
-                    new = c.stateName(stn)
+                    new = c.stateIndex(stn)
                 c.addTransition(i, sym, new)
                 j = 1
         else:
@@ -4146,9 +4884,9 @@ class DFA(FA):
             j = 0
         while True:
             stu = lStates[j]
-            s = c.stateName(stu)
+            s = c.stateIndex(stu)
             for sym in d.Sigma:
-                stn = d._evalSymbolL(stu, sym)
+                stn = d.evalSymbolL(stu, sym)
                 if F0 & stn != set([]):
                     stn.add(d.Initial)
                 if stn not in lStates:
@@ -4158,7 +4896,7 @@ class DFA(FA):
                     if d.Final & stn != set([]):
                         c.addFinal(new)
                 else:
-                    new = c.stateName(stn)
+                    new = c.stateIndex(stn)
                 c.addTransition(s, sym, new)
             if j == len(lStates) - 1:
                 break
@@ -4167,20 +4905,20 @@ class DFA(FA):
         return c
 
     def evalSymbolI(self, init, sym):
-        """State reachable from a given state state.
-
-        .. versionadded:: 0.9.5
-
-        .. note:: this is to be used with non complete DFAs
-
-        :raise DFAsymbolUnknown: if symbol not in alphabet
+        """Returns the state reached from a given state.
 
         :arg init: current state
         :type init: int
         :arg sym: symbol to be consumed
         :type sym: str
         :returns: reached state or -1
-        :rtype: set of int"""
+        :rtype: set of int
+
+        :raise DFAsymbolUnknown: if symbol not in alphabet
+
+        .. versionadded:: 0.9.5
+
+        .. note:: this is to be used with non complete DFAs"""
         if sym not in self.Sigma:
             raise DFAsymbolUnknown(sym)
         try:
@@ -4192,26 +4930,23 @@ class DFA(FA):
         return Next
 
     def evalSymbolLI(self, ls, sym):
-        """Set of states reacheable from given states through given symbol.
-
-        .. versionadded:: 0.9.5
-
-        .. note:: this is to be used with non complete DFAs
+        """Returns the set of states reached from a given set of states through a given symbol
 
         :arg ls: set of current states
         :type ls: set of int
         :arg sym: symbol to be consumed
         :type sym: str
         :returns: set of reached states
-        :rtype: set of int"""
+        :rtype: set of int
+
+
+        .. versionadded:: 0.9.5
+
+        .. note:: this is to be used with non complete DFAs"""
         return set([self.evalSymbolI(s, sym) for s in ls if self.evalSymbolI(s, sym) != -1])
 
     def concatI(self, fa2, strict=False):
         """Concatenation of two DFAs.
-
-        .. versionadded:: 0.9.5
-
-        .. note:: this is to be used with non complete DFAs
 
         :param fa2: the second DFA
         :type fa2: DFA
@@ -4220,7 +4955,11 @@ class DFA(FA):
         :returns: the result of the concatenation
         :rtype: DFA
 
-        :raises DFAdifferentSigma: if alphabet are not equal"""
+        :raises DFAdifferentSigma: if alphabet are not equal
+
+        .. versionadded:: 0.9.5
+
+        .. note:: this is to be used with non complete DFAs"""
         if strict and self.Sigma != fa2.Sigma:
             raise DFAdifferentSigma
         NSigma = self.Sigma.union(fa2.Sigma)
@@ -4245,10 +4984,10 @@ class DFA(FA):
                 c.addFinal(j)
         while True:
             stu = lStates[j]
-            s = c.stateName(stu)
+            s = c.stateIndex(stu)
             for sym in d1.Sigma:
                 stn = (d1.evalSymbolI(stu[0], sym), d2.evalSymbolLI(stu[1], sym))
-                if not (((stn[0] == -1) & (stn[1] == {-1}))) | ((stn[0] == -1) & (stn[1] == set([]))):
+                if not ((stn[0] == -1) & (stn[1] == {-1})) | ((stn[0] == -1) & (stn[1] == set([]))):
                     if d1.finalP(stn[0]):
                         stn[1].add(d2.Initial)
                     if stn not in lStates:
@@ -4257,7 +4996,7 @@ class DFA(FA):
                         if d2.Final & stn[1] != set([]):
                             c.addFinal(new)
                     else:
-                        new = c.stateName(stn)
+                        new = c.stateIndex(stn)
                     c.addTransition(s, sym, new)
             if j == len(lStates) - 1:
                 break
@@ -4294,7 +5033,7 @@ class DFA(FA):
         for sym in d.Sigma:
             stn = {d.evalSymbolI(d.Initial, sym)}
             if (stn != set([])) & (stn != {-1}):
-            # correction
+                # correction
                 if F0 & stn != set([]):
                     stn.add(d.Initial)
                 if stn not in lStates:
@@ -4303,12 +5042,12 @@ class DFA(FA):
                     if d.Final & stn != set([]):
                         c.addFinal(new)
                 else:
-                    new = c.stateName(stn)
+                    new = c.stateIndex(stn)
                 c.addTransition(i, sym, new)
         j = 1
         while True:
             stu = lStates[j]
-            s = c.stateName(stu)
+            s = c.stateIndex(stu)
             for sym in d.Sigma:
                 stn = d.evalSymbolLI(stu, sym)
                 if stn != set([]):
@@ -4320,7 +5059,7 @@ class DFA(FA):
                         if d.Final & stn != set([]):
                             c.addFinal(new)
                     else:
-                        new = c.stateName(stn)
+                        new = c.stateIndex(stn)
                     c.addTransition(s, sym, new)
             if j == len(lStates) - 1:
                 break
@@ -4328,35 +5067,13 @@ class DFA(FA):
                 j += 1
         return c
 
-    def dotFormat(self, sep="\n"):
-        """Representation in DOT format
-
-        :param sep: line separator
-        :type sep: str
-
-        .. versionadded: 0.9.6"""
-        st = "digraph DFA {0:s}{1:s}".format('{', sep)
-        for s in self.delta:
-            d = {}
-            for c in self.delta[s]:
-                t = self.delta[s][c]
-                d[t] = d.setdefault(t, []) + [c]
-            for t in d:
-                rep = ""
-                for a in d[t]:
-                    rep += a + ','
-                rep = rep[:-1]
-                st += '{0:d} -> {1:d} [label="{2:s}"]{3:s}'.format(s, t, rep, sep)
-        st += "{0:s}{1:s}".format('}', sep)
-        return st
-
     def shuffle(self, other, strict=False):
         """Shuffle of two languages: L1 W L2
 
         :param other: second automaton
         :type other: DFA
         :param strict: should the alphabets be necessary equal?
-        :type strict: boolean
+        :type strict: bool
         :rtype: DFA
 
         .. seealso::
@@ -4377,7 +5094,7 @@ class DFA(FA):
             c.addFinal(j)
         while True:
             s = c.States[j]
-            sn = c.stateName(s)
+            sn = c.stateIndex(s)
             for sym in c.Sigma:
                 stn = set()
                 for st in s:
@@ -4396,43 +5113,13 @@ class DFA(FA):
                             c.addFinal(new)
                             break
                 else:
-                    new = c.stateName(stn)
+                    new = c.stateIndex(stn)
                 c.addTransition(sn, sym, new)
             if j == len(c.States) - 1:
                 break
             else:
                 j += 1
         return c
-
-    def witness(self):
-        """ Generates a word recognisable by the automata.
-
-        :rtype: list of symbols
-        :raises DFAEmptyDFA: if the automaton regognizes the empty language"""
-        if not self.Final:
-            raise DFAEmptyDFA
-        visited = [self.Initial]
-        word = []
-        try:
-            self._w1(word, visited)
-        except DFAFound, result:
-            return result.word
-        raise DFAEmptyDFA
-
-    def _w1(self, word, slist):
-        """ Auxiliary function used by DFA.witness. Generates the word, backtraking when a dead-end is found."""
-        here = slist[-1]
-        if here in self.Final:
-            raise DFAFound(word)
-        else:
-            for c in self.delta[here].keys():
-                Next = self.delta[here][c]
-                if Next not in slist:
-                    slist.append(Next)
-                    word.append(c)
-                    self._w1(word, slist)
-                    slist, word = slist[:-1], word[:-1]
-            return
 
     def reorder(self, dicti):
         """Reorders states according to given dictionary. Given a dictionary (not necessarily complete)... reorders
@@ -4442,12 +5129,12 @@ class DFA(FA):
         :type dicti: dictionary"""
         if len(dicti.keys()) != len(self.States):
             for i in xrange(len(self.States)):
-                if i not in dicti.keys():
+                if i not in dicti:
                     dicti[i] = i
         delta = {}
-        for s in self.delta.keys():
+        for s in self.delta:
             delta[dicti[s]] = {}
-            for c in self.delta[s].keys():
+            for c in self.delta[s]:
                 delta[dicti[s]][c] = dicti[self.delta[s][c]]
         self.delta = delta
         self.Initial = dicti[self.Initial]
@@ -4471,7 +5158,7 @@ class DFA(FA):
         n, nstates = len(self.Final), len(self.States) - 1
         if not n:
             return reex.emptyset(copy(self.Sigma))
-        r = self._RPath(0, list(self.Final)[0], nstates)
+        r = self._RPath(0, uSet(self.Final), nstates)
         for s in list(self.Final)[1:]:
             r = reex.disj(self._RPath(0, s, nstates), r, copy(self.Sigma))
         return r
@@ -4483,7 +5170,7 @@ class DFA(FA):
             if initial == final:
                 r = reex.epsilon(copy(self.Sigma))
                 try:
-                    for c in self.delta[initial].keys():
+                    for c in self.delta[initial]:
                         if self.delta[initial][c] == initial:
                             r = reex.disj(r,
                                           reex.regexp(c, copy(self.Sigma)),
@@ -4494,7 +5181,7 @@ class DFA(FA):
             else:
                 r = reex.emptyset(copy(self.Sigma))
                 try:
-                    for c in self.delta[initial].keys():
+                    for c in self.delta[initial]:
                         if self.delta[initial][c] == final:
                             if not r.emptyP():
                                 r = reex.disj(r, reex.regexp(c, copy(self.Sigma)))
@@ -4529,16 +5216,14 @@ class DFA(FA):
         :raises DFAequivalent: if automata are equivalent"""
         x = ~self & other
         x = x.minimal()
-        try:
-            result = x.witness()
-            v = 0
-        except DFAEmptyDFA:
+        result = x.witness()
+        v = 0
+        if result is None:
             x = ~other & self
             x = x.minimal()
-            try:
-                result = x.witness()
-                v = 1
-            except DFAEmptyDFA:
+            result = x.witness()
+            v = 1
+            if result is None:
                 raise DFAequivalent
         return result, v
 
@@ -4553,7 +5238,7 @@ class DFA(FA):
         # ATTENTION CODER: This is mostly a copy&paste of
         # NFA.usefulStates(), except that the inner loop for adjacent
         # states is removed, and default initial_states is a list with
-        # self.Initial.
+        # self.Initial and is considered useful
         if initial_states is None:
             initial_states = [self.Initial]
             useful = set(initial_states)
@@ -4644,9 +5329,9 @@ class DFA(FA):
         new.States = self.States[:]
         new.addInitial(self.Initial)
         new.Final = self.Final.copy()
-        for s in self.delta.keys():
+        for s in self.delta:
             new.delta[s] = {}
-            for c in self.delta[s].keys():
+            for c in self.delta[s]:
                 new.delta[s][c] = {self.delta[s][c]}
         return new
 
@@ -4674,14 +5359,14 @@ class DFA(FA):
         :param strict: if not strict a state is never its own child even if a self loop is in place
         :param state: state id queried
         :type state: int
-        :type strict: boolean
+        :type strict: bool
         :returns: map children -> multiplicity
         :rtype: dictionary"""
         l = {}
-        if state not in self.delta.keys():
+        if state not in self.delta:
             return l
         for c in self.Sigma:
-            if c in self.delta[state].keys():
+            if c in self.delta[state]:
                 dest = self.delta[state][c]
                 l[dest] = l.get(dest, 0) + 1
         if not strict and state in l:
@@ -4748,7 +5433,6 @@ class DFA(FA):
                 break
         return sm
 
-    # TODO fix the syntatic monoid
     def sMonoid(self):
         """Evaluation of the syntactic monoid of a DFA
 
@@ -4764,13 +5448,14 @@ class DFA(FA):
         return self._ssg()
 
 
-class GFA(FA):
+class GFA(OFA):
     """ Class for Generalized Finite Automata: NFA with a unique initial state and transitions are labeled with regexp.
 
     .. inheritance-diagram:: GFA"""
 
     def __init__(self):
         super(GFA, self).__init__()
+        self.predecessors = None
 
     def __repr__(self):
         """GFA string representation
@@ -4780,7 +5465,7 @@ class GFA(FA):
     def addTransition(self, sti1, sym, sti2):
         """Adds a new transition from ``sti1`` to ``sti2`` consuming symbol ``sym``. Label of the transition function
          is a regexp.
-    
+
         :param sti1: state index of departure
         :type sti1: int
         :param sti2: state index of arrival
@@ -4798,9 +5483,8 @@ class GFA(FA):
         if sti2 not in self.delta[sti1]:
             self.delta[sti1][sti2] = sym
         else:
-            self.delta[sti1][sti2] = reex.disj(self.delta[sti1][sti2], sym,
-                                               copy(self.Sigma))
-            #TODO: write cleaner code and get rid of the general catch
+            self.delta[sti1][sti2] = reex.disj(self.delta[sti1][sti2], sym, copy(self.Sigma))
+        #TODO: write cleaner code and get rid of the general catch
         # noinspection PyBroadException
         try:
             self.predecessors[sti2].add(sti1)
@@ -4817,7 +5501,7 @@ class GFA(FA):
            dictionary does not have to be complete"""
         if len(dictio.keys()) != len(self.States):
             for i in xrange(len(self.States)):
-                if i not in dictio.keys():
+                if i not in dictio:
                     dictio[i] = i
         delta = {}
         preds = {}
@@ -4854,12 +5538,12 @@ class GFA(FA):
             del self.delta[st][st]
         else:
             r2 = None
-        for s in self.delta.keys():
+        for s in self.delta:
             if st not in self.delta[s]:
                 continue
             r1 = copy(self.delta[s][st])
             del self.delta[s][st]
-            for s1 in self.delta[st].keys():
+            for s1 in self.delta[st]:
                 r3 = copy(self.delta[st][s1])
                 if r2 is not None:
                     r = reex.concat(r1, reex.concat(r2, r3, copy(self.Sigma)), copy(self.Sigma))
@@ -4913,8 +5597,8 @@ class GFA(FA):
         self.setFinal([last])
 
     def _do_edges(self, v1, t, rp):
-        """ Labels for testing if a automaton is SP. used by SPRegExp 
-    
+        """ Labels for testing if a automaton is SP. used by SPRegExp
+
         :param v1: state (node)
         :type v1: int
         :param t: a label
@@ -5029,7 +5713,6 @@ class GFA(FA):
     def deleteState(self, sti):
         """ deletes a state from the GFA
         :param sti:"""
-        #TODO: check modifications made in NFA
         newOrder = {}
         for i in xrange(sti, len(self.States) - 1):
             newOrder[i + 1] = i
@@ -5088,7 +5771,7 @@ class GFA(FA):
         :param strict: a state is never its own children even if a self loop is in place
         :param state: state id queried
         :type state: int
-        :type strict: boolean
+        :type strict: bool
         :returns: map: children -> alphabetic length
         :rtype: dictionary"""
         l = {}
@@ -5148,218 +5831,6 @@ class GFA(FA):
                         self.low[st] = self.num[st]
 
 
-# noinspection PyUnusedLocal
-class ParserFAdo(Yappy):
-    """A parser for FAdo standard automata descriptions
-
-    .. inheritance-diagram:: ParserFAdo"""
-
-    def __init__(self, no_table=0, table=".tableFAdo"):
-        tokenizer = [("\n+", lambda x: ("EOL", "EOL")),
-                     ("#.*", ""),
-                     ("\s+", ""),
-                     ("@epsilon", lambda x: ("ids", "@epsilon")),
-                     ("@NFA", lambda x: ("NFA", "NFA")),
-                     ("@DFA", lambda x: ("DFA", "DFA")),
-                     ("\*", lambda x: ("SEP", "SEP")),
-                     ("\$", lambda x: ("DOLLAR", "DOLLAR")),
-                     ('"[A-Za-z0-9\(\)\[\]\{\}:\.,_-]+"', lambda x: ("id", x[1:-1])),
-                     ("[A-Za-z0-9]+", lambda x: ("id", x))]
-        grammar = grules([("r -> d r", self.defaultSemRule),
-                          ("r -> n r", self.defaultSemRule),
-                          ("r -> dummy r", self.emptySemRule),
-                          ("r -> ", self.emptySemRule),
-                          ("d -> DFA l t1", self.startDFASemRule),
-                          ("n -> NFA l t1n", self.startNFASemRule),
-                          ("n -> NFA l1 i tn", self.startNFASemRule),
-                          ("l -> id l", self.finalSemRule),
-                          ("l -> DOLLAR l2", self.emptySemRule),
-                          ("l -> EOL", self.emptySemRule),
-                          ("l1 -> id l1", self.finalSemRule),
-                          ("l1 -> SEP", self.emptySemRule),
-                          ("l2 -> id l2 ", self.addAlphabet),
-                          ("l2 -> EOL", self.emptySemRule),
-                          ("i -> id i", self.initialSemRule),
-                          ("i -> DOLLAR l2", self.emptySemRule),
-                          ("i -> EOL", self.emptySemRule),
-                          ("t1 -> EOL t1", self.emptySemRule),
-                          ("t1 -> id EOL t", self.firstDeclareState),
-                          ("t1 -> id id id EOL t", self.firstTransitionSemRule),
-                          ("t1 -> ", self.emptySemRule),
-                          ("t1n -> EOL t1n", self.emptySemRule),
-                          ("t1n -> id EOL tn", self.firstDeclareState),
-                          ("t1n -> id id id EOL tn", self.firstTransitionSemRule),
-                          ("t1n -> id ids id EOL tn", self.firstTransitionESemRule),
-                          ("t1n -> ", self.emptySemRule),
-                          ("t -> id EOL t", self.declareState),
-                          ("t -> id id id EOL t", self.transitionSemRule),
-                          ("t -> EOL t", self.emptySemRule),
-                          ("t -> ", self.emptySemRule),
-                          ("tn - EOL tn", self.emptySemRule),
-                          ("tn -> id EOL tn", self.declareState),
-                          ("tn -> id id id EOL tn", self.transitionSemRule),
-                          ("tn -> id ids id EOL tn", self.transitionESemRule),
-                          ("tn -> EOL tn", self.emptySemRule),
-                          ("tn -> ", self.emptySemRule),
-                          ("dummy -> EOL", self.emptySemRule)
-                          ])
-
-        self.theList = []
-        self.initLocal()
-        Yappy.__init__(self, tokenizer, grammar, table, no_table)
-
-    def initLocal(self):
-        """Starts local structures for a new automata"""
-        self.transitions = []
-        self.initials = []
-        self.states = set()
-        self.finals = []
-        self.alphabet = set()
-
-    #noinspection PyUnusedLocal
-    def defaultSemRule(self, lst, context=None):
-        """Defines the default semantic rule for Yappy
-        :param lst: lst of the arguments semantics
-        :param context: context for the semantic rules
-        :type context: dictionary
-        :returns: first argument semantics"""
-        return lst[0]
-
-    #noinspection PyUnusedLocal
-    def emptySemRule(self, lst, context=None):
-        """Defines the empty semantic rule for Yappy
-        :param lst: lst of the arguments semantics
-        :param context: context for the semantic rules
-        :type context: dictionary
-        :returns: empty list"""
-        return []
-
-    def startDFASemRule(self, lst, context=None):
-        """
-    
-        :param lst:
-        :param context:"""
-        new = DFA()
-        while self.states:
-            x = self.states.pop()
-            new.addState(x)
-        new.Sigma = self.alphabet
-        x = self.initials.pop()
-        new.setInitial(new.stateName(x))
-        while self.finals:
-            x = self.finals.pop()
-            new.addFinal(new.stateName(x))
-        while self.transitions:
-            (x1, x2, x3) = self.transitions.pop()
-            new.addTransition(new.stateName(x1), x2, new.stateName(x3))
-        self.theList.append(new)
-        self.initLocal()
-
-    def startNFASemRule(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        new = NFA()
-        new.Sigma = self.alphabet
-        while self.states:
-            x = self.states.pop()
-            new.addState(x)
-        while self.initials:
-            x = self.initials.pop()
-            new.addInitial(new.stateName(x))
-        while self.finals:
-            x = self.finals.pop()
-            new.addFinal(new.stateName(x))
-        while self.transitions:
-            (x1, x2, x3) = self.transitions.pop()
-            new.addTransition(new.stateName(x1), x2, new.stateName(x3))
-        self.theList.append(new)
-        self.initLocal()
-
-    def finalSemRule(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        self.finals.append(lst[0])
-        self.states.add(lst[0])
-
-    def initialSemRule(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        self.initials.append(lst[0])
-        self.states.add(lst[0])
-
-    def firstTransitionSemRule(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        self.initials.append(lst[0])
-        self.states.add(lst[0])
-        self.states.add(lst[2])
-        self.transitions.append((lst[0], lst[1], lst[2]))
-
-    def firstDeclareState(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        self.states.add(lst[0])
-        self.initials.append(lst[0])
-
-    def addAlphabet(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        self.alphabet.add(lst[0])
-
-    def declareState(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        self.states.add(lst[0])
-
-    def firstTransitionESemRule(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        self.transitions.append((lst[0], Epsilon, lst[2]))
-        self.initials.append(lst[0])
-        self.states.add(lst[0])
-        self.states.add(lst[2])
-
-    def transitionSemRule(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        self.transitions.append((lst[0], lst[1], lst[2]))
-        self.states.add(lst[0])
-        self.states.add(lst[2])
-
-    def transitionESemRule(self, lst, context=None):
-        """
-
-        :param lst:
-        :param context:"""
-        self.transitions.append((lst[0], Epsilon, lst[2]))
-        self.states.add(lst[0])
-        self.states.add(lst[2])
-
-    def result(self):
-        """
-
-        :return:"""
-        return self.theList
-
-
 # noinspection PyTypeChecker
 class SSemiGroup(object):
     """Class support for the Syntactic SemiGroup.
@@ -5368,7 +5839,6 @@ class SSemiGroup(object):
     :var words: a list of pairs (index of the prefix transformation, index of the suffix char)
     :var gen: a list of the max index of each generation
     :var Sigma: set of symbols"""
-
     def __init__(self):
         self.elements = []
         self.words = []
@@ -5387,7 +5857,10 @@ class SSemiGroup(object):
         """SSemiGroup representation
 
         :rtype: str"""
-        return self.elements.__repr__()
+        foo = "Semigroup:\n"
+        for s in self.elements:
+            foo += "%s \n" % str(s)
+        return foo
 
     def WordI(self, i):
         """Representative of an element given as index
@@ -5445,14 +5918,328 @@ class SSemiGroup(object):
             self.gen.append(gn)
 
 
+class EnumL(object):
+    """Class for enumerate FA languages
+
+    :var aut: Automaton of the language
+    :type aut: DFA
+    :var tmin: table for minimal words for each s in aut.States
+    :type tmin: dict
+    :var Words: list of words (if stored)
+    :type Words: list
+    :var Sigma: alphabet
+    :type Sigma: list
+    :type stack: deque
+
+    .. versionadded:: 0.9.8
+
+    .. note:
+        only for DFAs
+
+    .. seealso::
+        Efficient enumeration of words in regular languages, M. Ackerman and J. Shallit,
+        Theor. Comput. Sci. 410, 37, pp 3461-3470. 2009.
+        http://dx.doi.org/10.1016/j.tcs.2009.03.018"""
+
+    def __init__(self, aut, store=False):
+        self.aut = aut
+        self.tmin = {}
+        self.stack = None
+        self.Words = []
+        self.Sigma = list(aut.Sigma)
+        self.Sigma.sort()
+        self.store = store
+        self.initStack()
+
+    @abstractmethod
+    def initStack(self):
+        """Abstract method"""
+        pass
+
+    @abstractmethod
+    def minWordT(self, n):
+        """Abstract method
+        :param n:
+        :type n: int"""
+        pass
+
+    def minWord(self, m):
+        """ Computes the minimal word of length m accepted by the automaton
+        :param m:
+        :type m: int"""
+        if len(self.tmin) == 0:
+            self.minWordT(m)
+        if m == 0:
+            return ""
+        possiblew = [self.tmin[q][m] for q in self.stack[0] if q in self.tmin and m in self.tmin[q]]
+        if not possiblew:
+            return None
+        return min(possiblew)
+
+    def iCompleteP(self, i, q):
+        """Tests if state q is i-complete
+
+        :param i: int
+        :type i: int
+        :param q: state index
+        :type q: int"""
+        return i in self.tmin[q] or (i == 0 and self.aut.finalP(q))
+
+    @abstractmethod
+    def fillStack(self, w):
+        """Abstract method
+        :param w:
+        :type w: str"""
+        pass
+
+    @abstractmethod
+    def nextWord(self, w):
+        """Abstract method
+        :param w:
+        :type w: str"""
+        pass
+
+    def enumCrossSection(self, n):
+        """ Enumerates the nth cross-section of L(A)
+
+        :param n: nonnegative integer
+        :type n: int
+        """
+        self.initStack()
+        self.tmin = {}
+        self.Words = []
+        w = self.minWord(n)
+        while w is not None:
+            self.fillStack(w)
+            self.Words.append(w)
+            w = self.nextWord(w)
+        self.tmin = {}
+        self.initStack()
+
+    def enum(self, m):
+        """Enumerates the first m words of L(A) according to the lexicographic order if there are at least m words.
+        Otherwise, enumerates all words accepted by A.
+
+        :param m:
+        :type m: int
+        """
+        i = 0
+        lim = 1
+        numCEC = 0
+        s = len(self.aut)
+        if not (not (isinstance(self.aut, DFA) and self.aut.finalP(self.aut.Initial))
+                and not (isinstance(self.aut, NFA) and not self.aut.Initial.isdisjoint(self.aut.Final))):
+            self.Words = [""]
+            i += 1
+            numCEC += 1
+        else:
+            self.Words = []
+        while i < m and numCEC < s:
+            self.initStack()
+            self.tmin = {}
+            w = self.minWord(lim)
+            if w is None:
+                numCEC += 1
+            else:
+                numCEC = 0
+                while w is not None and i < m:
+                    i += 1
+                    self.Words.append(w)
+                    self.fillStack(w)
+                    w = self.nextWord(w)
+            lim += 1
+        self.tmin = {}
+        self.initStack()
+
+
+class EnumDFA(EnumL):
+    """Class for enumerating languages defined by DFAs"""
+
+    def minWordT(self, n):
+        """ Computes for each state the minimal word of length i<n
+        accepted by the automaton. Stores the values in tmin
+
+        :param n: length of the word
+        :type n: integer
+
+        .. note:: Makinen algorithm for DFAs"""
+        for i in xrange(len(self.aut)):
+            if i not in self.tmin:
+                self.tmin[i] = {}
+            for sym in self.Sigma:
+                if i in self.aut.delta and sym in self.aut.delta[i] and self.aut.finalP(self.aut.delta[i][sym]):
+                    self.tmin.setdefault(i, {})[1] = sym
+                    break
+        for j in range(2, n + 1):
+            for i in xrange(len(self.aut)):
+                m = None
+                if i in self.aut.delta:
+                    for sym in self.Sigma:
+                        if sym in self.aut.delta[i]:
+                            q = self.aut.delta[i][sym]
+                            if q in self.tmin and j - 1 in self.tmin[q]:
+                                m = sym + self.tmin[q][j - 1]
+                                break
+                                #if nfa compare with others
+                                # if m == None or sym+  self.tmin[q][j-1] < min
+                if m is not None:
+                    self.tmin[i][j] = m
+
+    def fillStack(self, w):
+        """ Computes S_1,...,S_n-1 where S_i is the set of (n-i)-complete states reachable from S_i-1
+
+        :param w: word"""
+        n = len(w)
+        self.initStack()
+        for i in xrange(1, n):
+            s = set({})
+            for j in self.stack[0]:
+                if j in self.aut.delta and w[i - 1] in self.aut.delta[j] and \
+                        self.iCompleteP(n - i, self.aut.delta[j][w[i - 1]]):
+                    s.add(self.aut.delta[j][w[i - 1]])
+            self.stack.appendleft(s)
+
+    def initStack(self):
+        """Initializes the stack with initial states """
+        self.stack = deque([{self.aut.Initial}])
+
+    def nextWord(self, w):
+        """Given an word, returns next word on the nth cross-section of L(aut)
+        according to the radix order
+
+        :param w: word
+        :type w: str
+        :rtype: str"""
+        n = len(w)
+        for i in xrange(n, 0, -1):
+            s = self.stack[0]
+            b = self.Sigma[-1]
+            flag = 0
+            for j in s:
+                if j in self.aut.delta:
+                    for sym in self.Sigma:
+                        if sym in self.aut.delta[j] and self.iCompleteP(n - i, self.aut.delta[j][sym]):
+                            if w[i - 1] < sym:
+                                if sym < b:
+                                    b = sym
+                                flag = 1
+            if flag == 0:
+                self.stack.popleft()
+            else:
+                s1 = set([])
+                for j in s:
+                    if j in self.aut.delta:
+                        if b in self.aut.delta[j] and self.iCompleteP(n - i, self.aut.delta[j][b]):
+                            s1.add(self.aut.delta[j][b])
+                if i != n:
+                    self.stack.appendleft(s1)
+                mw = self.minWord(n - i)
+                if mw is not None:
+                    return w[0:i - 1] + b + mw
+        return None
+
+
+class EnumNFA(EnumL):
+    """Class for enumerating languages defined by NFAs
+    """
+
+    def initStack(self):
+        """Initializes the stack with initial states
+        """
+        self.stack = deque([self.aut.Initial])
+
+    def minWordT(self, n):
+        """ Computes for each state the minimal word of length i <= n
+        accepted by the automaton. Stores the values in tmin.
+
+        :param n: length of the word
+        :type n: integer
+
+        .. note: Makinen algorithm for NFAs"""
+        for i in xrange(len(self.aut)):
+            for sym in self.Sigma:
+                if i in self.aut.delta and sym in self.aut.delta[i]:
+                    if not self.aut.delta[i][sym].isdisjoint(self.aut.Final):
+                        self.tmin.setdefault(i, {})[1] = sym
+                        break
+        for j in range(2, n + 1):
+            for i in xrange(len(self.aut)):
+                m = None
+                if i in self.aut.delta:
+                    for sym in self.Sigma:
+                        if sym in self.aut.delta[i]:
+                            for q in self.aut.delta[i][sym]:
+                                if q in self.tmin and j - 1 in self.tmin[q]:
+                                    if m is None or sym + self.tmin[q][j - 1] < m:
+                                        m = sym + self.tmin[q][j - 1]
+                if m is not None:
+                    self.tmin[i][j] = m
+
+    def fillStack(self, w):
+        """ Computes S_1,...,S_n-1 where S_i is the set of
+        (n-i)-complete states reachable from S_i-1
+
+        :param w: word"""
+        n = len(w)
+        self.initStack()
+        for i in xrange(1, n):
+            s = set([])
+            for j in self.stack[0]:
+                if j in self.aut.delta and w[i - 1] in self.aut.delta[j]:
+                    for q in self.aut.delta[j][w[i - 1]]:
+                        if self.iCompleteP(n - i, q):
+                            s.add(q)
+            if len(s) != 0:
+                self.stack.appendleft(s)
+
+    def nextWord(self, w):
+        """Given an word, returns next word in the the nth cross-section of L(aut)
+        according to the radix order
+
+        :param w: word
+        :type w: str"""
+        n = len(w)
+        for i in xrange(n, 0, -1):
+            if len(self.stack)== 0:
+                return None
+            s = self.stack[0]
+            b = self.Sigma[-1]
+            flag = 0
+            for j in s:
+                if j in self.aut.delta:
+                    for sym in self.Sigma:
+                        if sym in self.aut.delta[j]:
+                            for q in self.aut.delta[j][sym]:
+                                if self.iCompleteP(n - i, q):
+                                    if w[i - 1] < sym:
+                                        if sym < b:
+                                            b = sym
+                                        flag = 1
+            if flag == 0:
+                self.stack.popleft()
+            else:
+                s1 = set([])
+                for j in s:
+                    if j in self.aut.delta and b in self.aut.delta[j]:
+                        for q in self.aut.delta[j][b]:
+                            if self.iCompleteP(n - i, q):
+                                s1.add(q)
+                if i != n:
+                    self.stack.appendleft(s1)
+                mw = self.minWord(n - i)
+                if mw is not None:
+                    return w[0:i - 1] + b + mw
+        return None
+
+
 def equivalentP(first, second):
     """Verifies if the two languages given by some representative (DFA, NFA or re) are equivalent
 
     :arg first: language
     :arg second: language
-    :rtype: boolean
+    :rtype: bool
 
-    .. versionadded: 0.9.6"""
+    .. versionadded:: 0.9.6"""
     t1, t2 = type(first), type(second)
     if t1 == t2 or (issubclass(t1, reex.regexp) and issubclass(t2, reex.regexp)):
         return first.equivalentP(second)
@@ -5470,232 +6257,23 @@ def equivalentP(first, second):
             return first.toDFA() == second
 
 
-def readFromFile(FileName):
-    """Reads list of finite automata definition from a file.
-
-    :param FileName: file name
-    :type FileName: str
-    :rtype: list of FA
-
-    The format of these files must be the as simple as possible:
-
-    .. hlist::
-       :columns: 1
-
-       * ``#`` begins a comment
-       * ``@DFA`` or ``@NFA`` begin a new automata (and determines its type) and must be followed by the list of the
-         final states separated by blanks
-       * fields are separated by a blank and transitions by a CR: ``state`` ``symbol`` ``new state``
-       * in case of a NFA declaration, the "symbol" @epsilon is interpreted as a epsilon-transition
-       * the source state of the first transition is the initial state
-       * in the case of a NFA, its declaration ``@NFA``  can, after the declaration of the final states,
-         have a ``*`` followed by the list of initial states
-       * both, NFA and DFA, may have a declaration of alphabet starting with a ``$`` followed by the symbols of the
-         alphabet
-       * a line with a sigle name, decrares a state
-
-    .. productionlist:: Fado Format
-       FAdo: FA | FA CR FAdo
-       FA: DFA | NFA
-       DFA: "@DFA" LsStates Alphabet CR dTrans
-       NFA: "@NFA" LsStates Initials Alphabet CR nTrans
-       Initials: "*" LsStates | \epsilon
-       Alphabet: "$" LsSymbols | \epsilon
-       nSymbol: symbol | "@epsilon"
-       LsStates: stateid | stateid , LsStates
-       LsSymbols: symbol | symbol , LsSymbols
-       dTrans: stateid symbol stateid |
-        :| stateid symbol stateid CR dTrans
-       nTrans: stateid nSymbol stateid |
-        :| stateid nSymbol stateid CR nTrans
-
-    .. note::
-       If an error occur, either syntactic or because of a violation of the declared automata type,
-       an exception is raised
-
-    .. versionchanged:: 0.9.6"""
-    parser = ParserFAdo()
-    parser.inputfile(FileName)
-    return parser.result()
-
-
-# noinspection PyTypeChecker
-def saveToFile(FileName, fa, mode="a"):
-    """ Saves a list finite automata definition to a file using the input format
-
-    .. versionchanged:: 0.9.5
-    .. versionchanged:: 0.9.6
-    .. versionchanged:: 0.9.7 New format with quotes and alphabet
-
-    :param FileName: file name
-    :type FileName: str
-    :param fa: the FA
-    :type fa: list of FA
-    :param mode: writing mode
-    :type mode: str """
-
-    #TODO: write the complete information into file according with the new format
-    def _saveFA(fa):
-        """Writes one fa to a File
-
-        :param fa: the automaton
-        :type fa: FA"""
-        if isinstance(fa, DFA):
-            f.write("@DFA ")
-            NFAp = False
-        elif isinstance(fa, NFA):
-            f.write("@NFA ")
-            NFAp = True
-        else:
-            raise DFAerror()
-        if not NFAp and fa.Initial != 0:
-            foo = {0: fa.Initial, fa.Initial: 0}
-            fa.reorder(foo)
-        for sf in fa.Final:
-            f.write("{0:>s} ".format(statePP(fa.States[sf])))
-        if NFAp:
-            f.write(" * ")
-            for sf in fa.Initial:
-                f.write("{0:>s} ".format(statePP(fa.States[sf])))
-        f.write("\n")
-        for s in xrange(len(fa.States)):
-            if s in fa.delta:
-                for a in fa.delta[s].keys():
-                    if isinstance(fa.delta[s][a], set):
-                        for s1 in fa.delta[s][a]:
-                            f.write(
-                                "{0:>s} {1:>s} {2:>}\n".format(statePP(fa.States[s]), str(a), statePP(fa.States[s1])))
-                    else:
-                        f.write("{0:>s} {1:>s} {2:>s}\n".format(statePP(fa.States[s]), str(a),
-                                                                statePP(fa.States[fa.delta[s][a]])))
-            else:
-                f.write("{0:>s} \n".format(statePP(fa.States[s])))
-
-    try:
-        f = open(FileName, mode)
-    except IOError:
-        raise DFAerror()
-    if type(fa) == list:
-        for d in fa:
-            _saveFA(d)
-    else:
-        _saveFA(fa)
-    f.close()
-
-
-def saveToString(fa, sep="&"):
-    """Finite automata definition as a string using the input format.
-
-    .. versionadded:: 0.9.5
-    .. versionchanged:: 0.9.6 Names are now used instead of indexes.
-    .. versionchanged:: 0.9.7 New format with quotes and alphabet
-
-    :param fa: the FA
-    :type fa: list of FA
-    :arg sep: separation between `lines`
-    :type sep: str
-    :returns: the representation
-    :rtype: str """
-    buff = ""
-    if fa.Initial is None:
-        return "Error: no initial state defined"
-    if isinstance(fa, DFA):
-        buff += "@DFA "
-        NFAp = False
-    elif isinstance(fa, NFA):
-        buff += "@NFA "
-        NFAp = True
-    else:
-        raise DFAerror()
-    if not NFAp and fa.Initial != 0:
-        foo = {0: fa.Initial, fa.Initial: 0}
-        fa.reorder(foo)
-    for sf in fa.Final:
-        buff += ("{0:>s} ".format(statePP(fa.States[sf])))
-    if NFAp:
-        buff += " * "
-        for sf in fa.Initial:
-            buff += ("{0:>s} ".format(statePP(fa.States[sf])))
-    buff += sep
-    for s in xrange(len(fa.States)):
-        if s in fa.delta:
-            for a in fa.delta[s].keys():
-                if isinstance(fa.delta[s][a], set):
-                    for s1 in fa.delta[s][a]:
-                        buff += (
-                            "{0:>s} {1:>s} {2:>s}{3:>s}".format(statePP(fa.States[s]), str(a), statePP(fa.States[s1]),
-                                                                sep))
-                else:
-                    buff += ("{0:>s} {1:>s} {2:>s}{3:>s}".format(statePP(fa.States[s]), str(a),
-                                                                 statePP(fa.States[fa.delta[s][a]]), sep))
-        else:
-            buff += "{0:>s} {1:>s}".format(statePP(fa.States[s]), sep)
-    return buff
-
-
-def _exportToTeX(FileName, fa):
-    """ Saves a finite automatom definition to a latex tabular. Saves a finite automata definition to a file using
-    the input format
-
-    .. versionchanged:: 0.9.4
-
-    :param FileName: file name
-    :type FileName: str
-    :param fa: the FA
-    :type fa: FA
-    :raises DFAerror: if a file error occurs"""
-    try:
-        f = open(FileName, "w")
-    except IOError:
-        raise DFAerror()
-        #initial is the first one
-    if fa.Initial:
-        foo = {0: fa.Initial, fa.Initial: 0}
-        fa.reorder(foo)
-    f.write("$$\\begin{array}{r|")
-    for i in xrange(len(fa.Sigma)):
-        f.write("|c")
-    f.write("}\n")
-    for c in fa.Sigma:
-        f.write("&{0:>s}".format(str(c)))
-    f.write(" \\\\\hline\n")
-    for s in xrange(len(fa.States)):
-        if s in fa.delta:
-            if fa.Initial == s:
-                f.write("\\rightarrow")
-            if s in fa.Final:
-                f.write("\\star")
-            f.write("{0:>s}".format(str(s)))
-            for a in fa.delta[s].keys():
-                if isinstance(fa.delta[s][a], set):
-                    f.write("&\{")
-                    for s1 in fa.delta[s][a]:
-                        f.write("{0:>s} ".format(str(s1)))
-                    f.write("\}")
-                else:
-                    s1 = fa.delta[s][a]
-                    f.write("&{0:>s}".format(str(s1)))
-            f.write("\\\\\n")
-    f.write("\end{array}$$")
-    f.close()
-
-
-# noinspection PyTypeChecker
 def stringToDFA(s, f, n, k):
     """ Converts a string icdfa's representation to dfa.
 
     :param s: canonical string representation
-    :type s: list of int
+    :type s: list
     :param f: bit map of final states
-    :type f: list of int
+    :type f: list
     :param n: number of states
     :type n: int
     :param k: number of symbols
     :type k: int
     :returns: a complete dfa with Sigma [``k``], States [``n``]
-    :rtype: DFA"""
+    :rtype: DFA
+
+    .. versionchanged:: 0.9.8 symbols are converted to str"""
     fa = DFA()
-    fa.setSigma(range(k))
+    fa.setSigma([])
     fa.States = range(n)
     j = 0
     i = 0
@@ -5707,7 +6285,7 @@ def stringToDFA(s, f, n, k):
     fa.setInitial(0)
     for i in xrange(n * k):
         if s[i] != -1:
-            fa.addTransition(i / k, i % k, s[i])
+            fa.addTransition(i / k, str(i % k), s[i])
     return fa
 
 
@@ -5746,7 +6324,7 @@ def _sortWithNone(a, b):
 
 
 def _deref(mp, val):
-    if val in mp.keys():
+    if val in mp:
         return _deref(mp, mp[val])
     else:
         return val
@@ -5761,32 +6339,95 @@ def _dictGetKeyFromValue(elm, dic):
 
 
 def statePP(state):
-    """
+    """Pretty print state
 
     :param state:
     :return:"""
 
-    def _spp(state):
-        t = type(state)
+    def _spp(st):
+        t = type(st)
         if t == str:
-            return copy(state).replace(' ', '')
+            return copy(st).replace(' ', '')
         elif t == int:
-            return str(state)
+            return str(st)
         elif t == tuple:
-            foo = "("
-            for s in state:
-                foo += _spp(s) + ","
-            return foo[:-1] + ")"
+            bar = "("
+            for s in st:
+                bar += _spp(s) + ","
+            return bar[:-1] + ")"
         elif t == set:
-            foo = "{"
-            for s in state:
-                foo += _spp(s) + ","
-            return foo[:-1] + "}"
+            bar = "{"
+            for s in st:
+                bar += _spp(s) + ","
+            return bar[:-1] + "}"
         else:
-            return str(state)
+            return str(st)
 
     foo = _spp(state)
     if len(foo) > 1:
         return '"' + foo + '"'
     else:
         return foo
+
+
+def saveToString(fa, sep="&"):
+    """Finite automata definition as a string using the input format.
+
+    .. versionadded:: 0.9.5
+    .. versionchanged:: 0.9.6 Names are now used instead of indexes.
+    .. versionchanged:: 0.9.7 New format with quotes and alphabet
+
+    :param fa: the FA
+    :type fa: list of FA
+    :arg sep: separation between `lines`
+    :type sep: str
+    :returns: the representation
+    :rtype: str """
+    buff = ""
+    if fa.Initial is None:
+        return "Error: no initial state defined"
+    if isinstance(fa, DFA):
+        buff += "@DFA "
+        NFAp = False
+    elif isinstance(fa, NFA):
+        buff += "@NFA "
+        NFAp = True
+    else:
+        raise DFAerror()
+    if not NFAp and fa.Initial != 0:
+        foo = {0: fa.Initial, fa.Initial: 0}
+        fa.reorder(foo)
+    for sf in fa.Final:
+        buff += ("{0:>s} ".format(statePP(fa.States[sf])))
+    if NFAp:
+        buff += " * "
+        for sf in fa.Initial:
+            buff += ("{0:>s} ".format(statePP(fa.States[sf])))
+    buff += sep
+    for s in xrange(len(fa.States)):
+        if s in fa.delta:
+            for a in fa.delta[s]:
+                if isinstance(fa.delta[s][a], set):
+                    for s1 in fa.delta[s][a]:
+                        buff += ("{0:>s} {1:>s} {2:>s}{3:>s}".format(statePP(fa.States[s]), str(a),
+                                                                     statePP(fa.States[s1]), sep))
+                else:
+                    buff += ("{0:>s} {1:>s} {2:>s}{3:>s}".format(statePP(fa.States[s]), str(a),
+                                                                 statePP(fa.States[fa.delta[s][a]]), sep))
+        else:
+            buff += "{0:>s} {1:>s}".format(statePP(fa.States[s]), sep)
+    return buff
+
+
+def sConcat(x, y):
+    """ Concat words
+
+    :param x: first word
+    :param y: second word
+    :return: concatenation word"""
+    if x == Epsilon:
+        return y
+    elif y == Epsilon:
+        return x
+    else:
+        return x + y

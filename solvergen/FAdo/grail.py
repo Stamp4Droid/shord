@@ -8,11 +8,9 @@ fa.py
 
 .. *This is part of FAdo project*   http://fado.dcc.fc.up.pt
 
-.. *Version:* 0.9.5
-
 .. versionadded:: 0.9.4
 
-.. *Copyright:* 2011-2012 Rogério Reis & Nelma Moreira {rvr,nam}@dcc.fc.up.pt
+.. *Copyright:* 2011-2014 Rogério Reis & Nelma Moreira {rvr,nam}@dcc.fc.up.pt
 
 .. This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
    License as published by the Free Software Foundation; either version 2 of the License,
@@ -27,12 +25,15 @@ fa.py
 
 #__package__="FAdo"
 
-from yappy.parser import Yappy, grules
+import os
+import os.path
+import subprocess
+
+from yappy_parser import Yappy, grules
+
 from fa import NFA, DFA
 from fl import DCFA
 import common
-import os
-import subprocess
 
 
 class GrailCommandError(common.fnhException):
@@ -147,17 +148,17 @@ class ParserGrail(Yappy):
             fa.addState(s)
         fa.setFinal(fa.indexList(self.finals))
         if isDeterministic:
-            fa.setInitial(fa.stateName(common.uSet(self.initials)))
+            fa.setInitial(fa.stateIndex(common.uSet(self.initials)))
             for s1 in self.transitions:
                 for c in self.transitions[s1]:
-                    fa.addTransition(fa.stateName(s1), c,
-                                     fa.stateName(common.uSet(self.transitions[s1][c])[0]))
+                    fa.addTransition(fa.stateIndex(s1), c,
+                                     fa.stateIndex(common.uSet(self.transitions[s1][c])))
         else:
             fa.setInitial(fa.indexList(self.initials))
             for s1 in self.transitions:
                 for c in self.transitions[s1]:
                     for s2 in fa.indexList(self.transitions[s1][c]):
-                        fa.addTransition(fa.stateName(s1), c, s2)
+                        fa.addTransition(fa.stateIndex(s1), c, s2)
         return fa
 
 
@@ -203,12 +204,26 @@ def importFromGrailFile(fileName):
     The type of the object returned depends on the transition definiion red as well as the number of initial states
     declared
 
-    :arg fileName: file name
-    :type fileName: string
+    :arg str fileName: file name
     :returns: the automata red
     :rtype: FA"""
     parser = ParserGrail()
     parser.inputfile(fileName)
+    return parser.getAutomata()
+
+
+def importFromGrailString(st):
+    """Imports a finite automaton from a string in GRAIL format
+
+    The type of the object returned depends on the transition definiion red as well as the number of initial states
+    declared
+
+    :arg str st: fstring
+    :returns: the automata red
+    :rtype: FA"""
+
+    parser = ParserGrail()
+    parser.input(st)
     return parser.getAutomata()
 
 
@@ -218,8 +233,7 @@ def FAFromGrail(buffer):
   The type of the object returned depends on the transition definiion red as well as the number of initial states
   declared
 
-  :arg buffer: buffer file
-  :type buffer: string
+  :arg str buffer: buffer file
   :returns: the automata red
   :rtype: FA"""
     parser = ParserGrail()
@@ -232,6 +246,8 @@ class Grail(object):
     """A class for Grail execution"""
 
     def __init__(self):
+        """
+        .. versionchanged:: 0.9.8 tries to initialise execPath from fadorc """
         self.syntaxe = {"afacaten": ["afa", "afa", "afa"],
                         "afacomp": ["afa", "afa"],
                         "afaexec": ["afa", "word", "bool"],
@@ -290,12 +306,16 @@ class Grail(object):
                         "retofm": ["re", "fa"],
                         "reunion": ["re", "re", "re"]
                         }
+        if os.path.isfile("fadorc.py"):
+            try: from fadorc import grailPath
+            except ImportError:
+                return
+            self.execPath = os.path.abspath(grailPath)
 
     def setExecPath(self, path):
         """Sets the path to the Grail executables
 
-        :arg path: the path to Grail executables
-        :type path: string"""
+        :arg str path: the path to Grail executables"""
         self.execPath = os.path.abspath(path)
 
     def do(self, cmd, *args):
@@ -351,12 +371,14 @@ class Grail(object):
             result = self._parseResult(process.communicate(), lsargs[-1])
         return result
 
-    def _cleanFiles(self, lsargs, largs):
+    @staticmethod
+    def _cleanFiles(lsargs, largs):
         for i, s in enumerate(lsargs[:-1]):
             if s in ["fa"]:
                 os.remove(largs[i])
 
-    def _parseResult(self, pipe, aType):
+    @staticmethod
+    def _parseResult(pipe, aType):
         if aType == "fa" or aType == "ca":
             return FAFromGrail(pipe[0])
         if aType == "fl":
@@ -368,7 +390,7 @@ class Grail(object):
         if aType == "fa":
             FAToGrail(pipe, aObject)
         if aType == "re":
-            pipe.write(aObject.__str__())
+            pipe.write(aObject.__str__)
             pipe.write("\n")
         if aType == "fl":
             for wrd in aObject:
@@ -385,7 +407,7 @@ class Grail(object):
         if aType == "re":
             fname = common.tmpFileName()
             fo = open(fname, "w")
-            fo.write(aObject.__str__())
+            fo.write(aObject.__str__)
             fo.write("\n")
             fo.close()
             return fname

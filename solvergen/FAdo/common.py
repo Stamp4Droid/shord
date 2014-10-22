@@ -28,9 +28,12 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA."""
 import os
 import random
 from copy import deepcopy
+from abc import abstractmethod
 import functools
+import tempfile
+import subprocess
 
-FAdoVersion = "0.9.7"
+FAdoVersion = "1.0A1"
 
 
 class fnhException(Exception):
@@ -56,6 +59,8 @@ class FAException(fnhException):
 class DFAerror(fnhException):
     pass
 
+class TFASignal(fnhException):
+    pass
 
 class PDAerror(fnhException):
     pass
@@ -76,6 +81,20 @@ class FAdoGeneralError(Exception):
 class VersoError(FAdoGeneralError):
     pass
 
+class TFAAccept(TFASignal):
+    pass
+
+class TFAReject(TFASignal):
+    pass
+
+class TFARejectLoop(TFAReject):
+    pass
+
+class TFARejectBlocked(TFAReject):
+    pass
+
+class TFARejectNonFinal(TFAReject):
+    pass
 
 class CFGgrammarError(CFGerror):
     def __init__(self, rule):
@@ -83,7 +102,6 @@ class CFGgrammarError(CFGerror):
 
     def __str__(self):
         return "Error in rule %s" % self.rule
-
 
 class CFGterminalError(CFGerror):
     def __init__(self, size):
@@ -98,7 +116,7 @@ class DFAnoInitial(DFAerror):
         return "No initial state defined"
 
 
-class DFAstateRepeated(DFAerror):
+class DuplicateName(DFAerror):
     def __init__(self, number):
         self.number = number
 
@@ -137,6 +155,11 @@ class DFAsymbolUnknown(DFAerror):
 
     def __str__(self):
         return "Symbol %s is unknown" % self.symbol
+
+
+class GraphError(FAdoGeneralError):
+    def __str__(self):
+        return "Graph Error"
 
 
 class DFAstopped(DFAerror):
@@ -186,6 +209,10 @@ class DFAdifferentSigma(DFAerror):
     def __str__(self):
         return "Dfas with different alphabets"
 
+class DFAEmptySigma(DFAerror):
+    def __str__(self):
+        return "Dfa alphabet is empty"
+
 
 class DFAmarkedError(DFAerror):
     def __init__(self, sym):
@@ -193,6 +220,11 @@ class DFAmarkedError(DFAerror):
 
     def __str__(self):
         return "Symbol not marked %s" % str(self.sym)
+
+
+class TRError(FAException):
+    def __str__(self):
+        return "Transducer Error"
 
 
 class regexpInvalid(DFAerror):
@@ -217,11 +249,30 @@ class notAcyclic(DFAerror):
         return "Automaton is not acyclic "
 
 
+class IllegalBias(FAdoGeneralError):
+    def __str__(self):
+        return "Bias with illegal value "
+
+
+class CodesError(FAdoGeneralError):
+    pass
+
+
+class PropertyNotSatisfied(CodesError):
+    def __str__(self):
+        return "Property not satisfied"
+
+
 class GraphError(fnhException):
     def __init__(self, message):
         self.message = message
 
     def __str__(self):
+        return "%s" % self.message
+
+
+class TestsError(DFAerror):
+    def __init__(self, message):
         return "%s" % self.message
 
 
@@ -257,7 +308,10 @@ def debug(string, level=0):
 
 class SPLabel(object):
     """Label class for Serial-Paralel test algorithm
-  @see: Moreira & Reis, Fundamenta Informatica, 'Series-Paralel automata and short regular expressions', n.91 3-4, pag 611-629"""
+
+    .. seealso::
+        Moreira & Reis, Fundamenta Informatica, 'Series-Paralel automata and short regular expressions',  n.91 3-4,
+        pag 611-629"""
 
     def __init__(self, val=None):
         if not val:
@@ -328,9 +382,8 @@ class lbl(object):
 
 class memoized(object):
     """Decorator that caches a function's return value each time it is called.
-  If called later with the same arguments, the cached value is returned, and
-  not re-evaluated."""
 
+    If called later with the same arguments, the cached value is returned, and not re-evaluated."""
     def __init__(self, func):
         self.func = func
         self.cache = {}
@@ -411,7 +464,6 @@ def dememoize(cls, method_name):
         del cls.memoized_instances
     return True
 
-
 try:
     from itertools import product as cartesianProduct
 except ImportError:
@@ -421,10 +473,10 @@ except ImportError:
 
 def uSet(s):
     """returns the first element of a set
-  @arg s: the set
-  @type s: set of x
-  @returns: the first element of s
-  @rtype: x"""
+
+    :param set s: the set
+    :return: the first element of s
+    :rtype: x"""
     return list(s)[0]
 
 
@@ -437,11 +489,138 @@ def tmpFileName():
 def forceIterable(x):
     """Forces a non iterable object into a list, otherwise returns itself
 
-  :param x: the object
-  :type x: list ot set or singleton
-  :return: object as a list
-  :rtype: list"""
+    :param list x: the object
+    :return: object as a list
+    :rtype: list"""
     if not getattr(x, '__iter__', False):
         return list([x])
     else:
         return x
+
+
+def binomial(n,k):
+    """ Exactly what it seems
+
+    :param int n: n
+    :param int k: k
+    :rtype: int"""
+    return reduce(lambda acc, m: acc * (n - k + m) / m, range(1, k + 1), 1)
+
+
+def delFromList(l, l1):
+    """Delete every element of l1 from l
+
+    :type l: list
+    :type l1:list
+
+    .. versionadded: 0.9.8"""
+    for i in l1:
+        l.remove(i)
+
+
+def suffixes(word):
+    """Returns the list of propper suffixes of a word
+
+    :param word: the word
+    :type word: str
+    :rtype: list
+
+    .. versionadded: 0.9.8"""
+    return [word[i:] for i in range(1, len(word))]
+
+def graphvizTranslate(s):
+    """Translate epsilons for graphviz
+
+    :param s: symbol
+    :type s: str
+    :rtype: str"""
+    if s == Epsilon:
+        return "&epsilon;"
+    else:
+        return s
+
+import warnings
+
+
+def deprecated(func):
+    """This is a decorator which can be used to mark functions as deprecated. It will result in a warning being emmitted
+    when the function is used."""
+    def newFunc(*args, **kwargs):
+        warnings.warn("Call to deprecated function %s." % func.__name__,
+                      category=DeprecationWarning)
+        return func(*args, **kwargs)
+    newFunc.__name__ = func.__name__
+    newFunc.__doc__ = func.__doc__
+    newFunc.__dict__.update(func.__dict__)
+    return newFunc
+
+
+class Drawable(object):
+    """Any FAdo object that is drawable"""
+    def display(self, fileName=None, size="30,20"):
+        """ Display automata using dot
+
+        :param size: size of representation
+        :param fileName: filename to use for the graphic representation (default a os tmpfile
+        :return: name of the file created
+
+        .. versionchanged:: 1.0.4"""
+        if fileName is not None:
+            fnameGV = fileName + ".gv"
+            fnamePDF = fileName + ".pdf"
+        else:
+            f = tempfile.NamedTemporaryFile(suffix=".gv")
+            f.close()
+            fnameGV = f.name
+            fname, _ = os.path.splitext(fnameGV)
+            fnamePDF = fname + ".pdf"
+        foo = open(fnameGV, "w")
+        foo.write(self.dotFormat(size))
+        foo.close()
+        callstr = "dot -Tpdf %s -o %s" % (fnameGV, fnamePDF)
+        result = subprocess.call(callstr, shell=True)
+        if result:
+            print "Need graphviz to visualize objects"
+            return
+        #os.system("dot -Tpdf %s -o %s" % (fnameGV, fnamePDF))
+        if os.name == 'nt':
+            os.system("start %s" % fnamePDF)
+        else:
+            os.system("xdg-open %s" % fnamePDF)
+        return fnamePDF
+
+    def makePNG(self, fileName=None, size="30,20"):
+        """ Produce png file to display
+
+        :param str fileName: file name, if None will be a tmpfile
+        :param size: size for graphviz
+        :return: name of the file created
+
+        .. versionadded:: 1.0.4"""
+        if fileName is not None:
+            fnameGV = fileName + ".gv"
+            fnamePNG = fileName + ".png"
+        else:
+            f = tempfile.NamedTemporaryFile(suffix=".gv")
+            f.close()
+            fnameGV = f.name
+            fname, _ = os.path.splitext(fnameGV)
+            fnamePNG = fname + ".png"
+        foo = open(fnameGV, "w")
+        foo.write(self.dotFormat(size))
+        foo.close()
+        callstr = "dot -Tpng %s -o %s" % (fnameGV, fnamePNG)
+        result = subprocess.call(callstr, shell=True)
+        if result:
+            print "Need graphviz to visualize objects"
+            return
+        return fnamePNG
+
+    @abstractmethod
+    def dotFormat(self, size):
+        """Some dot representation
+
+        :param size: size parameter for dotviz
+        :type size: str
+        :rtype: str"""
+        pass
