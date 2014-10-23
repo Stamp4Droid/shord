@@ -64,7 +64,7 @@ import java.util.*;
 				 "MmethArg", "MmethRet", 
 				 "IinvkRet", "IinvkArg", 
 				 "VT", "chaIM",
-				 "HT", "HTFilter",
+				 "HT", "HTFilter", "TTFilter",
 				 "MI", "MH",
 				 "MV", "MU",
 				 "AssignPrim", 
@@ -81,7 +81,7 @@ import java.util.*;
 						"MmethArg", "MmethRet", 
 						"IinvkRet", "IinvkArg", 
 						"VT", "chaIM",
-						"HT", "HTFilter",
+						"HT", "HTFilter", "TTFilter",
 						"MI", "MH",
 						"MV", "MU",
 						"AssignPrim", 
@@ -96,7 +96,7 @@ import java.util.*;
 				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
 				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0",
 				 "V0,T0:T0_V0", "I0,M0:I0_M0",
-				 "H0,T0:H0_T0", "H0,T0:H0_T0",
+				 "H0,T0:H0_T0", "H0,T0:H0_T0", "T0,T1:T0_T1",
 				 "M0,I0:M0_I0", "M0,H0:M0_H0",
 				 "M0,V0:M0_V0", "M0,U0:M0_U0",
 				 "U0,U1:U0xU1",
@@ -134,6 +134,7 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relVT;
 	private ProgramRel relHT;
 	private ProgramRel relHTFilter;
+	private ProgramRel relTTFilter;
 	private ProgramRel relMI;
 	private ProgramRel relMH;
 	private ProgramRel relMV;
@@ -183,6 +184,8 @@ public class PAGBuilder extends JavaAnalysis
         relHT.zero();
 		relHTFilter = (ProgramRel) ClassicProject.g().getTrgt("HTFilter");
 		relHTFilter.zero();
+		relTTFilter = (ProgramRel) ClassicProject.g().getTrgt("TTFilter");
+		relTTFilter.zero();
 		relMI = (ProgramRel) ClassicProject.g().getTrgt("MI");
         relMI.zero();
 		relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");
@@ -232,6 +235,14 @@ public class PAGBuilder extends JavaAnalysis
 		relVT.save();
 		relHT.save();
 		relHTFilter.save();
+		
+		for (SootClass klass : Scene.v().getClasses()) {
+			for (SootMethod method : klass.getMethods()) {
+				
+			}
+		}
+		
+		relTTFilter.save();
 		
 		if(this.usePotentialCallbacksAdder) {
 			this.potentialCallbacksAdder.addRelMI(relMI);
@@ -799,6 +810,7 @@ public class PAGBuilder extends JavaAnalysis
 		if(this.usePotentialCallbacksAdder) {
 			this.potentialCallbacksAdder.addRelIM(relChaIM);
 		}
+		relReflect.save();
 		relChaIM.save();
 	}
 

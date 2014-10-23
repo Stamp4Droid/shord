@@ -6,7 +6,7 @@
 # CONFIGURATION
 ###################
 
-# name=cfl-debug-dlog
+# name=cfl-reflect-dlog
 
 .include "V.dom"
 .include "H.dom"
@@ -14,8 +14,10 @@
 .include "I.dom"
 .include "M.dom"
 .include "T.dom"
+.include "F.dom"
+.include "Z.dom"
 
-.bddvarorder M0xM1_T0_I0_C0xC1_V0_H0
+.bddvarorder Z0_M0xM1_T0_I0_C0xC1_V0_H0_F0
 
 ###################
 # DEBUG RELATIONS
@@ -31,11 +33,11 @@ MI(m:M,i:I) input
 chaIM(i:I,m:M) input
 MmethArg(m:M,z:Z,v:V) input
 MmethRet(m:M,z:Z,v:V) input
-IinvkArg(i:I,z:Z,v;V) input
+IinvkArg(i:I,z:Z,v:V) input
 IinvkRet(i:I,z:Z,v:V) input
 HTFilter(h:H,t:T) input
 
-ReflectArgObj(i:I,o:C) output
+ReflectArgObj(i:I,h:H) output
 ReflectRetType(i:I,t:T) output
 ReflectArgMatch(i:I,z:Z,m:M) output
 ReflectRetMatch(i:I,m:M) output
@@ -45,13 +47,13 @@ ReflectArgAnyMatch(i:I,m:M) output
 ReflectMatch(i:I,m:M) output
 
 # reflection argument types
-ReflectArgObj(i,o2) :- reflect(i), IinvkArg(i,_,v), pt(_,v,o1), fpt(o1,0,o2), CH(o2,h).
+ReflectArgObj(i,h) :- reflect(i), IinvkArg(i,_,v), pt(_,v,o1), fpt(o1,0,o2), CH(o2,h).
 
 # reflection return types
 ReflectRetType(i,t) :- reflect(i), IinvkRet(i,_,v), VT(v,t).
 
 # argument z of method m has a match with the reflection call at invocation site i
-ReflectArgMatch(i,z,m) :- MmethArg(m,_,v), VT(v,t), ReflectArgObj(i,h), HTFilter(h,t).
+ReflectArgMatch(i,z,m) :- MmethArg(m,z,v), VT(v,t), ReflectArgObj(i,h), HTFilter(h,t).
 
 # return value of method m has a match with the reflection call at invocation site i
 ReflectRetMatch(i,m) :- MmethRet(m,_,v), pt(_,v,o), CH(o,h), ReflectRetType(i,t), HTFilter(h,t).
