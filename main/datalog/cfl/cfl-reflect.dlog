@@ -65,3 +65,6 @@ ReflectAnyArgMismatch(i,m) :- ReflectArgMismatch(i,_,m).
 # invocation site i can target method m
 ReflectArgAnyMatch(i,m) :- !ReflectAnyArgMismatch(i,m). # change so that this runs even without using the method as an entry point (need MmethArg, VT)
 ReflectMatch(i,m) :- ReflectRetMatch(i,m), ReflectArgAnyMatch(i,m).
+
+ReflectRet(m:M,t:T) output
+ReflectRet(m,t) :- MmethRet(m,_,v), pt(_,v,o), CH(o,h), HTFilter(h,t).

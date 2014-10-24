@@ -24,13 +24,13 @@ import soot.util.Switch;
  * @author obastani
  *
  */
-public class PotentialCallbacksAdder {	
+public class CallgraphAugmenter {	
 	private final Map<SootMethod,Unit> unitsByMethod = new HashMap<SootMethod,Unit>();
 
-	public PotentialCallbacksAdder() {		
-		for(SootMethod potentialCallback : PotentialCallbacksBuilder.getPotentialCallbacks()) {
-			Unit mockUnit = new MockUnit(potentialCallback);
-			this.unitsByMethod.put(potentialCallback, mockUnit);
+	public CallgraphAugmenter() {		
+		for(SootMethod callbackAugment : CallgraphAugmentsBuilder.getCallbackAugments()) {
+			Unit mockUnit = new MockUnit(callbackAugment);
+			this.unitsByMethod.put(callbackAugment, mockUnit);
 		}
 	}
 
@@ -41,8 +41,8 @@ public class PotentialCallbacksAdder {
 	}
 	
 	public void addRelM(ProgramRel relM) {
-		for(SootMethod potentialCallback : this.unitsByMethod.keySet()) {
-			relM.add(potentialCallback);
+		for(SootMethod callbackAugment : this.unitsByMethod.keySet()) {
+			relM.add(callbackAugment);
 		}
 	}
 

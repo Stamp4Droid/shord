@@ -42,7 +42,7 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
-import stamp.missingmodels.callgraph.PotentialCallbacksAdder;
+import stamp.missingmodels.callgraph.CallgraphAugmenter;
 import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
@@ -236,17 +236,9 @@ public class PAGBuilder extends JavaAnalysis
 		relHT.save();
 		relHTFilter.save();
 		
-		for (SootClass klass : Scene.v().getClasses()) {
-			for (SootMethod method : klass.getMethods()) {
-				
-			}
-		}
-		
 		relTTFilter.save();
-		
-		if(this.usePotentialCallbacksAdder) {
-			this.potentialCallbacksAdder.addRelMI(relMI);
-		}
+
+		this.callgraphAugmenter.addRelMI(relMI);
 		
 		relMI.save();
 		relMH.save();
@@ -264,9 +256,8 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkPrimRet.save();
 		relIinvkPrimArg.save();
 
-		if(this.usePotentialCallbacksAdder) {
-			this.potentialCallbacksAdder.addRelM(this.relPotentialCallback);
-		}
+		this.callgraphAugmenter.addRelM(this.relPotentialCallback);
+
 		relPotentialCallback.save();
 	}
 
@@ -797,7 +788,7 @@ public class PAGBuilder extends JavaAnalysis
 			if(tgt.isPhantom())
 				continue;
 			//System.out.println("stmt: "+stmt+" tgt: "+tgt+ "abstract: "+ tgt.isAbstract());
-			if ("<java.lang.Class: java.lang.reflect.Method getMethod(java.lang.String,java.lang.Class[])>".equals(tgt.toString())) {
+			if ("<java.lang.reflect.Method: java.lang.Object invoke(java.lang.Object,java.lang.Object[])>".equals(tgt.toString())) {
 				System.out.println("REFLECTION: " + stmt.toString());
 				relReflect.add(stmt);
 			}
@@ -807,9 +798,9 @@ public class PAGBuilder extends JavaAnalysis
 			}
 			relChaIM.add(stmt, tgt);
 		}
-		if(this.usePotentialCallbacksAdder) {
-			this.potentialCallbacksAdder.addRelIM(relChaIM);
-		}
+		
+		this.callgraphAugmenter.addRelIM(relChaIM);
+
 		relReflect.save();
 		relChaIM.save();
 	}
@@ -904,9 +895,7 @@ public class PAGBuilder extends JavaAnalysis
 		domZ.save();
 		domV.save();
 
-		if(this.usePotentialCallbacksAdder) {
-			this.potentialCallbacksAdder.addDomI(domI);
-		}
+		this.callgraphAugmenter.addDomI(domI);
 		
 		domI.save();
 		domU.save();
@@ -981,14 +970,10 @@ public class PAGBuilder extends JavaAnalysis
         return fh.canStoreType(objType, varType);
     }
 	
-	private PotentialCallbacksAdder potentialCallbacksAdder;
-	private boolean usePotentialCallbacksAdder = false;
+	private CallgraphAugmenter callgraphAugmenter = new CallgraphAugmenter();
 
 	public void run()
-	{
-		this.potentialCallbacksAdder = new PotentialCallbacksAdder();
-		this.usePotentialCallbacksAdder = IOUtils.graphEdgesFileExists("param", "graph");
-		
+	{	
 		Program program = Program.g();		
 		//for(SootClass k : program.getClasses()) System.out.println("kk "+k + (k.hasSuperclass() ? k.getSuperclass() : ""));
 		program.buildCallGraph();

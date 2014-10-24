@@ -20,7 +20,7 @@ import soot.options.Options;
 import soot.tagkit.Tag;
 import soot.util.ArrayNumberer;
 import soot.util.Chain;
-import stamp.missingmodels.callgraph.PotentialCallbacksBuilder;
+import stamp.missingmodels.callgraph.CallgraphAugmentsBuilder;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 public class Program
@@ -83,22 +83,8 @@ public class Program
 			if(mainClass.declaresMethodByName("<clinit>"))
 				entryPoints.add(mainClass.getMethodByName("<clinit>"));
 			
-			//if("true".equals(System.getProperty("reflect"))) {
-				for(SootClass klass : g().getClasses()) {
-					for(SootMethod method : klass.getMethods()) {
-						if (!method.isConcrete() && !method.isAbstract())
-							entryPoints.add(method);
-					}
-				}
-			//}
-			
-			if(IOUtils.graphEdgesFileExists("param", "graph")) {
-				System.out.println("param file found -- adding potential callbacks");
-				for(SootMethod potentialCallback : PotentialCallbacksBuilder.getPotentialCallbacks()) {
-					entryPoints.add(potentialCallback);
-				}
-			} else {
-				System.out.println("param file not yet generated -- ignoring potential callbacks!");
+			for(SootMethod callbackAugment : CallgraphAugmentsBuilder.getCallbackAugments()) {
+				entryPoints.add(callbackAugment);
 			}
 
 			Scene.v().setEntryPoints(entryPoints);

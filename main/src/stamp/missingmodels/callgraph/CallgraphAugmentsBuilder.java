@@ -26,7 +26,7 @@ import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
  * @author obastani
  *
  */
-public class PotentialCallbacksBuilder extends JavaAnalysis {
+public class CallgraphAugmentsBuilder extends JavaAnalysis {
 	public static Set<SootMethod> getPotentialCallbacksFromFile() {
 		Map<String,SootMethod> methodsBySignature = new HashMap<String,SootMethod>();
 		Iterator<SootMethod> methodIter = Program.g().getMethods();
@@ -56,7 +56,7 @@ public class PotentialCallbacksBuilder extends JavaAnalysis {
 	public static void writePotentialCallbackSignaturesToFile() {
 		try {
 			PrintWriter pw = new PrintWriter(getCallbackFile());
-			for(SootMethod potentialCallback : getPotentialCallbacks()) {
+			for(SootMethod potentialCallback : getNewCallbackAugments()) {
 				pw.println(potentialCallback.toString());
 			}
 			pw.close();
@@ -69,21 +69,41 @@ public class PotentialCallbacksBuilder extends JavaAnalysis {
 		return new File(IOUtils.getAppOutputDirectory(), "potentialCallbacks.txt"); 
 	}
 	
-	public static Set<SootMethod> getPotentialCallbacks() {
-		System.out.println("Processing potential callbacks");
-		PotentialCallbacksBuilder potentialCallbacksBuilder = new PotentialCallbacksBuilder();
+	public static Set<SootMethod> getCallbackAugments() {
+		if (IOUtils.graphEdgesFileExists("param", "graph")) {
+			System.out.println("Param file found, adding potential callbacks");
+			return getNewCallbackAugments();
+		} else {
+			System.out.println("Param file not yet generated; ignoring potential callbacks!");
+			return new HashSet<SootMethod>();
+		}
+		
+	}
+	
+	public static Set<SootMethod> getNewCallbackAugments() {
+		CallgraphAugmentsBuilder callgraphAugmentsBuilder = new CallgraphAugmentsBuilder();
 		for(SootClass klass : Program.g().getClasses()) {
-			potentialCallbacksBuilder.processClass(klass);
+			callgraphAugmentsBuilder.processClass(klass);
 		}
 		Set<SootMethod> potentialCallbacks = new HashSet<SootMethod>();
-		for(SootMethod superMethod : potentialCallbacksBuilder.frameworkMethodsToCallbacks.keySet()) {
+		for(SootMethod superMethod : callgraphAugmentsBuilder.frameworkMethodsToCallbacks.keySet()) {
 			System.out.println("Processing potential callbacks for: " + superMethod.toString());
-			for(SootMethod potentialCallback : potentialCallbacksBuilder.frameworkMethodsToCallbacks.get(superMethod)) {
+			for(SootMethod potentialCallback : callgraphAugmentsBuilder.frameworkMethodsToCallbacks.get(superMethod)) {
 				System.out.println("Adding potential callback: " + potentialCallback.toString());
 				potentialCallbacks.add(potentialCallback);
 			}
 		}
 		return potentialCallbacks;
+		/*
+		Set<SootMethod> potentialCallbacks = new HashSet<SootMethod>();
+		for(SootClass klass : Program.g().getClasses()) {
+			for(SootMethod method : klass.getMethods()) {
+				if (!method.isConcrete() && !method.isAbstract())
+					potentialCallbacks.add(method);
+			}
+		}
+		return potentialCallbacks;
+		*/
 	}
 	
 	private static boolean isInteresting(SootMethod method) {
