@@ -42,7 +42,7 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
-import stamp.missingmodels.callgraph.CallgraphAugmenter;
+import stamp.missingmodels.callgraph.EntryPointAugmenter;
 import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
@@ -238,7 +238,7 @@ public class PAGBuilder extends JavaAnalysis
 		
 		relTTFilter.save();
 
-		this.callgraphAugmenter.addRelMI(relMI);
+		this.entryPointAugmenter.addRelMI(relMI);
 		
 		relMI.save();
 		relMH.save();
@@ -256,7 +256,7 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkPrimRet.save();
 		relIinvkPrimArg.save();
 
-		this.callgraphAugmenter.addRelM(this.relPotentialCallback);
+		this.entryPointAugmenter.addRelM(this.relPotentialCallback);
 
 		relPotentialCallback.save();
 	}
@@ -799,7 +799,7 @@ public class PAGBuilder extends JavaAnalysis
 			relChaIM.add(stmt, tgt);
 		}
 		
-		this.callgraphAugmenter.addRelIM(relChaIM);
+		this.entryPointAugmenter.addRelIM(relChaIM);
 
 		relReflect.save();
 		relChaIM.save();
@@ -895,7 +895,7 @@ public class PAGBuilder extends JavaAnalysis
 		domZ.save();
 		domV.save();
 
-		this.callgraphAugmenter.addDomI(domI);
+		this.entryPointAugmenter.addDomI(domI);
 		
 		domI.save();
 		domU.save();
@@ -970,7 +970,7 @@ public class PAGBuilder extends JavaAnalysis
         return fh.canStoreType(objType, varType);
     }
 	
-	private CallgraphAugmenter callgraphAugmenter = new CallgraphAugmenter();
+	private EntryPointAugmenter entryPointAugmenter = new EntryPointAugmenter();
 
 	public void run()
 	{	

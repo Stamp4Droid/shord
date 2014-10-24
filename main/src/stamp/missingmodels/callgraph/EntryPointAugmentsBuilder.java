@@ -26,8 +26,8 @@ import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
  * @author obastani
  *
  */
-public class CallgraphAugmentsBuilder extends JavaAnalysis {
-	public static Set<SootMethod> getPotentialCallbacksFromFile() {
+public class EntryPointAugmentsBuilder extends JavaAnalysis {
+	public static Set<SootMethod> getEntryPointAugmentsFromFile() {
 		Map<String,SootMethod> methodsBySignature = new HashMap<String,SootMethod>();
 		Iterator<SootMethod> methodIter = Program.g().getMethods();
 		while(methodIter.hasNext()) {
@@ -35,29 +35,29 @@ public class CallgraphAugmentsBuilder extends JavaAnalysis {
 			methodsBySignature.put(method.toString(), method);
 		}		
 		try {
-			Set<SootMethod> potentialCallbacks = new HashSet<SootMethod>();
-			BufferedReader br = new BufferedReader(new FileReader(getCallbackFile()));
+			Set<SootMethod> entryPointAugments = new HashSet<SootMethod>();
+			BufferedReader br = new BufferedReader(new FileReader(getEntryPointAugmentsFile()));
 			String line;
 			while((line = br.readLine()) != null) {
 				SootMethod method = methodsBySignature.get(line);
 				if(method == null) {
 					System.out.println("UNRECOGNIZED METHOD SIGNATURE: " + line);
 				}
-				potentialCallbacks.add(method);
+				entryPointAugments.add(method);
 			}
 			br.close();
-			return potentialCallbacks;
+			return entryPointAugments;
 		} catch(IOException e) {
 			e.printStackTrace();
 			return new HashSet<SootMethod>();
 		}
 	}
 	
-	public static void writePotentialCallbackSignaturesToFile() {
+	public static void writeEntryPointAugmentSignaturesToFile() {
 		try {
-			PrintWriter pw = new PrintWriter(getCallbackFile());
-			for(SootMethod potentialCallback : getNewCallbackAugments()) {
-				pw.println(potentialCallback.toString());
+			PrintWriter pw = new PrintWriter(getEntryPointAugmentsFile());
+			for(SootMethod entryPointAugment : getNewEntryPointAugments()) {
+				pw.println(entryPointAugment.toString());
 			}
 			pw.close();
 		} catch(IOException e) {
@@ -65,14 +65,14 @@ public class CallgraphAugmentsBuilder extends JavaAnalysis {
 		}
 	}
 	
-	private static File getCallbackFile() {
-		return new File(IOUtils.getAppOutputDirectory(), "potentialCallbacks.txt"); 
+	private static File getEntryPointAugmentsFile() {
+		return new File(IOUtils.getAppOutputDirectory(), "entryPointAugments.txt"); 
 	}
 	
-	public static Set<SootMethod> getCallbackAugments() {
+	public static Set<SootMethod> getEntryPointAugments() {
 		if (IOUtils.graphEdgesFileExists("param", "graph")) {
 			System.out.println("Param file found, adding potential callbacks");
-			return getNewCallbackAugments();
+			return getNewEntryPointAugments();
 		} else {
 			System.out.println("Param file not yet generated; ignoring potential callbacks!");
 			return new HashSet<SootMethod>();
@@ -80,8 +80,8 @@ public class CallgraphAugmentsBuilder extends JavaAnalysis {
 		
 	}
 	
-	public static Set<SootMethod> getNewCallbackAugments() {
-		CallgraphAugmentsBuilder callgraphAugmentsBuilder = new CallgraphAugmentsBuilder();
+	public static Set<SootMethod> getNewEntryPointAugments() {
+		EntryPointAugmentsBuilder callgraphAugmentsBuilder = new EntryPointAugmentsBuilder();
 		for(SootClass klass : Program.g().getClasses()) {
 			callgraphAugmentsBuilder.processClass(klass);
 		}

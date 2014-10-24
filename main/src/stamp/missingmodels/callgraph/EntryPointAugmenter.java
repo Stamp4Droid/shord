@@ -24,13 +24,13 @@ import soot.util.Switch;
  * @author obastani
  *
  */
-public class CallgraphAugmenter {	
+public class EntryPointAugmenter {	
 	private final Map<SootMethod,Unit> unitsByMethod = new HashMap<SootMethod,Unit>();
 
-	public CallgraphAugmenter() {		
-		for(SootMethod callbackAugment : CallgraphAugmentsBuilder.getCallbackAugments()) {
-			Unit mockUnit = new MockUnit(callbackAugment);
-			this.unitsByMethod.put(callbackAugment, mockUnit);
+	public EntryPointAugmenter() {		
+		for(SootMethod entryPointAugment : EntryPointAugmentsBuilder.getEntryPointAugments()) {
+			Unit mockUnit = new MockUnit(entryPointAugment);
+			this.unitsByMethod.put(entryPointAugment, mockUnit);
 		}
 	}
 
@@ -41,8 +41,8 @@ public class CallgraphAugmenter {
 	}
 	
 	public void addRelM(ProgramRel relM) {
-		for(SootMethod callbackAugment : this.unitsByMethod.keySet()) {
-			relM.add(callbackAugment);
+		for(SootMethod entryPointAugment : this.unitsByMethod.keySet()) {
+			relM.add(entryPointAugment);
 		}
 	}
 

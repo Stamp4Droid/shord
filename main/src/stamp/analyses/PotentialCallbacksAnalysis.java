@@ -22,7 +22,7 @@ import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Host;
 import soot.tagkit.Tag;
 import soot.util.Switch;
-import stamp.missingmodels.callgraph.CallgraphAugmentsBuilder;
+import stamp.missingmodels.callgraph.EntryPointAugmentsBuilder;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
@@ -76,7 +76,7 @@ public class PotentialCallbacksAnalysis extends JavaAnalysis {
 		}
 		
 		Set<SootMethod> potentialCallbacks = new HashSet<SootMethod>();
-		for(SootMethod potentialCallback : CallgraphAugmentsBuilder.getNewCallbackAugments()) {
+		for(SootMethod potentialCallback : EntryPointAugmentsBuilder.getNewEntryPointAugments()) {
 			if(!this.invocationTargetSignatures.contains(potentialCallback.toString())) {
 				potentialCallbacks.add(potentialCallback);
 			}
