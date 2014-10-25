@@ -12,7 +12,7 @@ import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.Stmt;
-import stamp.missingmodels.callgraph.EntryPointAugmenter.MockUnit;
+import stamp.missingmodels.entrypoints.EntryPointAugmenter.MockUnit;
 import stamp.srcmap.SyntheticMethodMap;
 import chord.util.tuple.object.Pair;
 

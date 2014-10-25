@@ -1,4 +1,4 @@
-package stamp.missingmodels.callgraph;
+package stamp.missingmodels.entrypoints;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public class EntryPointAugmenter {
 	private final Map<SootMethod,Unit> unitsByMethod = new HashMap<SootMethod,Unit>();
 
 	public EntryPointAugmenter() {		
-		for(SootMethod entryPointAugment : EntryPointAugmentsBuilder.getEntryPointAugments()) {
+		for(SootMethod entryPointAugment : EntryPointAugmentsBuilder.getAllEntryPointAugmentsIfGenerated()) {
 			Unit mockUnit = new MockUnit(entryPointAugment);
 			this.unitsByMethod.put(entryPointAugment, mockUnit);
 		}

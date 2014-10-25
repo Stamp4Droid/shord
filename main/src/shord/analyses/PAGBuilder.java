@@ -42,16 +42,14 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
-import stamp.missingmodels.callgraph.EntryPointAugmenter;
+import stamp.missingmodels.entrypoints.EntryPointAugmenter;
 import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
-
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import shord.project.analyses.ProgramDom;
 import shord.project.ClassicProject;
 import shord.program.Program;
-
 import chord.project.Chord;
 
 import java.util.*;

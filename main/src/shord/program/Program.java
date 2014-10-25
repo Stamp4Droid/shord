@@ -20,7 +20,7 @@ import soot.options.Options;
 import soot.tagkit.Tag;
 import soot.util.ArrayNumberer;
 import soot.util.Chain;
-import stamp.missingmodels.callgraph.EntryPointAugmentsBuilder;
+import stamp.missingmodels.entrypoints.EntryPointAugmentsBuilder;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 public class Program
@@ -83,7 +83,7 @@ public class Program
 			if(mainClass.declaresMethodByName("<clinit>"))
 				entryPoints.add(mainClass.getMethodByName("<clinit>"));
 			
-			for(SootMethod entryPointAugment : EntryPointAugmentsBuilder.getEntryPointAugments()) {
+			for(SootMethod entryPointAugment : EntryPointAugmentsBuilder.getAllEntryPointAugmentsIfGenerated()) {
 				entryPoints.add(entryPointAugment);
 			}
 
