@@ -68,3 +68,34 @@ public class MainActivity extends Activity
 00184a: 1100                                   |000b: return-object v0
 
 */
+
+/* Runtime error:
+
+W/dalvikvm( 2261): VFY: invalid reg type 17 on aput instr (need 13)
+W/dalvikvm( 2261): VFY:  rejecting opcode 0x4f at 0x0009
+W/dalvikvm( 2261): VFY:  rejected Ledu/stanford/stamp/test/sootdextest/MainActivity;.decode ([B)[B
+W/dalvikvm( 2261): Verifier rejected class Ledu/stanford/stamp/test/sootdextest/MainActivity;
+W/dalvikvm( 2261): Class init failed in newInstance call (Ledu/stanford/stamp/test/sootdextest/MainActivity;)
+D/AndroidRuntime( 2261): Shutting down VM
+W/dalvikvm( 2261): threadid=1: thread exiting with uncaught exception (group=0xb1ab4ba8)
+E/AndroidRuntime( 2261): FATAL EXCEPTION: main
+E/AndroidRuntime( 2261): Process: edu.stanford.stamp.test.sootdextest, PID: 2261
+E/AndroidRuntime( 2261): java.lang.VerifyError: edu/stanford/stamp/test/sootdextest/MainActivity
+E/AndroidRuntime( 2261): 	at java.lang.Class.newInstanceImpl(Native Method)
+E/AndroidRuntime( 2261): 	at java.lang.Class.newInstance(Class.java:1208)
+E/AndroidRuntime( 2261): 	at android.app.Instrumentation.newActivity(Instrumentation.java:1061)
+E/AndroidRuntime( 2261): 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2112)
+E/AndroidRuntime( 2261): 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2245)
+E/AndroidRuntime( 2261): 	at android.app.ActivityThread.access$800(ActivityThread.java:135)
+E/AndroidRuntime( 2261): 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1196)
+E/AndroidRuntime( 2261): 	at android.os.Handler.dispatchMessage(Handler.java:102)
+E/AndroidRuntime( 2261): 	at android.os.Looper.loop(Looper.java:136)
+E/AndroidRuntime( 2261): 	at android.app.ActivityThread.main(ActivityThread.java:5017)
+E/AndroidRuntime( 2261): 	at java.lang.reflect.Method.invokeNative(Native Method)
+E/AndroidRuntime( 2261): 	at java.lang.reflect.Method.invoke(Method.java:515)
+E/AndroidRuntime( 2261): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:779)
+E/AndroidRuntime( 2261): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:595)
+E/AndroidRuntime( 2261): 	at dalvik.system.NativeStart.main(Native Method)
+W/ActivityManager(  392):   Force finishing activity edu.stanford.stamp.test.sootdextest/.MainActivity
+
+*/
