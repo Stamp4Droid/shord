@@ -17,9 +17,10 @@ public class ReflectAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		ProgramRel relReflect = (ProgramRel)ClassicProject.g().getTrgt("ReflectMatch");
-
-		IOUtils.printRelation("ReflectRetType");
-		IOUtils.printRelation("ReflectRet");
-		IOUtils.printRelation("ReflectRetMatch");
+		IOUtils.printRelation("ReflectArgObj");
+		IOUtils.printRelation("ReflectArgMatch");
+		//IOUtils.printRelation("ReflectArgMismatch");
+		//IOUtils.printRelation("ReflectAnyArgMismatch");
+		IOUtils.printRelation("ReflectAnyArgMatch");
 	}
 }

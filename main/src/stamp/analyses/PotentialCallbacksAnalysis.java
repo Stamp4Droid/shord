@@ -3,7 +3,6 @@ package stamp.analyses;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,13 +14,8 @@ import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import soot.SootMethod;
 import soot.Unit;
-import soot.UnitBox;
-import soot.UnitPrinter;
-import soot.ValueBox;
 import soot.jimple.toolkits.callgraph.Edge;
-import soot.tagkit.Host;
-import soot.tagkit.Tag;
-import soot.util.Switch;
+import stamp.missingmodels.entrypoints.EntryPointAugmenter.MockUnit;
 import stamp.missingmodels.entrypoints.EntryPointAugmentsBuilder;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
@@ -120,90 +114,5 @@ public class PotentialCallbacksAnalysis extends JavaAnalysis {
 		
 		IOUtils.printRelation("potentialCallback");
 		IOUtils.printRelation("potentialCallbackIM");
-	}
-	
-	public static class MockUnit implements Unit {
-		public final SootMethod target;
-		public MockUnit(SootMethod target) {
-			this.target = target;
-		}
-		@Override
-		public String toString() {
-			return "MockCall(" + this.target.toString() + ")";
-		}
-		
-		private static final long serialVersionUID = 1L;
-		@Override
-		public Unit clone() {
-			return null;
-		}
-		@Override
-		public void apply(Switch arg0) {}
-		@Override
-		public void addAllTagsOf(Host arg0) {}
-		@Override
-		public void addTag(Tag arg0) {}
-		@Override
-		public int getJavaSourceStartColumnNumber() {
-			return 0;
-		}
-		@Override
-		public int getJavaSourceStartLineNumber() {
-			return 0;
-		}
-		@Override
-		public Tag getTag(String arg0) {
-			return null;
-		}
-		@Override
-		public List<Tag> getTags() {
-			return null;
-		}
-		@Override
-		public boolean hasTag(String arg0) {
-			return false;
-		}
-		@Override
-		public void removeAllTags() {}
-		@Override
-		public void removeTag(String arg0) {}
-		@Override
-		public void addBoxPointingToThis(UnitBox arg0) {}
-		@Override
-		public boolean branches() {
-			return false;
-		}
-		@Override
-		public void clearUnitBoxes() {}
-		@Override
-		public boolean fallsThrough() {
-			return false;
-		}
-		@Override
-		public List<UnitBox> getBoxesPointingToThis() {
-			return null;
-		}
-		@Override
-		public List<ValueBox> getDefBoxes() {
-			return null;
-		}
-		@Override
-		public List<UnitBox> getUnitBoxes() {
-			return null;
-		}
-		@Override
-		public List<ValueBox> getUseAndDefBoxes() {
-			return null;
-		}
-		@Override
-		public List<ValueBox> getUseBoxes() {
-			return null;
-		}
-		@Override
-		public void redirectJumpsToThisTo(Unit arg0) {}
-		@Override
-		public void removeBoxPointingToThis(UnitBox arg0) {}
-		@Override
-		public void toString(UnitPrinter arg0) {}
 	}
 }

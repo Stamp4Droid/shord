@@ -13,8 +13,9 @@ public class ReflectAugmentsBuilder extends EntryPointAugmentsBuilder {
 		Set<SootMethod> reflectCalls = new HashSet<SootMethod>();
 		for(SootClass klass : Program.g().getClasses()) {
 			for(SootMethod method : klass.getMethods()) {
-				if (!method.isConcrete() && !method.isAbstract())
+				if (method.isConcrete()) {
 					reflectCalls.add(method);
+				}
 			}
 		}
 		return reflectCalls;
