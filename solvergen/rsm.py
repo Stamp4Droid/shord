@@ -43,9 +43,6 @@ class Reference(util.Record):
         self.reversed = reversed
         self.comp = comp
 
-    def __key__(self):
-        return (self.reversed, self.comp)
-
     def __str__(self):
         return ('_' if self.reversed else '') + str(self.comp)
 
@@ -58,9 +55,6 @@ class Literal(util.Record):
         self.reversed = reversed
         self.symbol = symbol
         self.indexed = indexed
-
-    def __key__(self):
-        return (self.reversed, self.symbol, self.indexed)
 
     def __str__(self):
         idx_str = ('' if not self.symbol.parametric

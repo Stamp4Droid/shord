@@ -24,9 +24,6 @@ class Literal(util.Record):
         self._reverse = reverse
         self.symbol = symbol
 
-    def __key__(self):
-        return (self._reverse, self.symbol)
-
     def __str__(self):
         return ('_' if self._reverse else '') + self.symbol
 
@@ -51,9 +48,6 @@ class PartialFun(util.Record):
         self._table = util.sort_uniq(arg_ret_pairs)
         # Ensure that no argument appears twice
         assert len(self._table) == len(arg_ret_pairs)
-
-    def __key__(self):
-        return (self._table, )
 
     def apply(self, arg):
         for (x, f_x) in self._table:

@@ -1,57 +1,57 @@
 import bisect
 import copy
 import errno
+import inspect
 from itertools import izip, count, groupby
 import os
 import re
 import string
 import xml.etree.ElementTree as ET
 
+def EXPECT(pred):
+    if not pred:
+        raise Exception('Fatal Error')
+
 class BaseClass(object):
     """
     A specialization of Python's base object, that includes some sanity runtime
     checks.
 
-    Any object of this class (or any subclass of it) is prohibited from
-    assigning to the same attribute twice. If this happens, an exception is
-    raised.
-
-    "Private" attributes, i.e. those whose name begins with an underscore, are
-    excluded from this constraint (these should only be manipulated within the
-    class code anyway). Any attributes found in `self._mutables` (which should
-    contain a list of attribute names) are also excluded.
+    Any object of this class (or any subclass of it) can modify its fields only
+    inside its own methods (all fields are by default "private"). If code
+    outside the class tries to modify the object's fields, an exception is
+    raised. Our checks are stricter than Java-style access control: An object
+    can't even modify the fields of a different object of the same class. Any
+    attributes found in `self._mutables` (which should contain a list of
+    attribute names) are excluded from this constraint.
 
     To make use of this class, have your class inherit from it instead of
-    @e object, and make sure you initialize all public attributes in the
-    constructor. You can whitelist a custom set of mutable attributes by
-    storing their names (as strings) in `self._mutables`.
+    @e object. You can whitelist a custom set of mutable attributes by storing
+    their names (as a list of strings) in `self._mutables`.
     """
-    # TODO: Should instead check the calling function (read the top of the
-    # stack).
 
     def __init__(self):
         raise NotImplementedError() # abstract class
 
     def __setattr__(self, name, value):
-        if (not hasattr(self, name) or name.startswith('_') or
+        # XXX: Assuming the first argument of class methods is named 'self'.
+        caller_rcvr = inspect.stack()[1][0].f_locals.get('self')
+        # Might be None, e.g. if called from a standalone function.
+        if (self is caller_rcvr or
             hasattr(self, '_mutables') and name in self._mutables):
             super(BaseClass, self).__setattr__(name, value)
         else:
-            raise Exception('Attribute %s is final' % name)
+            raise Exception('Attribute %s is private' % name)
 
-    def __eq__(self, other):
-        raise NotImplementedError()
-
-    def __ne__(self, other):
-        raise NotImplementedError()
-
+    __eq__ = None
+    __ne__ = None
+    __gt__ = None
+    __ge__ = None
+    __le__ = None
+    __lt__ = None
     __hash__ = None
-
-    def __copy__(self):
-        raise NotImplementedError()
-
-    def __deepcopy__(self, memo):
-        raise NotImplementedError()
+    __copy__ = None
+    __deepcopy__ = None
 
 class Comparable(BaseClass):
     """
@@ -68,38 +68,50 @@ class Comparable(BaseClass):
         return type(other) == type(self) and self.__key__() == other.__key__()
 
     def __ne__(self, other):
-        return not self == other
+        return not (self == other)
 
 class Hashable(Comparable):
     """
     A specialization of Comparable that uses the contents of #__key__() to
-    hash instances. All the fields in the key tuple must also be hashable.
+    hash instances. All the fields in the key tuple must also be hashable, and
+    shouldn't be modified after initialization.
     """
 
     def __hash__(self):
         return hash(self.__key__())
 
-class Record(Hashable):
+class Record(BaseClass):
     """
-    A class that can be fully described by the contents of its #__key__(). The
-    elements of the key tuple must be exactly the arguments expected by the
-    constructor, and they must be provided in the same order.
+    A class that can be fully described by the values of its fields.
     """
-    # TODO: Can relax this requirement, by using reflection instead:
-    # http://stackoverflow.com/questions/1500718
+
+    def __eq__(self, other):
+        return type(other) == type(self) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+
+    def __hash__(self):
+        return hash(tuple(sorted(self.__dict__.items())))
 
     def __repr__(self):
-        key = self.__key__()
-        if len(key) == 1:
-            return '%s(%r)' % (type(self).__name__, key[0])
-        else:
-            return '%s%r' % (type(self).__name__, key)
+        args_str = ','.join(['%s=%r' % (k,v)
+                             for (k,v) in self.__dict__.items()])
+        return type(self).__name__ + '(' + args_str + ')'
 
     def __copy__(self):
-        return type(self)(*(self.__key__()))
+        cls = type(self)
+        result = cls.__new__(cls)
+        result.__dict__.update(self.__dict__)
+        return result
 
     def __deepcopy__(self, memo):
-        return type(self)(*(copy.deepcopy(self.__key__(), memo)))
+        cls = type(self)
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        for (k,v) in self.__dict__.items():
+            setattr(result, k, deepcopy(v, memo))
+        return result
 
 class IndexDict(list):
     """
