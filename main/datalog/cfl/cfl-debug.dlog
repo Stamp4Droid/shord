@@ -35,6 +35,11 @@ CM(c:C,m:M) input
 reachableM(m:M) output
 reachableM(m) :- CM(_,m).
 
+#clinit(m:M) input
+#reachableBase(m:M) output
+#reachableBase(0).
+#reachableBase(m) :- clinit(m), reachableM(m).
+
 potentialCallback(m:M) input
 potentialCallbackDependent(m0:M0,m1:M1) output
 potentialCallbackDependent(m0,m1) :- potentialCallback(m0), m0 = m1.

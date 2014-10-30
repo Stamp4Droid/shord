@@ -69,7 +69,7 @@ public abstract class EntryPointAugmentsBuilder extends JavaAnalysis {
 	private static List<Class<? extends EntryPointAugmentsBuilder>> builders = new ArrayList<Class<? extends EntryPointAugmentsBuilder>>();
 	static {
 		//builders.add(PotentialCallbackAugmentsBuilder.class);
-		builders.add(ReflectAugmentsBuilder.class);
+		//builders.add(ReflectAugmentsBuilder.class);
 	}
 	
 	private static Set<SootMethod> getAllEntryPointAugmentsPrivate(boolean useGenerated) {

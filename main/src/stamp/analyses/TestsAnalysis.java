@@ -11,9 +11,10 @@ import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
-import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar.TaintPointsToGrammar;
+import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
+import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.DynamicParamRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
@@ -24,7 +25,8 @@ import chord.project.Chord;
 
 @Chord(name = "tests")
 public class TestsAnalysis extends JavaAnalysis {
-	private static ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
+	//private static ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
+	private static ContextFreeGrammar taintGrammar = new CallgraphTaintGrammar();
 	
 	private static int getNumReachableMethods() {
 		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("reachableM");
@@ -81,8 +83,9 @@ public class TestsAnalysis extends JavaAnalysis {
 				double trueSize = numMethods >= reachedMethods.size() ? (double)reachedMethods.size() : (double)numMethods;
 				System.out.println("Running method coverage: " + trueSize/numReachableMethods);
 
-				RelationManager relations = new DynamicParamRelationManager(getFilteredCallgraph(callgraph, reachedMethods, numMethods));
+				//RelationManager relations = new DynamicParamRelationManager(getFilteredCallgraph(callgraph, reachedMethods, numMethods));
 				//RelationManager relations = new DynamicParamRelationManager(DroidRecordReader.getCallgraphList("../../callgraphs/", tokens[tokens.length-1]));
+				RelationManager relations = new DynamicCallgraphRelationManager(getFilteredCallgraph(callgraph, reachedMethods, numMethods));
 				Graph g = relationReader.readGraph(relations, taintGrammar);
 				TypeFilter t = relationReader.readTypeFilter(taintGrammar);
 				IOUtils.printAbductionResult(AbductiveInferenceRunner.runInference(g, t, true, 2), true);
