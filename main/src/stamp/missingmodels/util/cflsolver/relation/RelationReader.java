@@ -40,21 +40,21 @@ public interface RelationReader {
 			labels.add("$FINE_LOCATION");
 
 			labels.add("$getDeviceId");
-			//labels.add("$AUDIO");
+			labels.add("$AUDIO");
 
-			//labels.add("$SMS");
-			//labels.add("$ACCOUNTS");
-			//labels.add("$CONTACTS");
-			//labels.add("$CALENDAR");
-			//labels.add("$CONTENT_PROVIDER");
+			labels.add("$SMS");
+			labels.add("$ACCOUNTS");
+			labels.add("$CONTACTS");
+			labels.add("$CALENDAR");
+			labels.add("$CONTENT_PROVIDER");
 
-			//labels.add("!SOCKET");
+			labels.add("!SOCKET");
 			labels.add("!INTERNET");
-			//labels.add("!sendTextMessage");
-			//labels.add("!destinationAddress");
-			//labels.add("!sendDataMessage");
-			//labels.add("!sendMultipartTextMessage");			
-			//labels.add("!WebView");
+			labels.add("!sendTextMessage");
+			labels.add("!destinationAddress");
+			labels.add("!sendDataMessage");
+			labels.add("!sendMultipartTextMessage");			
+			labels.add("!WebView");
 			
 			GraphTransformer gt = new GraphTransformer() {
 				@Override
