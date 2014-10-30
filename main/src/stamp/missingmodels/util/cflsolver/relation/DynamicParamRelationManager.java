@@ -36,7 +36,12 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void <clinit>()>");
 		stampMethods.add("<android.content.StampSharedPreferences: void <clinit>()>");
 	}
-	
+
+	public static boolean isStampCallEdge(String caller, String callee) {
+		//return stampMethods.contains(caller) || stampMethods.contains(callee);
+		return stampMethods.contains(callee);
+	}
+
 	public DynamicParamRelationManager(MultivalueMap<String,String> dynamicCallgraph) {
 		// STEP 0: Make param and paramPrim edges weight 1
 		this.setNewWeights();
@@ -50,7 +55,7 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		for(int[] tuple : paramRel.getAryNIntTuples()) {
 			String caller = ConversionUtils.getMethodForVar(domV.get(tuple[1])).toString();
 			String callee = ConversionUtils.getMethodForVar(domV.get(tuple[0])).toString();
-			if(dynamicCallgraph.get(caller).contains(callee) || stampMethods.contains(caller) || stampMethods.contains(callee)) {
+			if(dynamicCallgraph.get(caller).contains(callee) || isStampCallEdge(caller, callee)) {
 				System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
 				dynamicCallgraphConverted.add("V" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
 			}
