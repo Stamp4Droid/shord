@@ -24,18 +24,18 @@ import stamp.missingmodels.util.cflsolver.util.IOUtils;
 public class AbductiveInferenceRunner {
 	
 	public interface AbductiveInferenceHelper {
-		public Set<Edge> getBaseEdges(Graph g);
+		public Set<Edge> getBaseEdges(Graph gbar, Graph gcur);
 		public Set<Edge> getInitialCutEdges(Graph g);
 	}
 	
 	public static class DefaultAbductiveInferenceHelper implements AbductiveInferenceHelper {
 		@Override
-		public Set<Edge> getBaseEdges(Graph gbart) {
+		public Set<Edge> getBaseEdges(Graph gbart, final Graph gcur) {
 			return gbart.getEdges(new EdgeFilter() {
 				@Override
 				public boolean filter(Edge edge) {
-					return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
-					//return edge.getSymbol().equals("callgraph");
+					//return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
+					return edge.getSymbol().equals("callgraph");
 				}
 			});
 		}
@@ -82,8 +82,8 @@ public class AbductiveInferenceRunner {
 		return gtStripContext.transform(gbar);
 	}
 	
-	private static Map<EdgeStruct,Boolean> runAbductiveInference(AbductiveInferenceHelper h, Graph gbart, boolean shord) throws LpSolveException {
-		Set<Edge> baseEdges = h.getBaseEdges(gbart);
+	private static Map<EdgeStruct,Boolean> runAbductiveInference(AbductiveInferenceHelper h, Graph gbart, Graph gcur, boolean shord) throws LpSolveException {
+		Set<Edge> baseEdges = h.getBaseEdges(gbart, gcur);
 		System.out.println("Num base edges: " + baseEdges.size());
 		
 		Set<Edge> initialCutEdges = h.getInitialCutEdges(gbart);
@@ -186,7 +186,7 @@ public class AbductiveInferenceRunner {
 			Graph gbart = stripContexts(gbar);
 
 			// STEP 3: Run the abductive inference algorithm
-			Map<EdgeStruct,Boolean> result = runAbductiveInference(h, gbart, shord);
+			Map<EdgeStruct,Boolean> result = runAbductiveInference(h, gbart, gcur, shord);
 			
 			// STEP 4: Transform graph to remove cut edges
 			gcur = removeResultingEdges(gcur, result);

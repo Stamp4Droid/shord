@@ -27,8 +27,8 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 	private AbductiveInferenceHelper getAbductiveInferenceHelper(final MultivalueMap<String,String> baseEdgeFilter, final MultivalueMap<String,String> cutEdgeFilter) {
 		return new AbductiveInferenceHelper() {
 			@Override
-			public Set<Edge> getBaseEdges(Graph g) {
-				return g.getEdges(new EdgeFilter() {
+			public Set<Edge> getBaseEdges(Graph gbar, Graph gcur) {
+				return gbar.getEdges(new EdgeFilter() {
 					@Override
 					public boolean filter(Edge edge) {
 						return (edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim"))

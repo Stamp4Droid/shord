@@ -75,7 +75,7 @@ public class TestsAnalysis extends JavaAnalysis {
 			System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
 			
 			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("../../profiler/traceouts/", tokens[tokens.length-1]);
-			IOUtils.printRelation("callgraph");
+			//IOUtils.printRelation("callgraph");
 			
 			double fractionMethodIncrement = 0.1;
 			int numMethods = reachedMethods.size();
