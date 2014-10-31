@@ -244,7 +244,7 @@ class MatchExact(util.Record):
                 return (self, lambda x: x)
         else:
             assert False
-        return (MatchOneOf(Language()), lambda x: x)
+        return None
 
     def limit(self, rhs):
         assert isinstance(rhs, SetLang)
@@ -335,7 +335,7 @@ class MatchSuffix(util.Record):
                         lambda x: x.specialize(matched))
         else:
             assert False
-        return (MatchOneOf(Language()), lambda x: x)
+        return None
 
     def limit(self, rhs):
         res = []
@@ -417,7 +417,7 @@ class MatchOneOf(util.Record):
                 return (MatchOneOf(common), lambda x: x)
         else:
             assert False
-        return (MatchOneOf(Language()), lambda x: x)
+        return None
 
     def limit(self, rhs):
         assert isinstance(rhs, SetLang)
@@ -622,8 +622,14 @@ class Xform(util.Record):
         return self.restrict(other)
 
     def restrict(self, other):
-        (lc,rc_act) = self.l_closes.restrict(other.l_closes)
-        (lo,ro_act) = self.l_opens.restrict(other.l_opens)
+        c_res = self.l_closes.restrict(other.l_closes)
+        if c_res is None:
+            return Xform.BOTTOM
+        o_res = self.l_opens.restrict(other.l_opens)
+        if o_res is None:
+            return Xform.BOTTOM
+        (lc,rc_act) = c_res
+        (lo,ro_act) = o_res
         return Xform(lc, lo, rc_act(self.r_closes), ro_act(self.r_opens))
 
     def __rshift__(self, other):
