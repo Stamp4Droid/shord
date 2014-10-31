@@ -682,7 +682,7 @@ Xform.BOTTOM = Xform(MatchOneOf(Language()), MatchOneOf(Language()),
 
 # ===== TESTS =================================================================
 
-if __name__ == '__main__':
+def test_sequence_splits():
     for (a,b) in Sequence('abcd').splits():
         print '*' + a.string + '*' + b.string + '*'
         for (c,d) in a.splits():
@@ -690,18 +690,36 @@ if __name__ == '__main__':
     for (a,b) in Sequence('abcd').splits(True):
         print '*' + a.string + '*' + b.string + '*'
 
-    xf1 = Xform(MatchExact(Sequence('abc')),
-                MatchSuffix(Sequence('d')),
-                SetLang(Language.from_regex('a*')),
-                Surround(Language.from_regex('ef*'),Language.from_regex('dd')))
-    print xf1
+def test_language_ops():
+    print Language.from_regex('abbb*c').lquot(Language.from_regex('ab'))
+    print Language.from_regex('abb*') <= Language.from_regex('abb*')
 
-    xf2 = Xform.parse('cba|_d -> a*|ef*_dd')
-    print xf2
-    assert xf1 == xf2
+def test_xform_examples():
+    t = {}
+    t[0] = Xform(MatchExact(Sequence('abc')),
+                 MatchSuffix(Sequence('d')),
+                 SetLang(Language.from_regex('a*')),
+                 Surround(Language.from_regex('ef*'),
+                          Language.from_regex('dd')))
+    t[1] = Xform.parse('cba|_d -> a*|ef*_dd')
+    assert t[0] == t[1]
+    t[2] = Xform.parse('(@epsilon)|(@epsilon) -> (@epsilon)|(@epsilon)')
+    t[3] = Xform.parse('| -> |')
+    t[4] = Xform.parse('_|_ -> _|_d')
+    for k in t:
+        print t[k]
+    return t
 
-    res = xf1.apply((Language.from_regex('a*b*c'), Language.from_regex('kd')))
+def test_xform_ops(t):
+    res = t[0].apply((Language.from_regex('a*b*c'), Language.from_regex('kd')))
     print res[0]
     print res[1]
+    print '====='
+    print t[4] / t[3]
+    print '====='
+    for x in t[3] >> t[4]:
+        print x
+    print '====='
+    for x in t[4] >> t[3]:
+        print x
 
-    print Language.from_regex('abbb*c').lquot(Language.from_regex('ab'))
