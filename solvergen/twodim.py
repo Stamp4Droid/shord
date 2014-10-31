@@ -255,6 +255,9 @@ class MatchExact(util.Record):
     def satisfiable(self):
         return True
 
+    def upcast(self):
+        return MatchOneOf(Language.singleton(self.seq))
+
     def to_string(self, reverse):
         return '%s' % (self.seq.reverse() if reverse else self.seq)
 
@@ -435,29 +438,16 @@ class MatchOneOf(util.Record):
         return self.to_string(False)
 
 def parse_matcher(s, reverse):
-    res = []
-    parametric = False
     if len(s) > 0 and s[-1 if reverse else 0] == '_':
-        parametric = True
         s = s[:-1] if reverse else s[1:]
-    if parametric:
         seq = Sequence(s)
-        if reverse:
-            seq = seq.reverse()
-        res.append(MatchSuffix(seq))
-    else:
-        try:
-            seq = Sequence(s)
-            if reverse:
-                seq = seq.reverse()
-            res.append(MatchExact(seq))
-        except AlphabetError:
-            pass
+        return MatchSuffix(seq.reverse() if reverse else seq)
+    try:
+        seq = Sequence(s)
+        return MatchExact(seq.reverse() if reverse else seq)
+    except AlphabetError:
         lang = Language.from_regex(s)
-        if reverse:
-            lang = lang.reverse()
-        res.append(MatchOneOf(lang))
-    return res
+        return MatchOneOf(lang.reverse() if reverse else lang)
 
 # ==== XFORM RHS ==============================================================
 
@@ -512,6 +502,9 @@ class AddSuffix(util.Record):
     def always_empty(self):
         return False
 
+    def upcast(self):
+        return Surround(Language(), self.suffix)
+
     def to_string(self, reverse):
         if reverse:
             return '%s_' % self.suffix.reverse()
@@ -558,48 +551,60 @@ class Surround(util.Record):
         return self.to_string(False)
 
 def parse_result(s, reverse):
-    res = []
     toks = s.split('_')
     if len(toks) == 1:
         lang = Language.from_regex(toks[0])
-        if reverse:
-            lang = lang.reverse()
-        res.append(SetLang(lang))
+        return SetLang(lang.reverse() if reverse else lang)
     elif len(toks) == 2:
         pre_str = toks[1 if reverse else 0]
-        pre_lang = Language.from_regex(pre_str)
-        if reverse:
-            pre_lang = pre_lang.reverse()
         suf_str = toks[0 if reverse else 1]
         suf_lang = Language.from_regex(suf_str)
-        if reverse:
-            suf_lang = suf_lang.reverse()
         if pre_str == '':
-            res.append(AddSuffix(suf_lang))
-        res.append(Surround(pre_lang, suf_lang))
+            return AddSuffix(suf_lang.reverse() if reverse else suf_lang)
+        else:
+            pre_lang = Language.from_regex(pre_str)
+            return Surround(pre_lang.reverse() if reverse else pre_lang,
+                            suf_lang.reverse() if reverse else suf_lang)
     else:
         assert False
-    return res
 
 # ==== XFORMS =================================================================
 
 class Xform(util.Record):
-    VALID_SIGS = [(MatchSuffix, MatchSuffix, AddSuffix, AddSuffix),
-                  (MatchExact,  MatchSuffix, SetLang,   Surround),
-                  (MatchSuffix, MatchExact,  Surround,  SetLang),
-                  (MatchOneOf,  MatchOneOf,  SetLang,   SetLang)]
+    VALID_SIGS = {
+        (MatchSuffix, MatchSuffix, AddSuffix, AddSuffix):
+            lambda lc,lo,rc,ro: (lc,lo,rc,ro),
+        (MatchExact,  MatchSuffix, SetLang,   Surround):
+            lambda lc,lo,rc,ro: (lc,lo,rc,ro),
+        (MatchSuffix, MatchExact,  Surround,  SetLang):
+            lambda lc,lo,rc,ro: (lc,lo,rc,ro),
+        (MatchOneOf,  MatchOneOf,  SetLang,   SetLang):
+            lambda lc,lo,rc,ro: (lc,lo,rc,ro),
+        # Can up-cast certain cases to valid signatures:
+        (MatchExact,  MatchSuffix, SetLang,   AddSuffix):
+            lambda lc,lo,rc,ro: (lc,lo,rc,ro.upcast()),
+        (MatchSuffix, MatchExact,  AddSuffix,  SetLang):
+            lambda lc,lo,rc,ro: (lc,lo,rc.upcast(),ro),
+        (MatchExact,  MatchOneOf,  SetLang,   SetLang):
+            lambda lc,lo,rc,ro: (lc.upcast(),lo,rc,ro),
+        (MatchOneOf,  MatchExact,  SetLang,   SetLang):
+            lambda lc,lo,rc,ro: (lc,lo.upcast(),rc,ro),
+        (MatchExact,  MatchExact,  SetLang,   SetLang):
+            lambda lc,lo,rc,ro: (lc.upcast(),lo.upcast(),rc,ro)}
 
     class SigError(Exception):
         pass
 
     def __init__(self, l_closes, l_opens, r_closes, r_opens):
         sig = (type(l_closes), type(l_opens), type(r_closes), type(r_opens))
-        if sig not in Xform.VALID_SIGS:
+        # TODO: Could compare types with 'is', or 'isinstance'.
+        fix = Xform.VALID_SIGS.get(sig)
+        if fix is None:
             raise Xform.SigError
-        self.l_closes = l_closes
-        self.l_opens  = l_opens
-        self.r_closes = r_closes
-        self.r_opens  = r_opens
+        (self.l_closes,self.l_opens,self.r_closes,self.r_opens) = fix(l_closes,
+                                                                      l_opens,
+                                                                      r_closes,
+                                                                      r_opens)
 
     def apply(self, lang):
         (c,o) = lang
@@ -651,12 +656,6 @@ class Xform(util.Record):
                 not self.l_opens.satisfiable() or
                 self.r_closes.always_empty() or
                 self.r_opens.always_empty())
-    @staticmethod
-    def try_construct(l_closes, l_opens, r_closes, r_opens):
-        try:
-            return [Xform(l_closes, l_opens, r_closes, r_opens)]
-        except Xform.SigError:
-            return []
 
     @staticmethod
     def parse(s):
@@ -664,14 +663,8 @@ class Xform(util.Record):
         [lhs_str,rhs_str] = s.split('->')
         [lc_str,lo_str] = lhs_str.split('|')
         [rc_str,ro_str] = rhs_str.split('|')
-        xforms = [xf
-                  for lc in parse_matcher(lc_str, True)
-                  for lo in parse_matcher(lo_str, False)
-                  for rc in parse_result(rc_str, True)
-                  for ro in parse_result(ro_str, False)
-                  for xf in Xform.try_construct(lc, lo, rc, ro)]
-        assert len(xforms) == 1
-        return xforms[0]
+        return Xform(parse_matcher(lc_str, True), parse_matcher(lo_str, False),
+                     parse_result(rc_str, True), parse_result(ro_str, False))
 
     def __str__(self):
         return '%s|%s -> %s|%s' % (self.l_closes.to_string(True),
