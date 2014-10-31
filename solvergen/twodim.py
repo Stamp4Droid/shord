@@ -9,28 +9,34 @@ import util
 # remaining functionality:
 # - parsing system of equations
 # - converting to set of xforms
+# - web interface (input form & CGI), with timeout setting
 # - solving
 # cleanup:
 # - denote used constants (e.g. bottom)
 # - special-case empty xforms? currently they don't have a normalized repr
+# - add union of xforms with inccompatible domains as standard operation
 # correctness:
 # - (random) testing (may have bugs in writeup)
 # - try constrcuted examples, then real systems
 # - verify axioms, operator closure
 # - ok to have empty languages in matches/results? still sound?
+# - Xform.ID is the neutral element for composition
 # performance:
 # - do caching, uniquing
 # - defunctionalize cases (profile first)
 # - special-case operations for singleton languages?
 # - return None to save time instead of returning an empty language?
+# - subset operations on xforms, throwing out redundant cases early
 
 # ===== USAGE =================================================================
 
 # Be careful with precedence when using overloaded operators.
-# Languag.from_regex deviates from standard syntax: '+' means concatenation.
+# Language.from_regex deviates from standard syntax: '+' means union.
 
 # ===== LITERALS ==============================================================
 
+# CAUTION: This set shouldn't include regex operators:
+# '*', '+', '(', ')', '[', ']', '|'
 ALPHABET = set(string.ascii_lowercase)
 
 class AlphabetError(Exception):
@@ -67,7 +73,7 @@ class Language(util.Record):
     def from_regex(re):
         if re.strip() == '':
             # Special case that str2regexp can't handle
-            return Language.singleton('')
+            return Language.singleton(Sequence(''))
         return Language(FAdo.reex.str2regexp(re).toDFA())
 
     def __add__(self, other):
@@ -75,6 +81,12 @@ class Language(util.Record):
 
     def concat(self, other):
         return Language(self._dfa.concat(other._dfa))
+
+    def __and__(self, other):
+        return self.disjunction(other)
+
+    def disjunction(self, other):
+        return Language(self._dfa & other._dfa)
 
     def __or__(self, other):
         return self.union(other)
@@ -94,8 +106,14 @@ class Language(util.Record):
     def contains(self, seq):
         return self._dfa.evalWordP(seq.string)
 
+    def __le__(self, other):
+        return self.subseteq(other)
+
+    def subseteq(self, other):
+        return (self._dfa & ~(other._dfa)).witness() is None
+
     def __div__(self, other):
-        return rquot(self, other)
+        return self.rquot(other)
 
     def rquot(self, other):
         m = self._dfa.dup()
@@ -167,7 +185,7 @@ class Sequence(util.Record):
 
     def rm_suffix(self, other):
         if self.string.endswith(other.string):
-            return Sequence(self.string[:-len(other.string)])
+            return Sequence(self.string[:len(self.string)-len(other.string)])
         return None
 
     def endswith(self, other):
@@ -175,6 +193,10 @@ class Sequence(util.Record):
 
     def __str__(self):
         return self.string
+
+def parse_lang_pair(s):
+    [c_str,o_str] = s.split('|')
+    return (Language.from_regex(c_str).reverse(), Language.from_regex(o_str))
 
 # ==== XFORM LHS ==============================================================
 
@@ -229,6 +251,9 @@ class MatchExact(util.Record):
         if self.seq in rhs.lang:
             return [(self, SetLang(Language.singleton(self.seq)))]
         return []
+
+    def satisfiable(self):
+        return True
 
     def to_string(self, reverse):
         return '%s' % (self.seq.reverse() if reverse else self.seq)
@@ -305,8 +330,9 @@ class MatchSuffix(util.Record):
                         lambda x: x.grow_suffix(Language.singleton(rest)))
         elif isinstance(other, MatchOneOf):
             matched = other.lang.rm_suffix(self.suffix)
-            return (MatchOneOf(matched + Language.singleton(self.suffix)),
-                    lambda x: x.specialize(matched))
+            if not matched.empty():
+                return (MatchOneOf(matched + Language.singleton(self.suffix)),
+                        lambda x: x.specialize(matched))
         else:
             assert False
         return (MatchOneOf(Language()), lambda x: x)
@@ -339,6 +365,9 @@ class MatchSuffix(util.Record):
         else:
             assert False
         return res
+
+    def satisfiable(self):
+        return True
 
     def to_string(self, reverse):
         if reverse:
@@ -383,7 +412,9 @@ class MatchOneOf(util.Record):
                 return (MatchOneOf(matched + Language.singleton(other.suffix)),
                         lambda x: x)
         elif isinstance(other, MatchOneOf):
-            return (MatchOneOf(self.lang & other.lang), lambda x: x)
+            common = self.lang & other.lang
+            if not common.empty():
+                return (MatchOneOf(common), lambda x: x)
         else:
             assert False
         return (MatchOneOf(Language()), lambda x: x)
@@ -393,6 +424,9 @@ class MatchOneOf(util.Record):
         if not (self.lang & rhs.lang).empty():
             return [(self, rhs)]
         return []
+
+    def satisfiable(self):
+        return not self.lang.empty()
 
     def to_string(self, reverse):
         return '%s' % (self.lang.reverse() if reverse else self.lang)
@@ -443,6 +477,9 @@ class SetLang(util.Record):
         assert isinstance(other, SetLang)
         return SetLang(self.lang | other.lang)
 
+    def always_empty(self):
+        return self.lang.empty()
+
     def to_string(self, reverse):
         return '%s' % (self.lang.reverse() if reverse else self.lang)
 
@@ -471,6 +508,9 @@ class AddSuffix(util.Record):
     def union(self, other):
         assert isinstance(other, AddSuffix)
         return AddSuffix(self.suffix | other.suffix)
+
+    def always_empty(self):
+        return False
 
     def to_string(self, reverse):
         if reverse:
@@ -504,6 +544,9 @@ class Surround(util.Record):
     def union(self, other):
         assert isinstance(other, Surround)
         return Surround(self.prefix | other.prefix, self.suffix | other.suffix)
+
+    def always_empty(self):
+        return False
 
     def to_string(self, reverse):
         if reverse:
@@ -597,6 +640,11 @@ class Xform(util.Record):
                 for (lc,rc) in self.l_closes.limit(self.r_closes)
                 for (lo,ro) in self.l_opens.limit(self.r_opens)]
 
+    def is_bottom(self):
+        return (not self.l_closes.satisfiable() or
+                not self.l_opens.satisfiable() or
+                self.r_closes.always_empty() or
+                self.r_opens.always_empty())
     @staticmethod
     def try_construct(l_closes, l_opens, r_closes, r_opens):
         try:
@@ -624,6 +672,14 @@ class Xform(util.Record):
                                    self.l_opens.to_string(False),
                                    self.r_closes.to_string(True),
                                    self.r_opens.to_string(False))
+
+Xform.ID = Xform(MatchSuffix(Sequence('')),
+                 MatchSuffix(Sequence('')),
+                 AddSuffix(Language.singleton(Sequence(''))),
+                 AddSuffix(Language.singleton(Sequence(''))))
+
+Xform.BOTTOM = Xform(MatchOneOf(Language()), MatchOneOf(Language()),
+                     SetLang(Language()), SetLang(Language()))
 
 # ===== TESTS =================================================================
 
