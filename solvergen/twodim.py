@@ -6,28 +6,6 @@ import FAdo.reex
 import string
 import util
 
-# TODO:
-# remaining functionality:
-# - parsing system of equations
-# - converting to set of xforms
-# - web interface (input form & CGI), with timeout setting
-# cleanup:
-# - denote used constants (e.g. bottom)
-# - special-case empty xforms? currently they don't have a normalized repr
-# - add union of xforms with inccompatible domains as standard operation
-# correctness:
-# - (random) testing (may have bugs in writeup)
-# - try constrcuted examples, then real systems
-# - verify axioms, operator closure
-# - ok to have empty languages in matches/results? still sound?
-# - Xform.ID is the neutral element for composition
-# performance:
-# - do caching, uniquing
-# - defunctionalize cases (profile first)
-# - special-case operations for singleton languages?
-# - return None to save time instead of returning an empty language?
-# - subset operations on xforms, throwing out redundant cases early
-
 # ===== USAGE =================================================================
 
 # Be careful with precedence when using overloaded operators.
@@ -830,17 +808,55 @@ def test_xform_ops(t):
         print x
 
 def test_system_examples():
-    return [
-        (parse_lang_pair('|b'),
-         [Xform.parse('_|_ -> _|_a'), Xform.parse('_|_ -> _|_c')]),
-        (parse_lang_pair('|aaa'),
-         [Xform.parse('_|_a -> _|_aa'), Xform.parse('_| -> _a|a')]),
-        (parse_lang_pair('|bbb'),
-         [Xform.parse('bb_|_b -> _|_'), Xform.parse('b_| -> _b|'),
-          Xform.parse('b|_b -> |b_'), Xform.parse('b| -> |'),
-          Xform.parse('|_b -> |bb_'), Xform.parse('| -> |b')]),
-        (parse_lang_pair('|b'),
-         [Xform.parse('|_b -> |bb_'), Xform.parse('_|_ -> _|_a')]),
-        (parse_lang_pair('|a'),
-         [Xform.parse('_|_a -> _|_ab'), Xform.parse('_|_a -> _|_aa'),
-          Xform.parse('_|_b -> _|_ba'), Xform.parse('_|_b -> _|_bb')])]
+    return [('|c',    ['_|_ -> _|_b']),       # |cb*
+            ('|c',    ['_|_ -> _|_a',
+                       '_|_ -> _|_b']),       # |c(a+b)*
+            ('|a',    ['_|_a -> _|_ab',
+                       '_|_a -> _|_aa',
+                       '_|_b -> _|_ba',
+                       '_|_b -> _|_bb']),     # |a(a+b)*
+            ('|aaa',  ['_|_a -> _|_aa',
+                       '_| -> _a|a']),        # |aaaa*
+            ('|b',    ['|_b -> |bb_']),       # |bb*
+            ('|c',    ['|_b -> |bb_']),       # |c
+            ('|cbb',  ['bb_|_b -> _|_',
+                       'b_| -> _b|',
+                       'b|_b -> |b_',
+                       'b| -> |',
+                       '|_b -> |bb_',
+                       '| -> |b']),           # |(cbb + bbcb + bbbbc)
+            ('|b',    ['b_| -> _b|',
+                       '|_b -> |b_',
+                       '| -> |']),            # |b
+            ('|babc', ['|_abc -> |baba_c']),  # |bab(ab)*c
+            ('c|d',   ['_|_ -> a_|_b']),      # a^kc|db^k => a*c|db*
+            ('|aaa',  ['|_aa -> |b_aa']),     # |b*aaa
+            ('|a',    ['_|_b -> _|_',
+                       '_|_a -> _|_aabb']),   # |a(aa*(bb?)?)?
+            ('|a',    ['_|_ -> _|_a',
+                       '_|_a -> _|_b']),      # |(a+b)(a+b)*
+            ('|b',    ['|_b -> |bb_',
+                       '_|_ -> _|_a']),       # |bb*a*
+            ('|c',    ['_|_ -> _|_a',
+                       '|_aa -> |b_']),       # |b*ca*
+            ('|a',    ['_|_a -> _|_ab',
+                       '_|_b -> _|_']),       # |ab?
+            ('|a',    ['_|_a -> _|_ba']),     # |b*a
+            ('|b',    ['_|_b -> _|_ab',
+                       '_| -> _b|ab',
+                       'ba_|_ab -> _|_',
+                       'ba_|b -> _a|',
+                       'ba_| -> _ba|',
+                       'b|_ab -> |a_',
+                       'b|b -> |',
+                       '|_ab -> |ab_',
+                       '| -> |']),            # |a*b
+            ('|bbb',  ['|_b -> |bb_'])]       # |bbbb*
+
+def test_system_solver(i):
+    (b,ss) = test_system_examples()[i]
+    (c,o) = solve(parse_lang_pair(b), [Xform.parse(s) for s in ss])
+    print '%s | %s' % (c.reverse(), o)
+
+if __name__ == '__main__':
+    test_system_examples()[0]
