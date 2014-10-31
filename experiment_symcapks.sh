@@ -1,69 +1,55 @@
 #!/bin/bash
 
-echo ./stamp analyze ../stamptest/SymcApks/03c1b44c94c86c3137862c20f9f745e0f89ce2cdb778dc6466a06a65b7a591ae.apk
-./stamp analyze ../stamptest/SymcApks/03c1b44c94c86c3137862c20f9f745e0f89ce2cdb778dc6466a06a65b7a591ae.apk
-echo ./stamp analyze ../stamptest/SymcApks/0461fd9161f2f7e8f86483511dbfb20e084a8ee33ced97c68b3fe27f8e1af110.apk
-./stamp analyze ../stamptest/SymcApks/0461fd9161f2f7e8f86483511dbfb20e084a8ee33ced97c68b3fe27f8e1af110.apk
-echo ./stamp analyze ../stamptest/SymcApks/04c9e05d0f626cc3f47dc0bc9b65a8cf.apk
-./stamp analyze ../stamptest/SymcApks/04c9e05d0f626cc3f47dc0bc9b65a8cf.apk
-echo ./stamp analyze ../stamptest/SymcApks/05ed925905586ae6f51adee19a16ee7a.apk
-./stamp analyze ../stamptest/SymcApks/05ed925905586ae6f51adee19a16ee7a.apk
-echo ./stamp analyze ../stamptest/SymcApks/0ac54ec80dc63f5f6d0334d5eca8bb59.apk
-./stamp analyze ../stamptest/SymcApks/0ac54ec80dc63f5f6d0334d5eca8bb59.apk
-echo ./stamp analyze ../stamptest/SymcApks/10163c1477513d7fb29e92d49a3d432a.apk
-./stamp analyze ../stamptest/SymcApks/10163c1477513d7fb29e92d49a3d432a.apk
+#echo ./stamp analyze ../stamptest/SymcApks/03c1b44c94c86c3137862c20f9f745e0f89ce2cdb778dc6466a06a65b7a591ae.apk
+#./stamp analyze ../stamptest/SymcApks/03c1b44c94c86c3137862c20f9f745e0f89ce2cdb778dc6466a06a65b7a591ae.apk
+#echo ./stamp analyze ../stamptest/SymcApks/0461fd9161f2f7e8f86483511dbfb20e084a8ee33ced97c68b3fe27f8e1af110.apk
+#./stamp analyze ../stamptest/SymcApks/0461fd9161f2f7e8f86483511dbfb20e084a8ee33ced97c68b3fe27f8e1af110.apk
+#echo ./stamp analyze ../stamptest/SymcApks/04c9e05d0f626cc3f47dc0bc9b65a8cf.apk
+#./stamp analyze ../stamptest/SymcApks/04c9e05d0f626cc3f47dc0bc9b65a8cf.apk
+#echo ./stamp analyze ../stamptest/SymcApks/05ed925905586ae6f51adee19a16ee7a.apk
+#./stamp analyze ../stamptest/SymcApks/05ed925905586ae6f51adee19a16ee7a.apk
+#echo ./stamp analyze ../stamptest/SymcApks/0ac54ec80dc63f5f6d0334d5eca8bb59.apk
+#./stamp analyze ../stamptest/SymcApks/0ac54ec80dc63f5f6d0334d5eca8bb59.apk
+#echo ./stamp analyze ../stamptest/SymcApks/10163c1477513d7fb29e92d49a3d432a.apk
+#./stamp analyze ../stamptest/SymcApks/10163c1477513d7fb29e92d49a3d432a.apk
 #echo ./stamp analyze ../stamptest/SymcApks/19780dca7c7b51891fb8962c1d9718e1.apk
 #./stamp analyze ../stamptest/SymcApks/19780dca7c7b51891fb8962c1d9718e1.apk
-echo ./stamp analyze ../stamptest/SymcApks/19c5a07446d8575ff0261b1ee1a57da36d1362ecfa5a59ad6d6862a435bec09d.apk
-./stamp analyze ../stamptest/SymcApks/19c5a07446d8575ff0261b1ee1a57da36d1362ecfa5a59ad6d6862a435bec09d.apk
-echo ./stamp analyze ../stamptest/SymcApks/24feff7f70fc1f4369069d64a9998d43.apk
-./stamp analyze ../stamptest/SymcApks/24feff7f70fc1f4369069d64a9998d43.apk
-echo ./stamp analyze ../stamptest/SymcApks/2ada9d0942eadf135cc6ae52f32a6ab1.apk
-./stamp analyze ../stamptest/SymcApks/2ada9d0942eadf135cc6ae52f32a6ab1.apk
-echo ./stamp analyze ../stamptest/SymcApks/324357f628d534eeae1674e6c3af9f3d4fad3e0dda5bc3fb782f1ed3b9a37dd8.apk
-./stamp analyze ../stamptest/SymcApks/324357f628d534eeae1674e6c3af9f3d4fad3e0dda5bc3fb782f1ed3b9a37dd8.apk
-echo ./stamp analyze ../stamptest/SymcApks/36033a89b739c5427609d859da328ec021f8412f3a9d808b659987a7c3ec49c0.apk
-./stamp analyze ../stamptest/SymcApks/36033a89b739c5427609d859da328ec021f8412f3a9d808b659987a7c3ec49c0.apk
-echo ./stamp analyze ../stamptest/SymcApks/4140ab0395fafad2b8642154e02615b08b1abea53a5e378784ed9d6775278c7b.apk
-./stamp analyze ../stamptest/SymcApks/4140ab0395fafad2b8642154e02615b08b1abea53a5e378784ed9d6775278c7b.apk
-echo ./stamp analyze ../stamptest/SymcApks/4292c13a79aa678e5969c254b7e18aea.apk
-./stamp analyze ../stamptest/SymcApks/4292c13a79aa678e5969c254b7e18aea.apk
-echo ./stamp analyze ../stamptest/SymcApks/48.apk
-./stamp analyze ../stamptest/SymcApks/48.apk
-echo ./stamp analyze ../stamptest/SymcApks/50b50a6d689b1c533bbd0aca942a7437.apk
-./stamp analyze ../stamptest/SymcApks/50b50a6d689b1c533bbd0aca942a7437.apk
-echo ./stamp analyze ../stamptest/SymcApks/5127eba2d0b28a56c463630178084cb1f3eff774e18d0926eb61ac6d3bf6d9b5.apk
-./stamp analyze ../stamptest/SymcApks/5127eba2d0b28a56c463630178084cb1f3eff774e18d0926eb61ac6d3bf6d9b5.apk
-echo ./stamp analyze ../stamptest/SymcApks/51.apk
-./stamp analyze ../stamptest/SymcApks/51.apk
-echo ./stamp analyze ../stamptest/SymcApks/52.apk
-./stamp analyze ../stamptest/SymcApks/52.apk
-echo ./stamp analyze ../stamptest/SymcApks/54975175131d44e08fc08811a318c440.apk
-./stamp analyze ../stamptest/SymcApks/54975175131d44e08fc08811a318c440.apk
-echo ./stamp analyze ../stamptest/SymcApks/6e35b25a07cc9883a327b55a2278210a.apk
-./stamp analyze ../stamptest/SymcApks/6e35b25a07cc9883a327b55a2278210a.apk
-echo ./stamp analyze ../stamptest/SymcApks/72.apk
-./stamp analyze ../stamptest/SymcApks/72.apk
-echo ./stamp analyze ../stamptest/SymcApks/748c7aae46a19ef26096450ec74ffe73a7226429cd4af29b56ba3583ead0fe9f.apk
-./stamp analyze ../stamptest/SymcApks/748c7aae46a19ef26096450ec74ffe73a7226429cd4af29b56ba3583ead0fe9f.apk
-echo ./stamp analyze ../stamptest/SymcApks/7766bdfd3afad45e728a6daf8e7e2c1c428e5fd03165da089e0d323da3e34e41.apk
-./stamp analyze ../stamptest/SymcApks/7766bdfd3afad45e728a6daf8e7e2c1c428e5fd03165da089e0d323da3e34e41.apk
-echo ./stamp analyze ../stamptest/SymcApks/7d43c8a5a007fe94a965ac2a062e85eb.apk
-./stamp analyze ../stamptest/SymcApks/7d43c8a5a007fe94a965ac2a062e85eb.apk
-echo ./stamp analyze ../stamptest/SymcApks/84df50142e9adacbbd66f8ecea8429d68d6eb39e9f70ed1767074320d21d4104.apk
-./stamp analyze ../stamptest/SymcApks/84df50142e9adacbbd66f8ecea8429d68d6eb39e9f70ed1767074320d21d4104.apk
-echo ./stamp analyze ../stamptest/SymcApks/8C1E1F66E50E26865DC20B1EBA5547CA.apk
-./stamp analyze ../stamptest/SymcApks/8C1E1F66E50E26865DC20B1EBA5547CA.apk
-echo ./stamp analyze ../stamptest/SymcApks/979fc443ec16cb8a1ff6c2c0bf0a20f4.apk
-./stamp analyze ../stamptest/SymcApks/979fc443ec16cb8a1ff6c2c0bf0a20f4.apk
-echo ./stamp analyze ../stamptest/SymcApks/9d1da3bdbdd369a4454bf2b4e3fc40db23b9040b8e203e972779ff8da3d425bd.apk
-./stamp analyze ../stamptest/SymcApks/9d1da3bdbdd369a4454bf2b4e3fc40db23b9040b8e203e972779ff8da3d425bd.apk
-echo ./stamp analyze ../stamptest/SymcApks/a924b2d70619bc3812072fe54d249546.apk
-./stamp analyze ../stamptest/SymcApks/a924b2d70619bc3812072fe54d249546.apk
-echo ./stamp analyze ../stamptest/SymcApks/aab740ca1d8682e4f910cd3006a71abd.apk
-./stamp analyze ../stamptest/SymcApks/aab740ca1d8682e4f910cd3006a71abd.apk
-echo ./stamp analyze ../stamptest/SymcApks/b098b09393b400c7fef3ea5e4439c569.apk
-./stamp analyze ../stamptest/SymcApks/b098b09393b400c7fef3ea5e4439c569.apk
+#echo ./stamp analyze ../stamptest/SymcApks/19c5a07446d8575ff0261b1ee1a57da36d1362ecfa5a59ad6d6862a435bec09d.apk
+#./stamp analyze ../stamptest/SymcApks/19c5a07446d8575ff0261b1ee1a57da36d1362ecfa5a59ad6d6862a435bec09d.apk
+#echo ./stamp analyze ../stamptest/SymcApks/36033a89b739c5427609d859da328ec021f8412f3a9d808b659987a7c3ec49c0.apk
+#./stamp analyze ../stamptest/SymcApks/36033a89b739c5427609d859da328ec021f8412f3a9d808b659987a7c3ec49c0.apk
+#echo ./stamp analyze ../stamptest/SymcApks/4140ab0395fafad2b8642154e02615b08b1abea53a5e378784ed9d6775278c7b.apk
+#./stamp analyze ../stamptest/SymcApks/4140ab0395fafad2b8642154e02615b08b1abea53a5e378784ed9d6775278c7b.apk
+#echo ./stamp analyze ../stamptest/SymcApks/4292c13a79aa678e5969c254b7e18aea.apk
+#./stamp analyze ../stamptest/SymcApks/4292c13a79aa678e5969c254b7e18aea.apk
+#echo ./stamp analyze ../stamptest/SymcApks/48.apk
+#./stamp analyze ../stamptest/SymcApks/48.apk
+#echo ./stamp analyze ../stamptest/SymcApks/50b50a6d689b1c533bbd0aca942a7437.apk
+#./stamp analyze ../stamptest/SymcApks/50b50a6d689b1c533bbd0aca942a7437.apk
+#echo ./stamp analyze ../stamptest/SymcApks/5127eba2d0b28a56c463630178084cb1f3eff774e18d0926eb61ac6d3bf6d9b5.apk
+#./stamp analyze ../stamptest/SymcApks/5127eba2d0b28a56c463630178084cb1f3eff774e18d0926eb61ac6d3bf6d9b5.apk
+#echo ./stamp analyze ../stamptest/SymcApks/51.apk
+#./stamp analyze ../stamptest/SymcApks/51.apk
+#echo ./stamp analyze ../stamptest/SymcApks/52.apk
+#./stamp analyze ../stamptest/SymcApks/52.apk
+#echo ./stamp analyze ../stamptest/SymcApks/6e35b25a07cc9883a327b55a2278210a.apk
+#./stamp analyze ../stamptest/SymcApks/6e35b25a07cc9883a327b55a2278210a.apk
+#echo ./stamp analyze ../stamptest/SymcApks/748c7aae46a19ef26096450ec74ffe73a7226429cd4af29b56ba3583ead0fe9f.apk
+#./stamp analyze ../stamptest/SymcApks/748c7aae46a19ef26096450ec74ffe73a7226429cd4af29b56ba3583ead0fe9f.apk
+#echo ./stamp analyze ../stamptest/SymcApks/7766bdfd3afad45e728a6daf8e7e2c1c428e5fd03165da089e0d323da3e34e41.apk
+#./stamp analyze ../stamptest/SymcApks/7766bdfd3afad45e728a6daf8e7e2c1c428e5fd03165da089e0d323da3e34e41.apk
+#echo ./stamp analyze ../stamptest/SymcApks/7d43c8a5a007fe94a965ac2a062e85eb.apk
+#./stamp analyze ../stamptest/SymcApks/7d43c8a5a007fe94a965ac2a062e85eb.apk
+#echo ./stamp analyze ../stamptest/SymcApks/84df50142e9adacbbd66f8ecea8429d68d6eb39e9f70ed1767074320d21d4104.apk
+#./stamp analyze ../stamptest/SymcApks/84df50142e9adacbbd66f8ecea8429d68d6eb39e9f70ed1767074320d21d4104.apk
+#echo ./stamp analyze ../stamptest/SymcApks/8C1E1F66E50E26865DC20B1EBA5547CA.apk
+#./stamp analyze ../stamptest/SymcApks/8C1E1F66E50E26865DC20B1EBA5547CA.apk
+#echo ./stamp analyze ../stamptest/SymcApks/979fc443ec16cb8a1ff6c2c0bf0a20f4.apk
+#./stamp analyze ../stamptest/SymcApks/979fc443ec16cb8a1ff6c2c0bf0a20f4.apk
+#echo ./stamp analyze ../stamptest/SymcApks/9d1da3bdbdd369a4454bf2b4e3fc40db23b9040b8e203e972779ff8da3d425bd.apk
+#./stamp analyze ../stamptest/SymcApks/9d1da3bdbdd369a4454bf2b4e3fc40db23b9040b8e203e972779ff8da3d425bd.apk
+#echo ./stamp analyze ../stamptest/SymcApks/a924b2d70619bc3812072fe54d249546.apk
+#./stamp analyze ../stamptest/SymcApks/a924b2d70619bc3812072fe54d249546.apk
 echo ./stamp analyze ../stamptest/SymcApks/b473ef5338c0e4e405af9b0048909833ae6b256ab552f190c67c32e7b4d1e7af.apk
 ./stamp analyze ../stamptest/SymcApks/b473ef5338c0e4e405af9b0048909833ae6b256ab552f190c67c32e7b4d1e7af.apk
 echo ./stamp analyze ../stamptest/SymcApks/b9ac057b2d024f94916c981c6ebeaa507f3edd584316df193d30d00691c0ab8f.apk
