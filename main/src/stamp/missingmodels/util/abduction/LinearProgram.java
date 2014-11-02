@@ -1,5 +1,8 @@
 package stamp.missingmodels.util.abduction;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,6 +11,9 @@ import java.util.Map;
 
 import lpsolve.LpSolve;
 import lpsolve.LpSolveException;
+import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
+import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 
 public class LinearProgram<T> {
 	public static class Coefficient<T> {
@@ -172,7 +178,7 @@ public class LinearProgram<T> {
 		}
 		this.constraints.add(constraint);
 		if(this.constraints.size()%1000 == 0) {
-			System.out.println(this.constraints.size());
+			//System.out.println(this.constraints.size());
 		}
 	}
 
@@ -225,7 +231,7 @@ public class LinearProgram<T> {
 		System.out.println("Number of constraints: " + numConstraints);
 		
 		if(numConstraints > 25000) {
-			throw new Error("Too many constraints!");
+			//throw new Error("Too many constraints!");
 		}
 		
 		System.out.println("Setting up LP");
@@ -253,8 +259,7 @@ public class LinearProgram<T> {
 			problem.setInt(i, true);
 			problem.setUpbo(i, 1.0);
 		}
-		
-		problem.setPresolve(problem.PRESOLVE_ROWS | problem.PRESOLVE_COLS | problem.PRESOLVE_LINDEP, problem.getPresolveloops());
+		problem.writeMps("ilp.mps");
 		
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 		
@@ -268,12 +273,46 @@ public class LinearProgram<T> {
 		
 		time = System.currentTimeMillis();
 		
-		problem.solve();
+		double[] solution = new double[1+numConstraints+numVariables];
 		
-		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
+		try {
+			Process p = Runtime.getRuntime().exec("./scip-3.1.0.linux.x86_64.gnu.opt.spx -l sol.txt -f ilp.mps -q");
+			try {
+				p.waitFor();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
+			BufferedReader solutionReader = new BufferedReader(new FileReader("sol.txt"));
+			boolean read = false;
+			for(String line = solutionReader.readLine(); line != null; line = solutionReader.readLine()) {
+				if(line.equals("primal solution:")) {
+					read = true;
+					continue;
+				}
+				if(line.equals("Statistics")) {
+					read = false;
+					continue;
+				}
+				if(read && line.startsWith("C")) {
+					String[] tokens = line.split(" ");
+					int i = Integer.parseInt(tokens[0].substring(1));
+					solution[numConstraints+i] = 1;
+				}
+			}
+			solutionReader.close();
+			new File("sol.txt").delete();
+			new File("ilp.mps").delete();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		/*
+		problem.solve();
 		
 		double[] solution = new double[1+numConstraints+numVariables];
 		problem.getPrimalSolution(solution);
+		*/
 		problem.deleteLp();
 
 		System.out.println("Solved LP");

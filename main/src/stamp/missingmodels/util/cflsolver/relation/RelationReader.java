@@ -51,10 +51,10 @@ public interface RelationReader {
 			labels.add("!SOCKET");
 			labels.add("!INTERNET");
 			labels.add("!sendTextMessage");
-			labels.add("!destinationAddress");
+			//labels.add("!destinationAddress");
 			labels.add("!sendDataMessage");
 			labels.add("!sendMultipartTextMessage");			
-			labels.add("!WebView");
+			//labels.add("!WebView");
 			
 			GraphTransformer gt = new GraphTransformer() {
 				@Override
