@@ -1,7 +1,10 @@
 package stamp.analyses;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import lpsolve.LpSolveException;
@@ -14,12 +17,13 @@ import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
 import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.DynamicParamRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
@@ -69,16 +73,23 @@ public class TestsAnalysis extends JavaAnalysis {
 			
 			List<String> reachedMethods = TraceReader.getReachableMethods("profiler/traceouts/", tokens[tokens.length-1]);
 			int numReachableMethods = getNumReachableMethods();
+
+			List<String> testReachedMethods = new ArrayList<String>(reachedMethods);
+			testReachedMethods.addAll(TraceReader.getMethodList("profiler/traceouts_test", tokens[tokens.length-1]));
 			
 			System.out.println("Method coverage: " + reachedMethods.size());
 			System.out.println("Number of reachable methods: " + numReachableMethods);
 			System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
+
+			System.out.println("Test number of reached methods: " + testReachedMethods.size());
 			
-			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("../../profiler/traceouts/", tokens[tokens.length-1]);
+			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("profiler/traceouts/", tokens[tokens.length-1]);
 			//IOUtils.printRelation("callgraph");
 			
-			double fractionMethodIncrement = 0.1;
-			int numMethods = reachedMethods.size();
+			//double fractionMethodIncrement = 0.1;
+			double fractionMethodIncrement = (double)reachedMethods.size()/(1.5*numReachableMethods);
+			//int numMethods = reachedMethods.size();
+			int numMethods = 0;
 			while(true) {
 				double trueSize = numMethods >= reachedMethods.size() ? (double)reachedMethods.size() : (double)numMethods;
 				System.out.println("Running method coverage: " + trueSize/numReachableMethods);
@@ -88,8 +99,26 @@ public class TestsAnalysis extends JavaAnalysis {
 				RelationManager relations = new DynamicCallgraphRelationManager(getFilteredCallgraph(callgraph, reachedMethods, numMethods));
 				Graph g = relationReader.readGraph(relations, taintGrammar);
 				TypeFilter t = relationReader.readTypeFilter(taintGrammar);
-				IOUtils.printAbductionResult(AbductiveInferenceRunner.runInference(g, t, true, 2), true);
-				
+				MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceRunner.runInference(g, t, true, 2); 
+				IOUtils.printAbductionResult(results, true);
+
+				Map<Integer,Integer> minTimeToCrash = new HashMap<Integer,Integer>();
+				for(EdgeStruct edge : results.keySet()) {
+					for(int cut : results.get(edge)) {
+						Integer curTimeToCrash = minTimeToCrash.get(cut);
+						int newTimeToCrash = testReachedMethods.indexOf(ConversionUtils.getMethodSig(edge.sinkName));
+						if(newTimeToCrash == -1) {
+							newTimeToCrash = testReachedMethods.size();
+						}
+						if(curTimeToCrash == null || newTimeToCrash < curTimeToCrash) {
+							minTimeToCrash.put(cut, newTimeToCrash);
+						}
+					}
+				}
+				for(int cut : minTimeToCrash.keySet()) {
+					System.out.println("MIN TIME TO CRASH FOR CUT " + cut + ": " + minTimeToCrash.get(cut));
+				}
+
 				if(numMethods >= reachedMethods.size()) {
 					break;
 				}

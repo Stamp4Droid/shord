@@ -165,11 +165,13 @@ public class AbductiveInferenceRunner {
 				String sink = dom.get(Integer.parseInt(edge.sink.name.substring(1)));
 				System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
 			}
+			/*
 			System.out.println("STARTING EDGE PATH");
 			for(Pair<Edge,Boolean> pathEdgePair : edge.getPath()) {
 				System.out.println("weight " + pathEdgePair.getX().getInfo().weight + ", " + "isForward " + pathEdgePair.getY() + ": " + pathEdgePair.getX().toString(shord));
 			}
 			System.out.println("ENDING EDGE PATH");
+			*/
 		}		
 	}
 	
@@ -179,7 +181,7 @@ public class AbductiveInferenceRunner {
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
 			Graph gbar = computeTransitiveClosure(gcur, t, shord);
-			IOUtils.printGraphStatistics(gbar);
+			//IOUtils.printGraphStatistics(gbar);
 			printPaths(gbar, h.getInitialCutEdges(gbar), shord);
 			
 			// STEP 2: Strip contexts

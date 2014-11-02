@@ -39,7 +39,7 @@ public class LogReader {
 				String[] appTokens = appDir.getName().split("_");
 				String appName = appTokens[appTokens.length-1];
 				
-				File resultFile = new File(appDir, "log.txt");
+				File resultFile = new File(appDir, "chord_output/log.txt");
 				BufferedReader br = new BufferedReader(new FileReader(resultFile));
 				
 				for(Processor processor : this.processors) {

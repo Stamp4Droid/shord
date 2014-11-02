@@ -56,7 +56,7 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 			String caller = ConversionUtils.getMethodForVar(domV.get(tuple[1])).toString();
 			String callee = ConversionUtils.getMethodForVar(domV.get(tuple[0])).toString();
 			if(dynamicCallgraph.get(caller).contains(callee) || isStampCallEdge(caller, callee)) {
-				System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
+				//System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
 				dynamicCallgraphConverted.add("V" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
 			}
 		}
@@ -69,7 +69,7 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 			String caller = ConversionUtils.getMethodForVar(domU.get(tuple[1])).toString();
 			String callee = ConversionUtils.getMethodForVar(domU.get(tuple[0])).toString();
 			if(dynamicCallgraph.get(caller).contains(callee)) {
-				System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
+				//System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
 				dynamicCallgraphConverted.add("U" + Integer.toString(tuple[1]), "U" + Integer.toString(tuple[0]));
 			}
 		}
