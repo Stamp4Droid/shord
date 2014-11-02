@@ -254,6 +254,8 @@ public class LinearProgram<T> {
 			problem.setUpbo(i, 1.0);
 		}
 		
+		problem.setPresolve(problem.PRESOLVE_ROWS | problem.PRESOLVE_COLS | problem.PRESOLVE_LINDEP, problem.getPresolveloops());
+		
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 		
 		//problem.printLp();

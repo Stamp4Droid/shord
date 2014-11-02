@@ -67,7 +67,7 @@ public class TestsAnalysis extends JavaAnalysis {
 			RelationReader relationReader = new ShordRelationReader();
 			String[] tokens = System.getProperty("stamp.out.dir").split("_");
 			
-			List<String> reachedMethods = TraceReader.getReachableMethods("../../profiler/traceouts/", tokens[tokens.length-1]);
+			List<String> reachedMethods = TraceReader.getReachableMethods("profiler/traceouts/", tokens[tokens.length-1]);
 			int numReachableMethods = getNumReachableMethods();
 			
 			System.out.println("Method coverage: " + reachedMethods.size());

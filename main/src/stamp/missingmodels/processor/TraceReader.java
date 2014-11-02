@@ -104,8 +104,11 @@ public class TraceReader {
 	
 	private static TraceReader read(String traceDir, String apkName) {
 		String traceFileName = apkName + ".traceout";
+		System.out.println("Looking for trace file: " + traceFileName);
 		try {
+			System.out.println("In directory: " + new File(traceDir).getCanonicalPath());
 			for(File traceFile : new File(traceDir).listFiles()) {
+				System.out.println("Comparing to file: " + traceFile.getCanonicalPath());
 				if(traceFile.getName().endsWith(traceFileName)) {
 					System.out.println("Found trace file: " + traceFile.getName());
 					return new TraceReader().process(new BufferedReader(new FileReader(traceFile)));
