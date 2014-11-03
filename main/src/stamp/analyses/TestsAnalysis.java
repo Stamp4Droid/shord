@@ -13,6 +13,7 @@ import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
 import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
@@ -74,14 +75,14 @@ public class TestsAnalysis extends JavaAnalysis {
 			List<String> reachedMethods = TraceReader.getReachableMethods("profiler/traceouts/", tokens[tokens.length-1]);
 			int numReachableMethods = getNumReachableMethods();
 
-			List<String> testReachedMethods = new ArrayList<String>(reachedMethods);
-			testReachedMethods.addAll(TraceReader.getMethodList("profiler/traceouts_test", tokens[tokens.length-1]));
+			List<Pair<String,String>> testReachedCallgraph = TraceReader.getOrderedCallgraph("profiler/traceouts", tokens[tokens.length-1]);
+			testReachedCallgraph.addAll(TraceReader.getOrderedCallgraph("profiler/traceouts_test", tokens[tokens.length-1]));
 			
 			System.out.println("Method coverage: " + reachedMethods.size());
 			System.out.println("Number of reachable methods: " + numReachableMethods);
 			System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
 
-			System.out.println("Test number of reached methods: " + testReachedMethods.size());
+			System.out.println("Test number of reached callgraph edges: " + testReachedCallgraph.size());
 			
 			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("profiler/traceouts/", tokens[tokens.length-1]);
 			//IOUtils.printRelation("callgraph");
@@ -103,20 +104,24 @@ public class TestsAnalysis extends JavaAnalysis {
 				IOUtils.printAbductionResult(results, true);
 
 				Map<Integer,Integer> minTimeToCrash = new HashMap<Integer,Integer>();
+				Map<Integer,String> callgraphEdgeToCrash = new HashMap<Integer,String>();
 				for(EdgeStruct edge : results.keySet()) {
 					for(int cut : results.get(edge)) {
 						Integer curTimeToCrash = minTimeToCrash.get(cut);
-						int newTimeToCrash = testReachedMethods.indexOf(ConversionUtils.getMethodSig(edge.sinkName));
+						Pair<String,String> callgraphEdge = new Pair<String,String>(ConversionUtils.getMethodSig(edge.sourceName), ConversionUtils.getMethodSig(edge.sinkName));
+						int newTimeToCrash = testReachedCallgraph.indexOf(callgraphEdge);
 						if(newTimeToCrash == -1) {
-							newTimeToCrash = testReachedMethods.size();
+							newTimeToCrash = testReachedCallgraph.size();
 						}
 						if(curTimeToCrash == null || newTimeToCrash < curTimeToCrash) {
 							minTimeToCrash.put(cut, newTimeToCrash);
+							callgraphEdgeToCrash.put(cut, callgraphEdge.getX() + " -> " + callgraphEdge.getY());
 						}
 					}
 				}
 				for(int cut : minTimeToCrash.keySet()) {
 					System.out.println("MIN TIME TO CRASH FOR CUT " + cut + ": " + minTimeToCrash.get(cut));
+					System.out.println("CALLGRAPH EDGE TO CRASH FOR CUT " + cut + ": " + callgraphEdgeToCrash.get(cut));
 				}
 
 				if(numMethods >= reachedMethods.size()) {

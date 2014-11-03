@@ -16,12 +16,14 @@ import java.util.Stack;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.Util.Pair;
 
 public class TraceReader {
 	//private Map<Integer,Integer> stackDepthByThread = new HashMap<Integer,Integer>();
 	private final Map<Integer,Stack<String>> stackByThread = new HashMap<Integer,Stack<String>>();
 	private boolean isProcessingTrace = false;
 	private final MultivalueMap<String,String> callgraph = new MultivalueMap<String,String>();
+	private final List<Pair<String,String>> orderedCallgraph = new ArrayList<Pair<String,String>>();
 	
 	private final Set<String> methodSet = new HashSet<String>();
 	private final List<String> methodList = new ArrayList<String>();
@@ -40,6 +42,7 @@ public class TraceReader {
 		if(!stack.isEmpty()) {
 			String caller = stack.peek();
 			this.callgraph.add(caller, method);
+			this.orderedCallgraph.add(new Pair<String,String>(caller, method));
 			if(!this.methodSet.contains(method)) {
 				this.methodList.add(method);
 				this.methodSet.add(method);
@@ -123,6 +126,10 @@ public class TraceReader {
 	
 	public static MultivalueMap<String,String> getCallgraph(String traceDir, String apkName) {
 		return read(traceDir, apkName).callgraph;
+	}
+	
+	public static List<Pair<String,String>> getOrderedCallgraph(String traceDir, String apkName) {
+		return read(traceDir, apkName).orderedCallgraph;
 	}
 	
 	public static List<String> getMethodList(String traceDir, String apkName) {

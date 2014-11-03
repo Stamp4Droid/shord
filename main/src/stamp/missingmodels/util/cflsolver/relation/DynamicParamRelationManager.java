@@ -26,6 +26,7 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 	
 	private static Set<String> stampMethods = new HashSet<String>();
 	static {
+		/*
 		stampMethods.add("<java.net.StampURLConnection: void connect()>");
 		stampMethods.add("<java.net.StampURLConnection: java.io.InputStream getInputStream()>");
 		stampMethods.add("<edu.stanford.stamp.harness.Callback: void <init>()>");
@@ -35,11 +36,21 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>");
 		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void <clinit>()>");
 		stampMethods.add("<android.content.StampSharedPreferences: void <clinit>()>");
+		*/
+		stampMethods.add("<java.net.StampURLConnection: ");
+		stampMethods.add("<edu.stanford.stamp.harness");
+		stampMethods.add("<android.content.StampSharedPreferences: ");
 	}
 
 	public static boolean isStampCallEdge(String caller, String callee) {
+		for(String name : stampMethods) {
+			if(caller.startsWith(name) || callee.startsWith(name)) {
+				return true;
+			}
+		}
+		return false;
 		//return stampMethods.contains(caller) || stampMethods.contains(callee);
-		return stampMethods.contains(callee);
+		//return stampMethods.contains(callee);
 	}
 
 	public DynamicParamRelationManager(MultivalueMap<String,String> dynamicCallgraph) {

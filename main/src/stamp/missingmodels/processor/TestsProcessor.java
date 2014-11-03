@@ -33,6 +33,9 @@ public class TestsProcessor implements Processor {
 	
 	private final Map<String,Integer> linesOfCode = new HashMap<String,Integer>();
 	
+	private final Map<String,Integer> testSetSizes = new HashMap<String,Integer>();
+	private final Map<String,Map<Double,Map<Integer,Double>>> minTimesToFailure = new HashMap<String,Map<Double,Map<Integer,Double>>>();
+	
 	private boolean isZerothCutEdge = false;
 	private String zerothCutEdgeCaller = null;
 	private final Map<String,MultivalueMap<Double,String>> zerothCut = new HashMap<String,MultivalueMap<Double,String>>();
@@ -100,6 +103,20 @@ public class TestsProcessor implements Processor {
 			}
 		} else if(line.startsWith("in cut 0:")) {
 			this.isZerothCutEdge = true;
+		} else if(line.startsWith("Test number of reached callgraph edges: ")) {
+			this.testSetSizes.put(appName, Integer.parseInt(line.split(": ")[1]));
+		} else if(line.startsWith("MIN TIME TO CRASH FOR CUT")) {
+			Map<Double,Map<Integer,Double>> minTimesToFailureMap = this.minTimesToFailure.get(appName);
+			if(minTimesToFailureMap == null) {
+				minTimesToFailureMap = new HashMap<Double,Map<Integer,Double>>();
+				this.minTimesToFailure.put(appName, minTimesToFailureMap);
+			}
+			Map<Integer,Double> minTimesToFailureMapMap = minTimesToFailureMap.get(this.currentCoverage);
+			if(minTimesToFailureMapMap == null) {
+				minTimesToFailureMapMap = new HashMap<Integer,Double>();
+				minTimesToFailureMap.put(this.currentCoverage, minTimesToFailureMapMap);
+			}
+			minTimesToFailureMapMap.put(Integer.parseInt(line.split("CUT ")[1].split(":")[0]), (double)Integer.parseInt(line.split(": ")[1])/this.testSetSizes.get(appName));
 		}
 	}
 
@@ -116,6 +133,7 @@ public class TestsProcessor implements Processor {
 				&& this.numFlowEdges.get(appName).get(this.currentCoverage) != null
 				&& this.numBaseEdges.get(appName).get(this.currentCoverage) != null
 				&& this.numCutEdges.get(appName).get(this.currentCoverage) != null
+				&& this.minTimesToFailure.get(appName).get(this.currentCoverage) != null
 				&& this.linesOfCode.get(appName) != null) {
 			this.appNames.add(appName);
 			if(this.coverages.get(appName).isEmpty()) {
@@ -176,6 +194,7 @@ public class TestsProcessor implements Processor {
 		sb.append("# Base Edges").append(",");
 		for(int i=0; i<this.getMaxNumCuts(); i++) {
 			sb.append("# Cut Edges " + i).append(",");
+			sb.append("% Test Passed " + i).append(",");
 		}
 		sb.append("Lines of Code").append(",");
 		return sb.toString();		
@@ -193,6 +212,7 @@ public class TestsProcessor implements Processor {
 		int numCuts = this.getMaxNumCuts();
 		for(int i=0; i<numCuts; i++) {
 			sb.append(this.numCutEdges.get(appName).get(coverage).get(i)).append(",");
+			sb.append(this.minTimesToFailure.get(appName).get(coverage).get(i)).append(",");
 		}
 		sb.append(this.linesOfCode.get(appName));
 		return sb.toString();
@@ -202,7 +222,7 @@ public class TestsProcessor implements Processor {
 		TestsProcessor tp = new TestsProcessor();
 		//new LogReader("../results_experiment2_with_pcs", tp).run();
 		//new LogReader("../results_experiment1", tp).run();
-		new LogReader("../stamp_output", tp).run();
+		new LogReader("../results/good_results", tp).run();
 		System.out.println(tp.getHeader());
 		for(String appName : tp.getAppNames()) {
 			for(double coverage : tp.getCoverages(appName)) {
