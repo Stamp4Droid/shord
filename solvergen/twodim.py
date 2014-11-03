@@ -26,13 +26,13 @@ class Language(util.Record):
             m = FAdo.fa.DFA()
             m.setInitial(m.addState())
         else:
-            if not isinstance(m, FAdo.fa.DFA):
-                m = m.toDFA()
-            m = m.minimal(complete=False)
-            m.renameStates(range(0, len(m)))
             if not m.Sigma <= ALPHABET:
                 raise AlphabetError
+            if not isinstance(m, FAdo.fa.DFA):
+                m = m.toDFA()
         m.setSigma(ALPHABET) # required for DFA equality to function correctly
+        m = m.minimal(complete=True)
+        m.renameStates(range(0, len(m)))
         self._dfa = m
 
     @staticmethod
@@ -859,4 +859,4 @@ def test_system_solver(i):
     print '%s | %s' % (c.reverse(), o)
 
 if __name__ == '__main__':
-    test_system_examples()[0]
+    test_system_solver(6)
