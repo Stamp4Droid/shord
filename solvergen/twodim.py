@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import collections
 import FAdo.fa
 import FAdo.reex
 import string
@@ -15,12 +14,12 @@ import util
 
 # CAUTION: This set shouldn't include regex operators:
 # '*', '+', '(', ')', '[', ']', '|'
-ALPHABET = set(string.ascii_lowercase)
+ALPHABET = set('abcde')
 
 class AlphabetError(Exception):
     pass
 
-class Language(util.Record):
+class Language(util.BaseClass):
     def __init__(self, m=None):
         if m is None:
             m = FAdo.fa.DFA()
@@ -34,6 +33,17 @@ class Language(util.Record):
         m = m.minimal(complete=True)
         m.renameStates(range(0, len(m)))
         self._dfa = m
+        # We only deal with minimal and complete DFAs, and ensure that they all
+        # share the same alphabet. Therefore, our DFAs are unique up to
+        # isomorphism. Additionally, under these conditions, DFA.uniqueRepr()
+        # is guaranteed to return the same string for any one in a set of
+        # isomorphic DFAs.
+        (trans_tab, final_bitset, num_states, sigma_size) = m.uniqueRepr()
+        assert len(trans_tab) == len(ALPHABET) * len(m)
+        assert len(final_bitset) == len(m)
+        assert num_states == len(m)
+        assert sigma_size == len(ALPHABET)
+        self._id_str = (tuple(trans_tab), tuple(final_bitset))
 
     @staticmethod
     def singleton(seq):
@@ -134,6 +144,12 @@ class Language(util.Record):
 
     def plus(self):
         return Language(self._dfa.star(True))
+
+    def __eq__(self, other):
+        return self._id_str == other._id_str
+
+    def __hash__(self):
+        return hash(self._id_str)
 
     def __str__(self):
         return '(%s)' % self._dfa.reCG()
@@ -666,23 +682,24 @@ def solve(base_lang, init_xforms):
     if bc.empty() or bo.empty():
         return base_lang
 
-    xforms = []
-    worklist = collections.deque(init_xforms)
+    xforms = set()
+    worklist = set(init_xforms)
     while True:
 
         # Exhaust all possible combinations of our current set of
         # transformations, using union and limit.
         while len(worklist) > 0:
-            new = worklist.popleft()
-            # TODO: Even a naive subset check might be useful here, to avoid
-            # obviously redundant entries.
-            if new.is_bottom() or new in xforms:
-                continue
+            new = worklist.pop()
             for old in xforms:
-                worklist.append((new / old) | (old / new))
+                t = (new / old) | (old / new)
+                if (not t.is_bottom() and t != new and t not in xforms and
+                    t not in worklist):
+                    worklist.add(t)
             for t in new.limit():
-                worklist.append(t)
-            xforms.append(new)
+                if (not t.is_bottom() and t != new and t not in xforms and
+                    t not in worklist):
+                    worklist.add(t)
+            xforms.add(new)
 
         tier1 = []
         tier2 = []
@@ -746,10 +763,13 @@ def solve(base_lang, init_xforms):
                 if children[j] is None:
                     continue
                 (_,t2) = children[j]
-                t = t1 >> t2
+                ts = t1 >> t2
                 # t2 could be applied after t1 and produced a non-empty set:
-                assert len(t) > 0
-                worklist.extend(t)
+                assert len(ts) > 0
+                for t in ts:
+                    if (not t.is_bottom() and t not in xforms and
+                        t not in worklist):
+                        worklist.add(t)
 
         # If no useful composition could be performed, then we've produced
         # all useful combinations of xforms. Thus, we only have to combine
