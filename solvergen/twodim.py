@@ -852,7 +852,7 @@ def test_system_examples():
             ('c|d',   ['_|_ -> a_|_b']),      # a^kc|db^k => a*c|db*
             ('|aaa',  ['|_aa -> |b_aa']),     # |b*aaa
             ('|a',    ['_|_b -> _|_',
-                       '_|_a -> _|_aabb']),   # |a(aa*(bb?)?)?
+                       '_|_a -> _|_aabb']),   # |a+(aaa*(@epsilon+b+(bb)))
             ('|a',    ['_|_ -> _|_a',
                        '_|_a -> _|_b']),      # |(a+b)(a+b)*
             ('|b',    ['|_b -> |bb_',
@@ -870,7 +870,7 @@ def test_system_examples():
                        'b|_ab -> |a_',
                        'b|b -> |',
                        '|_ab -> |ab_',
-                       '| -> |']),            # |a*b
+                       '| -> |']),            # |a*b + aba*
             ('|bbb',  ['|_b -> |bb_'])]       # |bbbb*
 
 def test_system_solver(i):
