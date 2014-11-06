@@ -132,8 +132,10 @@ public class ReachabilitySolver {
 	private void solve() {
 		System.out.println("Computing transitive closure...");
 		long time = System.currentTimeMillis();
+		int i = 0;
 		while(!this.worklist.isEmpty()) {
 			Edge edge = this.worklist.removeFirst();
+			i++;
 			// <-, ->
 			for(UnaryProduction unaryProduction : this.c.unaryProductionsByInput.get(edge.symbolInt)) {
 				this.addEdge(unaryProduction, edge);
@@ -170,6 +172,7 @@ public class ReachabilitySolver {
 			}
 		}
 		System.out.println("Done computing transitive closure in: " + (System.currentTimeMillis() - time) + "ms");
+		System.out.println("Num productions: " + i);
 	}
 	
 	private boolean solved = false;	

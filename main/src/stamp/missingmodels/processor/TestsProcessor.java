@@ -222,7 +222,8 @@ public class TestsProcessor implements Processor {
 		TestsProcessor tp = new TestsProcessor();
 		//new LogReader("../results_experiment2_with_pcs", tp).run();
 		//new LogReader("../results_experiment1", tp).run();
-		new LogReader("../results/good_results", tp).run();
+		//new LogReader("../results/good_results", tp).run();
+		new LogReader("../stamp_output", tp).run();
 		System.out.println(tp.getHeader());
 		for(String appName : tp.getAppNames()) {
 			for(double coverage : tp.getCoverages(appName)) {

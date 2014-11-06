@@ -1,9 +1,13 @@
 package stamp.analyses;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
+import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
@@ -15,12 +19,14 @@ import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.relation.CallbackRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
@@ -86,7 +92,7 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 			MultivalueMap<String,String> callgraphEdges = getGraphEdgesFromFile("callgraph", "graph");
 			MultivalueMap<String,String> sourceSinkEdges = getGraphEdgesFromFile("Src2Sink", "graph");
 			//AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(getUnion(paramEdges, paramPrimEdges), sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
-			AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(callgraphEdges, sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
+			//AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(callgraphEdges, sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
 			
 			//IOUtils.printRelation("reachableM");
 			//IOUtils.printRelation("callgraph");
@@ -95,17 +101,83 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 			//ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
 			ContextFreeGrammar taintGrammar = new CallgraphTaintGrammar();
 			RelationReader relationReader = new ShordRelationReader();
-			//Graph g = relationReader.readGraph(new CallbackRelationManager(paramEdges, paramPrimEdges), taintGrammar);
-			Graph g = relationReader.readGraph(new DynamicCallgraphRelationManager(callgraphEdges), taintGrammar);
-			TypeFilter t = relationReader.readTypeFilter(taintGrammar);
-			IOUtils.printCallgraphAbductionResult(AbductiveInferenceRunner.runInference(h, g, t, true, 2), true);
 			
-			Graph gbar = new ReachabilitySolver(g, t).getResult();
-			String extension = IOUtils.graphEdgesFileExists("param", "graph") ? "graph_new" : "graph";
-			IOUtils.printGraphEdgesToFile(gbar, "param", true, extension);
-			IOUtils.printGraphEdgesToFile(gbar, "paramPrim", true, extension);
-			IOUtils.printGraphEdgesToFile(gbar, "callgraph", true, extension);
-			IOUtils.printGraphEdgesToFile(gbar, "Src2Sink", true, extension);
+			/*** COPIED FROM TESTS ANALYSIS ***/
+			String[] tokens = System.getProperty("stamp.out.dir").split("_");
+			
+			List<String> reachedMethods = TraceReader.getReachableMethods("profiler/traceouts/", tokens[tokens.length-1]);
+			int numReachableMethods = TestsAnalysis.getNumReachableMethods();
+
+			List<Pair<String,String>> testReachedCallgraph = TraceReader.getOrderedCallgraph("profiler/traceouts", tokens[tokens.length-1]);
+			testReachedCallgraph.addAll(TraceReader.getOrderedCallgraph("profiler/traceouts_test", tokens[tokens.length-1]));
+			
+			System.out.println("Method coverage: " + reachedMethods.size());
+			System.out.println("Number of reachable methods: " + numReachableMethods);
+			System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
+
+			System.out.println("Test number of reached callgraph edges: " + testReachedCallgraph.size());
+			
+			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("profiler/traceouts/", tokens[tokens.length-1]);
+			//IOUtils.printRelation("callgraph");
+			
+			//double fractionMethodIncrement = 0.1;
+			double fractionMethodIncrement = (double)reachedMethods.size()/(1.5*numReachableMethods);
+			//int numMethods = reachedMethods.size();
+			int numMethods = 0;
+			while(true) {
+				double trueSize = numMethods >= reachedMethods.size() ? (double)reachedMethods.size() : (double)numMethods;
+				System.out.println("Running method coverage: " + trueSize/numReachableMethods);
+
+				/*** END COPIED FROM TESTS ANALYSIS ***/
+				MultivalueMap<String,String> newCallgraph = TestsAnalysis.getFilteredCallgraph(callgraph, reachedMethods, numMethods);
+				for(String key : callgraphEdges.keySet()) {
+					newCallgraph.get(key).addAll(callgraphEdges.get(key));
+				}
+
+				AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(newCallgraph, sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
+				
+				//Graph g = relationReader.readGraph(new CallbackRelationManager(paramEdges, paramPrimEdges), taintGrammar);
+				//Graph g = relationReader.readGraph(new DynamicCallgraphRelationManager(callgraphEdges), taintGrammar);
+				Graph g = relationReader.readGraph(new DynamicCallgraphRelationManager(newCallgraph), taintGrammar);
+				TypeFilter t = relationReader.readTypeFilter(taintGrammar);
+				MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceRunner.runInference(h, g, t, true, 2); 
+				IOUtils.printCallgraphAbductionResult(results, true);
+			
+				Graph gbar = new ReachabilitySolver(g, t).getResult();
+				String extension = IOUtils.graphEdgesFileExists("param", "graph") ? "graph_new" : "graph";
+				IOUtils.printGraphEdgesToFile(gbar, "param", true, extension);
+				IOUtils.printGraphEdgesToFile(gbar, "paramPrim", true, extension);
+				IOUtils.printGraphEdgesToFile(gbar, "callgraph", true, extension);
+				IOUtils.printGraphEdgesToFile(gbar, "Src2Sink", true, extension);
+				
+				/*** COPIED FROM TESTS ANALYSIS ***/
+				Map<Integer,Integer> minTimeToCrash = new HashMap<Integer,Integer>();
+				Map<Integer,String> callgraphEdgeToCrash = new HashMap<Integer,String>();
+				for(EdgeStruct edge : results.keySet()) {
+					for(int cut : results.get(edge)) {
+						Integer curTimeToCrash = minTimeToCrash.get(cut);
+						Pair<String,String> callgraphEdge = new Pair<String,String>(ConversionUtils.getMethodSig(edge.sourceName), ConversionUtils.getMethodSig(edge.sinkName));
+						int newTimeToCrash = testReachedCallgraph.indexOf(callgraphEdge);
+						if(newTimeToCrash == -1) {
+							newTimeToCrash = testReachedCallgraph.size();
+						}
+						if(curTimeToCrash == null || newTimeToCrash < curTimeToCrash) {
+							minTimeToCrash.put(cut, newTimeToCrash);
+							callgraphEdgeToCrash.put(cut, callgraphEdge.getX() + " -> " + callgraphEdge.getY());
+						}
+					}
+				}
+				for(int cut : minTimeToCrash.keySet()) {
+					System.out.println("MIN TIME TO CRASH FOR CUT " + cut + ": " + minTimeToCrash.get(cut));
+					System.out.println("CALLGRAPH EDGE TO CRASH FOR CUT " + cut + ": " + callgraphEdgeToCrash.get(cut));
+				}
+
+				if(numMethods >= reachedMethods.size()) {
+					break;
+				}
+				numMethods += (int)(fractionMethodIncrement*numReachableMethods);
+				/*** END COPIED FROM TESTS ANALYSIS ***/
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

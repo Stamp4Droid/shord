@@ -23,6 +23,7 @@ import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManag
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
@@ -33,7 +34,7 @@ public class TestsAnalysis extends JavaAnalysis {
 	//private static ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
 	private static ContextFreeGrammar taintGrammar = new CallgraphTaintGrammar();
 	
-	private static int getNumReachableMethods() {
+	public static int getNumReachableMethods() {
 		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("reachableM");
 		relReachableM.load();
 		int numReachableMethods = relReachableM.size();
@@ -41,7 +42,7 @@ public class TestsAnalysis extends JavaAnalysis {
 		return numReachableMethods;
 	}
 	
-	private static MultivalueMap<String,String> getFilteredCallgraph(MultivalueMap<String,String> callgraph, List<String> methodsList, int numMethods) {
+	public static MultivalueMap<String,String> getFilteredCallgraph(MultivalueMap<String,String> callgraph, List<String> methodsList, int numMethods) {
 		Set<String> includedMethods = new HashSet<String>();
 		for(int i=0; i<numMethods; i++) {
 			if(i>=methodsList.size()) {
@@ -87,6 +88,9 @@ public class TestsAnalysis extends JavaAnalysis {
 			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("profiler/traceouts/", tokens[tokens.length-1]);
 			//IOUtils.printRelation("callgraph");
 			
+			List<String> testReachedMethods = TraceReader.getReachableMethods("profiler/traceouts_test/", tokens[tokens.length-1]);
+			System.out.println("Test coverage: " + (double)testReachedMethods.size()/numReachableMethods);
+			
 			//double fractionMethodIncrement = 0.1;
 			double fractionMethodIncrement = (double)reachedMethods.size()/(1.5*numReachableMethods);
 			//int numMethods = reachedMethods.size();
@@ -100,6 +104,11 @@ public class TestsAnalysis extends JavaAnalysis {
 				RelationManager relations = new DynamicCallgraphRelationManager(getFilteredCallgraph(callgraph, reachedMethods, numMethods));
 				Graph g = relationReader.readGraph(relations, taintGrammar);
 				TypeFilter t = relationReader.readTypeFilter(taintGrammar);
+				
+				new ReachabilitySolver(g, t).getResult();
+
+				if(5 > 4) throw new RuntimeException("Terminating program");
+				
 				MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceRunner.runInference(g, t, true, 2); 
 				IOUtils.printAbductionResult(results, true);
 
