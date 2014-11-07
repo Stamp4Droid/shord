@@ -4,6 +4,8 @@ import collections
 import FAdo.fa
 import FAdo.reex
 import string
+import timeout
+import unittest
 import util
 
 # ===== USAGE =================================================================
@@ -572,6 +574,8 @@ def parse_result(s, reverse):
 
 # ==== XFORMS =================================================================
 
+# TODO: Tow xforms that both represent "bottom" can compare unequal; there may
+# also be other such cases.
 class Xform(util.Record):
     VALID_SIGS = {
         (MatchSuffix, MatchSuffix, AddSuffix, AddSuffix):
@@ -784,100 +788,189 @@ def solve(base_lang, init_xforms, verbose=False):
 
 # ===== TESTS =================================================================
 
-def test_sequence_splits():
-    for (a,b) in Sequence('abcd').splits():
-        print '*' + a.string + '*' + b.string + '*'
-        for (c,d) in a.splits():
-            print '  ' + '&' + c.string + ' ' + d.string + '&'
-    for (a,b) in Sequence('abcd').splits(True):
-        print '*' + a.string + '*' + b.string + '*'
+class TestSequenceOps(unittest.TestCase):
+    def test_splits(self):
+        self.assertEqual(list(Sequence('abcd').splits()),
+                         [(Sequence(''), Sequence('abcd')),
+                          (Sequence('a'), Sequence('bcd')),
+                          (Sequence('ab'), Sequence('cd')),
+                          (Sequence('abc'), Sequence('d')),
+                          (Sequence('abcd'), Sequence(''))])
 
-def test_language_ops():
-    print Language.from_regex('abbb*c').lquot(Language.from_regex('ab'))
-    print Language.from_regex('abb*') <= Language.from_regex('abb*')
+    def test_splits_nempty(self):
+        self.assertEqual(list(Sequence('abcd').splits(True)),
+                         [(Sequence('a'), Sequence('bcd')),
+                          (Sequence('ab'), Sequence('cd')),
+                          (Sequence('abc'), Sequence('d')),
+                          (Sequence('abcd'), Sequence(''))])
 
-def test_xform_examples():
-    t = {}
-    t[0] = Xform(MatchExact(Sequence('abc')),
-                 MatchSuffix(Sequence('d')),
-                 SetLang(Language.from_regex('a*')),
-                 Surround(Language.from_regex('ef*'),
-                          Language.from_regex('dd')))
-    t[1] = Xform.parse('cba|_d -> a*|ef*_dd')
-    assert t[0] == t[1]
-    t[2] = Xform.parse('(@epsilon)|(@epsilon) -> (@epsilon)|(@epsilon)')
-    t[3] = Xform.parse('| -> |')
-    t[4] = Xform.parse('_|_ -> _|_d')
-    for k in t:
-        print t[k]
-    return t
+class TestLanguageOps(unittest.TestCase):
+    def test_lquot(self):
+        l1 = Language.from_regex('abbb*c')
+        l2 = Language.from_regex('ab')
+        self.assertEqual(l1.lquot(l2), Language.from_regex('bb*c'))
 
-def test_xform_ops(t):
-    res = t[0].apply((Language.from_regex('a*b*c'), Language.from_regex('kd')))
-    print res[0]
-    print res[1]
-    print '====='
-    print t[4] / t[3]
-    print '====='
-    for x in t[3] >> t[4]:
-        print x
-    print '====='
-    for x in t[4] >> t[3]:
-        print x
+    def test_subseteq(self):
+        l1 = Language.from_regex('abb*')
+        l2 = Language.from_regex('ab*')
+        self.assertTrue(l1 <= l2)
 
-def test_system_examples():
-    return [('|c',    ['_|_ -> _|_b']),       # |cb*
-            ('|c',    ['_|_ -> _|_a',
-                       '_|_ -> _|_b']),       # |c(a+b)*
-            ('|a',    ['_|_a -> _|_ab',
-                       '_|_a -> _|_aa',
-                       '_|_b -> _|_ba',
-                       '_|_b -> _|_bb']),     # |a(a+b)*
-            ('|aaa',  ['_|_a -> _|_aa',
-                       '_| -> _a|a']),        # |aaaa*
-            ('|b',    ['|_b -> |bb_']),       # |bb*
-            ('|c',    ['|_b -> |bb_']),       # |c
-            ('|cbb',  ['bb_|_b -> _|_',
-                       'b_| -> _b|',
-                       'b|_b -> |b_',
-                       'b| -> |',
-                       '|_b -> |bb_',
-                       '| -> |b']),           # |(cbb + bbcb + bbbbc)
-            ('|b',    ['b_| -> _b|',
-                       '|_b -> |b_',
-                       '| -> |']),            # |b
-            ('|babc', ['|_abc -> |baba_c']),  # |bab(ab)*c
-            ('c|d',   ['_|_ -> a_|_b']),      # a^kc|db^k ~= a*c|db*
-            ('|aaa',  ['|_aa -> |b_aa']),     # |b*aaa
-            ('|a',    ['_|_b -> _|_',
-                       '_|_a -> _|_aabb']),   # |a+(aaa*(@epsilon+b+(bb)))
-            ('|a',    ['_|_ -> _|_a',
-                       '_|_a -> _|_b']),      # |(a+b)(a+b)*
-            ('|b',    ['|_b -> |bb_',
-                       '_|_ -> _|_a']),       # |bb*a*
-            ('|c',    ['_|_ -> _|_a',
-                       '|_aa -> |b_']),       # |b*ca*
-            ('|a',    ['_|_a -> _|_ab',
-                       '_|_b -> _|_']),       # |a(b+@epsilon)
-            ('|a',    ['_|_a -> _|_ba']),     # |b*a
-            ('|b',    ['_|_b -> _|_ab',
-                       '_| -> _b|ab',
-                       'ba_|_ab -> _|_',
-                       'ba_|b -> _a|',
-                       'ba_| -> _ba|',
-                       'b|_ab -> |a_',
-                       'b|b -> |',
-                       '|_ab -> |ab_',
-                       '| -> |']),            # |a*b + aba*
-            ('|bbb',  ['|_b -> |bb_']),       # |bbbb*
-            ('|c',    ['|c -> a|',
-                       '_|_c -> a_|_d',       # a| U a*|c U aa*|d
-                       '_|_d -> _|_c'])]      # ~= a*|(@epsilon+c+d)
+class TestXformOps(unittest.TestCase):
+    def setUp(self):
+        self.ts = [Xform(MatchExact(Sequence('abc')),
+                         MatchSuffix(Sequence('d')),
+                         SetLang(Language.from_regex('a*')),
+                         Surround(Language.from_regex('e*'),
+                                  Language.from_regex('dd'))),
+                   Xform(MatchExact(Sequence('')),
+                         MatchExact(Sequence('')),
+                         SetLang(Language.singleton(Sequence(''))),
+                         SetLang(Language.singleton(Sequence('')))),
+                   Xform(MatchExact(Sequence('')),
+                         MatchExact(Sequence('')),
+                         SetLang(Language.singleton(Sequence(''))),
+                         SetLang(Language.singleton(Sequence('')))),
+                   Xform(MatchSuffix(Sequence('')),
+                         MatchSuffix(Sequence('')),
+                         AddSuffix(Language.singleton(Sequence(''))),
+                         AddSuffix(Language.singleton(Sequence('d'))))]
 
-def test_system_solver(i):
-    (b,ss) = test_system_examples()[i]
-    (c,o) = solve(parse_lang_pair(b), [Xform.parse(s) for s in ss])
-    print '%s | %s' % (c.reverse(), o)
+    def test_parsing(self):
+        ts = [Xform.parse('cba|_d -> a*|e*_dd'),
+              Xform.parse('(@epsilon)|(@epsilon) -> (@epsilon)|(@epsilon)'),
+              Xform.parse('| -> |'),
+              Xform.parse('_|_ -> _|_d')]
+        self.assertEqual(self.ts, ts)
+
+    def test_apply(self):
+        self.assertEqual(self.ts[0].apply(parse_lang_pair('cb*a*|cd')),
+                         parse_lang_pair('a*|e*cdd'))
+
+    def test_restrict(self):
+        self.assertEqual(self.ts[3] / self.ts[2], Xform.parse('| -> |d'))
+
+    def test_compose(self):
+        self.assertEqual(self.ts[2] >> self.ts[3], [Xform.parse('| -> |d')])
+        self.assertEqual(self.ts[3] >> self.ts[2], [])
+
+    # TODO: test printing
+
+class TestSystemSolver(unittest.TestCase):
+    def run_solver(self, base, ts, ans):
+        base = parse_lang_pair(base)
+        ts = [Xform.parse(t) for t in ts]
+        ans = parse_lang_pair(ans)
+        @timeout.timeout(timeout=2)
+        def do():
+            return solve(base, ts, True)
+        res = do()
+        self.assertEqual(res, ans)
+
+    def test_non_applicable(self):
+        self.run_solver('|a', ['bb_|_b ->  _|_  ',
+                               ' b_|   -> _b|   ',
+                               '  b|_b ->   |b_ ',
+                               '  b|   ->   |   ',
+                               '   |_b ->   |bb_',
+                               '   |   ->   |b  '], '|a')
+
+    def test_simple_append(self):
+        self.run_solver('|c', ['_|_ -> _|_b'], '|cb*')
+
+    def test_xform_combination(self):
+        self.run_solver('|c', ['_|_ -> _|_a',
+                               '_|_ -> _|_b'], '|c(a+b)*')
+
+    def test_cond_append(self):
+        self.run_solver('|a', ['_|_a -> _|_aa'], '|aa*')
+
+    def test_cond_append_untriggered(self):
+        self.run_solver('|b', ['_|_a -> _|_aa'], '|b')
+
+    def test_cond_append_entry_point(self):
+        self.run_solver('|aaa',  ['_|_a ->  _|_aa'], '|aaaa*')
+
+    def test_internal_growth(self):
+        self.run_solver('|a', ['_|_a -> _|_ba'], '|b*a')
+
+    def test_direct_indirect_combo(self):
+        self.run_solver('|a', ['_|_a -> _|_ab',
+                               '_|_a -> _|_aa',
+                               '_|_b -> _|_ba',
+                               '_|_b -> _|_bb'], '|a(a+b)*')
+
+    def test_back_add(self):
+        self.run_solver('|b', ['|_b -> |bb_'], '|bb*')
+
+    def test_back_add_non_singleton(self):
+        self.run_solver('|abc', ['|_abc -> |abab_c'], '|ab(ab)*c')
+
+    def test_back_add_subseq(self):
+        self.run_solver('|babc', ['|_abc -> |baba_c'], '|bab(ab)*c')
+
+    def test_back_add_untriggered(self):
+        self.run_solver('|c', ['|_b -> |bb_'], '|c')
+
+    def test_back_add_untriggered_multi_steps(self):
+        self.run_solver('|cbb',  ['|_b -> |bb_'], '|(cbb+bbcb+bbbbc)')
+
+    def test_back_add_entry_point(self):
+        # accurate answer: |bbbb*
+        self.run_solver('|bbb', ['|_b -> |bb_'], '|bb*')
+
+    def test_no_growth(self):
+        self.run_solver('|b', ['b_|   -> _b|  ',
+                               '  |_b ->   |b_',
+                               '  |    ->  |  '], '|b')
+
+    def test_ctxt_approx(self):
+        # accurate answer: a^kc|db^k
+        self.run_solver('c|d', ['_|_ -> a_|_b'], 'a*c|db*')
+
+    def test_cond_back_add(self):
+        self.run_solver('|aaa', ['|_aa -> |b_aa'], '|b*aaa')
+
+    def test_multi_step_cycle(self):
+        self.run_solver('|a', ['_|_b -> _|_    ',
+                               '_|_a -> _|_aabb'],
+                        '|a+(aaa*(@epsilon+b+(bb)))')
+
+    def test_multi_step_no_growth(self):
+        self.run_solver('|a', ['_|_a -> _|_ab',
+                               '_|_b -> _|_  '], '|a(b+@epsilon)')
+
+    def test_step_after_cycle(self):
+        self.run_solver('|a', ['_|_  -> _|_a',
+                               '_|_a -> _|_b'], '|(a+b)(a+b)*')
+
+    def test_cycle_after_cycle(self):
+        self.run_solver('|b', [' |_b ->  |bb_',
+                               '_|_  -> _|_a '], '|bb*a*')
+
+    def test_cond_append_back_add_combo(self):
+        self.run_solver('|c', ['_|_   -> _|_a',
+                               ' |_aa ->  |b_'], '|b*ca*')
+
+    def test_step_after_internal_growth(self):
+        self.run_solver('|b', ['_|_b  -> _|_ab',
+                               ' |_ab ->  |ab_'], '|a*b + aba*')
+
+    def test_suffix_compos(self):
+        self.run_solver('|ab', ['_|_a -> _|_aac',
+                                '_|_b -> _|_   ',
+                                '_|_c -> _|_   '], '|(a+ab+aa*(c+@epsilon))')
+
+    def test_suffix_compos_multi_step(self):
+        self.run_solver('|ab', ['_|_a -> _|_aac',
+                                '_|_b -> _|_   ',
+                                '_|_c -> _|_d  ',
+                                '_|_d -> _|_   '], '|(a+ab+aa*(c+d+@epsilon))')
+
+    def test_approx_union_wont_shadow_compos(self):
+        # accurate answer: a| U a*|c U aa*|d
+        self.run_solver('|c', [' |c  ->  a|  ',
+                               '_|_c -> a_|_d',
+                               '_|_d ->  _|_c'], 'a*|(@epsilon+c+d)')
 
 if __name__ == '__main__':
-    test_system_solver(6)
+    unittest.main()
