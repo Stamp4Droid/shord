@@ -1,39 +1,31 @@
 #!/bin/bash
 
-echo ./stamp analyze ../stamptest/DarpaApps/0_GCache
-./stamp analyze ../stamptest/DarpaApps/0_GCache
-echo ./stamp analyze ../stamptest/DarpaApps/0_GpsCompass
-./stamp analyze ../stamptest/DarpaApps/0_GpsCompass
-echo ./stamp analyze ../stamptest/DarpaApps/0_notepad
-./stamp analyze ../stamptest/DarpaApps/0_notepad
-echo ./stamp analyze ../stamptest/DarpaApps/0_Sip2Peer
-./stamp analyze ../stamptest/DarpaApps/0_Sip2Peer
-echo ./stamp analyze ../stamptest/DarpaApps/0_TheBarcodeScanner
-./stamp analyze ../stamptest/DarpaApps/0_TheBarcodeScanner
-echo ./stamp analyze ../stamptest/DarpaApps/0_TheKeyboard
-./stamp analyze ../stamptest/DarpaApps/0_TheKeyboard
-echo ./stamp analyze ../stamptest/DarpaApps/0_TRAQ
-./stamp analyze ../stamptest/DarpaApps/0_TRAQ
-echo ./stamp analyze ../stamptest/DarpaApps/0_UltraCoolMap
-./stamp analyze ../stamptest/DarpaApps/0_UltraCoolMap
-echo ./stamp analyze ../stamptest/DarpaApps/1A_AndorsTrail
-./stamp analyze ../stamptest/DarpaApps/1A_AndorsTrail
-echo ./stamp analyze ../stamptest/DarpaApps/1A_AndroidGame
-./stamp analyze ../stamptest/DarpaApps/1A_AndroidGame
-echo ./stamp analyze ../stamptest/DarpaApps/1A_APG-E
-./stamp analyze ../stamptest/DarpaApps/1A_APG-E
-echo ./stamp analyze ../stamptest/DarpaApps/1A_Butane
-./stamp analyze ../stamptest/DarpaApps/1A_Butane
-echo ./stamp analyze ../stamptest/DarpaApps/1A_CalcA
-./stamp analyze ../stamptest/DarpaApps/1A_CalcA
-echo ./stamp analyze ../stamptest/DarpaApps/1A_CalcB
-./stamp analyze ../stamptest/DarpaApps/1A_CalcB
-echo ./stamp analyze ../stamptest/DarpaApps/1A_ConnectBot
-./stamp analyze ../stamptest/DarpaApps/1A_ConnectBot
+#echo ./stamp analyze ../stamptest/DarpaApps/0_GCache
+#./stamp analyze ../stamptest/DarpaApps/0_GCache
+#echo ./stamp analyze ../stamptest/DarpaApps/0_GpsCompass
+#./stamp analyze ../stamptest/DarpaApps/0_GpsCompass
+#echo ./stamp analyze ../stamptest/DarpaApps/0_notepad
+#./stamp analyze ../stamptest/DarpaApps/0_notepad
+#echo ./stamp analyze ../stamptest/DarpaApps/0_Sip2Peer
+#./stamp analyze ../stamptest/DarpaApps/0_Sip2Peer
+#echo ./stamp analyze ../stamptest/DarpaApps/0_TheKeyboard
+#./stamp analyze ../stamptest/DarpaApps/0_TheKeyboard
+#echo ./stamp analyze ../stamptest/DarpaApps/0_TRAQ
+#./stamp analyze ../stamptest/DarpaApps/0_TRAQ
+#echo ./stamp analyze ../stamptest/DarpaApps/0_UltraCoolMap
+#./stamp analyze ../stamptest/DarpaApps/0_UltraCoolMap
+#echo ./stamp analyze ../stamptest/DarpaApps/1A_AndorsTrail
+#./stamp analyze ../stamptest/DarpaApps/1A_AndorsTrail
+#echo ./stamp analyze ../stamptest/DarpaApps/1A_AndroidGame
+#./stamp analyze ../stamptest/DarpaApps/1A_AndroidGame
+#echo ./stamp analyze ../stamptest/DarpaApps/1A_Butane
+#./stamp analyze ../stamptest/DarpaApps/1A_Butane
+#echo ./stamp analyze ../stamptest/DarpaApps/1A_CalcA
+#./stamp analyze ../stamptest/DarpaApps/1A_CalcA
+#echo ./stamp analyze ../stamptest/DarpaApps/1A_CalcB
+#./stamp analyze ../stamptest/DarpaApps/1A_CalcB
 echo ./stamp analyze ../stamptest/DarpaApps/1A_CountdownTimer
 ./stamp analyze ../stamptest/DarpaApps/1A_CountdownTimer
-#echo ./stamp analyze ../stamptest/DarpaApps/1A_FunDraw
-#./stamp analyze ../stamptest/DarpaApps/1A_FunDraw
 echo ./stamp analyze ../stamptest/DarpaApps/1A_MorseCode
 ./stamp analyze ../stamptest/DarpaApps/1A_MorseCode
 echo ./stamp analyze ../stamptest/DarpaApps/1A_MyDrawA
@@ -68,10 +60,6 @@ echo ./stamp analyze ../stamptest/DarpaApps/1A_ToDoList
 ./stamp analyze ../stamptest/DarpaApps/1A_ToDoList
 echo ./stamp analyze ../stamptest/DarpaApps/1A_WordHelper
 ./stamp analyze ../stamptest/DarpaApps/1A_WordHelper
-echo ./stamp analyze ../stamptest/DarpaApps/1B_AndBible
-./stamp analyze ../stamptest/DarpaApps/1B_AndBible
-echo ./stamp analyze ../stamptest/DarpaApps/1B_APG-M
-./stamp analyze ../stamptest/DarpaApps/1B_APG-M
 echo ./stamp analyze ../stamptest/DarpaApps/1B_BatteryIndicator
 ./stamp analyze ../stamptest/DarpaApps/1B_BatteryIndicator
 echo ./stamp analyze ../stamptest/DarpaApps/1B_CalcF
@@ -80,8 +68,6 @@ echo ./stamp analyze ../stamptest/DarpaApps/1B_MediaFun
 ./stamp analyze ../stamptest/DarpaApps/1B_MediaFun
 echo ./stamp analyze ../stamptest/DarpaApps/1B_MyDrawD
 ./stamp analyze ../stamptest/DarpaApps/1B_MyDrawD
-echo ./stamp analyze ../stamptest/DarpaApps/1B_OpenGPSTracker
-./stamp analyze ../stamptest/DarpaApps/1B_OpenGPSTracker
 echo ./stamp analyze ../stamptest/DarpaApps/1B_Orienteering
 ./stamp analyze ../stamptest/DarpaApps/1B_Orienteering
 echo ./stamp analyze ../stamptest/DarpaApps/1B_PicViewer
@@ -164,7 +150,5 @@ echo ./stamp analyze ../stamptest/DarpaApps/2B_NetPhone
 ./stamp analyze ../stamptest/DarpaApps/2B_NetPhone
 echo ./stamp analyze ../stamptest/DarpaApps/2B_RunningApp
 ./stamp analyze ../stamptest/DarpaApps/2B_RunningApp
-echo ./stamp analyze ../stamptest/DarpaApps/2B_SMSBot
-./stamp analyze ../stamptest/DarpaApps/2B_SMSBot
 echo ./stamp analyze ../stamptest/DarpaApps/2B_WhereMyAppsAt
 ./stamp analyze ../stamptest/DarpaApps/2B_WhereMyAppsAt

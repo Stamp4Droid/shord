@@ -48,12 +48,12 @@ public interface RelationReader {
 			//labels.add("$CALENDAR");
 			//labels.add("$CONTENT_PROVIDER");
 
-			//labels.add("!SOCKET");
+			labels.add("!SOCKET");
 			labels.add("!INTERNET");
-			//labels.add("!sendTextMessage");
-			//labels.add("!destinationAddress");
-			//labels.add("!sendDataMessage");
-			//labels.add("!sendMultipartTextMessage");			
+			labels.add("!sendTextMessage");
+			labels.add("!destinationAddress");
+			labels.add("!sendDataMessage");
+			labels.add("!sendMultipartTextMessage");			
 			labels.add("!WebView");
 			
 			GraphTransformer gt = new GraphTransformer() {

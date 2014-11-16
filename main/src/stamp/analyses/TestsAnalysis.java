@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import lpsolve.LpSolveException;
+import shord.analyses.DomM;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -41,6 +42,54 @@ public class TestsAnalysis extends JavaAnalysis {
 		relReachableM.close();
 		return numReachableMethods;
 	}
+	
+	public static MultivalueMap<String,String> getStaticCallgraphReverse() {
+		MultivalueMap<String,String> staticCallgraphReverse = new MultivalueMap<String,String>();
+		ProgramRel relCallgraph = (ProgramRel)ClassicProject.g().getTrgt("callgraph");
+		DomM domM = (DomM)ClassicProject.g().getTrgt("M");
+		relCallgraph.load();
+		for(int[] tuple : relCallgraph.getAryNIntTuples()) {
+			String caller = domM.get(tuple[0]).toString();
+			String callee = domM.get(tuple[1]).toString();
+			staticCallgraphReverse.add(callee, caller);
+		}
+		relCallgraph.close();
+		return staticCallgraphReverse;
+	}
+	
+	public static class CallgraphCompleter {
+		private Set<String> processed = new HashSet<String>();
+		private MultivalueMap<String,String> staticCallgraphReverse;
+		private MultivalueMap<String,String> completeDynamicCallgraph;
+		
+		public CallgraphCompleter() {
+			this.staticCallgraphReverse = getStaticCallgraphReverse();
+			this.completeDynamicCallgraph = new MultivalueMap<String,String>();
+		}
+		
+		private void makeReachable(String method) {
+			if(this.processed.contains(method)) {
+				return;
+			}
+			this.processed.add(method);
+			for(String parent : staticCallgraphReverse.get(method)) {
+				System.out.println("Adding dynamic callgraph completion: " + parent + " -> " + method);
+				this.completeDynamicCallgraph.add(parent, method);
+				this.makeReachable(parent);
+			}
+		}
+		
+		public MultivalueMap<String,String> completeDynamicCallgraph(MultivalueMap<String,String> dynamicCallgraph) {			
+			for(String caller : dynamicCallgraph.keySet()) {
+				this.makeReachable(caller);
+				for(String callee : dynamicCallgraph.get(caller)) {
+					this.makeReachable(callee);
+				}
+			}
+			return this.completeDynamicCallgraph;
+		}
+	}
+	
 	
 	public static MultivalueMap<String,String> getFilteredCallgraph(MultivalueMap<String,String> callgraph, List<String> methodsList, int numMethods) {
 		Set<String> includedMethods = new HashSet<String>();
@@ -86,13 +135,14 @@ public class TestsAnalysis extends JavaAnalysis {
 			System.out.println("Test number of reached callgraph edges: " + testReachedCallgraph.size());
 			
 			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("profiler/traceouts/", tokens[tokens.length-1]);
+			callgraph = new CallgraphCompleter().completeDynamicCallgraph(callgraph);
 			//IOUtils.printRelation("callgraph");
 			
 			List<String> testReachedMethods = TraceReader.getReachableMethods("profiler/traceouts_test/", tokens[tokens.length-1]);
 			System.out.println("Test coverage: " + (double)testReachedMethods.size()/numReachableMethods);
 			
 			//double fractionMethodIncrement = 0.1;
-			double fractionMethodIncrement = (double)reachedMethods.size()/(1.5*numReachableMethods);
+			double fractionMethodIncrement = (double)reachedMethods.size()/(0.75*numReachableMethods);
 			//int numMethods = reachedMethods.size();
 			int numMethods = 0;
 			while(true) {
@@ -105,9 +155,11 @@ public class TestsAnalysis extends JavaAnalysis {
 				Graph g = relationReader.readGraph(relations, taintGrammar);
 				TypeFilter t = relationReader.readTypeFilter(taintGrammar);
 				
+				/*
 				new ReachabilitySolver(g, t).getResult();
 
 				if(5 > 4) throw new RuntimeException("Terminating program");
+				*/
 				
 				MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceRunner.runInference(g, t, true, 2); 
 				IOUtils.printAbductionResult(results, true);

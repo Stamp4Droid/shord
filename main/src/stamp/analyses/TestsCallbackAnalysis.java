@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
+import stamp.analyses.TestsAnalysis.CallgraphCompleter;
 import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
@@ -118,10 +119,14 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 			System.out.println("Test number of reached callgraph edges: " + testReachedCallgraph.size());
 			
 			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("profiler/traceouts/", tokens[tokens.length-1]);
+			callgraph = new CallgraphCompleter().completeDynamicCallgraph(callgraph);
 			//IOUtils.printRelation("callgraph");
 			
+			List<String> testReachedMethods = TraceReader.getReachableMethods("profiler/traceouts_test/", tokens[tokens.length-1]);
+			System.out.println("Test coverage: " + (double)testReachedMethods.size()/numReachableMethods);
+
 			//double fractionMethodIncrement = 0.1;
-			double fractionMethodIncrement = (double)reachedMethods.size()/(1.5*numReachableMethods);
+			double fractionMethodIncrement = (double)reachedMethods.size()/(0.75*numReachableMethods);
 			//int numMethods = reachedMethods.size();
 			int numMethods = 0;
 			while(true) {

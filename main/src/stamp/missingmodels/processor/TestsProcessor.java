@@ -20,14 +20,19 @@ public class TestsProcessor implements Processor {
 	
 	private boolean isLpRunningTime = false;
 	private double currentCoverage = -1.0;
-	private final Map<String,Map<Double,Integer>> lpRunningTimes = new HashMap<String,Map<Double,Integer>>();
 	
 	private final Map<String,Map<Double,Integer>> numVariables = new HashMap<String,Map<Double,Integer>>();
-	private final Map<String,Map<Double,Integer>> numConstraints = new HashMap<String,Map<Double,Integer>>();
 	
-	private final Map<String,Map<Double,Integer>> numFlowEdges = new HashMap<String,Map<Double,Integer>>();
-	private final Map<String,Map<Double,Integer>> numBaseEdges = new HashMap<String,Map<Double,Integer>>();
+	private final Map<String,Map<Double,Integer>> lpRunningTimes = new HashMap<String,Map<Double,Integer>>();
+	private final Map<String,Map<Double,Integer>> numConstraintsOpt = new HashMap<String,Map<Double,Integer>>();
+	private final Map<String,Map<Double,Integer>> numConstraints = new HashMap<String,Map<Double,Integer>>();
+
+	private final Map<String,Map<Double,Integer>> numSrcSinkEdges = new HashMap<String,Map<Double,Integer>>();
+	private final Map<String,Map<Double,Integer>> numMustEdges = new HashMap<String,Map<Double,Integer>>();
+	private final Map<String,Integer> numMayEdges = new HashMap<String,Integer>();
+	
 	private final Map<String,Map<Double,Map<Integer,Integer>>> numCutEdges = new HashMap<String,Map<Double,Map<Integer,Integer>>>();
+	private final Map<String,Double> testCoverages = new HashMap<String,Double>();
 	
 	private final MultivalueMap<String,Double> coverages = new MultivalueMap<String,Double>();
 	
@@ -47,10 +52,11 @@ public class TestsProcessor implements Processor {
 		this.lpRunningTimes.put(appName, new HashMap<Double,Integer>());
 		
 		this.numVariables.put(appName, new HashMap<Double,Integer>());
-		this.numConstraints.put(appName, new HashMap<Double,Integer>());
+		this.numConstraintsOpt.put(appName, new HashMap<Double,Integer>());
 		
-		this.numFlowEdges.put(appName, new HashMap<Double,Integer>());
-		this.numBaseEdges.put(appName, new HashMap<Double,Integer>());
+		this.numSrcSinkEdges.put(appName, new HashMap<Double,Integer>());
+		this.numMustEdges.put(appName, new HashMap<Double,Integer>());
+		this.numConstraints.put(appName, new HashMap<Double,Integer>());
 		this.numCutEdges.put(appName, new HashMap<Double,Map<Integer,Integer>>());
 		
 		this.zerothCut.put(appName, new MultivalueMap<Double,String>());
@@ -61,26 +67,34 @@ public class TestsProcessor implements Processor {
 		if(line.startsWith("Running method coverage:")) {
 			this.currentCoverage = Double.parseDouble(line.split(" ")[3].trim());
 			this.coverages.add(appName, this.currentCoverage);
+		} else if(line.startsWith("Test coverage:")) {
+			this.testCoverages.put(appName, Double.parseDouble(line.split(" ")[2].trim()));
 		} else if(this.isLpRunningTime && line.startsWith("Done in")) {
 			this.lpRunningTimes.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[2].split("ms")[0]));
 			this.isLpRunningTime = false;
 		} else if(line.startsWith("Solving LP")) {
 			this.isLpRunningTime = true;
 		} else if(line.startsWith("Num initial edges:")) {
-			if(this.numFlowEdges.get(appName).get(this.currentCoverage) == null) {
-				this.numFlowEdges.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
+			if(this.numSrcSinkEdges.get(appName).get(this.currentCoverage) == null) {
+				this.numSrcSinkEdges.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
 			}
 		} else if(line.startsWith("Num base edges:")) {
-			if(this.numBaseEdges.get(appName).get(this.currentCoverage) == null) {
-				this.numBaseEdges.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
+			if(this.numMustEdges.get(appName).get(this.currentCoverage) == null) {
+				this.numMustEdges.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
 			}
+		} else if(line.startsWith("Relation callgraph:")) {
+			this.numMayEdges.put(appName, (int)Double.parseDouble(line.split(" ")[4].trim()));
+		} else if(line.startsWith("Num productions:")) {
+			if(this.numConstraints.get(appName).get(this.currentCoverage) == null) {
+				this.numConstraints.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[2].trim()));
+			}			
 		} else if(line.startsWith("Number of variables:")) {
 			if(this.numVariables.get(appName).get(this.currentCoverage) == null) {
 				this.numVariables.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
 			}
 		} else if(line.startsWith("Number of constraints:")) {
-			if(this.numConstraints.get(appName).get(this.currentCoverage) == null) {
-				this.numConstraints.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
+			if(this.numConstraintsOpt.get(appName).get(this.currentCoverage) == null) {
+				this.numConstraintsOpt.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
 			}
 		} else if(line.startsWith("total cut")) {
 			String[] tokens = line.split(" ");
@@ -129,9 +143,10 @@ public class TestsProcessor implements Processor {
 	public void finishProcessing(String appName) {
 		if(this.lpRunningTimes.get(appName).get(this.currentCoverage) != null
 				&& this.numVariables.get(appName).get(this.currentCoverage) != null
+				&& this.numConstraintsOpt.get(appName).get(this.currentCoverage) != null
+				&& this.numSrcSinkEdges.get(appName).get(this.currentCoverage) != null
+				&& this.numMustEdges.get(appName).get(this.currentCoverage) != null
 				&& this.numConstraints.get(appName).get(this.currentCoverage) != null
-				&& this.numFlowEdges.get(appName).get(this.currentCoverage) != null
-				&& this.numBaseEdges.get(appName).get(this.currentCoverage) != null
 				&& this.numCutEdges.get(appName).get(this.currentCoverage) != null
 				&& this.minTimesToFailure.get(appName).get(this.currentCoverage) != null
 				&& this.linesOfCode.get(appName) != null) {
@@ -186,35 +201,41 @@ public class TestsProcessor implements Processor {
 	public String getHeader() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("App Name").append(",");
-		sb.append("Coverage").append(",");
-		sb.append("LP Solve Time").append(",");
+		sb.append("Lines of Code").append(",");
 		sb.append("# Variables").append(",");
 		sb.append("# Constraints").append(",");
-		sb.append("# Flow Edges").append(",");
-		sb.append("# Base Edges").append(",");
+		sb.append("# Constraints (opt)").append(",");
+		sb.append("LP Solve Time").append(",");
+		sb.append("# SrcSink Edges").append(",");
+		//sb.append("# Must Edges").append(",");
+		sb.append("# May Edges").append(",");
+		sb.append("Coverage").append(",");
+		sb.append("Test Coverage").append(",");
 		for(int i=0; i<this.getMaxNumCuts(); i++) {
 			sb.append("# Cut Edges " + i).append(",");
 			sb.append("% Test Passed " + i).append(",");
 		}
-		sb.append("Lines of Code").append(",");
-		return sb.toString();		
+		return sb.toString();
 	}
 	
 	public String getInfoFor(String appName, double coverage) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(appName).append(",");
-		sb.append(coverage).append(",");
-		sb.append(this.lpRunningTimes.get(appName).get(coverage)).append(",");
+		sb.append(this.linesOfCode.get(appName)).append(",");
 		sb.append(this.numVariables.get(appName).get(coverage)).append(",");
 		sb.append(this.numConstraints.get(appName).get(coverage)).append(",");
-		sb.append(this.numFlowEdges.get(appName).get(coverage)).append(",");
-		sb.append(this.numBaseEdges.get(appName).get(coverage)).append(",");
+		sb.append(this.numConstraintsOpt.get(appName).get(coverage)).append(",");
+		sb.append(this.lpRunningTimes.get(appName).get(coverage)).append(",");
+		sb.append(this.numSrcSinkEdges.get(appName).get(coverage)).append(",");
+		//sb.append(this.numMustEdges.get(appName).get(coverage)).append(",");
+		sb.append(this.numMayEdges.get(appName)).append(",");
+		sb.append(coverage).append(",");
+		sb.append(this.testCoverages.get(appName)).append(",");
 		int numCuts = this.getMaxNumCuts();
 		for(int i=0; i<numCuts; i++) {
 			sb.append(this.numCutEdges.get(appName).get(coverage).get(i)).append(",");
 			sb.append(this.minTimesToFailure.get(appName).get(coverage).get(i)).append(",");
 		}
-		sb.append(this.linesOfCode.get(appName));
 		return sb.toString();
 	}
 	
@@ -223,7 +244,7 @@ public class TestsProcessor implements Processor {
 		//new LogReader("../results_experiment2_with_pcs", tp).run();
 		//new LogReader("../results_experiment1", tp).run();
 		//new LogReader("../results/good_results", tp).run();
-		new LogReader("../stamp_output", tp).run();
+		new LogReader("../results/good_results_final", tp).run();
 		System.out.println(tp.getHeader());
 		for(String appName : tp.getAppNames()) {
 			for(double coverage : tp.getCoverages(appName)) {
@@ -234,7 +255,7 @@ public class TestsProcessor implements Processor {
 	
 	public static void printEdges() {
 		TestsProcessor tp = new TestsProcessor();
-		new LogReader("../results_good", tp).run();
+		new LogReader("../results_good_final", tp).run();
 		System.out.println("App#Coverage#Calledge");
 		for(String appName : tp.getAppNames()) {
 			for(double coverage : tp.getCoverages(appName)) {

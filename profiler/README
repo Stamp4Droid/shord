@@ -1,0 +1,10 @@
+adb install apks/APK_NAME
+PACKAGE_NAME = java ReadApk apks/APK_NAME | grep 'package'
+PID = adb shell ps | grep PACKAGE_NAME
+adb shell am profile PID start /sdcard/APK_NAME.trace
+adb shell am profile PID stop
+adb pull /sdcard/APK_NAME.trace traces
+adb shell kill PID
+adb shell pm uninstall PACKAGE_NAME
+dmtracedump -o traces/APK_NAME.trace > traceouts/APK_NAME.traceout
+
