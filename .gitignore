@@ -39,6 +39,7 @@ models/api-*/*
 stamp_output/*
 main/gen/
 solvergen/doc/
+solvergen/.tablereg
 
 tomcat/logs/*
 tomcat/work/Catalina/localhost/*
