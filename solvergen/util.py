@@ -32,26 +32,24 @@ class BaseClass(object):
 
     def __init__(self):
         raise NotImplementedError() # abstract class
-
-    def __setattr__(self, name, value):
-        # XXX: Assuming the first argument of class methods is named 'self'.
-        caller_rcvr = inspect.stack()[1][0].f_locals.get('self')
-        # Might be None, e.g. if called from a standalone function.
-        if (self is caller_rcvr or
-            hasattr(self, '_mutables') and name in self._mutables):
-            super(BaseClass, self).__setattr__(name, value)
-        else:
-            raise Exception('Attribute %s is private' % name)
-
-    __eq__ = None
-    __ne__ = None
-    __gt__ = None
-    __ge__ = None
-    __le__ = None
-    __lt__ = None
-    __hash__ = None
-    __copy__ = None
-    __deepcopy__ = None
+    def __eq__(self, other):
+        raise NotImplementedError()
+    def __ne__(self, other):
+        raise NotImplementedError()
+    def __gt__(self, other):
+        raise NotImplementedError()
+    def __ge__(self, other):
+        raise NotImplementedError()
+    def __lt__(self, other):
+        raise NotImplementedError()
+    def __le__(self, other):
+        raise NotImplementedError()
+    def __hash__(self):
+        raise NotImplementedError()
+    def __copy__(self):
+        raise NotImplementedError()
+    def __deepcopy__(self, memo):
+        raise NotImplementedError()
 
 class Comparable(BaseClass):
     """
