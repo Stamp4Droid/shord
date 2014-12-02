@@ -1,13 +1,20 @@
+#include <boost/program_options.hpp>
 #include <cassert>
 #include <cstdlib>
-#include <limits>
+#include <fstream>
 #include <iostream>
+#include <limits>
+
 #define LIBAMORE_LIBRARY_COMPILATION
 #include "amore/dfa.h"
 #include "amore/global.h"
 #include "amore/testBinary.h"
 #include "amore++/deterministic_finite_automaton.h"
 #include "amore++/nondeterministic_finite_automaton.h"
+
+namespace po = boost::program_options;
+
+// AMORE AUTOMATA =============================================================
 
 typedef struct dfauto DfaBackend;
 typedef amore::deterministic_finite_automaton DfaWrapper;
@@ -274,7 +281,9 @@ public:
     }
 };
 
-int main() {
+// TOP-LEVEL CODE =============================================================
+
+void test_dfa_code() {
     DFA d1(2, 3);
     d1.set_initial(0);
     d1.set_final(1);
@@ -319,4 +328,32 @@ int main() {
 
     std::cout << "d1 and d2 are " << ((d1 == d2) ? "" : "NOT ") << "equal"
 	      << std::endl;
+}
+
+int main(int argc, char* argv[]) {
+    // User-defined parameters
+    std::string funs_dirname;
+
+    // Parse options
+    po::options_description desc("Options");
+    desc.add_options()
+	("help,h", "Print help message")
+	("graph-dir", po::value<std::string>(&funs_dirname)->required(),
+	 "Directory of function graphs");
+    po::positional_options_description pos_desc;
+    pos_desc.add("graph-dir", 1);
+    po::variables_map vm;
+    try {
+	po::store(po::command_line_parser(argc, argv)
+		  .options(desc).positional(pos_desc).run(), vm);
+	if (vm.count("help") > 0) {
+	    // TODO: Also print usage
+	    std::cerr << desc << std::endl;
+	    return EXIT_FAILURE;
+	}
+	po::notify(vm);
+    } catch (const po::error& e) {
+        std::cerr << e.what() << std::endl;
+	return EXIT_FAILURE;
+    }
 }
