@@ -1,3 +1,5 @@
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <boost/regex.hpp>
 #include <cassert>
@@ -15,6 +17,7 @@
 
 #include "util.hpp"
 
+namespace fs = boost::filesystem;
 namespace po = boost::program_options;
 
 // AMORE AUTOMATA =============================================================
@@ -352,6 +355,63 @@ private:
 	return false;
     }
 public:
+    void parse_file(const fs::path& fpath,
+		    Registry<Function>& fun_reg, Registry<Field>& fld_reg) {
+	assert(!complete());
+	std::ifstream fin(fpath.string());
+	EXPECT((bool) fin);
+
+	bool vars_done = false;
+	std::string line;
+	while (std::getline(fin, line)) {
+	    boost::trim(line);
+	    if (line.empty()) {
+		continue; // Empty lines are ignored.
+	    }
+	    std::vector<std::string> toks;
+	    boost::split(toks, line, boost::is_any_of(" "),
+			 boost::token_compress_on);
+
+	    if (toks[0] == "#") {
+		EXPECT(toks.size() == 1);
+		EXPECT(!vars_done);
+		EXPECT(entry.valid());
+		EXPECT(!exits.empty());
+		vars_done = true;
+	    } else if (!vars_done) {
+		EXPECT(toks.size() >= 1);
+		Variable& v = vars.make(toks[0]);
+		for (auto it = toks.begin() + 1; it != toks.end(); ++it) {
+		    if (*it == "in") {
+			EXPECT(!entry.valid());
+			entry = v.ref;
+		    } else if (*it == "out") {
+			exits.insert(v.ref);
+		    } else {
+			EXPECT(false);
+		    }
+		}
+	    } else {
+		EXPECT(toks.size() == 2 || toks.size() == 3);
+		Ref<Variable> src = vars.find(toks[0]).ref;
+		Ref<Variable> tgt = vars.find(toks[1]).ref;
+		if (toks.size() == 2) {
+		    epsilons.insert(src, tgt);
+		} else if (toks[2][0] == '(') {
+		    opens.insert(fld_reg.add(toks[2].substr(1)).ref,
+				 src, tgt);
+		} else if (toks[2][0] == ')') {
+		    closes.insert(fld_reg.add(toks[2].substr(1)).ref,
+				  src, tgt);
+		} else {
+		    calls.insert(fun_reg.add(toks[2]).ref, src, tgt);
+		}
+	    }
+	}
+
+	EXPECT(fin.eof());
+	EXPECT(vars_done);
+    }
     bool complete() const {
 	return entry.valid();
     }
@@ -463,5 +523,24 @@ int main(int argc, char* argv[]) {
     } catch (const po::error& e) {
         std::cerr << e.what() << std::endl;
 	return EXIT_FAILURE;
+    }
+
+    // Parse function graphs
+    const std::string FILE_EXTENSION = ".fun.tgf";
+    Registry<Function> funs;
+    Registry<Field> flds;
+    for (const fs::path& path : Directory(funs_dirname)) {
+	std::string base(path.filename().string());
+	if (!boost::algorithm::ends_with(base, FILE_EXTENSION)) {
+	    continue;
+	}
+	size_t name_len = base.size() - FILE_EXTENSION.size();
+	std::string name(base.substr(0, name_len));
+	std::cout << "Parsing function " << name << std::endl;
+	Function& f = funs.add(name);
+	f.parse_file(path, funs, flds);
+    }
+    for (const Function& f : funs) {
+	EXPECT(f.complete());
     }
 }
