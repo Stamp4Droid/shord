@@ -1,4 +1,5 @@
 #include <boost/program_options.hpp>
+#include <boost/regex.hpp>
 #include <cassert>
 #include <cstdlib>
 #include <fstream>
@@ -11,6 +12,8 @@
 #include "amore/testBinary.h"
 #include "amore++/deterministic_finite_automaton.h"
 #include "amore++/nondeterministic_finite_automaton.h"
+
+#include "util.hpp"
 
 namespace po = boost::program_options;
 
@@ -278,6 +281,111 @@ public:
 	    os << std::endl;
 	}
 	return os;
+    }
+};
+
+// FUNCTION GRAPHS ============================================================
+
+TUPLE_TAG(SRC);
+TUPLE_TAG(TGT);
+TUPLE_TAG(FLD);
+TUPLE_TAG(FUN);
+
+class Field {
+    friend Registry<Field>;
+    typedef std::string Key;
+public:
+    const std::string name;
+    const Ref<Field> ref;
+private:
+    explicit Field(const std::string& name, Ref<Field> ref)
+	: name(name), ref(ref) {
+	EXPECT(boost::regex_match(name, boost::regex("\\w+")));
+    }
+    bool merge() {
+	return false;
+    }
+};
+
+class Variable {
+    friend Registry<Variable>;
+    typedef std::string Key;
+public:
+    const std::string name;
+    const Ref<Variable> ref;
+private:
+    explicit Variable(const std::string& name, Ref<Variable> ref)
+	: name(name), ref(ref) {
+	EXPECT(boost::regex_match(name, boost::regex("\\w+")));
+    }
+    bool merge() {
+	return false;
+    }
+};
+
+class Function {
+    friend Registry<Function>;
+    typedef std::string Key;
+public:
+    typedef mi::MultiIndex<
+                mi::Index<SRC, Ref<Variable>,
+                    mi::Table<TGT, Ref<Variable>>>,
+                mi::Index<TGT, Ref<Variable>,
+                    mi::Table<SRC, Ref<Variable>>>> VarPairs;
+public:
+    const std::string name;
+    const Ref<Function> ref;
+private:
+    Registry<Variable> vars;
+    Ref<Variable> entry;
+    std::set<Ref<Variable>> exits;
+    VarPairs epsilons;
+    mi::Index<FLD, Ref<Field>, VarPairs> opens;
+    mi::Index<FLD, Ref<Field>, VarPairs> closes;
+    mi::Index<FUN, Ref<Function>, VarPairs> calls;
+private:
+    explicit Function(const std::string& name, Ref<Function> ref)
+	: name(name), ref(ref) {
+	EXPECT(boost::regex_match(name, boost::regex("\\w+")));
+    }
+    bool merge() {
+	return false;
+    }
+public:
+    bool complete() const {
+	return entry.valid();
+    }
+    void to_dot(std::ostream& os, const Registry<Function>& fun_reg,
+		const Registry<Field>& fld_reg) const {
+	os << "digraph " << name << " {" << std::endl;
+	os << "  rankdir=LR;" << std::endl;
+	os << "  node [shape=plaintext,label=\"\"] __phantom__;" << std::endl;
+	for (const Variable& v : vars) {
+	    os << "  node [shape=" << (exits.count(v.ref) > 0 ? "double" : "")
+	       << "circle,color=black] " << v.name << ";" << std::endl;
+	}
+	os << "  __phantom__ -> " << vars[entry].name << " [color=blue];"
+		   << std::endl;
+	FOR(e, epsilons) {
+	    os << "  " << vars[e.get<SRC>()].name << " -> "
+	       << vars[e.get<TGT>()].name << ";" << std::endl;
+	}
+	FOR(o, opens) {
+	    os << "  " << vars[o.get<SRC>()].name << " -> "
+	       << vars[o.get<TGT>()].name << " [label=\"("
+	       << fld_reg[o.get<FLD>()].name << "\"];" << std::endl;
+	}
+	FOR(c, closes) {
+	    os << "  " << vars[c.get<SRC>()].name << " -> "
+	       << vars[c.get<TGT>()].name << " [label=\")"
+	       << fld_reg[c.get<FLD>()].name << "\"];" << std::endl;
+	}
+	FOR(c, calls) {
+	    os << "  " << vars[c.get<SRC>()].name << " -> "
+	       << vars[c.get<TGT>()].name << " [label=\""
+	       << fun_reg[c.get<FUN>()].name << "\"];" << std::endl;
+	}
+	os << "}" << std::endl;
     }
 };
 
