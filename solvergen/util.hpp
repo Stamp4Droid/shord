@@ -1221,6 +1221,12 @@ public:
 //   (assuming the result tuples doesn't get modified by the client code)
 // - Union operation
 // - Instantiated nested sets are NOT guaranteed to be non-empty.
+// - Primitive multi-dimension support:
+//   - primary index tuple order becomes the exported Tuple
+//   - 'insert' automatically adds on both dimensions, does required reordering
+//   - only for base containers
+//   - can't write-through (can't even get non-const references to sub-indices)
+//   - can't refer to element directly; must pick sub
 
 // Primary extensions:
 // - tag uniqueness check
@@ -1239,7 +1245,6 @@ public:
 //   - allow the limit to be picked dynamically (when we're done adding refs)
 //     but "freeze" that set, and assert it's not frozen whenever it's modified
 //     (perhaps only during debugging)
-// - implement multi-indexing properly, to connect all dimensions
 // - don't peel the insertion or iteration tuple
 //   instead combine with index after which to read
 //   alias top-level insert(tuple) as insert(0, tuple)
@@ -1266,10 +1271,6 @@ public:
 //   also need to explicitly specify which dimension we pick
 // - hack to avoid iterating on bottom fields, if not requested
 //   create an iterator to a dummy singleton container
-// - primitive multi-dimension support:
-//   - from top only (special wrapper to "close" the hierarchy?)
-//   - primary index tuple order becomes the exported Tuple
-//   - 'insert' automatically adds on both dimensions, does required reordering
 
 // Secondary extensions:
 // - abstract-out size type
@@ -1402,6 +1403,17 @@ public:
 //   alternatively, pattern
 // - follow-if-exists operation
 //   that short-circuits at the first non-existent value
+// - improve multi-index support:
+//   - implement for specialized containers
+//   - more than 2 index combination (or allow nesting)
+//   - detect when secondary dimension doesn't cover all tags
+//     or allow missing fields on secondary dimension
+//   - more efficient insertion than building a full copy of the input tuple
+//     could write a sorting algorithm with templates
+//     but need to be able to name the fields, or reorder the argument pack
+//   - contains check: can pick the most suitable dimension
+//   - implement copy
+// - removing: full query infrastructure
 
 namespace mi {
 
@@ -1419,6 +1431,9 @@ struct Getter<Tag, NamedTuple<Tag,Hd,Tl>> {
     static FldT& get(NamedTuple<Tag,Hd,Tl>& ntup) {
 	return ntup.hd;
     }
+    static const FldT& get(const NamedTuple<Tag,Hd,Tl>& ntup) {
+	return ntup.hd;
+    }
 };
 
 template<class FldN, class Tag, class Hd, class Tl>
@@ -1427,11 +1442,15 @@ struct Getter<FldN, NamedTuple<Tag,Hd,Tl>> {
     static FldT& get(NamedTuple<Tag,Hd,Tl>& ntup) {
 	return Getter<FldN,Tl>::get(ntup.tl);
     }
+    static const FldT& get(const NamedTuple<Tag,Hd,Tl>& ntup) {
+	return Getter<FldN,Tl>::get(ntup.tl);
+    }
 };
 
 } // namespace detail
 
 struct Nil {
+    explicit Nil() {}
     bool operator<(const Nil&) const {
 	return false;
     }
@@ -1451,7 +1470,11 @@ public:
     explicit NamedTuple(const Hd& hd, const Rest&... rest)
 	: hd(hd), tl(rest...) {}
     template<class FldN>
-    typename detail::Getter<FldN,NamedTuple>::FldT get() {
+    typename detail::Getter<FldN,NamedTuple>::FldT& get() {
+	return detail::Getter<FldN,NamedTuple>::get(*this);
+    }
+    template<class FldN>
+    const typename detail::Getter<FldN,NamedTuple>::FldT& get() const {
 	return detail::Getter<FldN,NamedTuple>::get(*this);
     }
     bool operator<(const NamedTuple& rhs) const {
@@ -1567,11 +1590,19 @@ public:
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
     }
+    template<class Other>
+    bool sec_insert(const Other& other) {
+	return insert(other.template get<Tag>());
+    }
     void remove(const T& val) {
 	store.erase(val);
     }
     void remove(const Tuple& tuple) {
 	remove(tuple.hd);
+    }
+    template<class Other>
+    void sec_remove(const Other& other) {
+	remove(other.template get<Tag>());
     }
     bool copy(const Table& src) {
 	unsigned int old_sz = size();
@@ -1661,15 +1692,26 @@ public:
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
     }
+    template<class Other>
+    bool sec_insert(const Other& other) {
+	return of(other.template get<Tag>()).sec_insert(other);
+    }
     template<class... Rest>
     void remove(const Key& key, const Rest&... rest) {
 	auto it = map.find(key);
-	if (it != map.cend()) {
+	if (it != map.end()) {
 	    it->second.remove(rest...);
 	}
     }
     void remove(const Tuple& tuple) {
 	remove(tuple.hd, tuple.tl);
+    }
+    template<class Other>
+    void sec_remove(const Other& other) {
+	auto it = map.find(other.template get<Tag>());
+	if (it != map.end()) {
+	    it->second.sec_remove(other);
+	}
     }
     bool copy(const Index& src) {
 	bool grew = false;
@@ -1759,6 +1801,89 @@ public:
 
 template<class Tag, class K, class S>
 const S Index<Tag,K,S>::dummy;
+
+template<class Pri, class Sec> class MultiIndex {
+public:
+    class Iterator;
+    friend Iterator;
+    typedef typename Pri::Tuple Tuple;
+private:
+    Pri pri_;
+    Sec sec_;
+public:
+    explicit MultiIndex() {}
+    const Pri& pri() const {
+	return pri_;
+    }
+    const Sec& sec() const {
+	return sec_;
+    }
+    template<class... Flds>
+    bool insert(const Flds&... flds) {
+	return insert(Tuple(flds...));
+    }
+    bool insert(const Tuple& tuple) {
+	if (pri_.insert(tuple)) {
+	    // Only insert on secondary index if tuple wasn't already present.
+	    bool sec_inserted = sec_.sec_insert(tuple);
+	    assert(sec_inserted);
+	    return true;
+	}
+	// TODO: Check that tuple is also present on sec.
+	return false;
+    }
+    template<class Other>
+    bool sec_insert(const Other& other) {
+	if (pri_.sec_insert(other)) {
+	    bool sec_inserted = sec_.sec_insert(other);
+	    assert(sec_inserted);
+	    return true;
+	}
+	return false;
+    }
+    template<class... Flds>
+    void remove(const Flds&... flds) {
+	remove(Tuple(flds...));
+    }
+    void remove(const Tuple& tuple) {
+	pri_.remove(tuple);
+	sec_.sec_remove(tuple);
+    }
+    template<class Other>
+    void sec_remove(const Other& other) {
+	pri_.sec_remove(other);
+	sec_.sec_remove(other);
+    }
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
+	it.migrate(*this);
+	return it;
+    }
+    bool empty() const {
+	return pri_.empty();
+    }
+    template<class... Flds>
+    bool contains(const Flds&... flds) const {
+	return pri_.contains(flds...);
+    }
+    unsigned int size() const {
+	return pri_.size();
+    }
+public:
+
+    class Iterator {
+    private:
+	typename Pri::Iterator sub_iter;
+    public:
+	explicit Iterator(Tuple& tgt) : sub_iter(tgt) {}
+	void migrate(const MultiIndex& idx) {
+	    sub_iter.migrate(idx.pri_);
+	}
+	bool next() {
+	    return sub_iter.next();
+	}
+    };
+};
 
 // SPECIALIZED CONTAINERS =====================================================
 
