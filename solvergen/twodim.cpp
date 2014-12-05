@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <limits>
+#include <vector>
 
 #define LIBAMORE_LIBRARY_COMPILATION
 #include "amore/dfa.h"
@@ -32,12 +33,6 @@ private:
     NfaBackend* backend_;
     NfaWrapper* wrapper_;
 private:
-    void add_trans_impl(posint src, posint letter, posint tgt) {
-	assert(src < num_states());
-	assert(letter <= num_letters());
-	assert(tgt < num_states());
-	connect(backend_->delta, letter, src, tgt);
-    }
 public:
     explicit NFA(posint num_letters, posint num_states) {
 	// no initial or final state set
@@ -61,6 +56,8 @@ public:
     ~NFA() {
 	delete wrapper_; // also deallocates backend_
     }
+    NFA(const NFA&) = delete;
+    NFA& operator=(const NFA&) = delete;
     // letters: 1..N
     // 0 is reserved for epsilon
     posint num_letters() const {
@@ -78,16 +75,11 @@ public:
 	assert(state < num_states());
 	return isfinal(backend_->infin[state]);
     }
-    const NfaWrapper* wrapper() const {
-	return wrapper_;
-    }
-    void add_trans(posint src, char symbol, posint tgt) {
-	posint letter = symbol - 'a' + 1;
-	assert(letter >= 1);
-	add_trans_impl(src, letter, tgt);
-    }
-    void add_eps_trans(posint src, posint tgt) {
-	add_trans_impl(src, 0, tgt);
+    void add_trans(posint src, posint letter, posint tgt) {
+	assert(src < num_states());
+	assert(letter <= num_letters());
+	assert(tgt < num_states());
+	connect(backend_->delta, letter, src, tgt);
     }
     void set_final(posint state, bool final = true) {
 	assert(state < num_states());
@@ -144,14 +136,22 @@ public:
     }
 };
 
-class DFA {
+// Symbols must be comparable (the alphabet gets sorted at construction).
+template<class Symbol> class DFA {
 private:
+    std::vector<Symbol> alphabet_;
     DfaBackend* backend_;
     DfaWrapper* wrapper_;
 public:
     // An extra sink state is added: the final FSM will have N+1 states.
-    explicit DFA(posint num_letters, posint num_states) {
-	posint sink_state = num_states;
+    template<typename C>
+    explicit DFA(const C& alphabet, posint num_states)
+	: alphabet_(alphabet.begin(), alphabet.end()) {
+	// Sort the set of symbols, and remove duplicates.
+	std::sort(alphabet_.begin(), alphabet_.end());
+	std::unique(alphabet_.begin(), alphabet_.end());
+	posint num_letters = alphabet_.size();
+	posint sink = num_states;
 	// no final state set
 	// reserves 1 extra slot for sink state
 	char* fin_bitset = newfinal(num_states);
@@ -160,26 +160,22 @@ public:
 	posint** delta = newddelta(num_letters, num_states);
 	// all valid transitions move to the sink state
 	for (posint i = 1; i <= num_letters; i++) {
-	    std::fill_n(delta[i], num_states + 1, sink_state);
+	    std::fill_n(delta[i], num_states + 1, sink);
 	}
 	backend_ = newdfa();
 	backend_->highest_state = num_states;
-	backend_->init = sink_state;
+	backend_->init = sink;
 	backend_->alphabet_size = num_letters;
 	backend_->final = fin_bitset;
 	backend_->delta = delta;
 	backend_->minimal = false;
 	wrapper_ = new DfaWrapper(backend_);
-	assert(wrapper_->get_state_count() == num_states + 1);
-	assert(wrapper_->get_alphabet_size() == num_letters);
-    }
-    explicit DFA(const NFA& nfa) {
-	wrapper_ = dynamic_cast<DfaWrapper*>(nfa.wrapper()->determinize());
-	backend_ = wrapper_->get_dfa();
     }
     ~DFA() {
 	delete wrapper_; // also deallocates backend_
     }
+    DFA(const DFA&) = delete;
+    DFA& operator=(const DFA&) = delete;
     // letters: 1..N
     // 0 is reserved for epsilon
     posint num_letters() const {
@@ -201,7 +197,7 @@ public:
     }
     // Returns the first sink state found (TODO: Assumes only one sink state).
     // Returns num_states() if no sink state exists.
-    posint sink() const {
+    posint sink_state() const {
 	for (posint state = 0; state < num_states(); state++) {
 	    if (is_final(state)) {
 		continue;
@@ -219,9 +215,17 @@ public:
 	}
 	return num_states();
     }
-    void add_trans(posint src, char symbol, posint tgt) {
+    void add_symb_trans(posint src, Symbol symbol, posint tgt) {
+	const auto iter_p =
+	    std::equal_range(alphabet_.cbegin(), alphabet_.cend(), symbol);
+	// Assumes the symbol exists in the FSM's alphabet.
+	assert(iter_p.first != iter_p.second);
+	// Add 1 to the alphabet offset, because 0 is reserved for epsilon.
+	posint letter = iter_p.first - alphabet_.cbegin() + 1;
+	add_trans(src, letter, tgt);
+    }
+    void add_trans(posint src, posint letter, posint tgt) {
 	assert(src < num_states());
-	posint letter = symbol - 'a' + 1;
 	assert(letter >= 1 && letter <= num_letters());
 	assert(tgt < num_states());
 	backend_->delta[letter][src] = tgt;
@@ -241,7 +245,10 @@ public:
 	wrapper_->minimize();
 	backend_ = wrapper_->get_dfa(); // update the cached backend pointer
     }
-    bool operator==(const DFA& other) {
+    // TODO: Only defined for minimal DFAs
+    bool operator==(const DFA& other) const {
+	// XXX: really want assert(alphabet_ == other.alphabet_);
+	assert(num_letters() == other.num_letters());
 	assert(minimal() && other.minimal());
 	return equiv(backend_, other.backend_);
     }
@@ -252,7 +259,7 @@ public:
 	return wrapper_->to_regex();
     }
     friend std::ostream& operator<<(std::ostream& os, const DFA& dfa) {
-	posint sink = dfa.sink();
+	posint sink = dfa.sink_state();
 	os << "\t";
 	for (posint state = 0; state < dfa.num_states(); state++) {
 	    if (state == sink) {
@@ -270,7 +277,7 @@ public:
 	os << std::endl;
 	posint** delta = dfa.backend_->delta;
 	for (posint letter = 1; letter <= dfa.num_letters(); letter++) {
-	    os << (char) ('a' + letter - 1) << "\t";
+	    os << dfa.alphabet_[letter - 1] << "\t";
 	    for (posint src = 0; src < dfa.num_states(); src++) {
 		if (src == sink) {
 		    continue;
@@ -452,13 +459,14 @@ public:
 // TOP-LEVEL CODE =============================================================
 
 void test_dfa_code() {
-    DFA d1(2, 3);
+    std::vector<std::string> alph = {"ey","bee"};
+    DFA<std::string> d1(alph, 3);
     d1.set_initial(0);
     d1.set_final(1);
-    d1.add_trans(0, 'a', 1);
-    d1.add_trans(1, 'a', 1);
-    d1.add_trans(1, 'b', 2);
-    d1.add_trans(2, 'a', 2);
+    d1.add_symb_trans(0, "ey", 1);
+    d1.add_symb_trans(1, "ey", 1);
+    d1.add_symb_trans(1, "bee", 2);
+    d1.add_symb_trans(2, "ey", 2);
     std::cout << "d1:" << std::endl;
     std::cout << d1;
     std::cout << d1.to_regex() << std::endl;
@@ -473,17 +481,21 @@ void test_dfa_code() {
     NFA n(2, 4);
     n.set_initial(0);
     n.set_final(1);
-    n.add_trans(0, 'a', 1);
-    n.add_trans(1, 'a', 1);
-    n.add_trans(1, 'b', 2);
-    n.add_trans(2, 'a', 2);
+    n.add_trans(0, 1, 1);
+    n.add_trans(1, 1, 1);
+    n.add_trans(1, 2, 2);
+    n.add_trans(2, 1, 2);
     std::cout << "n:" << std::endl;
     std::cout << n;
     std::cout << n.to_regex() << std::endl;
     std::cout << std::endl;
 
-    DFA d2(n);
-    std::cout << "d2 = n determinized:" << std::endl;
+    DFA<std::string> d2(alph, 2);
+    d2.set_initial(0);
+    d2.set_final(1);
+    d2.add_symb_trans(0, "ey", 1);
+    d2.add_symb_trans(1, "ey", 1);
+    std::cout << "d2:" << std::endl;
     std::cout << d2;
     std::cout << d2.to_regex() << std::endl;
     std::cout << std::endl;
