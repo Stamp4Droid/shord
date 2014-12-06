@@ -4,6 +4,7 @@
 #include <boost/regex.hpp>
 #include <cassert>
 #include <cstdlib>
+#include <deque>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -136,12 +137,106 @@ public:
     }
 };
 
+template<class T> class Matrix2D {
+private:
+    const posint x_len_;
+    const posint y_len_;
+    T* array_;
+public:
+    Matrix2D(posint x_len, posint y_len, const T& val)
+	: x_len_(x_len), y_len_(y_len), array_(new T[x_len*y_len]) {
+	std::fill_n(array_, x_len * y_len, val);
+    }
+    ~Matrix2D() {
+	delete array_;
+    }
+    T& operator()(posint i, posint j) {
+	assert(i < x_len_ && j < y_len_);
+	return array_[i*y_len_ + j];
+    }
+};
+
 // Symbols must be comparable (the alphabet gets sorted at construction).
 template<class Symbol> class DFA {
 private:
     std::vector<Symbol> alphabet_;
     DfaBackend* backend_;
     DfaWrapper* wrapper_;
+private:
+    posint follow(posint src, posint letter) const {
+	return backend_->delta[letter][src];
+    }
+    void trim_letters() {
+	// Compute the full set of letters that can reach each state.
+	Matrix2D<bool> reachable(num_states(), num_letters() + 1, false);
+	std::deque<posint> worklist = {initial()};
+	while (!worklist.empty()) {
+	    posint src = worklist.front();
+	    worklist.pop_front();
+	    for (posint letter = 1; letter <= num_letters(); letter++) {
+		posint tgt = follow(src, letter);
+		bool updated = false;
+		for (posint l = 1; l <= num_letters(); l++) {
+		    if (l != letter && !reachable(src, l)) {
+			continue;
+		    }
+		    if (reachable(tgt, l)) {
+			continue;
+		    }
+		    updated = true;
+		    reachable(tgt, l) = true;
+		}
+		if (updated) {
+		    worklist.push_back(tgt);
+		}
+	    }
+	}
+	// Only letters reaching final states are useful.
+	std::vector<bool> is_useful(num_letters() + 1, false);
+	for (posint state = 0; state < num_states(); state++) {
+	    if (!is_final(state)) {
+		continue;
+	    }
+	    for (posint letter = 1; letter <= num_letters(); letter++) {
+		if (reachable(state, letter)) {
+		    is_useful[letter] = true;
+		}
+	    }
+	}
+	// Collect useful letters in new alphabet.
+	std::vector<Symbol> useful_syms;
+	for (posint letter = 1; letter <= num_letters(); letter++) {
+	    if (is_useful[letter]) {
+		useful_syms.push_back(alphabet_[letter - 1]);
+	    }
+	}
+	// No need to continue if all letters are useful.
+	if (useful_syms.size() == num_letters()) {
+	    return;
+	}
+	// Set up new transition table (copy rows for useful letters only,
+	// deallocate the rest).
+	posint** new_delta =
+	    (posint**) calloc(useful_syms.size() + 1, sizeof(posint*));
+	assert(new_delta != NULL);
+	posint next = 1;
+	for (posint letter = 1; letter <= num_letters(); letter++) {
+	    if (is_useful[letter]) {
+		new_delta[next++] = backend_->delta[letter];
+	    } else {
+		dispose(backend_->delta[letter]);
+	    }
+	}
+	assert(next == useful_syms.size() + 1);
+	// Update the data members.
+	std::swap(alphabet_, useful_syms);
+	backend_->alphabet_size = alphabet_.size();
+	dispose(backend_->delta);
+	backend_->delta = new_delta;
+	// This CAN break minimality, e.g. if there was a sink state just to
+	// cover the useless letters.
+	backend_->minimal = false;
+    }
 public:
     // An extra sink state is added: the final FSM will have N+1 states.
     template<typename C>
@@ -242,6 +337,7 @@ public:
 	backend_->minimal = false;
     }
     void minimize() {
+	trim_letters();
 	wrapper_->minimize();
 	backend_ = wrapper_->get_dfa(); // update the cached backend pointer
     }
@@ -491,10 +587,10 @@ void test_dfa_code() {
     std::cout << std::endl;
 
     DFA<std::string> d2(alph, 2);
-    d2.set_initial(0);
-    d2.set_final(1);
-    d2.add_symb_trans(0, "ey", 1);
-    d2.add_symb_trans(1, "ey", 1);
+    d2.set_initial(1);
+    d2.set_final(0);
+    d2.add_symb_trans(1, "ey", 0);
+    d2.add_symb_trans(0, "ey", 0);
     std::cout << "d2:" << std::endl;
     std::cout << d2;
     std::cout << d2.to_regex() << std::endl;
