@@ -7,7 +7,9 @@
 #include <deque>
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <limits>
+#include <map>
 #include <vector>
 
 #define LIBAMORE_LIBRARY_COMPILATION
@@ -33,7 +35,6 @@ class NFA {
 private:
     NfaBackend* backend_;
     NfaWrapper* wrapper_;
-private:
 public:
     explicit NFA(posint num_letters, posint num_states) {
 	// no initial or final state set
@@ -237,6 +238,22 @@ private:
 	// cover the useless letters.
 	backend_->minimal = false;
     }
+    // Returns the newly-created sink state.
+    posint add_sink_state() {
+	posint new_size = num_states() + 1;
+	posint new_sink = new_size - 1;
+	backend_->highest_state = new_sink;
+	// new state is not marked final
+	backend_->final = (posint*) realloc(backend_->final, new_size);
+	assert(backend_->final != NULL);
+	posint** delta = backend_->delta;
+	for (posint letter = 1; letter <= num_letters(); letter++) {
+	    delta[letter] = (posint*) realloc(delta[letter], new_size);
+	    delta[letter][new_sink] = new_sink;
+	}
+	backend_->minimal = false;
+	return new_sink;
+    }
     DfaWrapper* extend_alph(const std::vector<Symbol>& new_alph) const {
 	// TODO: Assuming well-formed input:
 	// assert(alphabet_.size() <= new_alph.size());
@@ -316,7 +333,8 @@ public:
 	: alphabet_(alphabet.begin(), alphabet.end()) {
 	// Sort the set of symbols, and remove duplicates.
 	std::sort(alphabet_.begin(), alphabet_.end());
-	std::unique(alphabet_.begin(), alphabet_.end());
+	alphabet_.erase(std::unique(alphabet_.begin(), alphabet_.end()),
+			alphabet_.end());
 	posint num_letters = alphabet_.size();
 	posint sink = num_states;
 	// no final state set
@@ -339,9 +357,15 @@ public:
 	wrapper_ = new DfaWrapper(backend_);
     }
     ~DFA() {
-	delete wrapper_; // also deallocates backend_
+	if (wrapper_ != NULL) {
+	    delete wrapper_; // also deallocates backend_
+	}
     }
     DFA(const DFA&) = delete;
+    DFA(DFA&& rhs) : DFA(std::move(rhs.alphabet_), rhs.wrapper_) {
+	rhs.backend_ = NULL;
+	rhs.wrapper_ = NULL;
+    }
     DFA& operator=(const DFA&) = delete;
     // letters: 1..N
     // 0 is reserved for epsilon
@@ -383,6 +407,7 @@ public:
 	return num_states();
     }
     void add_symb_trans(posint src, Symbol symbol, posint tgt) {
+	// TODO: Might be more efficient to keep a map from symbols to letters.
 	const auto iter_p =
 	    std::equal_range(alphabet_.cbegin(), alphabet_.cend(), symbol);
 	// Assumes the symbol exists in the FSM's alphabet.
