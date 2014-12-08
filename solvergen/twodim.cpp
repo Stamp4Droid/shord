@@ -237,6 +237,78 @@ private:
 	// cover the useless letters.
 	backend_->minimal = false;
     }
+    DfaWrapper* extend_alph(const std::vector<Symbol>& new_alph) const {
+	// TODO: Assuming well-formed input:
+	// assert(alphabet_.size() <= new_alph.size());
+	// assert(std::is_sorted(new_alph.begin(), new_alph.end()));
+	// assert(no_duplicates(new_alph.begin(), new_alph.end()));
+	// assert(std::includes(new_alph.begin(), new_alph.end(),
+	// 		     alphabet_.begin(), alphabet_.end()));
+	if (alphabet_.size() == new_alph.size()) {
+	    return wrapper_->clone();
+	}
+	// Locate the sink state.
+	posint new_states = num_states();
+	posint new_sink = sink_state();
+	if (new_sink == num_states()) {
+	    // If no sink state exists on the original FSM, insert one as the
+	    // last state.
+	    new_states++;
+	}
+	// Allocate & fill out extended transition table.
+	posint** new_delta =
+	    (posint**) calloc(new_alph.size() + 1, sizeof(posint*));
+	assert(new_delta != NULL);
+	typename std::vector<Symbol>::const_iterator
+	    base_first = alphabet_.cbegin(),
+	    base_it    = alphabet_.cbegin(),
+	    base_lim   = alphabet_.cend(),
+	    ext_first  = new_alph.cbegin(),
+	    ext_it     = new_alph.cbegin(),
+	    ext_lim    = new_alph.cend();
+	for (; ext_it < ext_lim ; ++ext_it) {
+	    posint* new_row = (posint*) calloc(new_states, sizeof(posint));
+	    assert(new_row != NULL);
+	    new_delta[ext_it - ext_first + 1] = new_row;
+	    if (base_it < base_lim && *base_it == *ext_it) {
+		// existing symbol: copy the corresponding row
+		std::copy_n(backend_->delta[base_it - base_first + 1],
+			    num_states(), new_row);
+		++base_it;
+		if (new_states > num_states()) {
+		    new_row[new_sink] = new_sink;
+		}
+	    } else {
+		// new symbol: always leads to the sink state
+		std::fill_n(new_row, new_states, new_sink);
+	    }
+	}
+	assert(base_it == base_lim);
+	// Synthesize a new DFA.
+	DfaBackend* new_dfa = newdfa();
+	new_dfa->highest_state = new_states - 1;
+	new_dfa->init = initial();
+	new_dfa->alphabet_size = new_alph.size();
+	new_dfa->final = newfinal(new_states - 1);
+	for (posint state = 0; state < num_states(); state++) {
+	    setfinal(new_dfa->final[state], is_final(state));
+	    // Possible new sink state is not marked final.
+	}
+	new_dfa->delta = new_delta;
+	// TODO: Theoretically doesn't break minimality, but it might mess with
+	// the library's expectation of what minimized DFAs look like.
+	new_dfa->minimal = false;
+	return new DfaWrapper(new_dfa);
+    }
+    // The newly created DFA takes ownership of the provided components.
+    explicit DFA(std::vector<Symbol>&& alphabet, DfaWrapper* wrapper)
+	: alphabet_(std::move(alphabet)), backend_(wrapper->get_dfa()),
+	  wrapper_(wrapper) {
+	// TODO: Assuming well-formed input:
+	// assert(std::is_sorted(alphabet.begin(), alphabet.end()));
+	// assert(no_duplicates(alphabet.begin(), alphabet.end()));
+	assert(backend_->alphabet_size == alphabet_.size());
+    }
 public:
     // An extra sink state is added: the final FSM will have N+1 states.
     template<typename C>
@@ -340,6 +412,27 @@ public:
 	trim_letters();
 	wrapper_->minimize();
 	backend_ = wrapper_->get_dfa(); // update the cached backend pointer
+    }
+    DFA operator|(const DFA& other) const {
+	// Combine the alphabets of the two machines.
+	std::vector<Symbol> joint_alph;
+	std::set_union(alphabet_.begin(), alphabet_.end(),
+		       other.alphabet_.begin(), other.alphabet_.end(),
+		       std::back_inserter(joint_alph));
+	// Extend machines to the common alphabet, then union them.
+	DfaWrapper* dfa1 = extend_alph(joint_alph);
+	DfaWrapper* dfa2 = other.extend_alph(joint_alph);
+	assert(dfa1->get_alphabet_size() == dfa2->get_alphabet_size());
+	// TODO: These downcasts are statically safe.
+	NfaWrapper* nfa1U2 =
+	    dynamic_cast<NfaWrapper*>(dfa1->lang_union(*dfa2));
+	DfaWrapper* dfa1U2 = dynamic_cast<DfaWrapper*>(nfa1U2->determinize());
+	assert(dfa1U2 != NULL);
+	// Clean up temporary machines before returning.
+	delete dfa1;
+	delete dfa2;
+	delete nfa1U2;
+	return DFA(std::move(joint_alph), dfa1U2);
     }
     // TODO: Only defined for minimal DFAs
     bool operator==(const DFA& other) const {
@@ -555,14 +648,14 @@ public:
 // TOP-LEVEL CODE =============================================================
 
 void test_dfa_code() {
-    std::vector<std::string> alph = {"ey","bee"};
-    DFA<std::string> d1(alph, 3);
+    std::vector<std::string> alph_ab = {"alpha","beta"};
+    DFA<std::string> d1(alph_ab, 3);
     d1.set_initial(0);
     d1.set_final(1);
-    d1.add_symb_trans(0, "ey", 1);
-    d1.add_symb_trans(1, "ey", 1);
-    d1.add_symb_trans(1, "bee", 2);
-    d1.add_symb_trans(2, "ey", 2);
+    d1.add_symb_trans(0, "alpha", 1);
+    d1.add_symb_trans(1, "alpha", 1);
+    d1.add_symb_trans(1, "beta", 2);
+    d1.add_symb_trans(2, "alpha", 2);
     std::cout << "d1:" << std::endl;
     std::cout << d1;
     std::cout << d1.to_regex() << std::endl;
@@ -586,11 +679,11 @@ void test_dfa_code() {
     std::cout << n.to_regex() << std::endl;
     std::cout << std::endl;
 
-    DFA<std::string> d2(alph, 2);
+    DFA<std::string> d2(alph_ab, 2);
     d2.set_initial(1);
     d2.set_final(0);
-    d2.add_symb_trans(1, "ey", 0);
-    d2.add_symb_trans(0, "ey", 0);
+    d2.add_symb_trans(1, "alpha", 0);
+    d2.add_symb_trans(0, "alpha", 0);
     std::cout << "d2:" << std::endl;
     std::cout << d2;
     std::cout << d2.to_regex() << std::endl;
@@ -604,6 +697,36 @@ void test_dfa_code() {
 
     std::cout << "d1 and d2 are " << ((d1 == d2) ? "" : "NOT ") << "equal"
 	      << std::endl;
+    std::cout << std::endl;
+
+    std::vector<std::string> alph_abc = {"alpha", "beta", "gamma"};
+    DFA<std::string> d3(alph_abc, 2);
+    d3.set_initial(0);
+    d3.set_final(1);
+    d3.add_symb_trans(0, "alpha", 1);
+    d3.add_symb_trans(1, "beta", 1);
+    d3.add_symb_trans(1, "gamma", 1);
+    std::cout << "d3:" << std::endl;
+    std::cout << d3;
+    std::cout << d3.to_regex() << std::endl;
+    std::cout << std::endl;
+
+    d3.minimize();
+    std::cout << "d3 minimized:" << std::endl;
+    std::cout << d3;
+    std::cout << d3.to_regex() << std::endl;
+    std::cout << std::endl;
+
+    DFA<std::string> d1U3 = d1 | d3;
+    std::cout << "d1 U d3:" << std::endl;
+    std::cout << d1U3;
+    std::cout << d1U3.to_regex() << std::endl;
+    std::cout << std::endl;
+
+    d1U3.minimize();
+    std::cout << "d1 U d3 minimized:" << std::endl;
+    std::cout << d1U3;
+    std::cout << d1U3.to_regex() << std::endl;
 }
 
 int main(int argc, char* argv[]) {
