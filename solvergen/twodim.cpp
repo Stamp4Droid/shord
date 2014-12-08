@@ -31,7 +31,10 @@ typedef amore::deterministic_finite_automaton DfaWrapper;
 typedef struct nfauto NfaBackend;
 typedef amore::nondeterministic_finite_automaton NfaWrapper;
 
+template<class Symbol> class DFA;
+
 class NFA {
+    template<class Symbol> friend class DFA;
 private:
     NfaBackend* backend_;
     NfaWrapper* wrapper_;
@@ -56,9 +59,15 @@ public:
 	assert(wrapper_->get_alphabet_size() == num_letters);
     }
     ~NFA() {
-	delete wrapper_; // also deallocates backend_
+	if (wrapper_ != NULL) {
+	    delete wrapper_; // also deallocates backend_
+	}
     }
     NFA(const NFA&) = delete;
+    NFA(NFA&& rhs) : backend_(rhs.backend_), wrapper_(rhs.wrapper_) {
+	rhs.backend_ = NULL;
+	rhs.wrapper_ = NULL;
+    }
     NFA& operator=(const NFA&) = delete;
     // letters: 1..N
     // 0 is reserved for epsilon
@@ -138,6 +147,54 @@ public:
     }
 };
 
+// Maintains a map from items to blocks, which gets traversed on every merge,
+// to perform renumbering.
+// TODO: Could delay the renumbering (leaving holes temporarily), or use a more
+// efficient data structure (e.g. union-find).
+class SetPartition {
+private:
+    const posint num_items_;
+    posint num_blocks_;
+    posint* map_;
+public:
+    explicit SetPartition(posint n)
+	: num_items_(n), num_blocks_(n), map_(new posint[n]) {
+	for (posint i = 0; i < n; i++) {
+	    // Each element forms a singleton block.
+	    map_[i] = i;
+	}
+    }
+    ~SetPartition() {
+	delete map_;
+    }
+    posint num_blocks() const {
+	return num_blocks_;
+    }
+    void merge(posint blk_1, posint blk_2) {
+	assert(blk_1 < num_blocks() && blk_2 < num_blocks());
+	if (blk_1 == blk_2) {
+	    return;
+	}
+	if (blk_1 > blk_2) {
+	    merge(blk_2, blk_1);
+	    return;
+	}
+	for (posint i = 0; i < num_items_; i++) {
+	    if (map_[i] == blk_2) {
+		map_[i] = blk_1;
+	    } else if (map_[i] > blk_2) {
+		map_[i]--;
+	    }
+	}
+	num_blocks_--;
+    }
+    // Return the block where item i belongs.
+    posint operator[](posint i) const {
+	assert(i < num_items_);
+	return map_[i];
+    }
+};
+
 template<class T> class Matrix2D {
 private:
     const posint x_len_;
@@ -157,8 +214,40 @@ public:
     }
 };
 
+// Lower-left triangle (without the main diagonal): only care about elements
+// M[i][j] with i > j.
+// TODO: Could store only the required elements: ((n - 1) * n / 2) cells in
+// total, use formula (i * (i - 1) / 2 + j) to calculate the index.
+// TODO: Could specialize for bools: store 8 bools in a byte.
+template<class T> class TriangleMatrix {
+private:
+    posint size_;
+    T* array_;
+public:
+    TriangleMatrix(posint n, const T& val) : size_(n), array_(new T[n*n]) {
+	for (posint i = 0; i < n; i++) {
+	    for (posint j = 0; j < i; j++) {
+		array_[i*n + j] = val;
+	    }
+	}
+    }
+    ~TriangleMatrix() {
+	delete array_;
+    }
+    friend void swap(TriangleMatrix& a, TriangleMatrix& b) {
+	using std::swap;
+	swap(a.size_, b.size_);
+	swap(a.array_, b.array_);
+    }
+    T& operator()(posint i, posint j) {
+	assert(i < size_ && j < size_ && i != j);
+	return (i > j) ? array_[i*size_ + j] : array_[j*size_ + i];
+    }
+};
+
 // Symbols must be comparable (the alphabet gets sorted at construction).
 template<class Symbol> class DFA {
+    enum class StateColor {NONE, INITIAL, FINAL, BOTH};
 private:
     std::vector<Symbol> alphabet_;
     DfaBackend* backend_;
@@ -166,6 +255,87 @@ private:
 private:
     posint follow(posint src, posint letter) const {
 	return backend_->delta[letter][src];
+    }
+    StateColor color(posint state) const {
+	assert(state < num_states());
+	if (state == initial()) {
+	    if (is_final(state)) {
+		return StateColor::BOTH;
+	    } else {
+		return StateColor::INITIAL;
+	    }
+	}
+	if (is_final(state)) {
+	    return StateColor::FINAL;
+	} else {
+	    return StateColor::NONE;
+	}
+    }
+    NFA state_merge(const SetPartition& part) const {
+	NFA res(num_letters(), part.num_blocks());
+	for (posint letter = 1; letter <= num_letters(); letter++) {
+	    for (posint src = 0; src < num_states(); src++) {
+		posint tgt = follow(src, letter);
+		res.add_trans(part[src], letter, part[tgt]);
+	    }
+	}
+	res.set_initial(part[initial()]);
+	for (posint state = 0; state < num_states(); state++) {
+	    if (is_final(state)) {
+		res.set_final(part[state]);
+	    }
+	}
+	return res;
+    }
+    // Equivalent to the partitioning step of the table-filling variant of the
+    // DFA minimization algorithm, run for k iterations (not to fixpoint).
+    // TODO:
+    // - might converge faster than that
+    // - don't have to traverse all elements on every iteration
+    // - can adapt Hopcroft's improved partitioning algorithm instead?
+    SetPartition k_equiv(posint k) const {
+	TriangleMatrix<bool> distinct(num_states(), false);
+	posint sink = sink_state();
+	for (posint i = 0; i < num_states(); i++) {
+	    for (posint j = 0; j < i; j++) {
+		if (i == sink || j == sink || color(i) != color(j)) {
+		    distinct(i, j) = true;
+		}
+	    }
+	}
+	for (posint len = 1; len <= k; len++) {
+	    // We can't update the original array directly; that could
+	    // accelerate convergence.
+	    TriangleMatrix<bool> temp(num_states(), false);
+	    for (posint i = 0; i < num_states(); i++) {
+		for (posint j = 0; j < i; j++) {
+		    if (distinct(i, j)) {
+			temp(i, j) = true;
+			continue;
+		    }
+		    temp(i, j) = false;
+		    for (posint l = 1; l <= num_letters(); l++) {
+			posint ii = follow(i,l);
+			posint jj = follow(j,l);
+			if (ii == jj || !distinct(ii, jj)) {
+			    continue;
+			}
+			temp(i, j) = true;
+			break;
+		    }
+		}
+	    }
+	    swap(distinct, temp);
+	}
+	SetPartition part(num_states());
+	for (posint i = 0; i < num_states(); i++) {
+	    for (posint j = 0; j < i; j++) {
+		if (!distinct(i, j)) {
+		    part.merge(part[i], part[j]);
+		}
+	    }
+	}
+	return part;
     }
     void trim_letters() {
 	// Compute the full set of letters that can reach each state.
@@ -230,7 +400,7 @@ private:
 	}
 	assert(next == useful_syms.size() + 1);
 	// Update the data members.
-	std::swap(alphabet_, useful_syms);
+	alphabet_.swap(useful_syms);
 	backend_->alphabet_size = alphabet_.size();
 	dispose(backend_->delta);
 	backend_->delta = new_delta;
@@ -437,6 +607,11 @@ public:
 	trim_letters();
 	wrapper_->minimize();
 	backend_ = wrapper_->get_dfa(); // update the cached backend pointer
+    }
+    void fold(posint depth) {
+	NFA folded = state_merge(k_equiv(depth));
+	wrapper_ = dynamic_cast<DfaWrapper*>(folded.wrapper_->determinize());
+	backend_ = wrapper_->get_dfa();
     }
     DFA operator|(const DFA& other) const {
 	// Combine the alphabets of the two machines.
@@ -672,8 +847,33 @@ public:
 
 // TOP-LEVEL CODE =============================================================
 
+template<class Symbol>
+void test_minimization(DFA<Symbol>& dfa) {
+    std::cout << dfa;
+    std::cout << dfa.to_regex() << std::endl;
+    dfa.minimize();
+    std::cout << "Minimized:" << std::endl;
+    std::cout << dfa;
+    std::cout << dfa.to_regex() << std::endl;
+    std::cout << std::endl;
+}
+
+template<class Symbol>
+void test_folding(DFA<Symbol>& dfa, posint depth) {
+    std::cout << dfa;
+    std::cout << dfa.to_regex() << std::endl;
+    dfa.fold(depth);
+    std::cout << "Folded, k = " << depth << ":" << std::endl;
+    std::cout << dfa;
+    std::cout << dfa.to_regex() << std::endl;
+    std::cout << std::endl;
+}
+
 void test_dfa_code() {
     std::vector<std::string> alph_ab = {"alpha","beta"};
+    std::vector<std::string> alph_abc = {"alpha", "beta", "gamma"};
+    std::vector<std::string> alph_abcde = {"A","B", "C", "D", "E"};
+
     DFA<std::string> d1(alph_ab, 3);
     d1.set_initial(0);
     d1.set_final(1);
@@ -682,15 +882,7 @@ void test_dfa_code() {
     d1.add_symb_trans(1, "beta", 2);
     d1.add_symb_trans(2, "alpha", 2);
     std::cout << "d1:" << std::endl;
-    std::cout << d1;
-    std::cout << d1.to_regex() << std::endl;
-    std::cout << std::endl;
-
-    d1.minimize();
-    std::cout << "d1 minimized:" << std::endl;
-    std::cout << d1;
-    std::cout << d1.to_regex() << std::endl;
-    std::cout << std::endl;
+    test_minimization(d1);
 
     NFA n(2, 4);
     n.set_initial(0);
@@ -710,21 +902,12 @@ void test_dfa_code() {
     d2.add_symb_trans(1, "alpha", 0);
     d2.add_symb_trans(0, "alpha", 0);
     std::cout << "d2:" << std::endl;
-    std::cout << d2;
-    std::cout << d2.to_regex() << std::endl;
-    std::cout << std::endl;
-
-    d2.minimize();
-    std::cout << "d2 minimized:" << std::endl;
-    std::cout << d2;
-    std::cout << d2.to_regex() << std::endl;
-    std::cout << std::endl;
+    test_minimization(d2);
 
     std::cout << "d1 and d2 are " << ((d1 == d2) ? "" : "NOT ") << "equal"
 	      << std::endl;
     std::cout << std::endl;
 
-    std::vector<std::string> alph_abc = {"alpha", "beta", "gamma"};
     DFA<std::string> d3(alph_abc, 2);
     d3.set_initial(0);
     d3.set_final(1);
@@ -732,26 +915,33 @@ void test_dfa_code() {
     d3.add_symb_trans(1, "beta", 1);
     d3.add_symb_trans(1, "gamma", 1);
     std::cout << "d3:" << std::endl;
-    std::cout << d3;
-    std::cout << d3.to_regex() << std::endl;
-    std::cout << std::endl;
-
-    d3.minimize();
-    std::cout << "d3 minimized:" << std::endl;
-    std::cout << d3;
-    std::cout << d3.to_regex() << std::endl;
-    std::cout << std::endl;
+    test_minimization(d3);
 
     DFA<std::string> d1U3 = d1 | d3;
     std::cout << "d1 U d3:" << std::endl;
-    std::cout << d1U3;
-    std::cout << d1U3.to_regex() << std::endl;
-    std::cout << std::endl;
+    test_minimization(d1U3);
 
-    d1U3.minimize();
-    std::cout << "d1 U d3 minimized:" << std::endl;
-    std::cout << d1U3;
-    std::cout << d1U3.to_regex() << std::endl;
+    DFA<std::string> aaaa(alph_abc, 5);
+    aaaa.set_initial(0);
+    aaaa.set_final(4);
+    aaaa.add_symb_trans(0, "alpha", 1);
+    aaaa.add_symb_trans(1, "alpha", 2);
+    aaaa.add_symb_trans(2, "alpha", 3);
+    aaaa.add_symb_trans(3, "alpha", 4);
+    std::cout << "aaaa" << std::endl;
+    test_folding(aaaa, 1);
+
+    DFA<std::string> aacUbad(alph_abcde, 6);
+    aacUbad.set_initial(0);
+    aacUbad.set_final(3);
+    aacUbad.add_symb_trans(0, "A", 1);
+    aacUbad.add_symb_trans(1, "A", 2);
+    aacUbad.add_symb_trans(2, "C", 3);
+    aacUbad.add_symb_trans(0, "B", 4);
+    aacUbad.add_symb_trans(4, "A", 5);
+    aacUbad.add_symb_trans(5, "D", 3);
+    std::cout << "aacUbad" << std::endl;
+    test_folding(aacUbad, 1);
 }
 
 int main(int argc, char* argv[]) {
