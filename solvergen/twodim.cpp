@@ -14,7 +14,9 @@
 
 #define LIBAMORE_LIBRARY_COMPILATION
 #include "amore/dfa.h"
+#include "amore/enfa2nfa.h"
 #include "amore/global.h"
+#include "amore/nfa2dfa.h"
 #include "amore/testBinary.h"
 #include "amore++/deterministic_finite_automaton.h"
 #include "amore++/nondeterministic_finite_automaton.h"
@@ -38,7 +40,15 @@ template<class Symbol> class NFA {
 private:
     std::vector<Symbol> alphabet_;
     NfaBackend* backend_;
-    NfaWrapper* wrapper_;
+    // Not using a wrapper, because AMoRE++ NFAs can't handle epsilons.
+private:
+    DfaWrapper* determinize() const {
+	NfaBackend* wo_eps = enfa2nfa(backend_);
+	DfaWrapper* res = new DfaWrapper(nfa2dfa(wo_eps));
+	freenfa(wo_eps);
+	free(wo_eps);
+	return res;
+    }
 public:
     template<typename C>
     explicit NFA(const C& alphabet, posint num_states)
@@ -62,21 +72,17 @@ public:
 	// need to update it after mutations.
 	backend_->minimal = false;
 	backend_->is_eps = true;
-	wrapper_ = new NfaWrapper(backend_);
-	assert(wrapper_->get_state_count() == num_states);
-	assert(wrapper_->get_alphabet_size() == num_letters);
     }
     ~NFA() {
-	if (wrapper_ != NULL) {
-	    delete wrapper_; // also deallocates backend_
+	if (backend_ != NULL) {
+	    freenfa(backend_);
+	    free(backend_);
 	}
     }
     NFA(const NFA&) = delete;
     NFA(NFA&& rhs)
-	: alphabet_(std::move(rhs.alphabet_)), backend_(rhs.backend_),
-	  wrapper_(rhs.wrapper_) {
+	: alphabet_(std::move(rhs.alphabet_)), backend_(rhs.backend_) {
 	rhs.backend_ = NULL;
-	rhs.wrapper_ = NULL;
     }
     NFA& operator=(const NFA&) = delete;
     // letters: 1..N
@@ -127,12 +133,6 @@ public:
 	    rminit(backend_->infin[state]);
 	}
     }
-    std::string to_dot() const {
-	return wrapper_->visualize(true);
-    }
-    std::string to_regex() const {
-	return wrapper_->to_regex();
-    }
     friend std::ostream& operator<<(std::ostream& os, const NFA& nfa) {
 	os << "Initial: ";
 	for (posint state = 0; state < nfa.num_states(); state++) {
@@ -148,21 +148,18 @@ public:
 	    }
 	}
 	os << std::endl;
-	std::map<int,std::map<int,std::set<int>>> premap;
-	std::map<int,std::map<int,std::set<int>>> postmap;
-	nfa.wrapper_->get_transition_maps(premap, postmap);
-	for (const auto& src_p : postmap) {
-	    int src = src_p.first;
-	    for (const auto& letter_p : src_p.second) {
-		int letter = letter_p.first;
-		for (int dst : letter_p.second) {
-		    os << src << " --";
-		    if (letter >= 0) {
-			os << (char) ('a' + letter);
-		    } else {
-			os << "@epsilon";
+	for (posint letter = 0; letter <= nfa.num_letters(); letter++) {
+	    for (posint src = 0; src < nfa.num_states(); src++) {
+		for (posint tgt = 0; tgt < nfa.num_states(); tgt++) {
+		    if (testcon(nfa.backend_->delta, letter, src, tgt)) {
+			os << src << " --";
+			if (letter > 0) {
+			    os << nfa.alphabet_[letter - 1];
+			} else {
+			    os << "@epsilon";
+			}
+			os << "-> " << tgt << std::endl;
 		    }
-		    os << "-> " << dst << std::endl;
 		}
 	    }
 	}
@@ -550,6 +547,14 @@ public:
 	backend_->minimal = false;
 	wrapper_ = new DfaWrapper(backend_);
     }
+    explicit DFA(NFA<Symbol>&& nfa)
+	: DFA(std::move(nfa.alphabet_), nfa.determinize()) {
+	assert(!backend_->minimal); // ensures minimal() => no useless letters
+	// Ensure the NFA is in a valid state, by clearing its contents.
+	freenfa(nfa.backend_);
+	free(nfa.backend_);
+	nfa.backend_ = NULL;
+    }
     ~DFA() {
 	if (wrapper_ != NULL) {
 	    delete wrapper_; // also deallocates backend_
@@ -570,6 +575,7 @@ public:
     posint num_states() const {
 	return backend_->highest_state + 1;
     }
+    // Returns true iff DFA has minimal #states and no useless letters.
     bool minimal() const {
 	return backend_->minimal;
     }
@@ -634,8 +640,9 @@ public:
     }
     void fold(posint depth) {
 	NFA<Symbol> folded = state_merge(k_equiv(depth));
-	wrapper_ = dynamic_cast<DfaWrapper*>(folded.wrapper_->determinize());
+	wrapper_ = folded.determinize();
 	backend_ = wrapper_->get_dfa();
+	assert(!backend_->minimal); // ensures minimal() => no useless letters
     }
     DFA operator|(const DFA& other) const {
 	// Combine the alphabets of the two machines.
@@ -650,8 +657,11 @@ public:
 	// TODO: These downcasts are statically safe.
 	NfaWrapper* nfa1U2 =
 	    dynamic_cast<NfaWrapper*>(dfa1->lang_union(*dfa2));
+	// XXX: Assuming AMoRE++ can handle this correctly.
 	DfaWrapper* dfa1U2 = dynamic_cast<DfaWrapper*>(nfa1U2->determinize());
 	assert(dfa1U2 != NULL);
+	// ensures minimal() => no useless letters
+	assert(!dfa1U2->get_dfa()->minimal);
 	// Clean up temporary machines before returning.
 	delete dfa1;
 	delete dfa2;
@@ -660,9 +670,11 @@ public:
     }
     // TODO: Only defined for minimal DFAs
     bool operator==(const DFA& other) const {
-	// XXX: really want assert(alphabet_ == other.alphabet_);
-	assert(num_letters() == other.num_letters());
 	assert(minimal() && other.minimal());
+	// XXX: really want alphabet_ == other.alphabet_
+	if (num_letters() != other.num_letters()) {
+	    return false;
+	}
 	return equiv(backend_, other.backend_);
     }
     std::string to_dot() const {
@@ -918,7 +930,12 @@ void test_dfa_code() {
     n.add_symb_trans(2, "alpha", 2);
     std::cout << "n:" << std::endl;
     std::cout << n;
-    std::cout << n.to_regex() << std::endl;
+    DFA<std::string> nd(std::move(n));
+    std::cout << "Determinized:" << std::endl;
+    test_minimization(nd);
+
+    std::cout << "d1 and n are " << ((d1 == nd) ? "" : "NOT ") << "equal"
+	      << std::endl;
     std::cout << std::endl;
 
     DFA<std::string> d2(alph_ab, 2);
