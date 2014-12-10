@@ -33,13 +33,21 @@ typedef amore::nondeterministic_finite_automaton NfaWrapper;
 
 template<class Symbol> class DFA;
 
-class NFA {
-    template<class Symbol> friend class DFA;
+template<class Symbol> class NFA {
+    friend DFA<Symbol>;
 private:
+    std::vector<Symbol> alphabet_;
     NfaBackend* backend_;
     NfaWrapper* wrapper_;
 public:
-    explicit NFA(posint num_letters, posint num_states) {
+    template<typename C>
+    explicit NFA(const C& alphabet, posint num_states)
+	: alphabet_(alphabet.begin(), alphabet.end()) {
+	// Sort the set of symbols, and remove duplicates.
+	std::sort(alphabet_.begin(), alphabet_.end());
+	alphabet_.erase(std::unique(alphabet_.begin(), alphabet_.end()),
+			alphabet_.end());
+	posint num_letters = alphabet_.size();
 	// no initial or final state set
 	char* infin_bitset = newfinal(num_states - 1);
 	// reserves 1 extra row for epsilon
@@ -64,7 +72,9 @@ public:
 	}
     }
     NFA(const NFA&) = delete;
-    NFA(NFA&& rhs) : backend_(rhs.backend_), wrapper_(rhs.wrapper_) {
+    NFA(NFA&& rhs)
+	: alphabet_(std::move(rhs.alphabet_)), backend_(rhs.backend_),
+	  wrapper_(rhs.wrapper_) {
 	rhs.backend_ = NULL;
 	rhs.wrapper_ = NULL;
     }
@@ -85,6 +95,19 @@ public:
     bool is_final(posint state) const {
 	assert(state < num_states());
 	return isfinal(backend_->infin[state]);
+    }
+    void add_symb_trans(posint src, Symbol symbol, posint tgt) {
+	// TODO: Might be more efficient to keep a map from symbols to letters.
+	const auto iter_p =
+	    std::equal_range(alphabet_.cbegin(), alphabet_.cend(), symbol);
+	// Assumes the symbol exists in the FSM's alphabet.
+	assert(iter_p.first != iter_p.second);
+	// Add 1 to the alphabet offset, because 0 is reserved for epsilon.
+	posint letter = iter_p.first - alphabet_.cbegin() + 1;
+	add_trans(src, letter, tgt);
+    }
+    void add_eps_trans(posint src, posint tgt) {
+	add_trans(src, 0, tgt);
     }
     void add_trans(posint src, posint letter, posint tgt) {
 	assert(src < num_states());
@@ -271,8 +294,9 @@ private:
 	    return StateColor::NONE;
 	}
     }
-    NFA state_merge(const SetPartition& part) const {
-	NFA res(num_letters(), part.num_blocks());
+    NFA<Symbol> state_merge(const SetPartition& part) const {
+	// TODO: Copying alphabet, but not really using it.
+	NFA<Symbol> res(alphabet_, part.num_blocks());
 	for (posint letter = 1; letter <= num_letters(); letter++) {
 	    for (posint src = 0; src < num_states(); src++) {
 		posint tgt = follow(src, letter);
@@ -609,7 +633,7 @@ public:
 	backend_ = wrapper_->get_dfa(); // update the cached backend pointer
     }
     void fold(posint depth) {
-	NFA folded = state_merge(k_equiv(depth));
+	NFA<Symbol> folded = state_merge(k_equiv(depth));
 	wrapper_ = dynamic_cast<DfaWrapper*>(folded.wrapper_->determinize());
 	backend_ = wrapper_->get_dfa();
     }
@@ -884,13 +908,14 @@ void test_dfa_code() {
     std::cout << "d1:" << std::endl;
     test_minimization(d1);
 
-    NFA n(2, 4);
-    n.set_initial(0);
+    NFA<std::string> n(alph_ab, 4);
+    n.set_initial(3);
     n.set_final(1);
-    n.add_trans(0, 1, 1);
-    n.add_trans(1, 1, 1);
-    n.add_trans(1, 2, 2);
-    n.add_trans(2, 1, 2);
+    n.add_eps_trans(3, 0);
+    n.add_symb_trans(0, "alpha", 1);
+    n.add_symb_trans(1, "alpha", 1);
+    n.add_symb_trans(1, "beta", 2);
+    n.add_symb_trans(2, "alpha", 2);
     std::cout << "n:" << std::endl;
     std::cout << n;
     std::cout << n.to_regex() << std::endl;
