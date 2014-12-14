@@ -10,10 +10,10 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with the GNU C Library; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
- *  02111-1307 USA.  
+ *  02111-1307 USA.
  */
 
-/* enfa2nfa.c 
+/* enfa2nfa.c
    from fafa.c 3.0 (KIEL) 11.94 */
 
 #include <amore/enfa2nfa.h>
@@ -22,11 +22,11 @@
  *
  *	static	void  epsclosure()
  *		nfa   enfa2nfa()
- *	
+ *
  */
 
 /* mat is a matrix with dimensions 2,#states,#states; matp (0 or 1) denotes
- * the valid matrix at the and of the computations 
+ * the valid matrix at the and of the computations
  */
 static boole ***mat;
 static int matp;
@@ -62,7 +62,7 @@ register nfa na;
 		mat[0][j][j] = TRUE;
 	}
 	/* now, use the algorithm of kleene (general path finding algorithm)
-	 * to find the epsilon-transitions; we use the Boolean Semiring 
+	 * to find the epsilon-transitions; we use the Boolean Semiring
 	 */
 	rrobin = TRUE;
 	for (i = 0; i <= q; i++) {
@@ -85,7 +85,7 @@ nfa enfa2nfa(nfa epsa)
 {
 	nfa result;
 	posint goal = 0;
-	posint state, cut, letter;
+	posint state, letter, a, b, c, d;
 	/* copy automaton */
 	result = newnfa();
 	result->is_eps = FALSE;
@@ -107,7 +107,7 @@ nfa enfa2nfa(nfa epsa)
 		epsclosure(epsa);
 		/* check if an initial state is not final, but there is an epsilon-path
 		 * to a final state; in this case this state becomes a final state
-		 * mat[matp][f][t]   iff  epsilon path from f to t 
+		 * mat[matp][f][t]   iff  epsilon path from f to t
 		 */
 		for (state = 0; state <= result->highest_state; state++)
 			if(isinit(result->infin[state]) && (!isfinal(result->infin[state]))) {
@@ -117,24 +117,28 @@ nfa enfa2nfa(nfa epsa)
 						break;
 					}
 			}
-		/* the new letter moves are:
-		 * - the old ones
-		 * - epsilon-move then letter-move
-		 * - letter-move then epsilon-move
-		 * cut is the state reached in the latter two cases
-		 * before the "then"
+		/* Add all moves "a-to-d through letter l", such that in the
+		 * original NFA:
+		 * - a epsilon-moves to b (possibly a == b)
+		 * - b l-moves to c
+		 * - c epsilon-moves to d (possibly c == d)
 		 */
-		for (letter = 1; letter <= result->alphabet_size; letter++)
-			for (state = 0; state <= result->highest_state; state++)
-				for (goal = 0; goal <= result->highest_state; goal++)
-					for (cut = 0; cut <= result->highest_state; cut++) {
-						if(testcon(result->delta, letter, state, goal))
-							connect(result->delta, letter, state, goal);
-						else if((mat[matp][state][cut]) && testcon(result->delta, letter, cut, goal))
-							connect(result->delta, letter, state, goal);
-						else if((mat[matp][cut][goal]) && testcon(result->delta, letter, state, cut))
-							connect(result->delta, letter, state, goal);
+		for (a = 0; a <= result->highest_state; a++)
+			for (b = 0; b <= result->highest_state; b++) {
+				if (!mat[matp][a][b])
+					continue;
+				for (letter = 1; letter <= result->alphabet_size; letter++)
+					for (c = 0; c <= result->highest_state; c++) {
+						if (!testcon(result->delta, letter, b, c))
+							continue;
+	       					for (d = 0; d <= result->highest_state; d++) {
+							if (!mat[matp][c][d])
+								continue;
+							connect(result->delta, letter, a, d);
+						}
 					}
+			}
+
 	}
 	return result;
 }				/* enfa2nfa */
