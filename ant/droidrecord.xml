@@ -23,6 +23,9 @@
     </target>
 
     <target name="-setup-droidrecord-env">
+		<echo>VM: ${java.vm.name}</echo>
+		<echo>Java version: ${java.version}</echo>
+		<echo>Class format version: ${java.class.version}</echo>
       <!-- Fixme: Code copied from analyze, there should be a better way to 
                     run droidrecord that supports both source and APKs. -->
       <if>
@@ -205,7 +208,26 @@
 		<property name="droidrecord.debug.jimple.dir" location="${droidrecord.out.dir}/jimple"/>
 		<property name="droidrecord.enableOnMethodStart" value="true"/>
 		<ant antfile="${stamp.dir}/droidrecord/build.xml" target="instrument"/>
-        
+		<!-- /home/lazaro/adt-bundle-linux-x86_64-20130522/sdk/platforms/android-19/android.jar -->
+		<!-- <java classname="soot.Main" fork="true" failonerror="true"
+		      dir="${user.dir}" maxmemory="6g">
+		    <jvmarg value="-Xss8m"/>
+			<syspropertyset>
+				<propertyref builtin="all"/>
+			</syspropertyset>
+			<jvmarg value="-ea"/>
+			<arg line="-full-resolver -allow-phantom-refs -validate -src-prec apk -force-android-jar /home/lazaro/adt-bundle-linux-x86_64-20130522/sdk/platforms/android-19/android.jar -p cg off -outjar -d ${droidrecord.out.dir}/app.jar -O -process-dir ${droidrecord.in.apk}" />
+			<classpath>
+				<pathelement location="/home/lazaro/shord/droidrecord/libs/soot.jar"/>
+			</classpath>
+            <assertions>
+              <enable/>
+            </assertions>
+		</java> -->
+		
+        <input message="[FIXME] You may use this opportunity to do any dirty hack on the app.jar (you are welcome...). Enter 'h' once you are done or if you don't understand why this message is here (lucky you):"
+           validargs="H,h"/>
+           
         <mkdir dir="${droidrecord.out.dir}/apk"/>
         <mkdir dir="${droidrecord.out.dir}/apk/raw"/>
         <mkdir dir="${droidrecord.out.dir}/apk/unsigned"/>
@@ -223,6 +245,7 @@
         <delete file="${droidrecord.out.dir}/apk/raw/classes.dex"/>
         <delete dir="${droidrecord.out.dir}/apk/raw/META-INF"/>
         <copy file="${droidrecord.out.dir}/apk/classes.dex" tofile="${droidrecord.out.dir}/apk/raw/classes.dex"/>
+        <copy file="${droidrecord.out.dir}/apk/classes.dex" tofile="/tmp/out/classes.dex" />
         <!--<exec executable="python" 
           spawn="false"
     	  failonerror="true">
@@ -268,6 +291,12 @@
       spawn="false"
 	  failonerror="true">
       <arg line="${stamp.dynamic.device.arg} shell mkdir /data/droidrecord"/>
+    </exec>
+    <!-- Disable SELinux enforcing; FIXME: https://bitbucket.org/lazaro_clapp/droidrecord/issue/1/ -->
+	<exec executable="adb"
+      spawn="false"
+	  failonerror="true">
+      <arg line="${stamp.dynamic.device.arg} shell setenforce 0"/>
     </exec>
     <if>
         <equals arg1="${stamp.input.type}" arg2="apk"/>
