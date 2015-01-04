@@ -259,7 +259,7 @@
     	  failonerror="true">
     	    <arg line="-verbose -keystore ${user.home}/.android/debug.keystore -storepass android -keypass android ${droidrecord.out.dir}/apk/unsigned/unsigned.apk androiddebugkey"/>
         </exec>
-        <exec executable="zipalign"
+        <exec executable="${stamp.android.buildtools.dir}/zipalign"
           spawn="false"
     	  failonerror="true">
     	    <arg line="4 ${droidrecord.out.dir}/apk/unsigned/unsigned.apk ${stamp.droidrecord.out.apk}"/>
