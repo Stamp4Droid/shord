@@ -7,12 +7,14 @@ import sys
 def convert(tgf_fname, fout):
     comp = splitext(splitext(basename(tgf_fname))[0])[0]
     states_done = False
+    entries = []
     trans = {}
 
     fout.write('digraph %s {\n' % comp)
     fout.write('id="%s";\n' % comp)
     fout.write('rankdir="LR";\n')
-    fout.write('node [style="filled",fillcolor="white"];\n')
+    fout.write('node [style=filled,fillcolor=white,color=black];\n')
+    fout.write('node [shape=plaintext,label=""] __phantom__;\n')
 
     with open(tgf_fname) as fin:
         for line in fin:
@@ -22,17 +24,20 @@ def convert(tgf_fname, fout):
             elif states_done:
                 src = toks[0]
                 dst = toks[1]
-                trans[(src,dst)] = trans.get((src,dst), []) + toks[2:]
+                labels = toks[2:]
+                if len(labels) == 0:
+                    labels = ['']
+                trans[(src,dst)] = trans.get((src,dst), []) + labels
             elif toks == ['#']:
                 states_done = True
             else:
                 state = toks[0]
                 weight = ''
                 shape = 'circle'
-                label = ' '
+                label = state
                 for t in toks[1:]:
                     if t == 'in':
-                        shape = 'octagon'
+                        entries.append(state)
                     elif t == 'out':
                         weight = 'double'
                     else:
@@ -42,10 +47,13 @@ def convert(tgf_fname, fout):
                            % (state, comp + ':' + state, comp + ':' + state,
                               weight + shape, label))
 
-    for (src,dst) in trans:
-        edge_id = comp + ':' + src + '->' + comp + ':' + dst
-        fout.write('%s -> %s [id="%s",tooltip="%s"];\n' %
-                   (src, dst, edge_id, ' '.join(trans[(src,dst)])))
+    for e in entries:
+        fout.write('__phantom__ -> %s [color=blue];\n' % e)
+    for ((src,dst),labels) in trans.iteritems():
+        for l in labels:
+            edge_id = comp + ':' + src + '--' + l + '->' + comp + ':' + dst
+            fout.write('%s -> %s [id="%s",tooltip="%s",label="%s"];\n' %
+                       (src, dst, edge_id, l, l))
     fout.write('}\n')
 
 if __name__ == '__main__':
