@@ -623,9 +623,41 @@ public:
 private:
     std::vector<T*> array;
     std::map<Key,T> map;
+    std::deque<T> temps;
+private:
+    template<typename... ArgTs>
+    T& insert(const Key* key_ptr, ArgTs&&... args) {
+	Ref<T> next_ref(array.size());
+	T* obj_ptr;
+	if (key_ptr != NULL) {
+	    auto res = map.emplace(*key_ptr, T(key_ptr, next_ref,
+					       std::forward<ArgTs>(args)...));
+	    EXPECT(res.second);
+	    obj_ptr = &(res.first->second);
+	} else {
+	    temps.push_back(T(NULL, next_ref, std::forward<ArgTs>(args)...));
+	    obj_ptr = &(temps.back());
+	}
+	array.push_back(obj_ptr);
+	return *obj_ptr;
+    }
 public:
     explicit Registry() {}
-    Registry(const Registry& rhs) = default;
+    // TODO: Only works if T is copy-constructible.
+    Registry(const Registry& rhs)
+	: array(rhs.array.size(), NULL), map(rhs.map), temps(rhs.temps) {
+	auto update_ptr = [&](T& obj) {
+	    T*& cell = array.at(obj.ref.value());
+	    EXPECT(cell == NULL);
+	    cell = &obj;
+	};
+	for (auto& p : map) {
+	    update_ptr(p.second);
+	}
+	for (T& obj : temps) {
+	    update_ptr(obj);
+	}
+    }
     Registry(Registry&& rhs) {
 	swap(*this, rhs);
     }
@@ -639,6 +671,7 @@ public:
 	using std::swap;
 	swap(a.array, b.array);
 	swap(a.map,   b.map);
+	swap(a.temps, b.temps);
     }
     T& operator[](Ref<T> ref) {
 	EXPECT(ref.valid());
@@ -649,13 +682,7 @@ public:
 	return *(array.at(ref.value()));
     }
     template<typename... ArgTs> T& make(const Key& key, ArgTs&&... args) {
-	Ref<T> next_ref(array.size());
-	auto res = map.emplace(key, T(key, next_ref,
-				      std::forward<ArgTs>(args)...));
-	EXPECT(res.second);
-	T* obj_ptr = &(res.first->second);
-	array.push_back(obj_ptr);
-	return *obj_ptr;
+	return insert(&key, std::forward<ArgTs>(args)...);
     }
     template<typename... ArgTs> T& add(const Key& key, ArgTs&&... args) {
 	auto it = map.find(key);
@@ -665,6 +692,9 @@ public:
 	T& obj = it->second;
 	obj.merge(std::forward<ArgTs>(args)...);
 	return obj;
+    }
+    template<typename... ArgTs> T& mktemp(ArgTs&&... args) {
+	return insert(NULL, std::forward<ArgTs>(args)...);
     }
     T& find(const Key& key) {
 	return map.at(key);

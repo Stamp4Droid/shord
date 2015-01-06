@@ -773,8 +773,8 @@ public:
     const std::string name;
     const Ref<Field> ref;
 private:
-    explicit Field(const std::string& name, Ref<Field> ref)
-	: name(name), ref(ref) {
+    explicit Field(const std::string* name_ptr, Ref<Field> ref)
+	: name(*name_ptr), ref(ref) {
 	EXPECT(boost::regex_match(name, boost::regex("\\w+")));
     }
     bool merge() {
@@ -793,9 +793,13 @@ public:
     const std::string name;
     const Ref<Variable> ref;
 private:
-    explicit Variable(const std::string& name, Ref<Variable> ref)
-	: name(name), ref(ref) {
-	EXPECT(boost::regex_match(name, boost::regex("\\w+")));
+    explicit Variable(const std::string* name_ptr, Ref<Variable> ref)
+	: name(name_ptr != NULL ? *name_ptr
+	       : std::string("#") + std::to_string(ref.value())),
+	  ref(ref) {
+	if (name_ptr != NULL) {
+	    EXPECT(boost::regex_match(name, boost::regex("\\w+")));
+	}
     }
     bool merge() {
 	return false;
@@ -882,8 +886,8 @@ private:
 			mi::Table<TGT, Ref<Variable>>>> calls_;
     std::set<Ref<Function>> callers_;
 private:
-    explicit Function(const std::string& name, Ref<Function> ref)
-	: name(name), ref(ref) {
+    explicit Function(const std::string* name_ptr, Ref<Function> ref)
+	: name(*name_ptr), ref(ref) {
 	EXPECT(boost::regex_match(name, boost::regex("\\w+")));
     }
     bool merge() {
