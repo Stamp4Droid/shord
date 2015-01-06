@@ -11,6 +11,7 @@
 #include <limits>
 #include <map>
 #include <vector>
+#include <utility>
 
 #define LIBAMORE_LIBRARY_COMPILATION
 #include "amore/dfa.h"
@@ -133,28 +134,29 @@ public:
 	    rminit(backend_->infin[state]);
 	}
     }
-    friend std::ostream& operator<<(std::ostream& os, const NFA& nfa) {
+    template<class... Rest>
+    void print(std::ostream& os, const Rest&... rest) const {
 	os << "Initial: ";
-	for (posint state = 0; state < nfa.num_states(); state++) {
-	    if (nfa.is_initial(state)) {
+	for (posint state = 0; state < num_states(); state++) {
+	    if (is_initial(state)) {
 		os << state << " ";
 	    }
 	}
 	os << std::endl;
 	os << "Final: ";
-	for (posint state = 0; state < nfa.num_states(); state++) {
-	    if (nfa.is_final(state)) {
+	for (posint state = 0; state < num_states(); state++) {
+	    if (is_final(state)) {
 		os << state << " ";
 	    }
 	}
 	os << std::endl;
-	for (posint letter = 0; letter <= nfa.num_letters(); letter++) {
-	    for (posint src = 0; src < nfa.num_states(); src++) {
-		for (posint tgt = 0; tgt < nfa.num_states(); tgt++) {
-		    if (testcon(nfa.backend_->delta, letter, src, tgt)) {
+	for (posint letter = 0; letter <= num_letters(); letter++) {
+	    for (posint src = 0; src < num_states(); src++) {
+		for (posint tgt = 0; tgt < num_states(); tgt++) {
+		    if (testcon(backend_->delta, letter, src, tgt)) {
 			os << src << " --";
 			if (letter > 0) {
-			    os << nfa.alphabet_[letter - 1];
+			    alphabet_[letter - 1].print(os, rest...);
 			} else {
 			    os << "@epsilon";
 			}
@@ -163,7 +165,6 @@ public:
 		}
 	    }
 	}
-	return os;
     }
 };
 
@@ -273,9 +274,6 @@ private:
     DfaBackend* backend_;
     DfaWrapper* wrapper_;
 private:
-    posint follow(posint src, posint letter) const {
-	return backend_->delta[letter][src];
-    }
     StateColor color(posint state) const {
 	assert(state < num_states());
 	if (state == initial()) {
@@ -547,13 +545,10 @@ public:
 	backend_->minimal = false;
 	wrapper_ = new DfaWrapper(backend_);
     }
-    explicit DFA(NFA<Symbol>&& nfa)
-	: DFA(std::move(nfa.alphabet_), nfa.determinize()) {
+    explicit DFA(const NFA<Symbol>& nfa)
+	: DFA(std::vector<Symbol>(nfa.alphabet_), nfa.determinize()) {
+	// This creates a copy of the NFA's alphabet
 	assert(!backend_->minimal); // ensures minimal() => no useless letters
-	// Ensure the NFA is in a valid state, by clearing its contents.
-	freenfa(nfa.backend_);
-	free(nfa.backend_);
-	nfa.backend_ = NULL;
     }
     ~DFA() {
 	if (wrapper_ != NULL) {
@@ -566,6 +561,12 @@ public:
 	rhs.wrapper_ = NULL;
     }
     DFA& operator=(const DFA&) = delete;
+    friend void swap(DFA& a, DFA& b) {
+	using std::swap;
+	swap(a.alphabet_, b.alphabet_);
+	swap(a.backend_,  b.backend_);
+	swap(a.wrapper_,  b.wrapper_);
+    }
     // letters: 1..N
     // 0 is reserved for epsilon
     posint num_letters() const {
@@ -574,6 +575,12 @@ public:
     // states: 0..N-1
     posint num_states() const {
 	return backend_->highest_state + 1;
+    }
+    posint follow(posint src, posint letter) const {
+	return backend_->delta[letter][src];
+    }
+    const std::vector<Symbol>& alphabet() const {
+	return alphabet_;
     }
     // Returns true iff DFA has minimal #states and no useless letters.
     bool minimal() const {
@@ -677,8 +684,41 @@ public:
 	}
 	return equiv(backend_, other.backend_);
     }
+    template<class... Rest>
+    void to_tgf(std::ostream& os, const Rest&... rest) const {
+	posint sink = sink_state();
+	for (posint state = 0; state < num_states(); state++) {
+	    if (state == sink) {
+		continue;
+	    }
+	    os << state;
+	    if (state == initial()) {
+		os << " in";
+	    }
+	    if (is_final(state)) {
+		os << " out";
+	    }
+	    os << std::endl;
+	}
+	os << "#" << std::endl;
+	posint** delta = backend_->delta;
+	for (posint letter = 1; letter <= num_letters(); letter++) {
+	    for (posint src = 0; src < num_states(); src++) {
+		if (src == sink) {
+		    continue;
+		}
+		posint tgt = delta[letter][src];
+		if (tgt == sink) {
+		    continue;
+		}
+		os << src << " " << tgt << " ";
+		alphabet_[letter - 1].print(os, rest...);
+		os << std::endl;
+	    }
+	}
+    }
     std::string to_dot() const {
-	return wrapper_->visualize(true);
+	return wrapper_->visualize();
     }
     std::string to_regex() const {
 	return wrapper_->to_regex();
@@ -740,6 +780,10 @@ private:
     bool merge() {
 	return false;
     }
+public:
+    Field(const Field&) = delete;
+    Field(Field&&) = default;
+    Field& operator=(const Field&) = delete;
 };
 
 class Variable {
@@ -756,28 +800,87 @@ private:
     bool merge() {
 	return false;
     }
+public:
+    Variable(const Variable&) = default;
+    Variable(Variable&&) = default;
+    Variable& operator=(const Variable&) = delete;
+};
+
+// Only covers intra-method edges.
+class CodeGraph {
+public:
+    Registry<Variable> vars;
+    Ref<Variable> entry;
+    std::set<Ref<Variable>> exits;
+    mi::MultiIndex<mi::Index<SRC, Ref<Variable>,
+			     mi::Table<TGT, Ref<Variable>>>,
+		   mi::Index<TGT, Ref<Variable>,
+			     mi::Table<SRC, Ref<Variable>>>> epsilons;
+    mi::MultiIndex<mi::Index<TGT, Ref<Variable>,
+			     mi::Index<FLD, Ref<Field>,
+				       mi::Table<SRC, Ref<Variable>>>>,
+		   mi::Table<FLD, Ref<Field>>> opens;
+    mi::MultiIndex<mi::Index<SRC, Ref<Variable>,
+			     mi::Index<FLD, Ref<Field>,
+				       mi::Table<TGT, Ref<Variable>>>>,
+		   mi::Table<FLD, Ref<Field>>> closes;
+public:
+    explicit CodeGraph() {}
+    CodeGraph(const CodeGraph&) = default;
+    CodeGraph(CodeGraph&&) = default;
+    CodeGraph& operator=(const CodeGraph&) = delete;
+    friend void swap(CodeGraph& a, CodeGraph& b) {
+	using std::swap;
+	swap(a.vars,     b.vars);
+	swap(a.entry,    b.entry);
+	swap(a.exits,    b.exits);
+	swap(a.epsilons, b.epsilons);
+	swap(a.opens,    b.opens);
+	swap(a.closes,   b.closes);
+    }
+    void to_dot(std::ostream& os, const Registry<Field>& fld_reg) const {
+	os << "digraph function {" << std::endl;
+	os << "  rankdir=LR;" << std::endl;
+	os << "  node [shape=plaintext,label=\"\"] __phantom__;" << std::endl;
+	for (const Variable& v : vars) {
+	    os << "  node [shape="
+	       << (exits.count(v.ref) > 0 ? "double" : "")
+	       << "circle,color=black,label=\"" << v.name << "\"] \""
+	       << v.name << "\";" << std::endl;
+	}
+	os << "  __phantom__ -> " << vars[entry].name
+	   << " [color=blue];" << std::endl;
+	FOR(e, epsilons) {
+	    os << "  \"" << vars[e.get<SRC>()].name << "\" -> \""
+	       << vars[e.get<TGT>()].name << "\";" << std::endl;
+	}
+	FOR(o, opens) {
+	    os << "  \"" << vars[o.get<SRC>()].name << "\" -> \""
+	       << vars[o.get<TGT>()].name << "\" [label=\"("
+	       << fld_reg[o.get<FLD>()].name << "\"];" << std::endl;
+	}
+	FOR(c, closes) {
+	    os << "  \"" << vars[c.get<SRC>()].name << "\" -> \""
+	       << vars[c.get<TGT>()].name << "\" [label=\")"
+	       << fld_reg[c.get<FLD>()].name << "\"];" << std::endl;
+	}
+	os << "}" << std::endl;
+    }
 };
 
 class Function {
     friend Registry<Function>;
     typedef std::string Key;
 public:
-    typedef mi::MultiIndex<
-                mi::Index<SRC, Ref<Variable>,
-                    mi::Table<TGT, Ref<Variable>>>,
-                mi::Index<TGT, Ref<Variable>,
-                    mi::Table<SRC, Ref<Variable>>>> VarPairs;
 public:
     const std::string name;
     const Ref<Function> ref;
 private:
-    Registry<Variable> vars;
-    Ref<Variable> entry;
-    std::set<Ref<Variable>> exits;
-    VarPairs epsilons;
-    mi::Index<FLD, Ref<Field>, VarPairs> opens;
-    mi::Index<FLD, Ref<Field>, VarPairs> closes;
-    mi::Index<FUN, Ref<Function>, VarPairs> calls;
+    CodeGraph code_;
+    mi::Index<FUN, Ref<Function>,
+	      mi::Index<SRC, Ref<Variable>,
+			mi::Table<TGT, Ref<Variable>>>> calls_;
+    std::set<Ref<Function>> callers_;
 private:
     explicit Function(const std::string& name, Ref<Function> ref)
 	: name(name), ref(ref) {
@@ -787,12 +890,14 @@ private:
 	return false;
     }
 public:
+    Function(const Function&) = delete;
+    Function(Function&&) = default;
+    Function& operator=(const Function&) = delete;
     void parse_file(const fs::path& fpath,
 		    Registry<Function>& fun_reg, Registry<Field>& fld_reg) {
 	assert(!complete());
 	std::ifstream fin(fpath.string());
 	EXPECT((bool) fin);
-
 	bool vars_done = false;
 	std::string line;
 	while (std::getline(fin, line)) {
@@ -803,78 +908,82 @@ public:
 	    std::vector<std::string> toks;
 	    boost::split(toks, line, boost::is_any_of(" "),
 			 boost::token_compress_on);
-
 	    if (toks[0] == "#") {
 		EXPECT(toks.size() == 1);
 		EXPECT(!vars_done);
-		EXPECT(entry.valid());
-		EXPECT(!exits.empty());
+		EXPECT(code_.entry.valid());
+		EXPECT(!code_.exits.empty());
 		vars_done = true;
 	    } else if (!vars_done) {
 		EXPECT(toks.size() >= 1);
-		Variable& v = vars.make(toks[0]);
+		Variable& v = code_.vars.make(toks[0]);
 		for (auto it = toks.begin() + 1; it != toks.end(); ++it) {
 		    if (*it == "in") {
-			EXPECT(!entry.valid());
-			entry = v.ref;
+			EXPECT(!code_.entry.valid());
+			code_.entry = v.ref;
 		    } else if (*it == "out") {
-			exits.insert(v.ref);
+			code_.exits.insert(v.ref);
 		    } else {
 			EXPECT(false);
 		    }
 		}
 	    } else {
 		EXPECT(toks.size() == 2 || toks.size() == 3);
-		Ref<Variable> src = vars.find(toks[0]).ref;
-		Ref<Variable> tgt = vars.find(toks[1]).ref;
+		Ref<Variable> src = code_.vars.find(toks[0]).ref;
+		Ref<Variable> tgt = code_.vars.find(toks[1]).ref;
 		if (toks.size() == 2) {
-		    epsilons.insert(src, tgt);
+		    code_.epsilons.insert(src, tgt);
 		} else if (toks[2][0] == '(') {
-		    opens.insert(fld_reg.add(toks[2].substr(1)).ref,
-				 src, tgt);
+		    Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
+		    code_.opens.insert(tgt, fld, src);
 		} else if (toks[2][0] == ')') {
-		    closes.insert(fld_reg.add(toks[2].substr(1)).ref,
-				  src, tgt);
+		    Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
+		    code_.closes.insert(src, fld, tgt);
 		} else {
-		    calls.insert(fun_reg.add(toks[2]).ref, src, tgt);
+		    Function& callee = fun_reg.add(toks[2]);
+		    callee.callers_.insert(ref);
+		    calls_.insert(callee.ref, src, tgt);
 		}
 	    }
 	}
-
 	EXPECT(fin.eof());
 	EXPECT(vars_done);
     }
     bool complete() const {
-	return entry.valid();
+	return code_.entry.valid();
+    }
+    const std::set<Ref<Function>>& callers() const {
+	return callers_;
     }
     void to_dot(std::ostream& os, const Registry<Function>& fun_reg,
 		const Registry<Field>& fld_reg) const {
 	os << "digraph " << name << " {" << std::endl;
 	os << "  rankdir=LR;" << std::endl;
 	os << "  node [shape=plaintext,label=\"\"] __phantom__;" << std::endl;
-	for (const Variable& v : vars) {
-	    os << "  node [shape=" << (exits.count(v.ref) > 0 ? "double" : "")
+	for (const Variable& v : code_.vars) {
+	    os << "  node [shape="
+	       << (code_.exits.count(v.ref) > 0 ? "double" : "")
 	       << "circle,color=black] " << v.name << ";" << std::endl;
 	}
-	os << "  __phantom__ -> " << vars[entry].name << " [color=blue];"
-		   << std::endl;
-	FOR(e, epsilons) {
-	    os << "  " << vars[e.get<SRC>()].name << " -> "
-	       << vars[e.get<TGT>()].name << ";" << std::endl;
+	os << "  __phantom__ -> " << code_.vars[code_.entry].name
+	   << " [color=blue];" << std::endl;
+	FOR(e, code_.epsilons) {
+	    os << "  " << code_.vars[e.get<SRC>()].name << " -> "
+	       << code_.vars[e.get<TGT>()].name << ";" << std::endl;
 	}
-	FOR(o, opens) {
-	    os << "  " << vars[o.get<SRC>()].name << " -> "
-	       << vars[o.get<TGT>()].name << " [label=\"("
+	FOR(o, code_.opens) {
+	    os << "  " << code_.vars[o.get<SRC>()].name << " -> "
+	       << code_.vars[o.get<TGT>()].name << " [label=\"("
 	       << fld_reg[o.get<FLD>()].name << "\"];" << std::endl;
 	}
-	FOR(c, closes) {
-	    os << "  " << vars[c.get<SRC>()].name << " -> "
-	       << vars[c.get<TGT>()].name << " [label=\")"
+	FOR(c, code_.closes) {
+	    os << "  " << code_.vars[c.get<SRC>()].name << " -> "
+	       << code_.vars[c.get<TGT>()].name << " [label=\")"
 	       << fld_reg[c.get<FLD>()].name << "\"];" << std::endl;
 	}
-	FOR(c, calls) {
-	    os << "  " << vars[c.get<SRC>()].name << " -> "
-	       << vars[c.get<TGT>()].name << " [label=\""
+	FOR(c, calls_) {
+	    os << "  " << code_.vars[c.get<SRC>()].name << " -> "
+	       << code_.vars[c.get<TGT>()].name << " [label=\""
 	       << fun_reg[c.get<FUN>()].name << "\"];" << std::endl;
 	}
 	os << "}" << std::endl;
@@ -908,7 +1017,7 @@ void test_folding(DFA<Symbol>& dfa, posint depth) {
 void test_dfa_code() {
     std::vector<std::string> alph_ab = {"alpha","beta"};
     std::vector<std::string> alph_abc = {"alpha", "beta", "gamma"};
-    std::vector<std::string> alph_abcde = {"A","B", "C", "D", "E"};
+    std::vector<std::string> alph_abcde = {"A", "B", "C", "D", "E"};
 
     DFA<std::string> d1(alph_ab, 3);
     d1.set_initial(0);
@@ -929,8 +1038,7 @@ void test_dfa_code() {
     n.add_symb_trans(1, "beta", 2);
     n.add_symb_trans(2, "alpha", 2);
     std::cout << "n:" << std::endl;
-    std::cout << n;
-    DFA<std::string> nd(std::move(n));
+    DFA<std::string> nd(n);
     std::cout << "Determinized:" << std::endl;
     test_minimization(nd);
 
@@ -988,16 +1096,16 @@ void test_dfa_code() {
 
 int main(int argc, char* argv[]) {
     // User-defined parameters
-    std::string funs_dirname;
+    std::string indir_name;
 
     // Parse options
     po::options_description desc("Options");
     desc.add_options()
 	("help,h", "Print help message")
-	("graph-dir", po::value<std::string>(&funs_dirname)->required(),
+	("in", po::value<std::string>(&indir_name)->required(),
 	 "Directory of function graphs");
     po::positional_options_description pos_desc;
-    pos_desc.add("graph-dir", 1);
+    pos_desc.add("in", 1);
     po::variables_map vm;
     try {
 	po::store(po::command_line_parser(argc, argv)
@@ -1009,7 +1117,7 @@ int main(int argc, char* argv[]) {
 	}
 	po::notify(vm);
     } catch (const po::error& e) {
-        std::cerr << e.what() << std::endl;
+	std::cerr << e.what() << std::endl;
 	return EXIT_FAILURE;
     }
 
@@ -1017,7 +1125,7 @@ int main(int argc, char* argv[]) {
     const std::string FILE_EXTENSION = ".fun.tgf";
     Registry<Function> funs;
     Registry<Field> flds;
-    for (const fs::path& path : Directory(funs_dirname)) {
+    for (const fs::path& path : Directory(indir_name)) {
 	std::string base(path.filename().string());
 	if (!boost::algorithm::ends_with(base, FILE_EXTENSION)) {
 	    continue;
