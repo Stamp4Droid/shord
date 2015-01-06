@@ -199,8 +199,8 @@ get_path(const boost::filesystem::directory_entry& entry) {
 }
 
 template<typename T>
-const T& unwrap_ref(const std::reference_wrapper<T>& r) {
-    return r.get();
+const T& follow_ptr(T* const& r) {
+    return *r;
 }
 
 template<typename PtrT>
@@ -384,7 +384,7 @@ public:
     bool empty() const {
 	return queue.empty();
     }
-    bool enqueue(T val) {
+    bool enqueue(T&& val) {
 	auto res = reached.insert(std::move(val));
 	if (res.second) {
 	    queue.push(&(*(res.first)));
@@ -443,143 +443,11 @@ public:
     }
 };
 
-namespace mi {
-template<class Tag, class T> class Table;
-template<class Tag, class K, class S> class Index;
-}
-
-// CAUTION: Contents are destroyed lazily!
-template<class T, unsigned int LIMIT> class FuzzyStack {
-    // TODO: These should be with K == FuzzyStack<T,LIMIT>, but partial
-    // specialization is not allowed on friend class declarations.
-    template<class Tag, class K> friend class mi::Table;
-    template<class Tag, class K, class S> friend class mi::Index;
-private:
-    T contents_[LIMIT];
-    unsigned char size_ = 0;
-    bool exact_ = true;
-public:
-    explicit FuzzyStack() {}
-    FuzzyStack(const FuzzyStack& rhs) : size_(rhs.size_), exact_(rhs.exact_) {
-	std::copy_backward(rhs.contents_ + LIMIT - size_,
-			   rhs.contents_ + LIMIT,
-			   contents_ + LIMIT);
-    }
-    FuzzyStack& operator=(const FuzzyStack& rhs) {
-	size_  = rhs.size_;
-	exact_ = rhs.exact_;
-	std::copy_backward(rhs.contents_ + LIMIT - size_,
-			   rhs.contents_ + LIMIT,
-			   contents_ + LIMIT);
-	return *this;
-    }
-    bool empty() const {
-	return size_ == 0;
-    }
-    unsigned int size() const {
-	return size_;
-    }
-    bool exact() const {
-	return exact_;
-    }
-    const T& top() const {
-	assert(!empty());
-	return contents_[LIMIT - size_];
-    }
-    void push(const T& val) {
-	if (size_ == LIMIT) {
-	    pop_bottom();
-	    exact_ = false;
-	}
-	size_++;
-	contents_[LIMIT - size_] = val;
-    }
-    void pop() {
-	assert(!empty());
-	size_--;
-    }
-    void append(const FuzzyStack& rhs) {
-	if (!rhs.exact_) {
-	    *this = rhs;
-	    return;
-	}
-	if (size_ + rhs.size_ > LIMIT) {
-	    pop_bottom(size_ + rhs.size_ - LIMIT);
-	    exact_ = false;
-	}
-	std::copy_backward(rhs.contents_ + LIMIT - rhs.size_,
-			   rhs.contents_ + LIMIT,
-			   contents_ + LIMIT - size_);
-	size_ += rhs.size_;
-    }
-    void clear() {
-	size_ = 0;
-	exact_ = true;
-    }
-    const T* begin() const {
-	return contents_ + LIMIT - size_;
-    }
-    const T* end() const {
-	return contents_ + LIMIT;
-    }
-    void push_bottom(const T& val) {
-	assert(size_ < LIMIT);
-	std::move(contents_ + LIMIT - size_,
-		  contents_ + LIMIT,
-		  contents_ + LIMIT - size_ - 1);
-	contents_[LIMIT - 1] = val;
-	size_++;
-    }
-    void pop_bottom(unsigned int num = 1) {
-	assert(size_ >= num);
-	std::move_backward(contents_ + LIMIT - size_,
-			   contents_ + LIMIT - num,
-			   contents_ + LIMIT);
-	size_ -= num;
-    }
-    template<class... ArgTs>
-    friend void print(std::ostream& os, const FuzzyStack& s, bool reverse,
-		      const ArgTs&... args) {
-	if (!s.exact_ && reverse) {
-	    os << " *";
-	}
-	std::list<T> stage;
-	for (const T& slot : s) {
-	    if (reverse) {
-		stage.push_front(slot);
-	    } else {
-		stage.push_back(slot);
-	    }
-	}
-	for (const T& val : stage) {
-	    if (reverse) {
-		os << " ";
-	    }
-	    print(os, val, args...);
-	    if (!reverse) {
-		os << " ";
-	    }
-	}
-	if (!s.exact_ && !reverse) {
-	    os << "* ";
-	}
-    }
-    friend std::ostream& operator<<(std::ostream& os, const FuzzyStack& s) {
-	for (const T& slot : s) {
-	    os << slot << " ";
-	}
-	if (!s.exact_) {
-	    os << "* ";
-	}
-	return os;
-    }
-};
-
 namespace detail {
 
 template<unsigned int DEPTH> struct JoinZipHelper {
     template<class LMap, class RMap, class ZipT>
-    static void handle(LMap& l, RMap& r, const ZipT& zip) {
+    static void handle(const LMap& l, const RMap& r, const ZipT& zip) {
 	auto l_curr = l.begin();
 	auto r_curr = r.begin();
 	const auto l_end = l.end();
@@ -602,7 +470,7 @@ template<unsigned int DEPTH> struct JoinZipHelper {
 
 template<> struct JoinZipHelper<0> {
     template<class LMap, class RMap, class ZipT>
-    static void handle(LMap& l, RMap& r, const ZipT& zip) {
+    static void handle(const LMap& l, const RMap& r, const ZipT& zip) {
 	zip(l, r);
     }
 };
@@ -614,7 +482,7 @@ template<> struct JoinZipHelper<0> {
 // - Should implement using iterators?
 // - Only works for sorted containers
 template<unsigned int DEPTH, class LMap, class RMap, class ZipT>
-void join_zip(LMap& l, RMap& r, const ZipT& zip) {
+void join_zip(const LMap& l, const RMap& r, const ZipT& zip) {
     detail::JoinZipHelper<DEPTH>::handle(l, r, zip);
 }
 
@@ -703,57 +571,46 @@ unsigned int current_time() {
 //     return new T(name, ref, std::forward<ArgTs>(args)...);
 // }
 
-namespace mi {
-template<typename T> struct KeyTraits;
-}
-template<typename T> class Ref;
-template<typename T> class Registry;
-template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
-class FlatIndex;
-
 // TODO: Could make this class const-correct, i.e. get a const& when indexing a
 // Registry using a const Ref.
 template<typename T> class Ref {
-    friend Registry<T>;
-    friend mi::KeyTraits<Ref<T>>;
-    // TODO: This should be with C==T, but partial specialization is not
-    // allowed on friend class declarations.
-    template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
-    friend class FlatIndex;
 private:
-    unsigned int value;
-private:
-    explicit Ref(unsigned int value) : value(value) {
+    unsigned int value_;
+public:
+    explicit Ref() : value_(std::numeric_limits<unsigned int>::max()) {}
+    explicit Ref(unsigned int value) : value_(value) {
 	EXPECT(valid());
     }
-public:
-    explicit Ref() : value(std::numeric_limits<unsigned int>::max()) {}
-    Ref(const Ref& rhs) : value(rhs.value) {}
-    Ref& operator=(const Ref& rhs) {
-	value = rhs.value;
-	return *this;
+    Ref(const Ref&) = default;
+    Ref& operator=(const Ref&) = default;
+    friend void swap(Ref& a, Ref& b) {
+	using std::swap;
+	swap(a.value_, b.value_);
     }
     bool valid() const {
-	return value < std::numeric_limits<unsigned int>::max();
+	return value_ < std::numeric_limits<unsigned int>::max();
+    }
+    unsigned int value() const {
+	return value_;
     }
     friend int compare(const Ref& lhs, const Ref& rhs) {
-	return compare(lhs.value, rhs.value);
+	return compare(lhs.value_, rhs.value_);
     }
     bool operator<(const Ref& rhs) const {
-	return value < rhs.value;
+	return value_ < rhs.value_;
     }
     bool operator==(const Ref& rhs) const {
-	return value == rhs.value;
+	return value_ == rhs.value_;
     }
     bool operator!=(const Ref& rhs) const {
 	return !(*this == rhs);
     }
     std::size_t hash_code() const {
-	return hash(value);
+	return hash(value_);
     }
     friend std::ostream& operator<<(std::ostream& os, const Ref& ref) {
 	EXPECT(ref.valid());
-	os << ref.value;
+	os << ref.value_;
 	return os;
     }
 };
@@ -761,39 +618,44 @@ public:
 template<typename T> class Registry {
 public:
     typedef typename T::Key Key;
-    typedef std::vector<std::reference_wrapper<T>> RefArray;
-    typedef IterWrapper<typename RefArray::const_iterator, T,
-			detail::unwrap_ref<T>> Iterator;
+    typedef IterWrapper<typename std::vector<T*>::const_iterator, T,
+			detail::follow_ptr<T>> Iterator;
 private:
-    RefArray array;
+    std::vector<T*> array;
     std::map<Key,T> map;
 public:
     explicit Registry() {}
-    Registry(const Registry& rhs) = delete;
-    // XXX: This is dangerous/non-portable: The 'array' member variable stores
-    // references, which would only be valid for the 'map' on the original
-    // object. However, the move constructor on std::map (as normally
-    // implemented in the standard library) doesn't move the map nodes on the
-    // heap, and thus the references are still valid.
-    Registry(Registry&& rhs)
-	: array(std::move(rhs.array)), map(std::move(rhs.map)) {}
-    Registry& operator=(const Registry& rhs) = delete;
-    T& operator[](const Ref<T> ref) {
-	EXPECT(ref.valid());
-	return array.at(ref.value).get();
+    Registry(const Registry& rhs) = default;
+    Registry(Registry&& rhs) {
+	swap(*this, rhs);
     }
-    const T& operator[](const Ref<T> ref) const {
+    Registry& operator=(const Registry& rhs) = delete;
+    // XXX: This is dangerous/non-portable: The 'array' member variable stores
+    // pointers to objects in the accompanying 'map' and 'temps', which would
+    // normally become invalid if 'map' or 'temps' were moved in the heap.
+    // However, the default implementations of swap on std::map and std::deque
+    // don't move the actual heap storage, and thus the pointers remain valid.
+    friend void swap(Registry& a, Registry& b) {
+	using std::swap;
+	swap(a.array, b.array);
+	swap(a.map,   b.map);
+    }
+    T& operator[](Ref<T> ref) {
 	EXPECT(ref.valid());
-	return array.at(ref.value).get();
+	return *(array.at(ref.value()));
+    }
+    const T& operator[](Ref<T> ref) const {
+	EXPECT(ref.valid());
+	return *(array.at(ref.value()));
     }
     template<typename... ArgTs> T& make(const Key& key, ArgTs&&... args) {
 	Ref<T> next_ref(array.size());
 	auto res = map.emplace(key, T(key, next_ref,
 				      std::forward<ArgTs>(args)...));
 	EXPECT(res.second);
-	T& obj = res.first->second;
-	array.push_back(std::ref(obj));
-	return obj;
+	T* obj_ptr = &(res.first->second);
+	array.push_back(obj_ptr);
+	return *obj_ptr;
     }
     template<typename... ArgTs> T& add(const Key& key, ArgTs&&... args) {
 	auto it = map.find(key);
@@ -820,10 +682,10 @@ public:
 	return array.empty();
     }
     const T& first() const {
-	return array.front().get();
+	return *(array.front());
     }
     const T& last() const {
-	return array.back().get();
+	return *(array.back());
     }
     Iterator begin() const {
 	return Iterator(array.cbegin());
@@ -1111,14 +973,14 @@ public:
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	return (*this)[tuple.*MemPtr].insert(tuple);
     }
-    Wrapped& operator[](const Ref<C>& key) {
-	while (key.value >= array.size()) {
+    Wrapped& operator[](Ref<C> key) {
+	while (key.value() >= array.size()) {
 	    array.push_back(std::unique_ptr<Wrapped>(new Wrapped()));
 	}
-	return *(array[key.value]);
+	return *(array[key.value()]);
     }
-    const Wrapped& operator[](const Ref<C>& key) const {
-	return (key.value < array.size()) ? *(array[key.value]) : dummy;
+    const Wrapped& operator[](Ref<C> key) const {
+	return (key.value() < array.size()) ? *(array[key.value()]) : dummy;
     }
     Iterator begin() const {
 	return Iterator(array.cbegin());
@@ -1531,7 +1393,7 @@ struct KeyTraits<Ref<T>> {
 	return reg.size();
     }
     static unsigned int extract_idx(Ref<T> ref) {
-	return ref.value;
+	return ref.value();
     }
     static Ref<T> from_idx(unsigned int idx) {
 	return Ref<T>(idx);
@@ -1584,6 +1446,14 @@ private:
     std::set<T> store;
 public:
     explicit Table() {}
+    // TODO: Only works if T is copy-constructible.
+    Table(const Table&) = default;
+    Table(Table&&) = default;
+    Table& operator=(const Table&) = delete;
+    friend void swap(Table& a, Table& b) {
+	using std::swap;
+	swap(a.store, b.store);
+    }
     bool insert(const T& val) {
 	return store.insert(val).second;
     }
@@ -1591,18 +1461,8 @@ public:
 	return insert(tuple.hd);
     }
     template<class Other>
-    bool sec_insert(const Other& other) {
-	return insert(other.template get<Tag>());
-    }
-    void remove(const T& val) {
-	store.erase(val);
-    }
-    void remove(const Tuple& tuple) {
-	remove(tuple.hd);
-    }
-    template<class Other>
-    void sec_remove(const Other& other) {
-	remove(other.template get<Tag>());
+    void sec_insert(const Other& other) {
+	insert(other.template get<Tag>());
     }
     bool copy(const Table& src) {
 	unsigned int old_sz = size();
@@ -1678,6 +1538,13 @@ private:
     std::map<Key,Sub> map;
 public:
     explicit Index() {}
+    Index(const Index&) = default;
+    Index(Index&&) = default;
+    Index& operator=(const Index&) = delete;
+    friend void swap(Index& a, Index& b) {
+	using std::swap;
+	swap(a.map, b.map);
+    }
     Sub& of(const Key& key) {
 	return map[key];
     }
@@ -1693,25 +1560,8 @@ public:
 	return insert(tuple.hd, tuple.tl);
     }
     template<class Other>
-    bool sec_insert(const Other& other) {
-	return of(other.template get<Tag>()).sec_insert(other);
-    }
-    template<class... Rest>
-    void remove(const Key& key, const Rest&... rest) {
-	auto it = map.find(key);
-	if (it != map.end()) {
-	    it->second.remove(rest...);
-	}
-    }
-    void remove(const Tuple& tuple) {
-	remove(tuple.hd, tuple.tl);
-    }
-    template<class Other>
-    void sec_remove(const Other& other) {
-	auto it = map.find(other.template get<Tag>());
-	if (it != map.end()) {
-	    it->second.sec_remove(other);
-	}
+    void sec_insert(const Other& other) {
+	of(other.template get<Tag>()).sec_insert(other);
     }
     bool copy(const Index& src) {
 	bool grew = false;
@@ -1812,6 +1662,14 @@ private:
     Sec sec_;
 public:
     explicit MultiIndex() {}
+    MultiIndex(const MultiIndex&) = default;
+    MultiIndex(MultiIndex&&) = default;
+    MultiIndex& operator=(const MultiIndex&) = delete;
+    friend void swap(MultiIndex& a, MultiIndex& b) {
+	using std::swap;
+	swap(a.pri_, b.pri_);
+	swap(a.sec_, b.sec_);
+    }
     const Pri& pri() const {
 	return pri_;
     }
@@ -1825,34 +1683,16 @@ public:
     bool insert(const Tuple& tuple) {
 	if (pri_.insert(tuple)) {
 	    // Only insert on secondary index if tuple wasn't already present.
-	    bool sec_inserted = sec_.sec_insert(tuple);
-	    assert(sec_inserted);
+	    sec_.sec_insert(tuple);
 	    return true;
 	}
 	// TODO: Check that tuple is also present on sec.
 	return false;
     }
     template<class Other>
-    bool sec_insert(const Other& other) {
-	if (pri_.sec_insert(other)) {
-	    bool sec_inserted = sec_.sec_insert(other);
-	    assert(sec_inserted);
-	    return true;
-	}
-	return false;
-    }
-    template<class... Flds>
-    void remove(const Flds&... flds) {
-	remove(Tuple(flds...));
-    }
-    void remove(const Tuple& tuple) {
-	pri_.remove(tuple);
-	sec_.sec_remove(tuple);
-    }
-    template<class Other>
-    void sec_remove(const Other& other) {
-	pri_.sec_remove(other);
-	sec_.sec_remove(other);
+    void sec_insert(const Other& other) {
+	pri_.sec_insert(other);
+	sec_.sec_insert(other);
     }
     Iterator iter(Tuple& tgt) const {
 	Iterator it(tgt);
@@ -1887,509 +1727,6 @@ public:
 
 // SPECIALIZED CONTAINERS =====================================================
 
-template<class Tag, class T, unsigned int LIMIT>
-class Table<Tag,FuzzyStack<T,LIMIT> > {
-public:
-    typedef FuzzyStack<T,LIMIT> Key;
-    class Iterator;
-    friend Iterator;
-    typedef NamedTuple<Tag,Key,Nil> Tuple;
-private:
-    bool at_star = false;
-    bool at_here = false;
-    std::map<T,Table> children;
-public:
-    explicit Table() {}
-    bool insert(const Key& stack) {
-	Table* node = this;
-	if (node->at_star) {
-	    return false;
-	}
-	for (const T& slot : stack) {
-	    node = &(node->children[slot]);
-	    if (node->at_star) {
-		return false;
-	    }
-	}
-	if (stack.exact()) {
-	    if (node->at_here) {
-		return false;
-	    }
-	    node->at_here = true;
-	    return true;
-	}
-	node->at_star = true;
-	node->at_here = false;
-	node->children.clear();
-	return true;
-    }
-    bool insert(const Tuple& tuple) {
-	return insert(tuple.hd);
-    }
-    void remove(const Key& stack) {
-	Table* node = this;
-	for (const T& slot : stack) {
-	    auto it = node->children.find(slot);
-	    if (it == node->children.end()) {
-		return;
-	    }
-	    node = &(it->second);
-	}
-	node->at_here = false;
-	if (!stack.exact()) {
-	    node->at_star = false;
-	    node->children.clear();
-	}
-    }
-    void remove(const Tuple& tuple) {
-	remove(tuple.hd);
-    }
-    bool copy(const Table& src) {
-	if (at_star) {
-	    return false;
-	}
-	if (src.at_star) {
-	    at_star = true;
-	    at_here = false;
-	    children.clear();
-	    return true;
-	}
-	bool grew = false;
-	if (!at_here && src.at_here) {
-	    at_here = true;
-	    grew = true;
-	}
-	for (const auto& p : src.children) {
-	    if (children[p.first].copy(p.second)) {
-		grew = true;
-	    }
-	}
-	return grew;
-    }
-    Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
-    }
-    bool empty() const {
-	if (at_star || at_here) {
-	    return false;
-	}
-	for (const auto& p : children) {
-	    if (!p.second.empty()) {
-		return false;
-	    }
-	}
-	return true;
-    }
-    bool contains(const Key& stack) const {
-	const Table* node = this;
-	if (node->at_star) {
-	    return true;
-	}
-	for (const T& slot : stack) {
-	    auto it = node->children.find(slot);
-	    if (it == node->children.cend()) {
-		return false;
-	    }
-	    node = &(it->second);
-	    if (node->at_star) {
-		return true;
-	    }
-	}
-	return stack.exact() && node->at_here;
-    }
-    bool contains(const Tuple& tuple) const {
-	return contains(tuple.hd);
-    }
-    unsigned int size() const {
-	unsigned int sz = at_star + at_here;
-	for (const auto& p : children) {
-	    sz += p.second.size();
-	}
-	return sz;
-    }
-public:
-
-    class Iterator {
-	struct Config {
-	    const Table& tab;
-	    typename std::map<T,Table>::const_iterator ch_curr;
-	    typename std::map<T,Table>::const_iterator ch_end;
-	    Config(const Table& tab) : tab(tab),
-				       ch_curr(tab.children.cbegin()),
-				       ch_end(tab.children.cend()) {}
-	};
-	enum class Phase {STAR, HERE, NEXT_CHILD, FIRST_CHILD};
-    private:
-	std::deque<Config> pos_stack;
-	Key& tgt_fld;
-	Phase phase;
-    public:
-	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
-	void migrate(const Table& tab) {
-	    pos_stack.clear();
-	    pos_stack.emplace_front(tab);
-	    tgt_fld.clear();
-	    phase = Phase::STAR;
-	}
-	bool next() {
-	    while (true) {
-		Config& curr_pos = pos_stack.front();
-		switch (phase) {
-		case Phase::STAR:
-		    tgt_fld.exact_ = false;
-		    phase = Phase::HERE;
-		    if (curr_pos.tab.at_star) {
-			return true;
-		    }
-		    break;
-		case Phase::HERE:
-		    tgt_fld.exact_ = true;
-		    phase = Phase::FIRST_CHILD;
-		    if (curr_pos.tab.at_here) {
-			return true;
-		    }
-		    break;
-		case Phase::NEXT_CHILD:
-		    ++(curr_pos.ch_curr);
-		    // fall-through
-		case Phase::FIRST_CHILD:
-		    if (curr_pos.ch_curr == curr_pos.ch_end) {
-			pos_stack.pop_front();
-			if (pos_stack.empty()) {
-			    return false;
-			}
-			tgt_fld.pop_bottom();
-			phase = Phase::NEXT_CHILD;
-		    } else {
-			const auto& p = *(curr_pos.ch_curr);
-			pos_stack.emplace_front(p.second);
-			assert(tgt_fld.exact());
-			tgt_fld.push_bottom(p.first);
-			phase = Phase::STAR;
-		    }
-		    break;
-		default:
-		    assert(false);
-		}
-	    }
-	}
-    };
-};
-
-template<class Tag, class T, unsigned int LIMIT, class S>
-class Index<Tag,FuzzyStack<T,LIMIT>,S> {
-public:
-    typedef FuzzyStack<T,LIMIT> Key;
-    typedef S Sub;
-    class Iterator;
-    friend Iterator;
-    class ConstTopIter;
-    friend ConstTopIter;
-    typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
-private:
-    static const Sub dummy;
-private:
-    Sub at_star;
-    Sub at_here;
-    std::map<T,Index> children;
-private:
-    template<class... Rest>
-    void clear(const Rest&... rest) {
-	at_star.remove(rest...);
-	at_here.remove(rest...);
-	clear_children(rest...);
-    }
-    template<class... Rest>
-    void clear_children(const Rest&... rest) {
-	for (auto& p : children) {
-	    p.second.clear(rest...);
-	}
-    }
-public:
-    explicit Index() {}
-    template<class... Rest>
-    bool insert(const Key& stack, const Rest&... rest) {
-	Index* node = this;
-	for (const T& slot : stack) {
-	    if (node->at_star.contains(rest...)) {
-		return false;
-	    }
-	    node = &(node->children[slot]);
-	}
-	if (!stack.exact()) {
-	    if (node->at_star.insert(rest...)) {
-		node->at_here.remove(rest...);
-		node->clear_children(rest...);
-		return true;
-	    }
-	    return false;
-	}
-	if (node->at_star.contains(rest...)) {
-	    return false;
-	}
-	return node->at_here.insert(rest...);
-    }
-    bool insert(const Tuple& tuple) {
-	return insert(tuple.hd, tuple.tl);
-    }
-    template<class... Rest>
-    void remove(const Key& stack, const Rest&... rest) {
-	Index* node = this;
-	for (const T& slot : stack) {
-	    auto it = node->children.find(slot);
-	    if (it == node->children.end()) {
-		return;
-	    }
-	    node = &(it->second);
-	}
-	if (stack.exact()) {
-	    at_here.remove(rest...);
-	} else {
-	    node->clear(rest...);
-	}
-    }
-    void remove(const Tuple& tuple) {
-	remove(tuple.hd, tuple.tl);
-    }
-    bool copy(const Index& src) {
-	bool grew = false;
-	FOR(tup, src) {
-	    if (insert(tup)) {
-		grew = true;
-	    }
-	}
-	return grew;
-    }
-    Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
-    }
-    ConstTopIter begin() const {
-	return ConstTopIter(*this);
-    }
-    ConstTopIter end() const {
-	return ConstTopIter();
-    }
-    bool empty() const {
-	if (!at_star.empty() || !at_here.empty()) {
-	    return false;
-	}
-	for (const auto& p : children) {
-	    if (!p.second.empty()) {
-		return false;
-	    }
-	}
-	return true;
-    }
-    template<class... Rest>
-    bool contains(const Key& stack, const Rest&... rest) const {
-	const Index* node = this;
-	if (node->at_star.contains(rest...)) {
-	    return true;
-	}
-	for (const T& slot : stack) {
-	    auto it = node->children.find(slot);
-	    if (it == node->children.cend()) {
-		return false;
-	    }
-	    node = &(it->second);
-	    if (node->at_star.contains(rest...)) {
-		return true;
-	    }
-	}
-	return stack.exact() && node->at_here.contains(rest...);
-    }
-    bool contains(const Tuple& tuple) const {
-	return contains(tuple.hd, tuple.tl);
-    }
-    unsigned int size() const {
-	unsigned int sz = at_star.size() + at_here.size();
-	for (const auto& p : children) {
-	    sz += p.second.size();
-	}
-	return sz;
-    }
-public:
-
-    class ConstTopIter
-	: public std::iterator<std::forward_iterator_tag,
-			       std::pair<const Key&,const Sub&>> {
-	struct Config {
-	    const Index& idx;
-	    typename std::map<T,Index>::const_iterator ch_curr;
-	    typename std::map<T,Index>::const_iterator ch_end;
-	    Config(const Index& idx) : idx(idx),
-				       ch_curr(idx.children.cbegin()),
-				       ch_end(idx.children.cend()) {}
-	};
-	enum class Phase {BEFORE_STAR, AFTER_STAR, NEXT_CHILD, AFTER_HERE};
-    public:
-	typedef std::pair<const Key&,const Sub&> Value;
-    private:
-	std::deque<Config> pos_stack;
-	Key cached_key;
-	Phase phase;
-    private:
-	void move_to_next() {
-	    while (true) {
-		Config& curr_pos = pos_stack.front();
-		switch (phase) {
-		case Phase::BEFORE_STAR:
-		    cached_key.exact_ = false;
-		    phase = Phase::AFTER_STAR;
-		    if (!curr_pos.idx.at_star.empty()) {
-			return;
-		    }
-		    break;
-		case Phase::AFTER_STAR:
-		    cached_key.exact_ = true;
-		    phase = Phase::AFTER_HERE;
-		    if (!curr_pos.idx.at_here.empty()) {
-			return;
-		    }
-		    break;
-		case Phase::NEXT_CHILD:
-		    ++(curr_pos.ch_curr);
-		    // fall-through
-		case Phase::AFTER_HERE:
-		    if (curr_pos.ch_curr == curr_pos.ch_end) {
-			pos_stack.pop_front();
-			if (pos_stack.empty()) {
-			    return;
-			}
-			cached_key.pop_bottom();
-			phase = Phase::NEXT_CHILD;
-		    } else {
-			const auto& p = *(curr_pos.ch_curr);
-			pos_stack.emplace_front(p.second);
-			assert(cached_key.exact());
-			cached_key.push_bottom(p.first);
-			phase = Phase::BEFORE_STAR;
-		    }
-		    break;
-		default:
-		    assert(false);
-		}
-	    }
-	}
-    public:
-	explicit ConstTopIter() {}
-	explicit ConstTopIter(const Index& idx) : phase(Phase::BEFORE_STAR) {
-	    pos_stack.emplace_front(idx);
-	    move_to_next();
-	}
-	ConstTopIter(const ConstTopIter& rhs) : pos_stack(rhs.pos_stack),
-						cached_key(rhs.cached_key),
-						phase(rhs.phase) {}
-	ConstTopIter& operator=(const ConstTopIter& rhs) {
-	    pos_stack  = rhs.pos_stack;
-	    cached_key = rhs.cached_key;
-	    phase      = rhs.phase;
-	    return *this;
-	}
-	Value operator*() const {
-	    switch (phase) {
-	    case Phase::AFTER_STAR:
-		return Value(cached_key, pos_stack.front().idx.at_star);
-	    case Phase::AFTER_HERE:
-		return Value(cached_key, pos_stack.front().idx.at_here);
-	    default:
-		assert(false);
-	    }
-	}
-	ConstTopIter& operator++() {
-	    move_to_next();
-	    return *this;
-	}
-	bool operator==(const ConstTopIter& rhs) const {
-	    // XXX: We only support comparisons with past-the-end iterators.
-	    assert(rhs.pos_stack.empty());
-	    return pos_stack.empty();
-	}
-	bool operator!=(const ConstTopIter& rhs) const {
-	    return !(*this == rhs);
-	}
-    };
-
-    class Iterator {
-	struct Config {
-	    const Index& idx;
-	    typename std::map<T,Index>::const_iterator ch_curr;
-	    typename std::map<T,Index>::const_iterator ch_end;
-	    Config(const Index& idx) : idx(idx),
-				       ch_curr(idx.children.cbegin()),
-				       ch_end(idx.children.cend()) {}
-	};
-	enum class Phase {BEFORE_STAR, STAR, HERE, NEXT_CHILD, FIRST_CHILD};
-    private:
-	std::deque<Config> pos_stack;
-	Key& tgt_key;
-	typename Sub::Iterator sub_iter;
-	Phase phase;
-    public:
-	explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
-	void migrate(const Index& idx) {
-	    pos_stack.clear();
-	    pos_stack.emplace_front(idx);
-	    tgt_key.clear();
-	    phase = Phase::BEFORE_STAR;
-	}
-	bool next() {
-	    while (true) {
-		Config& curr_pos = pos_stack.front();
-		switch (phase) {
-		case Phase::BEFORE_STAR:
-		    tgt_key.exact_ = false;
-		    sub_iter.migrate(curr_pos.idx.at_star);
-		    phase = Phase::STAR;
-		    break;
-		case Phase::STAR:
-		    if (sub_iter.next()) {
-			return true;
-		    }
-		    tgt_key.exact_ = true;
-		    sub_iter.migrate(curr_pos.idx.at_here);
-		    phase = Phase::HERE;
-		    break;
-		case Phase::HERE:
-		    if (sub_iter.next()) {
-			return true;
-		    }
-		    phase = Phase::FIRST_CHILD;
-		    break;
-		case Phase::NEXT_CHILD:
-		    ++(curr_pos.ch_curr);
-		    // fall-through
-		case Phase::FIRST_CHILD:
-		    if (curr_pos.ch_curr == curr_pos.ch_end) {
-			pos_stack.pop_front();
-			if (pos_stack.empty()) {
-			    return false;
-			}
-			tgt_key.pop_bottom();
-			phase = Phase::NEXT_CHILD;
-		    } else {
-			const auto& p = *(curr_pos.ch_curr);
-			pos_stack.emplace_front(p.second);
-			assert(tgt_key.exact());
-			tgt_key.push_bottom(p.first);
-			phase = Phase::BEFORE_STAR;
-		    }
-		    break;
-		default:
-		    assert(false);
-		}
-	    }
-	}
-    };
-};
-
-template<class Tag, class T, unsigned int LIMIT, class S>
-const S Index<Tag,FuzzyStack<T,LIMIT>,S>::dummy;
-
 template<class Tag, class K, class S> class FlatIndex {
 public:
     typedef K Key;
@@ -2408,6 +1745,13 @@ public:
     explicit FlatIndex(const typename KeyTraits<Key>::SizeHint& hint,
 		       const Rest&... rest)
 	: array(KeyTraits<Key>::extract_size(hint), Sub(rest...)) {}
+    FlatIndex(const FlatIndex&) = default;
+    FlatIndex(FlatIndex&&) = default;
+    FlatIndex& operator=(const FlatIndex&) = delete;
+    friend void swap(FlatIndex& a, FlatIndex& b) {
+	using std::swap;
+	swap(a.array, b.array);
+    }
     Sub& of(const Key& key) {
 	return const_cast<Sub&>((*this)[key]);
     }
@@ -2425,13 +1769,6 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
-    }
-    template<class... Rest>
-    void remove(const Key& key, const Rest&... rest) {
-	of(key).remove(rest...);
-    }
-    void remove(const Tuple& tuple) {
-	remove(tuple.hd, tuple.tl);
     }
     bool copy(const FlatIndex& src) {
 	unsigned int lim = src.array.size();
@@ -2610,6 +1947,13 @@ public:
     explicit BitSet(const typename KeyTraits<T>::SizeHint& hint) {
 	EXPECT(sizeof(Store) * 8 >= KeyTraits<T>::extract_size(hint));
     }
+    BitSet(const BitSet&) = default;
+    BitSet(BitSet&&) = default;
+    BitSet& operator=(const BitSet&) = delete;
+    friend void swap(BitSet& a, BitSet& b) {
+	using std::swap;
+	swap(a.bits, b.bits);
+    }
     bool insert(const T& val) {
 	unsigned int idx = KeyTraits<T>::extract_idx(val);
 	assert(idx < sizeof(Store) * 8);
@@ -2619,14 +1963,6 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
-    }
-    void remove(const T& val) {
-	unsigned int idx = KeyTraits<T>::extract_idx(val);
-	assert(idx < sizeof(Store) * 8);
-	bits &= ~(top_bit >> idx);
-    }
-    void remove(const Tuple& tuple) {
-	remove(tuple.hd);
     }
     bool copy(const BitSet& src) {
 	Store prev_bits = bits;
@@ -2721,6 +2057,13 @@ private:
     }
 public:
     explicit LightIndex() {}
+    LightIndex(const LightIndex&) = default;
+    LightIndex(LightIndex&&) = default;
+    LightIndex& operator=(const LightIndex&) = delete;
+    friend void swap(LightIndex& a, LightIndex& b) {
+	using std::swap;
+	swap(a.list, b.list);
+    }
     Sub& of(const Key& key) {
 	typename List::const_iterator cpos;
 	typename List::iterator pos =
@@ -2740,16 +2083,6 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
-    }
-    template<class... Rest>
-    void remove(const Key& key, const Rest&... rest) {
-	typename List::const_iterator pos;
-	if (find(key, pos)) {
-	    pos->second.remove(rest...);
-	}
-    }
-    void remove(const Tuple& tuple) {
-	remove(tuple.hd, tuple.tl);
     }
     bool copy(const LightIndex& src) {
 	bool grew = false;
