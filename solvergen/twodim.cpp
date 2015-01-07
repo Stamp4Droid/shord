@@ -810,6 +810,35 @@ public:
     Variable& operator=(const Variable&) = delete;
 };
 
+class Delimiter {
+public:
+    bool is_open;
+    Ref<Field> fld;
+public:
+    explicit Delimiter(bool is_open, Ref<Field> fld)
+	: is_open(is_open), fld(fld) {}
+    Delimiter(const Delimiter&) = default;
+    Delimiter& operator=(const Delimiter&) = default;
+    friend int compare(const Delimiter& lhs, const Delimiter& rhs) {
+	int open_comp = compare(lhs.is_open, rhs.is_open);
+	if (open_comp != 0) {
+	    return open_comp;
+	}
+	return compare(lhs.fld, rhs.fld);
+    }
+    bool operator<(const Delimiter& rhs) const {
+	return compare(*this, rhs) < 0;
+    }
+    bool operator==(const Delimiter& rhs) const {
+	return compare(*this, rhs) == 0;
+    }
+    void print(std::ostream& os, const Registry<Field>& fld_reg) const {
+	os << (is_open ? "(" : ")") << fld_reg[fld].name;
+    }
+};
+
+typedef DFA<Delimiter> Signature;
+
 // Only covers intra-method edges.
 class CodeGraph {
 public:
@@ -841,6 +870,167 @@ public:
 	swap(a.epsilons, b.epsilons);
 	swap(a.opens,    b.opens);
 	swap(a.closes,   b.closes);
+    }
+    void embed(Ref<Variable> src, Ref<Variable> tgt, const Signature& callee) {
+	// Create temporary variables for all states in callee's signature
+	// (except the sink state).
+	// TODO: Could do this more efficiently, since Ref's are allocated
+	// serially.
+	std::vector<Ref<Variable>> state2var;
+	state2var.reserve(callee.num_states());
+	for (posint state = 0; state < callee.num_states(); state++) {
+	    // TODO: Emitting a state for the sink.
+	    state2var.push_back(vars.mktemp().ref);
+	}
+	// Copy all transitions, except those to/from the sink state.
+	posint sink = callee.sink_state();
+	for (posint letter = 1; letter <= callee.num_letters(); letter++) {
+	    const Delimiter& delim = callee.alphabet()[letter - 1];
+	    for (posint src = 0; src < callee.num_states(); src++) {
+		if (src == sink) {
+		    continue;
+		}
+		posint tgt = callee.follow(src, letter);
+		if (tgt == sink) {
+		    continue;
+		}
+		if (delim.is_open) {
+		    opens.insert(state2var[tgt], delim.fld, state2var[src]);
+		} else {
+		    closes.insert(state2var[src], delim.fld, state2var[tgt]);
+		}
+	    }
+	}
+	// Connect the newly constructed subgraph to the rest of the code.
+	epsilons.insert(src, state2var[callee.initial()]);
+	for (posint state = 0; state < callee.num_states(); state++) {
+	    if (callee.is_final(state)) {
+		epsilons.insert(state2var[state], tgt);
+	    }
+	}
+    }
+    // TODO: Could do this more efficiently using a rescheduling approach.
+    void close() {
+	// Initialize reachability worklist
+	std::deque<std::pair<Ref<Variable>,Ref<Variable>>> worklist;
+	for (const Variable& v : vars) {
+	    // Each variable is reachable from itself.
+	    worklist.emplace_back(v.ref, v.ref);
+	}
+	FOR(e, epsilons) {
+	    // A base epsilon transition (a,b) means b is reachable from a.
+	    worklist.emplace_back(e.get<SRC>(), e.get<TGT>());
+	}
+	// Combine base reachability information up to fixpoint.
+	auto add_pair = [&](Ref<Variable> src, Ref<Variable> tgt) {
+	    if (src == tgt || epsilons.contains(src, tgt)) {
+		return;
+	    }
+	    epsilons.insert(src, tgt);
+	    worklist.emplace_back(src, tgt);
+	};
+	auto add_product = [&](const mi::Table<SRC,Ref<Variable>>& srcs,
+			       const mi::Table<TGT,Ref<Variable>>& tgts) {
+	    for (Ref<Variable> s : srcs) {
+		for (Ref<Variable> t : tgts) {
+		    add_pair(s, t);
+		}
+	    }
+	};
+	while (!worklist.empty()) {
+	    Ref<Variable> src, tgt;
+	    std::tie(src, tgt) = worklist.front();
+	    // Extend to the left:
+	    // pre_src --> src --> tgt => pre_src --> tgt
+	    for (Ref<Variable> pre_src : epsilons.sec()[src]) {
+		add_pair(pre_src, tgt);
+	    }
+	    // Extend to the right:
+	    // src --> tgt --> post_tgt => src --> post_tgt
+	    for (Ref<Variable> post_tgt : epsilons.pri()[tgt]) {
+		add_pair(src, post_tgt);
+	    }
+	    // Match closes and opens:
+	    // a --(--> src --> tgt --)--> b => a --> b
+	    join_zip<1>(opens.pri()[src], closes.pri()[tgt], add_product);
+	    worklist.pop_front();
+	}
+    }
+    // Simply make a copy of each state, and leave it to the DFA library to
+    // remove any unreachable states.
+    void pn_extend() {
+	using std::swap;
+	// The original set of variables form the P-partition. Make a copy of
+	// each variable for the N-partition.
+	posint orig_vars = vars.size();
+	for (posint i = 0; i < orig_vars; i++) {
+	    vars.mktemp();
+	}
+	auto to_nvar = [orig_vars](Ref<Variable> pvar) -> Ref<Variable> {
+	    // XXX: Assumes Ref's are allocated serially.
+	    return Ref<Variable>(pvar.value() + orig_vars);
+	};
+	// Only the P-partition entry remains an entry on the PN-extended
+	// machine (no change needed).
+	// Both P-partition and N-partition exits are valid.
+	std::set<Ref<Variable>> new_exits;
+	for (Ref<Variable> v : exits) {
+	    new_exits.insert(v);
+	    new_exits.insert(to_nvar(v));
+	}
+	swap(exits, new_exits);
+	// Epsilon transitions are copied on the N-partition.
+	decltype(epsilons) new_epsilons;
+	FOR(e, epsilons) {
+	    new_epsilons.insert(e.get<SRC>(), e.get<TGT>());
+	    new_epsilons.insert(to_nvar(e.get<SRC>()), to_nvar(e.get<TGT>()));
+	}
+	swap(epsilons, new_epsilons);
+	// Opens are moved to the N-partition, and also serve as transitions
+	// from P to N.
+	decltype(opens) new_opens;
+	FOR(o, opens) {
+	    new_opens.insert(to_nvar(o.get<TGT>()), o.get<FLD>(),
+			     to_nvar(o.get<SRC>()));
+	    new_opens.insert(to_nvar(o.get<TGT>()), o.get<FLD>(),
+			     o.get<SRC>());
+	}
+	swap(opens, new_opens);
+	// Closes remain only between variables on the P-partition.
+    }
+    Signature to_sig() const {
+	// Assumes at least an entry variable has been set.
+	assert(entry.valid());
+	// Collect all used delimiters, to form the FSM's alphabet.
+	std::vector<Delimiter> delims;
+	for (Ref<Field> fld : opens.sec()) {
+	    delims.emplace_back(true, fld);
+	}
+	for (Ref<Field> fld : closes.sec()) {
+	    delims.emplace_back(false, fld);
+	}
+	// Build the FSM.
+	// XXX: Assumes Ref's are allocated serially.
+	NFA<Delimiter> nfa(delims, vars.size());
+	nfa.set_initial(entry.value());
+	for (Ref<Variable> v : exits) {
+	    nfa.set_final(v.value());
+	}
+	FOR(e, epsilons) {
+	    nfa.add_eps_trans(e.get<SRC>().value(), e.get<TGT>().value());
+	}
+	FOR(o, opens) {
+	    Delimiter d(true, o.get<FLD>());
+	    nfa.add_symb_trans(o.get<SRC>().value(), d, o.get<TGT>().value());
+	}
+	FOR(c, closes) {
+	    Delimiter d(false, c.get<FLD>());
+	    nfa.add_symb_trans(c.get<SRC>().value(), d, c.get<TGT>().value());
+	}
+	// Determinize and minimize the FSM.
+	Signature res(nfa);
+	res.minimize();
+	return res;
     }
     void to_dot(std::ostream& os, const Registry<Field>& fld_reg) const {
 	os << "digraph function {" << std::endl;
@@ -876,6 +1066,7 @@ class Function {
     friend Registry<Function>;
     typedef std::string Key;
 public:
+    const posint WIDENING_K = 2;
 public:
     const std::string name;
     const Ref<Function> ref;
@@ -885,10 +1076,13 @@ private:
 	      mi::Index<SRC, Ref<Variable>,
 			mi::Table<TGT, Ref<Variable>>>> calls_;
     std::set<Ref<Function>> callers_;
+    Signature sig_; // Initially set to the empty automaton.
 private:
     explicit Function(const std::string* name_ptr, Ref<Function> ref)
-	: name(*name_ptr), ref(ref) {
+	: name(*name_ptr), ref(ref), sig_(std::vector<Delimiter>(), 1) {
 	EXPECT(boost::regex_match(name, boost::regex("\\w+")));
+	sig_.set_initial(0);
+	sig_.minimize();
     }
     bool merge() {
 	return false;
@@ -958,6 +1152,38 @@ public:
     }
     const std::set<Ref<Function>>& callers() const {
 	return callers_;
+    }
+    const Signature& sig() const {
+	return sig_;
+    }
+    // Returns 'false' if we've reached fixpoint, and sig_ didn't need to be
+    // updated. Otherwise updates sig_ and returns 'true'.
+    bool update_sig(const Registry<Function>& fun_reg) {
+	// Current sig_ is step i on the fixpoint process, S(i).
+	const Signature& si = sig_;
+	// Embed the latest signatures of callees, and produce minimal FSM to
+	// form step i+1, F(S(i)).
+	CodeGraph stage(code_);
+	FOR(c, calls_) {
+	    // TODO: Assumes the numbering of the original vars doesn't change
+	    // on the clone.
+	    stage.embed(c.get<SRC>(), c.get<TGT>(),
+			fun_reg[c.get<FUN>()].sig_);
+	}
+	stage.close();
+	stage.pn_extend();
+	Signature fsi = stage.to_sig();
+	// Check if we've reached fixpoint.
+	Signature siUfsi = si | fsi;
+	siUfsi.minimize();
+	if (siUfsi == si) { // equivalent to F(Si) <= Si
+	    return false;
+	}
+	// If not, widen S(i) U F(S(i)) and set as latest signature.
+	siUfsi.fold(WIDENING_K);
+	siUfsi.minimize();
+	swap(sig_, siUfsi);
+	return true;
     }
     void to_dot(std::ostream& os, const Registry<Function>& fun_reg,
 		const Registry<Field>& fld_reg) const {
@@ -1101,15 +1327,19 @@ void test_dfa_code() {
 int main(int argc, char* argv[]) {
     // User-defined parameters
     std::string indir_name;
+    std::string outdir_name;
 
     // Parse options
     po::options_description desc("Options");
     desc.add_options()
 	("help,h", "Print help message")
 	("in", po::value<std::string>(&indir_name)->required(),
-	 "Directory of function graphs");
+	 "Directory of function graphs")
+	("out", po::value<std::string>(&outdir_name)->required(),
+	 "Directory to output signatures");
     po::positional_options_description pos_desc;
     pos_desc.add("in", 1);
+    pos_desc.add("out", 1);
     po::variables_map vm;
     try {
 	po::store(po::command_line_parser(argc, argv)
@@ -1142,5 +1372,36 @@ int main(int argc, char* argv[]) {
     }
     for (const Function& f : funs) {
 	EXPECT(f.complete());
+    }
+
+    // Update signatures up to fixpoint.
+    Worklist<Ref<Function>,true> worklist;
+    for (const Function& f : funs) {
+	worklist.enqueue(f.ref);
+    }
+    while (!worklist.empty()) {
+	Function& f = funs[worklist.dequeue()];
+	std::cout << "Processing " << f.name << std::endl;
+	if (!f.update_sig(funs)) {
+	    std::cout << "    no change" << std::endl;
+	    continue;
+	}
+	std::cout << "    updated" << std::endl;
+	for (Ref<Function> c : f.callers()) {
+	    if (worklist.enqueue(c)) {
+		std::cout << "    rescheduled " << funs[c].name << std::endl;
+	    }
+	}
+    }
+
+    // Print final signatures.
+    fs::path outdir = fs::path(outdir_name);
+    fs::create_directory(outdir);
+    for (const Function& f : funs) {
+	fs::path fpath(outdir/(f.name + ".sig.tgf"));
+	std::cout << "Printing signature for " << f.name << std::endl;
+	std::ofstream fout(fpath.string());
+	EXPECT((bool) fout);
+	f.sig().to_tgf(fout, flds);
     }
 }
