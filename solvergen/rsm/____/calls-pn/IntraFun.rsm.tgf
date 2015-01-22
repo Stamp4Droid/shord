@@ -1,0 +1,8 @@
+1 in out
+2 IntraFun
+#
+1 1  new  asgnRef  storeRef[*]  loadRef[*]
+1 1 _new _asgnRef _storeRef[*] _loadRef[*]
+
+1 2 paramRef[i] _retRef[i]
+2 1 retRef[i] _paramRef[i]
