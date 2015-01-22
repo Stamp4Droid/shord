@@ -680,6 +680,10 @@ public:
 	assert(minimal() && other.minimal());
 	// XXX: really want alphabet_ == other.alphabet_
 	if (num_letters() != other.num_letters()) {
+	    // We trim letters before minimizing, therefore the presence of
+            // some letter in the alphabet means there's at least one sentence
+            // in the automaton that contains it. Thus, a difference in the
+	    // alphabet automatically means that the automata are different.
 	    return false;
 	}
 	return equiv(backend_, other.backend_);
@@ -930,7 +934,8 @@ public:
 	    worklist.emplace_back(src, tgt);
 	};
 	auto add_product = [&](const mi::Table<SRC,Ref<Variable>>& srcs,
-			       const mi::Table<TGT,Ref<Variable>>& tgts) {
+			       const mi::Table<TGT,Ref<Variable>>& tgts,
+                               Ref<Field>) {
 	    for (Ref<Variable> s : srcs) {
 		for (Ref<Variable> t : tgts) {
 		    add_pair(s, t);
@@ -942,7 +947,7 @@ public:
 	    std::tie(src, tgt) = worklist.front();
 	    // Extend to the left:
 	    // pre_src --> src --> tgt => pre_src --> tgt
-	    for (Ref<Variable> pre_src : epsilons.sec()[src]) {
+	    for (Ref<Variable> pre_src : epsilons.sec<0>()[src]) {
 		add_pair(pre_src, tgt);
 	    }
 	    // Extend to the right:
@@ -1003,10 +1008,10 @@ public:
 	assert(entry.valid());
 	// Collect all used delimiters, to form the FSM's alphabet.
 	std::vector<Delimiter> delims;
-	for (Ref<Field> fld : opens.sec()) {
+	for (Ref<Field> fld : opens.sec<0>()) {
 	    delims.emplace_back(true, fld);
 	}
-	for (Ref<Field> fld : closes.sec()) {
+	for (Ref<Field> fld : closes.sec<0>()) {
 	    delims.emplace_back(false, fld);
 	}
 	// Build the FSM.

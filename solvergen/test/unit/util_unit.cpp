@@ -7,29 +7,14 @@
 // Simple structs used as tags
 TUPLE_TAG(flag);
 TUPLE_TAG(ref);
-TUPLE_TAG(a);
 TUPLE_TAG(b);
 TUPLE_TAG(c);
+TUPLE_TAG(id);
 TUPLE_TAG(first);
 TUPLE_TAG(second);
 TUPLE_TAG(third);
 
-struct Foo {
-    const int x;
-    const int y;
-    const int z;
-public:
-    Foo(int x, int y, int z) : x(x), y(y), z(z) {}
-    bool operator<(const Foo& other) const {
-	return std::tie(x, y, z) < std::tie(other.x, other.y, other.z);
-    }
-    friend std::ostream& operator<<(std::ostream& os, const Foo& obj);
-};
-
-std::ostream& operator<<(std::ostream& os, const Foo& obj) {
-    os << "Foo(" << obj.x << ',' << obj.y << ',' << obj.z << ")";
-    return os;
-}
+extern const boost::none_t NONE = boost::none;
 
 class Bar {
     friend Registry<Bar>;
@@ -39,8 +24,8 @@ public:
     const Ref<Bar> ref;
     const bool flag;
 private:
-    explicit Bar(const std::string& name, Ref<Bar> ref, bool flag)
-	: name(name), ref(ref), flag(flag) {}
+    explicit Bar(const std::string* name, Ref<Bar> ref, bool flag)
+	: name(*name), ref(ref), flag(flag) {}
     bool merge(bool flag) const {
 	assert(flag == this->flag);
 	return false;
@@ -71,15 +56,7 @@ template<> struct KeyTraits<unsigned int> {
 
 } // namespace mi
 
-typedef FuzzyStack<int,3> Stack;
-
-void print_stack(const Stack& s) {
-    std::cout << "size: " << s.size()
-	      << ", exact: " << s.exact()
-	      << ", contents: ";
-    print(std::cout, s, false);
-    std::cout << std::endl;
-}
+Registry<Bar> bars;
 
 int main() {
     std::cout << std::boolalpha;
@@ -97,7 +74,6 @@ int main() {
     }
     std::cout << std::endl;
 
-    Registry<Bar> bars;
     bars.make("aaa", true);
     bars.make("bbb", false);
     bars.add("aaa", true);
@@ -108,65 +84,60 @@ int main() {
     };
     std::cout << std::endl;
 
-    MultiIndex<Index<Index<Table<Foo>,int,&Foo::y>,int,&Foo::x>,
-	       Index<Index<PtrTable<Foo>,int,&Foo::z>,int,&Foo::y>,
-	       Index<Index<PtrTable<Foo>,int,&Foo::x>,int,&Foo::y>> idx;
-    idx.insert(Foo(1,2,3));
-    idx.insert(Foo(-10,0,0));
-    idx.insert(Foo(1,5,-11));
-    idx.insert(Foo(1,2,-11));
-    idx.insert(Foo(-10,-1,24));
-    idx.insert(Foo(1,2,3));
-    idx.insert(Foo(4,5,-11));
-    for (const Foo& obj : idx.primary()[1][2]) {
-	std::cout << obj << std::endl;
-    }
-    std::cout << std::endl;
-    for (const Foo& obj : idx.secondary<0>()[5][-11]) {
-	std::cout << obj << std::endl;
-    }
-    std::cout << std::endl;
-    for (const Foo& obj : idx.secondary<1>()[2][1]) {
-	std::cout << obj << std::endl;
-    }
-    std::cout << std::endl;
-    for (const Foo& obj : idx) {
-	std::cout << obj << std::endl;
-    }
-    std::cout << std::endl;
-
-    int counter = 0;
-    mi::FlatIndex<flag, bool,
-	mi::FlatIndex<ref, Ref<Bar>,
-	    mi::Index<a, int,
-		mi::Index<b, float,
-		    mi::Table<c, double>>>>> nidx(boost::none, bars);
-    for (const Bar& bar : bars) {
-	int x = ++counter;
-	float y = ++counter + 0.33;
-	double z = ++counter + 0.66;
-	nidx.insert(bar.flag, bar.ref, x, y, z);
-    }
+    mi::MultiIndex<
+        mi::FlatIndex<flag, bool, NONE,
+            mi::FlatIndex<ref, Ref<Bar>, bars,
+                mi::LightIndex<b, std::string,
+                    mi::Index<c, char,
+                        mi::Cell<id, int> > > > >,
+        mi::Index<c, char,
+            mi::MultiIndex<
+                mi::BitSet<flag, bool, NONE >,
+                mi::Table<b, std::string> > > > nidx;
+    nidx.insert(true,  bars.find("aaa").ref, "zero",  'z', 0);
+    nidx.insert(true,  bars.find("bbb").ref, "one",   'o', 1);
+    nidx.insert(true,  bars.find("ccc").ref, "two",   't', 2);
+    nidx.insert(false, bars.find("aaa").ref, "three", 't', 3);
+    nidx.insert(false, bars.find("bbb").ref, "four",  'f', 4);
+    nidx.insert(false, bars.find("ccc").ref, "five",  'f', 5);
     std::cout << "All " << nidx.size() << " entries:" << std::endl;
     FOR(res, nidx) {
-	std::cout << "  " << res << std::endl;
+        std::cout << "  ";
+	res.print(std::cout);
+        std::cout << std::endl;
+    }
+    std::cout << "Inserting duplicate id entry:" << std::endl;
+    nidx.insert(true,  bars.find("aaa").ref, "zero",  'z', 6);
+    FOR(res, nidx) {
+        std::cout << "  ";
+	res.print(std::cout);
+        std::cout << std::endl;
     }
     std::cout << "All the ref's for false:" << std::endl;
-    for (const auto& p : nidx[false]) {
+    for (const auto& p : nidx.pri()[false]) {
 	std::cout << "  " << p.first << std::endl;
     }
     std::cout << "All true entries:" << std::endl;
-    FOR(res, nidx[true]) {
-	std::cout << "  " <<  res << std::endl;
+    FOR(res, nidx.pri()[true]) {
+        std::cout << "  ";
+	res.print(std::cout);
+        std::cout << std::endl;
     }
-    std::cout << "All false entries for bbb:" << std::endl;
-    FOR(res, nidx[false][bars.find("bbb").ref]) {
-	std::cout << "  " <<  res << std::endl;
+    std::cout << "All true entries for bbb:" << std::endl;
+    FOR(res, nidx.pri()[true][bars.find("bbb").ref]) {
+        std::cout << "  ";
+	res.print(std::cout);
+        std::cout << std::endl;
     }
-    nidx.of(true).copy(nidx[false]);
-    std::cout << "All false tuples copied to true:" << std::endl;
-    FOR(res, nidx) {
-	std::cout <<  "  " << res << std::endl;
+    std::cout << "All (c,flag) combinations:" << std::endl;
+    FOR(res, nidx.sec<0>()) {
+        std::cout << "  ";
+	res.print(std::cout);
+        std::cout << std::endl;
+    }
+    std::cout << "All b's for c = 't':" << std::endl;
+    for (const std::string& b : nidx.sec<0>()['t'].sec<0>()) {
+        std::cout << "  " << b << std::endl;
     }
     std::cout << std::endl;
 
@@ -176,7 +147,9 @@ int main() {
     }
     std::cout << "Regular table contents:" << std::endl;
     FOR(tup, int_tab) {
-	std::cout << "  " << tup << std::endl;
+        std::cout << "  ";
+	tup.print(std::cout);
+        std::cout << std::endl;
     }
     std::cout << "Contains (1,41): " << int_tab.contains(1, 41) << std::endl;
     std::cout << "Contains (1,43): " << int_tab.contains(1, 43) << std::endl;
@@ -196,68 +169,6 @@ int main() {
     wl1.enqueue(1);
     assert(!wl1.empty());
     std::cout << std::endl;
-
-    Worklist<int,false,Table<int>> wl2;
-    wl2.enqueue(1);
-    wl2.dequeue();
-    wl2.enqueue(1);
-    assert(wl2.empty());
-
-    mi::Table<a,Stack> stacks;
-    mi::Index<a,Stack,mi::Table<b,Stack>> id;
-    Stack s54;
-    s54.push(4); s54.push(5);
-    print_stack(s54);
-    stacks.insert(s54);
-    id.insert(s54, s54);
-    Stack s321;
-    s321.push(1); s321.push(2); s321.push(3);
-    print_stack(s321);
-    stacks.insert(s321);
-    id.insert(s321, s321);
-    Stack s54321 = s321;
-    s54321.append(s54);
-    print_stack(s54321);
-    stacks.insert(s54321);
-    id.insert(s54321, s54321);
-    Stack s5454321 = s54321;
-    s5454321.append(s54);
-    print_stack(s5454321);
-    stacks.insert(s5454321);
-    id.insert(s5454321, s5454321);
-    Stack s5432154 = s54;
-    s5432154.append(s54321);
-    print_stack(s5432154);
-    stacks.insert(s5432154);
-    id.insert(s5432154, s5432154);
-    Stack s54_ = s5432154;
-    s54_.pop_bottom();
-    print_stack(s54_);
-    stacks.insert(s54_);
-    id.insert(s54_, s54_);
-    std::cout << "As stored in table:" << std::endl;
-    FOR(tup, stacks) {
-	std::cout << "  ";
-	print_stack(tup.get<a>());
-    }
-    std::cout << "Identity:" << std::endl;
-    FOR(tup, id) {
-	std::cout << "  ";
-	print(std::cout, tup.get<a>(), false);
-	std::cout << " ";
-	print(std::cout, tup.get<b>(), false);
-	std::cout << std::endl;
-    }
-    std::cout << "Should be the same as:" << std::endl;
-    for (const auto& a_p : id) {
-	FOR(tup, a_p.second) {
-	    std::cout << "  ";
-	    print(std::cout, a_p.first, false);
-	    std::cout << " ";
-	    print(std::cout, tup.get<b>(), false);
-	    std::cout << std::endl;
-	}
-    }
 
     return 0;
 }

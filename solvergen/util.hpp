@@ -3,6 +3,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/none.hpp>
+#include <boost/optional.hpp>
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
@@ -207,24 +208,6 @@ template<typename PtrT>
 const typename std::pointer_traits<PtrT>::element_type&
 deref(const PtrT& ptr) {
     return *ptr;
-}
-
-template<typename T, typename V, int I>
-struct TupleInserter {
-    static void insert(T& idxs, V& val) {
-	TupleInserter<T,V,I-1>::insert(idxs, val);
-	std::get<I-1>(idxs).insert(val);
-    }
-};
-
-template<typename T, typename V>
-struct TupleInserter<T,V,0> {
-    static void insert(T&, V&) {}
-};
-
-template<typename T, typename V>
-void insert_all(T& idxs, V& val) {
-    TupleInserter<T,V,std::tuple_size<T>::value>::insert(idxs, val);
 }
 
 template<typename T, typename S>
@@ -446,8 +429,9 @@ public:
 namespace detail {
 
 template<unsigned int DEPTH> struct JoinZipHelper {
-    template<class LMap, class RMap, class ZipT>
-    static void handle(const LMap& l, const RMap& r, const ZipT& zip) {
+    template<class LMap, class RMap, class ZipT, class... KeyTs>
+    static void handle(const LMap& l, const RMap& r, const ZipT& zip,
+                       const KeyTs&... keys) {
 	auto l_curr = l.begin();
 	auto r_curr = r.begin();
 	const auto l_end = l.end();
@@ -456,7 +440,8 @@ template<unsigned int DEPTH> struct JoinZipHelper {
 	    int key_rel = compare(l_curr->first, r_curr->first);
 	    if (key_rel == 0) {
 		JoinZipHelper<DEPTH-1>::handle(l_curr->second,
-					       r_curr->second, zip);
+					       r_curr->second, zip,
+                                               keys..., l_curr->first);
 	    }
 	    if (key_rel >= 0) {
 		++r_curr;
@@ -469,16 +454,16 @@ template<unsigned int DEPTH> struct JoinZipHelper {
 };
 
 template<> struct JoinZipHelper<0> {
-    template<class LMap, class RMap, class ZipT>
-    static void handle(const LMap& l, const RMap& r, const ZipT& zip) {
-	zip(l, r);
+    template<class LMap, class RMap, class ZipT, class... KeyTs>
+    static void handle(const LMap& l, const RMap& r, const ZipT& zip,
+                       const KeyTs&... keys) {
+	zip(l, r, keys...);
     }
 };
 
 } // namespace detail
 
 // TODO:
-// - Also feed the common key to zip?
 // - Should implement using iterators?
 // - Only works for sorted containers
 template<unsigned int DEPTH, class LMap, class RMap, class ZipT>
@@ -722,373 +707,6 @@ public:
     }
     Iterator end() const {
 	return Iterator(array.cend());
-    }
-};
-
-// STRUCT FIELD INDEXING ======================================================
-
-// Features:
-// - nested mapping
-//   use a trait/typedef to bubble-up the tuple type
-// - simultaneous index on 2 different fields
-//   (can't emplace anymore)
-//   careful if you try to store pointers; careful to avoid comparison
-//   store on the primary index first
-//   only store on the secondaries if it doesn't already exist
-// - generic handling of multiple indices on the same level
-//   use variadic templates
-//   need to identify secondary indices by their number
-//   type of field is not sufficient: might be the same for two fields
-// - tuples are explicitly materialized in memory
-//   the containers are stable, so the tuples can be handled via pointers
-// - can iterate over the entire table, as well as intermediate index levels
-// - selecting on a non-existent value doesn't create spurious entries
-
-// Comparison with RelC:
-// - leaf nodes contain unindexed sets, not single tuples
-// - functional dependencies are ignored
-// - delete/update not supported
-// - tuples explicitly materialized (fully present in memory)
-//   feasible to refer to tuples via pointers
-// - implemented purely in C++
-// - connection to the class structure (attributes are fields)
-// - no relational operations, no query planning
-//   user has to access the indices manually
-//   => always has to provide all the required keys
-//      (no need to verify that's the case)
-// - single root (like RelC) and single leaf
-//   single path through the graph is "primary"
-//   "secondary" indices are separate arcs on the graph
-//   those always start from the root node and end at the leaf node
-// - re-indexing not supported => index fields must be const
-//   underlying data structures implicitly disallow modifying the tuples at all
-//   => all fields must be const
-//   (partially enforced by having constant iterators)
-// - always possible to recover all fields of the tuples
-//   conditions 1 and 3 of query validity automatically satisfied:
-//   - queries produce all of the columns requested as output
-//   - tuples from each side of a fork can be accurately matched
-// - primary and secondary indices are completely separate
-//   not easy to support features like sharing the leaf representation
-//   (but will need in order to get pre-leaf merges)
-
-// Extensions:
-// - multi-field keys
-// - don't materialize tuples fully in memory
-//   instead store only the missing fields
-//   but instantiate a real tuple for every selection
-//   (which is not actually stored)
-//   this will require more verification
-//   [how do we refer to tuples in this case?]
-// - can avoid instantiating a separate set-of-refs for each secondary index?
-// - 'find' function?
-// - macro wrapping Index<...> sequence
-// - concrete size type
-// - give client choice of container to use
-// - store on deque rather than set at the bottom?
-// - handle derived classes correctly
-// - secondary arcs starting from arbitrary points and ending at the leaf
-//   probably make those branch points explicit using MultiIndex's
-// - secondary arcs ending at arbitrary points (harder)
-// - sharing among secondary arcs
-// - relational operations & high-level query plans
-//   possibly via pattern matching
-//   (need specialized pattern language, with wildcards, constraints etc.)
-//   could do this through template specialization:
-//   - each level knows what attribute it controls
-//     when "asked", combines that with answer from children
-//   - to query, pass a pattern down the index tree
-//     then each level:
-//     - uses the correct map
-//     - removes the matched field from the pattern
-//     - passes the new pattern down
-//     at fork points, can decide based on what the children report
-//   maybe wrap in a macro, to offer a nice syntax
-// - tuple deletion
-//   could reuse RelC's cut-based approach?
-//   need to handle single insertion but multiple mapping, at merge points
-//   could clean up empty map nodes
-// - tuple updates (allow reindexing to occur?)
-// - use intrusive containers to weave multiple indices efficiently
-//   i.e., wrap the data tuple over an element node for an intrusive container
-//   (add the pointer fields)
-//   useful for simple deletion of nodes at merge points
-//   features:
-//   - single object can belong to multiple indices
-//   - objects don't need to be copy constructible
-//   - derived classes can be handled
-//   - manual memory management required
-//   - manual re-indexing required
-// - variadic template of all indexing fields
-//   - shouldn't have to redefine Index twice, for the two cases of >3 and 3
-//     should instead be able to say that Index<T> = T
-//   - bug: would then be able to kill the matching of nested secondary indices
-//     by calling primary_select on an intermediate step
-//   but can't have non-types as variadic template parameters
-// - exploit functional dependencies
-//   defined e.g. on the tuple type, as attribute subsets that are keys
-//   - singleton ("unit") nodes
-//     only if we've crossed all functional dependencies
-//     specialized API:
-//     - iterator has size [either 0 or] 1
-//       can make special wrapper class for this
-//     - special function to retrieve single tuple
-//     - insert checks whenever a new value is added
-//       check that all remaining values are the same
-//       always return false
-//     - alternatively, if there is such a value, merge its non-const fields
-//       (need a callback for that)
-//   - modifiable non-key attributes
-//   - tuples no longer fully immutable => can make iterators semi-constant
-//     can still not insert through them
-//     but can get non-const refs to objects, to edit non-key fields
-// - union operator / bulk insertion
-// - random-access index/auto-increment attribute
-// - implement on top of boost::multi_index
-// - named indices (use classes as index tags)
-
-// Concepts:
-// - Relation<T>, SecIndex<T>:
-//   - typedef Tuple = T
-//   - typedef Iterator: iterator with traits:
-//     - constant iterator
-//     - value_type = Tuple
-//     - iterator_category = input_iterator_tag (at least)
-//   - std::pair<const Tuple*,bool> insert(const Tuple& tuple)
-//   - Iterator begin() const
-//   - Iterator end() const
-//   - unsigned int size() const
-// Implementations:
-// - Table<T> : Relation<T>
-// - PtrTable<T> : SecIndex<T>
-// - Index<S,K,MemPtr> : Relation<T> / SecIndex<T>
-//   where:
-//   - S : Relation<T> / SecIndex<T>
-//   - MemPtr is a pointer to a member of T, of type K
-//   additional:
-//   - typedef Wrapped = S
-//   - typedef Key = K
-//   - const Wrapped& operator[](const Key& key) const
-// - MultiIndex<PriIdxT,S[1],S[2],...> : Relation<T>:
-//   where:
-//   - PriIdxT : Relation<T>
-//   - each S[i] : SecIndex<T>
-//   additional:
-//   - const PriIdxT& primary() const
-//   - template<int I> const S[I] secondary() const
-
-// Constraints:
-// - correctness requirement:
-//   for each key field k: for any two tuples t1,t2: t1.k != t2.k => t1 != t2
-// - all levels must implement the same concept
-// - can't call insert on the wrapped type, only on the top
-// - the order of selects and that of template arguments is reverse
-// - indexed fields can't change value (must be 'const')
-//   (re-indexing not supported)
-//   rest of fields should probably not change either
-//   (unless they don't affect the ordering)
-
-template<typename T> class Table {
-public:
-    typedef T Tuple;
-    typedef typename std::set<Tuple>::const_iterator Iterator;
-private:
-    std::set<Tuple> store;
-public:
-    Table() {}
-    std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
-	auto res = store.insert(tuple);
-	return std::make_pair(&(*(res.first)), res.second);
-    }
-    Iterator begin() const {
-	return store.cbegin();
-    }
-    Iterator end() const {
-	return store.cend();
-    }
-    unsigned int size() const {
-	return store.size();
-    }
-};
-
-template<typename S, typename K, const K S::Tuple::* MemPtr> class Index {
-public:
-    typedef S Wrapped;
-    typedef typename Wrapped::Tuple Tuple;
-    typedef K Key;
-    typedef std::map<Key,Wrapped> Map;
-    typedef Flattener<MappedIter<Map>,typename Wrapped::Iterator> Iterator;
-private:
-    static const Wrapped dummy;
-private:
-    Map idx;
-public:
-    explicit Index() {}
-    std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
-	return idx[tuple.*MemPtr].insert(tuple);
-    }
-    const Wrapped& operator[](const Key& key) const {
-	auto it = idx.find(key);
-	return (it == idx.cend()) ? dummy : it->second;
-    }
-    Iterator begin() const {
-	return Iterator(MappedIter<Map>(idx.begin()),
-			MappedIter<Map>(idx.end()));
-    }
-    Iterator end() const {
-	return Iterator(MappedIter<Map>(idx.end()),
-			MappedIter<Map>(idx.end()));
-    }
-    unsigned int size() const {
-	unsigned int sz = 0;
-	for (const auto& entry : idx) {
-	    sz += entry.second.size();
-	}
-	return sz;
-    }
-};
-
-template<typename S, typename K, const K S::Tuple::* MemPtr>
-const S Index<S,K,MemPtr>::dummy;
-
-// Partial specialization, for types small enough that it makes sense to
-// preallocate all slots.
-// TODO: Code duplication with main Index class.
-template<typename S, const bool S::Tuple::* MemPtr>
-class Index<S,bool,MemPtr> {
-public:
-    typedef S Wrapped;
-    typedef typename Wrapped::Tuple Tuple;
-    typedef Flattener<Wrapped*,typename Wrapped::Iterator> Iterator;
-private:
-    Wrapped array[2];
-public:
-    explicit Index() {}
-    std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
-	return array[tuple.*MemPtr].insert(tuple);
-    }
-    const Wrapped& operator[](bool key) const {
-	return array[key];
-    }
-    Iterator begin() const {
-	return Iterator(&(array[0]));
-    }
-    Iterator end() const {
-	return Iterator(NULL);
-    }
-    unsigned int size() const {
-	return array[false].size() + array[true].size();
-    }
-};
-
-// TODO:
-// - Code duplication with Index class.
-// - Could allocate the Wrapped class on a specialized container.
-// - Could emplace the wrapped class directly on the vector, but would need
-//   to implement move semantics on it, so that iterators and pointers to the
-//   underlying tuples remain valid when the vector gets reallocated.
-template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
-class FlatIndex {
-public:
-    typedef S Wrapped;
-    typedef typename Wrapped::Tuple Tuple;
-    typedef std::vector<std::unique_ptr<Wrapped>> PtrArray;
-    typedef DerefIter<typename PtrArray::const_iterator> Iterator;
-private:
-    static const Wrapped dummy;
-private:
-    PtrArray array;
-public:
-    explicit FlatIndex() {}
-    std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
-	return (*this)[tuple.*MemPtr].insert(tuple);
-    }
-    Wrapped& operator[](Ref<C> key) {
-	while (key.value() >= array.size()) {
-	    array.push_back(std::unique_ptr<Wrapped>(new Wrapped()));
-	}
-	return *(array[key.value()]);
-    }
-    const Wrapped& operator[](Ref<C> key) const {
-	return (key.value() < array.size()) ? *(array[key.value()]) : dummy;
-    }
-    Iterator begin() const {
-	return Iterator(array.cbegin());
-    }
-    Iterator end() const {
-	return Iterator(array.cend());
-    }
-    unsigned int size() const {
-	unsigned int sz = 0;
-	for (const std::unique_ptr<Wrapped>& elem : array) {
-	    sz += elem->size();
-	}
-	return sz;
-    }
-};
-
-template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
-const S FlatIndex<S,C,MemPtr>::dummy;
-
-template<typename T> class PtrTable {
-public:
-    typedef T Tuple;
-    typedef typename std::deque<const Tuple*>::const_iterator PtrIterator;
-    typedef DerefIter<PtrIterator> Iterator;
-private:
-    std::deque<const Tuple*> store;
-public:
-    PtrTable() {}
-    std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
-	// Assuming this is only called via a fork point, it will never be
-	// called for duplicate entries, so we don't need to check.
-	store.push_back(&tuple);
-	return std::make_pair(&tuple, true);
-    }
-    Iterator begin() const {
-	return Iterator(store.cbegin());
-    }
-    Iterator end() const {
-	return Iterator(store.cend());
-    }
-    unsigned int size() const {
-	return store.size();
-    }
-};
-
-template<typename PriIdxT, typename... SecIdxTs> class MultiIndex {
-public:
-    typedef typename PriIdxT::Tuple Tuple;
-    typedef typename PriIdxT::Iterator Iterator;
-private:
-    PriIdxT pri_idx;
-    std::tuple<SecIdxTs...> sec_idxs;
-public:
-    explicit MultiIndex() {}
-    std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
-	auto res = pri_idx.insert(tuple);
-	// Only insert on secondary indices if tuple wasn't already present.
-	if (res.second) {
-	    detail::insert_all(sec_idxs, *(res.first));
-	}
-	return res;
-    }
-    const PriIdxT& primary() const {
-	return pri_idx;
-    }
-    // TODO: Define a public array of indices instead?
-    template<int I>
-    const typename pack_elem<I,SecIdxTs...>::type& secondary() const {
-	return std::get<I>(sec_idxs);
-    }
-    Iterator begin() const {
-	return pri_idx.begin();
-    }
-    Iterator end() const {
-	return pri_idx.end();
-    }
-    unsigned int size() const {
-	return pri_idx.size();
     }
 };
 
@@ -1346,9 +964,7 @@ struct Nil {
     bool operator<(const Nil&) const {
 	return false;
     }
-    friend std::ostream& operator<<(std::ostream& os, const Nil&) {
-	return os;
-    }
+    void print(std::ostream&) const {}
 };
 
 template<class Tag, class Hd, class Tl>
@@ -1378,9 +994,9 @@ public:
 	}
 	return tl < rhs.tl;
     }
-    friend std::ostream& operator<<(std::ostream& os, const NamedTuple& tup) {
-	os << Tag::name() << "=" << tup.hd << " " << tup.tl;
-	return os;
+    void print(std::ostream& os) const {
+	os << Tag::name() << "=" << hd << " ";
+	tl.print(os);
     }
 };
 
@@ -1430,20 +1046,6 @@ struct KeyTraits<Ref<T>> {
     }
 };
 
-template<class Idx> struct flat_dims {
-    static const unsigned int value = 0;
-};
-
-template<class Tag, class K, class S> class FlatIndex;
-template<class Tag, class K, class S> struct flat_dims<FlatIndex<Tag,K,S>> {
-    static const unsigned int value = flat_dims<S>::value + 1;
-};
-
-template<class Tag, class T> class BitSet;
-template<class Tag, class T> struct flat_dims<BitSet<Tag,T>> {
-    static const unsigned int value = 1;
-};
-
 namespace detail {
 
 template<class T, class S>
@@ -1454,6 +1056,24 @@ const T& get_first(const std::pair<const T,S>& p) {
 template<class T, unsigned int I>
 static const T& id(const T& val) {
     return val;
+}
+
+template<typename T, typename V, int I>
+struct TupleInserter {
+    static void insert(T& idxs, const V& val) {
+	TupleInserter<T,V,I-1>::insert(idxs, val);
+	std::get<I-1>(idxs).sec_insert(val);
+    }
+};
+
+template<typename T, typename V>
+struct TupleInserter<T,V,0> {
+    static void insert(T&, const V&) {}
+};
+
+template<typename T, typename V>
+void insert_all(T& idxs, const V& val) {
+    TupleInserter<T,V,std::tuple_size<T>::value>::insert(idxs, val);
 }
 
 } // namespace detail
@@ -1549,6 +1169,80 @@ public:
 	    }
 	    tgt_fld = *curr;
 	    return true;
+	}
+    };
+};
+
+template<class Tag, class T> class Cell {
+public:
+    class Iterator;
+    friend Iterator;
+    typedef NamedTuple<Tag,T,Nil> Tuple;
+private:
+    boost::optional<T> val_;
+public:
+    explicit Cell() {}
+    Cell(const Cell&) = default;
+    Cell(Cell&&) = default;
+    Cell& operator=(const Cell&) = delete;
+    friend void swap(Cell& a, Cell& b) {
+	using std::swap;
+	swap(a.val_, b.val_);
+    }
+    bool insert(const T& val) {
+	if ((bool) val_) {
+	    // can't update the value once set
+	    return false;
+	}
+	val_ = val;
+	return true;
+    }
+    bool insert(const Tuple& tuple) {
+	return insert(tuple.hd);
+    }
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
+	it.migrate(*this);
+	return it;
+    }
+    bool empty() const {
+	return !((bool) val_);
+    }
+    bool contains(const T& val) const {
+	return val_ == val;
+    }
+    bool contains(const Tuple& tuple) const {
+	return val_ == tuple.hd;
+    }
+    unsigned int size() const {
+	return ((bool) val_) ? 1 : 0;
+    }
+    const T& get() const {
+	return val_.get();
+    }
+public:
+
+    class Iterator {
+    private:
+	const Cell* curr;
+	T& tgt_fld;
+	bool before_start = true;
+    public:
+	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
+	void migrate(const Cell& cell) {
+	    curr = &cell;
+	    before_start = true;
+	}
+	bool next() {
+	    if (!before_start) {
+		return false;
+	    }
+	    before_start = false;
+	    if ((bool) curr->val_) {
+		tgt_fld = curr->val_.get();
+		return true;
+	    }
+	    return false;
 	}
     };
 };
@@ -1682,14 +1376,14 @@ public:
 template<class Tag, class K, class S>
 const S Index<Tag,K,S>::dummy;
 
-template<class Pri, class Sec> class MultiIndex {
+template<class Pri, class... Sec> class MultiIndex {
 public:
     class Iterator;
     friend Iterator;
     typedef typename Pri::Tuple Tuple;
 private:
     Pri pri_;
-    Sec sec_;
+    std::tuple<Sec...> sec_;
 public:
     explicit MultiIndex() {}
     MultiIndex(const MultiIndex&) = default;
@@ -1703,8 +1397,9 @@ public:
     const Pri& pri() const {
 	return pri_;
     }
-    const Sec& sec() const {
-	return sec_;
+    template<int I>
+    const typename pack_elem<I,Sec...>::type& sec() const {
+	return std::get<I>(sec_);
     }
     template<class... Flds>
     bool insert(const Flds&... flds) {
@@ -1713,7 +1408,7 @@ public:
     bool insert(const Tuple& tuple) {
 	if (pri_.insert(tuple)) {
 	    // Only insert on secondary index if tuple wasn't already present.
-	    sec_.sec_insert(tuple);
+	    detail::insert_all(sec_, tuple);
 	    return true;
 	}
 	// TODO: Check that tuple is also present on sec.
@@ -1722,7 +1417,7 @@ public:
     template<class Other>
     void sec_insert(const Other& other) {
 	pri_.sec_insert(other);
-	sec_.sec_insert(other);
+	detail::insert_all(sec_, other);
     }
     Iterator iter(Tuple& tgt) const {
 	Iterator it(tgt);
@@ -1757,7 +1452,8 @@ public:
 
 // SPECIALIZED CONTAINERS =====================================================
 
-template<class Tag, class K, class S> class FlatIndex {
+template<class Tag, class K, const typename KeyTraits<K>::SizeHint& Hint,
+	 class S> class FlatIndex {
 public:
     typedef K Key;
     typedef S Sub;
@@ -1771,10 +1467,7 @@ public:
 private:
     std::vector<Sub> array;
 public:
-    template<class... Rest>
-    explicit FlatIndex(const typename KeyTraits<Key>::SizeHint& hint,
-		       const Rest&... rest)
-	: array(KeyTraits<Key>::extract_size(hint), Sub(rest...)) {}
+    explicit FlatIndex() : array(KeyTraits<Key>::extract_size(Hint)) {}
     FlatIndex(const FlatIndex&) = default;
     FlatIndex(FlatIndex&&) = default;
     FlatIndex& operator=(const FlatIndex&) = delete;
@@ -1799,6 +1492,10 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
+    }
+    template<class Other>
+    void sec_insert(const Other& other) {
+	of(other.template get<Tag>()).sec_insert(other);
     }
     bool copy(const FlatIndex& src) {
 	unsigned int lim = src.array.size();
@@ -1963,7 +1660,8 @@ public:
     };
 };
 
-template<class Tag, class T> class BitSet {
+template<class Tag, class T, const typename KeyTraits<T>::SizeHint& Hint>
+class BitSet {
 private:
     typedef unsigned short Store;
     static const Store top_bit = 1 << (sizeof(Store) * 8 - 1);
@@ -1974,8 +1672,8 @@ public:
 private:
     Store bits = 0;
 public:
-    explicit BitSet(const typename KeyTraits<T>::SizeHint& hint) {
-	EXPECT(sizeof(Store) * 8 >= KeyTraits<T>::extract_size(hint));
+    explicit BitSet() {
+	EXPECT(sizeof(Store) * 8 >= KeyTraits<T>::extract_size(Hint));
     }
     BitSet(const BitSet&) = default;
     BitSet(BitSet&&) = default;
@@ -1993,6 +1691,10 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
+    }
+    template<class Other>
+    void sec_insert(const Other& other) {
+	insert(other.template get<Tag>());
     }
     bool copy(const BitSet& src) {
 	Store prev_bits = bits;
@@ -2113,6 +1815,10 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd, tuple.tl);
+    }
+    template<class Other>
+    void sec_insert(const Other& other) {
+	of(other.template get<Tag>()).sec_insert(other);
     }
     bool copy(const LightIndex& src) {
 	bool grew = false;
