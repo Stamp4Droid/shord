@@ -13,8 +13,11 @@ def convert(tgf_fname, fout):
     fout.write('digraph %s {\n' % comp)
     fout.write('id="%s";\n' % comp)
     fout.write('rankdir="LR";\n')
+    fout.write('label="%s";\n' % comp)
+    fout.write('labelloc=top;\n')
+    fout.write('labeljust=left;\n')
     fout.write('node [style=filled,fillcolor=white,color=black];\n')
-    fout.write('node [shape=plaintext,label=""] __phantom__;\n')
+    fout.write('__phantom__ [style=invis,label=""];\n')
 
     with open(tgf_fname) as fin:
         for line in fin:
@@ -32,20 +35,21 @@ def convert(tgf_fname, fout):
                 states_done = True
             else:
                 state = toks[0]
-                weight = ''
-                shape = 'circle'
+                weight = 1
+                shape = 'oval'
                 label = state
                 for t in toks[1:]:
                     if t == 'in':
                         entries.append(state)
                     elif t == 'out':
-                        weight = 'double'
+                        weight = 2
                     else:
                         shape = 'box'
-                        label = t
-                fout.write('%s [id="%s",tooltip="%s",shape="%s",label="%s"];\n'
+                        label = label + ':' + t
+                fout.write(('%s [id="%s",tooltip="%s",shape="%s",' +
+                            'peripheries=%s,label="%s"];\n')
                            % (state, comp + ':' + state, comp + ':' + state,
-                              weight + shape, label))
+                              shape, weight, label))
 
     for e in entries:
         fout.write('__phantom__ -> %s [color=blue];\n' % e)
