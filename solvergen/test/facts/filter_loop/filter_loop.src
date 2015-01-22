@@ -1,0 +1,14 @@
+filter_loop(l):
+  head = NULL
+  tail = NULL
+  while l != NULL:
+    if P(l->contents):
+      if head == NULL:
+        head = (l->contents, NULL)
+        tail = head
+      else:
+        temp = (l->contents, NULL)
+        tail->next = temp
+        tail = temp
+    l = l->next
+  return head

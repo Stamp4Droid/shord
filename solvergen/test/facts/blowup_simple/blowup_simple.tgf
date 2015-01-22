@@ -1,0 +1,14 @@
+t
+x
+bse
+o4
+o2
+op
+#
+t op storeRef[prev]
+op t storeRef[next]
+op bse storeRef[mTail]
+bse x retRef[i1]
+bse t loadRef[mTail]
+o2 bse new
+o4 op new

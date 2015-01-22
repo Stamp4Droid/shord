@@ -1,0 +1,5 @@
+search(l):
+  if ... :
+    return l
+  else:
+    return search(l->next)
