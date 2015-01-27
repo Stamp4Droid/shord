@@ -17,9 +17,13 @@ analysis = $(call first,\#,$(1))
 pri = $(call first,^,$(call last,@,$(call first,\#,$(1))))
 sec = $(call last,^,$(call last,@,$(call first,\#,$(1))))
 
-.PHONY: default clean
+.PHONY: default clean FORCE
 
 .SECONDARY:
+
+# Add to a target t1's dependencies to bypass Make's date checking, and force
+# it to always run t1's body when any t2 depends on t1.
+FORCE: ;
 
 default:
 
@@ -56,3 +60,15 @@ bin/cfg/%: $(CFG_SRC) gen/$$(call class,$$*)@$$(call pri,$$*)^$$(call sec,$$*).c
 # compiled with -DFLAG1 -DFLAG2
 bin/rsm\#%: $(RSM_SRC)
 	$(CC) $(subst $(comma), ,$*) -o $@ -I . $(filter %.cpp,$^) $(RSM_LIBS)
+
+bin/rsm.out: rsm.cpp util.hpp
+	$(CC) -I . -o bin/rsm.out rsm.cpp $(RSM_LIBS)
+
+bin/twodim.out: twodim.cpp util.hpp amore/libAMoRE.a
+	$(CC) -I . -I amore/include/ -L amore \
+	-o bin/twodim.out twodim.cpp -lAMoRE $(RSM_LIBS)
+
+# When some other target depends on amore/libAMoRE.a, invoke that sub-project's
+# Makefile to check for changes.
+amore/libAMoRE.a: FORCE
+	$(MAKE) -C amore/ libAMoRE.a

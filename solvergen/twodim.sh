@@ -1,8 +1,6 @@
 #!/bin/bash -eu
 
-g++ -std=c++11 -Wall -Wextra -pedantic -g \
-    -I amore/include/ -L amore/ \
-    -o twodim.out twodim.cpp \
-    -lAMoRE \
-    -lboost_system -lboost_filesystem -lboost_program_options -lboost_regex
-export LD_LIBRARY_PATH=amore/; ./twodim.out "$@"
+SGEN_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+
+make -C "$SGEN_DIR" bin/twodim.out
+export LD_LIBRARY_PATH="$SGEN_DIR/amore/"; "$SGEN_DIR/bin/twodim.out" "$@"
