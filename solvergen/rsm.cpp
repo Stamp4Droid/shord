@@ -1132,8 +1132,10 @@ int main(int argc, char* argv[]) {
     // Perform intersection
     std::cout << "Enumerating functions, based on primary RSM" << std::endl;
     enum_funs();
+    std::cout << funs.size() << " functions in total" << std::endl;
     std::cout << "Intersecting functions with secondary RSM" << std::endl;
     fs::create_directory(out_dir);
+    unsigned count = 0;
     FOR(f, funs) {
         Intersection intxn(f);
         std::stringstream ss;
@@ -1142,7 +1144,7 @@ int main(int argc, char* argv[]) {
         std::ofstream fout(fpath.string());
         EXPECT((bool) fout);
         fout << intxn;
-        std::cout << "Printed " << fpath << std::endl;
+        std::cout << "Printed # " << ++count << ": " << f << std::endl;
     }
 
     return EXIT_SUCCESS;
