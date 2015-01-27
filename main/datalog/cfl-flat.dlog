@@ -24,6 +24,7 @@ CM(c:C,m:M) input
 CH(o:C,h:H) input
 CI(c:C,i:I) input
 CC(c:C,d:C) input
+chaIM(i:I,m:M) input
 
 Alloc(v:V,h:H)    input
 HTFilter(h:H,t:T) input
@@ -39,6 +40,7 @@ StorePrim(b:V,f:F,u:U) input
 # OUTPUT RELATIONS ============================================================
 
 CIC(c:C,i:I,d:C) output
+CIMC(c:C,i:I,m:M,d:C) output
 CO(c:C,o:C) output
 
 AllocCtxt(c:C,v:V,o:C) output
@@ -55,6 +57,7 @@ ArrStorePrim(b:V,u:U) output # b[*] = u
 # RULES =======================================================================
 
 CIC(c,i,d) :- CC(c,d), CI(d,i).
+CIMC(c,i,m,d) :- CIC(c,i,d), chaIM(i,m).
 CO(c,o) :- CC(c,o), CH(o,_).
 
 AllocCtxt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).

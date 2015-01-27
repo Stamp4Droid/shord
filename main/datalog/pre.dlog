@@ -22,13 +22,21 @@ MmethRet(m:M,z:Z,v:V) input
 MmethPrimArg(m:M,z:Z,v:U) input
 MmethPrimRet(m:M,z:Z,v:U) input
 
-param(u:V,v:V,i:I) output   # u is the formal parameter, v is actual arg, i is invocation stmt
-return(u:V,v:V,i:I)  output   # u is the lhs at callsite, v is the return var, i is invocation stmt
-paramPrim(u:U,v:U,i:I) output   # u is the formal parameter, v is actual arg, i is invocation stmt
-returnPrim(u:U,v:U,i:I)  output   # u is the lhs at callsite, v is the return var, i is invocation stmt
+paramM(u:V,v:V,i:I,m:M) output
+param(u:V,v:V,i:I)      output   # u is the formal parameter, v is actual arg, i is invocation stmt
+returnM(u:V,v:V,i:I,m:M) output
+return(u:V,v:V,i:I)      output   # u is the lhs at callsite, v is the return var, i is invocation stmt
+paramPrimM(u:U,v:U,i:I,m:M) output
+paramPrim(u:U,v:U,i:I)      output   # u is the formal parameter, v is actual arg, i is invocation stmt
+returnPrimM(u:U,v:U,i:I,m:M) output
+returnPrim(u:U,v:U,i:I)      output   # u is the lhs at callsite, v is the return var, i is invocation stmt
 
-param(u,v,i) :- chaIM(i,m), MmethArg(m,z,u), IinvkArg(i,z,v).
-return(u,v,i) :- chaIM(i,m), MmethRet(m,z,v), IinvkRet(i,z,u).
+paramM(u,v,i,m) :- chaIM(i,m), MmethArg(m,z,u), IinvkArg(i,z,v).
+param(u,v,i)    :- paramM(u,v,i,_).
+returnM(u,v,i,m) :- chaIM(i,m), MmethRet(m,z,v), IinvkRet(i,z,u).
+return(u,v,i)    :- returnM(u,v,i,_).
 
-paramPrim(u,v,i) :- chaIM(i,m), MmethPrimArg(m,z,u), IinvkPrimArg(i,z,v).
-returnPrim(u,v,i) :- chaIM(i,m), MmethPrimRet(m,z,v), IinvkPrimRet(i,z,u).
+paramPrimM(u,v,i,m) :- chaIM(i,m), MmethPrimArg(m,z,u), IinvkPrimArg(i,z,v).
+paramPrim(u,v,i)    :- paramPrimM(u,v,i,_).
+returnPrimM(u,v,i,m) :- chaIM(i,m), MmethPrimRet(m,z,v), IinvkPrimRet(i,z,u).
+returnPrim(u,v,i)    :- returnPrimM(u,v,i,_).
