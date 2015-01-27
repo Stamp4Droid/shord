@@ -1093,7 +1093,7 @@ public:
     typedef typename std::set<T>::const_iterator ConstTopIter;
     typedef NamedTuple<Tag,T,Nil> Tuple;
 private:
-    std::set<T> store;
+    std::set<T> store_;
 public:
     explicit Table() {}
     // TODO: Only works if T is copy-constructible.
@@ -1102,10 +1102,10 @@ public:
     Table& operator=(const Table&) = delete;
     friend void swap(Table& a, Table& b) {
 	using std::swap;
-	swap(a.store, b.store);
+	swap(a.store_, b.store_);
     }
     bool insert(const T& val) {
-	return store.insert(val).second;
+	return store_.insert(val).second;
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
@@ -1117,14 +1117,14 @@ public:
     bool copy(const Table& src) {
 	unsigned int old_sz = size();
 	// TODO: Is this optimized for sorted source collections?
-	store.insert(src.store.cbegin(), src.store.cend());
+	store_.insert(src.store_.cbegin(), src.store_.cend());
 	return old_sz != size();
     }
     ConstTopIter begin() const {
-	return store.cbegin();
+	return store_.cbegin();
     }
     ConstTopIter end() const {
-	return store.cend();
+	return store_.cend();
     }
     Iterator iter(Tuple& tgt) const {
 	Iterator it(tgt);
@@ -1132,16 +1132,16 @@ public:
 	return it;
     }
     bool empty() const {
-	return store.empty();
+	return store_.empty();
     }
     bool contains(const T& val) const {
-	return store.count(val) > 0;
+	return store_.count(val) > 0;
     }
     bool contains(const Tuple& tuple) const {
 	return contains(tuple.hd);
     }
     unsigned int size() const {
-	return store.size();
+	return store_.size();
     }
 public:
 
@@ -1154,8 +1154,8 @@ public:
     public:
 	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
 	void migrate(const Table& table) {
-	    curr = table.store.cbegin();
-	    end = table.store.cend();
+	    curr = table.store_.cbegin();
+	    end = table.store_.cend();
 	    before_start = true;
 	}
 	bool next() {
@@ -1220,6 +1220,9 @@ public:
     const T& get() const {
 	return val_.get();
     }
+    const boost::optional<T>& contents() const {
+        return val_;
+    }
 public:
 
     class Iterator {
@@ -1243,6 +1246,84 @@ public:
 		return true;
 	    }
 	    return false;
+	}
+    };
+};
+
+template<class Tag, class T> class Bag {
+public:
+    class Iterator;
+    friend Iterator;
+    typedef typename std::deque<T>::const_iterator ConstTopIter;
+    typedef NamedTuple<Tag,T,Nil> Tuple;
+private:
+    std::deque<T> store_;
+public:
+    explicit Bag() {}
+    // TODO: Only works if T is copy-constructible.
+    Bag(const Bag&) = default;
+    Bag(Bag&&) = default;
+    Bag& operator=(const Bag&) = delete;
+    friend void swap(Bag& a, Bag& b) {
+	using std::swap;
+	swap(a.store_, b.store_);
+    }
+    bool insert(const T& val) {
+	store_.push_back(val);
+        return true;
+    }
+    bool insert(const Tuple& tuple) {
+	return insert(tuple.hd);
+    }
+    ConstTopIter begin() const {
+	return store_.cbegin();
+    }
+    ConstTopIter end() const {
+	return store_.cend();
+    }
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
+	it.migrate(*this);
+	return it;
+    }
+    bool empty() const {
+	return store_.empty();
+    }
+    bool contains(const T& val) const {
+        return std::find(store_.begin(), store_.end(), val) != store_.end();
+    }
+    bool contains(const Tuple& tuple) const {
+	return contains(tuple.hd);
+    }
+    unsigned int size() const {
+	return store_.size();
+    }
+public:
+
+    class Iterator {
+    private:
+	typename std::deque<T>::const_iterator curr;
+	typename std::deque<T>::const_iterator end;
+	T& tgt_fld;
+	bool before_start = true;
+    public:
+        explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
+	void migrate(const Bag& bag) {
+	    curr = bag.store_.cbegin();
+	    end = bag.store_.cend();
+	    before_start = true;
+	}
+	bool next() {
+	    if (before_start) {
+		before_start = false;
+	    } else {
+		++curr;
+	    }
+	    if (curr == end) {
+		return false;
+	    }
+	    tgt_fld = *curr;
+	    return true;
 	}
     };
 };

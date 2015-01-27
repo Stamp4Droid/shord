@@ -30,6 +30,7 @@ TUPLE_TAG(NODE);
 TUPLE_TAG(SRC);
 TUPLE_TAG(DST);
 TUPLE_TAG(MOD);
+TUPLE_TAG(FUN);
 
 TUPLE_TAG(COMP);
 TUPLE_TAG(STATE);
@@ -854,23 +855,6 @@ struct SuperNode {
 
 typedef unsigned int PointID;
 
-struct Move {
-    PointID from;
-    PointID to;
-};
-
-struct StackMove {
-    PointID from;
-    PointID to;
-    SecStackMod mod;
-};
-
-struct CallMove {
-    PointID from;
-    PointID to;
-    Function callee;
-};
-
 class Intersection {
 private:
     const Function fun_;
@@ -882,19 +866,26 @@ private:
                     mi::Cell<ID, PointID> > > > > sn2id_;
     std::vector<SuperNode> id2sn_;
     PointID initial_;
+    std::deque<PointID> fwd_list_;
+    mi::Index<DST, PointID,
+        mi::Table<SRC, PointID> > eps_moves_;
+    mi::Index<DST, PointID,
+        mi::Index<SRC, PointID,
+            mi::Bag<MOD, SecStackMod> > > stack_moves_;
+    mi::Index<DST, PointID,
+        mi::Index<SRC, PointID,
+            mi::Bag<FUN, Function> > > call_moves_;
     std::set<PointID> finals_;
-    std::deque<PointID> worklist_;
-    std::deque<Move> eps_moves_;
-    std::deque<StackMove> stack_moves_;
-    std::deque<CallMove> call_moves_;
+    std::vector<bool> useful_;
+    std::deque<PointID> bck_list_;
 private:
     PointID add_node(const SuperNode& sn) {
         auto& id_cell =
             sn2id_.of(sn.node).of(sn.pri_state).of(sn.sec_comp)
             .of(sn.sec_state);
-        if (id_cell.size() < 1) {
+        if (id_cell.empty()) {
             id_cell.insert(id2sn_.size());
-            worklist_.push_back(id2sn_.size());
+            fwd_list_.push_back(id2sn_.size());
             id2sn_.push_back(sn);
         }
         return id_cell.get();
@@ -904,10 +895,10 @@ private:
         return id2sn_.size() - 1;
     }
     const SuperNode& curr() const {
-        return id2sn_[worklist_.front()];
+        return id2sn_[fwd_list_.front()];
     }
     PointID curr_id() const {
-        return worklist_.front();
+        return fwd_list_.front();
     }
     void cross_trans(const EdgeTail& e, const SecMoves& sec_moves) {
         std::list<Ref<State> > pri_st_to;
@@ -928,14 +919,13 @@ private:
                 SuperNode next(e.get<DST>(), s, move.get<SEC_CP_TO>(),
                                move.get<SEC_ST_TO>());
                 PointID next_id = add_node(next);
-                eps_moves_.push_back(Move{curr_id(), next_id});
+                eps_moves_.insert(next_id, curr_id());
             }
             for (const auto& move : sec_moves.stack_moves()) {
                 SuperNode next(e.get<DST>(), s, move.get<SEC_CP_TO>(),
                                move.get<SEC_ST_TO>());
                 PointID next_id = add_node(next);
-                stack_moves_.push_back(StackMove{curr_id(), next_id,
-                                                 move.get<MOD>()});
+                stack_moves_.insert(next_id, curr_id(), move.get<MOD>());
             }
         }
     }
@@ -944,14 +934,13 @@ private:
                  [e.get<REV>()][e.get<SYMBOL>()]) {
             for (const auto& move : sec_moves.eps_moves()) {
                 PointID next_id = mktemp();
-                eps_moves_.push_back(Move{curr_id(), next_id});
+                eps_moves_.insert(next_id, curr_id());
                 cross_call(b, e, next_id,
                            move.get<SEC_CP_TO>(), move.get<SEC_ST_TO>());
             }
             for (const auto& move : sec_moves.stack_moves()) {
                 PointID next_id = mktemp();
-                stack_moves_.push_back(StackMove{curr_id(), next_id,
-                                                 move.get<MOD>()});
+                stack_moves_.insert(next_id, curr_id(), move.get<MOD>());
                 cross_call(b, e, next_id,
                            move.get<SEC_CP_TO>(), move.get<SEC_ST_TO>());
             }
@@ -965,7 +954,7 @@ private:
             Function callee(entered, e_in.get<DST>(), sec_cp_in, sec_st_in,
                             f.get<DST>(), f.get<SEC_CP_TO>(),
                             f.get<SEC_ST_TO>());
-            call_moves_.push_back(CallMove{in_id, out_id, callee});
+            call_moves_.insert(out_id, in_id, callee);
             cross_exits(box, e_in.get<TAG>(), callee, out_id);
         }
     }
@@ -982,18 +971,23 @@ private:
                     SuperNode next(n, exit.get<TO>(), move.get<SEC_CP_TO>(),
                                    move.get<SEC_ST_TO>());
                     PointID next_id = add_node(next);
-                    eps_moves_.push_back(Move{out_id, next_id});
+                    eps_moves_.insert(next_id, out_id);
                 }
                 for (const auto& move : moves_out.stack_moves()) {
                     SuperNode next(n, exit.get<TO>(), move.get<SEC_CP_TO>(),
                                    move.get<SEC_ST_TO>());
                     PointID next_id = add_node(next);
-                    stack_moves_.push_back(StackMove{out_id, next_id,
-                                                     move.get<MOD>()});
+                    stack_moves_.insert(next_id, out_id, move.get<MOD>());
                 }
             }
         }
     }
+    void mark_useful(PointID point) {
+        if (!useful_[point]) {
+            useful_[point] = true;
+            bck_list_.push_back(point);
+        }
+    };
     void print_point(std::ostream& os, PointID id) const {
         const SuperNode& sn = id2sn_[id];
         // XXX: The two cases should be disjoint, since SuperNode's use
@@ -1007,17 +1001,13 @@ private:
 public:
     explicit Intersection(const Function& fun)
         : fun_(fun), pri_comp_(pri_rsm->components[fun.get<PRI_CP>()]) {
-        // Emit function endpoints as SuperNodes.
+        // Register the function entry as the initial point.
         initial_ = add_node(SuperNode(fun.get<SRC>(), pri_comp_.initial,
                                       fun.get<SEC_CP_FROM>(),
                                       fun.get<SEC_ST_FROM>()));
-        for (Ref<State> s : pri_comp_.final) {
-            finals_.insert(add_node(SuperNode(fun.get<DST>(), s,
-                                              fun.get<SEC_CP_TO>(),
-                                              fun.get<SEC_ST_TO>())));
-        }
-        // Traverse the function and emit SuperNodes.
-        while (!worklist_.empty()) {
+        // Starting from the single entry, traverse the function and emit
+        // SuperNodes.
+        while (!fwd_list_.empty()) {
             const Component& sec_comp = sec_rsm->components[curr().sec_comp];
             // Enumerate all edges originating from the current node.
             FOR(e, edges->pri()[curr().node]) {
@@ -1034,12 +1024,50 @@ public:
                 // which is a summary edge).
                 cross_entries(e, sec_moves);
             }
-            worklist_.pop_front();
+            fwd_list_.pop_front();
+        }
+        // Register function exits as final points (only if we could reach them
+        // from the initial point).
+        useful_.resize(id2sn_.size(), false);
+        for (Ref<State> s : pri_comp_.final) {
+            boost::optional<PointID> final_id = sn2id_[fun.get<DST>()][s]
+                [fun.get<SEC_CP_TO>()][fun.get<SEC_ST_TO>()].contents();
+            if (!((bool) final_id)) {
+                continue;
+            }
+            finals_.insert(final_id.get());
+            mark_useful(final_id.get());
+        }
+        // Starting from the final points, move backwards and mark useful
+        // points (those that can reach an exit). This filtering step is
+        // overapproximate, but sound.
+        while (!bck_list_.empty()) {
+            for (PointID src : eps_moves_[bck_list_.front()]) {
+                mark_useful(src);
+            }
+            for (const auto& src_p : stack_moves_[bck_list_.front()]) {
+                mark_useful(src_p.first);
+            }
+            for (const auto& src_p : call_moves_[bck_list_.front()]) {
+                mark_useful(src_p.first);
+            }
+            bck_list_.pop_front();
         }
     }
     friend std::ostream& operator<<(std::ostream& os,
                                     const Intersection& intxn) {
+        if (!intxn.useful_[intxn.initial_]) {
+            // Degenerate case: can't reach any final point from the initial.
+            intxn.print_point(os, intxn.initial_);
+            os << " in" << std::endl;
+            os << "#" << std::endl;
+            return os;
+        }
+        // Only print useful points.
         for (PointID id = 0; id < intxn.id2sn_.size(); id++) {
+            if (!intxn.useful_[id]) {
+                continue;
+            }
             intxn.print_point(os, id);
             if (id == intxn.initial_) {
                 os << " in";
@@ -1050,23 +1078,57 @@ public:
             os << std::endl;
         }
         os << "#" << std::endl;
-        for (const Move& m : intxn.eps_moves_) {
-            intxn.print_point(os, m.from);
-            os << " ";
-            intxn.print_point(os, m.to);
-            os << std::endl;
+        // Only print arrows between useful points.
+        for (const auto& dst_p : intxn.eps_moves_) {
+            PointID dst = dst_p.first;
+            if (!intxn.useful_[dst]) {
+                continue;
+            }
+            for (PointID src : dst_p.second) {
+                if (!intxn.useful_[src]) {
+                    continue;
+                }
+                intxn.print_point(os, src);
+                os << " ";
+                intxn.print_point(os, dst);
+                os << std::endl;
+            }
         }
-        for (const StackMove& m : intxn.stack_moves_) {
-            intxn.print_point(os, m.from);
-            os << " ";
-            intxn.print_point(os, m.to);
-            os << " " << m.mod << std::endl;
+        for (const auto& dst_p : intxn.stack_moves_) {
+            PointID dst = dst_p.first;
+            if (!intxn.useful_[dst]) {
+                continue;
+            }
+            for (const auto& src_p : dst_p.second) {
+                PointID src = src_p.first;
+                if (!intxn.useful_[src]) {
+                    continue;
+                }
+                for (const SecStackMod& mod : src_p.second) {
+                    intxn.print_point(os, src);
+                    os << " ";
+                    intxn.print_point(os, dst);
+                    os << " " << mod << std::endl;
+                }
+            }
         }
-        for (const CallMove& m : intxn.call_moves_) {
-            intxn.print_point(os, m.from);
-            os << " ";
-            intxn.print_point(os, m.to);
-            os << " " << m.callee << std::endl;
+        for (const auto& dst_p : intxn.call_moves_) {
+            PointID dst = dst_p.first;
+            if (!intxn.useful_[dst]) {
+                continue;
+            }
+            for (const auto& src_p : dst_p.second) {
+                PointID src = src_p.first;
+                if (!intxn.useful_[src]) {
+                    continue;
+                }
+                for (const Function& fun : src_p.second) {
+                    intxn.print_point(os, src);
+                    os << " ";
+                    intxn.print_point(os, dst);
+                    os << " " << fun << std::endl;
+                }
+            }
         }
         return os;
     }
