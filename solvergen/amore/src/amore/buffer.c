@@ -36,7 +36,7 @@
  */
 /******************************************************************/
 /******************************************************************/
-#define BUFPOS	     15		/* number of tries to fetch memory from the OS */
+#define BUFPOS	     1500		/* number of tries to fetch memory from the OS */
 #define BUFS_BIG     1048576	/* buffer size */
 #define BUFS_SMALL   524288	/* buffer size */
 #define BUFSBSWITCH  8		/* switch from small to big */
