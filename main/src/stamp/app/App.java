@@ -76,7 +76,8 @@ public class App
 
 		Set<String> widgetNames = new HashSet();
 		for(Layout layout : layouts){
-			widgetNames.addAll(layout.customWidgets);
+			for(Widget widget : layout.widgets)
+				widgetNames.add(widget.getClassName());
 		}
 
 		List<Component> comps = this.comps;
@@ -97,17 +98,37 @@ public class App
 				this.comps.add(c);
 		}
 
+		Set<String> frameworkClasses = computeFrameworkClasses();
+		
 		for(Layout layout : layouts){
 			this.layouts.put(layout.id, layout);
 			
-			Set<String> widgets = layout.customWidgets;
-			for(Iterator<String> it = widgets.iterator(); it.hasNext();){
-				String widget = it.next();
-				if(!widgetNames.contains(widget))
-					it.remove();
+			List<Widget> widgets = layout.widgets;
+			for(Iterator<Widget> it = widgets.iterator(); it.hasNext();){
+				Widget widget = it.next();
+				String widgetClassName = widget.getClassName();
+				
+				//check if it is a custom widget
+				if(widgetNames.contains(widgetClassName))
+					continue;
+
+				//check if it is a framework widget
+				if(frameworkClasses.contains(widgetClassName))
+					continue;
+				boolean isFrameworkWidget = false;
+				widgetClassName = "."+widgetClassName;
+				for(String fClass : frameworkClasses){
+					if(fClass.endsWith(widgetClassName)){
+						isFrameworkWidget = true;
+						widget.setClassName(fClass);
+						break;
+					}
+				}
+
+				if(!isFrameworkWidget)
+					it.remove(); //remove it if it neither a custom or framework widget
 			}
 		}
-		
 	}
 
 	public List<Component> components()
@@ -310,5 +331,31 @@ public class App
 				}
 			}
 		}
+	}
+
+	Set<String> computeFrameworkClasses()
+	{
+		Set<String> frameworkClasses = new HashSet();
+		String androidJar = System.getProperty("stamp.android.jar");
+		JarFile archive;
+		try{
+			archive = new JarFile(androidJar);
+		}catch(IOException e){
+			throw new Error(e);
+		}
+		for (Enumeration entries = archive.entries(); entries.hasMoreElements();) {
+			JarEntry entry = (JarEntry) entries.nextElement();
+			String entryName = entry.getName();
+			int extensionIndex = entryName.lastIndexOf('.');
+			if (extensionIndex >= 0) {
+				String entryExtension = entryName.substring(extensionIndex);
+				if (".class".equals(entryExtension)) {
+					entryName = entryName.substring(0, extensionIndex);
+					entryName = entryName.replace('/', '.');
+					frameworkClasses.add(entryName);
+				}
+			}
+		}
+		return frameworkClasses;
 	}
 }

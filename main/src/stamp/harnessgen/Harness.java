@@ -37,6 +37,7 @@ import java.util.Collections;
 
 import stamp.app.Component;
 import stamp.app.Layout;
+import stamp.app.Widget;
 
 public class Harness
 {
@@ -85,7 +86,8 @@ public class Harness
 			}
 
 			//initialize the custom widgets used in this comp
-			for(String widgetClassName : layout.customWidgets){
+			for(Widget widget : layout.widgets){
+				String widgetClassName = widget.getClassName();
 				SootClass wClass = Scene.v().getSootClass(widgetClassName);
 				
 				//one constructor

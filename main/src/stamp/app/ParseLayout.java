@@ -16,12 +16,12 @@ import java.util.*;
 */
 public class ParseLayout
 {
-	private Map<String,Integer> layoutToId = new HashMap();
 	private Map<String,String> idToStringValue = new HashMap();
+	private PublicXml publicXml = new PublicXml();
 
 	List<Layout> process(File resDir)
 	{
-		mapLayoutToId(new File(resDir, "values/public.xml"));
+		publicXml.read(new File(resDir, "values/public.xml"));
 
 		mapIdToStringValue(new File(resDir, "values/strings.xml"));
 
@@ -47,7 +47,7 @@ public class ParseLayout
 		String layoutFileName = layoutFile.getName();
 		layoutFileName = layoutFileName.substring(0, layoutFileName.length()-4); //drop ".xml"
 		//System.out.println("++ "+layoutFileName);
-		Integer id = layoutToId.get(layoutFileName);
+		Integer id = publicXml.layoutIdFor(layoutFileName);
 		
 		Layout layout = new Layout(id, layoutFile.getName());
 
@@ -67,7 +67,7 @@ public class ParseLayout
 			xpath.setNamespaceContext(new PersonalNamespaceContext());
 
 			findCallbacks(document, xpath, layout.callbacks);
-			findWidgets(document, xpath, layout.customWidgets);
+			findWidgets(document, xpath, layout.widgets);
 
 			return layout;
 		}catch(Exception e){
@@ -75,16 +75,25 @@ public class ParseLayout
 		}
 	}
 
-	private void findWidgets(Document document, XPath xpath, Set<String> widgets) throws javax.xml.xpath.XPathExpressionException
+	private void findWidgets(Document document, XPath xpath, List<Widget> widgets) throws javax.xml.xpath.XPathExpressionException
 	{		
 		NodeList nodes = (NodeList)
 			xpath.evaluate("//*", document, XPathConstants.NODESET);
 		//System.out.println("nodes.size() = "+nodes.getLength());
 		for(int i = 0; i < nodes.getLength(); i++) {
 			//System.out.println("HELLO");
-			Node node = nodes.item(i);
+			Element elem = (Element) nodes.item(i);
 			//System.out.println("Widget: "+node.getNodeName());
-			widgets.add(node.getNodeName());
+			String id = elem.getAttribute("android:id");
+			if(id.isEmpty())
+				continue;//ignore for now. not sure whether we need to consider
+			if(id.startsWith("@id/"))
+				id = id.substring(4);
+			else if(id.startsWith("@+id/"))
+				id = id.substring(5);
+			else 
+				assert false : id;
+			widgets.add(new Widget(elem.getTagName(), id, publicXml.idIdFor(id)));
 		}
 	}
 	
@@ -112,38 +121,7 @@ public class ParseLayout
 			}
 		}
 	}
-	
-	private void mapLayoutToId(File publicXmlFile)
-	{
-		try{
-			File tmpFile = File.createTempFile("stamp_android_public_xml", null, null);
-			tmpFile.deleteOnExit();
-			UTF8ToAnsiUtils.main(new String[]{publicXmlFile.getAbsolutePath(), tmpFile.getAbsolutePath()});
-			publicXmlFile = tmpFile;
-
-			DocumentBuilder builder =
-				DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Reader reader =
-				new InputStreamReader(new FileInputStream(publicXmlFile), "Cp1252");
-			Document document = builder.parse(new InputSource(reader));
-
-			XPath xpath = XPathFactory.newInstance().newXPath();
-
-			NodeList nodes = (NodeList)
-				xpath.evaluate("/resources/public[@type=\"layout\"]", document, XPathConstants.NODESET);
-			//System.out.println("nodes.size() = "+nodes.getLength());
-			for(int i = 0; i < nodes.getLength(); i++) {
-				Element elem = (Element) nodes.item(i);
-				String layout = elem.getAttribute("name");
-				Integer id = Integer.decode(elem.getAttribute("id"));
-				layoutToId.put(layout, id);
-				//System.out.println("## "+layout+" "+id);
-			}
-		}catch(Exception e){
-			throw new Error(e);
-		}		
-	}
-	
+		
 	private void mapIdToStringValue(File stringXmlFile)
 	{
 		if(!stringXmlFile.exists())
