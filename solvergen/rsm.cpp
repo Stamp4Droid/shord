@@ -50,13 +50,13 @@ TUPLE_TAG(SEC_ST_TO);
 // BASIC NAMED OBJECTS ========================================================
 
 class Symbol {
-    friend Registry<Symbol>;
+public:
     typedef std::string Key;
 public:
     const std::string name;
     const Ref<Symbol> ref;
     const bool parametric;
-private:
+public:
     explicit Symbol(const std::string* name, Ref<Symbol> ref, bool parametric)
         : name(*name), ref(ref), parametric(parametric) {
         EXPECT(boost::regex_match(*name, boost::regex("[a-z]\\w*")));
@@ -68,12 +68,12 @@ private:
 };
 
 class Tag {
-    friend Registry<Tag>;
+public:
     typedef std::string Key;
 public:
     const std::string name;
     const Ref<Tag> ref;
-private:
+public:
     explicit Tag(const std::string* name, Ref<Tag> ref)
         : name(*name), ref(ref) {}
     bool merge() {
@@ -82,12 +82,12 @@ private:
 };
 
 class Node {
-    friend Registry<Node>;
+public:
     typedef std::string Key;
 public:
     const std::string name;
     const Ref<Node> ref;
-private:
+public:
     explicit Node(const std::string* name, Ref<Node> ref)
         : name(*name), ref(ref) {}
     bool merge() {
@@ -264,14 +264,14 @@ std::ostream& operator<<(std::ostream& os, const MatchLabel& label) {
 class Component;
 
 class State {
-    friend Registry<State>;
+public:
     typedef std::string Key;
 public:
     const std::string name;
     const Ref<State> ref;
     const bool initial;
     const bool final;
-private:
+public:
     explicit State(const std::string* name, Ref<State> ref, bool initial,
                    bool final)
         : name(*name), ref(ref), initial(initial), final(final) {}
@@ -279,7 +279,6 @@ private:
         EXPECT(initial == this->initial && final == this->final);
         return false;
     }
-public:
     friend std::ostream& operator<<(std::ostream& os, const State& state) {
         os << state.name;
         if (state.initial) {
@@ -293,20 +292,19 @@ public:
 };
 
 class Box {
-    friend Registry<Box>;
+public:
     typedef std::string Key;
 public:
     const std::string name;
     const Ref<Box> ref;
     const Ref<Component> comp;
-private:
+public:
     explicit Box(const std::string* name, Ref<Box> ref, Ref<Component> comp)
         : name(*name), ref(ref), comp(comp) {}
     bool merge(Ref<Component> comp) {
         EXPECT(comp == this->comp);
         return false;
     }
-public:
     // print function moved below Component
 };
 
@@ -394,7 +392,7 @@ void print(std::ostream& os, const Exit& exit,
 // RSM ========================================================================
 
 class Component {
-    friend Registry<Component>;
+public:
     typedef std::string Key;
 public:
     const std::string name;
@@ -407,13 +405,6 @@ public:
     Ref<State> initial;
     std::set<Ref<State> > final;
 private:
-    explicit Component(const std::string* name, Ref<Component> ref)
-        : name(*name), ref(ref) {
-        EXPECT(boost::regex_match(*name, boost::regex("[A-Z]\\w*")));
-    }
-    bool merge() {
-        return false;
-    }
     const State& add_state(const std::string& name, bool initial, bool final) {
         const State& s = states.make(name, initial, final);
         if (initial) {
@@ -426,6 +417,13 @@ private:
         return s;
     }
 public:
+    explicit Component(const std::string* name, Ref<Component> ref)
+        : name(*name), ref(ref) {
+        EXPECT(boost::regex_match(*name, boost::regex("[A-Z]\\w*")));
+    }
+    bool merge() {
+        return false;
+    }
     void parse(const fs::path& fpath, const Registry<Component>& comp_reg) {
         std::ifstream fin(fpath.string());
         EXPECT((bool) fin);

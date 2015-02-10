@@ -628,9 +628,8 @@ public:
     }
 };
 
-template<typename T> class Registry {
+template<typename T, typename Key = typename T::Key> class Registry {
 public:
-    typedef typename T::Key Key;
     typedef IterWrapper<typename std::vector<T*>::const_iterator, T,
 			detail::follow_ptr<T> > Iterator;
 private:

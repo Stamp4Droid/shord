@@ -771,32 +771,31 @@ TUPLE_TAG(FLD);
 TUPLE_TAG(FUN);
 
 class Field {
-    friend Registry<Field>;
+public:
     typedef std::string Key;
 public:
     const std::string name;
     const Ref<Field> ref;
-private:
+public:
     explicit Field(const std::string* name_ptr, Ref<Field> ref)
         : name(*name_ptr), ref(ref) {
         EXPECT(boost::regex_match(name, boost::regex("\\w+")));
     }
-    bool merge() {
-        return false;
-    }
-public:
     Field(const Field&) = delete;
     Field(Field&&) = default;
     Field& operator=(const Field&) = delete;
+    bool merge() {
+        return false;
+    }
 };
 
 class Variable {
-    friend Registry<Variable>;
+public:
     typedef std::string Key;
 public:
     const std::string name;
     const Ref<Variable> ref;
-private:
+public:
     explicit Variable(const std::string* name_ptr, Ref<Variable> ref)
         : name(name_ptr != NULL ? *name_ptr
                : std::string("#") + std::to_string(ref.value())),
@@ -805,13 +804,12 @@ private:
             EXPECT(boost::regex_match(name, boost::regex("\\w+")));
         }
     }
-    bool merge() {
-        return false;
-    }
-public:
     Variable(const Variable&) = default;
     Variable(Variable&&) = default;
     Variable& operator=(const Variable&) = delete;
+    bool merge() {
+        return false;
+    }
 };
 
 class Delimiter {
@@ -1068,9 +1066,8 @@ public:
 };
 
 class Function {
-    friend Registry<Function>;
-    typedef std::string Key;
 public:
+    typedef std::string Key;
     const posint WIDENING_K = 2;
 public:
     const std::string name;
@@ -1082,20 +1079,19 @@ private:
                         mi::Table<TGT, Ref<Variable>>>> calls_;
     std::set<Ref<Function>> callers_;
     Signature sig_; // Initially set to the empty automaton.
-private:
+public:
     explicit Function(const std::string* name_ptr, Ref<Function> ref)
         : name(*name_ptr), ref(ref), sig_(std::vector<Delimiter>(), 1) {
         EXPECT(boost::regex_match(name, boost::regex("\\w+")));
         sig_.set_initial(0);
         sig_.minimize();
     }
-    bool merge() {
-        return false;
-    }
-public:
     Function(const Function&) = delete;
     Function(Function&&) = default;
     Function& operator=(const Function&) = delete;
+    bool merge() {
+        return false;
+    }
     void parse_file(const fs::path& fpath,
                     Registry<Function>& fun_reg, Registry<Field>& fld_reg) {
         assert(!complete());
