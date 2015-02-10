@@ -163,7 +163,7 @@ int main() {
     wl1.enqueue(3);
     std::cout << "Should see 123" << std::endl;
     while (!wl1.empty()) {
-	std::cout << wl1.dequeue();
+	std::cout << wl1.dequeue().first;
     }
     std::cout << std::endl;
     wl1.enqueue(1);

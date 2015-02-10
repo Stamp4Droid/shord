@@ -26,13 +26,13 @@
 
 template<int I, typename... Types> struct pack_elem {
 public:
-    typedef typename std::tuple_element<I,std::tuple<Types...>>::type type;
+    typedef typename std::tuple_element<I,std::tuple<Types...> >::type type;
 };
 
 template<class T, class S> struct cons {};
 
 template<class H, class... Ts>
-struct cons<H,std::tuple<Ts...>> {
+struct cons<H,std::tuple<Ts...> > {
     typedef std::tuple<H,Ts...> type;
 };
 
@@ -270,7 +270,7 @@ template<typename PtrIter> using DerefIter =
 		    typename std::iterator_traits<PtrIter>::value_type>
 		::element_type,
 		detail::deref<
-		    typename std::iterator_traits<PtrIter>::value_type>>;
+		    typename std::iterator_traits<PtrIter>::value_type> >;
 
 // Takes a constant iterator over const-iterable objects, and returns a
 // constant iterator over the underlying objects.
@@ -356,52 +356,64 @@ public:
 // - Stored classes need to be comparable.
 // TODO:
 // - copy/iterator constructor
-template<typename T, bool CanReprocess,
-	 typename Set = std::set<T>> class Worklist;
+template<typename T, bool CanReprocess> class Worklist;
 
-template<typename T, typename Set> class Worklist<T,false,Set> {
+// TODO:
+// - keep id-to-item mapping
+// - use type-safe ids (Refs)
+template<typename T> class Worklist<T,false> {
+public:
+    typedef typename std::map<T,unsigned>::const_iterator Iterator;
 private:
-    Set reached;
-    std::queue<const T*> queue;
+    std::map<T,unsigned> reached_;
+    std::deque<Iterator> queue_;
 public:
     bool empty() const {
-	return queue.empty();
+	return queue_.empty();
     }
-    bool enqueue(T&& val) {
-	auto res = reached.insert(std::move(val));
-	if (res.second) {
-	    queue.push(&(*(res.first)));
-	    return true;
-	}
-	return false;
+    const std::map<T,unsigned>& reached() const {
+        return reached_;
     }
-    const T& dequeue() {
-	const T& ref = *(queue.front());
-	queue.pop();
-	return ref;
+    unsigned num_reached() const {
+        return reached_.size();
+    }
+    Iterator enqueue(T&& val) {
+        auto res = reached_.emplace(std::move(val), reached_.size());
+        if (res.second) {
+            queue_.push_back(res.first);
+        }
+        return res.first;
+    }
+    Iterator dequeue() {
+	Iterator ret = queue_.front();
+	queue_.pop_front();
+	return ret;
     }
 };
 
 // TODO: Enqueues and dequeues done by copying (careful with large structs).
-template<typename T, typename Set> class Worklist<T,true,Set> {
+template<typename T> class Worklist<T,true> {
 private:
-    Set reached;
-    std::queue<T> queue;
+    std::set<T> reached_;
+    std::queue<T> queue_;
 public:
     bool empty() const {
-	return queue.empty();
+	return queue_.empty();
+    }
+    unsigned size() const {
+        return queue_.size();
     }
     bool enqueue(T val) {
-	if (reached.insert(val).second) {
-	    queue.push(val);
+	if (reached_.insert(val).second) {
+	    queue_.push(val);
 	    return true;
 	}
 	return false;
     }
     T dequeue() {
-	T val = queue.front();
-	queue.pop();
-	reached.erase(val);
+	T val = queue_.front();
+	queue_.pop();
+	reached_.erase(val);
 	return val;
     }
 };
@@ -469,6 +481,22 @@ template<> struct JoinZipHelper<0> {
 template<unsigned int DEPTH, class LMap, class RMap, class ZipT>
 void join_zip(const LMap& l, const RMap& r, const ZipT& zip) {
     detail::JoinZipHelper<DEPTH>::handle(l, r, zip);
+}
+
+template<class Set>
+bool empty_intersection(const Set& a, const Set& b) {
+    typename Set::const_iterator a_it = a.begin();
+    typename Set::const_iterator b_it = b.begin();
+    while (a_it != a.end() && b_it != b.end()) {
+        if (*a_it == *b_it) {
+            return false;
+        } else if (*a_it < *b_it) {
+            ++a_it;
+        } else {
+            ++b_it;
+        }
+    }
+    return true;
 }
 
 // OS SERVICES ================================================================
@@ -604,7 +632,7 @@ template<typename T> class Registry {
 public:
     typedef typename T::Key Key;
     typedef IterWrapper<typename std::vector<T*>::const_iterator, T,
-			detail::follow_ptr<T>> Iterator;
+			detail::follow_ptr<T> > Iterator;
 private:
     std::vector<T*> array;
     std::map<Key,T> map;
@@ -657,6 +685,9 @@ public:
 	swap(a.array, b.array);
 	swap(a.map,   b.map);
 	swap(a.temps, b.temps);
+    }
+    void clear() {
+        swap(*this, Registry());
     }
     T& operator[](Ref<T> ref) {
 	EXPECT(ref.valid());
@@ -936,7 +967,7 @@ namespace detail {
 template<class FldN, class NT> struct Getter;
 
 template<class Tag, class Hd, class Tl>
-struct Getter<Tag, NamedTuple<Tag,Hd,Tl>> {
+struct Getter<Tag, NamedTuple<Tag,Hd,Tl> > {
     typedef Hd FldT;
     static FldT& get(NamedTuple<Tag,Hd,Tl>& ntup) {
 	return ntup.hd;
@@ -947,7 +978,7 @@ struct Getter<Tag, NamedTuple<Tag,Hd,Tl>> {
 };
 
 template<class FldN, class Tag, class Hd, class Tl>
-struct Getter<FldN, NamedTuple<Tag,Hd,Tl>> {
+struct Getter<FldN, NamedTuple<Tag,Hd,Tl> > {
     typedef typename Getter<FldN,Tl>::FldT FldT;
     static FldT& get(NamedTuple<Tag,Hd,Tl>& ntup) {
 	return Getter<FldN,Tl>::get(ntup.tl);
@@ -970,10 +1001,15 @@ struct Nil {
 template<class Tag, class Hd, class Tl>
 class NamedTuple {
 public:
+    typedef Hd Head;
+    typedef Tl Tail;
+public:
     Hd hd;
     Tl tl;
 public:
     explicit NamedTuple() {}
+    NamedTuple(const NamedTuple&) = default;
+    NamedTuple& operator=(const NamedTuple&) = delete;
     template<class... Rest>
     explicit NamedTuple(const Hd& hd, const Rest&... rest)
 	: hd(hd), tl(rest...) {}
@@ -1000,17 +1036,25 @@ public:
     }
 };
 
-template<class T>
-struct tuple_size;
+template<class NT> struct TupleTraits;
 
 template<>
-struct tuple_size<Nil> {
-    static const unsigned int value = 0;
+struct TupleTraits<Nil> {
+    static const unsigned int SIZE = 0;
+};
+
+template<class Tag, class Hd>
+struct TupleTraits<NamedTuple<Tag,Hd,Nil> > {
+    typedef Hd Daeh;
+    typedef Nil Liat;
+    static const unsigned int SIZE = 1;
 };
 
 template<class Tag, class Hd, class Tl>
-struct tuple_size<NamedTuple<Tag,Hd,Tl>> {
-    static const unsigned int value = tuple_size<Tl>::value + 1;
+struct TupleTraits<NamedTuple<Tag,Hd,Tl> > {
+    typedef typename TupleTraits<Tl>::Daeh Daeh;
+    typedef NamedTuple<Tag, Hd, typename TupleTraits<Tl>::Liat> Liat;
+    static const unsigned int value = TupleTraits<Tl>::SIZE + 1;
 };
 
 #define TUPLE_TAG(NAME) struct NAME {static const char* name() {return #NAME;}}
@@ -1033,7 +1077,7 @@ template<> struct KeyTraits<bool> {
 };
 
 template<class T>
-struct KeyTraits<Ref<T>> {
+struct KeyTraits<Ref<T> > {
     typedef Registry<T> SizeHint;
     static unsigned int extract_size(const SizeHint& reg) {
 	return reg.size();
@@ -1103,6 +1147,15 @@ public:
     friend void swap(Table& a, Table& b) {
 	using std::swap;
 	swap(a.store_, b.store_);
+    }
+    void clear() {
+        swap(*this, Table());
+    }
+    Table& of() {
+        return *this;
+    }
+    const Table& find() const {
+        return *this;
     }
     bool insert(const T& val) {
 	return store_.insert(val).second;
@@ -1189,6 +1242,15 @@ public:
 	using std::swap;
 	swap(a.val_, b.val_);
     }
+    void clear() {
+        swap(*this, Cell());
+    }
+    Cell& of() {
+        return *this;
+    }
+    const Cell& find() const {
+        return *this;
+    }
     bool insert(const T& val) {
 	if ((bool) val_) {
 	    // can't update the value once set
@@ -1218,6 +1280,7 @@ public:
 	return ((bool) val_) ? 1 : 0;
     }
     const T& get() const {
+        EXPECT((bool) val_);
 	return val_.get();
     }
     const boost::optional<T>& contents() const {
@@ -1267,6 +1330,15 @@ public:
     friend void swap(Bag& a, Bag& b) {
 	using std::swap;
 	swap(a.store_, b.store_);
+    }
+    void clear() {
+        swap(*this, Bag());
+    }
+    Bag& of() {
+        return *this;
+    }
+    const Bag& find() const {
+        return *this;
     }
     bool insert(const T& val) {
 	store_.push_back(val);
@@ -1350,12 +1422,26 @@ public:
 	using std::swap;
 	swap(a.map, b.map);
     }
-    Sub& of(const Key& key) {
-	return map[key];
+    void clear() {
+        swap(*this, Index());
+    }
+    Index& of() {
+        return *this;
+    }
+    template<class... Rest>
+    auto& of(const Key& key, const Rest&... rest) {
+	return map[key].of(rest...);
     }
     const Sub& operator[](const Key& key) const {
 	auto it = map.find(key);
 	return (it == map.cend()) ? dummy : it->second;
+    }
+    const Index& find() const {
+        return *this;
+    }
+    template<class... Rest>
+    const auto& find(const Key& key, const Rest&... rest) const {
+        return (*this)[key].find(rest...);
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
@@ -1474,6 +1560,9 @@ public:
 	using std::swap;
 	swap(a.pri_, b.pri_);
 	swap(a.sec_, b.sec_);
+    }
+    void clear() {
+        swap(*this, MultiIndex());
     }
     const Pri& pri() const {
 	return pri_;
@@ -1668,7 +1757,7 @@ public:
     };
 
     class TopIter : public std::iterator<std::forward_iterator_tag,
-					 std::pair<const Key,Sub&>> {
+					 std::pair<const Key,Sub&> > {
     public:
 	typedef std::pair<const Key,Sub&> Value;
     private:
@@ -1699,7 +1788,7 @@ public:
 
     class ConstTopIter
 	: public std::iterator<std::forward_iterator_tag,
-			       std::pair<const Key,const Sub&>> {
+			       std::pair<const Key,const Sub&> > {
     public:
 	typedef std::pair<const Key,const Sub&> Value;
     private:
@@ -1841,7 +1930,7 @@ public:
 };
 
 template<class Tag, class K, class S> class LightIndex {
-    typedef std::forward_list<std::pair<const K,S>> List;
+    typedef std::forward_list<std::pair<const K,S> > List;
 public:
     typedef K Key;
     typedef S Sub;
