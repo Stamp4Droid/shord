@@ -15,93 +15,61 @@
 
 #define LIBAMORE_LIBRARY_COMPILATION
 #include "amore/dfa.h"
-#include "amore/enfa2nfa.h"
 #include "amore/global.h"
-#include "amore/nfa2dfa.h"
 #include "amore/testBinary.h"
 #include "amore++/deterministic_finite_automaton.h"
-#include "amore++/nondeterministic_finite_automaton.h"
 
 #include "util.hpp"
 
 namespace fs = boost::filesystem;
 namespace po = boost::program_options;
 
-// AMORE AUTOMATA =============================================================
+// AUTOMATA ===================================================================
+
+TUPLE_TAG(FROM);
+TUPLE_TAG(LETTER);
+TUPLE_TAG(TO);
 
 typedef struct dfauto DfaBackend;
 typedef amore::deterministic_finite_automaton DfaWrapper;
-typedef struct nfauto NfaBackend;
-typedef amore::nondeterministic_finite_automaton NfaWrapper;
 
 template<class Symbol> class DFA;
 
+// Doesn't require a pre-defined number of states.
 template<class Symbol> class NFA {
-    friend DFA<Symbol>;
 private:
     std::vector<Symbol> alphabet_;
-    NfaBackend* backend_;
-    // Not using a wrapper, because AMoRE++ NFAs can't handle epsilons.
-private:
-    DfaWrapper* determinize() const {
-        NfaBackend* wo_eps = enfa2nfa(backend_);
-        DfaWrapper* res = new DfaWrapper(nfa2dfa(wo_eps));
-        freenfa(wo_eps);
-        free(wo_eps);
-        return res;
-    }
+    std::set<posint> initial_;
+    std::set<posint> final_;
+    mi::Index<FROM, posint,
+        mi::Index<LETTER, posint,
+            mi::Table<TO, posint> > > trans_;
 public:
     template<typename C>
-    explicit NFA(const C& alphabet, posint num_states)
+    explicit NFA(const C& alphabet)
         : alphabet_(alphabet.begin(), alphabet.end()) {
         // Sort the set of symbols, and remove duplicates.
         std::sort(alphabet_.begin(), alphabet_.end());
         alphabet_.erase(std::unique(alphabet_.begin(), alphabet_.end()),
                         alphabet_.end());
-        posint num_letters = alphabet_.size();
-        // no initial or final state set
-        char* infin_bitset = newfinal(num_states - 1);
-        // reserves 1 extra row for epsilon
-        // no transitions are set
-        char*** delta = newendelta(num_letters, num_states - 1);
-        backend_ = newnfa();
-        backend_->highest_state = num_states - 1;
-        backend_->alphabet_size = num_letters;
-        backend_->infin = infin_bitset;
-        backend_->delta = delta;
-        // We never minimize NFAs directly, so this is always false; we don't
-        // need to update it after mutations.
-        backend_->minimal = false;
-        backend_->is_eps = true;
-    }
-    ~NFA() {
-        if (backend_ != NULL) {
-            freenfa(backend_);
-            free(backend_);
-        }
+        // No initial or final states set, no transitions added
     }
     NFA(const NFA&) = delete;
-    NFA(NFA&& rhs)
-        : alphabet_(std::move(rhs.alphabet_)), backend_(rhs.backend_) {
-        rhs.backend_ = NULL;
-    }
+    NFA(NFA&& rhs) = default;
     NFA& operator=(const NFA&) = delete;
+    const std::vector<Symbol>& alphabet() const {
+        return alphabet_;
+    }
     // letters: 1..N
     // 0 is reserved for epsilon
     posint num_letters() const {
-        return backend_->alphabet_size;
+        return alphabet_.size();
     }
-    // states: 0..N-1
-    posint num_states() const {
-        return backend_->highest_state + 1;
+    const std::set<posint> initial() const {
+        return initial_;
     }
-    posint is_initial(posint state) const {
-        assert(state < num_states());
-        return isinit(backend_->infin[state]);
-    }
-    bool is_final(posint state) const {
-        assert(state < num_states());
-        return isfinal(backend_->infin[state]);
+    const std::set<posint> final() const {
+        return final_;
     }
     void add_symb_trans(posint src, Symbol symbol, posint tgt) {
         // TODO: Might be more efficient to keep a map from symbols to letters.
@@ -117,53 +85,98 @@ public:
         add_trans(src, 0, tgt);
     }
     void add_trans(posint src, posint letter, posint tgt) {
-        assert(src < num_states());
         assert(letter <= num_letters());
-        assert(tgt < num_states());
-        connect(backend_->delta, letter, src, tgt);
+        trans_.insert(src, letter, tgt);
     }
-    void set_final(posint state, bool final = true) {
-        assert(state < num_states());
-        setfinal(backend_->infin[state], final);
+    void set_initial(posint state) {
+        initial_.insert(state);
     }
-    void set_initial(posint state, bool initial = true) {
-        assert(state < num_states());
-        if (initial) {
-            setinit(backend_->infin[state]);
-        } else {
-            rminit(backend_->infin[state]);
+    void set_final(posint state) {
+        final_.insert(state);
+    }
+    // TODO: Could cache eps_close results (but without emiting d-states for
+    // the non-closed n-state sets).
+    void eps_close(std::set<posint>& states) const {
+        std::deque<posint> worklist(states.begin(), states.end());
+        while (!worklist.empty()) {
+            posint src = worklist.front();
+            for (posint tgt : trans_[src][0]) {
+                if (states.insert(tgt).second) {
+                    worklist.push_back(tgt);
+                }
+            }
+            worklist.pop_front();
         }
+    }
+    DfaWrapper* determinize() const {
+        // TODO: Can check if the NFA already contains no epsilons before
+        // going through this process.
+        // TODO: More efficient way to store sets of sets of states?
+        Worklist<std::set<posint>,false> worklist;
+        // Enqueue initial state set.
+        std::set<posint> init_ns_set = initial_;
+        eps_close(init_ns_set);
+        posint init_ds = worklist.enqueue(std::move(init_ns_set))->second;
+        // Discover reachable state sets and fill out transitions.
+        std::vector<std::vector<posint> > dtrans;
+        while (!worklist.empty()) {
+            auto src_nsds = worklist.dequeue();
+            // dstates processed in order
+            assert(src_nsds->second == dtrans.size());
+            dtrans.emplace_back(num_letters() + 1,
+                                std::numeric_limits<posint>::max());
+            for (posint letter = 1; letter <= num_letters(); letter++) {
+                std::set<posint> tgt_ns_set;
+                for (posint src_ns : src_nsds->first) {
+                    for (posint tgt_ns : trans_[src_ns][letter]) {
+                        tgt_ns_set.insert(tgt_ns);
+                    }
+                }
+                eps_close(tgt_ns_set);
+                posint tgt_ds =
+                    worklist.enqueue(std::move(tgt_ns_set))->second;
+                dtrans.back()[letter] = tgt_ds;
+            }
+        }
+        assert(dtrans.size() == worklist.num_reached());
+        // Construct product DFA in AMoRE format.
+        DfaBackend* res =
+            DFA<Symbol>::alloc_backend(num_letters(), worklist.num_reached());
+        res->init = init_ds;
+        for (const auto& nsds : worklist.reached()) {
+            if (!empty_intersection(nsds.first, final_)) {
+                setfinal(res->final[nsds.second], true);
+            }
+        }
+        for (posint src = 0; src < worklist.num_reached(); src++) {
+            const std::vector<posint>& from_src = dtrans[src];
+            for (posint letter = 1; letter <= num_letters(); letter++) {
+                res->delta[letter][src] = from_src[letter];
+            }
+        }
+        return new DfaWrapper(res);
     }
     template<class... Rest>
     void print(std::ostream& os, const Rest&... rest) const {
         os << "Initial: ";
-        for (posint state = 0; state < num_states(); state++) {
-            if (is_initial(state)) {
-                os << state << " ";
-            }
+        for (posint state : initial_) {
+            os << state << " ";
         }
         os << std::endl;
         os << "Final: ";
-        for (posint state = 0; state < num_states(); state++) {
-            if (is_final(state)) {
-                os << state << " ";
-            }
+        for (posint state : final_) {
+            os << state << " ";
         }
         os << std::endl;
-        for (posint letter = 0; letter <= num_letters(); letter++) {
-            for (posint src = 0; src < num_states(); src++) {
-                for (posint tgt = 0; tgt < num_states(); tgt++) {
-                    if (testcon(backend_->delta, letter, src, tgt)) {
-                        os << src << " --";
-                        if (letter > 0) {
-                            alphabet_[letter - 1].print(os, rest...);
-                        } else {
-                            os << "@epsilon";
-                        }
-                        os << "-> " << tgt << std::endl;
-                    }
-                }
+        FOR(t, trans_) {
+            os << t.template get<FROM>() << " --";
+            posint letter = t.template get<LETTER>();
+            if (letter > 0) {
+                alphabet_[letter - 1].print(os, rest...);
+            } else {
+                os << "@epsilon";
             }
+            os << "-> " << t.template get<TO>() << std::endl;
         }
     }
 };
@@ -291,7 +304,7 @@ private:
     }
     NFA<Symbol> state_merge(const SetPartition& part) const {
         // TODO: Copying alphabet, but not really using it.
-        NFA<Symbol> res(alphabet_, part.num_blocks());
+        NFA<Symbol> res(alphabet_);
         for (posint letter = 1; letter <= num_letters(); letter++) {
             for (posint src = 0; src < num_states(); src++) {
                 posint tgt = follow(src, letter);
@@ -524,29 +537,33 @@ public:
         std::sort(alphabet_.begin(), alphabet_.end());
         alphabet_.erase(std::unique(alphabet_.begin(), alphabet_.end()),
                         alphabet_.end());
-        posint num_letters = alphabet_.size();
-        posint sink = num_states;
-        // no final state set
-        // reserves 1 extra slot for sink state
-        char* fin_bitset = newfinal(num_states);
-        // reserves 1 extra row for epsilon, and 1 extra slot for sink state
-        // doesn't allocate an actual row for epsilon (letter #0)
-        posint** delta = newddelta(num_letters, num_states);
-        // all valid transitions move to the sink state
-        for (posint i = 1; i <= num_letters; i++) {
-            std::fill_n(delta[i], num_states + 1, sink);
-        }
-        backend_ = newdfa();
-        backend_->highest_state = num_states;
-        backend_->init = sink;
-        backend_->alphabet_size = num_letters;
-        backend_->final = fin_bitset;
-        backend_->delta = delta;
-        backend_->minimal = false;
+        backend_ = alloc_backend(alphabet_.size(), num_states + 1);
         wrapper_ = new DfaWrapper(backend_);
     }
+    // The last state is assumed to be the sink state.
+    static DfaBackend* alloc_backend(posint num_letters, posint num_states) {
+        posint sink = num_states - 1;
+        // no final state set
+        // reserves 1 extra slot for sink state
+        char* fin_bitset = newfinal(num_states - 1);
+        // reserves 1 extra row for epsilon, and 1 extra slot for sink state
+        // doesn't allocate an actual row for epsilon (letter #0)
+        posint** delta = newddelta(num_letters, num_states - 1);
+        // all valid transitions move to the sink state
+        for (posint i = 1; i <= num_letters; i++) {
+            std::fill_n(delta[i], num_states, sink);
+        }
+        DfaBackend* res = newdfa();
+        res->highest_state = sink;
+        res->init = sink;
+        res->alphabet_size = num_letters;
+        res->final = fin_bitset;
+        res->delta = delta;
+        res->minimal = false;
+        return res;
+    }
     explicit DFA(const NFA<Symbol>& nfa)
-        : DFA(std::vector<Symbol>(nfa.alphabet_), nfa.determinize()) {
+        : DFA(std::vector<Symbol>(nfa.alphabet()), nfa.determinize()) {
         // This creates a copy of the NFA's alphabet
         assert(!backend_->minimal); // ensures minimal() => no useless letters
     }
@@ -651,29 +668,66 @@ public:
         backend_ = wrapper_->get_dfa();
         assert(!backend_->minimal); // ensures minimal() => no useless letters
     }
+    // TODO: Doing simple product construction; could try a more efficient
+    // algorithm.
+    // We assume that most combinations of states won't be reachable, so we
+    // don't immediately take the cartesian product of states.
     DFA operator|(const DFA& other) const {
         // Combine the alphabets of the two machines.
         std::vector<Symbol> joint_alph;
         std::set_union(alphabet_.begin(), alphabet_.end(),
                        other.alphabet_.begin(), other.alphabet_.end(),
                        std::back_inserter(joint_alph));
-        // Extend machines to the common alphabet, then union them.
-        DfaWrapper* dfa1 = extend_alph(joint_alph);
-        DfaWrapper* dfa2 = other.extend_alph(joint_alph);
-        assert(dfa1->get_alphabet_size() == dfa2->get_alphabet_size());
-        // TODO: These downcasts are statically safe.
-        NfaWrapper* nfa1U2 =
-            dynamic_cast<NfaWrapper*>(dfa1->lang_union(*dfa2));
-        // XXX: Assuming AMoRE++ can handle this correctly.
-        DfaWrapper* dfa1U2 = dynamic_cast<DfaWrapper*>(nfa1U2->determinize());
-        assert(dfa1U2 != NULL);
-        // ensures minimal() => no useless letters
-        assert(!dfa1U2->get_dfa()->minimal);
+        // Extend machines to the common alphabet.
+        DfaWrapper* a_wrap = extend_alph(joint_alph);
+        DfaWrapper* b_wrap = other.extend_alph(joint_alph);
+        assert(a_wrap->get_alphabet_size() == joint_alph.size());
+        assert(b_wrap->get_alphabet_size() == joint_alph.size());
+        DfaBackend* a = a_wrap->get_dfa();
+        DfaBackend* b = b_wrap->get_dfa();
+        // Produce union machine.
+        Worklist<std::pair<posint,posint>,false> worklist;
+        posint aUb_init =
+            worklist.enqueue(std::make_pair(a->init, b->init))->second;
+        std::vector<std::vector<posint> > aUb_trans;
+        while (!worklist.empty()) {
+            auto pU_src = worklist.dequeue();
+            posint a_src = pU_src->first.first;
+            posint b_src = pU_src->first.second;
+            posint aUb_src = pU_src->second;
+            // union states processed in order
+            assert(aUb_src == aUb_trans.size());
+            aUb_trans.emplace_back(joint_alph.size() + 1,
+                                   std::numeric_limits<posint>::max());
+            for (posint letter = 1; letter <= joint_alph.size(); letter++) {
+                posint a_tgt = a->delta[letter][a_src];
+                posint b_tgt = b->delta[letter][b_src];
+                posint aUb_tgt =
+                    worklist.enqueue(std::make_pair(a_tgt, b_tgt))->second;
+                aUb_trans.back()[letter] = aUb_tgt;
+            }
+        }
+        assert(aUb_trans.size() == worklist.num_reached());
+        // Convert result DFA to AMoRE format.
+        DfaBackend* aUb = DFA<Symbol>::alloc_backend(joint_alph.size(),
+                                                     worklist.num_reached());
+        aUb->init = aUb_init;
+        for (const auto& pU : worklist.reached()) {
+            if (isfinal(a->final[pU.first.first]) ||
+                isfinal(b->final[pU.first.second])) {
+                setfinal(aUb->final[pU.second], true);
+            }
+        }
+        for (posint src = 0; src < worklist.num_reached(); src++) {
+            const std::vector<posint>& from_src = aUb_trans[src];
+            for (posint letter = 1; letter <= joint_alph.size(); letter++) {
+                aUb->delta[letter][src] = from_src[letter];
+            }
+        }
         // Clean up temporary machines before returning.
-        delete dfa1;
-        delete dfa2;
-        delete nfa1U2;
-        return DFA(std::move(joint_alph), dfa1U2);
+        delete a_wrap;
+        delete b_wrap;
+        return DFA(std::move(joint_alph), new DfaWrapper(aUb));
     }
     // TODO: Only defined for minimal DFAs
     bool operator==(const DFA& other) const {
@@ -1014,7 +1068,7 @@ public:
         }
         // Build the FSM.
         // XXX: Assumes Ref's are allocated serially.
-        NFA<Delimiter> nfa(delims, vars.size());
+        NFA<Delimiter> nfa(delims);
         nfa.set_initial(entry.value());
         for (Ref<Variable> v : exits) {
             nfa.set_final(v.value());
@@ -1111,7 +1165,6 @@ public:
                 EXPECT(toks.size() == 1);
                 EXPECT(!vars_done);
                 EXPECT(code_.entry.valid());
-                EXPECT(!code_.exits.empty());
                 vars_done = true;
             } else if (!vars_done) {
                 EXPECT(toks.size() >= 1);
@@ -1260,7 +1313,7 @@ void test_dfa_code() {
     std::cout << "d1:" << std::endl;
     test_minimization(d1);
 
-    NFA<std::string> n(alph_ab, 4);
+    NFA<std::string> n(alph_ab);
     n.set_initial(3);
     n.set_final(1);
     n.add_eps_trans(3, 0);
