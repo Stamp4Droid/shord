@@ -4,7 +4,7 @@ import argparse
 from os.path import basename, splitext
 import sys
 
-def convert(tgf_fname, fout):
+def convert(tgf_fname, print_labels, fout):
     comp = splitext(splitext(basename(tgf_fname))[0])[0]
     states_done = False
     entries = []
@@ -37,7 +37,7 @@ def convert(tgf_fname, fout):
                 state = toks[0]
                 weight = 1
                 shape = 'oval'
-                label = state
+                label = state if print_labels else ''
                 for t in toks[1:]:
                     if t == 'in':
                         entries.append(state)
@@ -62,6 +62,7 @@ def convert(tgf_fname, fout):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('-n', '--no-labels', action='store_true')
     parser.add_argument('tgf_file')
     args = parser.parse_args()
-    convert(args.tgf_file, sys.stdout)
+    convert(args.tgf_file, not args.no_labels, sys.stdout)
