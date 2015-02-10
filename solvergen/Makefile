@@ -5,7 +5,7 @@ CFG_SRC = engine.cpp solvergen.hpp
 RSM_PY = rsm.py fsm.py util.py
 RSM_SRC = rsm.cpp rsm.hpp util.hpp
 
-CC = g++ -std=c++11 -Wall -Wextra -pedantic -g
+CC = g++ -std=c++1y -Wall -Wextra -pedantic -g -O3
 RSM_LIBS = -lboost_system -lboost_filesystem -lboost_program_options -lboost_regex
 
 # The following functions assume a name formatted as "cls@pri^sec#flags".
