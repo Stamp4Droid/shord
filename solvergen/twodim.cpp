@@ -663,8 +663,12 @@ public:
         backend_ = wrapper_->get_dfa(); // update the cached backend pointer
     }
     void fold(posint depth) {
-        NFA<Symbol> folded = state_merge(k_equiv(depth));
+        SetPartition part = k_equiv(depth);
+        std::cout << "    Partition calculated" << std::endl;
+        NFA<Symbol> folded = state_merge(part);
+        std::cout << "    States merged" << std::endl;
         wrapper_ = folded.determinize();
+        std::cout << "    Widened FSM determinized" << std::endl;
         backend_ = wrapper_->get_dfa();
         assert(!backend_->minimal); // ensures minimal() => no useless letters
     }
@@ -1085,8 +1089,11 @@ public:
             nfa.add_symb_trans(c.get<SRC>().value(), d, c.get<TGT>().value());
         }
         // Determinize and minimize the FSM.
+        std::cout << "    NFA constructed" << std::endl;
         Signature res(nfa);
+        std::cout << "    NFA determinized" << std::endl;
         res.minimize();
+        std::cout << "    DFA minimized" << std::endl;
         return res;
     }
     void to_dot(std::ostream& os, const Registry<Field>& fld_reg) const {
@@ -1224,19 +1231,32 @@ public:
             stage.embed(c.get<SRC>(), c.get<TGT>(),
                         fun_reg[c.get<FUN>()].sig_);
         }
+        std::cout << "    Embedded calls" << std::endl;
         stage.close();
+        std::cout << "    Internal matching done" << std::endl;
         stage.pn_extend();
+        std::cout << "    PN-Extended" << std::endl;
+        std::cout << "    " << stage.vars.size() << " vars, "
+                  << (stage.epsilons.size() + stage.opens.size() +
+                      stage.closes.size() + calls_.size()) << " edges"
+                  << std::endl;
         Signature fsi = stage.to_sig();
+        std::cout << "    New signature calculated" << std::endl;
         // Check if we've reached fixpoint.
         Signature siUfsi = si | fsi;
+        std::cout << "    Unioned with previous sig" << std::endl;
         siUfsi.minimize();
+        std::cout << "    Union minimized" << std::endl;
         if (siUfsi == si) { // equivalent to F(Si) <= Si
             return false;
         }
+        std::cout << "    New sig was larger" << std::endl;
         // If not, widen S(i) U F(S(i)) and set as latest signature.
         siUfsi.fold(WIDENING_K);
+        std::cout << "    Sig folded" << std::endl;
         siUfsi.minimize();
         swap(sig_, siUfsi);
+        std::cout << "    Widened sig minimized" << std::endl;
         return true;
     }
     void to_dot(std::ostream& os, const Registry<Function>& fun_reg,
@@ -1428,6 +1448,8 @@ int main(int argc, char* argv[]) {
         EXPECT(f.complete());
     }
 
+    fs::path outdir = fs::path(outdir_name);
+    fs::create_directory(outdir);
     // Update signatures up to fixpoint.
     Worklist<Ref<Function>,true> worklist;
     for (const Function& f : funs) {
@@ -1436,24 +1458,20 @@ int main(int argc, char* argv[]) {
     while (!worklist.empty()) {
         Function& f = funs[worklist.dequeue()];
         std::cout << "Processing " << f.name << std::endl;
+        std::cout << "    " << worklist.size() << " left in queue" << std::endl;
         if (!f.update_sig(funs)) {
-            std::cout << "    no change" << std::endl;
+            std::cout << "    No change" << std::endl;
             continue;
         }
-        std::cout << "    updated" << std::endl;
+        std::cout << "    Updated, rescheduling callers" << std::endl;
         for (Ref<Function> c : f.callers()) {
             if (worklist.enqueue(c)) {
                 std::cout << "    rescheduled " << funs[c].name << std::endl;
             }
         }
-    }
-
-    // Print final signatures.
-    fs::path outdir = fs::path(outdir_name);
-    fs::create_directory(outdir);
-    for (const Function& f : funs) {
         fs::path fpath(outdir/(f.name + ".sig.tgf"));
-        std::cout << "Printing signature for " << f.name << std::endl;
+        // TODO: Empty signatures won't be printed.
+        std::cout << "    Printing signature" << std::endl;
         std::ofstream fout(fpath.string());
         EXPECT((bool) fout);
         f.sig().to_tgf(fout, flds);
