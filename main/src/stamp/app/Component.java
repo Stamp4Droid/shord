@@ -35,16 +35,29 @@ public class Component
 
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("component : {");
+		StringBuilder builder = new StringBuilder("{");
 		builder.append("name: "+name+", ");
 		builder.append("type: "+type+", ");
+
+		builder.append("intent-filters: {");
 		int len = intentFilters.size();
 		for(int i = 0; i < len; i++){
 			builder.append(intentFilters.get(i).toString());
 			if(i < (len-1))
 				builder.append(", ");
 		}
-		builder.append("} ");
+		builder.append("}, ");
+
+		builder.append("layouts: {");
+		len = layouts.size();
+		for(int i = 0; i < len; i++){
+			builder.append(layouts.get(i).toString());
+			if(i < (len-1))
+				builder.append(", ");
+		}
+		builder.append("}");
+
+		builder.append("}");
 		return builder.toString();
 	}
 }

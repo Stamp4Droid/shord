@@ -85,30 +85,47 @@ public class Harness
                 }
 			}
 
-			//initialize the custom widgets used in this comp
+			//inflate widgets used in this comp
 			for(Widget widget : layout.widgets){
 				String widgetClassName = widget.getClassName();
 				SootClass wClass = Scene.v().getSootClass(widgetClassName);
+
+				//add a static field to hold the instance of the widget
+				SootField f = new SootField(widgetFldNameFor(widget), 
+											wClass.getType(), 
+											Modifier.STATIC | Modifier.PUBLIC);
+
+				if(!sClass.declaresField(f.getSubSignature()))
+					sClass.addField(f);
+				else
+					f = sClass.getField(f.getSubSignature());
+
+				if(widget.isCustom()){
+					//one constructor
+					List<Type> paramTypes1 = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
+																	  RefType.v("android.util.AttributeSet"), 
+																	  IntType.v()});
 				
-				//one constructor
-				List<Type> paramTypes1 = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
-																  RefType.v("android.util.AttributeSet"), 
-																  IntType.v()});
-				
-				if(wClass.declaresMethod("<init>", paramTypes1)){
-					List<Value> args = Arrays.asList(new Value[]{NullConstant.v(),
-																 NullConstant.v(),
-																 IntConstant.v(0)});
-					init(wClass, paramTypes1, args);
-				}
-				
-				//another constructor
-				List<Type> paramTypes2 = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
-																  RefType.v("android.util.AttributeSet")});
-				if(wClass.declaresMethod("<init>", paramTypes2)){
-					List<Value> args = Arrays.asList(new Value[]{NullConstant.v(),
-																 NullConstant.v()});
-					init(wClass, paramTypes2, args);
+					if(wClass.declaresMethod("<init>", paramTypes1)){
+						List<Value> args = Arrays.asList(new Value[]{NullConstant.v(),
+																	 NullConstant.v(),
+																	 IntConstant.v(0)});
+						init(wClass, paramTypes1, args);
+					}
+					
+					//another constructor
+					List<Type> paramTypes2 = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
+																	  RefType.v("android.util.AttributeSet")});
+					if(wClass.declaresMethod("<init>", paramTypes2)){
+						List<Value> args = Arrays.asList(new Value[]{NullConstant.v(),
+																	 NullConstant.v()});
+						init(wClass, paramTypes2, args);
+					}
+				} else {
+					List<Type> paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context")});
+					List<Value> args = Arrays.asList(new Value[]{NullConstant.v()});
+					Local l = init(wClass, paramTypes, args);
+					units.add(Jimple.v().newAssignStmt(Jimple.v().newStaticFieldRef(f.makeRef()), l));
 				}
 			}
 		}
@@ -149,6 +166,11 @@ public class Harness
 		units.add(Jimple.v().newAssignStmt(c, Jimple.v().newNewExpr(klass.getType())));
 		units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(c, init.makeRef(), args)));	
 		return c;
+	}
+
+	public static String widgetFldNameFor(Widget w)
+	{
+		return w.idStr.replace(':','$').replace('/','$');
 	}
 
 	

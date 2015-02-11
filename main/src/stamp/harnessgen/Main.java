@@ -32,6 +32,7 @@ public class Main
 		List<Component> comps = app.components();
 		initSoot(apkPath, androidJar, comps);
 		app.findLayouts();
+		System.out.println(app.toString());
 		
 		File driverDir = new File(driverDirName, "stamp/harness");
 		driverDir.mkdirs();

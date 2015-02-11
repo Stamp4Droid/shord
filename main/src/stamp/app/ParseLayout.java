@@ -88,12 +88,17 @@ public class ParseLayout
 			if(id.isEmpty())
 				continue;//ignore for now. not sure whether we need to consider
 			if(id.startsWith("@id/"))
-				id = id.substring(4);
+				id = id.substring(1);
 			else if(id.startsWith("@+id/"))
-				id = id.substring(5);
-			else 
+				id = id.substring(2);
+			else if(id.startsWith("@*android:id/"))
+				id = id.substring(2);
+			else
 				assert false : id;
-			widgets.add(new Widget(elem.getTagName(), id, publicXml.idIdFor(id)));
+			int numId = -1;
+			if(id.startsWith("id/"))
+				numId = publicXml.idIdFor(id.substring(3));
+			widgets.add(new Widget(elem.getTagName(), id, numId));
 		}
 	}
 	

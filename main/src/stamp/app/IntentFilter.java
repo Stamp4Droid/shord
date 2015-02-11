@@ -47,7 +47,7 @@ public class IntentFilter
 	
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("intent-filter: { ");
+		StringBuilder builder = new StringBuilder("{");
 		builder.append("actions: {");
 		int len = actions.size();
 		int i = 0;
@@ -68,9 +68,9 @@ public class IntentFilter
 				builder.append(", ");
 			i++;
 		}
-		builder.append("} ");
+		builder.append("}");
 
-		builder.append("} ");
+		builder.append("}");
 		return builder.toString();
 	}
 }

@@ -109,8 +109,10 @@ public class App
 				String widgetClassName = widget.getClassName();
 				
 				//check if it is a custom widget
-				if(widgetNames.contains(widgetClassName))
+				if(widgetNames.contains(widgetClassName)){
+					widget.setCustom();
 					continue;
+				}
 
 				//check if it is a framework widget
 				if(frameworkClasses.contains(widgetClassName))
