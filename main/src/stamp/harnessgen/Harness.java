@@ -39,15 +39,21 @@ import stamp.app.Component;
 import stamp.app.Layout;
 import stamp.app.Widget;
 
+/*
+ * @author Saswat Anand
+ */
 public class Harness
 {
 	private final SootClass sClass;
+	private final SootClass gClass;
 	private final Chain units;
 	private final Chain<Local> locals;
 	private int count = 0;
 
-	public Harness(String className, List<Component> components)
+	public Harness(String className, List<Component> components, SootClass globalClass)
 	{
+		gClass = globalClass;
+
 		sClass = new SootClass(className, Modifier.PUBLIC);
 		sClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
 		Scene.v().addClass(sClass);
@@ -64,6 +70,16 @@ public class Harness
 		locals.add(arg);
 		units.add(Jimple.v().newIdentityStmt(arg, Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
         //addFields(components);
+	}
+
+	public SootClass getFinalSootClass()
+	{
+		//invoke callCallbacks method
+		//SootMethod callCallbacks = Scene.v().getMethod("<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>");
+		//units.add(Jimple.v().newInvokeStmt(Jimple.v().newStaticInvokeExpr(callCallbacks.makeRef())));
+
+		units.add(Jimple.v().newReturnVoidStmt());
+		return sClass;
 	}
 
 	public void addComponent(Component comp)
@@ -95,10 +111,10 @@ public class Harness
 											wClass.getType(), 
 											Modifier.STATIC | Modifier.PUBLIC);
 
-				if(!sClass.declaresField(f.getSubSignature()))
-					sClass.addField(f);
+				if(!gClass.declaresField(f.getSubSignature()))
+					gClass.addField(f);
 				else
-					f = sClass.getField(f.getSubSignature());
+					f = gClass.getField(f.getSubSignature());
 
 				if(widget.isCustom()){
 					//one constructor
@@ -131,22 +147,6 @@ public class Harness
 		}
 	}
 	
-	public void writeTo(File file) throws Exception
-	{
-		//invoke callCallbacks method
-		SootMethod callCallbacks = Scene.v().getMethod("<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>");
-		units.add(Jimple.v().newInvokeStmt(Jimple.v().newStaticInvokeExpr(callCallbacks.makeRef())));
-
-		units.add(Jimple.v().newReturnVoidStmt());
-
-		//write the class
-        OutputStream streamOut = new JasminOutputStream(new FileOutputStream(file));
-        PrintWriter writerOut = new PrintWriter(new OutputStreamWriter(streamOut));
-        JasminClass jasminClass = new soot.jimple.JasminClass(sClass);
-        jasminClass.print(writerOut);
-        writerOut.flush();
-        streamOut.close();
-	}
 
 	private Local init(SootClass klass, List<Type> paramTypes, List<Value> args)
 	{
