@@ -225,8 +225,8 @@
             </assertions>
 		</java> -->
 		
-        <input message="[FIXME] You may use this opportunity to do any dirty hack on the app.jar (you are welcome...). Enter 'h' once you are done or if you don't understand why this message is here (lucky you):"
-           validargs="H,h"/>
+        <!-- <input message="[FIXME] You may use this opportunity to do any dirty hack on the app.jar (you are welcome...). Enter 'h' once you are done or if you don't understand why this message is here (lucky you):"
+           validargs="H,h"/> -->
            
         <mkdir dir="${droidrecord.out.dir}/apk"/>
         <mkdir dir="${droidrecord.out.dir}/apk/raw"/>
@@ -237,15 +237,19 @@
     	  failonerror="true">
           <arg value="-JXmx${env.JavaHeap}"/>
           <arg value="--dex"/>
-          <arg value="--output=${droidrecord.out.dir}/apk/classes.dex"/>
+          <arg value="--multi-dex"/>
+          <arg value="--output=${droidrecord.out.dir}/apk/"/>
           <arg value="${stamp.dir}/droidrecord/jars/droidrecord_lib.jar"/>
           <arg value="${droidrecord.out.dir}/app.jar"/>
         </exec>
         <unzip src="${app.loc}" dest="${droidrecord.out.dir}/apk/raw"/>
         <delete file="${droidrecord.out.dir}/apk/raw/classes.dex"/>
         <delete dir="${droidrecord.out.dir}/apk/raw/META-INF"/>
-        <copy file="${droidrecord.out.dir}/apk/classes.dex" tofile="${droidrecord.out.dir}/apk/raw/classes.dex"/>
-        <copy file="${droidrecord.out.dir}/apk/classes.dex" tofile="/tmp/out/classes.dex" />
+        <copy todir="${droidrecord.out.dir}/apk/raw/">
+        	<fileset dir="${droidrecord.out.dir}/apk" casesensitive="yes">
+			  <filename name="classes*.dex"/>
+			</fileset>
+        </copy>
         <!--<exec executable="python" 
           spawn="false"
     	  failonerror="true">
