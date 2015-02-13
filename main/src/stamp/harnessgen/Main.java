@@ -14,6 +14,7 @@ import soot.Modifier;
 import soot.SootClass;
 import soot.jimple.JasminClass;
 import soot.util.JasminOutputStream;
+
 /*
 * @author Saswat Anand
 */
@@ -41,10 +42,6 @@ public class Main
 		
 		PrintWriter writer = new PrintWriter(new FileWriter(new File(harnessListFile)));
 
-		SootClass gClass = new SootClass("stamp.harness.G", Modifier.PUBLIC);
-		gClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
-		Scene.v().addClass(gClass);
-
 		int numComps = comps.size();
 		System.out.println("number of components = "+numComps);
 		int harnessCount = 0;
@@ -53,7 +50,7 @@ public class Main
 			harnessCount++;
 			String harnessClassName = "stamp.harness.Main"+harnessCount;
 			writer.println(harnessClassName);
-			Harness h = new Harness(harnessClassName, comps, gClass);
+			Harness h = new Harness(harnessClassName, comps);
 			for(int j = 0; j < numCompsPerHarness && i < numComps; j++, i++){
 				Component comp = comps.get(i);
 				h.addComponent(comp);
@@ -62,8 +59,14 @@ public class Main
 		}
 		writer.close();
 
+		SootClass gClass = new GClass(app).getFinalSootClass();
 		writeClass(gClass, driverDirName);
+
+		//GuiFix gfix = new GuiFix(app, gClass);
+		//gfix.perform();
 	}
+
+
 
 	private static void writeClass(SootClass klass, String driverDirName) throws IOException
 	{

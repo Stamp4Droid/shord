@@ -41,4 +41,15 @@ public class Widget
 	{
 		return "{class: "+className+", id-str: "+idStr+", id: "+id+"}";
 	}
+	
+	public boolean equals(Object other)
+	{
+		if(!(other instanceof Widget))
+			return false;
+		Widget o = (Widget) other;
+		return 
+			o.className.equals(className) &&
+			o.idStr.equals(idStr) &&
+			o.id.equals(id);
+	}
 }

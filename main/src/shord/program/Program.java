@@ -37,7 +37,7 @@ public class Program
 	{
 	}
 
-	public void build(List<String> harnesses)
+	public void build(List<String> harnesses, String widgetsClassName)
 	{
         try {
 			StringBuilder options = new StringBuilder();
@@ -66,6 +66,8 @@ public class Program
 			for(String h : harnesses){
 				Scene.v().loadClassAndSupport(h);
 			}
+
+			Scene.v().loadClassAndSupport(widgetsClassName);
 
 			//String mainClassName = System.getProperty("chord.main.class");
 			//SootClass mainClass = Scene.v().loadClassAndSupport(mainClassName);

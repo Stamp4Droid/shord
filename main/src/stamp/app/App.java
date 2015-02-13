@@ -35,6 +35,7 @@ public class App
 	private List<Component> comps = new ArrayList();
 	private Map<Integer,Layout> layouts = new HashMap();
 	private Set<String> permissions = new HashSet();
+	private List<String> classes = new ArrayList();
 
 	private String pkgName;
 	private String version;
@@ -49,13 +50,14 @@ public class App
 
 		File resDir = new File(apktoolOutDir, "res");
 		List<Layout> layouts = new ParseLayout().process(resDir);
-
-		app.process(apkPath, apktoolOutDir, layouts);
+		
+		app.collectClassNames(apkPath);
+		app.process(apktoolOutDir, layouts);
 		
 		return app;
 	}
 
-	public void process(String apkPath, String apktoolOutDir, List<Layout> layouts)
+	public void process(String apktoolOutDir, List<Layout> layouts)
 	{
 		if(iconPath != null){
 			if(iconPath.startsWith("@drawable/")){
@@ -89,7 +91,7 @@ public class App
 			compNames.add(c.name);
 		}
 
-		filterDead(apkPath, compNames, widgetNames);
+		filterDead(compNames, widgetNames);
 
 		System.out.println("^^ "+compNames.size());
 		
@@ -178,15 +180,19 @@ public class App
 		return iconPath;
 	}
 
-	private void filterDead(String apkPath, Set<String> compNames, Set<String> widgetNames)
+	public List<String> allClassNames()
+	{
+		return classes;
+	}
+
+	public Collection<Layout> allLayouts()
+	{
+		return layouts.values();
+	}
+
+	private void collectClassNames(String apkPath)
 	{
 		assert apkPath.endsWith(".apk");
-
-		//Map<String,Integer> componentNameToLayoutId = new HashMap();
-
-		Set<String> widgetNamesAvailable = new HashSet();
-		Set<String> compNamesAvailable = new HashSet();
-
 		try{
 			File f = new File(apkPath);
 			DexFile dexFile = new DexFile(f);
@@ -198,22 +204,25 @@ public class App
 					className = className.substring(1, len-1);
 				}
 				className = className.replace('/','.');
-				String tmp = className;
-				//String tmp = className.replace('$', '.');
-				if(compNames.contains(tmp)) {
-					compNamesAvailable.add(tmp);
-					System.out.println("%% "+tmp);
-					//componentNameToCallbacks.put(className, findCallbackMethods(defItem));
-					//componentNameToLayoutId.put(className, findLayoutId(defItem));
-				}
-				//else if(otherComps.contains(tmp))
-				//	componentNameToCallbacks.put(className, Collections.EMPTY_LIST);
-				else if(widgetNames.contains(tmp))
-					widgetNamesAvailable.add(tmp);
-					//customWidgetToConstructors.put(className, findConstructors(defItem));
+				classes.add(className);
 			}
 		} catch(IOException e){
 			throw new Error(e);
+		}
+	}
+
+	private void filterDead(Set<String> compNames, Set<String> widgetNames)
+	{
+		Set<String> compNamesAvailable = new HashSet();
+		Set<String> widgetNamesAvailable = new HashSet();
+
+		for (String className : classes) {
+			if(compNames.contains(className)) {
+				compNamesAvailable.add(className);
+				//System.out.println("%% "+tmp);
+			}
+			else if(widgetNames.contains(className))
+				widgetNamesAvailable.add(className);
 		}
 
 		compNames.clear();
@@ -335,7 +344,7 @@ public class App
 		}
 	}
 
-	Set<String> computeFrameworkClasses()
+	static Set<String> computeFrameworkClasses()
 	{
 		Set<String> frameworkClasses = new HashSet();
 		String androidJar = System.getProperty("stamp.android.jar");
@@ -360,4 +369,5 @@ public class App
 		}
 		return frameworkClasses;
 	}
+
 }

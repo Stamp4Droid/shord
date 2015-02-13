@@ -83,6 +83,7 @@
 	  <sysproperty key="stamp.max.harness.size" value="${stamp.max.harness.size}"/>
 	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
 	  <sysproperty key="stamp.harnesslist.file" value="${stamp.out.dir}/harness.txt"/>
+	  <sysproperty key="stamp.widgets.file" value="${stamp.out.dir}/widgets.txt"/>
     </java>
 
     <!-- Run Chord. -->
@@ -94,6 +95,7 @@
       <jvmarg value="-ea"/>
       <!--sysproperty key="chord.work.dir" file="${stamp.out.dir}"/-->
       <!--sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/-->
+	  <sysproperty key="stamp.widgets.file" value="${stamp.out.dir}/widgets.txt"/>
 	  <sysproperty key="stamp.harnesslist.file" value="${stamp.out.dir}/harness.txt"/>
       <sysproperty key="chord.class.path" value="${apk}:${driver.dir}"/>
       <sysproperty key="chord.java.analysis.path" value="${stamp.dir}/bin/stamp.main.jar:${stamp.dir}/scanner/stamp.scanner.jar"/>

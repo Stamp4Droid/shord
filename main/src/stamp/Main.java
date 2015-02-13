@@ -32,12 +32,16 @@ public class Main
 			harnessClasses.add(line);
 		}
 		reader.close();
-		
+
+		String widgetsFile = System.getProperty("stamp.widgets.file");
+		reader = new BufferedReader(new FileReader(new File(widgetsFile)));
+		String widgetClass = reader.readLine();
+
 		//harnessClasses.add(System.getProperty("chord.main.class"));
 		String outDir = System.getProperty("stamp.out.dir");
 
 		Program prog = Program.g();
-		prog.build(harnessClasses);
+		prog.build(harnessClasses, widgetClass);
 
 		setup();
 
