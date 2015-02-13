@@ -85,7 +85,7 @@ public class Main
 			StringBuilder options = new StringBuilder();
 			options.append("-allow-phantom-refs");
 			options.append(" -src-prec apk");
-			options.append(" -p jb.tr use-older-type-assigner:true"); 
+			//options.append(" -p jb.tr use-older-type-assigner:true"); 
 			//options.append(" -p cg implicit-entry:false");
 			options.append(" -force-android-jar "+System.getProperty("user.dir"));
 			options.append(" -soot-classpath "+androidJar+File.pathSeparator+apkPath);
