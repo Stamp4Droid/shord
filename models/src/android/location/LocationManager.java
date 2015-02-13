@@ -8,12 +8,7 @@ class LocationManager
 
 	private void registerListener(final android.location.LocationListener listener)
 	{
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-						listener.onLocationChanged(getLocation());
-					}
-				});
+		listener.onLocationChanged(getLocation());
 	}
 
 	@STAMP(flows={@Flow(from="$FINE_LOCATION",to="!INTENT")})
@@ -69,7 +64,7 @@ class LocationManager
 		return locationManager;
 	}
 
-        @STAMP(flows={@Flow(from="$FINE_LOCATION",to="!INTENT")})
+	@STAMP(flows={@Flow(from="$FINE_LOCATION",to="!INTENT")})
         public  void addProximityAlert(double latitude, double longitude, float radius, long expiration, android.app.PendingIntent intent) {
 	}
 
@@ -79,13 +74,8 @@ class LocationManager
 		return new String();
 	}
 
-        public  boolean addNmeaListener(final android.location.GpsStatus.NmeaListener listener) {
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-					    listener.onNmeaReceived(0,getNmea());
-					}
-				});
+	public  boolean addNmeaListener(final android.location.GpsStatus.NmeaListener listener) {
+		listener.onNmeaReceived(0,getNmea());
 		return true;
 	}
 

@@ -86,14 +86,8 @@ class TelephonyManager
 
 	public  void listen(final android.telephony.PhoneStateListener listener, int events) 
 	{
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-						listener.onCallStateChanged(0, incomingCallNumber());
-						listener.onCellLocationChanged(getCellLocation());
-					}
-				});
-
+		listener.onCallStateChanged(0, incomingCallNumber());
+		listener.onCellLocationChanged(getCellLocation());
 	}
 	
 	private static TelephonyManager telephonyManager = new TelephonyManager();

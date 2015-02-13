@@ -1,47 +1,14 @@
-import edu.stanford.stamp.harness.ApplicationDriver;
-import edu.stanford.stamp.harness.Callback;
-
 public class ItemizedOverlay
 {
   @STAMP(flows={@Flow(from="param1",to="this")})
   public  ItemizedOverlay(android.graphics.drawable.Drawable param1) 
   {
-		ApplicationDriver.getInstance().
-			registerCallback(new Callback(){
-					public void run() {
-						ItemizedOverlay.this.onTap(null, null);
-					}
-				}); 
-		ApplicationDriver.getInstance().
-			registerCallback(new Callback(){
-					public void run() {
-						ItemizedOverlay.this.onSnapToItem(0, 0, null, null);
-					}
-				}); 
-		ApplicationDriver.getInstance().
-			registerCallback(new Callback(){
-					public void run() {
-						ItemizedOverlay.this.onTrackballEvent(null, null);
-					}
-				}); 
-		ApplicationDriver.getInstance().
-			registerCallback(new Callback(){
-					public void run() {
-						ItemizedOverlay.this.onKeyUp(0, null, null);
-					}
-				}); 
-		ApplicationDriver.getInstance().
-			registerCallback(new Callback(){
-					public void run() {
-						ItemizedOverlay.this.onTouchEvent(null, null);
-					}
-				}); 
-		ApplicationDriver.getInstance().
-			registerCallback(new Callback(){
-					public void run() {
-						ItemizedOverlay.this.onTap(0);
-					}
-				});
+	  this.onTap(null, null);
+	  this.onSnapToItem(0, 0, null, null);
+	  this.onTrackballEvent(null, null);
+	  this.onKeyUp(0, null, null);
+	  this.onTouchEvent(null, null);
+	  this.onTap(0);
   }
 
   @STAMP(flows={@Flow(from="param1",to="@return")})
@@ -71,13 +38,7 @@ public class ItemizedOverlay
   @STAMP(flows={@Flow(from="this",to="@return")})
   public Item nextFocus(boolean param1)  { return null; }
 
-  public void setOnFocusChangeListener(final com.google.android.maps.ItemizedOverlay.OnFocusChangeListener listener)
-  {
-        ApplicationDriver.getInstance().
-			registerCallback(new Callback(){
-					public void run() {
-						listener.onFocusChanged(ItemizedOverlay.this, null);
-					}
-				});
+  public void setOnFocusChangeListener(final com.google.android.maps.ItemizedOverlay.OnFocusChangeListener listener){
+		listener.onFocusChanged(ItemizedOverlay.this, null);
   }
 }

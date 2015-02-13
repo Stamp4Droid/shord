@@ -56,12 +56,7 @@ class AccountManager
     private android.accounts.AccountManagerFuture<android.os.Bundle> registerAccountManagerCallback(final android.accounts.AccountManagerCallback<android.os.Bundle> callback)
     {
     	final StampAccountManagerFuture future = new StampAccountManagerFuture();
-    	edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-    	    registerCallback(new edu.stanford.stamp.harness.Callback(){
-    		    public void run() {
-    			callback.run(future);
-    		    }
-    		});
+		callback.run(future);
     	return future;
     }
 
