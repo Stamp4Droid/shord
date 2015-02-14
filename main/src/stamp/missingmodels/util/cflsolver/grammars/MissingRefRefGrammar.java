@@ -16,12 +16,15 @@ public class MissingRefRefGrammar extends ContextFreeGrammar {
 	}
 	
 	public MissingRefRefGrammar() {
-		this.addUnaryProduction("Ref2RefT", "ref2RefArgTStub");
-		this.addUnaryProduction("Ref2RefT", "ref2RefRetTStub");
-		this.addUnaryProduction("Prim2RefT", "prim2RefArgTStub");
-		this.addUnaryProduction("Prim2RefT", "prim2RefRetTStub");
-		this.addUnaryProduction("Ref2PrimT", "prim2PrimTStub");
-		this.addUnaryProduction("Prim2PrimT", "prim2PrimTStub");
+		this.addBinaryProduction("Obj2RefT", "Flow", "ref2RefArgTStub");
+		this.addBinaryProduction("Obj2RefT", "Flow", "ref2RefRetTStub");
+
+		this.addProduction("Label2ObjX", new String[]{"Label2Prim", "prim2RefArgTStub", "Flow"}, new boolean[]{false, false, true});
+		this.addProduction("Label2ObjX", new String[]{"Label2Prim", "prim2RefArgTStub", "Flow"}, new boolean[]{false, false, true});
+
+		this.addBinaryProduction("Obj2PrimT", "Flow", "ref2PrimTStub");
+
+		this.addBinaryProduction("Label2Prim", "Label2Prim", "prim2PrimTStub");
 
 		this.addProduction("FlowField", new String[]{"Flow", "store", "Flow"}, new boolean[]{false, false, true});
 	}
