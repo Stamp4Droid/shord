@@ -9,6 +9,7 @@ import stamp.missingmodels.util.cflsolver.relation.ImplicitFlowRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
+import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
@@ -24,9 +25,10 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		RelationReader relationReader = new ShordRelationReader();
-		RelationManager relations = new ImplicitFlowRelationManager();
+		RelationManager implicitRelations = new ImplicitFlowRelationManager();
+		RelationManager taintRelations = new TaintRelationManager();
 		
-		Graph gbar = new ReachabilitySolver(relationReader.readGraph(relations, taintGrammar), relationReader.readTypeFilter(implicitTaintGrammar)).getResult();
+		Graph gbar = new ReachabilitySolver(relationReader.readGraph(taintRelations, taintGrammar), relationReader.readTypeFilter(taintGrammar)).getResult();
 
 		System.out.println("Printing taint grammar statistics:");
 		IOUtils.printGraphStatistics(gbar);
@@ -34,7 +36,7 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 		System.out.println("Printing edges for taint grammar:");
 		IOUtils.printGraphEdges(gbar, "Src2Sink", true);
 		
-		Graph gbari = new ReachabilitySolver(relationReader.readGraph(relations, implicitTaintGrammar), relationReader.readTypeFilter(implicitTaintGrammar)).getResult();
+		Graph gbari = new ReachabilitySolver(relationReader.readGraph(implicitRelations, implicitTaintGrammar), relationReader.readTypeFilter(implicitTaintGrammar)).getResult();
 		
 		System.out.println("Printing implicit taint grammar statistics:");
 		IOUtils.printGraphStatistics(gbari);
