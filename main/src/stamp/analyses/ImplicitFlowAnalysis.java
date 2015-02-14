@@ -9,7 +9,7 @@ import stamp.missingmodels.util.cflsolver.relation.ImplicitFlowRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager;
+import stamp.missingmodels.util.cflsolver.relation.TaintWithContextRelationManager;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
@@ -26,7 +26,7 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 	public void run() {
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager implicitRelations = new ImplicitFlowRelationManager();
-		RelationManager taintRelations = new TaintRelationManager();
+		RelationManager taintRelations = new TaintWithContextRelationManager();
 		
 		Graph gbar = new ReachabilitySolver(relationReader.readGraph(taintRelations, taintGrammar), relationReader.readTypeFilter(taintGrammar)).getResult();
 

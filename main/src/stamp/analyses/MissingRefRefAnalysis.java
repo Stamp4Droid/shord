@@ -28,10 +28,10 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 		
 		Graph gbar = new ReachabilitySolver(relationReader.readGraph(relations, missingRefRefTaintGrammar), relationReader.readTypeFilter(missingRefRefTaintGrammar)).getResult();
 		
-		System.out.println("Printing implicit taint grammar statistics:");
+		System.out.println("Printing missing refref taint grammar statistics:");
 		IOUtils.printGraphStatistics(gbar);
 		
-		System.out.println("Printing edges for implicit taint grammar:");
+		System.out.println("Printing edges for missing refref taint grammar:");
 		IOUtils.printGraphEdges(gbar, "Src2Sink", true);
 	}
 }

@@ -78,7 +78,7 @@ Stub(m:M) input
 
 # new
 NewCtxt(c:C,v:V,o:C) output # v = new X() // o
-TypeFilter(c:C,v:V,o:C) output
+TypeFilterCtxt(c:C,v:V,o:C) output
 
 # assign
 AssignCtxt(c:C,v:V,u:V) output          # v = u
@@ -129,7 +129,7 @@ phAlloc(v:V,c:C) output
 
 # new
 NewCtxt(c,v,o)    :- Alloc(v,h), CH(o,h), MV(m,v), CC(c,o), CM(c,m).
-TypeFilter(c,v,o) :- typeFilter(v,o), MV(m,v), CM(c,m).
+TypeFilterCtxt(c,v,o) :- typeFilter(v,o), MV(m,v), CM(c,m).
 
 # assign
 AssignCtxt(c,v,u)       :- Assign(v,u), MV(m,v), CM(c,m).

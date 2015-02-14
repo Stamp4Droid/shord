@@ -186,7 +186,7 @@ public class ConversionUtils {
 		/*
 		 * Typefilter
 		 */
-		relations.add("typeFilter", new IndexRelation("TypeFilter", "C", 1, null, "V", 2, 0));
+		relations.add("typeFilter", new IndexRelation("TypeFilterCtxt", "C", 1, null, "V", 2, 0));
 
 		/*
 		 * BDDBDDB partial pt relations

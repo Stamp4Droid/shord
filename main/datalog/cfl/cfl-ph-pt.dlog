@@ -75,11 +75,8 @@ pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
 # Phantom flows
 
 phpt(c,v,u,cu) :- phAlloc(v,c), u = v, cu = c.
-#phpt(c,v,w,cw) :- phpt(c,u,w,cw), Assign(v,u), phTypeFilter(v,w).
 phpt(c,v,w,cw) :- phpt(c,u,w,cw), Assign(v,u).
-#phpt(d,u,w,cw) :- phpt(c,v,w,cw), param(u,v,i), typeFilter(u,w), CC(c,d), CI(d,i).
 phpt(d,u,w,cw) :- phpt(c,v,w,cw), param(u,v,i), CC(c,d), CI(d,i).
-#phpt(c,u,w,cw) :- phpt(d,v,w,cw), return(u,v,i), CI(d,i), CC(c,d), phTypeFilter(u,w).
 phpt(c,u,w,cw) :- phpt(d,v,w,cw), return(u,v,i), CI(d,i), CC(c,d).
 
 fphptph(w1,cw1,f,w2,cw2) :- phpt(c,v,w2,cw2), Store(u,f,v), phpt(c,u,w1,cw1).
