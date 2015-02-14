@@ -3,6 +3,8 @@ package stamp.missingmodels.util.cflsolver.relation;
 public class TaintWithContextRelationManager extends RelationManager {	
 	public TaintWithContextRelationManager() {
 		this.add(new IndexWithContextRelation("pt", "C", 2, null, "V", 1, 0, "Flow"));
+		this.add(new IndexWithContextRelation("fpt", "C", 2, null, "C", 0, null, "FlowField", 1));
+		this.add(new IndexWithContextRelation("fptArr", "C", 1, null, "C", 0, null, "FlowFieldArr"));
 		
 		this.add(new IndexWithContextRelation("AssignPrimCtxt", "U", 2, 0, "U", 1, 0, "assignPrim"));
 		this.add(new IndexWithContextRelation("AssignPrimCCtxt", "U", 3, 2, "U", 1, 0, "assignPrim"));

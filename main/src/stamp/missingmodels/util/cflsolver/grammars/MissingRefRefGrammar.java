@@ -1,11 +1,28 @@
 package stamp.missingmodels.util.cflsolver.grammars;
 
-public class MissingRefRefGrammar extends TaintGrammar {
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
+
+public class MissingRefRefGrammar extends ContextFreeGrammar {
+	public static class MissingRefRefTaintGrammar extends UnionGrammar {
+		public MissingRefRefTaintGrammar() {
+			super(new TaintGrammar(), new MissingRefRefGrammar());
+		}
+	}
+	
+	public static class MissingRefRefImplicitFlowGrammar extends UnionGrammar {
+		public MissingRefRefImplicitFlowGrammar() {
+			super(new ImplicitFlowGrammar(), new MissingRefRefGrammar());
+		}
+	}
+	
 	public MissingRefRefGrammar() {
-		this.addBinaryProduction("Obj2RefT", "Flow", "ref2RefImp");
-		this.addBinaryProduction("Obj2PrimT", "Flow", "ref2PrimImp");
-		
-		this.addProduction("Label2ObjX", new String[]{"Label2Prim", "prim2RefImp", "Flow"}, new boolean[]{false, false, true});
-		this.addBinaryProduction("Label2Prim", "Label2Prim", "prim2PrimImp");
+		this.addUnaryProduction("Ref2RefT", "ref2RefArgTStub");
+		this.addUnaryProduction("Ref2RefT", "ref2RefRetTStub");
+		this.addUnaryProduction("Prim2RefT", "prim2RefArgTStub");
+		this.addUnaryProduction("Prim2RefT", "prim2RefRetTStub");
+		this.addUnaryProduction("Ref2PrimT", "prim2PrimTStub");
+		this.addUnaryProduction("Prim2PrimT", "prim2PrimTStub");
+
+		this.addProduction("FlowField", new String[]{"Flow", "store", "Flow"}, new boolean[]{false, false, true});
 	}
 }
