@@ -86,12 +86,12 @@ compare(const T& lhs, const T& rhs) {
     return 1;
 }
 
-template<class T>
-int compare(const std::set<T>& lhs, const std::set<T>& rhs) {
-    auto l_curr = lhs.cbegin();
-    auto r_curr = rhs.cbegin();
-    const auto l_end = lhs.cend();
-    const auto r_end = rhs.cend();
+template<class T, class S>
+int set_compare(const T& lhs, const S& rhs) {
+    auto l_curr = lhs.begin();
+    auto r_curr = rhs.begin();
+    const auto l_end = lhs.end();
+    const auto r_end = rhs.end();
 
     while (true) {
 	if (l_curr == l_end) {
@@ -114,11 +114,16 @@ int compare(const std::set<T>& lhs, const std::set<T>& rhs) {
 }
 
 template<class T>
-int map_compare(const T& lhs, const T& rhs) {
-    auto l_curr = lhs.cbegin();
-    auto r_curr = rhs.cbegin();
-    const auto l_end = lhs.cend();
-    const auto r_end = rhs.cend();
+int compare(const std::set<T>& lhs, const std::set<T>& rhs) {
+    return set_compare(lhs, rhs);
+}
+
+template<class T, class S>
+int map_compare(const T& lhs, const S& rhs) {
+    auto l_curr = lhs.begin();
+    auto r_curr = rhs.begin();
+    const auto l_end = lhs.end();
+    const auto r_end = rhs.end();
 
     while (true) {
 	if (l_curr == l_end && r_curr == r_end) {
@@ -368,6 +373,9 @@ private:
     std::map<T,unsigned> reached_;
     std::deque<Iterator> queue_;
 public:
+    explicit Worklist() {}
+    Worklist(const Worklist&) = delete;
+    Worklist& operator=(const Worklist&) = delete;
     bool empty() const {
 	return queue_.empty();
     }
@@ -483,10 +491,10 @@ void join_zip(const LMap& l, const RMap& r, const ZipT& zip) {
     detail::JoinZipHelper<DEPTH>::handle(l, r, zip);
 }
 
-template<class Set>
-bool empty_intersection(const Set& a, const Set& b) {
-    typename Set::const_iterator a_it = a.begin();
-    typename Set::const_iterator b_it = b.begin();
+template<class T, class S>
+bool empty_intersection(const T& a, const S& b) {
+    auto a_it = a.begin();
+    auto b_it = b.begin();
     while (a_it != a.end() && b_it != b.end()) {
         if (*a_it == *b_it) {
             return false;
@@ -686,7 +694,8 @@ public:
 	swap(a.temps, b.temps);
     }
     void clear() {
-        swap(*this, Registry());
+        Registry temp;
+        swap(*this, temp);
     }
     T& operator[](Ref<T> ref) {
 	EXPECT(ref.valid());
@@ -1148,7 +1157,8 @@ public:
 	swap(a.store_, b.store_);
     }
     void clear() {
-        swap(*this, Table());
+        Table temp;
+        swap(*this, temp);
     }
     Table& of() {
         return *this;
@@ -1242,7 +1252,8 @@ public:
 	swap(a.val_, b.val_);
     }
     void clear() {
-        swap(*this, Cell());
+        Cell temp;
+        swap(*this, temp);
     }
     Cell& of() {
         return *this;
@@ -1331,7 +1342,8 @@ public:
 	swap(a.store_, b.store_);
     }
     void clear() {
-        swap(*this, Bag());
+        Bag temp;
+        swap(*this, temp);
     }
     Bag& of() {
         return *this;
@@ -1422,7 +1434,8 @@ public:
 	swap(a.map, b.map);
     }
     void clear() {
-        swap(*this, Index());
+        Index temp;
+        swap(*this, temp);
     }
     Index& of() {
         return *this;
@@ -1561,7 +1574,8 @@ public:
 	swap(a.sec_, b.sec_);
     }
     void clear() {
-        swap(*this, MultiIndex());
+        MultiIndex temp;
+        swap(*this, temp);
     }
     const Pri& pri() const {
 	return pri_;
@@ -1569,6 +1583,12 @@ public:
     template<int I>
     const typename pack_elem<I,Sec...>::type& sec() const {
 	return std::get<I>(sec_);
+    }
+    MultiIndex& of() {
+        return *this;
+    }
+    const MultiIndex& find() const {
+        return *this;
     }
     template<class... Flds>
     bool insert(const Flds&... flds) {
@@ -1644,8 +1664,16 @@ public:
 	using std::swap;
 	swap(a.array, b.array);
     }
-    Sub& of(const Key& key) {
-	return const_cast<Sub&>((*this)[key]);
+    void clear() {
+        FlatIndex temp;
+        swap(*this, temp);
+    }
+    FlatIndex& of() {
+        return *this;
+    }
+    template<class... Rest>
+    auto& of(const Key& key, const Rest&... rest) {
+	return const_cast<Sub&>((*this)[key]).of(rest...);
     }
     const Sub& operator[](const Key& key) const {
 	unsigned int i = KeyTraits<Key>::extract_idx(key);
@@ -1654,6 +1682,13 @@ public:
 #else
 	return array.at(i);
 #endif
+    }
+    const FlatIndex& find() const {
+        return *this;
+    }
+    template<class... Rest>
+    const auto& find(const Key& key, const Rest&... rest) const {
+        return (*this)[key].find(rest...);
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
@@ -1943,7 +1978,7 @@ private:
 private:
     List list;
 private:
-    bool find(const Key& key, typename List::const_iterator& pos) const {
+    bool search(const Key& key, typename List::const_iterator& pos) const {
 	pos = list.cbegin();
 	typename List::const_iterator prev = list.cbefore_begin();
 	while (pos != list.cend() && pos->first < key) {
@@ -1965,18 +2000,33 @@ public:
 	using std::swap;
 	swap(a.list, b.list);
     }
-    Sub& of(const Key& key) {
+    void clear() {
+        LightIndex temp;
+        swap(*this, temp);
+    }
+    LightIndex& of() {
+        return *this;
+    }
+    template<class... Rest>
+    auto& of(const Key& key, const Rest&... rest) {
 	typename List::const_iterator cpos;
 	typename List::iterator pos =
-	    find(key, cpos)
+	    search(key, cpos)
 	    // HACK: Convert a List::const_iterator to a List::iterator.
 	    ? list.insert_after(cpos, list.cend(), list.cend())
 	    : list.emplace_after(cpos, key, Sub());
-	return pos->second;
+	return pos->second.of(rest...);
     }
     const Sub& operator[](const Key& key) const {
 	typename List::const_iterator pos;
-	return find(key, pos) ? pos->second : dummy;
+	return search(key, pos) ? pos->second : dummy;
+    }
+    const LightIndex& find() const {
+        return *this;
+    }
+    template<class... Rest>
+    const auto& find(const Key& key, const Rest&... rest) const {
+        return (*this)[key].find(rest...);
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
@@ -2026,7 +2076,7 @@ public:
     template<class... Rest>
     bool contains(const Key& key, const Rest&... rest) const {
 	typename List::const_iterator pos;
-	return find(key, pos) ? pos->second.contains(rest...) : false;
+	return search(key, pos) ? pos->second.contains(rest...) : false;
     }
     bool contains(const Tuple& tuple) const {
 	return contains(tuple.hd, tuple.tl);
