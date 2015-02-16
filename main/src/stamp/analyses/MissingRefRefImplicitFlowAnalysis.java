@@ -44,6 +44,7 @@ public class MissingRefRefImplicitFlowAnalysis extends JavaAnalysis {
 		//IOUtils.printGraphStatistics(gbari);
 		
 		System.out.println("Printing tainted edges:");
+		//IOUtils.printGraphEdges(gbari, "Label2Ref", true);
 		IOUtils.printGraphEdges(gbari, "Label2Ref", true);
 		IOUtils.printGraphEdges(gbari, "Label2Prim", true);
 		
