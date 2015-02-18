@@ -595,150 +595,7 @@ public:
 RSM* pri_rsm = NULL;
 RSM* sec_rsm = NULL; // TODO: Exactly one secondary RSM for now
 
-// FUNCTION BOUNDS ============================================================
-
-mi::Index<PRI_CP, Ref<Component>, // = PRI_CP_FROM = PRI_CP_TO
-    // PRI_ST_FROM = PRI_CP's initial state
-    mi::Index<SRC, Ref<Node>,
-        mi::Index<SEC_CP_FROM, Ref<Component>,
-            mi::Index<SEC_ST_FROM, Ref<State>,
-                // PRI_ST_TO = any of PRI_CP's final states
-                mi::Index<DST, Ref<Node>,
-                    mi::Index<SEC_CP_TO, Ref<Component>,
-                        mi::Table<SEC_ST_TO, Ref<State> > > > > > > > funs;
-
-typedef decltype(funs)::Tuple Function;
-
-// XXX: Not unique if there's underscores in the individual names.
-std::ostream& operator<<(std::ostream& os, const Function& fun) {
-    const Component& sec_cp_from = sec_rsm->components[fun.get<SEC_CP_FROM>()];
-    const Component& sec_cp_to = sec_rsm->components[fun.get<SEC_CP_TO>()];
-    os << pri_rsm->components[fun.get<PRI_CP>()].name << "_"
-       << nodes[fun.get<SRC>()].name << "_"
-       << nodes[fun.get<DST>()].name << "_"
-       << sec_cp_from.name << "_"
-       << sec_cp_from.states[fun.get<SEC_ST_FROM>()].name << "_"
-       << sec_cp_to.name << "_"
-       << sec_cp_to.states[fun.get<SEC_ST_TO>()].name;
-    return os;
-}
-
-// Given a pair of entry/exit MatchLabels derived from the primary RSM, find
-// compatible entry/exit nodes on the graph, and all secondary RSM states that
-// we could ever occupy at those points. We ignore the specific tags on the
-// secondary arrows during this search (this is sound but might cause us to
-// include more secondary states than necessary).
-void enum_funs(Ref<Component> callee, const MatchLabel& in_label,
-               const MatchLabel& out_label) {
-    // Collect all the states where a secondary RSM arrow compatible with
-    // 'in_label' might lead.
-    bool in_rev = in_label.get<REV>();
-    Ref<Symbol> in_symb = in_label.get<SYMBOL>();
-    std::list<std::pair<Ref<Component>, Ref<State> > > sec_from_set;
-    for (const Component& sec_comp : sec_rsm->components) {
-        // For any compatible transition, include the state where it arrives.
-        for (Ref<State> s
-                 : sec_comp.transitions.sec<0>()[in_rev][in_symb].sec<0>()) {
-            sec_from_set.emplace_back(sec_comp.ref, s);
-        }
-        // For any compatible entry, include the initial state of the component
-        // being entered.
-        for (Ref<Box> b
-                 : sec_comp.entries.sec<1>()[in_rev][in_symb].sec<0>()) {
-            const Component& entered =
-                sec_rsm->components[sec_comp.boxes[b].comp];
-            sec_from_set.emplace_back(entered.ref, entered.initial);
-        }
-        // For any compatible exit, include the state where it arrives.
-        for (Ref<State> s
-                 : sec_comp.exits.sec<1>()[in_rev][in_symb].sec<0>()) {
-            sec_from_set.emplace_back(sec_comp.ref, s);
-        }
-    }
-    if (sec_from_set.empty()) {
-        return;
-    }
-
-    // Collect all the states where a secondary RSM arrow compatible with
-    // 'out_label' might originate.
-    bool out_rev = out_label.get<REV>();
-    Ref<Symbol> out_symb = out_label.get<SYMBOL>();
-    std::list<std::pair<Ref<Component>, Ref<State> > > sec_to_set;
-    for (const Component& sec_comp : sec_rsm->components) {
-        // For any compatible transition, include the state where it starts.
-        for (Ref<State> s
-                 : sec_comp.transitions.sec<0>()[out_rev][out_symb].pri()) {
-            sec_to_set.emplace_back(sec_comp.ref, s);
-        }
-        // For any compatible entry, include the state where it starts.
-        for (Ref<State> s
-                 : sec_comp.entries.sec<1>()[out_rev][out_symb].pri()) {
-            sec_to_set.emplace_back(sec_comp.ref, s);
-        }
-        // For any compatible exit, include all final states of the component
-        // being exited.
-        for (Ref<Box> b
-                 : sec_comp.exits.sec<1>()[out_rev][out_symb].pri()) {
-            const Component& exited =
-                sec_rsm->components[sec_comp.boxes[b].comp];
-            for (Ref<State> s : exited.final) {
-                sec_to_set.emplace_back(exited.ref, s);
-            }
-        }
-    }
-    if (sec_to_set.empty()) {
-        return;
-    }
-
-    // Find pairs of edges that match the entry and exit MatchLabel
-    // respectively. Then only keep those with matching tags.
-    // The symbols on MatchLabels must be parametric, so we're certain that the
-    // corresponding edges will have valid tags.
-    typedef mi::MultiIndex<mi::Table<SRC, Ref<Node> >,
-                           mi::Table<DST, Ref<Node> > > EndpStore;
-    auto record_endps = [&](const EndpStore& in_matches,
-                            const EndpStore& out_matches, Ref<Tag>) {
-        for (Ref<Node> in : in_matches.sec<0>()) {
-            for (Ref<Node> out : out_matches.pri()) {
-                for (const auto& sec_from : sec_from_set) {
-                    for (const auto& sec_to : sec_to_set) {
-                        funs.insert(callee,
-                                    in,  sec_from.first, sec_from.second,
-                                    out, sec_to.first,   sec_to.second);
-                    }
-                }
-            }
-        }
-    };
-    join_zip<1>(edges->sec<0>()[in_rev][in_symb],
-                edges->sec<0>()[out_rev][out_symb], record_endps);
-}
-
-// Take the primary RSM and extract the patterns for the edges that could cause
-// us to enter/exit a box (recursive call to another component). Search the
-// graph for pairs of edges that could function as such entries/exits, then
-// output the corresponding entry/exit nodes as the "functions" to summarize
-// over. Actually, for each entry/exit node pair, emit one function for each
-// secondary RSM state we could enter/exit at.
-void enum_funs() {
-    typedef mi::FlatIndex<REV, bool, NONE,
-                          mi::Table<SYMBOL, Ref<Symbol> > > MatchLabelSet;
-    for (const Component& pri_comp : pri_rsm->components) {
-        auto process = [&](const MatchLabelSet& in_labels,
-                           const MatchLabelSet& out_labels, Ref<Box> box) {
-            FOR(i, in_labels) {
-                FOR(o, out_labels) {
-                    enum_funs(pri_comp.boxes[box].comp, i, o);
-                }
-            }
-        };
-        // Process entry/exit pairs that correspond to the same box.
-        join_zip<1>(pri_comp.entries.sec<0>(), pri_comp.exits.sec<0>(),
-                    process);
-    }
-}
-
-// FUNCTION-RSM INTERSECTION ==================================================
+// TRANSITIONING OVER SECONDARY RSM ===========================================
 
 struct SecStackMod {
     bool is_entry;
@@ -826,82 +683,85 @@ public:
     }
 };
 
-// pri_comp is implicit (the one we're summarizing over)
-struct SuperNode {
-    Ref<Node> node;
-    Ref<State> pri_state;
-    Ref<Component> sec_comp;
-    Ref<State> sec_state;
-    // The default constructor creates an invalid SuperNode.
-    explicit SuperNode() {}
-    explicit SuperNode(Ref<Node> node, Ref<State> pri_state,
-                       Ref<Component> sec_comp, Ref<State> sec_state)
-        : node(node), pri_state(pri_state), sec_comp(sec_comp),
-          sec_state(sec_state) {}
-    bool valid() const {
-        return node.valid();
-    }
-    friend void print(std::ostream& os, const SuperNode& sn,
-                      const Component& pri_comp) {
-        const Component& sec_comp = sec_rsm->components[sn.sec_comp];
-        os << nodes[sn.node].name << "_"
-           << pri_comp.states[sn.pri_state].name << "_"
-           << sec_comp.name << "_"
-           << sec_comp.states[sn.sec_state].name;
-    }
+// FUNCTION BODY SYNTHESIS (CODE-RSM INTERSECTION) ============================
+
+class SuperNode {
+public:
+    // PRI_CP is implicit (the one we're summarizing over).
+    typedef mi::NamedTuple<NODE, Ref<Node>,
+                mi::NamedTuple<PRI_ST, Ref<State>,
+                    mi::NamedTuple<SEC_CP, Ref<Component>,
+                        mi::NamedTuple<SEC_ST, Ref<State>,
+                            mi::Nil > > > > Key;
+public:
+    const Key fields;
+    const Ref<SuperNode> ref;
+    bool useful = false;
+public:
+    SuperNode(const Key* fields, Ref<SuperNode> ref)
+        // TODO: Possibly inefficient way to default-initialize a Key in case
+        // of temporary SuperNode.
+        : fields(fields != NULL ? *fields : Key()), ref(ref) {}
 };
 
-typedef unsigned int PointID;
+typedef mi::NamedTuple<PRI_CP, Ref<Component>, // = PRI_CP_FROM = PRI_CP_TO
+            // PRI_ST_FROM = PRI_CP's initial state
+            mi::NamedTuple<SRC, Ref<Node>,
+                mi::NamedTuple<SEC_CP_FROM, Ref<Component>,
+                    mi::NamedTuple<SEC_ST_FROM, Ref<State>,
+                        // PRI_ST_TO = any of PRI_CP's final states
+                        mi::NamedTuple<DST, Ref<Node>,
+                            mi::NamedTuple<SEC_CP_TO, Ref<Component>,
+                                mi::NamedTuple<SEC_ST_TO, Ref<State>,
+                                    mi::Nil> > > > > > > Signature;
 
-class Intersection {
-private:
-    const Function fun_;
+class Function {
+public:
+    typedef Signature Key;
+public:
+    const Signature sig;
+    const Ref<Function> ref;
     const Component& pri_comp_;
-    mi::Index<NODE, Ref<Node>,
-        mi::Index<PRI_ST, Ref<State>,
-            mi::Index<SEC_CP, Ref<Component>,
-                mi::Index<SEC_ST, Ref<State>,
-                    mi::Cell<ID, PointID> > > > > sn2id_;
-    std::vector<SuperNode> id2sn_;
-    PointID initial_;
-    std::deque<PointID> fwd_list_;
-    mi::Index<DST, PointID,
-        mi::Table<SRC, PointID> > eps_moves_;
-    mi::Index<DST, PointID,
-        mi::Index<SRC, PointID,
-            mi::Bag<MOD, SecStackMod> > > stack_moves_;
-    mi::Index<DST, PointID,
-        mi::Index<SRC, PointID,
-            mi::Bag<FUN, Function> > > call_moves_;
-    std::set<PointID> finals_;
-    std::vector<bool> useful_;
-    std::deque<PointID> bck_list_;
 private:
-    PointID add_node(const SuperNode& sn) {
-        auto& id_cell =
-            sn2id_.of(sn.node).of(sn.pri_state).of(sn.sec_comp)
-            .of(sn.sec_state);
-        if (id_cell.empty()) {
-            id_cell.insert(id2sn_.size());
-            fwd_list_.push_back(id2sn_.size());
-            id2sn_.push_back(sn);
-        }
-        return id_cell.get();
+    Registry<SuperNode> sup_nodes_;
+    Ref<SuperNode> initial_;
+    std::deque<Ref<SuperNode> > fwd_list_;
+    mi::Index<DST, Ref<SuperNode>,
+        mi::Table<SRC, Ref<SuperNode> > > eps_moves_;
+    mi::Index<DST, Ref<SuperNode>,
+        mi::Index<SRC, Ref<SuperNode>,
+            mi::Bag<MOD, SecStackMod> > > stack_moves_;
+    mi::MultiIndex<
+        mi::Index<DST, Ref<SuperNode>,
+            mi::Index<SRC, Ref<SuperNode>,
+                mi::Table<FUN, Ref<Function> > > >,
+        mi::Table<FUN, Ref<Function> > > call_moves_;
+    std::set<Ref<SuperNode> > finals_;
+    std::deque<Ref<SuperNode> > bck_list_;
+    std::set<Ref<Function> > callers_;
+    bool second_pass_ = false;
+private:
+    const typename SuperNode::Key& curr() const {
+        return sup_nodes_[curr_id()].fields;
     }
-    PointID mktemp() {
-        id2sn_.emplace_back(); // default-construct an invalid SuperNode
-        return id2sn_.size() - 1;
-    }
-    const SuperNode& curr() const {
-        return id2sn_[fwd_list_.front()];
-    }
-    PointID curr_id() const {
+    Ref<SuperNode> curr_id() const {
         return fwd_list_.front();
+    }
+    Ref<SuperNode> add_node(Ref<Node> node, Ref<State> pri_state,
+                            Ref<Component> sec_comp, Ref<State> sec_state) {
+        unsigned int old_sz = sup_nodes_.size();
+        Ref<SuperNode> point =
+            sup_nodes_.add(node, pri_state, sec_comp, sec_state).ref;
+        if (sup_nodes_.size() > old_sz) {
+            // The SuperNode was not already present.
+            fwd_list_.push_back(point);
+        }
+        return point;
     }
     void cross_trans(const EdgeTail& e, const SecMoves& sec_moves) {
         std::list<Ref<State> > pri_st_to;
         const auto& trans =
-            pri_comp_.transitions.sec<1>()[curr().pri_state][e.get<REV>()]
+            pri_comp_.transitions.sec<1>()[curr().get<PRI_ST>()][e.get<REV>()]
             [e.get<SYMBOL>()];
         for (Ref<State> s : trans[Ref<Tag>()]) {
             pri_st_to.push_back(s);
@@ -914,104 +774,104 @@ private:
         }
         for (Ref<State> s : pri_st_to) {
             for (const auto& move : sec_moves.eps_moves()) {
-                SuperNode next(e.get<DST>(), s, move.get<SEC_CP_TO>(),
-                               move.get<SEC_ST_TO>());
-                PointID next_id = add_node(next);
+                Ref<SuperNode> next_id =
+                    add_node(e.get<DST>(), s, move.get<SEC_CP_TO>(),
+                             move.get<SEC_ST_TO>());
                 eps_moves_.insert(next_id, curr_id());
             }
             for (const auto& move : sec_moves.stack_moves()) {
-                SuperNode next(e.get<DST>(), s, move.get<SEC_CP_TO>(),
-                               move.get<SEC_ST_TO>());
-                PointID next_id = add_node(next);
+                Ref<SuperNode> next_id =
+                    add_node(e.get<DST>(), s, move.get<SEC_CP_TO>(),
+                             move.get<SEC_ST_TO>());
                 stack_moves_.insert(next_id, curr_id(), move.get<MOD>());
             }
         }
     }
     void cross_entries(const EdgeTail& e, const SecMoves& sec_moves) {
-        for (Ref<Box> b : pri_comp_.entries.sec<2>()[curr().pri_state]
+        for (Ref<Box> b : pri_comp_.entries.sec<2>()[curr().get<PRI_ST>()]
                  [e.get<REV>()][e.get<SYMBOL>()]) {
             for (const auto& move : sec_moves.eps_moves()) {
-                PointID next_id = mktemp();
+                Ref<SuperNode> next_id = sup_nodes_.mktemp().ref;
                 eps_moves_.insert(next_id, curr_id());
                 cross_call(b, e, next_id,
                            move.get<SEC_CP_TO>(), move.get<SEC_ST_TO>());
             }
             for (const auto& move : sec_moves.stack_moves()) {
-                PointID next_id = mktemp();
+                Ref<SuperNode> next_id = sup_nodes_.mktemp().ref;
                 stack_moves_.insert(next_id, curr_id(), move.get<MOD>());
                 cross_call(b, e, next_id,
                            move.get<SEC_CP_TO>(), move.get<SEC_ST_TO>());
             }
         }
     }
-    void cross_call(Ref<Box> box, const EdgeTail& e_in, PointID in_id,
-                    Ref<Component> sec_cp_in, Ref<State> sec_st_in) {
-        Ref<Component> entered = pri_comp_.boxes[box].comp;
-        FOR(f, funs[entered][e_in.get<DST>()][sec_cp_in][sec_st_in]) {
-            PointID out_id = mktemp();
-            Function callee(entered, e_in.get<DST>(), sec_cp_in, sec_st_in,
-                            f.get<DST>(), f.get<SEC_CP_TO>(),
-                            f.get<SEC_ST_TO>());
-            call_moves_.insert(out_id, in_id, callee);
-            cross_exits(box, e_in.get<TAG>(), callee, out_id);
-        }
-    }
+    void cross_call(Ref<Box> box, const EdgeTail& e_in, Ref<SuperNode> in_id,
+                    Ref<Component> sec_cp_in, Ref<State> sec_st_in);
     void cross_exits(Ref<Box> box, Ref<Tag> tag, const Function& callee,
-                     PointID out_id) {
+                     Ref<SuperNode> out_id) {
         FOR(exit, pri_comp_.exits.sec<2>()[box]) {
-            for (Ref<Node> n : edges->pri()[callee.get<DST>()][exit.get<REV>()]
-                     [exit.get<SYMBOL>()][tag]) {
+            for (Ref<Node> n : edges->pri()[callee.sig.get<DST>()]
+                     [exit.get<REV>()][exit.get<SYMBOL>()][tag]) {
                 EdgeTail e_out(exit.get<REV>(), exit.get<SYMBOL>(), tag, n);
                 SecMoves
-                    moves_out(sec_rsm->components[callee.get<SEC_CP_TO>()],
-                              callee.get<SEC_ST_TO>(), e_out);
+                    moves_out(sec_rsm->components[callee.sig.get<SEC_CP_TO>()],
+                              callee.sig.get<SEC_ST_TO>(), e_out);
                 for (const auto& move : moves_out.eps_moves()) {
-                    SuperNode next(n, exit.get<TO>(), move.get<SEC_CP_TO>(),
-                                   move.get<SEC_ST_TO>());
-                    PointID next_id = add_node(next);
+                    Ref<SuperNode> next_id =
+                        add_node(n, exit.get<TO>(), move.get<SEC_CP_TO>(),
+                                 move.get<SEC_ST_TO>());
                     eps_moves_.insert(next_id, out_id);
                 }
                 for (const auto& move : moves_out.stack_moves()) {
-                    SuperNode next(n, exit.get<TO>(), move.get<SEC_CP_TO>(),
-                                   move.get<SEC_ST_TO>());
-                    PointID next_id = add_node(next);
+                    Ref<SuperNode> next_id =
+                        add_node(n, exit.get<TO>(), move.get<SEC_CP_TO>(),
+                                 move.get<SEC_ST_TO>());
                     stack_moves_.insert(next_id, out_id, move.get<MOD>());
                 }
             }
         }
     }
-    void mark_useful(PointID point) {
-        if (!useful_[point]) {
-            useful_[point] = true;
+    void mark_useful(Ref<SuperNode> point) {
+        SuperNode& sn = sup_nodes_[point];
+        if (!sn.useful) {
+            sn.useful = true;
             bck_list_.push_back(point);
         }
     };
-    void print_point(std::ostream& os, PointID id) const {
-        const SuperNode& sn = id2sn_[id];
-        // XXX: The two cases should be disjoint, since SuperNode's use
-        // underscores to separate their components.
-        if (sn.valid()) {
-            print(os, sn, pri_comp_);
-        } else {
-            os << id;
-        }
+    void clear_body() {
+        sup_nodes_.clear();
+        initial_ = Ref<SuperNode>();
+        eps_moves_.clear();
+        stack_moves_.clear();
+        call_moves_.clear();
+        finals_.clear();
+        assert(fwd_list_.empty());
+        assert(bck_list_.empty());
     }
 public:
-    explicit Intersection(const Function& fun)
-        : fun_(fun), pri_comp_(pri_rsm->components[fun.get<PRI_CP>()]) {
+    explicit Function(const Signature* sig, Ref<Function> ref)
+        : sig(*sig), ref(ref),
+          pri_comp_(pri_rsm->components[sig->get<PRI_CP>()]) {}
+    Function(const Function&) = delete;
+    Function(Function&&) = default;
+    Function& operator=(const Function&) = delete;
+    void compute_body() {
+        if (second_pass_) {
+            // Clean up containers from previous iteration.
+            clear_body();
+        }
         // Register the function entry as the initial point.
-        initial_ = add_node(SuperNode(fun.get<SRC>(), pri_comp_.initial,
-                                      fun.get<SEC_CP_FROM>(),
-                                      fun.get<SEC_ST_FROM>()));
+        initial_ = add_node(sig.get<SRC>(), pri_comp_.initial,
+                            sig.get<SEC_CP_FROM>(), sig.get<SEC_ST_FROM>());
         // Starting from the single entry, traverse the function and emit
         // SuperNodes.
         while (!fwd_list_.empty()) {
-            const Component& sec_comp = sec_rsm->components[curr().sec_comp];
+            const Component& sec_comp =
+                sec_rsm->components[curr().get<SEC_CP>()];
             // Enumerate all edges originating from the current node.
-            FOR(e, edges->pri()[curr().node]) {
+            FOR(e, edges->pri()[curr().get<NODE>()]) {
                 // Follow the edge on the secondary RSM, starting from the
                 // current sec_comp + sec_state.
-                SecMoves sec_moves(sec_comp, curr().sec_state, e);
+                SecMoves sec_moves(sec_comp, curr().get<SEC_ST>(), e);
                 if (sec_moves.empty()) {
                     continue;
                 }
@@ -1026,111 +886,325 @@ public:
         }
         // Register function exits as final points (only if we could reach them
         // from the initial point).
-        useful_.resize(id2sn_.size(), false);
         for (Ref<State> s : pri_comp_.final) {
-            boost::optional<PointID> final_id = sn2id_[fun.get<DST>()][s]
-                [fun.get<SEC_CP_TO>()][fun.get<SEC_ST_TO>()].contents();
-            if (!((bool) final_id)) {
+            if (!sup_nodes_.contains(sig.get<DST>(), s, sig.get<SEC_CP_TO>(),
+                                     sig.get<SEC_ST_TO>())) {
                 continue;
             }
-            finals_.insert(final_id.get());
-            mark_useful(final_id.get());
+            Ref<SuperNode> final_id =
+                sup_nodes_.find(sig.get<DST>(), s, sig.get<SEC_CP_TO>(),
+                                sig.get<SEC_ST_TO>()).ref;
+            finals_.insert(final_id);
+            mark_useful(final_id);
         }
         // Starting from the final points, move backwards and mark useful
         // points (those that can reach an exit). This filtering step is
         // overapproximate, but sound.
         while (!bck_list_.empty()) {
-            for (PointID src : eps_moves_[bck_list_.front()]) {
+            for (Ref<SuperNode> src : eps_moves_[bck_list_.front()]) {
                 mark_useful(src);
             }
             for (const auto& src_p : stack_moves_[bck_list_.front()]) {
                 mark_useful(src_p.first);
             }
-            for (const auto& src_p : call_moves_[bck_list_.front()]) {
+            for (const auto& src_p : call_moves_.pri()[bck_list_.front()]) {
                 mark_useful(src_p.first);
             }
             bck_list_.pop_front();
         }
+        // Flag that primary body computation is complete.
+        second_pass_ = true;
     }
-    friend std::ostream& operator<<(std::ostream& os,
-                                    const Intersection& intxn) {
-        if (!intxn.useful_[intxn.initial_]) {
-            // Degenerate case: can't reach any final point from the initial.
-            intxn.print_point(os, intxn.initial_);
-            os << " in" << std::endl;
-            os << "#" << std::endl;
-            return os;
-        }
-        // Only print useful points.
-        for (PointID id = 0; id < intxn.id2sn_.size(); id++) {
-            if (!intxn.useful_[id]) {
+    bool empty_body() const {
+        // Before any matching is performed, we can only be certain that the
+        // FSM is empty if we can't reach any final point from the initial.
+        return !sup_nodes_[initial_].useful;
+    }
+    void add_caller(Ref<Function> f) {
+        callers_.insert(f);
+    }
+    const std::set<Ref<Function> >& callers() const {
+        return callers_;
+    }
+    const mi::Table<FUN, Ref<Function> >& callees() const {
+        return call_moves_.sec<0>();
+    }
+    friend std::ostream& operator<<(std::ostream& os, const Function& fun);
+};
+
+Registry<Function> funs;
+
+void Function::cross_call(Ref<Box> box, const EdgeTail& e_in,
+                          Ref<SuperNode> in_id, Ref<Component> sec_cp_in,
+                          Ref<State> sec_st_in) {
+    Ref<Component> entered = pri_comp_.boxes[box].comp;
+    FOR(s, funs.index()[entered][e_in.get<DST>()][sec_cp_in][sec_st_in]) {
+        Function& callee = funs[s.get<REF>()];
+        if (second_pass_) {
+            // In the 2nd pass, don't record callers, and ignore empty callees.
+            if (callee.empty_body()) {
                 continue;
             }
-            intxn.print_point(os, id);
-            if (id == intxn.initial_) {
-                os << " in";
-            }
-            if (intxn.finals_.count(id) > 0) {
-                os << " out";
-            }
-            os << std::endl;
+        } else {
+            callee.add_caller(ref);
         }
+        Ref<SuperNode> out_id = sup_nodes_.mktemp().ref;
+        call_moves_.insert(out_id, in_id, callee.ref);
+        cross_exits(box, e_in.get<TAG>(), callee, out_id);
+    }
+}
+
+void intersect_all() {
+    // 1st pass: Iterate over all discovered functions, to set up call graph.
+    for (Function& f : funs) {
+        f.compute_body();
+    }
+    // 2nd pass: Propagate function emptiness information.
+    Worklist<Ref<Function>,true> worklist;
+    for (const Function& f : funs) {
+        if (f.empty_body()) {
+            for (Ref<Function> c : f.callers()) {
+                worklist.enqueue(c);
+            }
+        }
+    }
+    while (!worklist.empty()) {
+        Function& f = funs[worklist.dequeue()];
+        if (f.empty_body()) {
+            continue;
+        }
+        f.compute_body();
+        if (f.empty_body()) {
+            for (Ref<Function> c : f.callers()) {
+                worklist.enqueue(c);
+            }
+        }
+    }
+}
+
+// FUNCTION PRINTING ==========================================================
+
+void print(std::ostream& os, const SuperNode& sn, const Component& pri_comp) {
+    // For invalid points, simply print their identifier.
+    if (!sn.fields.get<NODE>().valid()) {
+        os << sn.ref.value();
+        return;
+    }
+    const Component& sec_comp = sec_rsm->components[sn.fields.get<SEC_CP>()];
+    os << nodes[sn.fields.get<NODE>()].name << "_"
+       << pri_comp.states[sn.fields.get<PRI_ST>()].name << "_"
+       << sec_comp.name << "_"
+       << sec_comp.states[sn.fields.get<SEC_ST>()].name;
+}
+
+// XXX: Not unique if there's underscores in the individual names.
+std::ostream& operator<<(std::ostream& os, const Signature& sig) {
+    const Component& sec_cp_from = sec_rsm->components[sig.get<SEC_CP_FROM>()];
+    const Component& sec_cp_to = sec_rsm->components[sig.get<SEC_CP_TO>()];
+    os << pri_rsm->components[sig.get<PRI_CP>()].name << "_"
+       << nodes[sig.get<SRC>()].name << "_"
+       << nodes[sig.get<DST>()].name << "_"
+       << sec_cp_from.name << "_"
+       << sec_cp_from.states[sig.get<SEC_ST_FROM>()].name << "_"
+       << sec_cp_to.name << "_"
+       << sec_cp_to.states[sig.get<SEC_ST_TO>()].name;
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const Function& fun) {
+    if (fun.empty_body()) {
+        print(os, fun.sup_nodes_[fun.initial_], fun.pri_comp_);
+        os << " in" << std::endl;
         os << "#" << std::endl;
-        // Only print arrows between useful points.
-        for (const auto& dst_p : intxn.eps_moves_) {
-            PointID dst = dst_p.first;
-            if (!intxn.useful_[dst]) {
-                continue;
-            }
-            for (PointID src : dst_p.second) {
-                if (!intxn.useful_[src]) {
-                    continue;
-                }
-                intxn.print_point(os, src);
-                os << " ";
-                intxn.print_point(os, dst);
-                os << std::endl;
-            }
-        }
-        for (const auto& dst_p : intxn.stack_moves_) {
-            PointID dst = dst_p.first;
-            if (!intxn.useful_[dst]) {
-                continue;
-            }
-            for (const auto& src_p : dst_p.second) {
-                PointID src = src_p.first;
-                if (!intxn.useful_[src]) {
-                    continue;
-                }
-                for (const SecStackMod& mod : src_p.second) {
-                    intxn.print_point(os, src);
-                    os << " ";
-                    intxn.print_point(os, dst);
-                    os << " " << mod << std::endl;
-                }
-            }
-        }
-        for (const auto& dst_p : intxn.call_moves_) {
-            PointID dst = dst_p.first;
-            if (!intxn.useful_[dst]) {
-                continue;
-            }
-            for (const auto& src_p : dst_p.second) {
-                PointID src = src_p.first;
-                if (!intxn.useful_[src]) {
-                    continue;
-                }
-                for (const Function& fun : src_p.second) {
-                    intxn.print_point(os, src);
-                    os << " ";
-                    intxn.print_point(os, dst);
-                    os << " " << fun << std::endl;
-                }
-            }
-        }
         return os;
     }
-};
+    // Only print useful points.
+    for (const SuperNode& sn : fun.sup_nodes_) {
+        if (!sn.useful) {
+            continue;
+        }
+        print(os, sn, fun.pri_comp_);
+        if (sn.ref == fun.initial_) {
+            os << " in";
+        }
+        if (fun.finals_.count(sn.ref) > 0) {
+            os << " out";
+        }
+        os << std::endl;
+    }
+    os << "#" << std::endl;
+    // Only print arrows between useful points.
+    for (const auto& dst_p : fun.eps_moves_) {
+        const SuperNode& dst = fun.sup_nodes_[dst_p.first];
+        if (!dst.useful) {
+            continue;
+        }
+        for (Ref<SuperNode> src_id : dst_p.second) {
+            const SuperNode& src = fun.sup_nodes_[src_id];
+            if (!src.useful) {
+                continue;
+            }
+            print(os, src, fun.pri_comp_);
+            os << " ";
+            print(os, dst, fun.pri_comp_);
+            os << std::endl;
+        }
+    }
+    for (const auto& dst_p : fun.stack_moves_) {
+        const SuperNode& dst = fun.sup_nodes_[dst_p.first];
+        if (!dst.useful) {
+            continue;
+        }
+        for (const auto& src_p : dst_p.second) {
+            const SuperNode& src = fun.sup_nodes_[src_p.first];
+            if (!src.useful) {
+                continue;
+            }
+            for (const SecStackMod& mod : src_p.second) {
+                print(os, src, fun.pri_comp_);
+                os << " ";
+                print(os, dst, fun.pri_comp_);
+                os << " " << mod << std::endl;
+            }
+        }
+    }
+    for (const auto& dst_p : fun.call_moves_.pri()) {
+        const SuperNode& dst = fun.sup_nodes_[dst_p.first];
+        if (!dst.useful) {
+            continue;
+        }
+        for (const auto& src_p : dst_p.second) {
+            const SuperNode& src = fun.sup_nodes_[src_p.first];
+            if (!src.useful) {
+                continue;
+            }
+            for (Ref<Function> callee : src_p.second) {
+                print(os, src, fun.pri_comp_);
+                os << " ";
+                print(os, dst, fun.pri_comp_);
+                os << " " << funs[callee].sig << std::endl;
+            }
+        }
+    }
+    return os;
+}
+
+// FUNCTION ENUMERATION =======================================================
+
+// Given a pair of entry/exit MatchLabels derived from the primary RSM, find
+// compatible entry/exit nodes on the graph, and all secondary RSM states that
+// we could ever occupy at those points. We ignore the specific tags on the
+// secondary arrows during this search (this is sound but might cause us to
+// include more secondary states than necessary).
+void enum_funs(Ref<Component> callee, const MatchLabel& in_label,
+               const MatchLabel& out_label) {
+    // Collect all the states where a secondary RSM arrow compatible with
+    // 'in_label' might lead.
+    bool in_rev = in_label.get<REV>();
+    Ref<Symbol> in_symb = in_label.get<SYMBOL>();
+    std::list<std::pair<Ref<Component>, Ref<State> > > sec_from_set;
+    for (const Component& sec_comp : sec_rsm->components) {
+        // For any compatible transition, include the state where it arrives.
+        for (Ref<State> s
+                 : sec_comp.transitions.sec<0>()[in_rev][in_symb].sec<0>()) {
+            sec_from_set.emplace_back(sec_comp.ref, s);
+        }
+        // For any compatible entry, include the initial state of the component
+        // being entered.
+        for (Ref<Box> b
+                 : sec_comp.entries.sec<1>()[in_rev][in_symb].sec<0>()) {
+            const Component& entered =
+                sec_rsm->components[sec_comp.boxes[b].comp];
+            sec_from_set.emplace_back(entered.ref, entered.initial);
+        }
+        // For any compatible exit, include the state where it arrives.
+        for (Ref<State> s
+                 : sec_comp.exits.sec<1>()[in_rev][in_symb].sec<0>()) {
+            sec_from_set.emplace_back(sec_comp.ref, s);
+        }
+    }
+    if (sec_from_set.empty()) {
+        return;
+    }
+
+    // Collect all the states where a secondary RSM arrow compatible with
+    // 'out_label' might originate.
+    bool out_rev = out_label.get<REV>();
+    Ref<Symbol> out_symb = out_label.get<SYMBOL>();
+    std::list<std::pair<Ref<Component>, Ref<State> > > sec_to_set;
+    for (const Component& sec_comp : sec_rsm->components) {
+        // For any compatible transition, include the state where it starts.
+        for (Ref<State> s
+                 : sec_comp.transitions.sec<0>()[out_rev][out_symb].pri()) {
+            sec_to_set.emplace_back(sec_comp.ref, s);
+        }
+        // For any compatible entry, include the state where it starts.
+        for (Ref<State> s
+                 : sec_comp.entries.sec<1>()[out_rev][out_symb].pri()) {
+            sec_to_set.emplace_back(sec_comp.ref, s);
+        }
+        // For any compatible exit, include all final states of the component
+        // being exited.
+        for (Ref<Box> b
+                 : sec_comp.exits.sec<1>()[out_rev][out_symb].pri()) {
+            const Component& exited =
+                sec_rsm->components[sec_comp.boxes[b].comp];
+            for (Ref<State> s : exited.final) {
+                sec_to_set.emplace_back(exited.ref, s);
+            }
+        }
+    }
+    if (sec_to_set.empty()) {
+        return;
+    }
+
+    // Find pairs of edges that match the entry and exit MatchLabel
+    // respectively. Then only keep those with matching tags.
+    // The symbols on MatchLabels must be parametric, so we're certain that the
+    // corresponding edges will have valid tags.
+    typedef mi::MultiIndex<mi::Table<SRC, Ref<Node> >,
+                           mi::Table<DST, Ref<Node> > > EndpStore;
+    auto record_endps = [&](const EndpStore& in_matches,
+                            const EndpStore& out_matches, Ref<Tag>) {
+        for (Ref<Node> in : in_matches.sec<0>()) {
+            for (Ref<Node> out : out_matches.pri()) {
+                for (const auto& sec_from : sec_from_set) {
+                    for (const auto& sec_to : sec_to_set) {
+                        funs.add(callee,
+                                 in,  sec_from.first, sec_from.second,
+                                 out, sec_to.first,   sec_to.second);
+                    }
+                }
+            }
+        }
+    };
+    join_zip<1>(edges->sec<0>()[in_rev][in_symb],
+                edges->sec<0>()[out_rev][out_symb], record_endps);
+}
+
+// Take the primary RSM and extract the patterns for the edges that could cause
+// us to enter/exit a box (recursive call to another component). Search the
+// graph for pairs of edges that could function as such entries/exits, then
+// output the corresponding entry/exit nodes as the "functions" to summarize
+// over. Actually, for each entry/exit node pair, emit one function for each
+// secondary RSM state we could enter/exit at.
+void enum_funs() {
+    typedef mi::FlatIndex<REV, bool, NONE,
+                          mi::Table<SYMBOL, Ref<Symbol> > > MatchLabelSet;
+    for (const Component& pri_comp : pri_rsm->components) {
+        auto process = [&](const MatchLabelSet& in_labels,
+                           const MatchLabelSet& out_labels, Ref<Box> box) {
+            FOR(i, in_labels) {
+                FOR(o, out_labels) {
+                    enum_funs(pri_comp.boxes[box].comp, i, o);
+                }
+            }
+        };
+        // Process entry/exit pairs that correspond to the same box.
+        join_zip<1>(pri_comp.entries.sec<0>(), pri_comp.exits.sec<0>(),
+                    process);
+    }
+}
 
 // MAIN =======================================================================
 
@@ -1194,17 +1268,22 @@ int main(int argc, char* argv[]) {
     enum_funs();
     std::cout << funs.size() << " functions in total" << std::endl;
     std::cout << "Intersecting functions with secondary RSM" << std::endl;
+    intersect_all();
+
+    // Print out non-empty functions.
     fs::create_directory(out_dir);
     unsigned count = 0;
-    FOR(f, funs) {
-        Intersection intxn(f);
+    for (const Function& f : funs) {
+        if (f.empty_body()) {
+            continue;
+        }
         std::stringstream ss;
-        ss << f << ".fun.tgf";
+        ss << f.sig << ".fun.tgf";
         fs::path fpath = fs::path(out_dir)/ss.str();
         std::ofstream fout(fpath.string());
         EXPECT((bool) fout);
-        fout << intxn;
-        std::cout << "Printed # " << ++count << ": " << f << std::endl;
+        fout << f;
+        std::cout << "Printed # " << ++count << ": " << f.sig << std::endl;
     }
 
     return EXIT_SUCCESS;

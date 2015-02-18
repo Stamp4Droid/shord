@@ -2130,4 +2130,140 @@ const S LightIndex<Tag,K,S>::dummy;
 
 } // namespace mi
 
+// REGISTRY FOR NAMED TUPLE KEYS ==============================================
+
+// Interface differences from main case:
+// - We provide read-only access to the underlying index.
+// - Instead of supplying a single Key, the client code must specify the fields
+//   of the (NamedTuple-typed) key as separate arguments.
+// - Not allowing T's constructor to have additional arguments besides the key
+//   pointer.
+// - No merge() callback is necessary (since there are never any additional
+//   arguments to merge).
+
+// TODO:
+// - Provide efficient access to the ref cell, and allow adding to it.
+// - Only using mi::Index to perform NamedTuple indexing. Could allow client
+//   code to specify the indexing structure to use (default to nested Index's).
+// - REF is a reserved tag name, with no static string identifier.
+// - Allow constructor arguments besides the key pointer.
+
+struct REF {};
+
+namespace detail {
+
+template<class T, class Curr> struct IndexSynthHelper;
+
+template<class T>
+struct IndexSynthHelper<T, mi::Nil> {
+    typedef mi::Cell<REF, Ref<T> > Type;
+};
+
+template<class T, class Tag, class Hd, class Tl>
+struct IndexSynthHelper<T, mi::NamedTuple<Tag,Hd,Tl> > {
+    typedef mi::Index<Tag, Hd, typename IndexSynthHelper<T,Tl>::Type> Type;
+};
+
+template<class T, class Tuple>
+struct IndexSynth : public IndexSynthHelper<T,Tuple> {};
+
+} // namespace detail
+
+template<class T, class Tag, class Hd, class Tl>
+class Registry<T, mi::NamedTuple<Tag,Hd,Tl> > {
+public:
+    typedef mi::NamedTuple<Tag,Hd,Tl> Key;
+    typedef typename detail::IndexSynth<T,Key>::Type Idx;
+private:
+    Idx obj2ref_;
+    std::vector<T> ref2obj_;
+public:
+    explicit Registry() {}
+    Registry(const Registry& rhs) = delete;
+    Registry(Registry&& rhs) = default;
+    Registry& operator=(const Registry& rhs) = delete;
+    friend void swap(Registry& a, Registry& b) {
+	using std::swap;
+	swap(a.obj2ref_, b.obj2ref_);
+	swap(a.ref2obj_, b.ref2obj_);
+    }
+    void clear() {
+        Registry temp;
+        swap(*this, temp);
+    }
+    const Idx& index() const {
+        return obj2ref_;
+    }
+    T& operator[](Ref<T> ref) {
+	EXPECT(ref.valid());
+	return ref2obj_.at(ref.value());
+    }
+    const T& operator[](Ref<T> ref) const {
+	EXPECT(ref.valid());
+	return ref2obj_.at(ref.value());
+    }
+    template<typename... Flds>
+    T& make(const Flds&... flds) {
+        mi::Cell<REF, Ref<T> >& ref_cell = obj2ref_.of(flds...);
+        EXPECT(ref_cell.empty());
+        Ref<T> new_ref(ref2obj_.size());
+        ref_cell.insert(new_ref);
+        Key key(flds...);
+        ref2obj_.emplace_back(&key, new_ref);
+        return ref2obj_.back();
+    }
+    template<typename... Flds>
+    T& add(const Flds&... flds) {
+        const mi::Cell<REF, Ref<T> >& ref_cell = obj2ref_.find(flds...);
+        if (ref_cell.empty()) {
+            return make(flds...);
+        }
+        return (*this)[ref_cell.get()];
+    }
+    T& mktemp() {
+        Ref<T> new_ref(ref2obj_.size());
+        ref2obj_.emplace_back(nullptr, new_ref);
+        return ref2obj_.back();
+    }
+    template<typename... Flds>
+    T& find(const Flds&... flds) {
+        const mi::Cell<REF, Ref<T> >& ref_cell = obj2ref_.find(flds...);
+        return (*this)[ref_cell.get()];
+    }
+    template<typename... Flds>
+    const T& find(const Flds&... flds) const {
+        const mi::Cell<REF, Ref<T> >& ref_cell = obj2ref_.find(flds...);
+        return (*this)[ref_cell.get()];
+    }
+    template<typename... Flds>
+    bool contains(const Flds&... flds) const {
+        const mi::Cell<REF, Ref<T> >& ref_cell = obj2ref_.find(flds...);
+	return !ref_cell.empty();
+    }
+    unsigned int size() const {
+	return ref2obj_.size();
+    }
+    bool empty() const {
+	return ref2obj_.empty();
+    }
+    const T& first() const {
+	return ref2obj_.front();
+    }
+    const T& last() const {
+	return ref2obj_.back();
+    }
+    typename std::vector<T>::iterator begin() {
+	return ref2obj_.begin();
+    }
+    typename std::vector<T>::iterator end() {
+	return ref2obj_.end();
+    }
+    typename std::vector<T>::const_iterator begin() const {
+	return ref2obj_.cbegin();
+    }
+    typename std::vector<T>::const_iterator end() const {
+	return ref2obj_.cend();
+    }
+};
+
 #endif
