@@ -1,7 +1,7 @@
 package stamp.missingmodels.util.jcflsolver2;
 
 
-public class Node
+public class Vertex
 {
 	final Edges[] inEdges;
 	final Edges[] outEdges;
@@ -11,7 +11,7 @@ public class Node
 	private static int nodeCount = 0;
 	private static final boolean OUT_EDGES_NEXT = true;
 
-	public Node(String name, int numSymbols)
+	public Vertex(String name, int numSymbols)
 	{
 		this.name = name;
 		this.inEdges = new Edges[numSymbols];
@@ -41,7 +41,7 @@ public class Node
  
 	Edge addOutEdge(Edge edge)
 	{		
-		int kind = edge.kind;
+		int kind = edge.symbolInt;
 		Edges edges = outEdges[kind];
 		if(edges == null) {
 			edges = new /*EdgesSet*/EdgesSetCustom(OUT_EDGES_NEXT);
@@ -55,7 +55,7 @@ public class Node
 	 */
 	void addInputOutEdge(Edge edge)
 	{
-		int kind = edge.kind;
+		int kind = edge.symbolInt;
 		Edges edges = outEdges[kind];
 		if(edges == null) {
 			edges = new /*EdgesLinkedList*/EdgesSetCustom(OUT_EDGES_NEXT);
@@ -66,7 +66,7 @@ public class Node
 	
 	void addInEdge(Edge edge)
 	{
-		int kind = edge.kind;
+		int kind = edge.symbolInt;
 		Edges edges = inEdges[kind];
 		if(edges == null) {
 			edges = new /*EdgesLinkedList*/EdgesListCustom(!OUT_EDGES_NEXT);

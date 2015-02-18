@@ -43,7 +43,7 @@ public class G2 extends Graph {
 		rel.close();
 	}
 	
-	private static final ContextFreeGrammarOpt c = new ContextFreeGrammarOpt(new MissingRefRefTaintGrammar());
+	private final ContextFreeGrammarOpt c = new ContextFreeGrammarOpt(new MissingRefRefTaintGrammar());
 
 	public int numKinds() {
 		return c.getNumLabels();
@@ -59,19 +59,19 @@ public class G2 extends Graph {
 
 	public void process(Edge edge) {
 		// <-, ->
-		for(UnaryProduction unaryProduction : c.unaryProductionsByInput[edge.kind]) {
+		for(UnaryProduction unaryProduction : c.unaryProductionsByInput[edge.symbolInt]) {
 			this.addEdge2(unaryProduction, edge);
 		}
 		// <- <-, <- ->, -> <-, -> ->
-		for(BinaryProduction binaryProduction : c.binaryProductionsByFirstInput[edge.kind]) {
-			Node intermediate = binaryProduction.isFirstInputBackwards ? edge.from : edge.to;
+		for(BinaryProduction binaryProduction : c.binaryProductionsByFirstInput[edge.symbolInt]) {
+			Vertex intermediate = binaryProduction.isFirstInputBackwards ? edge.source : edge.sink;
 			Iterable<Edge> secondEdges = binaryProduction.isSecondInputBackwards ? intermediate.getInEdges(binaryProduction.secondInput) : intermediate.getOutEdges(binaryProduction.secondInput);
 			for(Edge secondEdge : secondEdges) {
 				this.addEdge2(binaryProduction, edge, secondEdge);
 			}
 		}
-		for(BinaryProduction binaryProduction : c.binaryProductionsBySecondInput[edge.kind]) {
-			Node intermediate = binaryProduction.isSecondInputBackwards ? edge.to : edge.from;
+		for(BinaryProduction binaryProduction : c.binaryProductionsBySecondInput[edge.symbolInt]) {
+			Vertex intermediate = binaryProduction.isSecondInputBackwards ? edge.sink : edge.source;
 			Iterable<Edge> firstEdges = binaryProduction.isFirstInputBackwards ? intermediate.getOutEdges(binaryProduction.firstInput) : intermediate.getInEdges(binaryProduction.firstInput);
 			for(Edge firstEdge : firstEdges) {
 				this.addEdge2(binaryProduction, firstEdge, edge);
@@ -81,8 +81,8 @@ public class G2 extends Graph {
 	
 	private void addEdge2(UnaryProduction unaryProduction, Edge input) {
 		// get edge base
-		Node source = unaryProduction.isInputBackwards ? input.to : input.from;
-		Node sink = unaryProduction.isInputBackwards ? input.from : input.to;
+		Vertex source = unaryProduction.isInputBackwards ? input.sink : input.source;
+		Vertex sink = unaryProduction.isInputBackwards ? input.source : input.sink;
 		int symbolInt = unaryProduction.target;
 		
 		// add edge
@@ -91,8 +91,8 @@ public class G2 extends Graph {
 
 	private void addEdge2(BinaryProduction binaryProduction, Edge firstInput, Edge secondInput) {
 		// get edge base
-		Node source = binaryProduction.isFirstInputBackwards ? firstInput.to : firstInput.from;
-		Node sink = binaryProduction.isSecondInputBackwards ? secondInput.from : secondInput.to;
+		Vertex source = binaryProduction.isFirstInputBackwards ? firstInput.sink : firstInput.source;
+		Vertex sink = binaryProduction.isSecondInputBackwards ? secondInput.source : secondInput.sink;
 		int symbolInt = binaryProduction.target;
 		
 		// add edge

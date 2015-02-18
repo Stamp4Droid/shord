@@ -33,20 +33,20 @@ public class EdgesSetCustom extends EdgesCustom
 			expandCapacity();
 			numBuckets = table.length;
 		}
-		int index = edge.to.id % numBuckets;//& (numBuckets - 1);
+		int index = edge.sink.id % numBuckets;//& (numBuckets - 1);
 		setNext(edge, table[index]);
 		table[index] = edge;
 		return null;
 	}
 	
 	private Edge get(Edge edge) {
-		int toNodeId = edge.to.id;
-		int label = edge.label();
+		int toNodeId = edge.sink.id;
+		int label = edge.label;
 		int numBuckets = table.length;
 		int index = toNodeId % numBuckets;//& (numBuckets - 1);
 		Edge e = table[index];
 		while(e != null){
-			if(e.to.id == toNodeId && e.label() == label){
+			if(e.sink.id == toNodeId && e.label == label){
 				//if(!e.equals(edge)){
 				//	assert false : edge.toString() + " " + e.toString();
 				//}
@@ -59,13 +59,13 @@ public class EdgesSetCustom extends EdgesCustom
 
 	private boolean contains(Edge edge)
 	{
-		int toNodeId = edge.to.id;
-		int label = edge.label();
+		int toNodeId = edge.sink.id;
+		int label = edge.label;
 		int numBuckets = table.length;
 		int index = toNodeId % numBuckets;//& (numBuckets - 1);
 		Edge e = table[index];
 		while(e != null){
-			if(e.to.id == toNodeId && e.label() == label){
+			if(e.sink.id == toNodeId && e.label == label){
 				//if(!e.equals(edge)){
 				//	assert false : edge.toString() + " " + e.toString();
 				//}
@@ -86,7 +86,7 @@ public class EdgesSetCustom extends EdgesCustom
 		for(int i = 0; i < oldNumBuckets; i++){
 			Edge e = oldTable[i];
 			while(e != null){
-				int index = e.to.id % newNumBuckets;//& (newNumBuckets - 1);
+				int index = e.sink.id % newNumBuckets;//& (newNumBuckets - 1);
 				Edge tmp = getNext(e);
 				setNext(e, newTable[index]);
 				newTable[index] = e;
@@ -97,8 +97,7 @@ public class EdgesSetCustom extends EdgesCustom
 		this.table = newTable;
 	}
 
-	private class SetIterator implements Iterator<Edge>  
-	{
+	private class SetIterator implements Iterator<Edge>   {
 		private Edge current;
 		private int index = 0;
 
@@ -134,26 +133,5 @@ public class EdgesSetCustom extends EdgesCustom
 		public void remove() {
 			throw new RuntimeException("unimplemented");
 		}
-	}
-
-	int count()
-	{
-		int count = 0;
-		for(int i = 0; i < table.length; i++){
-			Set<Integer> ids = new HashSet();
-			Edge edge = table[i];
-			while(edge != null){
-				if(edge instanceof LabeledEdge){
-					int nodeId = edge.to.id;
-					int label = ((LabeledEdge) edge).label;
-					if(!ids.contains(nodeId)){
-						ids.add(nodeId);
-					} else
-						count++;
-				}
-				edge = getNext(edge);
-			}
-		}
-		return count;
 	}
 }
