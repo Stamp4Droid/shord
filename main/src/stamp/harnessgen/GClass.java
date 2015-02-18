@@ -102,8 +102,10 @@ public class GClass
 				} else {
 					List<Type> paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context")});
 					List<Value> args = Arrays.asList(new Value[]{NullConstant.v()});
-					Local l = init(wClass, paramTypes, args);
-					units.add(Jimple.v().newAssignStmt(Jimple.v().newStaticFieldRef(f.makeRef()), l));
+					if(wClass.declaresMethod("<init>", paramTypes)){
+                        Local l = init(wClass, paramTypes, args);
+                        units.add(Jimple.v().newAssignStmt(Jimple.v().newStaticFieldRef(f.makeRef()), l));
+                    }
 				}
 			}
 		}
