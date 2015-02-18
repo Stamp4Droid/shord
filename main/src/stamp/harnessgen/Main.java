@@ -35,7 +35,9 @@ public class Main
 		List<Component> comps = app.components();
 		initSoot(apkPath, androidJar, comps);
 		app.findLayouts();
-		System.out.println(app.toString());
+
+		//dump the app description
+		dumpApp(app.toString());
 		
 		File driverDir = new File(driverDirName, "stamp/harness");
 		driverDir.mkdirs();
@@ -66,6 +68,14 @@ public class Main
 		//gfix.perform();
 	}
 
+
+	private static void dumpApp(String appDesc) throws IOException
+	{
+		String stampOutDir = System.getProperty("stamp.out.dir");
+		PrintWriter writer = new PrintWriter(new FileWriter(new File(stampOutDir, "app.txt")));
+		writer.println(appDesc);
+		writer.close();
+	}
 
 
 	private static void writeClass(SootClass klass, String driverDirName) throws IOException
