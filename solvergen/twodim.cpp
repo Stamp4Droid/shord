@@ -778,6 +778,43 @@ public:
         }
         return equiv(backend_, other.backend_);
     }
+    bool operator<=(const DFA& other) const {
+        // Combine the alphabets of the two machines.
+        std::vector<Symbol> joint_alph;
+        std::set_union(alphabet_.begin(), alphabet_.end(),
+                       other.alphabet_.begin(), other.alphabet_.end(),
+                       std::back_inserter(joint_alph));
+        // Extend machines to the common alphabet.
+        DfaWrapper* a_wrap = extend_alph(joint_alph);
+        DfaWrapper* b_wrap = other.extend_alph(joint_alph);
+        assert(a_wrap->get_alphabet_size() == joint_alph.size());
+        assert(b_wrap->get_alphabet_size() == joint_alph.size());
+        DfaBackend* a = a_wrap->get_dfa();
+        DfaBackend* b = b_wrap->get_dfa();
+        // Traverse union, stop immediatelly if you reach a state pair <q1,q2>
+        // where q1 is final and q2 is not (on their respective machines).
+        bool is_subset = true;
+        Worklist<std::pair<posint,posint>,false> worklist;
+        worklist.enqueue(std::make_pair(a->init, b->init));
+        while (!worklist.empty()) {
+            auto pU_src = worklist.dequeue();
+            posint a_src = pU_src->first.first;
+            posint b_src = pU_src->first.second;
+            if (isfinal(a->final[a_src]) && !isfinal(b->final[b_src])) {
+                is_subset = false;
+                break;
+            }
+            for (posint letter = 1; letter <= joint_alph.size(); letter++) {
+                posint a_tgt = a->delta[letter][a_src];
+                posint b_tgt = b->delta[letter][b_src];
+                worklist.enqueue(std::make_pair(a_tgt, b_tgt));
+            }
+        }
+        // Clean up temporary machines before returning.
+        delete a_wrap;
+        delete b_wrap;
+        return is_subset;
+    }
     template<class... Rest>
     void to_tgf(std::ostream& os, const Rest&... rest) const {
         posint sink = sink_state();
