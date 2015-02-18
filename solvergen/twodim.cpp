@@ -35,6 +35,38 @@ typedef amore::deterministic_finite_automaton DfaWrapper;
 
 template<class Symbol> class DFA;
 
+template<class T> class LightSet {
+private:
+    std::vector<T> array_;
+public:
+    explicit LightSet() {}
+    explicit LightSet(const std::set<T>& src)
+        : array_(src.begin(), src.end()) {}
+    LightSet(const LightSet&) = delete;
+    LightSet(LightSet&&) = default;
+    LightSet& operator=(const LightSet&) = delete;
+    bool insert(const T& val) {
+        auto pos = std::equal_range(array_.begin(), array_.end(), val);
+        if (pos.first != pos.second) {
+            return false;
+        }
+        array_.insert(pos.first, val);
+        return true;
+    }
+    unsigned size() const {
+        return array_.size();
+    }
+    typename std::vector<T>::const_iterator begin() const {
+        return array_.begin();
+    }
+    typename std::vector<T>::const_iterator end() const {
+        return array_.end();
+    }
+    bool operator<(const LightSet& rhs) const {
+        return set_compare(*this, rhs) < 0;
+    }
+};
+
 // Doesn't require a pre-defined number of states.
 template<class Symbol> class NFA {
 private:
@@ -96,12 +128,12 @@ public:
     }
     // TODO: Could cache eps_close results (but without emiting d-states for
     // the non-closed n-state sets).
-    void eps_close(std::set<posint>& states) const {
+    void eps_close(LightSet<posint>& states) const {
         std::deque<posint> worklist(states.begin(), states.end());
         while (!worklist.empty()) {
             posint src = worklist.front();
             for (posint tgt : trans_[src][0]) {
-                if (states.insert(tgt).second) {
+                if (states.insert(tgt)) {
                     worklist.push_back(tgt);
                 }
             }
@@ -112,9 +144,9 @@ public:
         // TODO: Can check if the NFA already contains no epsilons before
         // going through this process.
         // TODO: More efficient way to store sets of sets of states?
-        Worklist<std::set<posint>,false> worklist;
+        Worklist<LightSet<posint>,false> worklist;
         // Enqueue initial state set.
-        std::set<posint> init_ns_set = initial_;
+        LightSet<posint> init_ns_set(initial_);
         eps_close(init_ns_set);
         posint init_ds = worklist.enqueue(std::move(init_ns_set))->second;
         // Discover reachable state sets and fill out transitions.
@@ -126,7 +158,7 @@ public:
             dtrans.emplace_back(num_letters() + 1,
                                 std::numeric_limits<posint>::max());
             for (posint letter = 1; letter <= num_letters(); letter++) {
-                std::set<posint> tgt_ns_set;
+                LightSet<posint> tgt_ns_set;
                 for (posint src_ns : src_nsds->first) {
                     for (posint tgt_ns : trans_[src_ns][letter]) {
                         tgt_ns_set.insert(tgt_ns);
