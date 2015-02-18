@@ -41,12 +41,12 @@ public class EdgesSetCustom extends EdgesCustom
 	
 	private Edge get(Edge edge) {
 		int toNodeId = edge.sink.id;
-		int label = edge.label;
+		int label = edge.field;
 		int numBuckets = table.length;
 		int index = toNodeId % numBuckets;//& (numBuckets - 1);
 		Edge e = table[index];
 		while(e != null){
-			if(e.sink.id == toNodeId && e.label == label){
+			if(e.sink.id == toNodeId && e.field == label){
 				//if(!e.equals(edge)){
 				//	assert false : edge.toString() + " " + e.toString();
 				//}
@@ -60,12 +60,12 @@ public class EdgesSetCustom extends EdgesCustom
 	private boolean contains(Edge edge)
 	{
 		int toNodeId = edge.sink.id;
-		int label = edge.label;
+		int label = edge.field;
 		int numBuckets = table.length;
 		int index = toNodeId % numBuckets;//& (numBuckets - 1);
 		Edge e = table[index];
 		while(e != null){
-			if(e.sink.id == toNodeId && e.label == label){
+			if(e.sink.id == toNodeId && e.field == label){
 				//if(!e.equals(edge)){
 				//	assert false : edge.toString() + " " + e.toString();
 				//}

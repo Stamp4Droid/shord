@@ -11,7 +11,7 @@ import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.TaintWithContextRelationManager;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver2;
-import stamp.missingmodels.util.jcflsolver2.G2;
+import stamp.missingmodels.util.jcflsolver2.ReachabilitySolver;
 import chord.project.Chord;
 
 /**
@@ -24,7 +24,7 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		new G2(new MissingRefRefTaintRelationManager()).algo.process();
+		new ReachabilitySolver(new MissingRefRefTaintRelationManager()).process();
 		
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager missingRefRefRelations = new MissingRefRefTaintRelationManager();

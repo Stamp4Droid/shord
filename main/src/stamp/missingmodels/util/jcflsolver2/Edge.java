@@ -19,28 +19,24 @@ public class Edge {
 		this.source = source;
 		this.sink = sink;
 		this.symbolInt = kind;
-		this.label = -1;
+		this.field = -1;
 	}
 	
-	public final int label;
+	public final int field;
 
 	public Edge(int kind, Vertex source, Vertex sink, int label) {
 		this.source = source;
 		this.sink = sink;
 		this.symbolInt = kind;
-		this.label = label;
+		this.field = label;
 	}
 
 	public int hashCode() {
-		return this.source.hashCode() + this.sink.hashCode() + this.symbolInt + this.label;
+		return this.source.hashCode() + this.sink.hashCode() + this.symbolInt + this.field;
 	}
 
 	public boolean equals(Object o) {
 		Edge other = (Edge)o;
-		return this.source == other.source && this.sink == other.sink && this.symbolInt == other.symbolInt && this.label == other.label;
+		return this.source == other.source && this.sink == other.sink && this.symbolInt == other.symbolInt && this.field == other.field;
 	}
-
-    public EdgeData getData(Graph g) {
-    	return new EdgeData(this.source.name, this.sink.name, g.kindToSymbol(symbolInt), weight, Integer.toString(this.label));
-    }
 }

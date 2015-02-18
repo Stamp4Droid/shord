@@ -3,72 +3,55 @@ package stamp.missingmodels.util.jcflsolver2;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Graph {
-	public abstract void process(Edge edge);
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
 
-	public abstract int numKinds();
-
-	public abstract int symbolToKind(String symbol);
-
-	public abstract String kindToSymbol(int kind);
-
-	public Algorithm algo;
-
-	//public Collection<Node> nodes = new ArrayList();
+public class Graph {
 	public Map<String,Vertex> nodes = new HashMap<String,Vertex>();
+	private final ContextFreeGrammarOpt c;
+	private final ReachabilitySolver s;
 
-	public Graph() {
-		this.algo = new KnuthsAlgo(this);
-	}
-
-	public final void addEdge(Vertex from, Vertex to, int kind, Edge edgeA, boolean addLabel) {
-		int label = addLabel ? Math.max(edgeA.label, -1) : -1;
-		this.addEdgeInternal(from, to, kind, addLabel, label, edgeA.weight, edgeA, null);
-	}
-
-	public final void addEdge(Vertex from, Vertex to, int kind, Edge edgeA, Edge edgeB, boolean addLabel) {
-		if((edgeA.label == -1) || (edgeB.label == -1) || (edgeB.label == edgeB.label)) {
-			int label = addLabel ? Math.max(edgeA.label, edgeB.label) : -1;
-			this.addEdgeInternal(from, to, kind, addLabel, label, (short)(edgeA.weight + edgeB.weight), edgeA, edgeB);
-		}
-	}
-
-	public final void setAlgo(Algorithm algo) {
-		this.algo = algo;
-	}
-
-	public Vertex getNode(String name) {
-		Vertex node = this.nodes.get(name);
-		if(node == null) {
-			node = new Vertex(name, numKinds());
-			this.nodes.put(name, node);
-		}
-		return node;
-	}
-
-	public void addWeightedInputEdge(String from, String to, int kind, int label, short weight) {
-		Vertex fromNode = getNode(from);
-		Vertex toNode = getNode(to);
-
-		Edge newEdge = new Edge(kind, fromNode, toNode, label);
-		newEdge.weight = weight;
-		fromNode.addInputOutEdge(newEdge);
-		toNode.addInEdge(newEdge);
-		algo.addEdge(newEdge, null);
+	public Graph(ContextFreeGrammarOpt c, ReachabilitySolver s) {
+		this.c = c;
+		this.s = s;
 	}
 	
-	private void addEdgeInternal(Vertex from, Vertex to, int kind, boolean addLabel, int label, short weight, Edge edgeA, Edge edgeB) {
-		Edge newEdge = (addLabel && label >= 0)  ? new Edge(kind, from, to, label) : new Edge(kind, from, to, -1);
-		newEdge.weight = weight;
+	public Vertex getVertex(String name) {
+		Vertex vertex = this.nodes.get(name);
+		if(vertex == null) {
+			vertex = new Vertex(name, c.getNumLabels());
+			this.nodes.put(name, vertex);
+		}
+		return vertex;
+	}
 
-		newEdge.firstInput = edgeA;
-		newEdge.secondInput = edgeB;
+	public void addEdge(String sourceName, String sinkName, int symbolInt, int field, short weight) {
+		this.addEdge(this.getVertex(sourceName), this.getVertex(sinkName), symbolInt, field, weight, null, null);
+		/*
+		Vertex source = this.getVertex(sourceName);
+		Vertex sink = this.getVertex(sinkName);
 
-		Edge oldEdge = from.addOutEdge(newEdge);
+		Edge edge = new Edge(symbolInt, source, sink, field);
+		edge.weight = weight;
+		
+		source.addInputOutEdge(edge);
+		sink.addInEdge(edge);
+		
+		s.addEdgeToWorklist(edge, null);
+		*/
+	}
+	
+	public void addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
+		Edge edge = new Edge(symbolInt, source, sink, field);
+		edge.weight = weight;
+
+		edge.firstInput = firstInput;
+		edge.secondInput = secondInput;
+
+		Edge oldEdge = source.addOutEdge(edge);
 		if(oldEdge == null) {
-			to.addInEdge(newEdge);
+			sink.addInEdge(edge);
 		}
 
-		algo.addEdge(newEdge, oldEdge);
+		s.addEdgeToWorklist(edge, oldEdge);
 	}
 }
