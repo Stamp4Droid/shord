@@ -18,12 +18,13 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 public class ReachabilitySolver {
 	private final ContextFreeGrammar c;
 	private final GraphBuilder gb;
-	private final Heap<Edge> worklist = new BucketHeap<Edge>();
+	//private final Heap<Edge> worklist = new BucketHeap<Edge>();
+	private final Heap<Edge> worklist = new TestHeap<Edge>();
 	private final TypeFilter t;
 	
 	public static class TypeFilter {
-		private final MultivalueMap<String,String> filter = new MultivalueMap<String,String>();
-		private final int flowSymbolInt;
+		public final MultivalueMap<String,String> filter = new MultivalueMap<String,String>();
+		public final int flowSymbolInt;
 		
 		public TypeFilter(ContextFreeGrammar c) {
 			this.flowSymbolInt = c.getSymbolInt("Flow");
@@ -171,8 +172,10 @@ public class ReachabilitySolver {
 				}
 			}
 		}
-		System.out.println("Done computing transitive closure in: " + (System.currentTimeMillis() - time) + "ms");
+		long totalTime = System.currentTimeMillis() - time;
+		System.out.println("Done computing transitive closure in: " + totalTime + "ms");
 		System.out.println("Num productions: " + i);
+		System.out.println("Rate: " + ((double)i/totalTime) + " edges/ms");
 	}
 	
 	private boolean solved = false;	

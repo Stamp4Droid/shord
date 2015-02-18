@@ -172,7 +172,7 @@ public class ConversionUtils {
 		// prim assign
 		relations.add("assignPrimCtxt", new IndexRelation("AssignPrimCtxt", "U", 1, 0, "U", 2, 0));
 		relations.add("assignPrimCCtxt", new IndexRelation("AssignPrimCCtxt", "U", 1, 0, "U", 3, 2, (short)1));
-		relations.add("assignPrimCCtxt", new IndexRelation("DynAssignPrimCCtxt", "U", 1, 0, "U", 3, 2));
+		//relations.add("assignPrimCCtxt", new IndexRelation("DynAssignPrimCCtxt", "U", 1, 0, "U", 3, 2));
 
 		// prim load/store
 		relations.add("storePrimCtxt", new IndexRelation("StorePrimCtxt", "V", 1, 0, "U", 3, 0, 2));

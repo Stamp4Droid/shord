@@ -28,14 +28,20 @@ public class RepsAlgo extends Algorithm
 		return edge;
 	}
 
+	private long time;
+	
 	protected void beforeProcess()
 	{
 		System.out.println("Initial num of edges = "+workList.size());
+		this.time = System.currentTimeMillis();
 	}
 
 	protected void afterProcess()
 	{
+		long totalTime = System.currentTimeMillis() - this.time;
 		System.out.println("Total num of edges = "+count);
+		System.out.println("Time: " + totalTime);
+		System.out.println("Rate: " + ((double)count/totalTime) + " edges/ms");
 		/*
 		//debugging
 		int[] counts = new int[g.numKinds()];

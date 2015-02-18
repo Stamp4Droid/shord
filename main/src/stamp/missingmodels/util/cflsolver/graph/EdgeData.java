@@ -16,7 +16,7 @@ public interface EdgeData {
 	public static final class Field implements EdgeData {
 		public final static Field DEFAULT_FIELD = new Field(-1);
 		
-		private final int field;
+		public final int field;
 		
 		public Field(int field) {
 			this.field = field;
