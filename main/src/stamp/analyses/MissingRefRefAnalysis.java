@@ -4,16 +4,14 @@ import shord.project.analyses.JavaAnalysis;
 import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefTaintGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph2;
 import stamp.missingmodels.util.cflsolver.relation.MissingRefRefRelationManager.MissingRefRefTaintRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.TaintWithContextRelationManager;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver2;
-import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.jcflsolver2.G2;
 import chord.project.Chord;
 
 /**
@@ -26,6 +24,8 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
+		new G2(new MissingRefRefTaintRelationManager()).algo.process();
+		
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager missingRefRefRelations = new MissingRefRefTaintRelationManager();
 		RelationManager taintRelations = new TaintWithContextRelationManager();

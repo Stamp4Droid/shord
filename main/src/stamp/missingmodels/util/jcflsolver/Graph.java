@@ -110,7 +110,6 @@ public abstract class Graph {
 	}
 
 	public void addWeightedInputEdge(String from, String to, int kind, short weight) {
-
 		Node fromNode = getNode(from);
 		Node toNode = getNode(to);
 
