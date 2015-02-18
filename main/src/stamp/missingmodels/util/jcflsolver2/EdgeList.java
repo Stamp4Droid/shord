@@ -2,11 +2,11 @@ package stamp.missingmodels.util.jcflsolver2;
 
 import java.util.*;
 
-public class EdgesListCustom extends EdgesCustom 
+public class EdgeList extends EdgesCustom 
 {
 	private Edge head;
 
-	EdgesListCustom(boolean useNextAField)
+	EdgeList(boolean useNextAField)
 	{
 		super(useNextAField);
 	}
@@ -16,7 +16,7 @@ public class EdgesListCustom extends EdgesCustom
 		return new ListIterator();
 	}
 
-	public Edge addEdge(Edge edge)
+	public Edge add(Edge edge)
 	{
 		setNext(edge, head);
 		head = edge;

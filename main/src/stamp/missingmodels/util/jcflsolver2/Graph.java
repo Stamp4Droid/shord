@@ -18,7 +18,7 @@ public class Graph {
 	public Vertex getVertex(String name) {
 		Vertex vertex = this.nodes.get(name);
 		if(vertex == null) {
-			vertex = new Vertex(name, c.getNumLabels());
+			vertex = new Vertex(c.getNumLabels());
 			this.nodes.put(name, vertex);
 		}
 		return vertex;
@@ -26,18 +26,6 @@ public class Graph {
 
 	public void addEdge(String sourceName, String sinkName, int symbolInt, int field, short weight) {
 		this.addEdge(this.getVertex(sourceName), this.getVertex(sinkName), symbolInt, field, weight, null, null);
-		/*
-		Vertex source = this.getVertex(sourceName);
-		Vertex sink = this.getVertex(sinkName);
-
-		Edge edge = new Edge(symbolInt, source, sink, field);
-		edge.weight = weight;
-		
-		source.addInputOutEdge(edge);
-		sink.addInEdge(edge);
-		
-		s.addEdgeToWorklist(edge, null);
-		*/
 	}
 	
 	public void addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {

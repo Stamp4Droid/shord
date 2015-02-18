@@ -1,43 +1,37 @@
 package stamp.missingmodels.util.jcflsolver2;
 
-abstract class EdgesCustom implements Edges
+abstract class EdgesCustom implements EdgeCollection
 {
 	private final Next next;
 
-	EdgesCustom(boolean useNextA)
-	{
+	EdgesCustom(boolean useNextA) {
 		if(useNextA)
 			this.next = new NextA();
 		else
 			this.next = new NextB();
 	}
 	
-	protected final Edge getNext(Edge e)
-	{
+	protected final Edge getNext(Edge e) {
 		return next.getNext(e);
 	}
 
-	protected final void setNext(Edge edge, Edge nextEdge)
-	{
+	protected final void setNext(Edge edge, Edge nextEdge) {
 		next.setNext(edge, nextEdge);
 	}
 
-	interface Next
-	{
+	interface Next {
 		public Edge getNext(Edge e);
 		public void setNext(Edge e, Edge next);
 	}
 
-	private class NextA implements Next
-	{
-		public Edge getNext(Edge e){ return e.nextA; }
-		public void setNext(Edge e, Edge next){ e.nextA = next; }
+	private class NextA implements Next {
+		public Edge getNext(Edge e){ return e.nextOutgoingEdge; }
+		public void setNext(Edge e, Edge next){ e.nextOutgoingEdge = next; }
 	}
 
-	private class NextB implements Next
-	{
-		public Edge getNext(Edge e){ return e.nextB; }
-		public void setNext(Edge e, Edge next){ e.nextB = next; }
+	private class NextB implements Next {
+		public Edge getNext(Edge e){ return e.nextIncomingEdge; }
+		public void setNext(Edge e, Edge next){ e.nextIncomingEdge = next; }
 	}
 
 }

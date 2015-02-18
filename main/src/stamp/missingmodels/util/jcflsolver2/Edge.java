@@ -4,16 +4,17 @@ public class Edge {
 	public final Vertex source;
 	public final Vertex sink;
 	public final int symbolInt;
-
-	Edge nextA;
-	Edge nextB;
+	public final int field;
 	
 	public short weight;
-	public Edge nextWorklist;
-	public Edge prevWorklist;
-	
 	public Edge firstInput;
 	public Edge secondInput;
+	
+	public Edge nextWorklist;
+	public Edge prevWorklist;
+
+	public Edge nextOutgoingEdge;
+	public Edge nextIncomingEdge;
 	
 	Edge(int kind, Vertex source, Vertex sink) {
 		this.source = source;
@@ -21,8 +22,6 @@ public class Edge {
 		this.symbolInt = kind;
 		this.field = -1;
 	}
-	
-	public final int field;
 
 	public Edge(int kind, Vertex source, Vertex sink, int label) {
 		this.source = source;

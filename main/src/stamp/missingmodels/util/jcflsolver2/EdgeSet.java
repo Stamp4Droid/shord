@@ -2,7 +2,7 @@ package stamp.missingmodels.util.jcflsolver2;
 
 import java.util.*;
 
-public class EdgesSetCustom extends EdgesCustom
+public class EdgeSet extends EdgesCustom
 {
 	private Edge[] table = new Edge[INITIAL_TABLE_SIZE];
 	private int size = 0;
@@ -10,7 +10,7 @@ public class EdgesSetCustom extends EdgesCustom
 	private static final double MAX_LOAD_FACTOR = 0.9;
 	private static final int INITIAL_TABLE_SIZE = 16;
 
-	EdgesSetCustom(boolean useNextAField)
+	EdgeSet(boolean useNextAField)
 	{
 		super(useNextAField);
 	}
@@ -20,7 +20,7 @@ public class EdgesSetCustom extends EdgesCustom
 		return new SetIterator();
 	}
 
-	public Edge addEdge(Edge edge)
+	public Edge add(Edge edge)
 	{
 		Edge e = get(edge);
 		if(e != null) {
