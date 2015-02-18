@@ -37,11 +37,7 @@ public class G2 extends Graph {
 			//Context context = relation.getContext(tuple);
 			int weight = relation.getWeight(tuple);
 
-			if(field.field >= 0) {
-				g.addWeightedInputEdge(source, sink, g.symbolToKind(symbol), field.field, (short)weight);
-			} else {
-				g.addWeightedInputEdge(source, sink, g.symbolToKind(symbol), (short)weight);
-			}
+			g.addWeightedInputEdge(source, sink, g.symbolToKind(symbol), field.field, (short)weight);
 		}
 		
 		rel.close();
@@ -102,16 +98,5 @@ public class G2 extends Graph {
 		// add edge
 		this.addEdge(source, sink, symbolInt, firstInput, secondInput, !binaryProduction.ignoreFields);
 	}
-	
-	public String[] outputRels() {
-		String[] rels = {};
-		return rels;
-	}
-
-	public short kindToWeight(int kind) {
-		return 0;
-	}
-
-	public boolean useReps() { return true; }
 
 }
