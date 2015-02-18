@@ -5,8 +5,7 @@ from os.path import basename, splitext
 import sys
 
 def convert(tgf_fname, print_labels, fout):
-    tgf_base = splitext(splitext(basename(tgf_fname))[0])[0]
-    comp = splitext(tgf_base)[0]
+    comp = splitext(splitext(basename(tgf_fname))[0])[0]
     states_done = False
     entries = []
     trans = {}
@@ -14,7 +13,7 @@ def convert(tgf_fname, print_labels, fout):
     fout.write('digraph %s {\n' % comp)
     fout.write('id="%s";\n' % comp)
     fout.write('rankdir="LR";\n')
-    fout.write('label="%s";\n' % tgf_base)
+    fout.write('label="%s";\n' % comp)
     fout.write('labelloc=top;\n')
     fout.write('labeljust=left;\n')
     fout.write('node [style=filled,fillcolor=white,color=black];\n')
@@ -59,7 +58,6 @@ def convert(tgf_fname, print_labels, fout):
             edge_id = comp + ':' + src + '--' + l + '->' + comp + ':' + dst
             fout.write('%s -> %s [id="%s",tooltip="%s",label="%s"];\n' %
                        (src, dst, edge_id, l, l))
-
     fout.write('}\n')
 
 if __name__ == '__main__':

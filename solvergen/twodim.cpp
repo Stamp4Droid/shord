@@ -1288,9 +1288,7 @@ public:
     }
     // Returns 'false' if we've reached fixpoint, and sig_ didn't need to be
     // updated. Otherwise updates sig_ and returns 'true'.
-    bool update_sig(const Registry<Function>& fun_reg,
-                    const Registry<Field>& fld_reg, const fs::path& outdir,
-                    unsigned revision) {
+    bool update_sig(const Registry<Function>& fun_reg) {
         // Current sig_ is step i on the fixpoint process, S(i).
         const Signature& si = sig_;
         // Embed the latest signatures of callees, and produce minimal FSM to
@@ -1322,13 +1320,6 @@ public:
             return false;
         }
         std::cout << "    New sig was larger" << std::endl;
-        fs::path fpath(outdir/(name + "." + std::to_string(revision)
-                               + ".imm.tgf"));
-        std::cout << "    Printing sig before widening: revision "
-                  << std::to_string(revision) << std::endl;
-        std::ofstream fout(fpath.string());
-        EXPECT((bool) fout);
-        siUfsi.to_tgf(fout, fld_reg);
         // If not, widen S(i) U F(S(i)) and set as latest signature.
         siUfsi.fold(WIDENING_K);
         std::cout << "    Sig folded" << std::endl;
@@ -1536,34 +1527,20 @@ int main(int argc, char* argv[]) {
     while (!worklist.empty()) {
         Function& f = funs[worklist.dequeue()];
         std::cout << "Processing " << f.name << std::endl;
-        std::cout << "    " << worklist.size() << " left in queue"
-                  << std::endl;
-        unsigned revision = 1;
-        while (true) {
-            fs::path fpath(outdir/(f.name + "." + std::to_string(revision)
-                                   + ".sig.tgf"));
-            if (fs::exists(fpath)) {
-                revision++;
-            } else {
-                break;
-            }
-        }
-        if (!f.update_sig(funs, flds, outdir, revision)) {
+        std::cout << "    " << worklist.size() << " left in queue" << std::endl;
+        if (!f.update_sig(funs)) {
             std::cout << "    No change" << std::endl;
             continue;
         }
         std::cout << "    Updated, rescheduling callers" << std::endl;
         for (Ref<Function> c : f.callers()) {
             if (worklist.enqueue(c)) {
-                std::cout << "        rescheduled " << funs[c].name
-                          << std::endl;
+                std::cout << "    rescheduled " << funs[c].name << std::endl;
             }
         }
-        fs::path fpath(outdir/(f.name + "." + std::to_string(revision)
-                               + ".sig.tgf"));
+        fs::path fpath(outdir/(f.name + ".sig.tgf"));
         // TODO: Empty signatures won't be printed.
-        std::cout << "    Printing signature: revision "
-                  << std::to_string(revision) << std::endl;
+        std::cout << "    Printing signature" << std::endl;
         std::ofstream fout(fpath.string());
         EXPECT((bool) fout);
         f.sig().to_tgf(fout, flds);
