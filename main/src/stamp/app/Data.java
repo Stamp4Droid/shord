@@ -15,13 +15,13 @@ public class Data
 		StringBuilder builder = new StringBuilder();
 		builder
 			.append("{")
-			.append(scheme == null ? "" : "scheme: "+scheme)
-			.append(host == null ? "" : "host: "+host)
-			.append(port == null ? "" : "port: "+port)
-			.append(path == null ? "" : "path: "+path)
-			.append(pathPattern == null ? "" : "pathPattern: "+pathPattern)
-			.append(pathPrefix == null ? "" : "pathPrefix: "+pathPrefix)
-			.append(mimeType == null ? "" : "mimeType: "+mimeType)
+			.append(scheme == null ? "" : "\"scheme\": \""+scheme+"\"")
+			.append(host == null ? "" : ", \"host\": "+host+"\"")
+			.append(port == null ? "" : ", \"port\": \""+port+"\"")
+			.append(path == null ? "" : ", \"path\": \""+path+"\"")
+			.append(pathPattern == null ? "" : ", \"pathPattern\": \""+pathPattern+"\"")
+			.append(pathPrefix == null ? "" : ", \"pathPrefix\": \""+pathPrefix+"\"")
+			.append(mimeType == null ? "" : ", \"mimeType\": \""+mimeType+"\"")
 			.append("}");
 		return builder.toString();
 	}

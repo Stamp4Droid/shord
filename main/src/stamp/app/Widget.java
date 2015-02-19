@@ -39,7 +39,7 @@ public class Widget
 	
 	public String toString()
 	{
-		return "{class: "+className+", id-str: "+idStr+", id: "+id+"}";
+		return "{\"class\": \""+className+"\", \"id-str\": \""+idStr+"\", \"id\": "+id+"}";
 	}
 	
 	public boolean equals(Object other)

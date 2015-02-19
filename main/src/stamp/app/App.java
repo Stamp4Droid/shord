@@ -234,22 +234,32 @@ public class App
 	
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("App : {\n");
+		StringBuilder builder = new StringBuilder("{");
 
-		builder.append("package: "+pkgName+"\n");
-		builder.append("version: "+version+"\n");
+		builder.append("\"package\": \""+pkgName+"\", ");
+		builder.append("\"version\": \""+version+"\", ");
 
-		builder.append("comps : {\n");
+		int n = comps.size();
+		builder.append("\"comps\" : [");
+		int i = 0;
 		for(Component c : comps){
-			builder.append("\t"+c.toString()+"\n");
+			builder.append(c.toString());
+			if(i < (n-1))
+				builder.append(", ");
+			i++;
 		}
-		builder.append("}\n");
+		builder.append("], ");
 
-		builder.append("perms: {\n");
+		builder.append("\"perms\": [");
+		i = 0;
+		n = permissions.size();
 		for(String perm : permissions){
-			builder.append("\t"+perm+"\n");
+			builder.append("\""+perm+"\"");
+			if(i < (n-1))
+				builder.append(", ");
+			i++;
 		}
-		builder.append("}\n");
+		builder.append("]");
 
 		builder.append("}");
 		return builder.toString();

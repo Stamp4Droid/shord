@@ -18,26 +18,27 @@ public class Layout
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder("{");
-		builder.append("file: "+fileName+", ");
-		builder.append("id: "+id+", ");
-		builder.append("widgets: {");
+		builder.append("\"file\": \""+fileName+"\", ");
+		builder.append("\"id\": \""+id+"\", ");
+		builder.append("\"widgets\": [");
 		int len = widgets.size();
 		for(int i = 0; i < len; i++){
 			builder.append(widgets.get(i).toString());
 			if(i < (len-1))
 				builder.append(", ");
 		}
-		builder.append("}, ");
-		builder.append("callbacks: {");
+		builder.append("], ");
+		builder.append("\"callbacks\": [");
 		len = callbacks.size();
 		int i = 0;
 		for(String cb : callbacks){
-			builder.append(cb);
+			builder.append("\""+cb+"\"");
 			if(i < (len-1))
 				builder.append(", ");
 			i++;
 		}
-		builder.append("}, ");
+		builder.append("]");
+		builder.append("}");
 		return builder.toString();
 	}
 	
