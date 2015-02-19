@@ -29,7 +29,7 @@ public class Graph {
 		Edge edge = new Edge(symbolInt, this.getVertex(sourceName), this.getVertex(sinkName), field);
 		edge.weight = weight;
 		
-		Edge oldEdge = this.getVertex(sourceName).getCurrentOutgoingEdge(edge);
+		Edge oldEdge = this.getVertex(sourceName).getCurrentOutgoingEdge(symbolInt, this.getVertex(sinkName), field);
 		if(oldEdge == null) {
 			this.getVertex(sourceName).addOutgoingEdge(edge);
 			this.getVertex(sinkName).addIncomingEdge(edge);
@@ -40,11 +40,10 @@ public class Graph {
 	public void addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
 		Edge edge = new Edge(symbolInt, source, sink, field);
 		edge.weight = weight;
-
 		edge.firstInput = firstInput;
 		edge.secondInput = secondInput;
 
-		Edge oldEdge = source.getCurrentOutgoingEdge(edge);
+		Edge oldEdge = source.getCurrentOutgoingEdge(symbolInt, sink, field);
 		if(oldEdge == null) {
 			source.addOutgoingEdge(edge);
 			sink.addIncomingEdge(edge);
