@@ -4,6 +4,7 @@ import shord.project.analyses.JavaAnalysis;
 import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefTaintGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.graph.Graph2;
 import stamp.missingmodels.util.cflsolver.relation.MissingRefRefRelationManager.MissingRefRefTaintRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
@@ -24,7 +25,7 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		new ReachabilitySolver(new MissingRefRefTaintRelationManager()).process();
+		new ReachabilitySolver(new MissingRefRefTaintGrammar(), new MissingRefRefTaintRelationManager()).process();
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager missingRefRefRelations = new MissingRefRefTaintRelationManager();
 		RelationManager taintRelations = new TaintWithContextRelationManager();

@@ -2,7 +2,7 @@ package stamp.missingmodels.util.jcflsolver2;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefTaintGrammar;
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.AuxProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.BinaryProduction;
@@ -12,11 +12,12 @@ import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
 
 public class ReachabilitySolver {
-	private final ContextFreeGrammarOpt c = new ContextFreeGrammarOpt(new MissingRefRefTaintGrammar());
+	public final ContextFreeGrammarOpt c;
 	public final Graph g;
 	
-	public ReachabilitySolver(RelationManager relations) {
-		this.g = new Graph(this.c, this);
+	public ReachabilitySolver(ContextFreeGrammar c, RelationManager relations) {
+		this.c = new ContextFreeGrammarOpt(c);
+		this.g = new Graph(this.c);
 		for(int i=0; i<c.getNumLabels(); i++) {
 			String symbol = c.getSymbol(i);
 			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
@@ -42,25 +43,54 @@ public class ReachabilitySolver {
 			//Context context = relation.getContext(tuple);
 			int weight = relation.getWeight(tuple);
 
-			g.addEdge(source, sink, c.getSymbolInt(symbol), field.field, (short)weight);
+			this.addEdgeHelper(source, sink, c.getSymbolInt(symbol), field.field, (short)weight);
 		}
 		
 		rel.close();
-	}
-
-	public void addEdgeToWorklist(Edge newEdge, Edge oldEdge) {
-		if(oldEdge == null) {
-			count++;
-			this.worklist.push(newEdge);
-		} else {
-			this.worklist.update(oldEdge, newEdge);
-		}
 	}
 
 	private BucketHeap worklist = new BucketHeap();
 	
 	private int count;
 	private long time;
+	
+	public void addEdgeHelper(String sourceName, String sinkName, int symbolInt, int field, short weight) {
+		this.addEdgeHelper(this.g.getVertex(sourceName), this.g.getVertex(sinkName), symbolInt, field, weight, null, null);
+		/*
+		Edge edge = new Edge(symbolInt, this.getVertex(sourceName), this.getVertex(sinkName), field);
+		edge.weight = weight;
+		
+		Edge oldEdge = this.getVertex(sourceName).getCurrentOutgoingEdge(edge);
+		if(oldEdge == null) {
+			this.getVertex(sourceName).addOutgoingEdge(edge);
+			this.getVertex(sinkName).addIncomingEdge(edge);
+		}
+		s.addEdgeToWorklist(edge, oldEdge);
+		*/
+	}
+	
+	public void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
+		Edge edge = new Edge(symbolInt, source, sink, field);
+		edge.weight = weight;
+
+		edge.firstInput = firstInput;
+		edge.secondInput = secondInput;
+
+		Edge oldEdge = source.getCurrentOutgoingEdge(edge);
+		if(oldEdge == null) {
+			this.count++;
+			source.addOutgoingEdge(edge);
+			sink.addIncomingEdge(edge);
+			this.worklist.push(edge);
+		} else {
+			if(edge.weight < oldEdge.weight) {
+				oldEdge.weight = edge.weight;
+				oldEdge.firstInput = edge.firstInput;
+				oldEdge.secondInput = edge.secondInput;
+				this.worklist.update(oldEdge);
+			}
+		}
+	}
 
 	private void addEdge(UnaryProduction unaryProduction, Edge input) {
 		// get edge base
@@ -72,7 +102,7 @@ public class ReachabilitySolver {
 		int field = unaryProduction.ignoreFields ? -1 : Math.max(symbolInt, -1);
 		
 		// add edge
-		this.g.addEdge(source, sink, symbolInt, field, input.weight, input, null);
+		this.addEdgeHelper(source, sink, symbolInt, field, input.weight, input, null);
 	}
 
 	private void addEdge(BinaryProduction binaryProduction, Edge firstInput, Edge secondInput) {
@@ -84,7 +114,7 @@ public class ReachabilitySolver {
 		// add edge
 		if((firstInput.field == -1) || (secondInput.field == -1) || (firstInput.field == secondInput.field)) {
 			int field = binaryProduction.ignoreFields ? -1 : Math.max(firstInput.field, secondInput.field);
-			this.g.addEdge(source, sink, symbolInt, field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);
+			this.addEdgeHelper(source, sink, symbolInt, field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);
 		}
 	}
 
@@ -97,7 +127,7 @@ public class ReachabilitySolver {
 		// add edge
 		if((input.field == -1) || (auxInput.field == -1) || (input.field == auxInput.field)) {
 			int field = auxProduction.ignoreFields ? -1 : Math.max(input.field, auxInput.field);
-			this.g.addEdge(source, sink, symbolInt, field, (short)(input.weight + auxInput.weight), input, auxInput);
+			this.addEdgeHelper(source, sink, symbolInt, field, (short)(input.weight + auxInput.weight), input, auxInput);
 		}
 	}
 	

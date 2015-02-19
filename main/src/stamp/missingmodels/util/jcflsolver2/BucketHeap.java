@@ -42,22 +42,17 @@ public class BucketHeap {
 		return head;
 	}
 
-	public void update(Edge edge, Edge newEdge) {
-		if(newEdge.weight < edge.weight) {
-			if(edge.prevWorklist != null) {
-				edge.prevWorklist.nextWorklist = edge.nextWorklist;
-			} else {
-				this.buckets.set(edge.weight, edge.nextWorklist);
-			}
-			if(edge.nextWorklist != null) {
-				edge.nextWorklist.prevWorklist = edge.prevWorklist;
-			}
-			edge.weight = newEdge.weight;
-			edge.firstInput = newEdge.firstInput;
-			edge.secondInput = newEdge.secondInput;
-			this.size--;
-			push(edge);
+	public void update(Edge edge) {
+		if(edge.prevWorklist != null) {
+			edge.prevWorklist.nextWorklist = edge.nextWorklist;
+		} else {
+			this.buckets.set(edge.weight, edge.nextWorklist);
 		}
+		if(edge.nextWorklist != null) {
+			edge.nextWorklist.prevWorklist = edge.prevWorklist;
+		}
+		this.size--;
+		this.push(edge);
 	}
 
 	public int size() {
