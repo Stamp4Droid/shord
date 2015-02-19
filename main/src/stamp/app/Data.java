@@ -16,7 +16,7 @@ public class Data
 		builder
 			.append("{")
 			.append(scheme == null ? "" : "\"scheme\": \""+scheme+"\"")
-			.append(host == null ? "" : ", \"host\": "+host+"\"")
+			.append(host == null ? "" : ", \"host\": \""+host+"\"")
 			.append(port == null ? "" : ", \"port\": \""+port+"\"")
 			.append(path == null ? "" : ", \"path\": \""+path+"\"")
 			.append(pathPattern == null ? "" : ", \"pathPattern\": \""+pathPattern+"\"")
