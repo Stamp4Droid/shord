@@ -25,7 +25,14 @@ public class Graph {
 	}
 
 	public void addEdge(String sourceName, String sinkName, int symbolInt, int field, short weight) {
-		this.addEdge(this.getVertex(sourceName), this.getVertex(sinkName), symbolInt, field, weight, null, null);
+		//this.addEdge(this.getVertex(sourceName), this.getVertex(sinkName), symbolInt, field, weight, null, null);
+		Edge edge = new Edge(symbolInt, this.getVertex(sourceName), this.getVertex(sinkName), field);
+		edge.weight = weight;
+		if(this.getVertex(sourceName).getOutgoingEdge(edge) == null) {
+			this.getVertex(sourceName).addOutgoingEdge(edge);
+			this.getVertex(sinkName).addIncomingEdge(edge);
+		}
+		s.addEdgeToWorklist(edge, null);
 	}
 	
 	public void addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
@@ -35,9 +42,10 @@ public class Graph {
 		edge.firstInput = firstInput;
 		edge.secondInput = secondInput;
 
-		Edge oldEdge = source.addOutEdge(edge);
+		Edge oldEdge = source.getOutgoingEdge(edge);
 		if(oldEdge == null) {
-			sink.addInEdge(edge);
+			source.addOutgoingEdge(edge);
+			sink.addIncomingEdge(edge);
 		}
 
 		s.addEdgeToWorklist(edge, oldEdge);

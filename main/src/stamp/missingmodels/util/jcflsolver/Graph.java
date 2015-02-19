@@ -118,7 +118,7 @@ public abstract class Graph {
 		}
 		Edge newEdge = new NonLabeledEdge(kind, fromNode, toNode);
 		newEdge.weight = weight;
-		fromNode.addInputOutEdge(newEdge);
+		fromNode.addOutEdge(newEdge);
 		toNode.addInEdge(newEdge);
 		algo.addEdge(newEdge, null);
 	}

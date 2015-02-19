@@ -100,14 +100,14 @@ public class ReachabilitySolver {
 			// <- <-, <- ->, -> <-, -> ->
 			for(BinaryProduction binaryProduction : c.binaryProductionsByFirstInput[edge.symbolInt]) {
 				Vertex intermediate = binaryProduction.isFirstInputBackwards ? edge.source : edge.sink;
-				Iterable<Edge> secondEdges = binaryProduction.isSecondInputBackwards ? intermediate.getInEdges(binaryProduction.secondInput) : intermediate.getOutEdges(binaryProduction.secondInput);
+				Iterable<Edge> secondEdges = binaryProduction.isSecondInputBackwards ? intermediate.getIncomingEdges(binaryProduction.secondInput) : intermediate.getOutgoingEdges(binaryProduction.secondInput);
 				for(Edge secondEdge : secondEdges) {
 					this.addEdge(binaryProduction, edge, secondEdge);
 				}
 			}
 			for(BinaryProduction binaryProduction : c.binaryProductionsBySecondInput[edge.symbolInt]) {
 				Vertex intermediate = binaryProduction.isSecondInputBackwards ? edge.sink : edge.source;
-				Iterable<Edge> firstEdges = binaryProduction.isFirstInputBackwards ? intermediate.getOutEdges(binaryProduction.firstInput) : intermediate.getInEdges(binaryProduction.firstInput);
+				Iterable<Edge> firstEdges = binaryProduction.isFirstInputBackwards ? intermediate.getOutgoingEdges(binaryProduction.firstInput) : intermediate.getIncomingEdges(binaryProduction.firstInput);
 				for(Edge firstEdge : firstEdges) {
 					this.addEdge(binaryProduction, firstEdge, edge);
 				}

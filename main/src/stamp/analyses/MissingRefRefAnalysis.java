@@ -25,7 +25,6 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		new ReachabilitySolver(new MissingRefRefTaintRelationManager()).process();
-		
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager missingRefRefRelations = new MissingRefRefTaintRelationManager();
 		RelationManager taintRelations = new TaintWithContextRelationManager();
@@ -41,7 +40,7 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 		IOUtils.printGraphEdges(gbar, "Src2Sink", true);
 		*/
 		
-		Graph2 gbar = new ReachabilitySolver2(relationReader.readGraph(missingRefRefRelations, missingRefRefTaintGrammar), relationReader.readTypeFilter(missingRefRefTaintGrammar)).getResult();
+		//Graph2 gbar = new ReachabilitySolver2(relationReader.readGraph(missingRefRefRelations, missingRefRefTaintGrammar), relationReader.readTypeFilter(missingRefRefTaintGrammar)).getResult();
 		
 		/*
 		Graph gbarr = new ReachabilitySolver(relationReader.readGraph(missingRefRefRelations, missingRefRefTaintGrammar), relationReader.readTypeFilter(missingRefRefTaintGrammar)).getResult();
