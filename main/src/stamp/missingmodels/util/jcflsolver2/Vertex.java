@@ -1,6 +1,7 @@
 package stamp.missingmodels.util.jcflsolver2;
 
-import stamp.missingmodels.util.jcflsolver2.EdgeCollection.EdgeList;
+import stamp.missingmodels.util.jcflsolver2.Edge.EdgeList;
+import stamp.missingmodels.util.jcflsolver2.Edge.EdgeSet;
 
 public class Vertex {
 	final EdgeList[] incomingEdges;
@@ -15,38 +16,37 @@ public class Vertex {
 		this.id = ++numVertices;
 	}
 	
-	public EdgeCollection getOutgoingEdges(int kind) {
-		EdgeCollection edges = outgoingEdges[kind];
-		return edges == null ? EdgeCollection.EMPTY_EDGES : edges;
+	public Iterable<Edge> getOutgoingEdges(int symbolInt) {
+		EdgeSet edges = outgoingEdges[symbolInt];
+		return edges == null ? Edge.EMPTY_EDGES : edges;
 	}
 	
-	public EdgeCollection getIncomingEdges(int kind) {
-		EdgeCollection edges = incomingEdges[kind];
-		return edges == null ? EdgeCollection.EMPTY_EDGES : edges;
+	public Iterable<Edge> getIncomingEdges(int symbolInt) {
+		EdgeList edges = incomingEdges[symbolInt];
+		return edges == null ? Edge.EMPTY_EDGES : edges;
 	}
 	
-	public Edge getOutgoingEdge(Edge edge) {
-		int symbol = edge.symbolInt;
-		EdgeSet edges = this.outgoingEdges[symbol];
+	public Edge getCurrentOutgoingEdge(Edge edge) {
+		EdgeSet edges = this.outgoingEdges[edge.symbolInt];
 		return edges == null ? null : edges.get(edge);
 	}
  
 	public void addOutgoingEdge(Edge edge) {
-		int symbol = edge.symbolInt;
-		EdgeSet edges = this.outgoingEdges[symbol];
+		int symbolInt = edge.symbolInt;
+		EdgeSet edges = this.outgoingEdges[symbolInt];
 		if(edges == null) {
 			edges = new EdgeSet();
-			this.outgoingEdges[symbol] = edges;
+			this.outgoingEdges[symbolInt] = edges;
 		}
 		edges.add(edge);
 	}
 	
 	public void addIncomingEdge(Edge edge) {
-		int kind = edge.symbolInt;
-		EdgeList edges = this.incomingEdges[kind];
+		int symbolInt = edge.symbolInt;
+		EdgeList edges = this.incomingEdges[symbolInt];
 		if(edges == null) {
 			edges = new EdgeList();
-			this.incomingEdges[kind] = edges;
+			this.incomingEdges[symbolInt] = edges;
 		}
 		edges.add(edge);
 	}

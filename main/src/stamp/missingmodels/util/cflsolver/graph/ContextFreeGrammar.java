@@ -121,8 +121,6 @@ public class ContextFreeGrammar {
 	public final List<List<AuxProduction>> auxProductionsByAuxInput;
 	public final List<List<AuxProduction>> auxProductionsByTarget;
 	
-	
-	
 	private final Map<String,Integer> symbolInts = new HashMap<String,Integer>();
 	private final Map<Integer,String> symbols = new HashMap<Integer,String>();
 	private int curLabel = 0;

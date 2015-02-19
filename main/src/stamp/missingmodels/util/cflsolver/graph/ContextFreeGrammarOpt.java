@@ -4,6 +4,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ContextFreeGrammarOpt {
+	
+	public final class UnaryProduction {
+		public final int target;
+		public final int input;
+		public final boolean isInputBackwards;
+		public final boolean ignoreFields;
+		public final boolean ignoreContexts;
+		
+		public UnaryProduction(ContextFreeGrammar.UnaryProduction production) {
+			this.target = production.target;
+			this.input = production.input;
+			this.isInputBackwards = production.isInputBackwards;
+			this.ignoreFields = production.ignoreFields;
+			this.ignoreContexts = production.ignoreContexts;
+		}
+		
+		@Override
+		public String toString() {
+			return getSymbol(this.target) + " :- " + (this.isInputBackwards ? "_" : "") + getSymbol(this.input) + ".";
+		}
+	}
+	
 	public final class BinaryProduction {
 		public final int target;
 		public final int firstInput;
@@ -28,25 +50,36 @@ public class ContextFreeGrammarOpt {
 			return getSymbol(this.target) + "[" + this.ignoreFields + "][" + this.ignoreContexts + "]" + " :- " + (this.isFirstInputBackwards ? "_" : "") + getSymbol(this.firstInput) + ", " + (this.isSecondInputBackwards ? "_" : "") + getSymbol(this.secondInput) + ".";
 		}
 	}
-	
-	public final class UnaryProduction {
+
+	public final class AuxProduction {
 		public final int target;
 		public final int input;
+		public final int auxInput;
+		public final boolean isAuxInputFirst;
 		public final boolean isInputBackwards;
+		public final boolean isAuxInputBackwards;
 		public final boolean ignoreFields;
 		public final boolean ignoreContexts;
 		
-		public UnaryProduction(ContextFreeGrammar.UnaryProduction production) {
+		public AuxProduction(ContextFreeGrammar.AuxProduction production) {
 			this.target = production.target;
 			this.input = production.input;
+			this.auxInput = production.auxInput;
+			this.isAuxInputFirst = production.isAuxInputFirst;
 			this.isInputBackwards = production.isInputBackwards;
+			this.isAuxInputBackwards = production.isAuxInputBackwards;
 			this.ignoreFields = production.ignoreFields;
 			this.ignoreContexts = production.ignoreContexts;
 		}
 		
 		@Override
 		public String toString() {
-			return getSymbol(this.target) + " :- " + (this.isInputBackwards ? "_" : "") + getSymbol(this.input) + ".";
+			if(this.isAuxInputFirst) {
+				return getSymbol(this.target) + "[" + this.ignoreFields + "][" + this.ignoreContexts + "]" + " :- (" + (this.isAuxInputBackwards ? "_" : "") + getSymbol(this.auxInput) + "), " + (this.isInputBackwards ? "_" : "") + getSymbol(this.input) + ".";
+				
+			} else {
+				return getSymbol(this.target) + "[" + this.ignoreFields + "][" + this.ignoreContexts + "]" + " :- " + (this.isInputBackwards ? "_" : "") + getSymbol(this.input) + ", (" + (this.isAuxInputBackwards ? "_" : "") + getSymbol(this.auxInput) + ").";
+			}
 		}
 	}
 	
@@ -55,6 +88,9 @@ public class ContextFreeGrammarOpt {
 	public final BinaryProduction[][] binaryProductionsByFirstInput;
 	public final BinaryProduction[][] binaryProductionsBySecondInput;
 	public final BinaryProduction[][] binaryProductionsByTarget;
+	public final AuxProduction[][] auxProductionsByInput;
+	public final AuxProduction[][] auxProductionsByAuxInput;
+	public final AuxProduction[][] auxProductionsByTarget;
 	
 	private final Map<String,Integer> symbolInts = new HashMap<String,Integer>();
 	private final Map<Integer,String> symbols = new HashMap<Integer,String>();
@@ -104,6 +140,30 @@ public class ContextFreeGrammarOpt {
 			this.binaryProductionsByTarget[i] = new BinaryProduction[c.binaryProductionsByTarget.get(i).size()];
 			for(int j=0; j<c.binaryProductionsByTarget.get(i).size(); j++) {
 				this.binaryProductionsByTarget[i][j] = new BinaryProduction(c.binaryProductionsByTarget.get(i).get(j));
+			}
+		}
+
+		this.auxProductionsByInput = new AuxProduction[c.auxProductionsByInput.size()][];
+		for(int i=0; i<c.auxProductionsByInput.size(); i++) {
+			this.auxProductionsByInput[i] = new AuxProduction[c.auxProductionsByInput.get(i).size()];
+			for(int j=0; j<c.auxProductionsByInput.get(i).size(); j++) {
+				this.auxProductionsByInput[i][j] = new AuxProduction(c.auxProductionsByInput.get(i).get(j));
+			}
+		}
+
+		this.auxProductionsByAuxInput = new AuxProduction[c.auxProductionsByAuxInput.size()][];
+		for(int i=0; i<c.auxProductionsByAuxInput.size(); i++) {
+			this.auxProductionsByAuxInput[i] = new AuxProduction[c.auxProductionsByAuxInput.get(i).size()];
+			for(int j=0; j<c.auxProductionsByAuxInput.get(i).size(); j++) {
+				this.auxProductionsByAuxInput[i][j] = new AuxProduction(c.auxProductionsByAuxInput.get(i).get(j));
+			}
+		}
+
+		this.auxProductionsByTarget = new AuxProduction[c.auxProductionsByTarget.size()][];
+		for(int i=0; i<c.auxProductionsByTarget.size(); i++) {
+			this.auxProductionsByTarget[i] = new AuxProduction[c.auxProductionsByTarget.get(i).size()];
+			for(int j=0; j<c.auxProductionsByTarget.get(i).size(); j++) {
+				this.auxProductionsByTarget[i][j] = new AuxProduction(c.auxProductionsByTarget.get(i).get(j));
 			}
 		}
 	}
