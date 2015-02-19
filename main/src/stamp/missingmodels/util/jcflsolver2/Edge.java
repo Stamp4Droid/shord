@@ -30,6 +30,7 @@ public class Edge {
 		this.field = field;
 	}
 
+
 	public static final Iterable<Edge> EMPTY_EDGES = new Iterable<Edge>() {
 		private final Iterator<Edge> emptyIterator = new Iterator<Edge>() {
 			public boolean hasNext() { return false; }
@@ -92,8 +93,8 @@ public class Edge {
 		}
 
 		public void add(Edge edge) {
-			if(this.get(edge.sink, edge.field) != null) {
-				throw new RuntimeException("Adding duplicate edge!");
+			if(this.get(edge) != null) {
+				throw new RuntimeException();
 			}
 			double loadFactor = (double)++size/this.table.length;
 			if (loadFactor > MAX_LOAD_FACTOR) {
@@ -104,11 +105,11 @@ public class Edge {
 			this.table[index] = edge;
 		}
 
-		public Edge get(Vertex sink, int field) {
-			Edge e = this.table[sink.id%this.table.length];
+		public Edge get(Edge edge) {
+			Edge e = this.table[edge.sink.id%this.table.length];
 			while(e != null) {
 				// source should already be equal
-				if(e.sink.id == sink.id && e.field == field) {
+				if(e.sink.id == edge.sink.id && e.symbolInt == edge.symbolInt && e.field == edge.field) {
 					return e;
 				}
 				e = e.nextOutgoingEdge;

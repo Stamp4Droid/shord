@@ -61,10 +61,6 @@ public class ReachabilitySolver {
 	
 	private int count;
 	private long time;
-	
-	private void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
-		
-	}
 
 	private void addEdge(UnaryProduction unaryProduction, Edge input) {
 		// get edge base

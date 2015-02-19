@@ -26,9 +26,9 @@ public class Vertex {
 		return edges == null ? Edge.EMPTY_EDGES : edges;
 	}
 	
-	public Edge getCurrentOutgoingEdge(int symbolInt, Vertex sink, int field) {
-		EdgeSet edges = this.outgoingEdges[symbolInt];
-		return edges == null ? null : edges.get(sink, field);
+	public Edge getCurrentOutgoingEdge(Edge edge) {
+		EdgeSet edges = this.outgoingEdges[edge.symbolInt];
+		return edges == null ? null : edges.get(edge);
 	}
  
 	public void addOutgoingEdge(Edge edge) {
