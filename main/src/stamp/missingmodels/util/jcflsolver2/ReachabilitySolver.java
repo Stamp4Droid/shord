@@ -1,73 +1,23 @@
 package stamp.missingmodels.util.jcflsolver2;
 
-import shord.project.ClassicProject;
-import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.AuxProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.UnaryProduction;
-import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
-import stamp.missingmodels.util.cflsolver.relation.RelationManager;
-import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
 
 public class ReachabilitySolver {
-	public final ContextFreeGrammarOpt c;
-	public final Graph g;
+	private final Graph g;
 	
-	public ReachabilitySolver(ContextFreeGrammar c, RelationManager relations) {
-		this.c = new ContextFreeGrammarOpt(c);
-		this.g = new Graph(this.c);
-		for(int i=0; i<c.getNumLabels(); i++) {
-			String symbol = c.getSymbol(i);
-			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
-				readRelation(g, relation);
-			}
+	public ReachabilitySolver(Graph g) {
+		this.g = new Graph(g.c);
+		for(Edge edge : g) {
+			this.addEdgeHelper(this.g.getVertex(edge.source.name), this.g.getVertex(edge.sink.name), edge.symbolInt, edge.field, edge.weight, null, null);
 		}
-	}
-	
-	private void readRelation(Graph g, Relation relation) {
-		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relation.getName());
-		rel.load();
-		
-		Iterable<int[]> res = rel.getAryNIntTuples();
-		for(int[] tuple : res) {
-			if(!relation.filter(tuple)) {
-				return;
-			}
-		
-			String source = relation.getSource(tuple);
-			String sink = relation.getSink(tuple);
-			String symbol = relation.getSymbol();
-			Field field = relation.getField(tuple);
-			//Context context = relation.getContext(tuple);
-			int weight = relation.getWeight(tuple);
-
-			this.addEdgeHelper(source, sink, c.getSymbolInt(symbol), field.field, (short)weight);
-		}
-		
-		rel.close();
 	}
 
 	private BucketHeap worklist = new BucketHeap();
 	
 	private int count;
 	private long time;
-	
-	public void addEdgeHelper(String sourceName, String sinkName, int symbolInt, int field, short weight) {
-		this.addEdgeHelper(this.g.getVertex(sourceName), this.g.getVertex(sinkName), symbolInt, field, weight, null, null);
-		/*
-		Edge edge = new Edge(symbolInt, this.getVertex(sourceName), this.getVertex(sinkName), field);
-		edge.weight = weight;
-		
-		Edge oldEdge = this.getVertex(sourceName).getCurrentOutgoingEdge(edge);
-		if(oldEdge == null) {
-			this.getVertex(sourceName).addOutgoingEdge(edge);
-			this.getVertex(sinkName).addIncomingEdge(edge);
-		}
-		s.addEdgeToWorklist(edge, oldEdge);
-		*/
-	}
 	
 	public void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
 		if(this.g.addEdge(source, sink, symbolInt, field, weight, firstInput, secondInput, this.worklist)) {
@@ -121,18 +71,18 @@ public class ReachabilitySolver {
 		while(this.worklist.size() != 0) {
 			Edge edge = this.worklist.pop();
 			// <-, ->
-			for(UnaryProduction unaryProduction : this.c.unaryProductionsByInput[edge.symbolInt]) {
+			for(UnaryProduction unaryProduction : this.g.c.unaryProductionsByInput[edge.symbolInt]) {
 				this.addEdge(unaryProduction, edge);
 			}
 			// <- <-, <- ->, -> <-, -> ->
-			for(BinaryProduction binaryProduction : this.c.binaryProductionsByFirstInput[edge.symbolInt]) {
+			for(BinaryProduction binaryProduction : this.g.c.binaryProductionsByFirstInput[edge.symbolInt]) {
 				Vertex intermediate = binaryProduction.isFirstInputBackwards ? edge.source : edge.sink;
 				Iterable<Edge> secondEdges = binaryProduction.isSecondInputBackwards ? intermediate.getIncomingEdges(binaryProduction.secondInput) : intermediate.getOutgoingEdges(binaryProduction.secondInput);
 				for(Edge secondEdge : secondEdges) {
 					this.addEdge(binaryProduction, edge, secondEdge);
 				}
 			}
-			for(BinaryProduction binaryProduction : this.c.binaryProductionsBySecondInput[edge.symbolInt]) {
+			for(BinaryProduction binaryProduction : this.g.c.binaryProductionsBySecondInput[edge.symbolInt]) {
 				Vertex intermediate = binaryProduction.isSecondInputBackwards ? edge.sink : edge.source;
 				Iterable<Edge> firstEdges = binaryProduction.isFirstInputBackwards ? intermediate.getOutgoingEdges(binaryProduction.firstInput) : intermediate.getIncomingEdges(binaryProduction.firstInput);
 				for(Edge firstEdge : firstEdges) {
@@ -140,14 +90,14 @@ public class ReachabilitySolver {
 				}
 			}
 			// <- <-, <- ->, -> <-, -> ->
-			for(AuxProduction auxProduction : this.c.auxProductionsByInput[edge.symbolInt]) {
+			for(AuxProduction auxProduction : this.g.c.auxProductionsByInput[edge.symbolInt]) {
 				Vertex intermediate = (!auxProduction.isAuxInputFirst) ^ auxProduction.isInputBackwards ? edge.sink : edge.source;
 				Iterable<Edge> auxEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? intermediate.getOutgoingEdges(auxProduction.auxInput) : intermediate.getIncomingEdges(auxProduction.auxInput);
 				for(Edge auxEdge : auxEdges) {
 					this.addEdge(auxProduction, edge, auxEdge);
 				}
 			}
-			for(AuxProduction auxProduction : this.c.auxProductionsByAuxInput[edge.symbolInt]) {
+			for(AuxProduction auxProduction : this.g.c.auxProductionsByAuxInput[edge.symbolInt]) {
 				Vertex intermediate = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? edge.source : edge.sink;
 				Iterable<Edge> inputEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isInputBackwards ? intermediate.getIncomingEdges(auxProduction.input) : intermediate.getOutgoingEdges(auxProduction.input);
 				for(Edge inputEdge : inputEdges) {

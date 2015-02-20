@@ -5,13 +5,12 @@ import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingR
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
-import stamp.missingmodels.util.cflsolver.graph.Graph2;
 import stamp.missingmodels.util.cflsolver.relation.MissingRefRefRelationManager.MissingRefRefTaintRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.TaintWithContextRelationManager;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver2;
+import stamp.missingmodels.util.jcflsolver2.Graph;
 import stamp.missingmodels.util.jcflsolver2.ReachabilitySolver;
 import chord.project.Chord;
 
@@ -25,7 +24,7 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		new ReachabilitySolver(new MissingRefRefTaintGrammar(), new MissingRefRefTaintRelationManager()).process();
+		new ReachabilitySolver(new Graph(new ContextFreeGrammarOpt(new MissingRefRefTaintGrammar()), new MissingRefRefTaintRelationManager())).process();
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager missingRefRefRelations = new MissingRefRefTaintRelationManager();
 		RelationManager taintRelations = new TaintWithContextRelationManager();

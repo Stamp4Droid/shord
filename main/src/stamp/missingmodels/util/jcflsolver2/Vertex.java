@@ -4,15 +4,17 @@ import stamp.missingmodels.util.jcflsolver2.Edge.EdgeList;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeSet;
 
 public class Vertex {
-	final EdgeList[] incomingEdges;
-	final EdgeSet[] outgoingEdges;
-	final int id;
+	private final EdgeList[] incomingEdges;
+	private final EdgeSet[] outgoingEdges;
+	public final String name;
+	public final int id;
 
 	private static int numVertices = 0;
 
-	public Vertex(int numSymbols) {
+	public Vertex(String name, int numSymbols) {
 		this.incomingEdges = new EdgeList[numSymbols];
 		this.outgoingEdges = new EdgeSet[numSymbols];
+		this.name = name;
 		this.id = ++numVertices;
 	}
 	
