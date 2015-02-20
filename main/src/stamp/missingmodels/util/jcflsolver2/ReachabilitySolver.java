@@ -70,25 +70,8 @@ public class ReachabilitySolver {
 	}
 	
 	public void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
-		Edge edge = new Edge(symbolInt, source, sink, field);
-		edge.weight = weight;
-
-		edge.firstInput = firstInput;
-		edge.secondInput = secondInput;
-
-		Edge oldEdge = source.getCurrentOutgoingEdge(edge);
-		if(oldEdge == null) {
+		if(this.g.addEdge(source, sink, symbolInt, field, weight, firstInput, secondInput, this.worklist)) {
 			this.count++;
-			source.addOutgoingEdge(edge);
-			sink.addIncomingEdge(edge);
-			this.worklist.push(edge);
-		} else {
-			if(edge.weight < oldEdge.weight) {
-				oldEdge.weight = edge.weight;
-				oldEdge.firstInput = edge.firstInput;
-				oldEdge.secondInput = edge.secondInput;
-				this.worklist.update(oldEdge);
-			}
 		}
 	}
 
