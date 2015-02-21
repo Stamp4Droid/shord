@@ -47,8 +47,10 @@ public class ReachabilitySolver {
 			Edge newEdge = this.gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, edge.context, new EdgeInfo(edge.getInfo().weight));
 			this.worklist.add(newEdge, edge.getInfo().weight);
 		}
+		System.out.println("Initial edges: " + g.getEdges().size());
 	}
 	
+	private int i=0;
 	private void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, Field field, Context context, EdgeInfo newInfo) {
 		// make sure field and context are not null
 		if(field == null || context == null) {
@@ -61,6 +63,7 @@ public class ReachabilitySolver {
 		// add the edge if the edge is new or if the weight is smaller
 		if(curInfo == null || newInfo.weight < curInfo.weight) {
 			this.worklist.add(this.gb.addEdge(source, sink, symbolInt, field, context, newInfo), newInfo.weight);
+			i++;
 		}
 	}
 	
@@ -174,7 +177,8 @@ public class ReachabilitySolver {
 		}
 		long totalTime = System.currentTimeMillis() - time;
 		System.out.println("Done computing transitive closure in: " + totalTime + "ms");
-		System.out.println("Num productions: " + i);
+		System.out.println("Num productions: " + this.i);
+		System.out.println("Total num productions: " + i);
 		System.out.println("Rate: " + ((double)i/totalTime) + " edges/ms");
 	}
 	

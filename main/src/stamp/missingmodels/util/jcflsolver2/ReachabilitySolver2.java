@@ -1,17 +1,22 @@
 package stamp.missingmodels.util.jcflsolver2;
 
+import java.util.HashSet;
+
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.AuxProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.UnaryProduction;
 
-public class ReachabilitySolver {
-	private final Graph g;
+public class ReachabilitySolver2 {
+	private final Graph2 g;
 	
-	public ReachabilitySolver(Graph g) {
-		this.g = new Graph(g.c);
+	public ReachabilitySolver2(Graph2 g) {
+		this.g = new Graph2(g.c);
+		int i=0;
 		for(Edge edge : g) {
 			this.addEdgeHelper(this.g.getVertex(edge.source.name), this.g.getVertex(edge.sink.name), edge.symbolInt, edge.field, edge.weight, null, null);
+			i++;
 		}
+		System.out.println("Initial edges 2: " + i);
 	}
 
 	private BucketHeap worklist = new BucketHeap();
@@ -32,7 +37,7 @@ public class ReachabilitySolver {
 		int symbolInt = unaryProduction.target;
 		
 		// get field
-		int field = unaryProduction.ignoreFields ? -1 : Math.max(symbolInt, -1);
+		int field = unaryProduction.ignoreFields ? -1 : Math.max(input.field, -1);
 		
 		// add edge
 		this.addEdgeHelper(source, sink, symbolInt, field, input.weight, input, null);
@@ -64,7 +69,7 @@ public class ReachabilitySolver {
 		}
 	}
 	
-	public void process() {
+	public Graph2 process() {
 		System.out.println("Initial num of edges = " + this.worklist.size());
 		this.time = System.currentTimeMillis();
 		
@@ -110,5 +115,7 @@ public class ReachabilitySolver {
 		System.out.println("Total num of edges = " + count);
 		System.out.println("Time: " + totalTime);
 		System.out.println("Rate: " + ((double)count/totalTime) + " edges/ms");
+		
+		return this.g;
 	}
 }

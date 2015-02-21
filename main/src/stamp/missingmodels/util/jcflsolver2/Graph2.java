@@ -10,15 +10,15 @@ import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
 
-public class Graph implements Iterable<Edge> {
+public class Graph2 implements Iterable<Edge> {
 	public Map<String,Vertex> nodes = new HashMap<String,Vertex>();
 	public final ContextFreeGrammarOpt c;
 	
-	public Graph(ContextFreeGrammarOpt c) {
+	public Graph2(ContextFreeGrammarOpt c) {
 		this.c = c;
 	}
 
-	public Graph(ContextFreeGrammarOpt c, RelationManager relations) {
+	public Graph2(ContextFreeGrammarOpt c, RelationManager relations) {
 		this.c = c;
 		for(int i=0; i<c.getNumLabels(); i++) {
 			String symbol = c.getSymbol(i);
