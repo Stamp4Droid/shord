@@ -60,7 +60,7 @@ class StampCharBuffer extends CharBuffer
 		return this;
 	}
 	
-	public java.lang.CharSequence subSequence(int start, int end)
+	public java.nio.CharBuffer subSequence(int start, int end)
 	{
 		return this;
 	}
