@@ -3,11 +3,30 @@ package stamp.missingmodels.util.jcflsolver2;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
+
 public class Edge {
+	public static class EdgeStruct {
+		public final String sourceName;
+		public final String sinkName;
+		public final String symbol;
+		public final int field;
+		public final short weight;
+		
+		public EdgeStruct(String sourceName, String sinkName, String symbol, int field, short weight) {
+			this.sourceName = sourceName;
+			this.sinkName = sinkName;
+			this.symbol = symbol;
+			this.field = field;
+			this.weight = weight;
+		}
+	}
+	
 	public final Vertex source;
 	public final Vertex sink;
 	public final int symbolInt;
 	public final int field;
+	public final ContextFreeGrammarOpt c;
 	
 	public short weight;
 	public Edge firstInput;
@@ -19,17 +38,21 @@ public class Edge {
 	public Edge nextOutgoingEdge;
 	public Edge nextIncomingEdge;
 	
-	Edge(int symbolInt, Vertex source, Vertex sink) {
-		this(symbolInt, source, sink, -1);
+	Edge(ContextFreeGrammarOpt c, int symbolInt, Vertex source, Vertex sink) {
+		this(c, symbolInt, source, sink, -1);
 	}
 
-	public Edge(int symbolInt, Vertex source, Vertex sink, int field) {
+	public Edge(ContextFreeGrammarOpt c, int symbolInt, Vertex source, Vertex sink, int field) {
 		this.source = source;
 		this.sink = sink;
 		this.symbolInt = symbolInt;
 		this.field = field;
+		this.c = c;
 	}
-
+	
+	public EdgeStruct getStruct() {
+		return new EdgeStruct(this.source.name, this.sink.name, this.c.getSymbol(this.symbolInt), this.field, this.weight);
+	}
 
 	public static final Iterable<Edge> EMPTY_EDGES = new Iterable<Edge>() {
 		private final Iterator<Edge> emptyIterator = new Iterator<Edge>() {

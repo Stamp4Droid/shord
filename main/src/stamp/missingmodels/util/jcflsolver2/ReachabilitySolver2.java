@@ -1,25 +1,17 @@
 package stamp.missingmodels.util.jcflsolver2;
 
-import java.util.HashSet;
-
+import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.AuxProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.UnaryProduction;
+import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
+import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
+import stamp.missingmodels.util.jcflsolver2.Graph2.GraphBuilder;
+import stamp.missingmodels.util.jcflsolver2.Graph2.GraphTransformer;
 
-public class ReachabilitySolver2 {
-	private final Graph2 g;
-	
-	public ReachabilitySolver2(Graph2 g) {
-		this.g = new Graph2(g.c);
-		int i=0;
-		for(Edge edge : g) {
-			this.addEdgeHelper(this.g.getVertex(edge.source.name), this.g.getVertex(edge.sink.name), edge.symbolInt, edge.field, edge.weight, null, null);
-			i++;
-		}
-		System.out.println("Initial edges 2: " + i);
-	}
-
-	private BucketHeap worklist = new BucketHeap();
+public class ReachabilitySolver2 implements GraphTransformer {
+	private GraphBuilder g;
+	private BucketHeap worklist;
 	
 	private int count;
 	private long time;
@@ -37,7 +29,7 @@ public class ReachabilitySolver2 {
 		int symbolInt = unaryProduction.target;
 		
 		// get field
-		int field = unaryProduction.ignoreFields ? -1 : Math.max(input.field, -1);
+		int field = unaryProduction.ignoreFields ? -1 : input.field;
 		
 		// add edge
 		this.addEdgeHelper(source, sink, symbolInt, field, input.weight, input, null);
@@ -50,9 +42,12 @@ public class ReachabilitySolver2 {
 		int symbolInt = binaryProduction.target;
 		
 		// add edge
-		if((firstInput.field == -1) || (secondInput.field == -1) || (firstInput.field == secondInput.field)) {
-			int field = binaryProduction.ignoreFields ? -1 : Math.max(firstInput.field, secondInput.field);
-			this.addEdgeHelper(source, sink, symbolInt, field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);
+		if(binaryProduction.ignoreFields || (firstInput.field == secondInput.field)) {
+			this.addEdgeHelper(source, sink, symbolInt, -1, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);			
+		} else if(firstInput.field == -1) {
+			this.addEdgeHelper(source, sink, symbolInt, secondInput.field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);						
+		} else if(secondInput.field == -1) {
+			this.addEdgeHelper(source, sink, symbolInt, firstInput.field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);									
 		}
 	}
 
@@ -69,25 +64,34 @@ public class ReachabilitySolver2 {
 		}
 	}
 	
-	public Graph2 process() {
+	public Graph2 transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges) {
+		this.g = new GraphBuilder(c);
+		this.worklist = new BucketHeap();
+		this.time = System.currentTimeMillis();
+		this.count = 0;
+		
+		for(EdgeStruct edge : edges) {
+			this.addEdgeHelper(this.g.getVertex(edge.sourceName), this.g.getVertex(edge.sinkName), c.getSymbolInt(edge.symbol), edge.field, edge.weight, null, null);
+		}
+		
 		System.out.println("Initial num of edges = " + this.worklist.size());
 		this.time = System.currentTimeMillis();
 		
 		while(this.worklist.size() != 0) {
 			Edge edge = this.worklist.pop();
 			// <-, ->
-			for(UnaryProduction unaryProduction : this.g.c.unaryProductionsByInput[edge.symbolInt]) {
+			for(UnaryProduction unaryProduction : c.unaryProductionsByInput[edge.symbolInt]) {
 				this.addEdge(unaryProduction, edge);
 			}
 			// <- <-, <- ->, -> <-, -> ->
-			for(BinaryProduction binaryProduction : this.g.c.binaryProductionsByFirstInput[edge.symbolInt]) {
+			for(BinaryProduction binaryProduction : c.binaryProductionsByFirstInput[edge.symbolInt]) {
 				Vertex intermediate = binaryProduction.isFirstInputBackwards ? edge.source : edge.sink;
 				Iterable<Edge> secondEdges = binaryProduction.isSecondInputBackwards ? intermediate.getIncomingEdges(binaryProduction.secondInput) : intermediate.getOutgoingEdges(binaryProduction.secondInput);
 				for(Edge secondEdge : secondEdges) {
 					this.addEdge(binaryProduction, edge, secondEdge);
 				}
 			}
-			for(BinaryProduction binaryProduction : this.g.c.binaryProductionsBySecondInput[edge.symbolInt]) {
+			for(BinaryProduction binaryProduction : c.binaryProductionsBySecondInput[edge.symbolInt]) {
 				Vertex intermediate = binaryProduction.isSecondInputBackwards ? edge.sink : edge.source;
 				Iterable<Edge> firstEdges = binaryProduction.isFirstInputBackwards ? intermediate.getOutgoingEdges(binaryProduction.firstInput) : intermediate.getIncomingEdges(binaryProduction.firstInput);
 				for(Edge firstEdge : firstEdges) {
@@ -95,14 +99,14 @@ public class ReachabilitySolver2 {
 				}
 			}
 			// <- <-, <- ->, -> <-, -> ->
-			for(AuxProduction auxProduction : this.g.c.auxProductionsByInput[edge.symbolInt]) {
+			for(AuxProduction auxProduction : c.auxProductionsByInput[edge.symbolInt]) {
 				Vertex intermediate = (!auxProduction.isAuxInputFirst) ^ auxProduction.isInputBackwards ? edge.sink : edge.source;
 				Iterable<Edge> auxEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? intermediate.getOutgoingEdges(auxProduction.auxInput) : intermediate.getIncomingEdges(auxProduction.auxInput);
 				for(Edge auxEdge : auxEdges) {
 					this.addEdge(auxProduction, edge, auxEdge);
 				}
 			}
-			for(AuxProduction auxProduction : this.g.c.auxProductionsByAuxInput[edge.symbolInt]) {
+			for(AuxProduction auxProduction : c.auxProductionsByAuxInput[edge.symbolInt]) {
 				Vertex intermediate = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? edge.source : edge.sink;
 				Iterable<Edge> inputEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isInputBackwards ? intermediate.getIncomingEdges(auxProduction.input) : intermediate.getOutgoingEdges(auxProduction.input);
 				for(Edge inputEdge : inputEdges) {
@@ -116,6 +120,6 @@ public class ReachabilitySolver2 {
 		System.out.println("Time: " + totalTime);
 		System.out.println("Rate: " + ((double)count/totalTime) + " edges/ms");
 		
-		return this.g;
+		return this.g.getGraph();
 	}
 }

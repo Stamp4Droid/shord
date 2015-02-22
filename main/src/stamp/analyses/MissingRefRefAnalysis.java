@@ -34,7 +34,7 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		Graph2 gbar = new ReachabilitySolver2(new Graph2(new ContextFreeGrammarOpt(new MissingRefRefTaintGrammar()), new MissingRefRefTaintRelationManager())).process();
+		Graph2 gbar = new Graph2(new ContextFreeGrammarOpt(new MissingRefRefTaintGrammar()), new MissingRefRefTaintRelationManager()).transform(new ReachabilitySolver2());
 				
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager missingRefRefRelations = new MissingRefRefTaintRelationManager();
@@ -58,8 +58,8 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 		}
 
 		Set<EdgeStruct> edgeStructs2 = new HashSet<EdgeStruct>();
-		for(Edge edge : gbar) {
-			edgeStructs2.add(new EdgeStruct(edge.source.name, edge.sink.name, gbar.c.getSymbol(edge.symbolInt), new Field(edge.field), Context.DEFAULT_CONTEXT));
+		for(Edge.EdgeStruct edge : gbar.getEdges()) {
+			edgeStructs2.add(new EdgeStruct(edge.sourceName, edge.sinkName, edge.symbol, new Field(edge.field), Context.DEFAULT_CONTEXT));
 		}
 		
 		System.out.println("Common:");

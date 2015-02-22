@@ -9,10 +9,51 @@ import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
+import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
 
-public class Graph2 implements Iterable<Edge> {
-	public Map<String,Vertex> nodes = new HashMap<String,Vertex>();
-	public final ContextFreeGrammarOpt c;
+public class Graph2 {
+	public static class GraphBuilder {
+		private final Graph2 graph;
+		
+		public GraphBuilder(ContextFreeGrammarOpt c) {
+			this.graph = new Graph2(c);
+		}
+		
+		public Graph2 getGraph() {
+			return this.graph;
+		}
+		
+		public boolean addInputEdge(String source, String sink, String symbol, int field, short weight) {
+			return this.graph.addInputEdge(source, sink, symbol, field, weight);
+		}
+		
+		public boolean addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
+			return this.graph.addEdge(source, sink, symbolInt, field, weight, firstInput, secondInput, worklist);
+		}
+		
+		public Vertex getVertex(String name) {
+			return this.graph.getVertex(name);
+		}
+	}
+	
+	public interface GraphTransformer {
+		public Graph2 transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges);
+	}
+	
+	public static abstract class EdgeTransformer implements GraphTransformer {
+		public abstract void process(GraphBuilder gb, EdgeStruct edgeStruct);
+		
+		public Graph2 transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges) {
+			GraphBuilder gb = new GraphBuilder(c);
+			for(EdgeStruct edge : edges) {
+				this.process(gb, edge);
+			}
+			return gb.getGraph();
+		}
+	}
+	
+	private final Map<String,Vertex> nodes = new HashMap<String,Vertex>();
+	private final ContextFreeGrammarOpt c;
 	
 	public Graph2(ContextFreeGrammarOpt c) {
 		this.c = c;
@@ -26,6 +67,18 @@ public class Graph2 implements Iterable<Edge> {
 				this.readRelation(relation);
 			}
 		}
+	}
+	
+	public Graph2 transform(GraphTransformer transformer) {
+		return transformer.transform(this.c, this.getEdges());
+	}
+	
+	public Iterable<EdgeStruct> getEdges() {
+		return new EdgeIterator();
+	}
+	
+	public ContextFreeGrammarOpt getContextFreeGrammarOpt() {
+		return this.c;
 	}
 	
 	private void readRelation(Relation relation) {
@@ -60,22 +113,12 @@ public class Graph2 implements Iterable<Edge> {
 		return vertex;
 	}
 	
-	public boolean addInputEdge(String source, String sink, String symbol, int field, short weight) {
+	private boolean addInputEdge(String source, String sink, String symbol, int field, short weight) {
 		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbolInt(symbol), field, (short)weight, null, null, null);		
-		/*
-		Edge edge = new Edge(symbolInt, this.getVertex(sourceName), this.getVertex(sinkName), field);
-		edge.weight = weight;
-		
-		Edge oldEdge = this.getVertex(sourceName).getCurrentOutgoingEdge(edge);
-		if(oldEdge == null) {
-			this.getVertex(sourceName).addOutgoingEdge(edge);
-			this.getVertex(sinkName).addIncomingEdge(edge);
-		}
-		*/
 	}
 	
-	public boolean addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
-		Edge edge = new Edge(symbolInt, source, sink, field);
+	private boolean addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
+		Edge edge = new Edge(this.c, symbolInt, source, sink, field);
 		edge.weight = weight;
 
 		edge.firstInput = firstInput;
@@ -102,7 +145,7 @@ public class Graph2 implements Iterable<Edge> {
 		}
 	}
 	
-	private class EdgeIterator implements Iterator<Edge> {
+	private class EdgeIterator implements Iterator<EdgeStruct>, Iterable<EdgeStruct> {
 		private Vertex[] vertices = nodes.values().toArray(new Vertex[]{});
 		private int curVertex = 0;
 		private int curSymbolInt = 0;
@@ -131,19 +174,19 @@ public class Graph2 implements Iterable<Edge> {
 			}
 		}
 		
-		public Edge next() {
+		public EdgeStruct next() {
 			Edge result = this.current.next();
 			this.increment();
-			return result;
+			return result.getStruct();
 		}
 
 		public void remove() {
 			throw new RuntimeException("Remove is not implemented for EdgeSet!");
 		}
-	}
 
-	@Override
-	public Iterator<Edge> iterator() {
-		return new EdgeIterator();
+		@Override
+		public Iterator<EdgeStruct> iterator() {
+			return this;
+		}
 	}
 }
