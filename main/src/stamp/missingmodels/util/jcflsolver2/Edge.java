@@ -1,8 +1,10 @@
 package stamp.missingmodels.util.jcflsolver2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import stamp.missingmodels.util.Util.Pair;
@@ -10,6 +12,29 @@ import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 
 public class Edge {
+	public static class Field {
+		public static final Field DEFAULT_FIELD = new Field(-1);
+		
+		private static final Map<Integer,Field> fields = new HashMap<Integer,Field>();
+		static {
+			fields.put(-1, DEFAULT_FIELD);
+		}
+		
+		public static Field getField(int field) {
+			Field fieldData = fields.get(field);
+			if(fieldData == null) {
+				fieldData = new Field(field);
+				fields.put(field, fieldData);
+			}
+			return fieldData;
+		}
+		
+		public final int field;
+		private Field(int field) {
+			this.field = field;
+		}
+	}
+	
 	public static class EdgeStruct {
 		public final String sourceName;
 		public final String sinkName;
@@ -44,7 +69,7 @@ public class Edge {
 	public final Vertex source;
 	public final Vertex sink;
 	public final Symbol symbol;
-	public final int field;
+	public final Field field;
 	
 	public short weight;
 	public Edge firstInput;
@@ -57,10 +82,10 @@ public class Edge {
 	public Edge nextIncomingEdge;
 	
 	Edge(Symbol symbol, Vertex source, Vertex sink) {
-		this(symbol, source, sink, -1);
+		this(symbol, source, sink, Field.DEFAULT_FIELD);
 	}
 
-	public Edge(Symbol symbol, Vertex source, Vertex sink, int field) {
+	public Edge(Symbol symbol, Vertex source, Vertex sink, Field field) {
 		this.source = source;
 		this.sink = sink;
 		this.symbol = symbol;
@@ -68,7 +93,7 @@ public class Edge {
 	}
 	
 	public EdgeStruct getStruct() {
-		return new EdgeStruct(this.source.name, this.sink.name, this.symbol.symbol, this.field, this.weight);
+		return new EdgeStruct(this.source.name, this.sink.name, this.symbol.symbol, this.field.field, this.weight);
 	}
 	
 	private void getPathHelper(List<Pair<Edge,Boolean>> path, boolean isForward) {
@@ -220,7 +245,7 @@ public class Edge {
 			Edge e = this.table[edge.sink.id%this.table.length];
 			while(e != null) {
 				// source should already be equal
-				if(e.sink.id == edge.sink.id && e.symbol.id == edge.symbol.id && e.field == edge.field) {
+				if(e.sink.id == edge.sink.id && e.symbol.id == edge.symbol.id && e.field.field == edge.field.field) {
 					return e;
 				}
 				e = e.nextOutgoingEdge;

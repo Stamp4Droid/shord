@@ -7,6 +7,7 @@ import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGramma
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
+import stamp.missingmodels.util.jcflsolver2.Edge.Field;
 import stamp.missingmodels.util.jcflsolver2.Graph2.GraphBuilder;
 import stamp.missingmodels.util.jcflsolver2.Graph2.GraphTransformer;
 
@@ -19,7 +20,7 @@ public class ReachabilitySolver2 implements GraphTransformer {
 	
 	private TypeFilter filter;
 	
-	private void addEdgeHelper(Vertex source, Vertex sink, Symbol symbol, int field, short weight, Edge firstInput, Edge secondInput) {
+	private void addEdgeHelper(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput) {
 		if(this.g.addEdge(source, sink, symbol, field, weight, firstInput, secondInput, this.worklist)) {
 			this.count++;
 		}
@@ -32,21 +33,21 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		Symbol symbol = unaryProduction.target;
 		
 		// get field
-		int field = unaryProduction.ignoreFields ? -1 : input.field;
+		Field field = unaryProduction.ignoreFields ? Field.DEFAULT_FIELD : input.field;
 		
 		// add edge
 		this.addEdgeHelper(source, sink, symbol, field, input.weight, input, null);
 	}
 	
-	private static int produceField(boolean ignoreFields, int firstField, int secondField) {
-		if(ignoreFields || firstField == secondField) {
-			return -1;
-		} else if(firstField == -1) {
+	private static Field produceField(boolean ignoreFields, Field firstField, Field secondField) {
+		if(ignoreFields || firstField.field == secondField.field) {
+			return Field.DEFAULT_FIELD;
+		} else if(firstField.field == Field.DEFAULT_FIELD.field) {
 			return secondField;
-		} else if(secondField == -1) {
+		} else if(secondField.field == Field.DEFAULT_FIELD.field) {
 			return firstField;
 		} else {
-			return -2;
+			return null;
 		}
 	}
 
@@ -57,10 +58,10 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		Symbol symbol = binaryProduction.target;
 		
 		// get field
-		int field = produceField(binaryProduction.ignoreFields, firstInput.field, secondInput.field);
+		Field field = produceField(binaryProduction.ignoreFields, firstInput.field, secondInput.field);
 		
 		// add edge
-		if(field != -2) {
+		if(field != null) {
 			this.addEdgeHelper(source, sink, symbol, field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);						
 		}
 	}
@@ -72,10 +73,10 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		Symbol symbol = auxProduction.target;
 		
 		// get field
-		int field = produceField(auxProduction.ignoreFields, input.field, auxInput.field);
+		Field field = produceField(auxProduction.ignoreFields, input.field, auxInput.field);
 		
 		// add edge
-		if(field != -2) {
+		if(field != null) {
 			this.addEdgeHelper(source, sink, symbol, field, (short)(input.weight + auxInput.weight), input, auxInput);
 		}
 	}
@@ -87,7 +88,7 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		this.count = 0;
 		
 		for(EdgeStruct edge : edges) {
-			this.addEdgeHelper(this.g.getVertex(edge.sourceName), this.g.getVertex(edge.sinkName), c.getSymbol(edge.symbol), edge.field, edge.weight, null, null);
+			this.addEdgeHelper(this.g.getVertex(edge.sourceName), this.g.getVertex(edge.sinkName), c.getSymbol(edge.symbol), Field.getField(edge.field), edge.weight, null, null);
 		}
 		
 		System.out.println("Initial num of edges = " + this.worklist.size());

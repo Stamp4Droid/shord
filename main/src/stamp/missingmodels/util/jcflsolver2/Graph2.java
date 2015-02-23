@@ -10,6 +10,7 @@ import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
+import stamp.missingmodels.util.jcflsolver2.Edge.Field;
 import stamp.missingmodels.util.jcflsolver2.RelationManager.Relation;
 
 public class Graph2 {
@@ -24,11 +25,11 @@ public class Graph2 {
 			return this.graph;
 		}
 		
-		public boolean addEdge(String source, String sink, String symbol, int field, short weight) {
+		public boolean addEdge(String source, String sink, String symbol, Field field, short weight) {
 			return this.graph.addEdge(source, sink, symbol, field, weight);
 		}
 		
-		public boolean addEdge(Vertex source, Vertex sink, Symbol symbol, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
+		public boolean addEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
 			return this.graph.addEdge(source, sink, symbol, field, weight, firstInput, secondInput, worklist);
 		}
 		
@@ -126,7 +127,7 @@ public class Graph2 {
 		@Override
 		public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
 			if(this.filter.filter(edgeStruct)) {
-				gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.weight);
+				gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, Field.getField(edgeStruct.field), edgeStruct.weight);
 			}
 		}
 	}
@@ -161,7 +162,7 @@ public class Graph2 {
 			String source = relation.getSource(tuple);
 			String sink = relation.getSink(tuple);
 			String symbol = relation.getSymbol();
-			int field = relation.getField(tuple).field;
+			Field field = Field.getField(relation.getField(tuple).field);
 			//Context context = relation.getContext(tuple);
 			short weight = (short)relation.getWeight(tuple);
 			
@@ -180,11 +181,11 @@ public class Graph2 {
 		return vertex;
 	}
 	
-	private boolean addEdge(String source, String sink, String symbol, int field, short weight) {
+	private boolean addEdge(String source, String sink, String symbol, Field field, short weight) {
 		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbol(symbol), field, (short)weight, null, null, null);		
 	}
 	
-	private boolean addEdge(Vertex source, Vertex sink, Symbol symbol, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
+	private boolean addEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
 		/*
 		if(!this.t.filter(source.name, sink.name, symbolInt)) {
 			return false;
