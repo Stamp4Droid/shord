@@ -6,16 +6,25 @@ import java.util.List;
 import java.util.Map;
 
 public class ContextFreeGrammar {
-	public final class BinaryProduction {
-		public final int target;
-		public final int firstInput;
-		public final int secondInput;
+	public static final class Symbol {
+		public final String symbol;
+		public final int id;
+		public Symbol(String symbol, int id) {
+			this.symbol = symbol;
+			this.id = id;
+		}
+	}
+	
+	public static final class BinaryProduction {
+		public final Symbol target;
+		public final Symbol firstInput;
+		public final Symbol secondInput;
 		public final boolean isFirstInputBackwards;
 		public final boolean isSecondInputBackwards;
 		public final boolean ignoreFields;
 		public final boolean ignoreContexts;
 
-		public BinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+		public BinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
 			this.target = target;
 			this.firstInput = firstInput;
 			this.secondInput = secondInput;
@@ -25,31 +34,31 @@ public class ContextFreeGrammar {
 			this.ignoreContexts = ignoreContexts;
 		}
 
-		public BinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards) {
+		public BinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards) {
 			this(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, false, false);
 		}
 
-		public BinaryProduction(int target, int firstInput, int secondInput) {
+		public BinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput) {
 			this(target, firstInput, secondInput, false, false, false, false);
 		}
 
 		@Override
 		public String toString() {
-			return getSymbol(this.target) + "[" + this.ignoreFields + "][" + this.ignoreContexts + "]" + " :- " + (this.isFirstInputBackwards ? "_" : "") + getSymbol(this.firstInput) + ", " + (this.isSecondInputBackwards ? "_" : "") + getSymbol(this.secondInput) + ".";
+			return this.target.symbol + "[" + this.ignoreFields + "][" + this.ignoreContexts + "]" + " :- " + (this.isFirstInputBackwards ? "_" : "") + this.firstInput.symbol + ", " + (this.isSecondInputBackwards ? "_" : "") + this.secondInput.symbol + ".";
 		}
 	}
 
-	public final class AuxProduction {
-		public final int target;
-		public final int input;
-		public final int auxInput;
+	public static final class AuxProduction {
+		public final Symbol target;
+		public final Symbol input;
+		public final Symbol auxInput;
 		public final boolean isAuxInputFirst;
 		public final boolean isInputBackwards;
 		public final boolean isAuxInputBackwards;
 		public final boolean ignoreFields;
 		public final boolean ignoreContexts;
 
-		public AuxProduction(int target, int input, int auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+		public AuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
 			this.target = target;
 			this.input = input;
 			this.auxInput = auxInput;
@@ -60,33 +69,33 @@ public class ContextFreeGrammar {
 			this.ignoreContexts = ignoreContexts;
 		}
 
-		public AuxProduction(int target, int input, int auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards) {
+		public AuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards) {
 			this(target, input, auxInput, isAuxInputFirst, isInputBackwards, isAuxInputBackwards, false, false);
 		}
 
-		public AuxProduction(int target, int input, int auxInput, boolean isAuxInputFirst) {
+		public AuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst) {
 			this(target, input, auxInput, isAuxInputFirst, false, false, false, false);
 		}
 
 		@Override
 		public String toString() {
 			if(this.isAuxInputFirst) {
-				return getSymbol(this.target) + "[" + this.ignoreFields + "][" + this.ignoreContexts + "]" + " :- (" + (this.isAuxInputBackwards ? "_" : "") + getSymbol(this.auxInput) + "), " + (this.isInputBackwards ? "_" : "") + getSymbol(this.input) + ".";
+				return this.target.symbol + "[" + this.ignoreFields + "][" + this.ignoreContexts + "]" + " :- (" + (this.isAuxInputBackwards ? "_" : "") + this.auxInput.symbol + "), " + (this.isInputBackwards ? "_" : "") + this.input.symbol + ".";
 
 			} else {
-				return getSymbol(this.target) + "[" + this.ignoreFields + "][" + this.ignoreContexts + "]" + " :- " + (this.isInputBackwards ? "_" : "") + getSymbol(this.input) + ", (" + (this.isAuxInputBackwards ? "_" : "") + getSymbol(this.auxInput) + ").";
+				return this.target.symbol + "[" + this.ignoreFields + "][" + this.ignoreContexts + "]" + " :- " + (this.isInputBackwards ? "_" : "") + this.input.symbol + ", (" + (this.isAuxInputBackwards ? "_" : "") + this.auxInput.symbol + ").";
 			}
 		}
 	}
 
 	public final class UnaryProduction {
-		public final int target;
-		public final int input;
+		public final Symbol target;
+		public final Symbol input;
 		public final boolean isInputBackwards;
 		public final boolean ignoreFields;
 		public final boolean ignoreContexts;
 
-		public UnaryProduction(int target, int input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+		public UnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
 			this.target = target;
 			this.input = input;
 			this.isInputBackwards = isInputBackwards;
@@ -94,25 +103,25 @@ public class ContextFreeGrammar {
 			this.ignoreContexts = ignoreContexts;
 		}
 
-		public UnaryProduction(int target, int input, boolean isInputBackwards, boolean ignoreFields) {
+		public UnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields) {
 			this(target, input, isInputBackwards, ignoreFields, false);
 		}
 
-		public UnaryProduction(int target, int input, boolean isInputBackwards) {
+		public UnaryProduction(Symbol target, Symbol input, boolean isInputBackwards) {
 			this(target, input, isInputBackwards, false, false);
 		}
 
-		public UnaryProduction(int target, int input) {
+		public UnaryProduction(Symbol target, Symbol input) {
 			this(target, input, false, false, false);
 		}
 
 		@Override
 		public String toString() {
-			return getSymbol(this.target) + " :- " + (this.isInputBackwards ? "_" : "") + getSymbol(this.input) + ".";
+			return this.target.symbol + " :- " + (this.isInputBackwards ? "_" : "") + this.input.symbol + ".";
 		}
 	}
 
-	public final class ContextFreeGrammarOpt {
+	public static final class ContextFreeGrammarOpt {
 		public final UnaryProduction[][] unaryProductionsByInput;
 		public final UnaryProduction[][] unaryProductionsByTarget;
 		public final BinaryProduction[][] binaryProductionsByFirstInput;
@@ -122,14 +131,14 @@ public class ContextFreeGrammar {
 		public final AuxProduction[][] auxProductionsByAuxInput;
 		public final AuxProduction[][] auxProductionsByTarget;
 	
-		private final Map<String,Integer> symbolInts = new HashMap<String,Integer>();
-		private final Map<Integer,String> symbols = new HashMap<Integer,String>();
+		private final Map<String,Symbol> symbols = new HashMap<String,Symbol>();
+		private final Map<Integer,Symbol> symbolsById = new HashMap<Integer,Symbol>();
 		private int numLabels = 0;
 	
 		private ContextFreeGrammarOpt(ContextFreeGrammar c) {
 			for(int i=0; i<c.getNumLabels(); i++) {
-				this.symbols.put(i, c.getSymbol(i));
-				this.symbolInts.put(c.getSymbol(i), i);
+				this.symbols.put(c.getSymbol(i).symbol, c.getSymbol(i));
+				this.symbolsById.put(i, c.getSymbol(i));
 			}
 			this.numLabels = c.getNumLabels();
 	
@@ -202,12 +211,12 @@ public class ContextFreeGrammar {
 			return this.numLabels;
 		}
 	
-		public int getSymbolInt(String symbol) {
-			return this.symbolInts.get(symbol);
+		public Symbol getSymbol(String symbol) {
+			return this.symbols.get(symbol);
 		}
 	
-		public String getSymbol(int label) {
-			return this.symbols.get(label);
+		public Symbol getSymbol(int id) {
+			return this.symbolsById.get(id);
 		}
 	
 		@Override
@@ -236,8 +245,8 @@ public class ContextFreeGrammar {
 	public final List<List<AuxProduction>> auxProductionsByAuxInput;
 	public final List<List<AuxProduction>> auxProductionsByTarget;
 
-	private final Map<String,Integer> symbolInts = new HashMap<String,Integer>();
-	private final Map<Integer,String> symbols = new HashMap<Integer,String>();
+	private final Map<String,Symbol> symbols = new HashMap<String,Symbol>();
+	private final Map<Integer,Symbol> symbolsById = new HashMap<Integer,Symbol>();
 	private int curLabel = 0;
 
 	public ContextFreeGrammar() {
@@ -259,9 +268,9 @@ public class ContextFreeGrammar {
 		return this.curLabel;
 	}
 
-	public int getSymbolInt(String symbol) {
-		Integer symbolInt = this.symbolInts.get(symbol);
-		if(symbolInt == null) {
+	public Symbol getSymbol(String symbol) {
+		Symbol result = this.symbols.get(symbol);
+		if(result == null) {
 			this.unaryProductionsByInput.add(new ArrayList<UnaryProduction>());
 			this.unaryProductionsByTarget.add(new ArrayList<UnaryProduction>());
 			this.binaryProductionsByFirstInput.add(new ArrayList<BinaryProduction>());
@@ -270,51 +279,51 @@ public class ContextFreeGrammar {
 			this.auxProductionsByInput.add(new ArrayList<AuxProduction>());
 			this.auxProductionsByAuxInput.add(new ArrayList<AuxProduction>());
 			this.auxProductionsByTarget.add(new ArrayList<AuxProduction>());
-			symbolInt = this.curLabel++;
-			this.symbolInts.put(symbol, symbolInt);
-			this.symbols.put(symbolInt, symbol);
+			result = new Symbol(symbol, this.curLabel++);
+			this.symbols.put(symbol, result);
+			this.symbolsById.put(result.id, result);
 		}
-		return symbolInt;
+		return result;
 	}
 
-	public String getSymbol(int label) {
-		return this.symbols.get(label);
+	public Symbol getSymbol(int symbolInt) {
+		return this.symbolsById.get(symbolInt);
 	}
 
 	public void addUnaryProduction(String target, String input) {
-		this.addUnaryProduction(this.getSymbolInt(target), this.getSymbolInt(input), false, false, false);
+		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), false, false, false);
 	}
 
 	public void addUnaryProduction(String target, String input, boolean isInputBackwards) {
-		this.addUnaryProduction(this.getSymbolInt(target), this.getSymbolInt(input), isInputBackwards, false, false);
+		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, false, false);
 	}
 
 	public void addUnaryProduction(String target, String input, boolean isInputBackwards, boolean ignoreFields) {
-		this.addUnaryProduction(this.getSymbolInt(target), this.getSymbolInt(input), isInputBackwards, ignoreFields, false);
+		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, ignoreFields, false);
 	}
 
 	public void addUnaryProduction(String target, String input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		this.addUnaryProduction(this.getSymbolInt(target), this.getSymbolInt(input), isInputBackwards, ignoreFields, ignoreContexts);
+		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, ignoreFields, ignoreContexts);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput) {
-		this.addBinaryProduction(this.getSymbolInt(target), this.getSymbolInt(firstInput), this.getSymbolInt(secondInput), false, false, false, false);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), false, false, false, false);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean ignoreFields) {
-		this.addBinaryProduction(this.getSymbolInt(target), this.getSymbolInt(firstInput), this.getSymbolInt(secondInput), false, false, ignoreFields, false);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), false, false, ignoreFields, false);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards) {
-		this.addBinaryProduction(this.getSymbolInt(target), this.getSymbolInt(firstInput), this.getSymbolInt(secondInput), isFirstInputBackwards, isSecondInputBackwards, false, false);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, false, false);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields) {
-		this.addBinaryProduction(this.getSymbolInt(target), this.getSymbolInt(firstInput), this.getSymbolInt(secondInput), isFirstInputBackwards, isSecondInputBackwards, ignoreFields, false);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, ignoreFields, false);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		this.addBinaryProduction(this.getSymbolInt(target), this.getSymbolInt(firstInput), this.getSymbolInt(secondInput), isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts);
 	}
 
 	public void addProduction(String target, String[] inputs) {
@@ -354,52 +363,52 @@ public class ContextFreeGrammar {
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst) {
-		this.addAuxProduction(this.getSymbolInt(target), this.getSymbolInt(input), this.getSymbolInt(auxInput), isAuxInputFirst, false, false, false, false);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, false, false, false, false);
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst, boolean ignoreFields) {
-		this.addAuxProduction(this.getSymbolInt(target), this.getSymbolInt(input), this.getSymbolInt(auxInput), isAuxInputFirst, false, false, ignoreFields, false);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, false, false, ignoreFields, false);
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards) {
-		this.addAuxProduction(this.getSymbolInt(target), this.getSymbolInt(input), this.getSymbolInt(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, false, false);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, false, false);
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields) {
-		this.addAuxProduction(this.getSymbolInt(target), this.getSymbolInt(input), this.getSymbolInt(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, false);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, false);
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		this.addAuxProduction(this.getSymbolInt(target), this.getSymbolInt(input), this.getSymbolInt(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts);
 	}
 
-	public void addUnaryProduction(int target, int input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		if(target >= this.curLabel || input >= this.curLabel) {
-			throw new RuntimeException("label out of range");
+	public void addUnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+		if(target.id >= this.curLabel || input.id >= this.curLabel) {
+			throw new RuntimeException("symbol out of range");
 		}
 		UnaryProduction unaryProduction = new UnaryProduction(target, input, isInputBackwards, ignoreFields);
-		this.unaryProductionsByInput.get(input).add(unaryProduction);
-		this.unaryProductionsByTarget.get(target).add(unaryProduction);
+		this.unaryProductionsByInput.get(input.id).add(unaryProduction);
+		this.unaryProductionsByTarget.get(target.id).add(unaryProduction);
 	}
 
-	public void addBinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		if(target >= this.curLabel || firstInput >= this.curLabel || secondInput >= this.curLabel) {
-			throw new RuntimeException("label out of range");
+	public void addBinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+		if(target.id >= this.curLabel || firstInput.id >= this.curLabel || secondInput.id >= this.curLabel) {
+			throw new RuntimeException("symbol out of range");
 		}
 		BinaryProduction binaryProduction = new BinaryProduction(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts);
-		this.binaryProductionsByFirstInput.get(firstInput).add(binaryProduction);
-		this.binaryProductionsBySecondInput.get(secondInput).add(binaryProduction);
-		this.binaryProductionsByTarget.get(target).add(binaryProduction);
+		this.binaryProductionsByFirstInput.get(firstInput.id).add(binaryProduction);
+		this.binaryProductionsBySecondInput.get(secondInput.id).add(binaryProduction);
+		this.binaryProductionsByTarget.get(target.id).add(binaryProduction);
 	}
 
-	public void addAuxProduction(int target, int input, int auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		if(target >= this.curLabel || input >= this.curLabel || auxInput >= this.curLabel) {
-			throw new RuntimeException("label out of range");
+	public void addAuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+		if(target.id >= this.curLabel || input.id >= this.curLabel || auxInput.id >= this.curLabel) {
+			throw new RuntimeException("symbol out of range");
 		}
 		AuxProduction auxProduction = new AuxProduction(target, input, auxInput, isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts);
-		this.auxProductionsByInput.get(input).add(auxProduction);
-		this.auxProductionsByAuxInput.get(auxInput).add(auxProduction);
-		this.auxProductionsByTarget.get(target).add(auxProduction);
+		this.auxProductionsByInput.get(input.id).add(auxProduction);
+		this.auxProductionsByAuxInput.get(auxInput.id).add(auxProduction);
+		this.auxProductionsByTarget.get(target.id).add(auxProduction);
 	}
 
 	@Override

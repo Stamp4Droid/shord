@@ -7,6 +7,7 @@ import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 
 public class GraphBuilder {
 	private final Graph graph;
@@ -27,8 +28,8 @@ public class GraphBuilder {
 		return this.graph.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.context, new EdgeInfo(weight));
 	}
 	
-	public Edge addEdge(Vertex source, Vertex sink, int symbolInt, Field field, Context context, EdgeInfo info) {
-		return this.graph.addEdge(source, sink, symbolInt, field, context, info);
+	public Edge addEdge(Vertex source, Vertex sink, Symbol symbol, Field field, Context context, EdgeInfo info) {
+		return this.graph.addEdge(source, sink, symbol, field, context, info);
 	}
 
 	public Edge addEdge(String source, String sink, String symbol, Field field, Context context, EdgeInfo info) {

@@ -39,7 +39,7 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 					@Override
 					public boolean filter(Edge edge) {
 						//return (edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim"))
-						return (edge.getSymbol().equals("callgraph"))
+						return (edge.symbol.symbol.equals("callgraph"))
 								&& !baseEdgeFilter.get(edge.source.toString(true)).contains(edge.sink.toString(true));
 					}
 				});
@@ -50,7 +50,7 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 				return g.getEdges(new EdgeFilter() {
 					@Override
 					public boolean filter(Edge edge) {
-						return edge.getSymbol().equals("Src2Sink")
+						return edge.symbol.symbol.equals("Src2Sink")
 								&& !cutEdgeFilter.get(edge.source.toString(true)).contains(edge.sink.toString(true));
 					}
 				});

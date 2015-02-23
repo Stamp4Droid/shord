@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
-import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 
 public class Edge {
 	public static class EdgeStruct {
@@ -43,9 +43,8 @@ public class Edge {
 	
 	public final Vertex source;
 	public final Vertex sink;
-	public final int symbolInt;
+	public final Symbol symbol;
 	public final int field;
-	public final ContextFreeGrammarOpt c;
 	
 	public short weight;
 	public Edge firstInput;
@@ -57,20 +56,19 @@ public class Edge {
 	public Edge nextOutgoingEdge;
 	public Edge nextIncomingEdge;
 	
-	Edge(ContextFreeGrammarOpt c, int symbolInt, Vertex source, Vertex sink) {
-		this(c, symbolInt, source, sink, -1);
+	Edge(Symbol symbol, Vertex source, Vertex sink) {
+		this(symbol, source, sink, -1);
 	}
 
-	public Edge(ContextFreeGrammarOpt c, int symbolInt, Vertex source, Vertex sink, int field) {
+	public Edge(Symbol symbol, Vertex source, Vertex sink, int field) {
 		this.source = source;
 		this.sink = sink;
-		this.symbolInt = symbolInt;
+		this.symbol = symbol;
 		this.field = field;
-		this.c = c;
 	}
 	
 	public EdgeStruct getStruct() {
-		return new EdgeStruct(this.source.name, this.sink.name, this.c.getSymbol(this.symbolInt), this.field, this.weight);
+		return new EdgeStruct(this.source.name, this.sink.name, this.symbol.symbol, this.field, this.weight);
 	}
 	
 	private void getPathHelper(List<Pair<Edge,Boolean>> path, boolean isForward) {
@@ -133,7 +131,7 @@ public class Edge {
 	public String toString(boolean shord) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(this.source.toString(shord)).append("-");
-		sb.append(this.c.getSymbol(this.symbolInt)).append("[");
+		sb.append(this.symbol.symbol).append("[");
 		sb.append(this.field).append("]");
 		sb.append("-").append(this.sink.toString(shord));
 		return sb.toString();
@@ -222,7 +220,7 @@ public class Edge {
 			Edge e = this.table[edge.sink.id%this.table.length];
 			while(e != null) {
 				// source should already be equal
-				if(e.sink.id == edge.sink.id && e.symbolInt == edge.symbolInt && e.field == edge.field) {
+				if(e.sink.id == edge.sink.id && e.symbol.id == edge.symbol.id && e.field == edge.field) {
 					return e;
 				}
 				e = e.nextOutgoingEdge;

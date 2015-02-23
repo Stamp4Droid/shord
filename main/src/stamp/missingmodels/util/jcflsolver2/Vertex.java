@@ -30,12 +30,12 @@ public class Vertex {
 	}
 	
 	public Edge getCurrentOutgoingEdge(Edge edge) {
-		EdgeSet edges = this.outgoingEdges[edge.symbolInt];
+		EdgeSet edges = this.outgoingEdges[edge.symbol.id];
 		return edges == null ? null : edges.get(edge);
 	}
  
 	public void addOutgoingEdge(Edge edge) {
-		int symbolInt = edge.symbolInt;
+		int symbolInt = edge.symbol.id;
 		EdgeSet edges = this.outgoingEdges[symbolInt];
 		if(edges == null) {
 			edges = new EdgeSet();
@@ -45,7 +45,7 @@ public class Vertex {
 	}
 	
 	public void addIncomingEdge(Edge edge) {
-		int symbolInt = edge.symbolInt;
+		int symbolInt = edge.symbol.id;
 		EdgeList edges = this.incomingEdges[symbolInt];
 		if(edges == null) {
 			edges = new EdgeList();

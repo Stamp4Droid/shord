@@ -76,7 +76,7 @@ public class AbductiveInference {
 	
 	private void processProduction(UnaryProduction unaryProduction, Edge target) {
 		// iterate over potential inputs
-		Collection<Edge> potentialInputs = unaryProduction.isInputBackwards ? target.source.getIncomingEdges(unaryProduction.input) : target.source.getOutgoingEdges(unaryProduction.input);
+		Collection<Edge> potentialInputs = unaryProduction.isInputBackwards ? target.source.getIncomingEdges(unaryProduction.input.id) : target.source.getOutgoingEdges(unaryProduction.input.id);
 		for(Edge input : potentialInputs) {
 			// only add production if the sink is correct
 			Vertex toCheck = unaryProduction.isInputBackwards ? input.source : input.sink;
@@ -101,10 +101,10 @@ public class AbductiveInference {
 
 	private void processProduction(BinaryProduction binaryProduction, Edge target) {
 		// iterate over potential first inputs
-		Collection<Edge> potentialFirstInputs = binaryProduction.isFirstInputBackwards ? target.source.getIncomingEdges(binaryProduction.firstInput) : target.source.getOutgoingEdges(binaryProduction.firstInput);
+		Collection<Edge> potentialFirstInputs = binaryProduction.isFirstInputBackwards ? target.source.getIncomingEdges(binaryProduction.firstInput.id) : target.source.getOutgoingEdges(binaryProduction.firstInput.id);
 		for(Edge firstInput : potentialFirstInputs) {
 			// iterate over potential second inputs
-			Collection<Edge> potentialSecondInputs = binaryProduction.isSecondInputBackwards ? target.sink.getOutgoingEdges(binaryProduction.secondInput) : target.sink.getIncomingEdges(binaryProduction.secondInput);
+			Collection<Edge> potentialSecondInputs = binaryProduction.isSecondInputBackwards ? target.sink.getOutgoingEdges(binaryProduction.secondInput.id) : target.sink.getIncomingEdges(binaryProduction.secondInput.id);
 			for(Edge secondInput : potentialSecondInputs) {
 				// only add production if the intermediate is correct
 				Vertex firstIntermediate = binaryProduction.isFirstInputBackwards ? firstInput.source : firstInput.sink;
@@ -136,7 +136,7 @@ public class AbductiveInference {
 
 	private void processProduction(AuxProduction auxProduction, Edge target) {
 		// iterate over potential inputs
-		Collection<Edge> potentialInputs = auxProduction.isInputBackwards ? target.source.getIncomingEdges(auxProduction.input) : target.source.getOutgoingEdges(auxProduction.input);
+		Collection<Edge> potentialInputs = auxProduction.isInputBackwards ? target.source.getIncomingEdges(auxProduction.input.id) : target.source.getOutgoingEdges(auxProduction.input.id);
 		for(Edge input : potentialInputs) {
 			// only add production if intermediate matches
 			Vertex toCheck = auxProduction.isInputBackwards ? input.source : input.sink;
@@ -145,7 +145,7 @@ public class AbductiveInference {
 			}
 			// iterate over potential aux inputs
 			Vertex auxIntermediate = auxProduction.isAuxInputFirst ? target.source : target.sink;
-			Collection<Edge> potentialAuxInputs = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? auxIntermediate.getOutgoingEdges(auxProduction.auxInput) : auxIntermediate.getIncomingEdges(auxProduction.auxInput);
+			Collection<Edge> potentialAuxInputs = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? auxIntermediate.getOutgoingEdges(auxProduction.auxInput.id) : auxIntermediate.getIncomingEdges(auxProduction.auxInput.id);
 			for(Edge auxInput : potentialAuxInputs) {
 				// only add production for inputs with positive weight
 				boolean includeInput = input.getInfo().weight > 0;
@@ -174,13 +174,13 @@ public class AbductiveInference {
 			return;
 		}
 		
-		for(UnaryProduction unaryProduction : this.contextFreeGrammar.unaryProductionsByTarget.get(edge.symbolInt)) {
+		for(UnaryProduction unaryProduction : this.contextFreeGrammar.unaryProductionsByTarget.get(edge.symbol.id)) {
 			this.processProduction(unaryProduction, edge);
 		}
-		for(BinaryProduction binaryProduction : this.contextFreeGrammar.binaryProductionsByTarget.get(edge.symbolInt)) {
+		for(BinaryProduction binaryProduction : this.contextFreeGrammar.binaryProductionsByTarget.get(edge.symbol.id)) {
 			this.processProduction(binaryProduction, edge);
 		}
-		for(AuxProduction auxProduction : this.contextFreeGrammar.auxProductionsByTarget.get(edge.symbolInt)) {
+		for(AuxProduction auxProduction : this.contextFreeGrammar.auxProductionsByTarget.get(edge.symbol.id)) {
 			this.processProduction(auxProduction, edge);
 		}
 	}

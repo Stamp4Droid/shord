@@ -22,7 +22,7 @@ public class ShordRelationReader implements RelationReader {
 	public Graph readGraph(RelationManager relations, ContextFreeGrammar contextFreeGrammar) {
 		GraphBuilder gb = new GraphBuilder(contextFreeGrammar);
 		for(int i=0; i<gb.toGraph().getContextFreeGrammar().getNumLabels(); i++) {
-			String symbol = gb.toGraph().getContextFreeGrammar().getSymbol(i);
+			String symbol = gb.toGraph().getContextFreeGrammar().getSymbol(i).symbol;
 			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
 				readRelation(gb, relation);
 			}

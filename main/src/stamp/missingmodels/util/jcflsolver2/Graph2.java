@@ -6,7 +6,9 @@ import java.util.Map;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
 import stamp.missingmodels.util.jcflsolver2.RelationManager.Relation;
 
@@ -26,12 +28,39 @@ public class Graph2 {
 			return this.graph.addEdge(source, sink, symbol, field, weight);
 		}
 		
-		public boolean addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
-			return this.graph.addEdge(source, sink, symbolInt, field, weight, firstInput, secondInput, worklist);
+		public boolean addEdge(Vertex source, Vertex sink, Symbol symbol, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
+			return this.graph.addEdge(source, sink, symbol, field, weight, firstInput, secondInput, worklist);
 		}
 		
 		public Vertex getVertex(String name) {
 			return this.graph.getVertex(name);
+		}
+	}
+	
+	public static class TypeFilter {
+		public final MultivalueMap<String,String> filter = new MultivalueMap<String,String>();
+		public final int flowSymbolId;
+		
+		public TypeFilter(ContextFreeGrammarOpt c) {
+			this.flowSymbolId = c.getSymbol("Flow").id;
+			
+			final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt("ptd");
+			rel.load();
+			
+			Iterable<int[]> res = rel.getAryNIntTuples();
+			for(int[] tuple : res) {
+				this.add("H" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
+			}
+			
+			rel.close();
+		}
+		
+		public void add(String h, String v) {
+			this.filter.add(h, v);
+		}
+		
+		public boolean filter(String source, String sink, int symbolInt) {
+			return symbolInt != this.flowSymbolId || this.filter.get(source).contains(sink);
 		}
 	}
 	
@@ -53,15 +82,18 @@ public class Graph2 {
 	
 	private final Map<String,Vertex> nodes = new HashMap<String,Vertex>();
 	private final ContextFreeGrammarOpt c;
+	private final TypeFilter t;
 	
 	public Graph2(ContextFreeGrammarOpt c) {
 		this.c = c;
+		this.t = new TypeFilter(c);
 	}
 
 	public Graph2(ContextFreeGrammarOpt c, RelationManager relations) {
 		this.c = c;
+		this.t = new TypeFilter(c);
 		for(int i=0; i<c.getNumLabels(); i++) {
-			String symbol = c.getSymbol(i);
+			String symbol = c.getSymbol(i).symbol;
 			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
 				this.readRelation(relation);
 			}
@@ -149,11 +181,17 @@ public class Graph2 {
 	}
 	
 	private boolean addEdge(String source, String sink, String symbol, int field, short weight) {
-		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbolInt(symbol), field, (short)weight, null, null, null);		
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbol(symbol), field, (short)weight, null, null, null);		
 	}
 	
-	private boolean addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
-		Edge edge = new Edge(this.c, symbolInt, source, sink, field);
+	private boolean addEdge(Vertex source, Vertex sink, Symbol symbol, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
+		/*
+		if(!this.t.filter(source.name, sink.name, symbolInt)) {
+			return false;
+		}
+		*/
+		
+		Edge edge = new Edge(symbol, source, sink, field);
 		edge.weight = weight;
 
 		edge.firstInput = firstInput;

@@ -26,11 +26,11 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		Graph2 gbar = new Graph2(new MissingRefRefTaintGrammar().getOpt(), new MissingRefRefTaintRelationManager()).transform(new ReachabilitySolver2());
-				
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager missingRefRefRelations = new MissingRefRefTaintRelationManager();
 		RelationManager taintRelations = new TaintWithContextRelationManager();
+		
+		Graph2 gbar = new Graph2(new MissingRefRefTaintGrammar().getOpt(), new MissingRefRefTaintRelationManager()).transform(new ReachabilitySolver2());
 		
 		/*
 		Graph gbar = new ReachabilitySolver(relationReader.readGraph(taintRelations, taintGrammar), relationReader.readTypeFilter(taintGrammar)).getResult();

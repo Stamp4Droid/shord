@@ -8,7 +8,6 @@ import lpsolve.LpSolveException;
 import shord.project.ClassicProject;
 import stamp.analyses.DomL;
 import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
@@ -19,7 +18,6 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
-import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 public class AbductiveInferenceRunner {
 	
@@ -35,7 +33,7 @@ public class AbductiveInferenceRunner {
 				@Override
 				public boolean filter(Edge edge) {
 					//return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
-					return edge.getSymbol().equals("callgraph");
+					return edge.symbol.symbol.equals("callgraph");
 				}
 			});
 		}
@@ -51,7 +49,7 @@ public class AbductiveInferenceRunner {
 					//	this.added = true;
 					//}
 					//return result;
-					return edge.getSymbol().equals("Src2Sink");
+					return edge.symbol.symbol.equals("Src2Sink");
 				}
 			});
 		}
@@ -128,7 +126,7 @@ public class AbductiveInferenceRunner {
 		for(Edge edge : gnewBar.getEdges(new EdgeFilter() {
 			@Override
 			public boolean filter(Edge edge) {
-				return edge.getSymbol().equals("Src2Sink");
+				return edge.symbol.symbol.equals("Src2Sink");
 			}
 		})) {
 			System.out.println("src2sink edge: " + edge);

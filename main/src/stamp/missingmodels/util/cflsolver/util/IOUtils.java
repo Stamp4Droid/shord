@@ -15,7 +15,6 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import soot.SootMethod;
 import stamp.missingmodels.util.Util.Counter;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
@@ -128,11 +127,11 @@ public class IOUtils {
 		for(Edge edge : g.getEdges(new EdgeFilter() {
 			@Override
 			public boolean filter(Edge edge) {
-				return edge.getSymbol().equals(symbol);
+				return edge.symbol.symbol.equals(symbol);
 			}})) {
 			StringBuilder sb = new StringBuilder();
 			if(prependRelationName) {
-				sb.append(edge.getSymbol()).append(SEPARATOR);
+				sb.append(edge.symbol.symbol).append(SEPARATOR);
 			}
 			sb.append(shord ? ConversionUtils.toStringShord(edge.source.name) : edge.source.name.substring(1)).append(SEPARATOR);
 			sb.append(shord ? ConversionUtils.toStringShord(edge.sink.name) : edge.sink.name.substring(1)).append(SEPARATOR);
@@ -198,13 +197,13 @@ public class IOUtils {
 	
 	public static void printGraphStatistics(Graph g) {
 		for(int symbolInt=0; symbolInt<g.getContextFreeGrammar().getNumLabels(); symbolInt++) {
-			final String symbol = g.getContextFreeGrammar().getSymbol(symbolInt);
+			final String symbol = g.getContextFreeGrammar().getSymbol(symbolInt).symbol;
 			if(!symbol.equals(symbol)) continue;
 			Set<String> edges = new HashSet<String>();
 			for(Edge edge : g.getEdges(new EdgeFilter() {
 				@Override
 				public boolean filter(Edge edge) {
-					return edge.getSymbol().equals(symbol); 
+					return edge.symbol.symbol.equals(symbol); 
 				}})) {
 				edges.add(edge.sink.name.substring(1) + " " + edge.source.name.substring(1));
 			}

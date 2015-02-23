@@ -1,8 +1,10 @@
 package stamp.missingmodels.util.jcflsolver2;
 
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.AuxProduction;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.BinaryProduction;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
 import stamp.missingmodels.util.jcflsolver2.Graph2.GraphBuilder;
@@ -15,8 +17,10 @@ public class ReachabilitySolver2 implements GraphTransformer {
 	private int count;
 	private long time;
 	
-	private void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
-		if(this.g.addEdge(source, sink, symbolInt, field, weight, firstInput, secondInput, this.worklist)) {
+	private TypeFilter filter;
+	
+	private void addEdgeHelper(Vertex source, Vertex sink, Symbol symbol, int field, short weight, Edge firstInput, Edge secondInput) {
+		if(this.g.addEdge(source, sink, symbol, field, weight, firstInput, secondInput, this.worklist)) {
 			this.count++;
 		}
 	}
@@ -25,13 +29,13 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		// get edge base
 		Vertex source = unaryProduction.isInputBackwards ? input.sink : input.source;
 		Vertex sink = unaryProduction.isInputBackwards ? input.source : input.sink;
-		int symbolInt = unaryProduction.target;
+		Symbol symbol = unaryProduction.target;
 		
 		// get field
 		int field = unaryProduction.ignoreFields ? -1 : input.field;
 		
 		// add edge
-		this.addEdgeHelper(source, sink, symbolInt, field, input.weight, input, null);
+		this.addEdgeHelper(source, sink, symbol, field, input.weight, input, null);
 	}
 	
 	private static int produceField(boolean ignoreFields, int firstField, int secondField) {
@@ -50,14 +54,14 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		// get edge base
 		Vertex source = binaryProduction.isFirstInputBackwards ? firstInput.sink : firstInput.source;
 		Vertex sink = binaryProduction.isSecondInputBackwards ? secondInput.source : secondInput.sink;
-		int symbolInt = binaryProduction.target;
+		Symbol symbol = binaryProduction.target;
 		
 		// get field
 		int field = produceField(binaryProduction.ignoreFields, firstInput.field, secondInput.field);
 		
 		// add edge
 		if(field != -2) {
-			this.addEdgeHelper(source, sink, symbolInt, field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);						
+			this.addEdgeHelper(source, sink, symbol, field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);						
 		}
 	}
 
@@ -65,14 +69,14 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		// get edge base
 		Vertex source = auxProduction.isInputBackwards ? input.sink : input.source;
 		Vertex sink = auxProduction.isInputBackwards ? input.source : input.sink;
-		int symbolInt = auxProduction.target;
+		Symbol symbol = auxProduction.target;
 		
 		// get field
 		int field = produceField(auxProduction.ignoreFields, input.field, auxInput.field);
 		
 		// add edge
 		if(field != -2) {
-			this.addEdgeHelper(source, sink, symbolInt, field, (short)(input.weight + auxInput.weight), input, auxInput);
+			this.addEdgeHelper(source, sink, symbol, field, (short)(input.weight + auxInput.weight), input, auxInput);
 		}
 	}
 	
@@ -83,7 +87,7 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		this.count = 0;
 		
 		for(EdgeStruct edge : edges) {
-			this.addEdgeHelper(this.g.getVertex(edge.sourceName), this.g.getVertex(edge.sinkName), c.getSymbolInt(edge.symbol), edge.field, edge.weight, null, null);
+			this.addEdgeHelper(this.g.getVertex(edge.sourceName), this.g.getVertex(edge.sinkName), c.getSymbol(edge.symbol), edge.field, edge.weight, null, null);
 		}
 		
 		System.out.println("Initial num of edges = " + this.worklist.size());
@@ -92,35 +96,35 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		while(this.worklist.size() != 0) {
 			Edge edge = this.worklist.pop();
 			// <-, ->
-			for(UnaryProduction unaryProduction : c.unaryProductionsByInput[edge.symbolInt]) {
+			for(UnaryProduction unaryProduction : c.unaryProductionsByInput[edge.symbol.id]) {
 				this.addEdge(unaryProduction, edge);
 			}
 			// <- <-, <- ->, -> <-, -> ->
-			for(BinaryProduction binaryProduction : c.binaryProductionsByFirstInput[edge.symbolInt]) {
+			for(BinaryProduction binaryProduction : c.binaryProductionsByFirstInput[edge.symbol.id]) {
 				Vertex intermediate = binaryProduction.isFirstInputBackwards ? edge.source : edge.sink;
-				Iterable<Edge> secondEdges = binaryProduction.isSecondInputBackwards ? intermediate.getIncomingEdges(binaryProduction.secondInput) : intermediate.getOutgoingEdges(binaryProduction.secondInput);
+				Iterable<Edge> secondEdges = binaryProduction.isSecondInputBackwards ? intermediate.getIncomingEdges(binaryProduction.secondInput.id) : intermediate.getOutgoingEdges(binaryProduction.secondInput.id);
 				for(Edge secondEdge : secondEdges) {
 					this.addEdge(binaryProduction, edge, secondEdge);
 				}
 			}
-			for(BinaryProduction binaryProduction : c.binaryProductionsBySecondInput[edge.symbolInt]) {
+			for(BinaryProduction binaryProduction : c.binaryProductionsBySecondInput[edge.symbol.id]) {
 				Vertex intermediate = binaryProduction.isSecondInputBackwards ? edge.sink : edge.source;
-				Iterable<Edge> firstEdges = binaryProduction.isFirstInputBackwards ? intermediate.getOutgoingEdges(binaryProduction.firstInput) : intermediate.getIncomingEdges(binaryProduction.firstInput);
+				Iterable<Edge> firstEdges = binaryProduction.isFirstInputBackwards ? intermediate.getOutgoingEdges(binaryProduction.firstInput.id) : intermediate.getIncomingEdges(binaryProduction.firstInput.id);
 				for(Edge firstEdge : firstEdges) {
 					this.addEdge(binaryProduction, firstEdge, edge);
 				}
 			}
 			// <- <-, <- ->, -> <-, -> ->
-			for(AuxProduction auxProduction : c.auxProductionsByInput[edge.symbolInt]) {
+			for(AuxProduction auxProduction : c.auxProductionsByInput[edge.symbol.id]) {
 				Vertex intermediate = (!auxProduction.isAuxInputFirst) ^ auxProduction.isInputBackwards ? edge.sink : edge.source;
-				Iterable<Edge> auxEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? intermediate.getOutgoingEdges(auxProduction.auxInput) : intermediate.getIncomingEdges(auxProduction.auxInput);
+				Iterable<Edge> auxEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? intermediate.getOutgoingEdges(auxProduction.auxInput.id) : intermediate.getIncomingEdges(auxProduction.auxInput.id);
 				for(Edge auxEdge : auxEdges) {
 					this.addEdge(auxProduction, edge, auxEdge);
 				}
 			}
-			for(AuxProduction auxProduction : c.auxProductionsByAuxInput[edge.symbolInt]) {
+			for(AuxProduction auxProduction : c.auxProductionsByAuxInput[edge.symbol.id]) {
 				Vertex intermediate = (!auxProduction.isAuxInputFirst) ^ auxProduction.isAuxInputBackwards ? edge.source : edge.sink;
-				Iterable<Edge> inputEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isInputBackwards ? intermediate.getIncomingEdges(auxProduction.input) : intermediate.getOutgoingEdges(auxProduction.input);
+				Iterable<Edge> inputEdges = (!auxProduction.isAuxInputFirst) ^ auxProduction.isInputBackwards ? intermediate.getIncomingEdges(auxProduction.input.id) : intermediate.getOutgoingEdges(auxProduction.input.id);
 				for(Edge inputEdge : inputEdges) {
 					this.addEdge(auxProduction, inputEdge, edge);
 				}

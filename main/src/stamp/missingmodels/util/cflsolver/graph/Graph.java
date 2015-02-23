@@ -14,6 +14,7 @@ import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 
 public final class Graph {
 	
@@ -172,31 +173,27 @@ public final class Graph {
 		}
 	}
 
-	public final class Edge {
+	public static final class Edge {
 		public final Vertex source;
 		public final Vertex sink;
-		public final int symbolInt;
+		public final Symbol symbol;
 		public final Field field;
 		public final Context context;
 		
-		private Edge(Vertex source, Vertex sink, int symbolInt, Field field, Context context) {
+		private Edge(Vertex source, Vertex sink, Symbol symbol, Field field, Context context) {
 			this.source = source;
 			this.sink = sink;
-			this.symbolInt = symbolInt;
+			this.symbol = symbol;
 			this.field = field;
 			this.context = context;
 		}
 		
-		public String getSymbol() {
-			return contextFreeGrammar.getSymbol(this.symbolInt);
-		}
-		
 		public EdgeInfo getInfo() {
-			return this.source.outgoingEdgesBySymbol[this.symbolInt].get(this);
+			return this.source.outgoingEdgesBySymbol[this.symbol.id].get(this);
 		}
 		
 		public EdgeStruct getStruct() {
-			return new EdgeStruct(this.source.name, this.sink.name, this.getSymbol(), this.field, this.context);
+			return new EdgeStruct(this.source.name, this.sink.name, this.symbol.symbol, this.field, this.context);
 		}
 		
 		private void getPathHelper(List<Pair<Edge,Boolean>> path, boolean isForward) {
@@ -260,7 +257,7 @@ public final class Graph {
 		public String toString(boolean shord) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(this.source.toString(shord)).append("-");
-			sb.append(contextFreeGrammar.getSymbol(this.symbolInt)).append("[");
+			sb.append(this.symbol.symbol).append("[");
 			sb.append(this.field.toString()).append("][");
 			sb.append(this.context).append("]");
 			sb.append("-").append(this.sink.toString(shord));
@@ -276,14 +273,13 @@ public final class Graph {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + getOuterType().hashCode();
 			result = prime * result
 					+ ((context == null) ? 0 : context.hashCode());
 			result = prime * result + ((field == null) ? 0 : field.hashCode());
 			result = prime * result + ((sink == null) ? 0 : sink.hashCode());
 			result = prime * result
 					+ ((source == null) ? 0 : source.hashCode());
-			result = prime * result + symbolInt;
+			result = prime * result + symbol.id;
 			return result;
 		}
 
@@ -296,8 +292,6 @@ public final class Graph {
 			if (getClass() != obj.getClass())
 				return false;
 			Edge other = (Edge) obj;
-			if (!getOuterType().equals(other.getOuterType()))
-				return false;
 			if (context == null) {
 				if (other.context != null)
 					return false;
@@ -318,13 +312,9 @@ public final class Graph {
 					return false;
 			} else if (!source.equals(other.source))
 				return false;
-			if (symbolInt != other.symbolInt)
+			if (symbol.id != other.symbol.id)
 				return false;
 			return true;
-		}
-
-		private Graph getOuterType() {
-			return Graph.this;
 		}
 	}
 	
@@ -344,32 +334,32 @@ public final class Graph {
 		return vertex;
 	}
 	
-	protected Edge addEdge(Vertex source, Vertex sink, int symbolInt, Field field, Context context, EdgeInfo edgeInfo) {
-		Edge edge = new Edge(source, sink, symbolInt, field, context);
-		if(!source.outgoingEdgesBySymbol[symbolInt].containsKey(edge)) {
-			sink.incomingEdgesBySymbol[symbolInt].add(edge);
+	protected Edge addEdge(Vertex source, Vertex sink, Symbol symbol, Field field, Context context, EdgeInfo edgeInfo) {
+		Edge edge = new Edge(source, sink, symbol, field, context);
+		if(!source.outgoingEdgesBySymbol[symbol.id].containsKey(edge)) {
+			sink.incomingEdgesBySymbol[symbol.id].add(edge);
 		}
-		source.outgoingEdgesBySymbol[symbolInt].put(edge, edgeInfo);
+		source.outgoingEdgesBySymbol[symbol.id].put(edge, edgeInfo);
 		return edge;
 	}
 	
 	protected Edge addEdge(String source, String sink, String symbol, Field field, Context context, EdgeInfo edgeInfo) {
 		Vertex sourceVertex = this.getVertex(source);
-		Vertex sinkVertex = this.getVertex(sink);		
-		int symbolInt = this.contextFreeGrammar.getSymbolInt(symbol);
-		return this.addEdge(sourceVertex, sinkVertex, symbolInt, field, context, edgeInfo);
+		Vertex sinkVertex = this.getVertex(sink);
+		Symbol symbolData = this.contextFreeGrammar.getSymbol(symbol);
+		return this.addEdge(sourceVertex, sinkVertex, symbolData, field, context, edgeInfo);
 	}
 	
-	public EdgeInfo getInfo(Vertex source, Vertex sink, int symbolInt, Field field, Context context) {
-		Edge edge = new Edge(source, sink, symbolInt, field, context);
-		return source.outgoingEdgesBySymbol[symbolInt].get(edge);
+	public EdgeInfo getInfo(Vertex source, Vertex sink, Symbol symbol, Field field, Context context) {
+		Edge edge = new Edge(source, sink, symbol, field, context);
+		return source.outgoingEdgesBySymbol[symbol.id].get(edge);
 	}
 	
 	public EdgeInfo getInfo(String source, String sink, String symbol, Field field, Context context) {
 		Vertex sourceVertex = this.getVertex(source);
 		Vertex sinkVertex = this.getVertex(sink);
-		int symbolInt = this.contextFreeGrammar.getSymbolInt(symbol);
-		return this.getInfo(sourceVertex, sinkVertex, symbolInt, field, context);
+		Symbol symbolData = this.contextFreeGrammar.getSymbol(symbol);
+		return this.getInfo(sourceVertex, sinkVertex, symbolData, field, context);
 	}
 
 	public ContextFreeGrammar getContextFreeGrammar() {
@@ -383,7 +373,7 @@ public final class Graph {
 	public Graph getFilteredGraph(EdgeFilter filter) {
 		GraphBuilder gb = new GraphBuilder(this.contextFreeGrammar);
 		for(Edge edge : this.getEdges(filter)) {
-			gb.addEdge(edge.source.name, edge.sink.name, edge.getSymbol(), edge.field, edge.context, edge.getInfo());
+			gb.addEdge(edge.source.name, edge.sink.name, edge.symbol.symbol, edge.field, edge.context, edge.getInfo());
 		}
 		return gb.toGraph();
 	}
