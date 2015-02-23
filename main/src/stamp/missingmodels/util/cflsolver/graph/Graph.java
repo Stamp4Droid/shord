@@ -13,6 +13,7 @@ import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
 
 public final class Graph {
 	

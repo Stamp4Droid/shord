@@ -3,10 +3,6 @@ package stamp.missingmodels.util.cflsolver.solver;
 import java.util.Collection;
 
 import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.AuxProduction;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.BinaryProduction;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
@@ -14,6 +10,10 @@ import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;
 import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.AuxProduction;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.UnaryProduction;
 
 public class ReachabilitySolver {
 	private final ContextFreeGrammar c;

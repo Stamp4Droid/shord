@@ -1,5 +1,7 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
+import stamp.missingmodels.util.jcflsolver2.RelationManager;
+
 public class PointsToRelationManager extends RelationManager {
 	public PointsToRelationManager() {
 		this.add(new IndexRelation("AllocNew", "H", 1, "V", 0, "alloc"));

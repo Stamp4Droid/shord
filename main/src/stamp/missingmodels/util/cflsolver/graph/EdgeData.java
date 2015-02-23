@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.AuxProduction;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.BinaryProduction;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.UnaryProduction;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.AuxProduction;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.UnaryProduction;
 
 public interface EdgeData {
 	public EdgeData produce(UnaryProduction unaryProduction);

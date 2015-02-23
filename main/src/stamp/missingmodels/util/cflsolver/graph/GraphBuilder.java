@@ -6,6 +6,7 @@ import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
 
 public class GraphBuilder {
 	private final Graph graph;

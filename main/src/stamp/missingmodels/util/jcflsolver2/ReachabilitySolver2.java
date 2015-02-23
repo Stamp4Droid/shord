@@ -1,10 +1,9 @@
 package stamp.missingmodels.util.jcflsolver2;
 
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.AuxProduction;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.BinaryProduction;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt.UnaryProduction;
-import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.AuxProduction;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
 import stamp.missingmodels.util.jcflsolver2.Graph2.GraphBuilder;
 import stamp.missingmodels.util.jcflsolver2.Graph2.GraphTransformer;
@@ -16,7 +15,7 @@ public class ReachabilitySolver2 implements GraphTransformer {
 	private int count;
 	private long time;
 	
-	public void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
+	private void addEdgeHelper(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput) {
 		if(this.g.addEdge(source, sink, symbolInt, field, weight, firstInput, secondInput, this.worklist)) {
 			this.count++;
 		}
@@ -34,6 +33,18 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		// add edge
 		this.addEdgeHelper(source, sink, symbolInt, field, input.weight, input, null);
 	}
+	
+	private static int produceField(boolean ignoreFields, int firstField, int secondField) {
+		if(ignoreFields || firstField == secondField) {
+			return -1;
+		} else if(firstField == -1) {
+			return secondField;
+		} else if(secondField == -1) {
+			return firstField;
+		} else {
+			return -2;
+		}
+	}
 
 	private void addEdge(BinaryProduction binaryProduction, Edge firstInput, Edge secondInput) {
 		// get edge base
@@ -41,13 +52,12 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		Vertex sink = binaryProduction.isSecondInputBackwards ? secondInput.source : secondInput.sink;
 		int symbolInt = binaryProduction.target;
 		
+		// get field
+		int field = produceField(binaryProduction.ignoreFields, firstInput.field, secondInput.field);
+		
 		// add edge
-		if(binaryProduction.ignoreFields || (firstInput.field == secondInput.field)) {
-			this.addEdgeHelper(source, sink, symbolInt, -1, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);			
-		} else if(firstInput.field == -1) {
-			this.addEdgeHelper(source, sink, symbolInt, secondInput.field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);						
-		} else if(secondInput.field == -1) {
-			this.addEdgeHelper(source, sink, symbolInt, firstInput.field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);									
+		if(field != -2) {
+			this.addEdgeHelper(source, sink, symbolInt, field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);						
 		}
 	}
 
@@ -57,9 +67,11 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		Vertex sink = auxProduction.isInputBackwards ? input.source : input.sink;
 		int symbolInt = auxProduction.target;
 		
+		// get field
+		int field = produceField(auxProduction.ignoreFields, input.field, auxInput.field);
+		
 		// add edge
-		if((input.field == -1) || (auxInput.field == -1) || (input.field == auxInput.field)) {
-			int field = auxProduction.ignoreFields ? -1 : Math.max(input.field, auxInput.field);
+		if(field != -2) {
 			this.addEdgeHelper(source, sink, symbolInt, field, (short)(input.weight + auxInput.weight), input, auxInput);
 		}
 	}

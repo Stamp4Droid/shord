@@ -1,9 +1,13 @@
 package stamp.missingmodels.util.jcflsolver2;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGrammarOpt;
 
 public class Edge {
 	public static class EdgeStruct {
@@ -19,6 +23,21 @@ public class Edge {
 			this.symbol = symbol;
 			this.field = field;
 			this.weight = weight;
+		}
+		public String toString(boolean shord) {
+			String convertedSourceName = shord ? ConversionUtils.toStringShord(this.sourceName) : this.sourceName;
+			String convertedSinkName = shord ? ConversionUtils.toStringShord(this.sinkName) : this.sinkName;
+			StringBuilder sb = new StringBuilder();
+			sb.append(convertedSourceName).append("-");
+			sb.append(this.symbol).append("[");
+			sb.append(this.field).append("]");
+			sb.append("-").append(convertedSinkName);
+			return sb.toString();
+		}
+		
+		@Override
+		public String toString() {
+			return this.toString(false);
 		}
 	}
 	
@@ -52,6 +71,77 @@ public class Edge {
 	
 	public EdgeStruct getStruct() {
 		return new EdgeStruct(this.source.name, this.sink.name, this.c.getSymbol(this.symbolInt), this.field, this.weight);
+	}
+	
+	private void getPathHelper(List<Pair<Edge,Boolean>> path, boolean isForward) {
+		if(this.firstInput == null) {
+			path.add(new Pair<Edge,Boolean>(this, isForward));
+		} else {
+			if(this.source.equals(this.firstInput.source) && this.sink.equals(this.firstInput.sink)) {
+				this.firstInput.getPathHelper(path, isForward);
+			} else if(this.source.equals(this.firstInput.sink) && this.sink.equals(this.firstInput.source)) { 
+				this.firstInput.getPathHelper(path, !isForward);
+			} else {
+				Edge comesFirst = this.source.equals(this.firstInput.source) || this.source.equals(this.firstInput.sink) ? this.firstInput : this.secondInput;
+				Edge comesSecond = this.source.equals(this.firstInput.source) || this.source.equals(this.firstInput.sink) ? this.secondInput : this.firstInput;
+				
+				boolean comesFirstIsForward = this.source.equals(comesFirst.source); 
+				boolean comesSecondIsForward = this.sink.equals(comesSecond.sink);
+				
+				Edge processFirst = isForward ? comesFirst : comesSecond;
+				Edge processSecond = isForward ? comesSecond : comesFirst;
+				
+				boolean processFirstIsForward = isForward ? comesFirstIsForward : !comesSecondIsForward;
+				boolean processSecondIsForward = isForward ? comesSecondIsForward : !comesFirstIsForward;
+				
+				processFirst.getPathHelper(path, processFirstIsForward);
+				processSecond.getPathHelper(path, processSecondIsForward);
+			}
+		}
+	}
+	
+	private String toStringPath(List<Pair<Edge,Boolean>> path) {
+		StringBuilder sb = new StringBuilder();
+		for(Pair<Edge,Boolean> pathEdgePair : path) {
+			sb.append(pathEdgePair.toString()).append("\n");
+		}
+		return sb.toString();
+	}
+	
+	private boolean checkPath(List<Pair<Edge,Boolean>> path) {
+		Vertex prevVertex = null;
+		for(Pair<Edge,Boolean> pathEdgePair : path) {
+			Vertex checkVertex = pathEdgePair.getY() ? pathEdgePair.getX().source : pathEdgePair.getX().sink;
+			if(prevVertex != null && !prevVertex.equals(checkVertex)) {
+				System.out.println("PATH ERROR AT: " + checkVertex.name);
+				System.out.println(toStringPath(path));
+				System.out.println("END PATH ERROR: " + checkVertex.name);
+				return false;
+			}
+			prevVertex = pathEdgePair.getY() ? pathEdgePair.getX().sink : pathEdgePair.getX().source;
+		}
+		return true;
+	}
+	
+	public List<Pair<Edge,Boolean>> getPath() {
+		List<Pair<Edge,Boolean>> path = new ArrayList<Pair<Edge,Boolean>>();
+		this.getPathHelper(path, true);
+		this.checkPath(path);
+		return path;
+	}
+
+	public String toString(boolean shord) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.source.toString(shord)).append("-");
+		sb.append(this.c.getSymbol(this.symbolInt)).append("[");
+		sb.append(this.field).append("]");
+		sb.append("-").append(this.sink.toString(shord));
+		return sb.toString();
+	}
+
+	@Override
+	public String toString() {
+		return this.toString(false);
 	}
 
 	public static final Iterable<Edge> EMPTY_EDGES = new Iterable<Edge>() {

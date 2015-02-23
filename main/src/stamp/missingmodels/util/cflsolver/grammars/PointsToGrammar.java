@@ -1,6 +1,6 @@
 package stamp.missingmodels.util.cflsolver.grammars;
 
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
 
 public class PointsToGrammar extends ContextFreeGrammar {
 	public PointsToGrammar() {

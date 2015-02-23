@@ -1,5 +1,6 @@
 package stamp.missingmodels.util.jcflsolver2;
 
+import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeList;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeSet;
 
@@ -51,5 +52,18 @@ public class Vertex {
 			this.incomingEdges[symbolInt] = edges;
 		}
 		edges.add(edge);
+	}
+	
+	public String toString(boolean shord) {
+		if(shord) {
+			return ConversionUtils.toStringShord(this.name);
+		} else {
+			return this.name;
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return this.toString(false);
 	}
 }

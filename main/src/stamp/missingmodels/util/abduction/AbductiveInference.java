@@ -12,14 +12,14 @@ import stamp.missingmodels.util.abduction.LinearProgram.Coefficient;
 import stamp.missingmodels.util.abduction.LinearProgram.ConstraintType;
 import stamp.missingmodels.util.abduction.LinearProgram.LinearProgramResult;
 import stamp.missingmodels.util.abduction.LinearProgram.ObjectiveType;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.AuxProduction;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.BinaryProduction;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.AuxProduction;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.UnaryProduction;
 
 public class AbductiveInference {
 	private final LinearProgram<Edge> lp = new LinearProgram<Edge>();

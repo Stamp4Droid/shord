@@ -6,10 +6,9 @@ import java.util.Map;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammarOpt;
-import stamp.missingmodels.util.cflsolver.relation.RelationManager;
-import stamp.missingmodels.util.cflsolver.relation.RelationManager.Relation;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
+import stamp.missingmodels.util.jcflsolver2.RelationManager.Relation;
 
 public class Graph2 {
 	public static class GraphBuilder {
@@ -23,8 +22,8 @@ public class Graph2 {
 			return this.graph;
 		}
 		
-		public boolean addInputEdge(String source, String sink, String symbol, int field, short weight) {
-			return this.graph.addInputEdge(source, sink, symbol, field, weight);
+		public boolean addEdge(String source, String sink, String symbol, int field, short weight) {
+			return this.graph.addEdge(source, sink, symbol, field, weight);
 		}
 		
 		public boolean addEdge(Vertex source, Vertex sink, int symbolInt, int field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
@@ -81,6 +80,42 @@ public class Graph2 {
 		return this.c;
 	}
 	
+	public static interface Filter<T> {
+		public boolean filter(T t);
+	}
+	
+	public static class FilterTransformer extends EdgeTransformer {
+		private final Filter<EdgeStruct> filter;
+		
+		public FilterTransformer(Filter<EdgeStruct> filter) {
+			this.filter = filter;
+		}
+
+		@Override
+		public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
+			if(this.filter.filter(edgeStruct)) {
+				gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.weight);
+			}
+		}
+	}
+	
+	public Iterable<EdgeStruct> getEdges(Filter<EdgeStruct> filter) {
+		return new FilteredEdgeIterator(filter);
+	}
+
+	public String toString(boolean shord) {
+		StringBuilder sb = new StringBuilder();
+		for(EdgeStruct edge : this.getEdges()) {
+			sb.append(edge.toString(shord)).append("\n");
+		}
+		return sb.toString();
+	}
+	
+	@Override
+	public String toString() {
+		return this.toString(false);
+	}
+	
 	private void readRelation(Relation relation) {
 		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relation.getName());
 		rel.load();
@@ -98,7 +133,7 @@ public class Graph2 {
 			//Context context = relation.getContext(tuple);
 			short weight = (short)relation.getWeight(tuple);
 			
-			this.addInputEdge(source, sink, symbol, field, weight);
+			this.addEdge(source, sink, symbol, field, weight);
 		}
 		
 		rel.close();
@@ -113,7 +148,7 @@ public class Graph2 {
 		return vertex;
 	}
 	
-	private boolean addInputEdge(String source, String sink, String symbol, int field, short weight) {
+	private boolean addEdge(String source, String sink, String symbol, int field, short weight) {
 		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbolInt(symbol), field, (short)weight, null, null, null);		
 	}
 	
@@ -156,6 +191,7 @@ public class Graph2 {
 			this.increment();
 		}
 		
+		@Override
 		public boolean hasNext() {
 			return this.current != null;
 		}
@@ -174,19 +210,64 @@ public class Graph2 {
 			}
 		}
 		
+		@Override
 		public EdgeStruct next() {
 			Edge result = this.current.next();
 			this.increment();
 			return result.getStruct();
 		}
-
+		
+		@Override
 		public void remove() {
-			throw new RuntimeException("Remove is not implemented for EdgeSet!");
+			throw new RuntimeException("Remove is not implemented for EdgeIterator!");
 		}
 
 		@Override
 		public Iterator<EdgeStruct> iterator() {
 			return this;
+		}
+	}
+	
+	public class FilteredEdgeIterator implements Iterator<EdgeStruct>, Iterable<EdgeStruct> {
+		private final EdgeIterator iterator = new EdgeIterator();
+		private final Filter<EdgeStruct> filter;
+		private EdgeStruct curEdge;
+		
+		public FilteredEdgeIterator(Filter<EdgeStruct> filter) {
+			this.filter = filter;
+			this.increment();
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return this.curEdge != null;
+		}
+		
+		@Override
+		public EdgeStruct next() {
+			EdgeStruct result = this.curEdge;
+			this.increment();
+			return result;
+		}
+		
+		@Override
+		public void remove() {
+			throw new RuntimeException("Remove is not implemented for FilteredEdgeIterator!");
+		}
+		
+		@Override
+		public Iterator<EdgeStruct> iterator() {
+			return this;
+		}
+		
+		private void increment() {
+			while(this.iterator.hasNext()) {
+				this.curEdge = this.iterator.next();
+				if(this.filter.filter(this.curEdge)) {
+					return;
+				}
+			}
+			this.curEdge = null;
 		}
 	}
 }

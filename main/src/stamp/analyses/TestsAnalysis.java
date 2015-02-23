@@ -1,6 +1,5 @@
 package stamp.analyses;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,17 +16,16 @@ import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
 import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
+import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.RelationManager;
 import stamp.missingmodels.util.cflsolver.relation.RelationReader;
-import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.RelationManager;
 import chord.project.Chord;
 
 @Chord(name = "tests")

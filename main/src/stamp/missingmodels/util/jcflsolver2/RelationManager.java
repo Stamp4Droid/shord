@@ -1,4 +1,4 @@
-package stamp.missingmodels.util.cflsolver.relation;
+package stamp.missingmodels.util.jcflsolver2;
 
 import java.util.Collection;
 import java.util.Collections;
