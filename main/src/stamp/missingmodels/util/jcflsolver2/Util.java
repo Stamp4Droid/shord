@@ -1,4 +1,4 @@
-package stamp.missingmodels.util;
+package stamp.missingmodels.util.jcflsolver2;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -15,13 +15,13 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.Util.Counter;
-import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
+import stamp.missingmodels.util.jcflsolver2.Util.Counter;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 public class IOUtils {
 	private static final String SEPARATOR = "##";

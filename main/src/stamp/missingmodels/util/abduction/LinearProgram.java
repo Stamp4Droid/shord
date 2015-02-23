@@ -12,7 +12,7 @@ import java.util.Map;
 
 import lpsolve.LpSolve;
 import lpsolve.LpSolveException;
-import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 public class LinearProgram<T> {
 	public static class Coefficient<T> {

@@ -13,8 +13,8 @@ import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
-import stamp.missingmodels.util.Util.Counter;
-import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.jcflsolver2.Util.Counter;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
 
 

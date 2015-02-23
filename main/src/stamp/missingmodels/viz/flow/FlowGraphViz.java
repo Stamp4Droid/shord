@@ -3,7 +3,7 @@ package stamp.missingmodels.viz.flow;
 import java.util.List;
 import java.util.Set;
 
-import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 import stamp.missingmodels.viz.dot.DotObject;
 import stamp.missingmodels.viz.dot.Viz;
 import stamp.missingmodels.viz.flow.FlowGraphViz.FlowGraph;

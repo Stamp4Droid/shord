@@ -8,8 +8,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 public class DroidRecordReader {
 	private final MultivalueMap<String,String> callgraph = new MultivalueMap<String,String>();

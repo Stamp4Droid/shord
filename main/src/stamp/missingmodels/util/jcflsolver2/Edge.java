@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 public class Edge {
 	public static class Field {

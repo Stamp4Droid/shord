@@ -10,14 +10,13 @@ import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
-import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
 import stamp.missingmodels.util.jcflsolver2.RelationManager;
 import stamp.missingmodels.util.jcflsolver2.RelationManager.Relation;
+import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
 
 public class ShordRelationReader implements RelationReader {
-
 	@Override
 	public Graph readGraph(RelationManager relations, ContextFreeGrammar contextFreeGrammar) {
 		GraphBuilder gb = new GraphBuilder(contextFreeGrammar);

@@ -4,13 +4,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
 import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
+import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
-public class RelationManager {	
+public class RelationManager {
+	public interface RelationReader {
+		public Graph readGraph(RelationManager relations, ContextFreeGrammar contextFreeGrammar);
+		public TypeFilter readTypeFilter(ContextFreeGrammar contextFreeGrammar);
+	}
+
 	private final MultivalueMap<String,Relation> relationsByName = new MultivalueMap<String,Relation>();
 	private final MultivalueMap<String,Relation> relationsBySymbol = new MultivalueMap<String,Relation>();
 	

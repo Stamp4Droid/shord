@@ -4,8 +4,8 @@ import java.util.*;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 public abstract class Graph {		
 	public abstract void process(Edge edge);

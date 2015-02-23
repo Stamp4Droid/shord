@@ -12,9 +12,9 @@ import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
-import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.Graph;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 public class Experiment implements StampOutputFile {
 	private JCFLSolverRunner j;

@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 public final class Graph {
 	

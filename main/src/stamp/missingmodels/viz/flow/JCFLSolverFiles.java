@@ -19,12 +19,12 @@ import stamp.missingmodels.util.StubLookup.StubLookupValue;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
-import stamp.missingmodels.util.Util.Counter;
-import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
+import stamp.missingmodels.util.jcflsolver2.Util.Counter;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 import stamp.missingmodels.viz.flow.FlowObject.AliasCompressedFlowObject;
 import stamp.srcmap.sourceinfo.SourceInfo;
 

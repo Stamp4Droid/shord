@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 public class DotObject {
 	private int curId = 0;

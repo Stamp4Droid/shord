@@ -7,7 +7,6 @@ import java.util.Set;
 import lpsolve.LpSolveException;
 import shord.project.ClassicProject;
 import stamp.analyses.DomL;
-import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
@@ -18,6 +17,7 @@ import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
 public class AbductiveInferenceRunner {
 	

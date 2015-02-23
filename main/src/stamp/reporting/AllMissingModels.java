@@ -7,12 +7,12 @@ import stamp.analyses.JCFLSolverAnalysis;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
-import stamp.missingmodels.util.Util.Counter;
-import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
+import stamp.missingmodels.util.jcflsolver2.Util.Counter;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 /*
  * @author Osbert Bastani

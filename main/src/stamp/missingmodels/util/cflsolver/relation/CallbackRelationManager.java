@@ -3,8 +3,8 @@ package stamp.missingmodels.util.cflsolver.relation;
 import shord.analyses.DomU;
 import shord.analyses.DomV;
 import shord.project.ClassicProject;
-import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPointsToRelationManager;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
 public class CallbackRelationManager extends TaintPointsToRelationManager {
 	private void setNewWeights() {
