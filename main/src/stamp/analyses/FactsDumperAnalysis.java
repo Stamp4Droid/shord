@@ -33,13 +33,11 @@ public class FactsDumperAnalysis extends JavaAnalysis {
 
 	@Override
 	public void run() {
-		String templatesTopDir =
-			PropertyHelper.getProperty("stamp.dumper.templates.dir");
-		String outTopDir = PropertyHelper.getProperty("stamp.dumper.outdir");
-		for (File inDir : FileHelper.listSubDirs(templatesTopDir)) {
-			File outDir = new File(outTopDir, inDir.getName());
-			outDir.mkdir();
-			processDir(inDir, outDir);
-		}
+		File templatesDir =
+			new File(PropertyHelper.getProperty("stamp.dumper.templates.dir"));
+		File outDir =
+			new File(PropertyHelper.getProperty("stamp.dumper.outdir"));
+		outDir.mkdir();
+		processDir(templatesDir, outDir);
 	}
 }

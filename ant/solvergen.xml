@@ -2,10 +2,10 @@
 <project name="STAMP-SolverGen">
 
   <target name="-prepare-backend-solvergen">
-    <property name="stamp.solvergen.analysis.version" value="cfg"/>
-    <property name="stamp.solvergen.analysis.class" value="_ree"/>
-    <property name="stamp.solvergen.analysis.pri" value="s-r-pet-lace:a"/>
-    <property name="stamp.solvergen.analysis.sec" value="null:a"/>
+    <property name="stamp.solvergen.analysis.version" value="rsm"/>
+    <property name="stamp.solvergen.analysis.class" value="____"/>
+    <property name="stamp.solvergen.analysis.pri" value="i-s--s"/>
+    <property name="stamp.solvergen.analysis.sec" value="s-i-p-cn"/>
 
     <!-- Prepare SolverGen I/O directories. -->
     <property name="stamp.solvergen.indir"
@@ -17,14 +17,14 @@
 
     <!-- Register backend-specific analyses. -->
     <property name="stamp.analyses.main"
-	      value="cfl-flat-dlog,facts-dumper-java,cfl-solver-runner-java,dat-rel-parser-java,post-ins-dlog"/>
+	      value="cfl-flat-dlog,facts-dumper-java"/>
 
     <!-- Set backend-specific system properties. -->
     <!-- Facts Dumper options -->
     <property name="stamp.dumper.templates.dir"
-	      location="${stamp.dir}/solvergen/input"/>
+	      location="${stamp.dir}/solvergen/input/${stamp.solvergen.analysis.class}"/>
     <property name="stamp.dumper.outdir"
-	      location="${stamp.out.dir}/input"/>
+	      location="${stamp.out.dir}/input/${stamp.solvergen.analysis.class}"/>
     <property name="stamp.dumper.accrange.printindex" value="false"/>
     <!-- Solver Runner options -->
     <property name="stamp.solvergen.script"
