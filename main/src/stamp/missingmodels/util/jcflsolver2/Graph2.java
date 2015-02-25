@@ -25,6 +25,10 @@ public class Graph2 {
 			return this.graph;
 		}
 		
+		public boolean addEdge(EdgeStruct edge) {
+			return this.addEdge(edge.sourceName, edge.sinkName, edge.symbol, Field.getField(edge.field), edge.weight);
+		}
+		
 		public boolean addEdge(String source, String sink, String symbol, Field field, short weight) {
 			return this.graph.addEdge(source, sink, symbol, field, weight);
 		}
@@ -102,10 +106,14 @@ public class Graph2 {
 	}
 	
 	public Graph2 transform(GraphTransformer transformer) {
-		return transformer.transform(this.c, this.getEdges());
+		return transformer.transform(this.c, this.getEdgeStructs());
 	}
 	
-	public Iterable<EdgeStruct> getEdges() {
+	public Iterable<EdgeStruct> getEdgeStructs() {
+		return new EdgeStructIterator();
+	}
+	
+	public Iterable<Edge> getEdges() {
 		return new EdgeIterator();
 	}
 	
@@ -132,13 +140,17 @@ public class Graph2 {
 		}
 	}
 	
-	public Iterable<EdgeStruct> getEdges(Filter<EdgeStruct> filter) {
+	public Iterable<EdgeStruct> getEdgeStructs(Filter<EdgeStruct> filter) {
+		return new FilteredEdgeStructIterator(filter);
+	}
+	
+	public Iterable<Edge> getEdges(Filter<Edge> filter) {
 		return new FilteredEdgeIterator(filter);
 	}
 
 	public String toString(boolean shord) {
 		StringBuilder sb = new StringBuilder();
-		for(EdgeStruct edge : this.getEdges()) {
+		for(EdgeStruct edge : this.getEdgeStructs()) {
 			sb.append(edge.toString(shord)).append("\n");
 		}
 		return sb.toString();
@@ -218,8 +230,85 @@ public class Graph2 {
 			return false;
 		}
 	}
+
+	public abstract class TransformIterator<X,Y> implements Iterator<Y> {
+		private final Iterator<X> iterator;
+		
+		public TransformIterator(Iterator<X> iterator) {
+			this.iterator = iterator;
+		}
+		
+		public abstract Y transform(X x);
+
+		@Override
+		public boolean hasNext() {
+			return this.iterator.hasNext();
+		}
+
+		@Override
+		public Y next() {
+			return this.transform(this.iterator.next());
+		}
+
+		@Override
+		public void remove() {
+			this.iterator.remove();
+		}
+	}
 	
-	private class EdgeIterator implements Iterator<EdgeStruct>, Iterable<EdgeStruct> {
+	private class EdgeStructIterator extends TransformIterator<Edge,EdgeStruct> implements Iterable<EdgeStruct> {
+		public EdgeStructIterator() {
+			super(new EdgeIterator());
+		}
+
+		@Override
+		public Iterator<EdgeStruct> iterator() {
+			return this;
+		}
+
+		@Override
+		public EdgeStruct transform(Edge edge) {
+			return edge.getStruct();
+		}
+	}
+	
+	public abstract class TransformFilter<X,Y> implements Filter<X> {
+		private final Filter<Y> filter;
+		
+		public TransformFilter(Filter<Y> filter) {
+			this.filter = filter;
+		}
+		
+		public abstract Y transform(X x);
+		
+		@Override
+		public boolean filter(X x) {
+			return this.filter.filter(this.transform(x));
+		}
+	}
+	
+	private class FilteredEdgeStructIterator extends TransformIterator<Edge,EdgeStruct> implements Iterable<EdgeStruct> {
+		public FilteredEdgeStructIterator(Filter<EdgeStruct> filter) {
+			super(new FilteredEdgeIterator(new TransformFilter<Edge,EdgeStruct>(filter) {
+				@Override
+				public EdgeStruct transform(Edge edge) {
+					return edge.getStruct();
+				}
+			}));
+		}
+
+		@Override
+		public Iterator<EdgeStruct> iterator() {
+			return this;
+		}
+
+		@Override
+		public EdgeStruct transform(Edge edge) {
+			return edge.getStruct();
+		}
+	}
+	
+	private class EdgeIterator implements Iterator<Edge>, Iterable<Edge> {
 		private Vertex[] vertices = nodes.values().toArray(new Vertex[]{});
 		private int curVertex = 0;
 		private int curSymbolInt = 0;
@@ -250,10 +339,10 @@ public class Graph2 {
 		}
 		
 		@Override
-		public EdgeStruct next() {
+		public Edge next() {
 			Edge result = this.current.next();
 			this.increment();
-			return result.getStruct();
+			return result;
 		}
 		
 		@Override
@@ -262,17 +351,17 @@ public class Graph2 {
 		}
 
 		@Override
-		public Iterator<EdgeStruct> iterator() {
+		public Iterator<Edge> iterator() {
 			return this;
 		}
 	}
 	
-	public class FilteredEdgeIterator implements Iterator<EdgeStruct>, Iterable<EdgeStruct> {
+	public class FilteredEdgeIterator implements Iterator<Edge>, Iterable<Edge> {
 		private final EdgeIterator iterator = new EdgeIterator();
-		private final Filter<EdgeStruct> filter;
-		private EdgeStruct curEdge;
+		private final Filter<Edge> filter;
+		private Edge curEdge;
 		
-		public FilteredEdgeIterator(Filter<EdgeStruct> filter) {
+		public FilteredEdgeIterator(Filter<Edge> filter) {
 			this.filter = filter;
 			this.increment();
 		}
@@ -283,8 +372,8 @@ public class Graph2 {
 		}
 		
 		@Override
-		public EdgeStruct next() {
-			EdgeStruct result = this.curEdge;
+		public Edge next() {
+			Edge result = this.curEdge;
 			this.increment();
 			return result;
 		}
@@ -295,7 +384,7 @@ public class Graph2 {
 		}
 		
 		@Override
-		public Iterator<EdgeStruct> iterator() {
+		public Iterator<Edge> iterator() {
 			return this;
 		}
 		

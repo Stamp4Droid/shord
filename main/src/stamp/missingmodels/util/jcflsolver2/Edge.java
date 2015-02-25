@@ -20,6 +20,22 @@ public class Edge {
 			fields.put(-1, DEFAULT_FIELD);
 		}
 		
+		public static Field produce(boolean ignoreFields, Field firstField, Field secondField) {
+			if(ignoreFields || firstField.field == secondField.field) {
+				return DEFAULT_FIELD;
+			} else if(firstField.field == DEFAULT_FIELD.field) {
+				return secondField;
+			} else if(secondField.field == DEFAULT_FIELD.field) {
+				return firstField;
+			} else {
+				return null;
+			}
+		}
+		
+		public static Field produce(boolean ignoreFields, Field field) {
+			return ignoreFields ? DEFAULT_FIELD : field;
+		}
+		
 		public static Field getField(int field) {
 			Field fieldData = fields.get(field);
 			if(fieldData == null) {
@@ -166,8 +182,12 @@ public class Edge {
 	public String toString() {
 		return this.toString(false);
 	}
+	
+	public interface IterableWithSize<T> extends Iterable<T> {
+		public int size();
+	}
 
-	public static final Iterable<Edge> EMPTY_EDGES = new Iterable<Edge>() {
+	public static final IterableWithSize<Edge> EMPTY_EDGES = new IterableWithSize<Edge>() {
 		private final Iterator<Edge> emptyIterator = new Iterator<Edge>() {
 			public boolean hasNext() { return false; }
 			public Edge next() { throw new NoSuchElementException(); }
@@ -176,10 +196,12 @@ public class Edge {
 		public Iterator<Edge> iterator() {
 			return emptyIterator;
 		}
+		public int size() { return 0; }
 	};
 
-	public static final class EdgeList implements Iterable<Edge> {
+	public static final class EdgeList implements IterableWithSize<Edge> {
 		private Edge head = null;
+		private int size = 0;
 
 		public Iterator<Edge> iterator() {
 			return new EdgeListIterator();
@@ -189,7 +211,10 @@ public class Edge {
 			Edge edgeWithData = edge;
 			edgeWithData.nextIncomingEdge = this.head;
 			this.head = edgeWithData;
+			this.size++;
 		}
+		
+		public int size() { return this.size; }
 
 		private class EdgeListIterator implements Iterator<Edge> {
 			private Edge current;
@@ -217,7 +242,7 @@ public class Edge {
 		}
 	}
 
-	public static class EdgeSet implements Iterable<Edge> {
+	public static class EdgeSet implements IterableWithSize<Edge> {
 		private static final double MAX_LOAD_FACTOR = 0.9;
 		private static final int INITIAL_TABLE_SIZE = 16;
 
@@ -252,6 +277,8 @@ public class Edge {
 			}
 			return null;
 		}
+		
+		public int size() { return this.size; }
 
 		private void expandCapacity() {
 			Edge[] oldTable = this.table;

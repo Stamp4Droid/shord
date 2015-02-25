@@ -6,13 +6,13 @@ import lpsolve.LpSolveException;
 import shord.project.analyses.JavaAnalysis;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
+import stamp.missingmodels.util.cflsolver.reader.FileRelationReader;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.relation.RelationReader;
-import stamp.missingmodels.util.cflsolver.relation.RelationReader.FileRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
 import chord.project.Chord;
 
 @Chord(name = "cflsolver")

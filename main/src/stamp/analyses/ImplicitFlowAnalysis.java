@@ -6,12 +6,12 @@ import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.ImplicitFlowRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.RelationReader;
 import stamp.missingmodels.util.cflsolver.relation.TaintWithContextRelationManager;
 import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
 import stamp.missingmodels.util.jcflsolver2.RelationManager;
+import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
 import chord.project.Chord;
 
 /**
