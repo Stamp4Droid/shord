@@ -14,8 +14,10 @@ import soot.jimple.spark.ondemand.genericutil.ImmutableStack;
 import chord.project.Chord; 
 import shord.project.analyses.JavaAnalysis;
 
-import java.util.*;
+import com.google.gson.stream.JsonWriter;
 
+import java.util.*;
+import java.io.*;
 /*
  * @author Saswat Anand
  */
@@ -36,6 +38,7 @@ public class IccgOnDemand extends JavaAnalysis
 	private Set<SootMethod> iccMeths = new HashSet();
 	private Map<SootMethod,List<Edge>> callEdges = new HashMap();
 	private OnDemandPTA dpta;
+	private JsonWriter writer;
 
 	public void run() 
 	{
@@ -90,11 +93,21 @@ public class IccgOnDemand extends JavaAnalysis
 		//}
 		
 		SootMethod main = Scene.v().getMethod("<stamp.harness.Main1: void main(java.lang.String[])>");
-		traverse(main, new ArrayList(), new HashSet(), dpta.emptyStack());
-		
+
+		try{
+			String stampOutDir = System.getProperty("stamp.out.dir");
+			this.writer = new JsonWriter(new BufferedWriter(new FileWriter(new File(stampOutDir, "iccg.json"))));
+			writer.setIndent("  ");
+			writer.beginArray();
+			traverse(main, new ArrayList(), new HashSet(), dpta.emptyStack());
+			writer.endArray();
+			writer.close();
+		}catch(IOException e){
+			throw new Error(e);
+		}
 	}
 
-	void traverse(SootMethod m, List<Edge> path, Set<SootMethod> visited, ImmutableStack<Integer> callerContext)
+	void traverse(SootMethod m, List<Edge> path, Set<SootMethod> visited, ImmutableStack<Integer> callerContext) throws IOException
 	{
 		List<Edge> outgoingEdges = callEdges.get(m);
 		if(outgoingEdges == null)
@@ -106,13 +119,13 @@ public class IccgOnDemand extends JavaAnalysis
 
 			//check validity of the calledge
 			Stmt callStmt = e.srcStmt();
-			System.out.println("Query: "+ callStmt + "@" + (path.size()==0 ? "" : path.get(path.size()-1).tgt()) + " callee: "+callee);
+			//System.out.println("Query: "+ callStmt + "@" + (path.size()==0 ? "" : path.get(path.size()-1).tgt()) + " callee: "+callee);
 			ImmutableStack<Integer> calleeContext = dpta.calleeContext(callStmt, callee, callerContext);
 			if(calleeContext == null)
 				continue; //invalid edge
 
 			if(iccMeths.contains(callee)){
-				System.out.println(pathStr(path, e));
+				pathStr(path, e);
 				continue;
 			}
 			Set<SootMethod> visitedCopy = new HashSet();
@@ -127,20 +140,23 @@ public class IccgOnDemand extends JavaAnalysis
 		}
 	}
 
-	String pathStr(List<Edge> path, Edge e)
+	void pathStr(List<Edge> path, Edge e) throws IOException
 	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("{");
+		writer.beginObject();
+
 		String srcAct = path.get(0).tgt().getDeclaringClass().getName();
-		builder.append("\"src\": \""+ srcAct+"\", ");
-		builder.append("\"icc-path\": [");
+		writer.name("src").value(srcAct);
+		
+		writer.name("icc-path");
+		writer.beginArray();
 		for(Edge edge : path)
-			builder.append("\""+edge.srcStmt()+"@"+edge.src()+"\", ");
-		builder.append("\""+e.srcStmt()+"@"+e.src()+"\"");
-		builder.append("], ");
-		builder.append("\"icc-meth\": "+e.tgt());
-		builder.append("}");
-		return builder.toString();
+			writer.value(edge.srcStmt()+"@"+edge.src().getSignature());
+		writer.value(e.srcStmt()+"@"+e.src());
+		writer.endArray();
+
+		writer.name("icc-meth").value(e.tgt().getSignature());
+		
+		writer.endObject();
 	}
 
 	private void setup()

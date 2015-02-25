@@ -19,6 +19,9 @@ import shord.analyses.ContainerTag;
 
 import stamp.app.App;
 
+/*
+ * @author Saswat Anand
+ */
 public class Program
 {
 	private static Program g;

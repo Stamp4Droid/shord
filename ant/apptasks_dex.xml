@@ -136,8 +136,7 @@
 		<pathelement location="${stamp.dir}/lib/jdom.jar"/>
 
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
-		<pathelement location="${stamp.dir}/lib/stamp.chord.jar"/>
-        <pathelement location="${stamp.dir}/lib/automaton.jar"/>
+        <pathelement location="${stamp.dir}/lib/gson-2.3.1.jar"/>
     	<pathelement location="${stamp.dir}/lib/droidrecord_reader.jar"/>
       </classpath>
     </java>
