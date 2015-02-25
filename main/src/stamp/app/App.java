@@ -4,11 +4,6 @@ import java.util.*;
 import java.util.jar.*;
 import java.io.*;
 
-import org.jf.dexlib.ClassDefItem;
-import org.jf.dexlib.ClassDataItem;
-import org.jf.dexlib.TypeIdItem;
-import org.jf.dexlib.DexFile; 
-
 import soot.Modifier;
 import soot.jimple.Stmt;
 import soot.jimple.Constant;
@@ -24,6 +19,12 @@ import soot.Body;
 import soot.Unit;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.scalar.SimpleLocalDefs;
+import soot.dexpler.Util;
+
+import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile;
+import org.jf.dexlib2.iface.ClassDef;
+
 
 import shord.program.Program;
 
@@ -195,16 +196,10 @@ public class App
 		assert apkPath.endsWith(".apk");
 		try{
 			File f = new File(apkPath);
-			DexFile dexFile = new DexFile(f);
-			for (ClassDefItem defItem : dexFile.ClassDefsSection.getItems()) {
-				String className = defItem.getClassType().getTypeDescriptor();
-				if(className.charAt(0) == 'L'){
-					int len = className.length();
-					assert className.charAt(len-1) == ';';
-					className = className.substring(1, len-1);
-				}
-				className = className.replace('/','.');
-				classes.add(className);
+			DexBackedDexFile d = DexFileFactory.loadDexFile(f, 1);
+			for (ClassDef c : d.getClasses()) {
+				String name = Util.dottedClassName(c.getType());
+				classes.add(name);
 			}
 		} catch(IOException e){
 			throw new Error(e);
