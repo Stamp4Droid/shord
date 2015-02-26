@@ -1,5 +1,6 @@
 import android.telephony.TelephonyManager;
 import android.location.LocationManager;
+import android.content.ClipboardManager;
 
 public class Activity
 {
@@ -70,6 +71,8 @@ public class Activity
 			return TelephonyManager.getInstance();
 		else if(name.equals(LOCATION_SERVICE))
 			return LocationManager.getInstance();
+		else if(name.equals(CLIPBOARD_SERVICE))
+			return ClipboardManager.getInstance();
 		else
 			return null;//TODO
 	}
