@@ -1,11 +1,11 @@
 public class ListActivity
 {
-    public  ListActivity() 
+    public  ListActivity()
 	{
 		this.onListItemClick(null, null, 0, 0l);
 		this.onRestoreInstanceState(null);
-		this.onDestroy(); 
-		this.onContentChanged(); 
+		this.onDestroy();
+		this.onContentChanged();
 	}
 
 }

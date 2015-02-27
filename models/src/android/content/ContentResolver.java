@@ -7,10 +7,10 @@ class ContentResolver
 		return provider.query(uri, projection, selection, selectionArgs, sortOrder);
     }
 
-	public final  void registerContentObserver(android.net.Uri uri, boolean notifyForDescendents, final android.database.ContentObserver observer) { 
+	public final  void registerContentObserver(android.net.Uri uri, boolean notifyForDescendents, final android.database.ContentObserver observer) {
 		observer.onChange(true);
 	}
-	
+
 	@STAMP(flows={@Flow(from="uri",to="@return")})
 	public final java.io.InputStream openInputStream(android.net.Uri uri) throws java.io.FileNotFoundException {
 		return new java.io.StampInputStream();

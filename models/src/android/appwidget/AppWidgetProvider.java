@@ -1,7 +1,7 @@
 class AppWidgetProvider
 {
-    public  AppWidgetProvider() 
-	{ 
+    public  AppWidgetProvider()
+	{
 		android.content.Context context = new android.test.mock.MockContext();
 
 		this.onReceive(context, new android.content.Intent());

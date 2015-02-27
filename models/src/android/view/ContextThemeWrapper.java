@@ -1,6 +1,6 @@
 class ContextThemeWrapper
 {
-	public ContextThemeWrapper(android.content.Context base, int themeres) 
+	public ContextThemeWrapper(android.content.Context base, int themeres)
 	{
         super(base);
     }
@@ -9,7 +9,7 @@ class ContextThemeWrapper
         super.attachBaseContext(newBase);
 	}
 
-	public java.lang.Object getSystemService(java.lang.String name) 
+	public java.lang.Object getSystemService(java.lang.String name)
 	{
 		return mBase.getSystemService(name);
 	}

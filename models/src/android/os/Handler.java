@@ -19,7 +19,7 @@ class Handler
 		this.handleMessage(msg);
 	    return true;
 	}
-	
+
 	public final boolean sendMessageDelayed(final android.os.Message msg, final long delayMillis) {
 		try {
 			Thread.sleep(delayMillis);
@@ -42,7 +42,7 @@ class Handler
 		r.run();
 	    return true;
 	}
-	
+
 	public final  boolean postAtTime(final java.lang.Runnable r, long uptimeMillis) {
 		r.run();
 	    return true;
@@ -74,8 +74,8 @@ class Handler
 		msg.handler = this;
 	    return msg;
 	}
-	
-	public final  android.os.Message obtainMessage(int what, int arg1, int arg2) 
+
+	public final  android.os.Message obtainMessage(int what, int arg1, int arg2)
 	{
 	    android.os.Message msg = new android.os.Message();
 	    msg.what = what;
@@ -84,8 +84,8 @@ class Handler
 		msg.handler = this;
 	    return msg;
 	}
-	
-	public final  android.os.Message obtainMessage(int what, java.lang.Object obj) 
+
+	public final  android.os.Message obtainMessage(int what, java.lang.Object obj)
 	{
 	    android.os.Message msg = new android.os.Message();
 	    msg.what = what;
@@ -93,8 +93,8 @@ class Handler
 		msg.handler = this;
 		return msg;
 	}
-	
-	public final  android.os.Message obtainMessage(int what) 
+
+	public final  android.os.Message obtainMessage(int what)
 	{
 		android.os.Message msg = new android.os.Message();
 	    msg.what = what;
@@ -102,7 +102,7 @@ class Handler
 	    return msg;
 	}
 
-	public final  android.os.Message obtainMessage() 
+	public final  android.os.Message obtainMessage()
 	{
 		android.os.Message msg = new android.os.Message();
 		msg.handler = this;

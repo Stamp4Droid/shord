@@ -2,18 +2,18 @@ class Thread
 {
     private Runnable r;
 
-    public  Thread() 
-    { 
+    public  Thread()
+    {
 		this.r = this;
     }
 
-    public  Thread(java.lang.Runnable runnable) 
-    { 
+    public  Thread(java.lang.Runnable runnable)
+    {
 		this.r = runnable;
     }
 
-    public synchronized  void start() 
-    { 
+    public synchronized  void start()
+    {
 		r.run();
     }
 }

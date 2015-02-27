@@ -1,7 +1,7 @@
 class BaseAdapter
 {
-	public  BaseAdapter() 
-	{ 
+	public  BaseAdapter()
+	{
 		this.getCount();
 		this.getView(0, null, null);
 		this.getItem(0);

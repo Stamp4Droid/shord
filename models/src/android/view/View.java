@@ -1,56 +1,56 @@
 class View
 {
-	public  View(android.content.Context context) 
-	{ 
+	public  View(android.content.Context context)
+	{
 		onFinishInflate();
 
 		onMeasure(0,0);
 		onLayout(false, 0, 0, 0, 0);
 		onSizeChanged(0, 0, 0, 0);
-		
+
 		onDraw(null);
-						
+
 		onTouchEvent(null);
 		onTrackballEvent(null);
 		onKeyUp(0, null);
 		onKeyDown(0, null);
-		
+
 		onFocusChanged(false, 0, null);
 		onWindowFocusChanged(false);
-		
+
 		onAttachedToWindow();
 		onDetachedFromWindow();
 		onWindowVisibilityChanged(0);
 	}
 
-    public  void setOnFocusChangeListener(final android.view.View.OnFocusChangeListener l) 
-	{ 
+    public  void setOnFocusChangeListener(final android.view.View.OnFocusChangeListener l)
+	{
 		l.onFocusChange(View.this, false);
 	}
-	
-    // Callback classes and callback setter methods                                                                                                                            
-    public  void setOnClickListener(final android.view.View.OnClickListener l) 
-    { 
+
+    // Callback classes and callback setter methods
+    public  void setOnClickListener(final android.view.View.OnClickListener l)
+    {
 		l.onClick(View.this);
     }
-	
-    public  void setOnLongClickListener(final android.view.View.OnLongClickListener l) 
-    { 
+
+    public  void setOnLongClickListener(final android.view.View.OnLongClickListener l)
+    {
 		l.onLongClick(View.this);
     }
-	
-    public  void setOnCreateContextMenuListener(final android.view.View.OnCreateContextMenuListener l) 
-	{ 
+
+    public  void setOnCreateContextMenuListener(final android.view.View.OnCreateContextMenuListener l)
+	{
 		l.onCreateContextMenu(null, View.this, null);
 	}
 
-    public  void setOnKeyListener(final android.view.View.OnKeyListener l) 
-	{ 
+    public  void setOnKeyListener(final android.view.View.OnKeyListener l)
+	{
 		l.onKey(View.this, 0, null);
 	}
 
-    public  void setOnTouchListener(final android.view.View.OnTouchListener l) 
-	{ 
+    public  void setOnTouchListener(final android.view.View.OnTouchListener l)
+	{
 		l.onTouch(View.this, null);
 	}
 }

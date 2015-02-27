@@ -15,19 +15,19 @@ class LocationManager
         public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.app.PendingIntent intent) {
 
 	}
-	
-	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener) 
-	{ 
+
+	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener)
+	{
 		registerListener(listener);
 	}
 
-	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener, android.os.Looper looper) 
-	{ 
+	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener, android.os.Looper looper)
+	{
 		registerListener(listener);
 	}
 
-	public  void requestLocationUpdates(long minTime, float minDistance, android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper) 
-	{ 
+	public  void requestLocationUpdates(long minTime, float minDistance, android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper)
+	{
 		registerListener(listener);
 	}
 
@@ -35,12 +35,12 @@ class LocationManager
         public  void requestLocationUpdates(long minTime, float minDistance, android.location.Criteria criteria, android.app.PendingIntent intent) {
 	}
 
-	public  void requestSingleUpdate(java.lang.String provider, android.location.LocationListener listener, android.os.Looper looper) 
-	{ 
+	public  void requestSingleUpdate(java.lang.String provider, android.location.LocationListener listener, android.os.Looper looper)
+	{
 		registerListener(listener);
 	}
 
-	public  void requestSingleUpdate(android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper) 
+	public  void requestSingleUpdate(android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper)
 	{
 		registerListener(listener);
 	}
@@ -53,8 +53,8 @@ class LocationManager
 	public  void requestSingleUpdate(android.location.Criteria criteria, android.app.PendingIntent intent) {
 	}
 
-	public  android.location.Location getLastKnownLocation(java.lang.String provider) 
-	{ 
+	public  android.location.Location getLastKnownLocation(java.lang.String provider)
+	{
 		return getLocation();
 	}
 

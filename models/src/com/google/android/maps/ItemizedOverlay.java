@@ -1,7 +1,7 @@
 public class ItemizedOverlay
 {
   @STAMP(flows={@Flow(from="param1",to="this")})
-  public  ItemizedOverlay(android.graphics.drawable.Drawable param1) 
+  public  ItemizedOverlay(android.graphics.drawable.Drawable param1)
   {
 	  this.onTap(null, null);
 	  this.onSnapToItem(0, 0, null, null);
@@ -19,13 +19,13 @@ public class ItemizedOverlay
 
   @STAMP(flows={@Flow(from="this",to="@return")})
   public com.google.android.maps.GeoPoint getCenter() { return new GeoPoint(0, 0); }
-  
+
   @STAMP(flows={@Flow(from="this",to="param1")})
   public void draw(android.graphics.Canvas param1, com.google.android.maps.MapView param2, boolean param3) {}
-  
+
   @STAMP(flows={@Flow(from="this",to="@return")})
   public int getLatSpanE6() { return 13000000; }
-  
+
   @STAMP(flows={@Flow(from="this",to="@return")})
   public int getLonSpanE6() { return 13000000; }
 

@@ -8,10 +8,10 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /*
- * @author Patrick Charles Mutchler 
+ * @author Patrick Charles Mutchler
  * @author Saswat Anand
  */
-public class ApplicationDriver 
+public class ApplicationDriver
 {
 	static List<Callback> callbacks = new ArrayList();
 
@@ -25,7 +25,7 @@ public class ApplicationDriver
 	public static ApplicationDriver getInstance()
 	{
 		return instance;
-	}	
+	}
 
 	public static void registerCallback(Callback cb)
 	{
@@ -40,5 +40,3 @@ public class ApplicationDriver
 		callbacks.get(0).run();
 	}
 }
-
-	

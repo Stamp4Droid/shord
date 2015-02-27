@@ -1,7 +1,7 @@
 class ContextWrapper
 {
 	protected Context mBase;
-	
+
 	public ContextWrapper(android.content.Context base) {
 		mBase = base;
 	}
@@ -12,26 +12,26 @@ class ContextWrapper
 
     private android.content.ContentResolver contentResolver = new android.test.mock.MockContentResolver();
 
-    public  android.content.ContentResolver getContentResolver() 
-    { 
+    public  android.content.ContentResolver getContentResolver()
+    {
 		return contentResolver;
     }
-	
-	public  android.content.Intent registerReceiver(android.content.BroadcastReceiver receiver, android.content.IntentFilter filter) { 
+
+	public  android.content.Intent registerReceiver(android.content.BroadcastReceiver receiver, android.content.IntentFilter filter) {
 		final BroadcastReceiver r = receiver;
 		r.onReceive(ContextWrapper.this, new Intent());
 		return new Intent();
 	}
 
-	public  android.content.Intent registerReceiver(android.content.BroadcastReceiver receiver, android.content.IntentFilter filter, java.lang.String broadcastPermission, android.os.Handler scheduler) 
-	{ 
+	public  android.content.Intent registerReceiver(android.content.BroadcastReceiver receiver, android.content.IntentFilter filter, java.lang.String broadcastPermission, android.os.Handler scheduler)
+	{
 		final BroadcastReceiver r = receiver;
 		r.onReceive(ContextWrapper.this, new Intent());
 		return new Intent();
 	}
 
 	@STAMP(flows = {@Flow(from="!Service.bind",to="service")})
-    public boolean bindService(android.content.Intent service, android.content.ServiceConnection conn, int flags) 
+    public boolean bindService(android.content.Intent service, android.content.ServiceConnection conn, int flags)
 	{
 		final android.content.ServiceConnection c = conn;
 		c.onServiceConnected(null, null);
@@ -39,8 +39,8 @@ class ContextWrapper
 		return true;
     }
 
-	public  android.content.Context getApplicationContext() 
-	{ 
+	public  android.content.Context getApplicationContext()
+	{
 		return this;
 	}
 
@@ -90,9 +90,9 @@ class ContextWrapper
 
     public android.content.pm.PackageManager getPackageManager() {
 		return new android.test.mock.MockPackageManager();
-    }        
+    }
 
-	public  android.content.SharedPreferences getSharedPreferences(java.lang.String name, int mode) { 
+	public  android.content.SharedPreferences getSharedPreferences(java.lang.String name, int mode) {
 		return android.content.StampSharedPreferences.INSTANCE;
 	}
 
@@ -104,7 +104,7 @@ class ContextWrapper
 		return new java.io.FileOutputStream(name);
     }
 
-	public  java.lang.Object getSystemService(java.lang.String name) 
+	public  java.lang.Object getSystemService(java.lang.String name)
 	{
 		return mBase.getSystemService(name);
 	}

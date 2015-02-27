@@ -5,4 +5,3 @@ public abstract class MapActivity
 	  this.onGetMapDataSource();
   }
 }
-

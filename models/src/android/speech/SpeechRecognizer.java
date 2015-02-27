@@ -1,13 +1,13 @@
 public class SpeechRecognizer
 {
 	private android.speech.RecognitionListener myListener;
-	
-	public void setRecognitionListener(android.speech.RecognitionListener listener) 
+
+	public void setRecognitionListener(android.speech.RecognitionListener listener)
 	{
 		myListener = listener;
 	}
 
-	public void startListening(android.content.Intent recognizerIntent) 
+	public void startListening(android.content.Intent recognizerIntent)
 	{
 		java.util.ArrayList<String> list = new java.util.ArrayList<String>();
 		list.add(taintedString());

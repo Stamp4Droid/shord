@@ -3,7 +3,7 @@ import android.location.LocationManager;
 
 public class Activity
 {
-    public  Activity() 
+    public  Activity()
 	{
 		this.onCreate(null);
 		this.onStart();
@@ -59,13 +59,13 @@ public class Activity
 		this.onActionModeFinished(null);
 	}
 
-    public final  android.database.Cursor managedQuery(android.net.Uri uri, java.lang.String[] projection, java.lang.String selection, java.lang.String[] selectionArgs, java.lang.String sortOrder) 
-    { 
+    public final  android.database.Cursor managedQuery(android.net.Uri uri, java.lang.String[] projection, java.lang.String selection, java.lang.String[] selectionArgs, java.lang.String sortOrder)
+    {
 		return getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
     }
 
-	public  java.lang.Object getSystemService(java.lang.String name) 
-	{ 
+	public  java.lang.Object getSystemService(java.lang.String name)
+	{
 		if(name.equals(TELEPHONY_SERVICE))
 			return TelephonyManager.getInstance();
 		else if(name.equals(LOCATION_SERVICE))
@@ -73,19 +73,19 @@ public class Activity
 		else
 			return null;//TODO
 	}
-	
+
 	@STAMP(flows = {@Flow(from="!Activity",to="intent")})
-	public  void startActivityForResult(android.content.Intent intent, int requestCode) 
-	{ 
+	public  void startActivityForResult(android.content.Intent intent, int requestCode)
+	{
 		this.onActivityResult(0, 0, new android.content.Intent());
 	}
 
 	@STAMP(flows = {@Flow(from="!Activity",to="intent")})
-	public  void startActivityForResult(android.content.Intent intent, int requestCode, android.os.Bundle options) 
-	{ 
+	public  void startActivityForResult(android.content.Intent intent, int requestCode, android.os.Bundle options)
+	{
 		this.onActivityResult(0, 0, new android.content.Intent());
 	}
-	
+
 	public final void showDialog (int id)
 	{
 	    this.onCreateDialog(id);

@@ -1,7 +1,7 @@
 class TimerTask
 {
-    protected  TimerTask() 
-    { 
+    protected  TimerTask()
+    {
         run();
     }
 }
