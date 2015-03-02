@@ -1,6 +1,9 @@
+import edu.stanford.stamp.annotation.Inline;
+
 public class ItemizedOverlay
 {
   @STAMP(flows={@Flow(from="param1",to="this")})
+  @Inline
   public  ItemizedOverlay(android.graphics.drawable.Drawable param1)
   {
 	  this.onTap(null, null);
@@ -38,6 +41,7 @@ public class ItemizedOverlay
   @STAMP(flows={@Flow(from="this",to="@return")})
   public Item nextFocus(boolean param1)  { return null; }
 
+  @Inline
   public void setOnFocusChangeListener(final com.google.android.maps.ItemizedOverlay.OnFocusChangeListener listener){
 		listener.onFocusChanged(ItemizedOverlay.this, null);
   }

@@ -1,3 +1,5 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class MyLocationOverlay
 {
 	@STAMP(flows={@Flow(from="$LOCATION",to="@return")})
@@ -12,6 +14,7 @@ class MyLocationOverlay
         return new android.location.Location((String) null);
 	}
 
+	@Inline
 	public synchronized boolean runOnFirstFix(final java.lang.Runnable param1) {
 		param1.run();
 		return true;

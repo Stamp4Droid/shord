@@ -1,6 +1,9 @@
 package android.view;
+import edu.stanford.stamp.annotation.Inline;
+
 public class StampSurfaceHolder implements SurfaceHolder
 {
+	@Inline
 	public   void addCallback(final android.view.SurfaceHolder.Callback callback)
 	{
 		callback.surfaceCreated(StampSurfaceHolder.this);
@@ -13,7 +16,7 @@ public class StampSurfaceHolder implements SurfaceHolder
 	public   boolean isCreating(){ throw new RuntimeException("Stub!"); }
 
 	@java.lang.Deprecated()
-		public   void setType(int type){ throw new RuntimeException("Stub!"); }
+	public   void setType(int type){ throw new RuntimeException("Stub!"); }
 
 	public   void setFixedSize(int width, int height){ throw new RuntimeException("Stub!"); }
 

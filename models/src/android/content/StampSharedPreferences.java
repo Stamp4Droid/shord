@@ -1,5 +1,7 @@
 package android.content;
 
+import edu.stanford.stamp.annotation.Inline;
+
 public class StampSharedPreferences implements SharedPreferences
 {
 	public static final StampSharedPreferences INSTANCE = new StampSharedPreferences();
@@ -45,6 +47,7 @@ public class StampSharedPreferences implements SharedPreferences
 		return new StampSharedPreferencesEditor();
 	}
 
+	@Inline
 	public void registerOnSharedPreferenceChangeListener(final android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
 		listener.onSharedPreferenceChanged(StampSharedPreferences.this, null);
 	}

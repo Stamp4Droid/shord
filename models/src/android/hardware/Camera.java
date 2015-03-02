@@ -1,3 +1,5 @@
+import edu.stanford.stamp.annotation.Inline;
+
 public class Camera
 {
     @STAMP(flows = {@Flow(from="$CAMERA.picture",to="@return")})
@@ -12,6 +14,7 @@ public class Camera
 
     public static android.hardware.Camera open() {  return new Camera(); }
 
+	@Inline
     public final void takePicture(android.hardware.Camera.ShutterCallback shutter,
 								  final android.hardware.Camera.PictureCallback raw,
 								  final android.hardware.Camera.PictureCallback jpeg) {
@@ -19,6 +22,7 @@ public class Camera
 		jpeg.onPictureTaken(getPicture(), Camera.this);
     }
 
+	@Inline
     public final  void takePicture(android.hardware.Camera.ShutterCallback shutter,
 								   final android.hardware.Camera.PictureCallback raw,
 								   final android.hardware.Camera.PictureCallback postview,
@@ -28,16 +32,19 @@ public class Camera
 		jpeg.onPictureTaken(getPicture(), Camera.this);
     }
 
+	@Inline
 	public final  void setPreviewCallback(final android.hardware.Camera.PreviewCallback cb)
 	{
 		cb.onPreviewFrame(getPicture(), Camera.this);
 	}
 
+	@Inline
 	public final  void setOneShotPreviewCallback(final android.hardware.Camera.PreviewCallback cb)
 	{
 		cb.onPreviewFrame(getPicture(), Camera.this);
 	}
 
+	@Inline
 	public final  void setPreviewCallbackWithBuffer(final android.hardware.Camera.PreviewCallback cb)
 	{
 		cb.onPreviewFrame(getPicture(), Camera.this);

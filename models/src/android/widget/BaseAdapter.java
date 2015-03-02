@@ -1,5 +1,8 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class BaseAdapter
 {
+	@Inline
 	public  BaseAdapter()
 	{
 		this.getCount();

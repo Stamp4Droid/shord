@@ -1,5 +1,8 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class Application
 {
+	@Inline
 	public Application()
 	{
 		super(null);

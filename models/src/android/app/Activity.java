@@ -1,8 +1,10 @@
 import android.telephony.TelephonyManager;
 import android.location.LocationManager;
+import edu.stanford.stamp.annotation.Inline;
 
 public class Activity
 {
+	@Inline
     public  Activity()
 	{
 		this.onCreate(null);
@@ -75,22 +77,26 @@ public class Activity
 	}
 
 	@STAMP(flows = {@Flow(from="!Activity",to="intent")})
+	@Inline
 	public  void startActivityForResult(android.content.Intent intent, int requestCode)
 	{
 		this.onActivityResult(0, 0, new android.content.Intent());
 	}
 
 	@STAMP(flows = {@Flow(from="!Activity",to="intent")})
+	@Inline
 	public  void startActivityForResult(android.content.Intent intent, int requestCode, android.os.Bundle options)
 	{
 		this.onActivityResult(0, 0, new android.content.Intent());
 	}
 
+	@Inline
 	public final void showDialog (int id)
 	{
 	    this.onCreateDialog(id);
 	}
 
+	@Inline
     public final void runOnUiThread(final java.lang.Runnable action) {
 		action.run();
     }

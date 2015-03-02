@@ -1,3 +1,5 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class AccountManager
 {
     private static AccountManager accountManager = new AccountManager();
@@ -52,6 +54,7 @@ class AccountManager
 	    }
     }
 
+	@Inline
     private android.accounts.AccountManagerFuture<android.os.Bundle> registerAccountManagerCallback(final android.accounts.AccountManagerCallback<android.os.Bundle> callback)
     {
     	final StampAccountManagerFuture future = new StampAccountManagerFuture();
@@ -59,36 +62,43 @@ class AccountManager
     	return future;
     }
 
+	@Inline
     public  android.accounts.AccountManagerFuture<android.os.Bundle> getAuthToken(android.accounts.Account account, java.lang.String authTokenType, android.os.Bundle options, android.app.Activity activity, android.accounts.AccountManagerCallback<android.os.Bundle> callback, android.os.Handler handler)
     {
     	return registerAccountManagerCallback(callback);
     }
 
+	@Inline
     public  android.accounts.AccountManagerFuture<android.os.Bundle> getAuthToken(android.accounts.Account account, java.lang.String authTokenType, boolean notifyAuthFailure, android.accounts.AccountManagerCallback<android.os.Bundle> callback, android.os.Handler handler)
     {
     	return registerAccountManagerCallback(callback);
     }
 
+	@Inline
     public  android.accounts.AccountManagerFuture<android.os.Bundle> addAccount(java.lang.String accountType, java.lang.String authTokenType, java.lang.String[] requiredFeatures, android.os.Bundle addAccountOptions, android.app.Activity activity, android.accounts.AccountManagerCallback<android.os.Bundle> callback, android.os.Handler handler)
     {
     	return registerAccountManagerCallback(callback);
     }
 
+	@Inline
     public  android.accounts.AccountManagerFuture<android.os.Bundle> confirmCredentials(android.accounts.Account account, android.os.Bundle options, android.app.Activity activity, android.accounts.AccountManagerCallback<android.os.Bundle> callback, android.os.Handler handler)
     {
     	return registerAccountManagerCallback(callback);
     }
 
+	@Inline
     public  android.accounts.AccountManagerFuture<android.os.Bundle> updateCredentials(android.accounts.Account account, java.lang.String authTokenType, android.os.Bundle options, android.app.Activity activity, android.accounts.AccountManagerCallback<android.os.Bundle> callback, android.os.Handler handler)
     {
     	return registerAccountManagerCallback(callback);
     }
 
+	@Inline
     public  android.accounts.AccountManagerFuture<android.os.Bundle> editProperties(java.lang.String accountType, android.app.Activity activity, android.accounts.AccountManagerCallback<android.os.Bundle> callback, android.os.Handler handler)
     {
     	return registerAccountManagerCallback(callback);
     }
 
+	@Inline
     public  android.accounts.AccountManagerFuture<android.os.Bundle> getAuthTokenByFeatures(java.lang.String accountType, java.lang.String authTokenType, java.lang.String[] features, android.app.Activity activity, android.os.Bundle addAccountOptions, android.os.Bundle getAuthTokenOptions, android.accounts.AccountManagerCallback<android.os.Bundle> callback, android.os.Handler handler)
     {
     	return registerAccountManagerCallback(callback);

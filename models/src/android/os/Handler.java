@@ -1,25 +1,32 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class Handler
 {
+	@Inline
 	public final  boolean sendEmptyMessageAtTime(int what, long uptimeMillis) {
 		this.handleMessage(null);
 	    return true;
 	}
 
+	@Inline
 	public final  boolean sendEmptyMessageDelayed(int what, long delayMillis) {
 		this.handleMessage(null);
 	    return true;
 	}
 
+	@Inline
 	public final boolean sendEmptyMessage(int what) {
 		this.handleMessage(null);
 	    return true;
 	}
 
+	@Inline
 	public final boolean sendMessage(final android.os.Message msg) {
 		this.handleMessage(msg);
 	    return true;
 	}
 
+	@Inline
 	public final boolean sendMessageDelayed(final android.os.Message msg, final long delayMillis) {
 		try {
 			Thread.sleep(delayMillis);
@@ -28,38 +35,43 @@ class Handler
 		return true;
 	}
 
+	@Inline
 	public  boolean sendMessageAtTime(final android.os.Message msg, long uptimeMillis) {
 		this.handleMessage(msg);
 	    return true;
 	}
 
+	@Inline
 	public final  boolean sendMessageAtFrontOfQueue(final android.os.Message msg) {
 		this.handleMessage(msg);
 	    return true;
 	}
 
+	@Inline
 	public final  boolean post(final java.lang.Runnable r) {
 		r.run();
 	    return true;
 	}
 
+	@Inline
 	public final  boolean postAtTime(final java.lang.Runnable r, long uptimeMillis) {
 		r.run();
 	    return true;
 	}
 
-
+	@Inline
 	public final  boolean postAtTime(final java.lang.Runnable r, java.lang.Object token, long uptimeMillis) {
 		r.run();
 	    return true;
 	}
 
-
+	@Inline
 	public final  boolean postDelayed(final java.lang.Runnable r, long delayMillis) {
 		r.run();
 	    return true;
 	}
 
+	@Inline
 	public final  boolean postAtFrontOfQueue(final java.lang.Runnable r) {
 		r.run();
 	    return true;

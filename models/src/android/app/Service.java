@@ -1,5 +1,8 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class Service
 {
+	@Inline
 	public  Service()
 	{
 		super((android.content.Context)null);

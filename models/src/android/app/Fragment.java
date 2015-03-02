@@ -1,5 +1,8 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class Fragment
 {
+	@Inline
 	public  Fragment()
 	{
 		this.onHiddenChanged(false);
