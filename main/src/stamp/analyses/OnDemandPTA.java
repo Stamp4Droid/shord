@@ -1,21 +1,27 @@
 package stamp.analysis;
 
+import soot.G;
 import soot.Scene;
 import soot.SootMethod;
+import soot.SootField;
 import soot.Local;
+import soot.PointsToSet;
 import soot.jimple.Stmt;
 import soot.jimple.StaticInvokeExpr;
 import soot.jimple.SpecialInvokeExpr;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.spark.sets.EmptyPointsToSet;
 import soot.jimple.spark.pag.PAG;
-import soot.jimple.spark.pag.LocalVarNode;
+import soot.jimple.spark.pag.VarNode;
 import soot.jimple.spark.ondemand.pautil.ContextSensitiveInfo;
 import soot.jimple.spark.ondemand.genericutil.ImmutableStack;
 import soot.jimple.spark.ondemand.DemandCSPointsTo;
 import soot.jimple.spark.ondemand.HeuristicType;
 import soot.jimple.spark.ondemand.TerminateEarlyException;
+import soot.jimple.spark.ondemand.AllocAndContextSet;
 import soot.jimple.toolkits.callgraph.Edge;
+
 
 import java.util.*; 
 
@@ -102,6 +108,56 @@ public class OnDemandPTA extends DemandCSPointsTo
 		}
 		return false;
 		*/
+	}
+
+    /**
+     * Computes the refined set of reaching objects for l.                                                            
+     * Returns <code>null</code> if refinement failed.
+     */
+    public PointsToSet pointsToSetFor(Local l, ImmutableStack<Integer> context) {
+        VarNode v = pag.findLocalVarNode(l);
+        if (v == null) {
+			//no reaching objects
+			return EmptyPointsToSet.v();
+        }
+
+		clearState();
+        // must reset the refinement heuristic for each query
+        this.fieldCheckHeuristic = HeuristicType.getHeuristic(
+															  heuristicType, pag.getTypeManager(), getMaxPasses());
+        doPointsTo = true;
+        numPasses = 0;
+        PointsToSet contextSensitiveResult = null;
+        while (true) {
+            numPasses++;
+            if (DEBUG_PASS != -1 && numPasses > DEBUG_PASS) {
+                break;
+            }
+            if (numPasses > maxPasses) {
+                break;
+            }
+            if (DEBUG) {
+                G.v().out.println("PASS " + numPasses);
+                G.v().out.println(fieldCheckHeuristic);
+            }
+            clearState();
+            pointsTo = new AllocAndContextSet();
+            try {
+                refineP2Set(new VarAndContext(v, context), null);
+                contextSensitiveResult = pointsTo;
+            } catch (TerminateEarlyException e) {
+            }
+            if (!fieldCheckHeuristic.runNewPass()) {
+                break;
+            }
+        }
+        return contextSensitiveResult;
+    }
+	
+	public PointsToSet pointsToSetFor(SootField f)
+	{
+		assert f.isStatic() : f.getSignature();
+		return pag.reachingObjects(f);
 	}
 	
 	ImmutableStack<Integer> emptyStack()

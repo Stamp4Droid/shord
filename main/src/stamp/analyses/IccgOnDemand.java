@@ -1,18 +1,26 @@
 package stamp.analysis;
 
 import soot.Local;
+import soot.Value;
 import soot.Scene;
 import soot.SootMethod;
-import soot.Transform;
-import soot.PackManager;
+import soot.SootClass;
+import soot.SootField;
 import soot.MethodOrMethodContext;
+import soot.PointsToSet;
 import soot.jimple.Stmt;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.spark.ondemand.genericutil.ImmutableStack;
+import soot.jimple.spark.ondemand.AllocAndContextSet;
+import soot.jimple.spark.ondemand.AllocAndContext;
+import soot.jimple.spark.pag.AllocNode;
+import soot.toolkits.scalar.Pair;
 
 import chord.project.Chord; 
+
 import shord.project.analyses.JavaAnalysis;
+import shord.program.Program;
 
 import com.google.gson.stream.JsonWriter;
 
@@ -37,6 +45,7 @@ public class IccgOnDemand extends JavaAnalysis
 
 	private Set<SootMethod> iccMeths = new HashSet();
 	private Map<SootMethod,List<Edge>> callEdges = new HashMap();
+	private List<Pair<String,PointsToSet>> widgetToPointsToSetList = new ArrayList();
 	private OnDemandPTA dpta;
 	private JsonWriter writer;
 
@@ -52,14 +61,24 @@ public class IccgOnDemand extends JavaAnalysis
 		}
 
 		List<SootMethod> workList = new ArrayList();
-		for(Iterator<MethodOrMethodContext> it = Scene.v().getReachableMethods().listener(); it.hasNext();){
-			SootMethod m = (SootMethod) it.next();
-			if(iccMeths.contains(m)){
-				System.out.println("R: "+m);			
-				workList.add(m);
+		try{
+			String stampOutDir = System.getProperty("stamp.out.dir");
+			PrintWriter reachableMethodsWriter = new PrintWriter(new BufferedWriter(new FileWriter(new File(stampOutDir, "reachablemethods.txt"))));
+			for(Iterator<MethodOrMethodContext> it = Scene.v().getReachableMethods().listener(); it.hasNext();){
+				SootMethod m = (SootMethod) it.next();
+				reachableMethodsWriter.println(m);
+				if(iccMeths.contains(m)){
+					System.out.println("R: "+m);			
+					workList.add(m);
+				}
 			}
+			reachableMethodsWriter.close();
+		}catch(IOException e){
+			throw new Error(e);
 		}
 		
+		mapWidgetToAllocNode();
+
 		CallGraph cg = Scene.v().getCallGraph();
 		Set<SootMethod> visited = new HashSet();
 		while(!workList.isEmpty()){
@@ -83,6 +102,7 @@ public class IccgOnDemand extends JavaAnalysis
 					}
 					outgoingEdges.add(edge);
 					//System.out.println("success: "+src+" "+stmt+" "+tgt);
+					System.out.println("XY: "+src+" "+tgt);
 				} else
 					;//System.out.println("fail: "+src+" "+stmt+" "+tgt);
 			}
@@ -99,7 +119,7 @@ public class IccgOnDemand extends JavaAnalysis
 			this.writer = new JsonWriter(new BufferedWriter(new FileWriter(new File(stampOutDir, "iccg.json"))));
 			writer.setIndent("  ");
 			writer.beginArray();
-			traverse(main, new ArrayList(), new HashSet(), dpta.emptyStack());
+			traverse(main, new ArrayList(), new HashSet(), dpta.emptyStack(), new ArrayList());
 			writer.endArray();
 			writer.close();
 		}catch(IOException e){
@@ -107,7 +127,18 @@ public class IccgOnDemand extends JavaAnalysis
 		}
 	}
 
-	void traverse(SootMethod m, List<Edge> path, Set<SootMethod> visited, ImmutableStack<Integer> callerContext) throws IOException
+	void mapWidgetToAllocNode()
+	{
+		SootClass gClass = Scene.v().getSootClass("stamp.harness.G");
+		for(SootField field : gClass.getFields()){
+			assert field.isStatic() : field.toString();
+			PointsToSet pt = dpta.pointsToSetFor(field);
+			String fieldSig = field.getSignature();
+			widgetToPointsToSetList.add(new Pair(fieldSig, pt));
+		}
+	}
+
+	void traverse(SootMethod m, List<Edge> path, Set<SootMethod> visited, ImmutableStack<Integer> callerContext, List<Set<String>> widgets) throws IOException
 	{
 		List<Edge> outgoingEdges = callEdges.get(m);
 		if(outgoingEdges == null)
@@ -119,13 +150,31 @@ public class IccgOnDemand extends JavaAnalysis
 
 			//check validity of the calledge
 			Stmt callStmt = e.srcStmt();
-			//System.out.println("Query: "+ callStmt + "@" + (path.size()==0 ? "" : path.get(path.size()-1).tgt()) + " callee: "+callee);
+			System.out.println("Query: "+ callStmt + "@" + (path.size()==0 ? "" : path.get(path.size()-1).tgt()) + " callee: "+callee);
 			ImmutableStack<Integer> calleeContext = dpta.calleeContext(callStmt, callee, callerContext);
 			if(calleeContext == null)
 				continue; //invalid edge
 
+			Set<String> ws = null;
+			if(callee.getSubSignature().equals("void onClick(android.view.View)")){
+				Value v = callStmt.getInvokeExpr().getArg(0);
+				if(v instanceof Local){
+					PointsToSet pt = dpta.pointsToSetFor((Local) v, callerContext);
+					if(pt != null && !pt.isEmpty()){
+						for(Pair<String,PointsToSet> pair : widgetToPointsToSetList){
+							if(pt.hasNonEmptyIntersection(pair.getO2())){
+								if(ws == null)
+									ws = new HashSet();
+								ws.add(pair.getO1());
+								//System.out.println("onClick: "+pair.getO1());
+							}
+						}
+					}
+				}
+			}
+
 			if(iccMeths.contains(callee)){
-				pathStr(path, e);
+				pathStr(path, e, widgets);
 				continue;
 			}
 			Set<SootMethod> visitedCopy = new HashSet();
@@ -136,22 +185,37 @@ public class IccgOnDemand extends JavaAnalysis
 			pathCopy.addAll(path);
 			pathCopy.add(e);
 
-			traverse(callee, pathCopy, visitedCopy, calleeContext);
+			List<Set<String>> widgetsCopy = new ArrayList();
+			widgetsCopy.addAll(widgets);
+			if(ws != null)
+				widgetsCopy.add(ws);
+
+			traverse(callee, pathCopy, visitedCopy, calleeContext, widgetsCopy);
 		}
 	}
 
-	void pathStr(List<Edge> path, Edge e) throws IOException
+	void pathStr(List<Edge> path, Edge e, List<Set<String>> widgets) throws IOException
 	{
 		writer.beginObject();
 
 		String srcAct = path.get(0).tgt().getDeclaringClass().getName();
 		writer.name("src").value(srcAct);
 		
-		writer.name("icc-path");
+		writer.name("callstack");
 		writer.beginArray();
 		for(Edge edge : path)
 			writer.value(edge.srcStmt()+"@"+edge.src().getSignature());
 		writer.value(e.srcStmt()+"@"+e.src());
+		writer.endArray();
+
+		writer.name("widget-path");
+		writer.beginArray();
+		for(Set<String> ws : widgets){
+			writer.beginArray();
+			for(String w : ws)
+				writer.value(w);
+			writer.endArray();
+		}
 		writer.endArray();
 
 		writer.name("icc-meth").value(e.tgt().getSignature());
@@ -161,18 +225,8 @@ public class IccgOnDemand extends JavaAnalysis
 
 	private void setup()
 	{
-		//run spark
-		Transform sparkTransform = PackManager.v().getTransform( "cg.spark" );
-		String defaultOptions = sparkTransform.getDefaultOptions();
-		StringBuilder options = new StringBuilder();
-		options.append("enabled:true");
-		options.append(" verbose:true");
-		//options.append(" dump-answer:true");
-		options.append(" "+defaultOptions);
-		System.out.println("spark options: "+options.toString());
-		sparkTransform.setDefaultOptions(options.toString());
-		sparkTransform.apply();	
-		
+		Program.g().runSpark();
+
 		this.dpta = OnDemandPTA.makeDefault();
 	}
 }

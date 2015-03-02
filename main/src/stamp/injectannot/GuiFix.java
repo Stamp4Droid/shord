@@ -10,23 +10,20 @@ import soot.Local;
 import soot.Value;
 import soot.jimple.Jimple;
 import soot.jimple.Stmt;
-import soot.toolkits.graph.ExceptionalUnitGraph;
-import soot.toolkits.scalar.SimpleLocalDefs;
 import soot.jimple.Constant;
 import soot.jimple.IntConstant;
 import soot.jimple.InvokeExpr;
 import soot.jimple.AssignStmt;
 import soot.util.Chain;
-import soot.util.NumberedSet;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Enumeration;
-import java.util.jar.JarFile;
-import java.util.jar.JarEntry;
+import java.util.Set;
+import java.util.HashSet;
+
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,6 +34,8 @@ import stamp.app.Widget;
 import shord.project.analyses.JavaAnalysis;
 import shord.program.Program;
 
+import stamp.analyses.InterProcReachingDefAnalysis;
+
 import chord.project.Chord;
 /*
  * @author Saswat Anand
@@ -45,7 +44,7 @@ import chord.project.Chord;
 public class GuiFix extends JavaAnalysis
 {
 	private Map<Integer,List<String>> viewIdToWidgetFlds = new HashMap();
-	private SimpleLocalDefs sld = null;
+	private InterProcReachingDefAnalysis iprda = null;
 	private Body body;
 	private SootClass gClass;
 
@@ -80,9 +79,11 @@ public class GuiFix extends JavaAnalysis
 
 	public void run()
 	{
-		NumberedSet fklasses = frameworkClasses();
-		for(SootClass klass : Program.g().getClasses()){
-			if(fklasses.contains(klass))
+		this.iprda = new InterProcReachingDefAnalysis();
+
+		Program prog = Program.g();
+		for(SootClass klass : prog.getClasses()){
+			if(prog.isFrameworkClass(klass))
 				continue;
 			for(SootMethod method : klass.getMethods()){
 				if(!method.isConcrete())
@@ -106,69 +107,36 @@ public class GuiFix extends JavaAnalysis
 			if(!callee.getSubSignature().equals("android.view.View findViewById(int)"))
 				continue;
 
-			int viewId = viewId(ie.getArg(0), stmt);
-			List<String> widgetFlds = viewIdToWidgetFlds.get(viewId);
-			if(widgetFlds == null)
+			Set<String> widgetFlds = getWidgetFlds(ie.getArg(0), stmt, body.getMethod());
+			if(widgetFlds.isEmpty())
 				continue;
 			Local leftOp = (Local) ((AssignStmt) stmt).getLeftOp();
 			for(String subsig : widgetFlds){
-				System.out.println("%% "+viewId+" "+subsig);
 				SootField fld = gClass.getField(subsig);
 				Stmt loadStmt = Jimple.v().newAssignStmt(leftOp, Jimple.v().newStaticFieldRef(fld.makeRef()));
 				units.insertBefore(loadStmt, stmt);
 			}
 			units.remove(stmt);
 		}
-		sld = null;
 	}
 
-	private int viewId(Value arg, Stmt stmt)
+	private Set<String> getWidgetFlds(Value arg, Stmt stmt, SootMethod method)
 	{
-		int viewId = -1;
+		Set<String> widgetFlds = new HashSet();
 		if(arg instanceof Constant){
-			viewId = ((IntConstant) arg).value;
+			int viewId = ((IntConstant) arg).value;
+			List<String> ws = viewIdToWidgetFlds.get(viewId);
+			if(ws != null)
+				widgetFlds.addAll(ws);
 		} else {
-			if(sld == null)
-				sld = new SimpleLocalDefs(new ExceptionalUnitGraph(body));
-			
-			for(Unit def : sld.getDefsOfAt((Local) arg, stmt)){
-				if(!(def instanceof AssignStmt))
-					continue;
-				Value rhs = ((AssignStmt) def).getRightOp();
-				if(rhs instanceof IntConstant){
-					viewId = ((IntConstant) rhs).value;
-					break;
-				}
+			Set<Integer> viewIds = iprda.computeReachingDefsFor((Local) arg, stmt, method);
+			for(Integer viewId : viewIds){
+				List<String> ws = viewIdToWidgetFlds.get(viewId);
+				if(ws != null)
+					widgetFlds.addAll(ws);
 			}
 		}
-		return viewId;
+		return widgetFlds;
 	}
 
-	NumberedSet frameworkClasses()
-	{
-		Scene scene = Scene.v();
-		NumberedSet frameworkClasses = new NumberedSet(scene.getClassNumberer());
-		String androidJar = System.getProperty("stamp.android.jar");
-		JarFile archive;
-		try{
-			archive = new JarFile(androidJar);
-		}catch(IOException e){
-			throw new Error(e);
-		}
-		for (Enumeration entries = archive.entries(); entries.hasMoreElements();) {
-			JarEntry entry = (JarEntry) entries.nextElement();
-			String entryName = entry.getName();
-			int extensionIndex = entryName.lastIndexOf('.');
-			if (extensionIndex >= 0) {
-				String entryExtension = entryName.substring(extensionIndex);
-				if (".class".equals(entryExtension)) {
-					entryName = entryName.substring(0, extensionIndex);
-					entryName = entryName.replace('/', '.');
-					if(scene.containsClass(entryName))
-						frameworkClasses.add(scene.getSootClass(entryName));
-				}
-			}
-		}
-		return frameworkClasses;
-	}
 }

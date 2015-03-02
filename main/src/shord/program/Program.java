@@ -11,7 +11,10 @@ import soot.jimple.toolkits.callgraph.CallGraphBuilder;
 import soot.tagkit.Tag;
 import soot.toolkits.scalar.LocalSplitter;
 import soot.dexpler.DalvikThrowAnalysis;
+import soot.util.NumberedSet;
 
+import java.util.jar.JarFile;
+import java.util.jar.JarEntry;
 import java.util.*;
 import java.io.*;
 
@@ -26,6 +29,7 @@ public class Program
 {
 	private static Program g;
 	private SootMethod mainMethod;
+	private NumberedSet frameworkClasses;
 	private App app;
 
 	public static Program g()
@@ -121,6 +125,24 @@ public class Program
 		CallGraphBuilder cg = new CallGraphBuilder(DumbPointerAnalysis.v());
 		cg.build();
 	}
+
+	public void runSpark()
+	{
+		Scene.v().releaseCallGraph();
+		Scene.v().releasePointsToAnalysis();
+		G.v().MethodPAG_methodToPag.clear();
+		//run spark
+		Transform sparkTransform = PackManager.v().getTransform( "cg.spark" );
+		String defaultOptions = sparkTransform.getDefaultOptions();
+		StringBuilder options = new StringBuilder();
+		options.append("enabled:true");
+		options.append(" verbose:true");
+		//options.append(" dump-answer:true");
+		options.append(" "+defaultOptions);
+		System.out.println("spark options: "+options.toString());
+		sparkTransform.setDefaultOptions(options.toString());
+		sparkTransform.apply();	
+	}
 	
 	public void printAllClasses()
 	{
@@ -189,5 +211,41 @@ public class Program
 			System.out.println(app.toString());
 		}
 		return app;
+	}
+
+	public NumberedSet frameworkClasses()
+	{
+		if(frameworkClasses != null)
+			return frameworkClasses;
+
+		Scene scene = Scene.v();
+		frameworkClasses = new NumberedSet(scene.getClassNumberer());
+		String androidJar = System.getProperty("stamp.android.jar");
+		JarFile archive;
+		try{
+			archive = new JarFile(androidJar);
+		}catch(IOException e){
+			throw new Error(e);
+		}
+		for (Enumeration entries = archive.entries(); entries.hasMoreElements();) {
+			JarEntry entry = (JarEntry) entries.nextElement();
+			String entryName = entry.getName();
+			int extensionIndex = entryName.lastIndexOf('.');
+			if (extensionIndex >= 0) {
+				String entryExtension = entryName.substring(extensionIndex);
+				if (".class".equals(entryExtension)) {
+					entryName = entryName.substring(0, extensionIndex);
+					entryName = entryName.replace('/', '.');
+					if(scene.containsClass(entryName))
+						frameworkClasses.add(scene.getSootClass(entryName));
+				}
+			}
+		}
+		return frameworkClasses;
+	}
+	
+	public boolean isFrameworkClass(SootClass k)
+	{
+		return frameworkClasses().contains(k);
 	}
 }
