@@ -49,6 +49,15 @@ public class Edge {
 		private Field(int field) {
 			this.field = field;
 		}
+		
+		public String toString(boolean shord) {
+			return Integer.toString(this.field);
+		}
+		
+		@Override
+		public String toString() {
+			return this.toString(false);
+		}
 	}
 	
 	public static class EdgeStruct {

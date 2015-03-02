@@ -67,7 +67,8 @@ public class ShordRelationReader implements RelationReader {
 			}
 		};
 		
-		return gt.transform(gb.toGraph());
+		//return gt.transform(gb.toGraph());
+		return gb.toGraph();
 	}
 	
 	private static void readRelation(GraphBuilder gb, Relation relation) {

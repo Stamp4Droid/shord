@@ -9,15 +9,20 @@ import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
 import stamp.missingmodels.util.jcflsolver2.Edge.Field;
 import stamp.missingmodels.util.jcflsolver2.Graph2.GraphBuilder;
 import stamp.missingmodels.util.jcflsolver2.Graph2.GraphTransformer;
+import stamp.missingmodels.util.jcflsolver2.TypeFilter.GraphTypeFilter;
 
 public class ReachabilitySolver2 implements GraphTransformer {
 	private GraphBuilder g;
 	private BucketHeap worklist;
+	private TypeFilter filter;
 	
 	private int count;
 	private long time;
 	
 	private void addEdgeHelper(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput) {
+		if(this.filter != null && !this.filter.filter(symbol, source, sink)) {
+			return;
+		}
 		if(this.g.addEdge(source, sink, symbol, field, weight, firstInput, secondInput, this.worklist)) {
 			this.count++;
 		}
@@ -69,12 +74,16 @@ public class ReachabilitySolver2 implements GraphTransformer {
 	public Graph2 transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges) {
 		this.g = new GraphBuilder(c);
 		this.worklist = new BucketHeap();
+		
 		this.time = System.currentTimeMillis();
 		this.count = 0;
 		
 		for(EdgeStruct edge : edges) {
 			this.addEdgeHelper(this.g.getVertex(edge.sourceName), this.g.getVertex(edge.sinkName), c.getSymbol(edge.symbol), Field.getField(edge.field), edge.weight, null, null);
 		}
+		
+		// initialize filter after adding edges so graph vertices are initialized
+		this.filter = new GraphTypeFilter(this.g.getGraph());
 		
 		System.out.println("Initial num of edges = " + this.worklist.size());
 		this.time = System.currentTimeMillis();

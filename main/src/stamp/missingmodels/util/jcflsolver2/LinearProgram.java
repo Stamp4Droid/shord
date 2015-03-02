@@ -361,7 +361,8 @@ public class LinearProgram<T> {
 		
 		try {
 			new File("sol.txt").delete();
-			Process p = Runtime.getRuntime().exec("./scip-3.1.0.linux.x86_64.gnu.opt.spx -l sol.txt -f ilp.mps -q");
+			//Process p = Runtime.getRuntime().exec("./scip-3.1.0.linux.x86_64.gnu.opt.spx -l sol.txt -f ilp.mps -q");
+			Process p = Runtime.getRuntime().exec("./lib/scip -l sol.txt -f ilp.mps -q");
 			try {
 				p.waitFor();
 			} catch(Exception e) {

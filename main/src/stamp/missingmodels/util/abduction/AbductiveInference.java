@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import lpsolve.LpSolveException;
+import stamp.analyses.MissingRefRefAnalysis;
 import stamp.missingmodels.util.abduction.LinearProgram.Coefficient;
 import stamp.missingmodels.util.abduction.LinearProgram.ConstraintType;
 import stamp.missingmodels.util.abduction.LinearProgram.LinearProgramResult;
@@ -170,6 +171,7 @@ public class AbductiveInference {
 	}
 
 	private void processEdge(Edge edge) {
+		MissingRefRefAnalysis.graphEdges.add(edge);
 		if(this.baseEdges.contains(edge)) {
 			return;
 		}

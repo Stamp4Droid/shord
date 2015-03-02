@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Set;
 
 import lpsolve.LpSolveException;
+import stamp.analyses.MissingRefRefAnalysis;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.AuxProduction;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.BinaryProduction;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.UnaryProduction;
-import stamp.missingmodels.util.jcflsolver2.Edge.EdgeSet;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
 import stamp.missingmodels.util.jcflsolver2.Edge.Field;
 import stamp.missingmodels.util.jcflsolver2.LinearProgram.Coefficient;
@@ -22,26 +22,27 @@ import stamp.missingmodels.util.jcflsolver2.LinearProgram.ObjectiveType;
 
 public class AbductiveInference {
 	private final LinearProgram<Edge> lp = new LinearProgram<Edge>();
-	private final EdgeSet edges = new EdgeSet();
+	private final HashSet<Edge> edges = new HashSet<Edge>();
 	private final LinkedList<Edge> worklist = new LinkedList<Edge>();
 	
 	private final ContextFreeGrammarOpt contextFreeGrammar;
-	private final Set<Edge> baseEdges;
-	private final Iterable<Edge> initialEdges;
+	private final Set<Edge> baseEdges = new HashSet<Edge>();
+	private final Set<Edge> initialEdges = new HashSet<Edge>();
 	
 	public AbductiveInference(Graph2 graph, Iterable<Edge> baseEdges, Iterable<Edge> initialEdges) {
 		this.contextFreeGrammar = graph.getContextFreeGrammarOpt();
-		this.baseEdges = new HashSet<Edge>();
 		for(Edge edge : baseEdges) {
 			this.baseEdges.add(edge);
 		}
-		this.initialEdges = initialEdges;
+		for(Edge edge : initialEdges) {
+			this.initialEdges.add(edge);
+		}
 	}
 	
 	private void setObjective() {
 		Collection<Coefficient<Edge>> coefficients = new HashSet<Coefficient<Edge>>();
 		for(Edge edge : this.baseEdges) {
-			if(this.edges.get(edge) == null) {
+			if(!this.edges.contains(edge)) {
 				continue;
 			}
 			if(edge.weight == (short)0) {
@@ -59,7 +60,7 @@ public class AbductiveInference {
 	}
 	
 	private void addEdge(Edge edge) {
-		if(this.edges.get(edge) == null) {
+		if(!this.edges.contains(edge)) {
 			this.edges.add(edge);
 			this.worklist.add(edge);
 		}
@@ -178,6 +179,7 @@ public class AbductiveInference {
 	}
 
 	private void processEdge(Edge edge) {
+		MissingRefRefAnalysis.graph2Edges.add(edge);
 		if(this.baseEdges.contains(edge)) {
 			return;
 		}

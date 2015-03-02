@@ -8,14 +8,12 @@ import lpsolve.LpSolveException;
 import shord.project.ClassicProject;
 import stamp.analyses.DomL;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
-import stamp.missingmodels.util.jcflsolver2.Edge.IterableWithSize;
 import stamp.missingmodels.util.jcflsolver2.Graph2.EdgeTransformer;
 import stamp.missingmodels.util.jcflsolver2.Graph2.Filter;
 import stamp.missingmodels.util.jcflsolver2.Graph2.GraphBuilder;
-import stamp.missingmodels.util.jcflsolver2.Graph2.TypeFilter;
 import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
-public class AbductiveInferenceRunner {
+public class AbductiveInferenceRunner2 {
 	
 	public interface AbductiveInferenceHelper {
 		public Iterable<Edge> getBaseEdges(Graph2 gbar, Graph2 gcur);
@@ -28,8 +26,8 @@ public class AbductiveInferenceRunner {
 			return gbart.getEdges(new Filter<Edge>() {
 				@Override
 				public boolean filter(Edge edge) {
-					//return edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim");
-					return edge.symbol.symbol.equals("callgraph");
+					return edge.symbol.symbol.equals("param") || edge.symbol.symbol.equals("paramPrim");
+					//return edge.symbol.symbol.equals("callgraph");
 				}
 			});
 		}
@@ -51,7 +49,7 @@ public class AbductiveInferenceRunner {
 		}
 	}
 	
-	private static Graph2 computeTransitiveClosure(Graph2 g, TypeFilter t, boolean shord) {
+	private static Graph2 computeTransitiveClosure(Graph2 g, boolean shord) {
 		long time = System.currentTimeMillis();
 		System.out.println("Computing transitive closure");
 		
@@ -72,7 +70,9 @@ public class AbductiveInferenceRunner {
 
 		// print initial cut edges
 		DomL dom = shord ? (DomL)ClassicProject.g().getTrgt("L") : null;
-		for(Edge edge : initialCutEdges) {	
+		System.out.println("Printing Src2Sink edges...");
+		/*
+		for(Edge edge : initialCutEdges) {
 			System.out.println("Cutting Src2Sink edge: " + edge.toString());
 			System.out.println("Edge weight: " + edge.weight);
 			if(dom != null) {
@@ -81,6 +81,7 @@ public class AbductiveInferenceRunner {
 				System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
 			}
 		}
+		*/
 		
 		return new AbductiveInference(gbart, baseEdges, initialCutEdges).solve();
 	}
@@ -155,12 +156,12 @@ public class AbductiveInferenceRunner {
 		}		
 	}
 	
-	public static MultivalueMap<EdgeStruct,Integer> runInference(AbductiveInferenceHelper h, Graph2 g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
+	public static MultivalueMap<EdgeStruct,Integer> runInference(AbductiveInferenceHelper h, Graph2 g, boolean shord, int numCuts) throws LpSolveException {
 		Graph2 gcur = g;
 		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
-			Graph2 gbar = computeTransitiveClosure(gcur, t, shord);
+			Graph2 gbar = computeTransitiveClosure(gcur, shord);
 			//IOUtils.printGraphStatistics(gbar);
 			printPaths(gbar, h.getInitialCutEdges(gbar), shord);
 			
@@ -188,7 +189,7 @@ public class AbductiveInferenceRunner {
 		return allResults;
 	}
 	
-	public static MultivalueMap<EdgeStruct,Integer> runInference(Graph2 g, TypeFilter t, boolean shord, int numCuts) throws LpSolveException {
-		return runInference(new DefaultAbductiveInferenceHelper(), g, t, shord, numCuts);
+	public static MultivalueMap<EdgeStruct,Integer> runInference(Graph2 g, boolean shord, int numCuts) throws LpSolveException {
+		return runInference(new DefaultAbductiveInferenceHelper(), g, shord, numCuts);
 	}
 }

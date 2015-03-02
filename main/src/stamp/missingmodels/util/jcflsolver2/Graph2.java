@@ -11,7 +11,6 @@ import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
 import stamp.missingmodels.util.jcflsolver2.Edge.Field;
 import stamp.missingmodels.util.jcflsolver2.RelationManager.Relation;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
 public class Graph2 {
 	public static class GraphBuilder {
@@ -42,33 +41,6 @@ public class Graph2 {
 		}
 	}
 	
-	public static class TypeFilter {
-		public final MultivalueMap<String,String> filter = new MultivalueMap<String,String>();
-		public final int flowSymbolId;
-		
-		public TypeFilter(ContextFreeGrammarOpt c) {
-			this.flowSymbolId = c.getSymbol("Flow").id;
-			
-			final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt("ptd");
-			rel.load();
-			
-			Iterable<int[]> res = rel.getAryNIntTuples();
-			for(int[] tuple : res) {
-				this.add("H" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
-			}
-			
-			rel.close();
-		}
-		
-		public void add(String h, String v) {
-			this.filter.add(h, v);
-		}
-		
-		public boolean filter(String source, String sink, int symbolInt) {
-			return symbolInt != this.flowSymbolId || this.filter.get(source).contains(sink);
-		}
-	}
-	
 	public interface GraphTransformer {
 		public Graph2 transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges);
 	}
@@ -85,18 +57,15 @@ public class Graph2 {
 		}
 	}
 	
-	private final Map<String,Vertex> nodes = new HashMap<String,Vertex>();
+	private final Map<String,Vertex> vertices = new HashMap<String,Vertex>();
 	private final ContextFreeGrammarOpt c;
-	private final TypeFilter t;
 	
 	public Graph2(ContextFreeGrammarOpt c) {
 		this.c = c;
-		this.t = new TypeFilter(c);
 	}
 
 	public Graph2(ContextFreeGrammarOpt c, RelationManager relations) {
 		this.c = c;
-		this.t = new TypeFilter(c);
 		for(int i=0; i<c.getNumLabels(); i++) {
 			String symbol = c.getSymbol(i).symbol;
 			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
@@ -168,7 +137,7 @@ public class Graph2 {
 		Iterable<int[]> res = rel.getAryNIntTuples();
 		for(int[] tuple : res) {
 			if(!relation.filter(tuple)) {
-				return;
+				continue;
 			}
 		
 			String source = relation.getSource(tuple);
@@ -185,25 +154,27 @@ public class Graph2 {
 	}
 	
 	public Vertex getVertex(String name) {
-		Vertex vertex = this.nodes.get(name);
+		Vertex vertex = this.vertices.get(name);
 		if(vertex == null) {
 			vertex = new Vertex(name, c.getNumLabels());
-			this.nodes.put(name, vertex);
+			this.vertices.put(name, vertex);
 		}
 		return vertex;
 	}
 	
+	public boolean containsVertex(String name) {
+		return this.vertices.containsKey(name);
+	}
+	
+	public int getNumVertices() {
+		return this.vertices.size();
+	}
+	
 	private boolean addEdge(String source, String sink, String symbol, Field field, short weight) {
-		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbol(symbol), field, (short)weight, null, null, null);		
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbol(symbol), field, weight, null, null, null);		
 	}
 	
 	private boolean addEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
-		/*
-		if(!this.t.filter(source.name, sink.name, symbolInt)) {
-			return false;
-		}
-		*/
-		
 		Edge edge = new Edge(symbol, source, sink, field);
 		edge.weight = weight;
 
@@ -309,13 +280,13 @@ public class Graph2 {
 	}
 	
 	private class EdgeIterator implements Iterator<Edge>, Iterable<Edge> {
-		private Vertex[] vertices = nodes.values().toArray(new Vertex[]{});
+		private Vertex[] vertexList = vertices.values().toArray(new Vertex[]{});
 		private int curVertex = 0;
 		private int curSymbolInt = 0;
 		private Iterator<Edge> current;
 		
 		public EdgeIterator() {
-			this.current = this.vertices.length>0 && c.getNumLabels()>0 ? this.vertices[0].getIncomingEdges(0).iterator() : null;
+			this.current = this.vertexList.length>0 && c.getNumLabels()>0 ? this.vertexList[0].getIncomingEdges(0).iterator() : null;
 			this.increment();
 		}
 		
@@ -334,7 +305,7 @@ public class Graph2 {
 		private void increment() {
 			while(this.current != null && !this.current.hasNext()) {
 				this.incrementIndex();
-				this.current = this.curVertex<this.vertices.length ? this.vertices[this.curVertex].getIncomingEdges(this.curSymbolInt).iterator() : null;
+				this.current = this.curVertex<this.vertexList.length ? this.vertexList[this.curVertex].getIncomingEdges(this.curSymbolInt).iterator() : null;
 			}
 		}
 		

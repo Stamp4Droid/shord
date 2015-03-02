@@ -85,7 +85,7 @@ public class RelationManager {
 			
 			EdgeInfo curInfo = gb.toGraph().getInfo(source, sink, symbol, field, context);
 			int weight = this.getWeight(tuple);
-			
+						
 			if(curInfo == null || curInfo.weight > weight) {
 				gb.addEdge(source, sink, symbol, field, context, new EdgeInfo(weight));
 			}
