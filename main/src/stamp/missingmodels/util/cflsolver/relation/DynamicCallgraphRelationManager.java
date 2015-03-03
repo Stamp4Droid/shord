@@ -3,19 +3,19 @@ package stamp.missingmodels.util.cflsolver.relation;
 import shord.analyses.DomM;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import stamp.missingmodels.util.cflsolver.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPointsToRelationManager;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
 public class DynamicCallgraphRelationManager extends TaintPointsToRelationManager {
 	private void setNewWeights() {
 		this.clearRelationsByName("param");
-		this.add(new IndexRelation("param", "V", 1, "V", 0, "paramInput", 2, true));
+		this.add(new IndexRelation("param", "V", 1, "V", 0, "paramInput"));
 		
 		this.clearRelationsByName("paramPrim");
-		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrimInput", 2, true));
+		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrimInput"));
 		
 		this.add(new IndexRelation("reachableBase", "M", 0, "M", 0, "reachableBase"));
-		this.add(new IndexRelation("callgraph", "M", 0, "M", 1, "callgraph", null, 1));
+		this.add(new IndexRelation("callgraph", "M", 0, "M", 1, "callgraph", null, (short)1));
 		this.add(new IndexRelation("MV", "M", 0, "V", 1, "MV"));
 		this.add(new IndexRelation("MU", "M", 0, "U", 1, "MU"));
 	}

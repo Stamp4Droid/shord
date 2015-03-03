@@ -10,8 +10,8 @@ public class TaintRelationManager extends PointsToRelationManager {
 	public TaintRelationManager() {
 		this.add(new IndexRelation("AssignPrim", "U", 1, "U", 0, "assignPrim"));
 		
-		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", 2, true));
-		this.add(new IndexRelation("returnPrim", "U", 1, "U", 0, "returnPrim", 2, false));
+		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim"));
+		this.add(new IndexRelation("returnPrim", "U", 1, "U", 0, "returnPrim"));
 		
 		this.add(new IndexRelation("StorePrim", "U", 2, "V", 0, "storePrim", 1));
 		this.add(new IndexRelation("LoadPrim", "V", 1, "U", 0, "loadPrim", 2));

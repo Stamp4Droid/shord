@@ -15,8 +15,8 @@ import java.util.Stack;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
-import stamp.missingmodels.util.jcflsolver2.Util.Pair;
+import stamp.missingmodels.util.cflsolver.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.Util.Pair;
 
 public class TraceReader {
 	//private Map<Integer,Integer> stackDepthByThread = new HashMap<Integer,Integer>();

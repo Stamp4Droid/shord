@@ -15,13 +15,13 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.cflsolver.graph.Graph;
-import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
-import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
-import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
-import stamp.missingmodels.util.jcflsolver2.Util.Counter;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
-import stamp.missingmodels.util.jcflsolver2.Util.Pair;
+import stamp.missingmodels.util.cflsolver.Edge;
+import stamp.missingmodels.util.cflsolver.Edge.EdgeStruct;
+import stamp.missingmodels.util.cflsolver.Graph;
+import stamp.missingmodels.util.cflsolver.Graph.Filter;
+import stamp.missingmodels.util.cflsolver.Util.Counter;
+import stamp.missingmodels.util.cflsolver.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.Util.Pair;
 
 public class IOUtils {
 	private static final String SEPARATOR = "##";
@@ -124,7 +124,7 @@ public class IOUtils {
 	// otherwise, prints "edgeSymbol#source#sink"
 	private static void printGraphEdges(Graph g, final String symbol, boolean shord, PrintWriter pw, boolean prependRelationName) {
 		Set<String> edgeStrings = new HashSet<String>();
-		for(Edge edge : g.getEdges(new EdgeFilter() {
+		for(Edge edge : g.getEdges(new Filter<Edge>() {
 			@Override
 			public boolean filter(Edge edge) {
 				return edge.symbol.symbol.equals(symbol);
@@ -135,7 +135,7 @@ public class IOUtils {
 			}
 			sb.append(shord ? ConversionUtils.toStringShord(edge.source.name) : edge.source.name.substring(1)).append(SEPARATOR);
 			sb.append(shord ? ConversionUtils.toStringShord(edge.sink.name) : edge.sink.name.substring(1)).append(SEPARATOR);
-			sb.append(edge.getInfo().weight);
+			sb.append(edge.weight);
 			edgeStrings.add(sb.toString());
 		}
 		List<String> edgeList = new ArrayList<String>(edgeStrings);
@@ -196,11 +196,11 @@ public class IOUtils {
 	}
 	
 	public static void printGraphStatistics(Graph g) {
-		for(int symbolInt=0; symbolInt<g.getContextFreeGrammar().getNumLabels(); symbolInt++) {
-			final String symbol = g.getContextFreeGrammar().getSymbol(symbolInt).symbol;
+		for(int symbolInt=0; symbolInt<g.getSymbols().getNumSymbols(); symbolInt++) {
+			final String symbol = g.getSymbols().get(symbolInt).symbol;
 			if(!symbol.equals(symbol)) continue;
 			Set<String> edges = new HashSet<String>();
-			for(Edge edge : g.getEdges(new EdgeFilter() {
+			for(Edge edge : g.getEdges(new Filter<Edge>() {
 				@Override
 				public boolean filter(Edge edge) {
 					return edge.symbol.symbol.equals(symbol); 
@@ -209,6 +209,6 @@ public class IOUtils {
 			}
 			System.out.println(symbol + ": " + edges.size());
 		}
-		System.out.println("total edges: " + g.getEdges().size());
+		System.out.println("total edges: " + g.getNumEdges());
 	}
 }

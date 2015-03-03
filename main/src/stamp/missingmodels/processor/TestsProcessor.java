@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import stamp.missingmodels.processor.LogReader.Processor;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.Util.MultivalueMap;
 
 /**
  * Retrieve LP running time, total cut size, and lines of code from loc and log files 

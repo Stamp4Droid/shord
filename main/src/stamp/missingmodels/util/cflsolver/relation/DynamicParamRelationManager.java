@@ -7,17 +7,17 @@ import shord.analyses.DomU;
 import shord.analyses.DomV;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import stamp.missingmodels.util.cflsolver.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
 public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 	private void setNewWeights() {
 		this.clearRelationsByName("param");
-		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", 2, true, 1));
+		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", null, (short)1));
 		
 		this.clearRelationsByName("paramPrim");
-		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", 2, true, 1));
+		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", null, (short)1));
 	}
 	
 	public DynamicParamRelationManager() {
@@ -87,13 +87,13 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		paramPrimRel.close();
 		
 		// STEP 2: Build the extra relations
-		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", 2, true) {
+		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", 2) {
 			@Override
 			public boolean filter(int[] tuple) {
 				return dynamicCallgraphConverted.get(this.getSource(tuple)).contains(this.getSink(tuple));
 			}
 		});
-		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", 2, true) {
+		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", 2) {
 			@Override
 			public boolean filter(int[] tuple) {
 				return dynamicCallgraphConverted.get(this.getSource(tuple)).contains(this.getSink(tuple));

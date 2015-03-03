@@ -1,6 +1,6 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
-import stamp.missingmodels.util.jcflsolver2.RelationManager;
+import stamp.missingmodels.util.cflsolver.RelationManager;
 
 public class UnionRelationManager extends RelationManager {
 	private void addRelationManager(RelationManager relationManager) {

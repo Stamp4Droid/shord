@@ -1,15 +1,5 @@
 package stamp.reporting;
 
-import stamp.analyses.JCFLSolverAnalysis;
-import stamp.missingmodels.util.ConversionUtils;
-import stamp.missingmodels.util.StubLookup;
-import stamp.missingmodels.util.StubLookup.StubLookupKey;
-import stamp.missingmodels.util.StubLookup.StubLookupValue;
-import stamp.missingmodels.util.jcflsolver.Edge;
-import stamp.missingmodels.util.jcflsolver.EdgeData;
-import stamp.missingmodels.util.jcflsolver.Graph;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
-import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
 /*
  * @author Osbert Bastani
@@ -21,6 +11,7 @@ public class MissingModels extends XMLReport {
 
 	public void generate() {
 		try {
+			/*
 			Graph g = JCFLSolverAnalysis.g();
 			StubLookup s = JCFLSolverAnalysis.s();
 
@@ -42,6 +33,7 @@ public class MissingModels extends XMLReport {
 					newTuple().addValue(source + " -> " + sink).addValue(info.method).addValue(line);
 				}
 			}
+			*/
 		} catch (Exception e) {
 			System.err.println("Error in Missing Models Report Generation. Perhaps analysis was run without JCFL?");
 			e.printStackTrace();
