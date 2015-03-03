@@ -16,7 +16,7 @@ public interface TypeFilter {
 		private final int numVertices;
 		
 		public GraphTypeFilter(Graph2 g) {
-			this.flowSymbolId = g.getContextFreeGrammarOpt().getSymbol("Flow").id;
+			this.flowSymbolId = g.getContextFreeGrammarOpt().getSymbols().get("Flow").id;
 			this.numVertices = g.getNumVertices();
 			
 			final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt("ptd");

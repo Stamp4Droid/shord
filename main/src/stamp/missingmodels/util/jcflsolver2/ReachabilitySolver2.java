@@ -79,7 +79,7 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		this.count = 0;
 		
 		for(EdgeStruct edge : edges) {
-			this.addEdgeHelper(this.g.getVertex(edge.sourceName), this.g.getVertex(edge.sinkName), c.getSymbol(edge.symbol), Field.getField(edge.field), edge.weight, null, null);
+			this.addEdgeHelper(this.g.getVertex(edge.sourceName), this.g.getVertex(edge.sinkName), c.getSymbols().get(edge.symbol), Field.getField(edge.field), edge.weight, null, null);
 		}
 		
 		// initialize filter after adding edges so graph vertices are initialized

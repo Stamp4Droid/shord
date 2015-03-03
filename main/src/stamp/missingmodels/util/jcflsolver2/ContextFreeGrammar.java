@@ -15,6 +15,31 @@ public class ContextFreeGrammar {
 		}
 	}
 	
+	public static final class SymbolMap {
+		private final Map<String,Symbol> symbols = new HashMap<String,Symbol>();
+		private final Map<Integer,Symbol> symbolsById = new HashMap<Integer,Symbol>();
+		private int numSymbols = 0;
+		
+		public Symbol get(String symbol) {
+			return this.symbols.get(symbol);
+		}
+		
+		public Symbol get(int symbolInt) {
+			return this.symbolsById.get(symbolInt);
+		}
+		
+		public Symbol add(String symbol) {
+			Symbol result = new Symbol(symbol, this.numSymbols++);
+			this.symbols.put(symbol, result);
+			this.symbolsById.put(result.id, result);
+			return result;
+		}
+		
+		public int getNumSymbols() {
+			return this.numSymbols;
+		}
+	}
+	
 	public static final class BinaryProduction {
 		public final Symbol target;
 		public final Symbol firstInput;
@@ -130,18 +155,12 @@ public class ContextFreeGrammar {
 		public final AuxProduction[][] auxProductionsByInput;
 		public final AuxProduction[][] auxProductionsByAuxInput;
 		public final AuxProduction[][] auxProductionsByTarget;
-	
-		private final Map<String,Symbol> symbols = new HashMap<String,Symbol>();
-		private final Map<Integer,Symbol> symbolsById = new HashMap<Integer,Symbol>();
-		private int numLabels = 0;
+
+		private final SymbolMap symbols;
 	
 		private ContextFreeGrammarOpt(ContextFreeGrammar c) {
-			for(int i=0; i<c.getNumLabels(); i++) {
-				this.symbols.put(c.getSymbol(i).symbol, c.getSymbol(i));
-				this.symbolsById.put(i, c.getSymbol(i));
-			}
-			this.numLabels = c.getNumLabels();
-	
+			this.symbols = c.symbols;
+
 			this.unaryProductionsByInput = new UnaryProduction[c.unaryProductionsByInput.size()][];
 			for(int i=0; i<c.unaryProductionsByInput.size(); i++) {
 				this.unaryProductionsByInput[i] = new UnaryProduction[c.unaryProductionsByInput.get(i).size()];
@@ -206,28 +225,20 @@ public class ContextFreeGrammar {
 				}
 			}
 		}
-	
-		public int getNumLabels() {
-			return this.numLabels;
+		
+		public SymbolMap getSymbols() {
+			return this.symbols;
 		}
-	
-		public Symbol getSymbol(String symbol) {
-			return this.symbols.get(symbol);
-		}
-	
-		public Symbol getSymbol(int id) {
-			return this.symbolsById.get(id);
-		}
-	
+		
 		@Override
 		public String toString() {
 			StringBuilder sb = new StringBuilder();
-			for(int i=0; i<this.numLabels; i++) {
+			for(int i=0; i<this.symbols.getNumSymbols(); i++) {
 				for(UnaryProduction unaryProduction : this.unaryProductionsByInput[i]) {
 					sb.append(unaryProduction.toString()).append("\n");
 				}
 			}
-			for(int i=0; i<this.numLabels; i++) {
+			for(int i=0; i<this.symbols.getNumSymbols(); i++) {
 				for(BinaryProduction binaryProduction : this.binaryProductionsByFirstInput[i]) {
 					sb.append(binaryProduction.toString()).append("\n");
 				}
@@ -245,10 +256,6 @@ public class ContextFreeGrammar {
 	public final List<List<AuxProduction>> auxProductionsByAuxInput;
 	public final List<List<AuxProduction>> auxProductionsByTarget;
 
-	private final Map<String,Symbol> symbols = new HashMap<String,Symbol>();
-	private final Map<Integer,Symbol> symbolsById = new HashMap<Integer,Symbol>();
-	private int curLabel = 0;
-
 	public ContextFreeGrammar() {
 		this.unaryProductionsByInput = new ArrayList<List<UnaryProduction>>();
 		this.unaryProductionsByTarget = new ArrayList<List<UnaryProduction>>();
@@ -263,10 +270,8 @@ public class ContextFreeGrammar {
 	public ContextFreeGrammarOpt getOpt() {
 		return new ContextFreeGrammarOpt(this);
 	}
-
-	public int getNumLabels() {
-		return this.curLabel;
-	}
+	
+	private final SymbolMap symbols = new SymbolMap();
 
 	public Symbol getSymbol(String symbol) {
 		Symbol result = this.symbols.get(symbol);
@@ -279,15 +284,13 @@ public class ContextFreeGrammar {
 			this.auxProductionsByInput.add(new ArrayList<AuxProduction>());
 			this.auxProductionsByAuxInput.add(new ArrayList<AuxProduction>());
 			this.auxProductionsByTarget.add(new ArrayList<AuxProduction>());
-			result = new Symbol(symbol, this.curLabel++);
-			this.symbols.put(symbol, result);
-			this.symbolsById.put(result.id, result);
+			result = this.symbols.add(symbol);
 		}
 		return result;
 	}
-
-	public Symbol getSymbol(int symbolInt) {
-		return this.symbolsById.get(symbolInt);
+	
+	public SymbolMap getSymbols() {
+		return this.symbols;
 	}
 
 	public void addUnaryProduction(String target, String input) {
@@ -383,7 +386,7 @@ public class ContextFreeGrammar {
 	}
 
 	public void addUnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		if(target.id >= this.curLabel || input.id >= this.curLabel) {
+		if(target.id >= this.symbols.getNumSymbols() || input.id >= this.symbols.getNumSymbols()) {
 			throw new RuntimeException("symbol out of range");
 		}
 		UnaryProduction unaryProduction = new UnaryProduction(target, input, isInputBackwards, ignoreFields);
@@ -392,7 +395,7 @@ public class ContextFreeGrammar {
 	}
 
 	public void addBinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		if(target.id >= this.curLabel || firstInput.id >= this.curLabel || secondInput.id >= this.curLabel) {
+		if(target.id >= this.symbols.getNumSymbols() || firstInput.id >= this.symbols.getNumSymbols() || secondInput.id >= this.symbols.getNumSymbols()) {
 			throw new RuntimeException("symbol out of range");
 		}
 		BinaryProduction binaryProduction = new BinaryProduction(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts);
@@ -402,7 +405,7 @@ public class ContextFreeGrammar {
 	}
 
 	public void addAuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		if(target.id >= this.curLabel || input.id >= this.curLabel || auxInput.id >= this.curLabel) {
+		if(target.id >= this.symbols.getNumSymbols() || input.id >= this.symbols.getNumSymbols() || auxInput.id >= this.symbols.getNumSymbols()) {
 			throw new RuntimeException("symbol out of range");
 		}
 		AuxProduction auxProduction = new AuxProduction(target, input, auxInput, isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts);
@@ -414,17 +417,17 @@ public class ContextFreeGrammar {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for(int i=0; i<this.curLabel; i++) {
+		for(int i=0; i<this.symbols.getNumSymbols(); i++) {
 			for(UnaryProduction unaryProduction : (List<UnaryProduction>)this.unaryProductionsByInput.get(i)) {
 				sb.append(unaryProduction.toString()).append("\n");
 			}
 		}
-		for(int i=0; i<this.curLabel; i++) {
+		for(int i=0; i<this.symbols.getNumSymbols(); i++) {
 			for(BinaryProduction binaryProduction : (List<BinaryProduction>)this.binaryProductionsByFirstInput.get(i)) {
 				sb.append(binaryProduction.toString()).append("\n");
 			}
 		}
-		for(int i=0; i<this.curLabel; i++) {
+		for(int i=0; i<this.symbols.getNumSymbols(); i++) {
 			for(AuxProduction auxProduction : (List<AuxProduction>)this.auxProductionsByInput.get(i)) {
 				sb.append(auxProduction.toString()).append("\n");
 			}

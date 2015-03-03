@@ -16,8 +16,7 @@ import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 
-public final class Graph {
-	
+public final class Graph {	
 	public static final class Vertex {
 		public final String name;
 		protected final Map<Edge,EdgeInfo>[] outgoingEdgesBySymbol;
@@ -328,7 +327,7 @@ public final class Graph {
 	private Vertex getVertex(String name) {
 		Vertex vertex = this.verticesByName.get(name);
 		if(vertex == null) {
-			vertex = new Vertex(name, this.contextFreeGrammar.getNumLabels());
+			vertex = new Vertex(name, this.contextFreeGrammar.getSymbols().getNumSymbols());
 			this.verticesByName.put(name, vertex);
 		}
 		return vertex;

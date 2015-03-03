@@ -4,7 +4,7 @@ import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
 
 public class UnionGrammar extends ContextFreeGrammar {
 	private void add(ContextFreeGrammar grammar) {
-		for(int i=0; i<grammar.getNumLabels(); i++) {
+		for(int i=0; i<grammar.getSymbols().getNumSymbols(); i++) {
 			for(UnaryProduction unaryProduction : grammar.unaryProductionsByInput.get(i)) {
 				this.addUnaryProduction(unaryProduction.target.symbol, unaryProduction.input.symbol, unaryProduction.isInputBackwards, unaryProduction.ignoreFields, unaryProduction.ignoreContexts);
 			}

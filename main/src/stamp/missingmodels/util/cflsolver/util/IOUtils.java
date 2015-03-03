@@ -196,8 +196,8 @@ public class IOUtils {
 	}
 	
 	public static void printGraphStatistics(Graph g) {
-		for(int symbolInt=0; symbolInt<g.getContextFreeGrammar().getNumLabels(); symbolInt++) {
-			final String symbol = g.getContextFreeGrammar().getSymbol(symbolInt).symbol;
+		for(int symbolInt=0; symbolInt<g.getContextFreeGrammar().getSymbols().getNumSymbols(); symbolInt++) {
+			final String symbol = g.getContextFreeGrammar().getSymbols().get(symbolInt).symbol;
 			if(!symbol.equals(symbol)) continue;
 			Set<String> edges = new HashSet<String>();
 			for(Edge edge : g.getEdges(new EdgeFilter() {

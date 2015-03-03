@@ -66,8 +66,8 @@ public class Graph2 {
 
 	public Graph2(ContextFreeGrammarOpt c, RelationManager relations) {
 		this.c = c;
-		for(int i=0; i<c.getNumLabels(); i++) {
-			String symbol = c.getSymbol(i).symbol;
+		for(int i=0; i<c.getSymbols().getNumSymbols(); i++) {
+			String symbol = c.getSymbols().get(i).symbol;
 			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
 				this.readRelation(relation);
 			}
@@ -156,7 +156,7 @@ public class Graph2 {
 	public Vertex getVertex(String name) {
 		Vertex vertex = this.vertices.get(name);
 		if(vertex == null) {
-			vertex = new Vertex(name, c.getNumLabels());
+			vertex = new Vertex(name, c.getSymbols().getNumSymbols());
 			this.vertices.put(name, vertex);
 		}
 		return vertex;
@@ -171,7 +171,7 @@ public class Graph2 {
 	}
 	
 	private boolean addEdge(String source, String sink, String symbol, Field field, short weight) {
-		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbol(symbol), field, weight, null, null, null);		
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbols().get(symbol), field, weight, null, null, null);		
 	}
 	
 	private boolean addEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
@@ -286,7 +286,7 @@ public class Graph2 {
 		private Iterator<Edge> current;
 		
 		public EdgeIterator() {
-			this.current = this.vertexList.length>0 && c.getNumLabels()>0 ? this.vertexList[0].getIncomingEdges(0).iterator() : null;
+			this.current = this.vertexList.length>0 && c.getSymbols().getNumSymbols()>0 ? this.vertexList[0].getIncomingEdges(0).iterator() : null;
 			this.increment();
 		}
 		
@@ -296,7 +296,7 @@ public class Graph2 {
 		}
 		
 		private void incrementIndex() {
-			if(++this.curSymbolInt == c.getNumLabels()) {
+			if(++this.curSymbolInt == c.getSymbols().getNumSymbols()) {
 				this.curVertex++;
 				this.curSymbolInt = 0;
 			}
