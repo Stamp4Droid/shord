@@ -7,27 +7,26 @@ import java.util.Map;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
-import soot.jimple.toolkits.ide.icfg.JimpleBasedInterproceduralCFG.EdgeFilter;
 import stamp.analyses.TestsAnalysis.CallgraphCompleter;
 import stamp.missingmodels.processor.TraceReader;
-import stamp.missingmodels.util.cflsolver.AbductiveInferenceRunner;
-import stamp.missingmodels.util.cflsolver.AbductiveInferenceRunner.AbductiveInferenceHelper;
-import stamp.missingmodels.util.cflsolver.AbductiveInferenceRunner.DefaultAbductiveInferenceHelper;
-import stamp.missingmodels.util.cflsolver.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.Edge;
-import stamp.missingmodels.util.cflsolver.Edge.EdgeStruct;
-import stamp.missingmodels.util.cflsolver.Graph;
-import stamp.missingmodels.util.cflsolver.Graph.Filter;
-import stamp.missingmodels.util.cflsolver.ReachabilitySolver;
-import stamp.missingmodels.util.cflsolver.RelationManager.RelationReader;
-import stamp.missingmodels.util.cflsolver.TypeFilter;
-import stamp.missingmodels.util.cflsolver.Util.MultivalueMap;
-import stamp.missingmodels.util.cflsolver.Util.Pair;
+import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
+import stamp.missingmodels.util.abduction.AbductiveInferenceRunner.AbductiveInferenceHelper;
+import stamp.missingmodels.util.abduction.AbductiveInferenceRunner.DefaultAbductiveInferenceHelper;
 import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
+import stamp.missingmodels.util.cflsolver.graph.Graph;
+import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeFilter;
+import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
+import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 import chord.project.Chord;
 
 @Chord(name = "tests-callback")
@@ -35,8 +34,8 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 	private AbductiveInferenceHelper getAbductiveInferenceHelper(final MultivalueMap<String,String> baseEdgeFilter, final MultivalueMap<String,String> cutEdgeFilter) {
 		return new AbductiveInferenceHelper() {
 			@Override
-			public Iterable<Edge> getBaseEdges(Graph gbar, Graph gcur) {
-				return gbar.getEdges(new Filter<Edge>() {
+			public Set<Edge> getBaseEdges(Graph gbar, Graph gcur) {
+				return gbar.getEdges(new EdgeFilter() {
 					@Override
 					public boolean filter(Edge edge) {
 						//return (edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim"))
@@ -47,8 +46,8 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 			}
 
 			@Override
-			public Iterable<Edge> getInitialCutEdges(Graph g) {
-				return g.getEdges(new Filter<Edge>() {
+			public Set<Edge> getInitialCutEdges(Graph g) {
+				return g.getEdges(new EdgeFilter() {
 					@Override
 					public boolean filter(Edge edge) {
 						return edge.symbol.symbol.equals("Src2Sink")
@@ -139,7 +138,7 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 				}
 
 				AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(newCallgraph, sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
-				/*
+				
 				//Graph g = relationReader.readGraph(new CallbackRelationManager(paramEdges, paramPrimEdges), taintGrammar);
 				//Graph g = relationReader.readGraph(new DynamicCallgraphRelationManager(callgraphEdges), taintGrammar);
 				Graph g = relationReader.readGraph(new DynamicCallgraphRelationManager(newCallgraph), taintGrammar);
@@ -153,9 +152,8 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 				IOUtils.printGraphEdgesToFile(gbar, "paramPrim", true, extension);
 				IOUtils.printGraphEdgesToFile(gbar, "callgraph", true, extension);
 				IOUtils.printGraphEdgesToFile(gbar, "Src2Sink", true, extension);
-				*/
+				
 				/*** COPIED FROM TESTS ANALYSIS ***/
-				/*
 				Map<Integer,Integer> minTimeToCrash = new HashMap<Integer,Integer>();
 				Map<Integer,String> callgraphEdgeToCrash = new HashMap<Integer,String>();
 				for(EdgeStruct edge : results.keySet()) {
@@ -181,7 +179,6 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 					break;
 				}
 				numMethods += (int)(fractionMethodIncrement*numReachableMethods);
-				*/
 				/*** END COPIED FROM TESTS ANALYSIS ***/
 			}
 		} catch(Exception e) {

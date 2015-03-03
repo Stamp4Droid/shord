@@ -1,14 +1,17 @@
 package stamp.analyses;
 
 import shord.project.analyses.JavaAnalysis;
-import stamp.missingmodels.util.cflsolver.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.RelationManager;
-import stamp.missingmodels.util.cflsolver.RelationManager.RelationReader;
 import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefImplicitFlowGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefTaintGrammar;
+import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.MissingRefRefRelationManager.MissingRefRefImplicitFlowRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.MissingRefRefRelationManager.MissingRefRefTaintRelationManager;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.RelationManager;
+import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
 import chord.project.Chord;
 
 /**
@@ -35,7 +38,6 @@ public class MissingRefRefImplicitFlowAnalysis extends JavaAnalysis {
 		IOUtils.printGraphEdges(gbar, "Src2Sink", true);
 		*/
 		
-		/*
 		Graph gbari = new ReachabilitySolver(relationReader.readGraph(implicitRelations, implicitTaintGrammar), relationReader.readTypeFilter(implicitTaintGrammar)).getResult();
 		
 		//System.out.println("Printing implicit taint grammar statistics:");
@@ -48,6 +50,5 @@ public class MissingRefRefImplicitFlowAnalysis extends JavaAnalysis {
 		
 		System.out.println("Printing edges for implicit taint grammar:");
 		IOUtils.printGraphEdges(gbari, "Src2Sink", true);
-		*/
 	}
 }

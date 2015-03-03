@@ -5,13 +5,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import stamp.missingmodels.util.cflsolver.ContextFreeGrammar.SymbolMap;
-import stamp.missingmodels.util.cflsolver.Graph;
-import stamp.missingmodels.util.cflsolver.Graph.GraphBuilder;
-import stamp.missingmodels.util.cflsolver.RelationManager;
-import stamp.missingmodels.util.cflsolver.RelationManager.Relation;
-import stamp.missingmodels.util.cflsolver.RelationManager.RelationReader;
-import stamp.missingmodels.util.cflsolver.TypeFilter;
+import stamp.missingmodels.util.cflsolver.graph.Graph;
+import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.RelationManager;
+import stamp.missingmodels.util.jcflsolver2.RelationManager.Relation;
+import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
 
 public class FileRelationReader implements RelationReader {
 	private final File directory;
@@ -21,8 +21,8 @@ public class FileRelationReader implements RelationReader {
 	}
 
 	@Override
-	public Graph readGraph(RelationManager relations, SymbolMap symbols) {
-		GraphBuilder gb = new GraphBuilder(symbols);
+	public Graph readGraph(RelationManager relations, ContextFreeGrammar contextFreeGrammar) {
+		GraphBuilder gb = new GraphBuilder(contextFreeGrammar);
 		for(File relationFile : this.directory.listFiles()) {
 			try {
 				String relationName = relationFile.getName().split("\\.")[0];
@@ -30,7 +30,7 @@ public class FileRelationReader implements RelationReader {
 				readRelation(relations, br, gb, relationName);
 			} catch(Exception e) {}
 		}
-		return gb.getGraph();
+		return gb.toGraph();
 	}
 	
 	private static void readRelation(RelationManager relations, BufferedReader br, GraphBuilder gb, String relationName) throws IOException {
@@ -47,10 +47,9 @@ public class FileRelationReader implements RelationReader {
 			}
 		}
 	}
-	
+
 	@Override
-	public TypeFilter readTypeFilter(SymbolMap symbols) {
-		/*
+	public TypeFilter readTypeFilter(ContextFreeGrammar contextFreeGrammar) {
 		TypeFilter t = new TypeFilter(contextFreeGrammar);
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(new File(this.directory, "ptd.txt")));
@@ -65,7 +64,5 @@ public class FileRelationReader implements RelationReader {
 			e.printStackTrace();
 		}
 		return t;
-		*/
-		return null;
 	}		
 }

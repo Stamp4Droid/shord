@@ -1,6 +1,6 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
-import stamp.missingmodels.util.cflsolver.RelationManager;
+import stamp.missingmodels.util.jcflsolver2.RelationManager;
 
 public class PointsToRelationManager extends RelationManager {
 	public PointsToRelationManager() {
@@ -8,8 +8,8 @@ public class PointsToRelationManager extends RelationManager {
 
 		this.add(new IndexRelation("Assign", "V", 1, "V", 0, "assign"));
 
-		this.add(new IndexRelation("param", "V", 1, "V", 0, "param"));
-		this.add(new IndexRelation("return", "V", 1, "V", 0, "return"));
+		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", 2, true));
+		this.add(new IndexRelation("return", "V", 1, "V", 0, "return", 2, false));
 
 		this.add(new IndexRelation("Store", "V", 2, "V", 0, "store", 1));
 		this.add(new IndexRelation("Load", "V", 1, "V", 0, "load", 2));

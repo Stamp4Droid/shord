@@ -1,18 +1,23 @@
 package stamp.analyses;
 
+import java.util.HashSet;
+
 import lpsolve.LpSolveException;
 import shord.project.analyses.JavaAnalysis;
-import stamp.missingmodels.util.cflsolver.AbductiveInferenceRunner;
-import stamp.missingmodels.util.cflsolver.ContextFreeGrammar.ContextFreeGrammarOpt;
-import stamp.missingmodels.util.cflsolver.Edge.EdgeStruct;
-import stamp.missingmodels.util.cflsolver.Graph;
-import stamp.missingmodels.util.cflsolver.RelationManager;
-import stamp.missingmodels.util.cflsolver.RelationManager.RelationReader;
-import stamp.missingmodels.util.cflsolver.Util.MultivalueMap;
+import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar.TaintPointsToGrammar;
+import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.DynamicParamRelationManager;
-import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.jcflsolver2.AbductiveInferenceRunner2;
+import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.Edge;
+import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
+import stamp.missingmodels.util.jcflsolver2.Graph2;
+import stamp.missingmodels.util.jcflsolver2.RelationManager;
+import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 import chord.project.Chord;
 
 /**
@@ -20,6 +25,8 @@ import chord.project.Chord;
  */
 @Chord(name = "missing-refref-java")
 public class MissingRefRefAnalysis extends JavaAnalysis {
+	public static HashSet<Graph.Edge> graphEdges = new HashSet<Graph.Edge>();
+	public static HashSet<Edge> graph2Edges = new HashSet<Edge>();
 	@Override
 	public void run() {
 		/*
@@ -45,13 +52,43 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager relations = new DynamicParamRelationManager(new MultivalueMap<String,String>());
 		//RelationManager relations = new TaintPointsToRelationManager();
-		ContextFreeGrammarOpt taintGrammar = new TaintPointsToGrammar().getOpt();
-		Graph g2 = new Graph(taintGrammar.getSymbols(), new DynamicParamRelationManager(new MultivalueMap<String,String>()));
+		ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
+		Graph g = relationReader.readGraph(relations, taintGrammar);
+		TypeFilter t = relationReader.readTypeFilter(taintGrammar);
 		try {
-			MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceRunner.runInference(taintGrammar, g2, true, 2);
-			IOUtils.printAbductionResult(results, true);
+			MultivalueMap<Graph.EdgeStruct,Integer> results = AbductiveInferenceRunner.runInference(g, t, true, 2);
+		} catch (LpSolveException e1) {
+			e1.printStackTrace();
+		}
+		
+		Graph2 g2 = new Graph2(new TaintPointsToGrammar().getOpt(), new DynamicParamRelationManager(new MultivalueMap<String,String>()));
+		try {
+			MultivalueMap<EdgeStruct,Integer> results2 = AbductiveInferenceRunner2.runInference(g2, true, 2);
 		} catch (LpSolveException e) {
 			e.printStackTrace();
+		}
+		//IOUtils.printAbductionResult(results, true);
+		
+		HashSet<String> graphEdgeStrings = new HashSet<String>();
+		for(Graph.Edge edge : graphEdges) {
+			graphEdgeStrings.add(edge.source.name + "-" + edge.symbol.symbol + "[" + edge.field.field + "]-" + edge.sink.name);
+		}
+		HashSet<String> graph2EdgeStrings = new HashSet<String>();
+		for(Edge edge : graph2Edges) {
+			graph2EdgeStrings.add(edge.toString());
+		}
+		
+		System.out.println("DIFF1:");
+		for(String edge : graphEdgeStrings) {
+			if(!graph2EdgeStrings.contains(edge)) {
+				System.out.println(edge);
+			}
+		}
+		System.out.println("DIFF2:");
+		for(String edge : graph2EdgeStrings) {
+			if(!graphEdgeStrings.contains(edge)) {
+				System.out.println(edge);
+			}
 		}
 	}
 }

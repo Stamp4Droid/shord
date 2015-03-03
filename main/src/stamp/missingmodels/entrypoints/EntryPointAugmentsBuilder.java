@@ -19,8 +19,8 @@ import soot.Modifier;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.util.NumberedString;
-import stamp.missingmodels.util.cflsolver.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
 
 public abstract class EntryPointAugmentsBuilder extends JavaAnalysis {

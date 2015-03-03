@@ -1,6 +1,6 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
-import stamp.missingmodels.util.cflsolver.RelationManager;
+import stamp.missingmodels.util.jcflsolver2.RelationManager;
 
 public class TaintWithContextRelationManager extends RelationManager {	
 	public TaintWithContextRelationManager() {
