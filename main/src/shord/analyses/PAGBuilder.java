@@ -757,7 +757,7 @@ public class PAGBuilder extends JavaAnalysis
 		Iterator<Edge> edgeIt = cg.listener();
 		while(edgeIt.hasNext()){
 			Edge edge = edgeIt.next();
-			if(!edge.isExplicit() && !edge.isThreadRunCall())
+			if(!edge.isExplicit())
 				continue;
 			Stmt stmt = edge.srcStmt();
 			//int stmtIdx = domI.getOrAdd(stmt);
