@@ -111,6 +111,14 @@ public class Program
         }
 	}
 
+	public static boolean isRealCall(Edge edge) {
+		SootMethod tgt = (SootMethod) edge.tgt();
+		if (tgt.isAbstract()) {
+			assert false : "call tgt: " + tgt + " is abstract";
+		}
+		return !tgt.isPhantom() && edge.isExplicit();
+	}
+
 	private void inline_calls_to(SootMethod m) {
 		// TODO: Assuming the inlining code doesn't modify the call
 		// graph (otherwise our iterator might become invalid).
@@ -118,13 +126,20 @@ public class Program
 		Iterator<Edge> iter = cg.edgesInto(m);
 		while (iter.hasNext()) {
 			Edge e = iter.next();
+			if (!isRealCall(e)) {
+				continue;
+			}
 			Stmt invk = e.srcStmt();
 			SootMethod caller = (SootMethod) e.getSrc();
 			// Ensure all calls to m have a single target.
 			Iterator<Edge> calls = cg.edgesOutOf(invk);
-			assert(calls.hasNext());
-			calls.next();
-			assert(!calls.hasNext());
+			int numCalls = 0;
+			while (calls.hasNext()) {
+				if (isRealCall(calls.next())) {
+					numCalls++;
+				}
+			}
+			assert(numCalls == 1);
 			// Perform the inlining (unsafely).
 			System.out.println("Inlining " + m.toString() +
 							   " into " + caller.toString() +
