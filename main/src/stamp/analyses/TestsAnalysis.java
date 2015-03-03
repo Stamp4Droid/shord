@@ -1,31 +1,16 @@
 package stamp.analyses;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import lpsolve.LpSolveException;
 import shord.analyses.DomM;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.processor.TraceReader;
-import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
 import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
-import stamp.missingmodels.util.cflsolver.graph.Graph;
-import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
-import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
-import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
-import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
-import stamp.missingmodels.util.jcflsolver2.RelationManager;
-import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
 import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
-import stamp.missingmodels.util.jcflsolver2.Util.Pair;
 import chord.project.Chord;
 
 @Chord(name = "tests")
@@ -116,6 +101,7 @@ public class TestsAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
+		/*
 		try {
 			RelationReader relationReader = new ShordRelationReader();
 			String[] tokens = System.getProperty("stamp.out.dir").split("_");
@@ -158,7 +144,7 @@ public class TestsAnalysis extends JavaAnalysis {
 
 				if(5 > 4) throw new RuntimeException("Terminating program");
 				*/
-				
+				/*
 				MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceRunner.runInference(g, t, true, 2); 
 				IOUtils.printAbductionResult(results, true);
 
@@ -191,5 +177,6 @@ public class TestsAnalysis extends JavaAnalysis {
 		} catch(LpSolveException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import lpsolve.LpSolveException;
-import stamp.analyses.MissingRefRefAnalysis;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.AuxProduction;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.BinaryProduction;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.ContextFreeGrammarOpt;
@@ -29,7 +28,7 @@ public class AbductiveInference {
 	private final Set<Edge> baseEdges = new HashSet<Edge>();
 	private final Set<Edge> initialEdges = new HashSet<Edge>();
 	
-	public AbductiveInference(Graph2 graph, Iterable<Edge> baseEdges, Iterable<Edge> initialEdges) {
+	public AbductiveInference(Graph graph, Iterable<Edge> baseEdges, Iterable<Edge> initialEdges) {
 		this.contextFreeGrammar = graph.getContextFreeGrammarOpt();
 		for(Edge edge : baseEdges) {
 			this.baseEdges.add(edge);
@@ -179,7 +178,6 @@ public class AbductiveInference {
 	}
 
 	private void processEdge(Edge edge) {
-		MissingRefRefAnalysis.graph2Edges.add(edge);
 		if(this.baseEdges.contains(edge)) {
 			return;
 		}

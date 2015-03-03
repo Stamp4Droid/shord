@@ -7,11 +7,11 @@ import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
 import stamp.missingmodels.util.jcflsolver2.Edge.Field;
-import stamp.missingmodels.util.jcflsolver2.Graph2.GraphBuilder;
-import stamp.missingmodels.util.jcflsolver2.Graph2.GraphTransformer;
+import stamp.missingmodels.util.jcflsolver2.Graph.GraphBuilder;
+import stamp.missingmodels.util.jcflsolver2.Graph.GraphTransformer;
 import stamp.missingmodels.util.jcflsolver2.TypeFilter.GraphTypeFilter;
 
-public class ReachabilitySolver2 implements GraphTransformer {
+public class ReachabilitySolver implements GraphTransformer {
 	private GraphBuilder g;
 	private BucketHeap worklist;
 	private TypeFilter filter;
@@ -71,7 +71,7 @@ public class ReachabilitySolver2 implements GraphTransformer {
 		}
 	}
 	
-	public Graph2 transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges) {
+	public Graph transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges) {
 		this.g = new GraphBuilder(c);
 		this.worklist = new BucketHeap();
 		

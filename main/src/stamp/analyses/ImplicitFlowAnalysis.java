@@ -3,15 +3,7 @@ package stamp.analyses;
 import shord.project.analyses.JavaAnalysis;
 import stamp.missingmodels.util.cflsolver.grammars.ImplicitFlowGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
-import stamp.missingmodels.util.cflsolver.graph.Graph;
-import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.relation.ImplicitFlowRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.TaintWithContextRelationManager;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
-import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
-import stamp.missingmodels.util.jcflsolver2.RelationManager;
-import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
 import chord.project.Chord;
 
 /**
@@ -24,6 +16,7 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
+		/*
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager implicitRelations = new ImplicitFlowRelationManager();
 		RelationManager taintRelations = new TaintWithContextRelationManager();
@@ -43,5 +36,6 @@ public class ImplicitFlowAnalysis extends JavaAnalysis {
 		
 		System.out.println("Printing edges for implicit taint grammar:");
 		IOUtils.printGraphEdges(gbari, "Src2Sink", true);
+		*/
 	}
 }

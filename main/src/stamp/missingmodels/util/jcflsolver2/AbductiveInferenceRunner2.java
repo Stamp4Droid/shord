@@ -8,21 +8,21 @@ import lpsolve.LpSolveException;
 import shord.project.ClassicProject;
 import stamp.analyses.DomL;
 import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
-import stamp.missingmodels.util.jcflsolver2.Graph2.EdgeTransformer;
-import stamp.missingmodels.util.jcflsolver2.Graph2.Filter;
-import stamp.missingmodels.util.jcflsolver2.Graph2.GraphBuilder;
+import stamp.missingmodels.util.jcflsolver2.Graph.EdgeTransformer;
+import stamp.missingmodels.util.jcflsolver2.Graph.Filter;
+import stamp.missingmodels.util.jcflsolver2.Graph.GraphBuilder;
 import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
 public class AbductiveInferenceRunner2 {
 	
 	public interface AbductiveInferenceHelper {
-		public Iterable<Edge> getBaseEdges(Graph2 gbar, Graph2 gcur);
-		public Iterable<Edge> getInitialCutEdges(Graph2 g);
+		public Iterable<Edge> getBaseEdges(Graph gbar, Graph gcur);
+		public Iterable<Edge> getInitialCutEdges(Graph g);
 	}
 	
 	public static class DefaultAbductiveInferenceHelper implements AbductiveInferenceHelper {
 		@Override
-		public Iterable<Edge> getBaseEdges(Graph2 gbart, final Graph2 gcur) {
+		public Iterable<Edge> getBaseEdges(Graph gbart, final Graph gcur) {
 			return gbart.getEdges(new Filter<Edge>() {
 				@Override
 				public boolean filter(Edge edge) {
@@ -33,7 +33,7 @@ public class AbductiveInferenceRunner2 {
 		}
 		
 		@Override
-		public Iterable<Edge> getInitialCutEdges(Graph2 gbart) {
+		public Iterable<Edge> getInitialCutEdges(Graph gbart) {
 			return gbart.getEdges(new Filter<Edge>() {
 				//private boolean added = false;
 				@Override
@@ -49,11 +49,11 @@ public class AbductiveInferenceRunner2 {
 		}
 	}
 	
-	private static Graph2 computeTransitiveClosure(Graph2 g, boolean shord) {
+	private static Graph computeTransitiveClosure(Graph g, boolean shord) {
 		long time = System.currentTimeMillis();
 		System.out.println("Computing transitive closure");
 		
-		Graph2 gbar = g.transform(new ReachabilitySolver2());
+		Graph gbar = g.transform(new ReachabilitySolver());
 		
 		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
 		//System.out.println("Num edges: " + gbar.getEdges().size());
@@ -61,7 +61,7 @@ public class AbductiveInferenceRunner2 {
 		return gbar;
 	}
 	
-	private static Map<EdgeStruct,Boolean> runAbductiveInference(AbductiveInferenceHelper h, Graph2 gbart, Graph2 gcur, boolean shord) throws LpSolveException {
+	private static Map<EdgeStruct,Boolean> runAbductiveInference(AbductiveInferenceHelper h, Graph gbart, Graph gcur, boolean shord) throws LpSolveException {
 		Iterable<Edge> baseEdges = h.getBaseEdges(gbart, gcur);
 		//System.out.println("Num base edges: " + baseEdges.size());
 		
@@ -86,7 +86,7 @@ public class AbductiveInferenceRunner2 {
 		return new AbductiveInference(gbart, baseEdges, initialCutEdges).solve();
 	}
 	
-	private static void recomputeTransitiveClosure(Graph2 gbar, TypeFilter t, Set<Edge> baseEdges, final Map<EdgeStruct,Boolean> result) {
+	private static void recomputeTransitiveClosure(Graph gbar, TypeFilter t, Set<Edge> baseEdges, final Map<EdgeStruct,Boolean> result) {
 		System.out.println("Printing remaining src-sink edges:");
 		final Set<EdgeStruct> baseEdgeStructs = new HashSet<EdgeStruct>();
 		for(Edge edge : baseEdges) {
@@ -105,8 +105,8 @@ public class AbductiveInferenceRunner2 {
 				gb.addEdge(edge);
 			}
 		};
-		Graph2 gnew = gbar.transform(gtNew);
-		Graph2 gnewBar = gnew.transform(new ReachabilitySolver2());
+		Graph gnew = gbar.transform(gtNew);
+		Graph gnewBar = gnew.transform(new ReachabilitySolver());
 		for(EdgeStruct edge : gnewBar.getEdgeStructs(new Filter<EdgeStruct>() {
 			@Override
 			public boolean filter(EdgeStruct edge) {
@@ -118,7 +118,7 @@ public class AbductiveInferenceRunner2 {
 		System.out.println("Done!");
 	}
 	
-	private static Graph2 removeResultingEdges(Graph2 g, final Map<EdgeStruct,Boolean> result) {
+	private static Graph removeResultingEdges(Graph g, final Map<EdgeStruct,Boolean> result) {
 		EdgeTransformer gt = new EdgeTransformer() {
 			@Override
 			public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
@@ -135,7 +135,7 @@ public class AbductiveInferenceRunner2 {
 		return g.transform(gt);
 	}
 	
-	private static void printPaths(Graph2 g, Iterable<Edge> edges, boolean shord) {
+	private static void printPaths(Graph g, Iterable<Edge> edges, boolean shord) {
 		//System.out.println("Initial cut edges before context strip: " + edges.size());
 		DomL dom = shord ? (DomL)ClassicProject.g().getTrgt("L") : null;
 		for(Edge edge : edges) {	
@@ -156,12 +156,12 @@ public class AbductiveInferenceRunner2 {
 		}		
 	}
 	
-	public static MultivalueMap<EdgeStruct,Integer> runInference(AbductiveInferenceHelper h, Graph2 g, boolean shord, int numCuts) throws LpSolveException {
-		Graph2 gcur = g;
+	public static MultivalueMap<EdgeStruct,Integer> runInference(AbductiveInferenceHelper h, Graph g, boolean shord, int numCuts) throws LpSolveException {
+		Graph gcur = g;
 		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
-			Graph2 gbar = computeTransitiveClosure(gcur, shord);
+			Graph gbar = computeTransitiveClosure(gcur, shord);
 			//IOUtils.printGraphStatistics(gbar);
 			printPaths(gbar, h.getInitialCutEdges(gbar), shord);
 			
@@ -189,7 +189,7 @@ public class AbductiveInferenceRunner2 {
 		return allResults;
 	}
 	
-	public static MultivalueMap<EdgeStruct,Integer> runInference(Graph2 g, boolean shord, int numCuts) throws LpSolveException {
+	public static MultivalueMap<EdgeStruct,Integer> runInference(Graph g, boolean shord, int numCuts) throws LpSolveException {
 		return runInference(new DefaultAbductiveInferenceHelper(), g, shord, numCuts);
 	}
 }

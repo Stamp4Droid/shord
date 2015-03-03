@@ -12,15 +12,15 @@ import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
 import stamp.missingmodels.util.jcflsolver2.Edge.Field;
 import stamp.missingmodels.util.jcflsolver2.RelationManager.Relation;
 
-public class Graph2 {
+public class Graph {
 	public static class GraphBuilder {
-		private final Graph2 graph;
+		private final Graph graph;
 		
 		public GraphBuilder(ContextFreeGrammarOpt c) {
-			this.graph = new Graph2(c);
+			this.graph = new Graph(c);
 		}
 		
-		public Graph2 getGraph() {
+		public Graph getGraph() {
 			return this.graph;
 		}
 		
@@ -42,13 +42,13 @@ public class Graph2 {
 	}
 	
 	public interface GraphTransformer {
-		public Graph2 transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges);
+		public Graph transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges);
 	}
 	
 	public static abstract class EdgeTransformer implements GraphTransformer {
 		public abstract void process(GraphBuilder gb, EdgeStruct edgeStruct);
 		
-		public Graph2 transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges) {
+		public Graph transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges) {
 			GraphBuilder gb = new GraphBuilder(c);
 			for(EdgeStruct edge : edges) {
 				this.process(gb, edge);
@@ -60,11 +60,11 @@ public class Graph2 {
 	private final Map<String,Vertex> vertices = new HashMap<String,Vertex>();
 	private final ContextFreeGrammarOpt c;
 	
-	public Graph2(ContextFreeGrammarOpt c) {
+	public Graph(ContextFreeGrammarOpt c) {
 		this.c = c;
 	}
 
-	public Graph2(ContextFreeGrammarOpt c, RelationManager relations) {
+	public Graph(ContextFreeGrammarOpt c, RelationManager relations) {
 		this.c = c;
 		for(int i=0; i<c.getSymbols().getNumSymbols(); i++) {
 			String symbol = c.getSymbols().get(i).symbol;
@@ -74,7 +74,7 @@ public class Graph2 {
 		}
 	}
 	
-	public Graph2 transform(GraphTransformer transformer) {
+	public Graph transform(GraphTransformer transformer) {
 		return transformer.transform(this.c, this.getEdgeStructs());
 	}
 	

@@ -15,7 +15,7 @@ public interface TypeFilter {
 		private final int flowSymbolId;
 		private final int numVertices;
 		
-		public GraphTypeFilter(Graph2 g) {
+		public GraphTypeFilter(Graph g) {
 			this.flowSymbolId = g.getContextFreeGrammarOpt().getSymbols().get("Flow").id;
 			this.numVertices = g.getNumVertices();
 			

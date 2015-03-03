@@ -4,12 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import stamp.missingmodels.util.cflsolver.graph.EdgeData.Context;
-import stamp.missingmodels.util.cflsolver.graph.EdgeData.Field;
-import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeInfo;
-import stamp.missingmodels.util.cflsolver.graph.Graph;
-import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
+import stamp.missingmodels.util.jcflsolver2.Edge.Field;
+import stamp.missingmodels.util.jcflsolver2.Graph.GraphBuilder;
 import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
 public class RelationManager {
@@ -63,10 +59,9 @@ public class RelationManager {
 		public abstract String getSink(int[] tuple);
 		public abstract String getSymbol();
 		
-		public abstract Context getContext(int[] tuple);
 		public abstract Field getField(int[] tuple);
 		
-		public abstract int getWeight(int[] tuple);
+		public abstract short getWeight(int[] tuple);
 		
 		public boolean filter(int[] tuple) {
 			return true;
@@ -81,14 +76,9 @@ public class RelationManager {
 			String sink = this.getSink(tuple);
 			String symbol = this.getSymbol();
 			Field field = this.getField(tuple);
-			Context context = this.getContext(tuple);
+			short weight = this.getWeight(tuple);
 			
-			EdgeInfo curInfo = gb.toGraph().getInfo(source, sink, symbol, field, context);
-			int weight = this.getWeight(tuple);
-						
-			if(curInfo == null || curInfo.weight > weight) {
-				gb.addEdge(source, sink, symbol, field, context, new EdgeInfo(weight));
-			}
+			gb.addEdge(source, sink, symbol, field, weight);
 		}
 	}
 	
@@ -102,12 +92,10 @@ public class RelationManager {
 		private final String symbol;
 		
 		private final Integer fieldIndex;
-		private final Integer contextIndex;
-		private final boolean contextDirection;
 		
-		private final int weight;
+		private final short weight;
 		
-		public IndexRelation(String name, String sourceDom, int sourceIndex, String sinkDom, int sinkIndex, String symbol, Integer fieldIndex, Integer contextIndex, boolean contextDirection, int weight) {
+		public IndexRelation(String name, String sourceDom, int sourceIndex, String sinkDom, int sinkIndex, String symbol, Integer fieldIndex, short weight) {
 			this.name = name;
 			
 			this.sourceName = sourceDom;
@@ -117,40 +105,12 @@ public class RelationManager {
 			this.symbol = symbol;
 			
 			this.fieldIndex = fieldIndex;
-			this.contextIndex = contextIndex;
-			this.contextDirection = contextDirection;
 			
 			this.weight = weight;
 		}
-
-		public IndexRelation(String name, String sourceName, int sourceIndex, String sinkName, int sinkIndex, String symbol, Integer fieldIndex, int weight) {
-			this(name, sourceName, sourceIndex, sinkName, sinkIndex, symbol, fieldIndex, null, true, weight);
-		}
-		
-		public IndexRelation(String name, String sourceName, int sourceIndex, String sinkName, int sinkIndex, String symbol, Integer contextIndex, boolean contextDirection, int weight) {
-			this(name, sourceName, sourceIndex, sinkName, sinkIndex, symbol, null, contextIndex, contextDirection, weight);
-		}
-		
-		/*
-		public IndexRelation(String name, String sourceName, int sourceIndex, String sinkName, int sinkIndex, String symbol, int weight) {
-			this(name, sourceName, sourceIndex, sinkName, sinkIndex, symbol, null, null, true, weight);
-		}
-		*/
-		
-		public IndexRelation(String name, String sourceName, int sourceIndex, String sinkName, int sinkIndex, String symbol, Integer fieldIndex, Integer contextIndex, boolean contextDirection) {
-			this(name, sourceName, sourceIndex, sinkName, sinkIndex, symbol, fieldIndex, contextIndex, contextDirection, 0);
-		}
-		
-		public IndexRelation(String name, String sourceName, int sourceIndex, String sinkName, int sinkIndex, String symbol, Integer fieldIndex) {
-			this(name, sourceName, sourceIndex, sinkName, sinkIndex, symbol, fieldIndex, null, true, 0);
-		}
-		
-		public IndexRelation(String name, String sourceName, int sourceIndex, String sinkName, int sinkIndex, String symbol, Integer contextIndex, boolean contextDirection) {
-			this(name, sourceName, sourceIndex, sinkName, sinkIndex, symbol, null, contextIndex, contextDirection, 0);
-		}
 		
 		public IndexRelation(String name, String sourceName, int sourceIndex, String sinkName, int sinkIndex, String symbol) {
-			this(name, sourceName, sourceIndex, sinkName, sinkIndex, symbol, null, null, true, 0);
+			this(name, sourceName, sourceIndex, sinkName, sinkIndex, symbol, null, (short)0);
 		}
 		
 		@Override
@@ -175,16 +135,11 @@ public class RelationManager {
 
 		@Override
 		public Field getField(int[] tuple) {
-			return this.fieldIndex == null ? Field.DEFAULT_FIELD : new Field(tuple[this.fieldIndex]);
+			return this.fieldIndex == null ? Field.DEFAULT_FIELD : Field.getField(tuple[this.fieldIndex]);
 		}
 
 		@Override
-		public Context getContext(int[] tuple) {
-			return this.contextIndex == null ? Context.DEFAULT_CONTEXT : new Context(tuple[this.contextIndex], this.contextDirection);
-		}
-
-		@Override
-		public int getWeight(int[] tuple) {
+		public short getWeight(int[] tuple) {
 			return this.weight;
 		}
 	}
@@ -204,13 +159,13 @@ public class RelationManager {
 		private final int sinkContextIndex;
 		private final int fieldIndex;
 
-		private final int weight;
+		private final short weight;
 
 		private final boolean hasSourceContext;
 		private final boolean hasSinkContext;
 		private final boolean hasField;
 		
-		public IndexWithContextRelation(String relationName, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol, Integer fieldIndex, Integer weight) {
+		public IndexWithContextRelation(String relationName, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol, Integer fieldIndex, short weight) {
 			this.name = relationName;
 
 			this.hasSourceContext = sourceContextIndex != null;
@@ -227,18 +182,18 @@ public class RelationManager {
 
 			this.fieldIndex = this.hasField ? fieldIndex : -1;
 
-			this.weight = weight == null ? 0 : weight; 
+			this.weight = weight;
 
 			this.sourceName = sourceName;
 			this.sinkName = sinkName;
 		}
 		
 		public IndexWithContextRelation(String name, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol, Integer fieldIndex) {
-			this(name, sourceName, sourceIndex, sourceContextIndex, sinkName, sinkIndex, sinkContextIndex, symbol, fieldIndex, null);
+			this(name, sourceName, sourceIndex, sourceContextIndex, sinkName, sinkIndex, sinkContextIndex, symbol, fieldIndex, (short)0);
 		}
 		
 		public IndexWithContextRelation(String name, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol) {
-			this(name, sourceName, sourceIndex, sourceContextIndex, sinkName, sinkIndex, sinkContextIndex, symbol, null, null);
+			this(name, sourceName, sourceIndex, sourceContextIndex, sinkName, sinkIndex, sinkContextIndex, symbol, null, (short)0);
 		}
 
 		@Override
@@ -263,22 +218,17 @@ public class RelationManager {
 
 		@Override
 		public Field getField(int[] tuple) {
-			return this.hasField ? new Field(tuple[fieldIndex]) : Field.DEFAULT_FIELD;
+			return this.hasField ? Field.getField(tuple[fieldIndex]) : Field.DEFAULT_FIELD;
 		}
 		
 		@Override
-		public int getWeight(int[] tuple) {
+		public short getWeight(int[] tuple) {
 			return this.weight;
 		}
 
 		@Override
 		public boolean filter(int[] tuple) {
 			return true;
-		}
-		
-		@Override
-		public Context getContext(int[] tuple) {
-			return Context.DEFAULT_CONTEXT;
 		}
 	}
 }

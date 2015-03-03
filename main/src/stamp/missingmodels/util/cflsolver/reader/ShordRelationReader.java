@@ -5,23 +5,20 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.analyses.DomL;
-import stamp.missingmodels.util.cflsolver.graph.Graph;
-import stamp.missingmodels.util.cflsolver.graph.Graph.EdgeStruct;
-import stamp.missingmodels.util.cflsolver.graph.GraphBuilder;
-import stamp.missingmodels.util.cflsolver.graph.GraphTransformer;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.jcflsolver2.Graph;
+import stamp.missingmodels.util.jcflsolver2.Graph.GraphBuilder;
 import stamp.missingmodels.util.jcflsolver2.RelationManager;
 import stamp.missingmodels.util.jcflsolver2.RelationManager.Relation;
 import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
+import stamp.missingmodels.util.jcflsolver2.TypeFilter;
 
 public class ShordRelationReader implements RelationReader {
 	@Override
 	public Graph readGraph(RelationManager relations, ContextFreeGrammar contextFreeGrammar) {
-		GraphBuilder gb = new GraphBuilder(contextFreeGrammar);
-		for(int i=0; i<gb.toGraph().getContextFreeGrammar().getSymbols().getNumSymbols(); i++) {
-			String symbol = gb.toGraph().getContextFreeGrammar().getSymbols().get(i).symbol;
+		GraphBuilder gb = new GraphBuilder(contextFreeGrammar.getOpt());
+		for(int i=0; i<gb.getGraph().getContextFreeGrammarOpt().getSymbols().getNumSymbols(); i++) {
+			String symbol = gb.getGraph().getContextFreeGrammarOpt().getSymbols().get(i).symbol;
 			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
 				readRelation(gb, relation);
 			}
@@ -50,9 +47,10 @@ public class ShordRelationReader implements RelationReader {
 		labels.add("!sendMultipartTextMessage");			
 		labels.add("!WebView");
 		
-		GraphTransformer gt = new GraphTransformer() {
+		/*
+		GraphTransformer gt = new EdgeTransformer() {
 			@Override
-			public void process(GraphBuilder gb, EdgeStruct edgeStruct, int weight) {
+			public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
 				DomL dom = (DomL)ClassicProject.g().getTrgt("L");
 				String name = null;
 				if(edgeStruct.sourceName.startsWith("L")) {
@@ -66,9 +64,10 @@ public class ShordRelationReader implements RelationReader {
 				gb.addEdge(edgeStruct, weight);
 			}
 		};
+		*/
 		
 		//return gt.transform(gb.toGraph());
-		return gb.toGraph();
+		return gb.getGraph();
 	}
 	
 	private static void readRelation(GraphBuilder gb, Relation relation) {
@@ -85,6 +84,7 @@ public class ShordRelationReader implements RelationReader {
 
 	@Override
 	public TypeFilter readTypeFilter(ContextFreeGrammar contextFreeGrammar) {
+		/*
 		TypeFilter t = new TypeFilter(contextFreeGrammar);
 		
 		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt("ptd");
@@ -98,5 +98,7 @@ public class ShordRelationReader implements RelationReader {
 		rel.close();		
 		
 		return t;
+		*/
+		return null;
 	}
 }

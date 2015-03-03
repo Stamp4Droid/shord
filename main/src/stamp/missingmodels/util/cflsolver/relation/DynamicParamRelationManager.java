@@ -14,10 +14,10 @@ import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 	private void setNewWeights() {
 		this.clearRelationsByName("param");
-		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", 2, true, 1));
+		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", null, (short)1));
 		
 		this.clearRelationsByName("paramPrim");
-		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", 2, true, 1));
+		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", null, (short)1));
 	}
 	
 	public DynamicParamRelationManager() {
@@ -87,13 +87,13 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		paramPrimRel.close();
 		
 		// STEP 2: Build the extra relations
-		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", 2, true) {
+		this.add(new IndexRelation("param", "V", 1, "V", 0, "param") {
 			@Override
 			public boolean filter(int[] tuple) {
 				return dynamicCallgraphConverted.get(this.getSource(tuple)).contains(this.getSink(tuple));
 			}
 		});
-		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", 2, true) {
+		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim") {
 			@Override
 			public boolean filter(int[] tuple) {
 				return dynamicCallgraphConverted.get(this.getSource(tuple)).contains(this.getSink(tuple));
