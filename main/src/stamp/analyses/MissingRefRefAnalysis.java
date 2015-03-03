@@ -1,6 +1,7 @@
 package stamp.analyses;
 
 import shord.project.analyses.JavaAnalysis;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Graph;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
@@ -42,7 +43,8 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 
 		RelationReader relationReader = new ShordRelationReader();
 		RelationManager relations = new DynamicParamRelationManager(new MultivalueMap<String,String>());
-		Graph g2 = new Graph(new TaintPointsToGrammar().getSymbols(), new DynamicParamRelationManager(new MultivalueMap<String,String>()));
+		ContextFreeGrammarOpt grammar = new TaintPointsToGrammar().getOpt();
+		Graph g2 = relationReader.readGraph(relations, grammar.getSymbols());
 		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(new TaintPointsToGrammar().getOpt(), g2, true, 2);
 
 		IOUtils.printAbductionResult(results, true);

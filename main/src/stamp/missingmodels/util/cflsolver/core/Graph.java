@@ -4,13 +4,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import shord.project.ClassicProject;
-import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
-import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
 
 public class Graph {
 	public static class GraphBuilder {
@@ -24,16 +21,37 @@ public class Graph {
 			return this.graph;
 		}
 		
-		public boolean addEdge(EdgeStruct edge) {
-			return this.addEdge(edge.sourceName, edge.sinkName, edge.symbol, Field.getField(edge.field), edge.weight);
+		public Edge getEdge(Vertex source, Vertex sink, Symbol symbol, Field field) {
+			return source.getCurrentOutgoingEdge(new Edge(symbol, source, sink, field));
 		}
 		
-		public boolean addEdge(String source, String sink, String symbol, Field field, short weight) {
-			return this.graph.addEdge(source, sink, symbol, field, weight);
+		public Edge addOrUpdateEdge(EdgeStruct edge) {
+			return this.addOrUpdateEdge(edge.sourceName, edge.sinkName, edge.symbol, edge.field, edge.weight);
 		}
 		
-		public boolean addEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
-			return this.graph.addEdge(source, sink, symbol, field, weight, firstInput, secondInput, worklist);
+		public Edge addOrUpdateEdge(String source, String sink, String symbol, int field, short weight) {
+			return this.addOrUpdateEdge(this.graph.getVertex(source), this.graph.getVertex(sink), this.graph.symbols.get(symbol), Field.getField(field), weight, null, null);
+		}
+		
+		public Edge addOrUpdateEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput) {
+			Edge curEdge = this.getEdge(source, sink, symbol, field);
+			if(curEdge == null) {
+				Edge edge = new Edge(symbol, source, sink, field);
+				edge.weight = weight;
+				edge.firstInput = firstInput;
+				edge.secondInput = secondInput;
+				source.addOutgoingEdge(edge);
+				sink.addIncomingEdge(edge);
+				this.graph.numEdges++;
+				return edge;
+			} else if(weight<curEdge.weight) {
+				curEdge.weight = weight;
+				curEdge.firstInput = firstInput;
+				curEdge.secondInput = secondInput;
+				return curEdge;
+			} else {
+				return null;
+			}
 		}
 		
 		public Vertex getVertex(String name) {
@@ -64,19 +82,10 @@ public class Graph {
 	
 	private final Map<String,Vertex> vertices = new HashMap<String,Vertex>();
 	private final SymbolMap symbols;
+	private int numEdges = 0;
 	
 	public Graph(SymbolMap symbols) {
 		this.symbols = symbols;
-	}
-
-	public Graph(SymbolMap symbols, RelationManager relations) {
-		this.symbols = symbols;
-		for(int i=0; i<this.symbols.getNumSymbols(); i++) {
-			String symbol = this.symbols.get(i).symbol;
-			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
-				this.readRelation(relation);
-			}
-		}
 	}
 	
 	public Graph transform(GraphTransformer transformer) {
@@ -95,6 +104,10 @@ public class Graph {
 		return this.symbols;
 	}
 	
+	public int getNumEdges() {
+		return this.numEdges;
+	}
+	
 	public static interface Filter<T> {
 		public boolean filter(T t);
 	}
@@ -110,7 +123,7 @@ public class Graph {
 		@Override
 		public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
 			if(this.filter.filter(edgeStruct)) {
-				gb.addEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, Field.getField(edgeStruct.field), edgeStruct.weight);
+				gb.addOrUpdateEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.weight);
 			}
 		}
 	}
@@ -136,29 +149,6 @@ public class Graph {
 		return this.toString(false);
 	}
 	
-	private void readRelation(Relation relation) {
-		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relation.getName());
-		rel.load();
-		
-		Iterable<int[]> res = rel.getAryNIntTuples();
-		for(int[] tuple : res) {
-			if(!relation.filter(tuple)) {
-				continue;
-			}
-		
-			String source = relation.getSource(tuple);
-			String sink = relation.getSink(tuple);
-			String symbol = relation.getSymbol();
-			Field field = Field.getField(relation.getField(tuple).field);
-			//Context context = relation.getContext(tuple);
-			short weight = (short)relation.getWeight(tuple);
-			
-			this.addEdge(source, sink, symbol, field, weight);
-		}
-		
-		rel.close();
-	}
-	
 	public Vertex getVertex(String name) {
 		Vertex vertex = this.vertices.get(name);
 		if(vertex == null) {
@@ -174,38 +164,6 @@ public class Graph {
 	
 	public int getNumVertices() {
 		return this.vertices.size();
-	}
-	
-	private boolean addEdge(String source, String sink, String symbol, Field field, short weight) {
-		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.symbols.get(symbol), field, weight, null, null, null);		
-	}
-	
-	private boolean addEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
-		Edge edge = new Edge(symbol, source, sink, field);
-		edge.weight = weight;
-
-		edge.firstInput = firstInput;
-		edge.secondInput = secondInput;
-
-		Edge oldEdge = source.getCurrentOutgoingEdge(edge);
-		if(oldEdge == null) {
-			source.addOutgoingEdge(edge);
-			sink.addIncomingEdge(edge);
-			if(worklist != null) {
-				worklist.push(edge);
-			}
-			return true;
-		} else {
-			if(edge.weight < oldEdge.weight) {
-				oldEdge.weight = edge.weight;
-				oldEdge.firstInput = edge.firstInput;
-				oldEdge.secondInput = edge.secondInput;
-				if(worklist != null) {
-					worklist.update(oldEdge);
-				}
-			}
-			return false;
-		}
 	}
 
 	public abstract class TransformIterator<X,Y> implements Iterator<Y> {
@@ -333,7 +291,7 @@ public class Graph {
 		}
 	}
 	
-	public class FilteredEdgeIterator implements Iterator<Edge>, Iterable<Edge> {
+	private class FilteredEdgeIterator implements Iterator<Edge>, Iterable<Edge> {
 		private final EdgeIterator iterator = new EdgeIterator();
 		private final Filter<Edge> filter;
 		private Edge curEdge;

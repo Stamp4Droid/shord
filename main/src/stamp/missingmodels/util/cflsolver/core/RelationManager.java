@@ -60,7 +60,7 @@ public class RelationManager {
 		public abstract String getSink(int[] tuple);
 		public abstract String getSymbol();
 		
-		public abstract Field getField(int[] tuple);
+		public abstract int getField(int[] tuple);
 		
 		public abstract short getWeight(int[] tuple);
 		
@@ -76,10 +76,10 @@ public class RelationManager {
 			String source = this.getSource(tuple);
 			String sink = this.getSink(tuple);
 			String symbol = this.getSymbol();
-			Field field = this.getField(tuple);
+			int field = this.getField(tuple);
 			short weight = this.getWeight(tuple);
 			
-			gb.addEdge(source, sink, symbol, field, weight);
+			gb.addOrUpdateEdge(source, sink, symbol, field, weight);
 		}
 	}
 	
@@ -135,8 +135,8 @@ public class RelationManager {
 		}
 
 		@Override
-		public Field getField(int[] tuple) {
-			return this.fieldIndex == null ? Field.DEFAULT_FIELD : Field.getField(tuple[this.fieldIndex]);
+		public int getField(int[] tuple) {
+			return this.fieldIndex == null ? Field.DEFAULT_FIELD.field : tuple[this.fieldIndex];
 		}
 
 		@Override
@@ -218,8 +218,8 @@ public class RelationManager {
 		}
 
 		@Override
-		public Field getField(int[] tuple) {
-			return this.hasField ? Field.getField(tuple[fieldIndex]) : Field.DEFAULT_FIELD;
+		public int getField(int[] tuple) {
+			return this.hasField ? tuple[fieldIndex] : Field.DEFAULT_FIELD.field;
 		}
 		
 		@Override

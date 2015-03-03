@@ -82,12 +82,24 @@ public class Edge {
 			sb.append(this.symbol).append("[");
 			sb.append(this.field).append("]");
 			sb.append("-").append(convertedSinkName);
+			sb.append("#").append(this.weight);
 			return sb.toString();
 		}
 		
 		@Override
 		public String toString() {
 			return this.toString(false);
+		}
+		
+		@Override
+		public int hashCode() {
+			return this.sourceName.hashCode() + 31*(this.sinkName.hashCode() + 31*(this.symbol.hashCode() + 31*this.field));
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			EdgeStruct other = (EdgeStruct) obj;
+			return this.sourceName.equals(other.sourceName) && this.sinkName.equals(other.sinkName) && this.symbol.equals(other.symbol) && this.field == other.field;
 		}
 	}
 	

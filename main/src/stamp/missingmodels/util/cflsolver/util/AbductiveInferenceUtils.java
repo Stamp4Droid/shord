@@ -101,19 +101,17 @@ public class AbductiveInferenceUtils {
 			
 			// STEP 2: Run the abductive inference algorithm
 			final Map<EdgeStruct,Boolean> result = runAbductiveInference(h, c, gbar, gcur, shord);
-			
-			// STEP 3: Transform graph to remove cut edges
-			gcur = gcur.transform(new EdgeTransformer(gcur.getSymbols()) {
-				public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
-					gb.addEdge(result.get(edgeStruct) != null && result.get(edgeStruct) ? new EdgeStruct(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, (short)0): edgeStruct);
-				}});
-
-			// STEP 4: Add cut to list
 			for(EdgeStruct edge : result.keySet()) {
 				if(result.get(edge)) {
 					allResults.add(edge, i);
 				}
 			}
+			
+			// STEP 3: Transform graph to remove cut edges
+			gcur = gcur.transform(new EdgeTransformer(gcur.getSymbols()) {
+				public void process(GraphBuilder gb, EdgeStruct edge) {
+					gb.addOrUpdateEdge(edge.sourceName, edge.sinkName, edge.symbol, edge.field, result.containsKey(edge) && result.get(edge) ? (short)0 : edge.weight);
+				}});
 		}		
 		return allResults;
 	}
