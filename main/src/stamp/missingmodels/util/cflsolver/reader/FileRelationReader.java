@@ -5,13 +5,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Graph;
-import stamp.missingmodels.util.cflsolver.core.RelationManager;
-import stamp.missingmodels.util.cflsolver.core.TypeFilter;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
+import stamp.missingmodels.util.cflsolver.core.TypeFilter;
 
 public class FileRelationReader implements RelationReader {
 	private final File directory;
@@ -21,8 +21,8 @@ public class FileRelationReader implements RelationReader {
 	}
 
 	@Override
-	public Graph readGraph(RelationManager relations, ContextFreeGrammar contextFreeGrammar) {
-		GraphBuilder gb = new GraphBuilder(contextFreeGrammar.getOpt());
+	public Graph readGraph(RelationManager relations, SymbolMap symbols) {
+		GraphBuilder gb = new GraphBuilder(symbols);
 		for(File relationFile : this.directory.listFiles()) {
 			try {
 				String relationName = relationFile.getName().split("\\.")[0];
@@ -49,7 +49,7 @@ public class FileRelationReader implements RelationReader {
 	}
 
 	@Override
-	public TypeFilter readTypeFilter(ContextFreeGrammar contextFreeGrammar) {
+	public TypeFilter readTypeFilter(SymbolMap symbols) {
 		/*
 		TypeFilter t = new TypeFilter(contextFreeGrammar.getOpt());
 		try {

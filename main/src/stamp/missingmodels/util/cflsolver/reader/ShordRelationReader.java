@@ -5,20 +5,20 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Graph;
-import stamp.missingmodels.util.cflsolver.core.RelationManager;
-import stamp.missingmodels.util.cflsolver.core.TypeFilter;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
+import stamp.missingmodels.util.cflsolver.core.TypeFilter;
 
 public class ShordRelationReader implements RelationReader {
 	@Override
-	public Graph readGraph(RelationManager relations, ContextFreeGrammar contextFreeGrammar) {
-		GraphBuilder gb = new GraphBuilder(contextFreeGrammar.getOpt());
-		for(int i=0; i<gb.getGraph().getContextFreeGrammarOpt().getSymbols().getNumSymbols(); i++) {
-			String symbol = gb.getGraph().getContextFreeGrammarOpt().getSymbols().get(i).symbol;
+	public Graph readGraph(RelationManager relations, SymbolMap symbols) {
+		GraphBuilder gb = new GraphBuilder(symbols);
+		for(int i=0; i<symbols.getNumSymbols(); i++) {
+			String symbol = symbols.get(i).symbol;
 			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
 				readRelation(gb, relation);
 			}
@@ -83,7 +83,7 @@ public class ShordRelationReader implements RelationReader {
 	}
 
 	@Override
-	public TypeFilter readTypeFilter(ContextFreeGrammar contextFreeGrammar) {
+	public TypeFilter readTypeFilter(SymbolMap symbols) {
 		/*
 		TypeFilter t = new TypeFilter(contextFreeGrammar);
 		

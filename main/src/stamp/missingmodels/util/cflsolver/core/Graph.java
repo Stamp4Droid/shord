@@ -6,8 +6,8 @@ import java.util.Map;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
@@ -16,8 +16,8 @@ public class Graph {
 	public static class GraphBuilder {
 		private final Graph graph;
 		
-		public GraphBuilder(ContextFreeGrammarOpt c) {
-			this.graph = new Graph(c);
+		public GraphBuilder(SymbolMap symbols) {
+			this.graph = new Graph(symbols);
 		}
 		
 		public Graph getGraph() {
@@ -42,14 +42,19 @@ public class Graph {
 	}
 	
 	public interface GraphTransformer {
-		public Graph transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges);
+		public Graph transform(Iterable<EdgeStruct> edges);
 	}
 	
 	public static abstract class EdgeTransformer implements GraphTransformer {
+		private final SymbolMap symbols;
+		public EdgeTransformer(SymbolMap symbols) {
+			this.symbols = symbols;
+		}
 		public abstract void process(GraphBuilder gb, EdgeStruct edgeStruct);
 		
-		public Graph transform(ContextFreeGrammarOpt c, Iterable<EdgeStruct> edges) {
-			GraphBuilder gb = new GraphBuilder(c);
+		@Override
+		public Graph transform(Iterable<EdgeStruct> edges) {
+			GraphBuilder gb = new GraphBuilder(this.symbols);
 			for(EdgeStruct edge : edges) {
 				this.process(gb, edge);
 			}
@@ -58,16 +63,16 @@ public class Graph {
 	}
 	
 	private final Map<String,Vertex> vertices = new HashMap<String,Vertex>();
-	private final ContextFreeGrammarOpt c;
+	private final SymbolMap symbols;
 	
-	public Graph(ContextFreeGrammarOpt c) {
-		this.c = c;
+	public Graph(SymbolMap symbols) {
+		this.symbols = symbols;
 	}
 
-	public Graph(ContextFreeGrammarOpt c, RelationManager relations) {
-		this.c = c;
-		for(int i=0; i<c.getSymbols().getNumSymbols(); i++) {
-			String symbol = c.getSymbols().get(i).symbol;
+	public Graph(SymbolMap symbols, RelationManager relations) {
+		this.symbols = symbols;
+		for(int i=0; i<this.symbols.getNumSymbols(); i++) {
+			String symbol = this.symbols.get(i).symbol;
 			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
 				this.readRelation(relation);
 			}
@@ -75,7 +80,7 @@ public class Graph {
 	}
 	
 	public Graph transform(GraphTransformer transformer) {
-		return transformer.transform(this.c, this.getEdgeStructs());
+		return transformer.transform(this.getEdgeStructs());
 	}
 	
 	public Iterable<EdgeStruct> getEdgeStructs() {
@@ -86,8 +91,8 @@ public class Graph {
 		return new EdgeIterator();
 	}
 	
-	public ContextFreeGrammarOpt getContextFreeGrammarOpt() {
-		return this.c;
+	public SymbolMap getSymbols() {
+		return this.symbols;
 	}
 	
 	public static interface Filter<T> {
@@ -97,7 +102,8 @@ public class Graph {
 	public static class FilterTransformer extends EdgeTransformer {
 		private final Filter<EdgeStruct> filter;
 		
-		public FilterTransformer(Filter<EdgeStruct> filter) {
+		public FilterTransformer(SymbolMap symbols, Filter<EdgeStruct> filter) {
+			super(symbols);
 			this.filter = filter;
 		}
 
@@ -156,7 +162,7 @@ public class Graph {
 	public Vertex getVertex(String name) {
 		Vertex vertex = this.vertices.get(name);
 		if(vertex == null) {
-			vertex = new Vertex(name, c.getSymbols().getNumSymbols());
+			vertex = new Vertex(name, this.symbols.getNumSymbols());
 			this.vertices.put(name, vertex);
 		}
 		return vertex;
@@ -171,7 +177,7 @@ public class Graph {
 	}
 	
 	private boolean addEdge(String source, String sink, String symbol, Field field, short weight) {
-		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.c.getSymbols().get(symbol), field, weight, null, null, null);		
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.symbols.get(symbol), field, weight, null, null, null);		
 	}
 	
 	private boolean addEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput, BucketHeap worklist) {
@@ -286,7 +292,7 @@ public class Graph {
 		private Iterator<Edge> current;
 		
 		public EdgeIterator() {
-			this.current = this.vertexList.length>0 && c.getSymbols().getNumSymbols()>0 ? this.vertexList[0].getIncomingEdges(0).iterator() : null;
+			this.current = this.vertexList.length>0 && symbols.getNumSymbols()>0 ? this.vertexList[0].getIncomingEdges(0).iterator() : null;
 			this.increment();
 		}
 		
@@ -296,7 +302,7 @@ public class Graph {
 		}
 		
 		private void incrementIndex() {
-			if(++this.curSymbolInt == c.getSymbols().getNumSymbols()) {
+			if(++this.curSymbolInt == symbols.getNumSymbols()) {
 				this.curVertex++;
 				this.curSymbolInt = 0;
 			}

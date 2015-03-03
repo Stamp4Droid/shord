@@ -4,14 +4,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 
 public class RelationManager {
 	public interface RelationReader {
-		public Graph readGraph(RelationManager relations, ContextFreeGrammar contextFreeGrammar);
-		public TypeFilter readTypeFilter(ContextFreeGrammar contextFreeGrammar);
+		public Graph readGraph(RelationManager relations, SymbolMap symbols);
+		public TypeFilter readTypeFilter(SymbolMap symbols);
 	}
 
 	private final MultivalueMap<String,Relation> relationsByName = new MultivalueMap<String,Relation>();

@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
-import lpsolve.LpSolveException;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.AuxProduction;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
@@ -28,8 +27,8 @@ public class AbductiveInference {
 	private final Set<Edge> baseEdges = new HashSet<Edge>();
 	private final Set<Edge> initialEdges = new HashSet<Edge>();
 	
-	public AbductiveInference(Graph graph, Iterable<Edge> baseEdges, Iterable<Edge> initialEdges) {
-		this.contextFreeGrammar = graph.getContextFreeGrammarOpt();
+	public AbductiveInference(ContextFreeGrammarOpt contextFreeGrammar, Graph graph, Iterable<Edge> baseEdges, Iterable<Edge> initialEdges) {
+		this.contextFreeGrammar = contextFreeGrammar;
 		for(Edge edge : baseEdges) {
 			this.baseEdges.add(edge);
 		}
@@ -93,11 +92,6 @@ public class AbductiveInference {
 			if(Field.produce(unaryProduction.ignoreFields, input.field).field != target.field.field) {
 				continue;
 			}
-			/*
-			if(!input.context.produce(unaryProduction).equals(target.context)) {
-				continue;
-			}
-			*/
 			// add edge
 			this.addProduction(target, input);
 		}
@@ -123,11 +117,6 @@ public class AbductiveInference {
 				if(Field.produce(binaryProduction.ignoreFields, firstInput.field, secondInput.field).field != target.field.field) {
 					continue;
 				}
-				/*
-				if(!target.context.equals(firstInput.context.produce(binaryProduction, secondInput.context))) {
-					continue;
-				}
-				*/
 				// add edge
 				if(includeFirstInput && includeSecondInput) {
 					this.addProduction(target, firstInput, secondInput);
@@ -160,11 +149,6 @@ public class AbductiveInference {
 				if(Field.produce(auxProduction.ignoreFields, input.field, auxInput.field).field != target.field.field) {
 					continue;
 				}
-				/*
-				if(!target.context.equals(input.context.produce(auxProduction, auxInput.context))) {
-					continue;
-				}
-				*/
 				// add edge
 				if(includeInput && includeAuxInput) {
 					this.addProduction(target, input, auxInput);
@@ -195,7 +179,7 @@ public class AbductiveInference {
 	
 	// returns 1 if the edge is in the cut, 0 if the edge is not in the cut
 	private Map<EdgeStruct,Boolean> result = null;
-	public Map<EdgeStruct,Boolean> solve() throws LpSolveException {
+	public Map<EdgeStruct,Boolean> solve() {
 		if(this.result == null) {
 			// STEP 1: Break initial edges
 			this.setInitialEdges();

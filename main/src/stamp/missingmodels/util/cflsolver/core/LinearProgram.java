@@ -190,7 +190,16 @@ public class LinearProgram<T> {
 		}
 	}
 	
-	public LinearProgramResult<T> solve() throws LpSolveException {
+	public LinearProgramResult<T> solve() {
+		try {
+			return solveHelper();
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Solve failed!");
+		}
+	}
+	
+	private LinearProgramResult<T> solveHelper() {
 		try {
 			System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55.so");
 			System.load("/home/obastani/Documents/projects/research/stamp/shord/lib/liblpsolve55j.so");
