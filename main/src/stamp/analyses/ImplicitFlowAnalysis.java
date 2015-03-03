@@ -1,9 +1,9 @@
 package stamp.analyses;
 
 import shord.project.analyses.JavaAnalysis;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.ImplicitFlowGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
-import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
 import chord.project.Chord;
 
 /**

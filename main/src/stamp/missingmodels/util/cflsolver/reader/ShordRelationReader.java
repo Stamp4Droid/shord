@@ -5,13 +5,13 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
-import stamp.missingmodels.util.jcflsolver2.Graph;
-import stamp.missingmodels.util.jcflsolver2.Graph.GraphBuilder;
-import stamp.missingmodels.util.jcflsolver2.RelationManager;
-import stamp.missingmodels.util.jcflsolver2.RelationManager.Relation;
-import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
-import stamp.missingmodels.util.jcflsolver2.TypeFilter;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
+import stamp.missingmodels.util.cflsolver.core.TypeFilter;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
+import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
 
 public class ShordRelationReader implements RelationReader {
 	@Override

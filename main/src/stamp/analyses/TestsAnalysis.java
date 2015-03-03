@@ -8,9 +8,9 @@ import shord.analyses.DomM;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
-import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 import chord.project.Chord;
 
 @Chord(name = "tests")

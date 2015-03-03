@@ -1,6 +1,6 @@
 package stamp.missingmodels.util.cflsolver.grammars;
 
-import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
 
 public class MissingRefRefGrammar extends ContextFreeGrammar {
 	public static class MissingRefRefTaintGrammar extends UnionGrammar {

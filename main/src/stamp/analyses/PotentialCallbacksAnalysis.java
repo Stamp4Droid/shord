@@ -17,8 +17,8 @@ import soot.Unit;
 import soot.jimple.toolkits.callgraph.Edge;
 import stamp.missingmodels.entrypoints.EntryPointAugmenter.MockUnit;
 import stamp.missingmodels.entrypoints.EntryPointAugmentsBuilder;
+import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 import chord.project.Chord;
 
 /**

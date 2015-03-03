@@ -7,9 +7,9 @@ import shord.analyses.DomU;
 import shord.analyses.DomV;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 
 public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 	private void setNewWeights() {

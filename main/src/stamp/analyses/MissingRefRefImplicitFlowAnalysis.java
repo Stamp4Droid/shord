@@ -1,14 +1,14 @@
 package stamp.analyses;
 
 import shord.project.analyses.JavaAnalysis;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
+import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
 import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefImplicitFlowGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefTaintGrammar;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.MissingRefRefRelationManager.MissingRefRefImplicitFlowRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.MissingRefRefRelationManager.MissingRefRefTaintRelationManager;
-import stamp.missingmodels.util.jcflsolver2.ContextFreeGrammar;
-import stamp.missingmodels.util.jcflsolver2.RelationManager;
-import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
 import chord.project.Chord;
 
 /**

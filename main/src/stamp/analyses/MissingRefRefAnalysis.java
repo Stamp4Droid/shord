@@ -2,15 +2,15 @@ package stamp.analyses;
 
 import lpsolve.LpSolveException;
 import shord.project.analyses.JavaAnalysis;
+import stamp.missingmodels.util.cflsolver.core.AbductiveInferenceRunner;
+import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
+import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
+import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
+import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar.TaintPointsToGrammar;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.DynamicParamRelationManager;
-import stamp.missingmodels.util.jcflsolver2.AbductiveInferenceRunner2;
-import stamp.missingmodels.util.jcflsolver2.Edge.EdgeStruct;
-import stamp.missingmodels.util.jcflsolver2.Graph;
-import stamp.missingmodels.util.jcflsolver2.RelationManager;
-import stamp.missingmodels.util.jcflsolver2.RelationManager.RelationReader;
-import stamp.missingmodels.util.jcflsolver2.Util.MultivalueMap;
 import chord.project.Chord;
 
 /**
@@ -45,7 +45,7 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 		//RelationManager relations = new TaintPointsToRelationManager();
 		Graph g2 = new Graph(new TaintPointsToGrammar().getOpt(), new DynamicParamRelationManager(new MultivalueMap<String,String>()));
 		try {
-			MultivalueMap<EdgeStruct,Integer> results2 = AbductiveInferenceRunner2.runInference(g2, true, 2);
+			MultivalueMap<EdgeStruct,Integer> results2 = AbductiveInferenceRunner.runInference(g2, true, 2);
 		} catch (LpSolveException e) {
 			e.printStackTrace();
 		}
