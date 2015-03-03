@@ -15,6 +15,8 @@ import soot.SootClass;
 import soot.jimple.JasminClass;
 import soot.util.JasminOutputStream;
 
+import com.google.gson.stream.JsonWriter;
+
 /*
 * @author Saswat Anand
 */
@@ -38,6 +40,7 @@ public class Main
 
 		//dump the app description
 		dumpApp(app.toString());
+		dumpClassHierarchy(app);
 		
 		File driverDir = new File(driverDirName, "stamp/harness");
 		driverDir.mkdirs();
@@ -72,11 +75,64 @@ public class Main
 	private static void dumpApp(String appDesc) throws IOException
 	{
 		String stampOutDir = System.getProperty("stamp.out.dir");
-		PrintWriter writer = new PrintWriter(new FileWriter(new File(stampOutDir, "app.txt")));
+		PrintWriter writer = new PrintWriter(new FileWriter(new File(stampOutDir, "app.json")));
 		writer.println(appDesc);
 		writer.close();
 	}
 
+	private static void dumpClassHierarchy(App app) throws IOException
+	{
+		String stampOutDir = System.getProperty("stamp.out.dir");
+		JsonWriter writer = new JsonWriter(new BufferedWriter(new FileWriter(new File(stampOutDir, "hierarchy.json"))));
+		writer.setIndent("  ");
+		Scene scene = Scene.v();		
+
+		writer.beginObject();
+
+		//write app classes
+		writer.name("app");
+		writer.beginArray();
+		Set<String> frameworkClasses = app.allFrameworkClassNames();
+		List<SootClass> workList = new ArrayList();
+		for(String className : app.allClassNames()){
+			if(!scene.containsClass(className))
+				continue;
+
+			SootClass klass = scene.getSootClass(className);
+			SootClass superClass = klass.getSuperclass();
+			String superClassName = superClass.getName();
+			if(frameworkClasses.contains(superClassName))
+				workList.add(superClass);
+		
+			writer.beginObject();
+			writer.name("class").value(className);
+			writer.name("super").value(superClassName);
+			writer.endObject();
+		}
+		writer.endArray();
+
+		//write framework classes
+		writer.name("framework");
+		writer.beginArray();
+		Set<SootClass> visited = new HashSet();
+		while(!workList.isEmpty()){
+			SootClass klass = workList.remove(0);
+			if(visited.contains(klass))
+				continue;
+			visited.add(klass);
+			if(!klass.hasSuperclass())
+				continue;
+			SootClass superClass = klass.getSuperclass();
+			writer.beginObject();
+			writer.name("class").value(klass.getName());
+			writer.name("super").value(superClass.getName());
+			writer.endObject();
+		}
+		writer.endArray();
+
+		writer.endObject();
+		writer.close();
+	}
 
 	private static void writeClass(SootClass klass, String driverDirName) throws IOException
 	{

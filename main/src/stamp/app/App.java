@@ -37,6 +37,7 @@ public class App
 	private Map<Integer,Layout> layouts = new HashMap();
 	private Set<String> permissions = new HashSet();
 	private List<String> classes = new ArrayList();
+	private Set<String> frameworkClasses = new HashSet();
 
 	private String pkgName;
 	private String version;
@@ -53,6 +54,7 @@ public class App
 		List<Layout> layouts = new ParseLayout().process(resDir);
 		
 		app.collectClassNames(apkPath);
+		app.computeFrameworkClasses();		
 		app.process(apktoolOutDir, layouts);
 		
 		return app;
@@ -100,8 +102,6 @@ public class App
 			if(compNames.contains(c.name))
 				this.comps.add(c);
 		}
-
-		Set<String> frameworkClasses = computeFrameworkClasses();
 		
 		for(Layout layout : layouts){
 			this.layouts.put(layout.id, layout);
@@ -186,6 +186,11 @@ public class App
 		return classes;
 	}
 
+	public Set<String> allFrameworkClassNames()
+	{
+		return frameworkClasses;
+	}
+
 	public Collection<Layout> allLayouts()
 	{
 		return layouts.values();
@@ -226,7 +231,7 @@ public class App
 		widgetNames.clear();
 		widgetNames.addAll(widgetNamesAvailable);
 	}
-	
+
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder("{");
@@ -349,9 +354,8 @@ public class App
 		}
 	}
 
-	static Set<String> computeFrameworkClasses()
+	void computeFrameworkClasses()
 	{
-		Set<String> frameworkClasses = new HashSet();
 		String androidJar = System.getProperty("stamp.android.jar");
 		JarFile archive;
 		try{
@@ -372,7 +376,6 @@ public class App
 				}
 			}
 		}
-		return frameworkClasses;
 	}
 
 }
