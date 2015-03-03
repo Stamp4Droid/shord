@@ -10,10 +10,13 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.CallGraphBuilder;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
+import soot.jimple.toolkits.scalar.CopyPropagator;
+import soot.jimple.toolkits.scalar.DeadAssignmentEliminator;
 import soot.tagkit.AnnotationElem;
 import soot.tagkit.AnnotationTag;
 import soot.tagkit.Tag;
 import soot.tagkit.VisibilityAnnotationTag;
+import soot.toolkits.scalar.UnusedLocalEliminator;
 
 import java.util.*;
 import java.io.*;
@@ -148,7 +151,9 @@ public class Program
 			// Validate the new body and remove intermediate variables.
 			Body body = caller.getActiveBody();
 			body.validate();
-			PackManager.v().getPack("jop").apply(body);
+			CopyPropagator.v().transform(body);
+			DeadAssignmentEliminator.v().transform(body);
+			UnusedLocalEliminator.v().transform(body);
 		}
 	}
 
