@@ -9,20 +9,21 @@ import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphTransformer;
-import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
+import stamp.missingmodels.util.cflsolver.core.TypeFilter.GraphTypeFilter;
 
 public class ReachabilitySolver implements GraphTransformer {
 	private final ContextFreeGrammarOpt contextFreeGrammar;
 	
 	private GraphBuilder graph;
 	private BucketHeap worklist;
+	private TypeFilter filter;
 	
 	public ReachabilitySolver(ContextFreeGrammarOpt contextFreeGrammar) {
 		this.contextFreeGrammar = contextFreeGrammar;
 	}
 	
 	private void addEdgeHelper(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput) {
-		if(field == null) {
+		if(field == null || (this.filter != null && !this.filter.filter(symbol, source, sink))) {
 			return;
 		}
 		Edge curEdge = this.graph.getEdge(source, sink, symbol, field);
@@ -62,7 +63,7 @@ public class ReachabilitySolver implements GraphTransformer {
 	public Graph transform(Iterable<EdgeStruct> edges) {
 		long time = System.currentTimeMillis();
 		
-		this.graph = new GraphBuilder(new VertexMap(edges), this.contextFreeGrammar.getSymbols());
+		this.graph = new GraphBuilder(this.contextFreeGrammar.getSymbols());
 		this.worklist = new BucketHeap();
 		
 		for(EdgeStruct edge : edges) {
@@ -70,7 +71,7 @@ public class ReachabilitySolver implements GraphTransformer {
 		}
 		
 		// initialize filter after adding edges so graph vertices are initialized
-		//this.filter = filterFactory.getFilter(this.graph.getGraph());
+		this.filter = new GraphTypeFilter(this.graph.getGraph());
 		
 		System.out.println("Initial num of edges = " + this.worklist.size());
 		

@@ -1,9 +1,7 @@
 package stamp.missingmodels.util.cflsolver.core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
@@ -12,74 +10,11 @@ import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 
 public class Graph {
-	public static class VertexMap {
-		private final Map<String,Integer> vertices = new HashMap<String,Integer>();
-		private final Map<Integer,String> verticesById = new HashMap<Integer,String>();
-		
-		public VertexMap(Iterable<EdgeStruct> edges) {
-			for(EdgeStruct edge : edges) {
-				this.add(edge.sourceName);
-				this.add(edge.sinkName);
-			}
-		}
-		
-		private void add(String vertex) {
-			if(this.vertices.get(vertex) == null) {
-				this.verticesById.put(this.vertices.size(), vertex);
-				this.vertices.put(vertex, this.vertices.size());
-			}
-		}
-		
-		public int get(String name) {
-			return this.vertices.get(name);
-		}
-		
-		public String get(int id) {
-			return this.verticesById.get(id);
-		}
-		
-		public boolean contains(String name) {
-			return this.vertices.containsKey(name);
-		}
-		
-		public boolean contains(int id) {
-			return this.verticesById.containsKey(id);
-		}
-		
-		public int size() {
-			return this.vertices.size();
-		}
-	}
-	
-	public static class SimpleGraphBuilder {
-		private final SymbolMap symbols;
-		private final List<EdgeStruct> edges = new ArrayList<EdgeStruct>();
-		public SimpleGraphBuilder(SymbolMap symbols) {
-			this.symbols = symbols;
-		}
-		public void add(EdgeStruct edge) {
-			this.edges.add(edge);
-		}
-		public void addOrUpdateEdge(String source, String sink, String symbol, int field, short weight) {
-			this.add(new EdgeStruct(source, sink, symbol, field, weight));
-		}
-		
-		public Graph getGraph() {
-			GraphBuilder gb = new GraphBuilder(new VertexMap(this.edges), this.symbols);
-			for(EdgeStruct edge : this.edges) {
-				gb.addOrUpdateEdge(edge);
-			}
-			return gb.getGraph();
-		}
-	}
-	
-	// Be careful -- this has different semantics than SimpleGraphBuilder:
-	// adding edges after getGraph() will update the original graph
 	public static class GraphBuilder {
 		private final Graph graph;
-
-		public GraphBuilder(VertexMap vertices, SymbolMap symbols) {
-			this.graph = new Graph(vertices, symbols);
+		
+		public GraphBuilder(SymbolMap symbols) {
+			this.graph = new Graph(symbols);
 		}
 		
 		public Graph getGraph() {
@@ -130,16 +65,14 @@ public class Graph {
 	
 	public static abstract class EdgeTransformer implements GraphTransformer {
 		private final SymbolMap symbols;
-		private final VertexMap vertices;
-		public EdgeTransformer(VertexMap vertices, SymbolMap symbols) {
-			this.vertices = vertices;
+		public EdgeTransformer(SymbolMap symbols) {
 			this.symbols = symbols;
 		}
 		public abstract void process(GraphBuilder gb, EdgeStruct edgeStruct);
 		
 		@Override
 		public Graph transform(Iterable<EdgeStruct> edges) {
-			GraphBuilder gb = new GraphBuilder(this.vertices, this.symbols);
+			GraphBuilder gb = new GraphBuilder(this.symbols);
 			for(EdgeStruct edge : edges) {
 				this.process(gb, edge);
 			}
@@ -147,19 +80,12 @@ public class Graph {
 		}
 	}
 	
-	private final VertexMap vertices;
-	private final Vertex[] vertexArray;
+	private final Map<String,Vertex> vertices = new HashMap<String,Vertex>();
 	private final SymbolMap symbols;
 	private int numEdges = 0;
 	
-	public Graph(VertexMap vertices, SymbolMap symbols) {
-		this.vertices = vertices;
-		this.vertexArray = new Vertex[this.vertices.size()];
+	public Graph(SymbolMap symbols) {
 		this.symbols = symbols;
-		for(int i=0; i<this.vertices.size(); i++) {
-			this.vertexArray[i] = new Vertex(i, this.vertices.get(i),  this.symbols.getNumSymbols());
-
-		}
 	}
 	
 	public Graph transform(GraphTransformer transformer) {
@@ -167,23 +93,11 @@ public class Graph {
 	}
 	
 	public Iterable<EdgeStruct> getEdgeStructs() {
-		return new Iterable<EdgeStruct>() {
-			@Override
-			public Iterator<EdgeStruct> iterator() {
-				return new EdgeStructIterator();
-			}};
+		return new EdgeStructIterator();
 	}
 	
 	public Iterable<Edge> getEdges() {
-		return new Iterable<Edge>() {
-			@Override
-			public Iterator<Edge> iterator() {
-				return new EdgeIterator();
-			}};
-	}
-	
-	public VertexMap getVertices() {
-		return this.vertices;
+		return new EdgeIterator();
 	}
 	
 	public SymbolMap getSymbols() {
@@ -201,8 +115,8 @@ public class Graph {
 	public static class FilterTransformer extends EdgeTransformer {
 		private final Filter<EdgeStruct> filter;
 		
-		public FilterTransformer(VertexMap vertices, SymbolMap symbols, Filter<EdgeStruct> filter) {
-			super(vertices, symbols);
+		public FilterTransformer(SymbolMap symbols, Filter<EdgeStruct> filter) {
+			super(symbols);
 			this.filter = filter;
 		}
 
@@ -214,20 +128,12 @@ public class Graph {
 		}
 	}
 	
-	public Iterable<EdgeStruct> getEdgeStructs(final Filter<EdgeStruct> filter) {
-		return new Iterable<EdgeStruct>() {
-			@Override
-			public Iterator<EdgeStruct> iterator() {
-				return new FilteredEdgeStructIterator(filter);
-			}};
+	public Iterable<EdgeStruct> getEdgeStructs(Filter<EdgeStruct> filter) {
+		return new FilteredEdgeStructIterator(filter);
 	}
 	
 	public Iterable<Edge> getEdges(Filter<Edge> filter) {
-		return new Iterable<Edge>() {
-			@Override
-			public Iterator<Edge> iterator() {
-				return new EdgeIterator();
-			}};
+		return new FilteredEdgeIterator(filter);
 	}
 
 	public String toString(boolean shord) {
@@ -244,11 +150,16 @@ public class Graph {
 	}
 	
 	public Vertex getVertex(String name) {
-		return this.vertexArray[this.vertices.get(name)];
+		Vertex vertex = this.vertices.get(name);
+		if(vertex == null) {
+			vertex = new Vertex(name, this.symbols.getNumSymbols());
+			this.vertices.put(name, vertex);
+		}
+		return vertex;
 	}
 	
 	public boolean containsVertex(String name) {
-		return this.vertices.contains(name);
+		return this.vertices.containsKey(name);
 	}
 	
 	public int getNumVertices() {
@@ -280,9 +191,14 @@ public class Graph {
 		}
 	}
 	
-	private class EdgeStructIterator extends TransformIterator<Edge,EdgeStruct> {
+	private class EdgeStructIterator extends TransformIterator<Edge,EdgeStruct> implements Iterable<EdgeStruct> {
 		public EdgeStructIterator() {
 			super(new EdgeIterator());
+		}
+
+		@Override
+		public Iterator<EdgeStruct> iterator() {
+			return this;
 		}
 
 		@Override
@@ -306,7 +222,7 @@ public class Graph {
 		}
 	}
 	
-	private class FilteredEdgeStructIterator extends TransformIterator<Edge,EdgeStruct> {
+	private class FilteredEdgeStructIterator extends TransformIterator<Edge,EdgeStruct> implements Iterable<EdgeStruct> {
 		public FilteredEdgeStructIterator(Filter<EdgeStruct> filter) {
 			super(new FilteredEdgeIterator(new TransformFilter<Edge,EdgeStruct>(filter) {
 				@Override
@@ -317,18 +233,24 @@ public class Graph {
 		}
 
 		@Override
+		public Iterator<EdgeStruct> iterator() {
+			return this;
+		}
+
+		@Override
 		public EdgeStruct transform(Edge edge) {
 			return edge.getStruct();
 		}
 	}
 	
-	private class EdgeIterator implements Iterator<Edge> {
+	private class EdgeIterator implements Iterator<Edge>, Iterable<Edge> {
+		private Vertex[] vertexList = vertices.values().toArray(new Vertex[]{});
 		private int curVertex = 0;
 		private int curSymbolInt = 0;
 		private Iterator<Edge> current;
 		
-		private EdgeIterator() {
-			this.current = vertexArray.length>0 && symbols.getNumSymbols()>0 ? vertexArray[0].getIncomingEdges(0).iterator() : null;
+		public EdgeIterator() {
+			this.current = this.vertexList.length>0 && symbols.getNumSymbols()>0 ? this.vertexList[0].getIncomingEdges(0).iterator() : null;
 			this.increment();
 		}
 		
@@ -347,7 +269,7 @@ public class Graph {
 		private void increment() {
 			while(this.current != null && !this.current.hasNext()) {
 				this.incrementIndex();
-				this.current = this.curVertex<vertexArray.length ? vertexArray[this.curVertex].getIncomingEdges(this.curSymbolInt).iterator() : null;
+				this.current = this.curVertex<this.vertexList.length ? this.vertexList[this.curVertex].getIncomingEdges(this.curSymbolInt).iterator() : null;
 			}
 		}
 		
@@ -362,14 +284,19 @@ public class Graph {
 		public void remove() {
 			throw new RuntimeException("Remove is not implemented for EdgeIterator!");
 		}
+
+		@Override
+		public Iterator<Edge> iterator() {
+			return this;
+		}
 	}
 	
-	private class FilteredEdgeIterator implements Iterator<Edge> {
+	private class FilteredEdgeIterator implements Iterator<Edge>, Iterable<Edge> {
 		private final EdgeIterator iterator = new EdgeIterator();
 		private final Filter<Edge> filter;
 		private Edge curEdge;
 		
-		private FilteredEdgeIterator(Filter<Edge> filter) {
+		public FilteredEdgeIterator(Filter<Edge> filter) {
 			this.filter = filter;
 			this.increment();
 		}
@@ -389,6 +316,11 @@ public class Graph {
 		@Override
 		public void remove() {
 			throw new RuntimeException("Remove is not implemented for FilteredEdgeIterator!");
+		}
+		
+		@Override
+		public Iterator<Edge> iterator() {
+			return this;
 		}
 		
 		private void increment() {
