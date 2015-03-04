@@ -93,11 +93,19 @@ public class Graph {
 	}
 	
 	public Iterable<EdgeStruct> getEdgeStructs() {
-		return new EdgeStructIterator();
+		return new Iterable<EdgeStruct>() {
+			@Override
+			public Iterator<EdgeStruct> iterator() {
+				return new EdgeStructIterator();
+			}};
 	}
 	
 	public Iterable<Edge> getEdges() {
-		return new EdgeIterator();
+		return new Iterable<Edge>() {
+			@Override
+			public Iterator<Edge> iterator() {
+				return new EdgeIterator();
+			}};
 	}
 	
 	public SymbolMap getSymbols() {
@@ -128,12 +136,20 @@ public class Graph {
 		}
 	}
 	
-	public Iterable<EdgeStruct> getEdgeStructs(Filter<EdgeStruct> filter) {
-		return new FilteredEdgeStructIterator(filter);
+	public Iterable<EdgeStruct> getEdgeStructs(final Filter<EdgeStruct> filter) {
+		return new Iterable<EdgeStruct>() {
+			@Override
+			public Iterator<EdgeStruct> iterator() {
+				return new FilteredEdgeStructIterator(filter);
+			}};
 	}
 	
-	public Iterable<Edge> getEdges(Filter<Edge> filter) {
-		return new FilteredEdgeIterator(filter);
+	public Iterable<Edge> getEdges(final Filter<Edge> filter) {
+		return new Iterable<Edge>() {
+			@Override
+			public Iterator<Edge> iterator() {
+				return new FilteredEdgeIterator(filter);
+			}};
 	}
 
 	public String toString(boolean shord) {
@@ -191,14 +207,9 @@ public class Graph {
 		}
 	}
 	
-	private class EdgeStructIterator extends TransformIterator<Edge,EdgeStruct> implements Iterable<EdgeStruct> {
+	private class EdgeStructIterator extends TransformIterator<Edge,EdgeStruct> {
 		public EdgeStructIterator() {
 			super(new EdgeIterator());
-		}
-
-		@Override
-		public Iterator<EdgeStruct> iterator() {
-			return this;
 		}
 
 		@Override
@@ -222,7 +233,7 @@ public class Graph {
 		}
 	}
 	
-	private class FilteredEdgeStructIterator extends TransformIterator<Edge,EdgeStruct> implements Iterable<EdgeStruct> {
+	private class FilteredEdgeStructIterator extends TransformIterator<Edge,EdgeStruct> {
 		public FilteredEdgeStructIterator(Filter<EdgeStruct> filter) {
 			super(new FilteredEdgeIterator(new TransformFilter<Edge,EdgeStruct>(filter) {
 				@Override
@@ -233,17 +244,12 @@ public class Graph {
 		}
 
 		@Override
-		public Iterator<EdgeStruct> iterator() {
-			return this;
-		}
-
-		@Override
 		public EdgeStruct transform(Edge edge) {
 			return edge.getStruct();
 		}
 	}
 	
-	private class EdgeIterator implements Iterator<Edge>, Iterable<Edge> {
+	private class EdgeIterator implements Iterator<Edge> {
 		private Vertex[] vertexList = vertices.values().toArray(new Vertex[]{});
 		private int curVertex = 0;
 		private int curSymbolInt = 0;
@@ -284,14 +290,9 @@ public class Graph {
 		public void remove() {
 			throw new RuntimeException("Remove is not implemented for EdgeIterator!");
 		}
-
-		@Override
-		public Iterator<Edge> iterator() {
-			return this;
-		}
 	}
 	
-	private class FilteredEdgeIterator implements Iterator<Edge>, Iterable<Edge> {
+	private class FilteredEdgeIterator implements Iterator<Edge> {
 		private final EdgeIterator iterator = new EdgeIterator();
 		private final Filter<Edge> filter;
 		private Edge curEdge;
@@ -316,11 +317,6 @@ public class Graph {
 		@Override
 		public void remove() {
 			throw new RuntimeException("Remove is not implemented for FilteredEdgeIterator!");
-		}
-		
-		@Override
-		public Iterator<Edge> iterator() {
-			return this;
 		}
 		
 		private void increment() {

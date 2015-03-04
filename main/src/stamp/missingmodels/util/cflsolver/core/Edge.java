@@ -117,10 +117,6 @@ public class Edge {
 
 	public Edge nextOutgoingEdge;
 	public Edge nextIncomingEdge;
-	
-	Edge(Symbol symbol, Vertex source, Vertex sink) {
-		this(symbol, source, sink, Field.DEFAULT_FIELD);
-	}
 
 	public Edge(Symbol symbol, Vertex source, Vertex sink, Field field) {
 		this.source = source;
@@ -196,6 +192,7 @@ public class Edge {
 		sb.append(this.symbol.symbol).append("[");
 		sb.append(this.field).append("]");
 		sb.append("-").append(this.sink.toString(shord));
+		sb.append("#").append(this.weight);
 		return sb.toString();
 	}
 
