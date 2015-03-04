@@ -108,7 +108,7 @@ public class AbductiveInferenceUtils {
 			}
 			
 			// STEP 3: Transform graph to remove cut edges
-			gcur = gcur.transform(new EdgeTransformer(gcur.getSymbols()) {
+			gcur = gcur.transform(new EdgeTransformer(gcur.getVertices(), gcur.getSymbols()) {
 				public void process(GraphBuilder gb, EdgeStruct edge) {
 					gb.addOrUpdateEdge(edge.sourceName, edge.sinkName, edge.symbol, edge.field, result.containsKey(edge) && result.get(edge) ? (short)0 : edge.weight);
 				}});

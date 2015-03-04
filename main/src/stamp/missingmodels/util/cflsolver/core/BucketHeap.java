@@ -13,8 +13,11 @@ public class BucketHeap {
 			this.buckets.add(null);
 		}
 	}
-
+	
 	public void push(Edge t) {
+		if(t.weight<this.minBucket) {
+			throw new RuntimeException("Edge weight lower than current minimum bucket!");
+		}
 		this.ensure(t.weight);
 		Edge head = this.buckets.get(t.weight);
 		if(head != null) {
@@ -33,7 +36,7 @@ public class BucketHeap {
 		while(head == null) {
 			this.minBucket++;
 			if(this.minBucket >= this.buckets.size()) {
-				return null;
+				throw new RuntimeException("Out of edges!");
 			}
 			head = this.buckets.get(this.minBucket);
 		}
@@ -46,7 +49,7 @@ public class BucketHeap {
 		if(edge.prevWorklist != null) {
 			edge.prevWorklist.nextWorklist = edge.nextWorklist;
 		} else {
-			this.buckets.set(edge.weight, edge.nextWorklist);
+			this.buckets.set(edge.nextWorklist.weight, edge.nextWorklist);
 		}
 		if(edge.nextWorklist != null) {
 			edge.nextWorklist.prevWorklist = edge.prevWorklist;

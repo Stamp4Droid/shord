@@ -7,7 +7,7 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Graph;
-import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.Graph.SimpleGraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
@@ -16,7 +16,7 @@ import stamp.missingmodels.util.cflsolver.core.TypeFilter;
 public class ShordRelationReader implements RelationReader {
 	@Override
 	public Graph readGraph(RelationManager relations, SymbolMap symbols) {
-		GraphBuilder gb = new GraphBuilder(symbols);
+		SimpleGraphBuilder gb = new SimpleGraphBuilder(symbols);
 		for(int i=0; i<symbols.getNumSymbols(); i++) {
 			String symbol = symbols.get(i).symbol;
 			for(Relation relation : relations.getRelationsBySymbol(symbol)) {
@@ -70,7 +70,7 @@ public class ShordRelationReader implements RelationReader {
 		return gb.getGraph();
 	}
 	
-	private static void readRelation(GraphBuilder gb, Relation relation) {
+	private static void readRelation(SimpleGraphBuilder gb, Relation relation) {
 		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relation.getName());
 		rel.load();
 		

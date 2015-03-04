@@ -6,7 +6,7 @@ import java.util.Set;
 
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
-import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.Graph.SimpleGraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 
 public class RelationManager {
@@ -68,7 +68,7 @@ public class RelationManager {
 			return true;
 		}
 		
-		public void addEdge(GraphBuilder gb, int[] tuple) {
+		public void addEdge(SimpleGraphBuilder gb, int[] tuple) {
 			if(!this.filter(tuple)) {
 				return;
 			}
