@@ -851,7 +851,7 @@ public class PAGBuilder extends JavaAnalysis
 		domU.save();
 	}
 
-	boolean isStub(SootMethod method)
+	public static boolean isStub(SootMethod method)
 	{
 		if(!method.isConcrete())
 			return false;

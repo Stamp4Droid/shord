@@ -22,6 +22,7 @@ import java.util.*;
 import java.io.*;
 
 import shord.analyses.ContainerTag;
+import shord.analyses.PAGBuilder;
 
 public class Program
 {
@@ -32,6 +33,9 @@ public class Program
 
 	private static Program g;
 	private SootMethod mainMethod;
+	List<SootMethod> toInline = new ArrayList<SootMethod>();
+	Map<SootMethod,Set<SootMethod>> inlineRevCG =
+		new HashMap<SootMethod,Set<SootMethod>>();
 
 	public static Program g()
 	{
@@ -80,29 +84,51 @@ public class Program
 
 			// Get an initial call graph.
 			buildCallGraph();
-			// Inline model methods marked with @Inline.
+			// Collect all model methods marked with @Inline.
 			// TODO: Only search over framework methods.
 			Iterator<SootMethod> meths = getMethods();
 			while (meths.hasNext()) {
 				SootMethod m = meths.next();
-				// Search method annotations for @Inline.
 				if (!m.hasTag("VisibilityAnnotationTag")) {
 					continue;
 				}
-				boolean must_inline = false;
 				VisibilityAnnotationTag tag = (VisibilityAnnotationTag)
 					m.getTag("VisibilityAnnotationTag");
 				for (AnnotationTag annot : tag.getAnnotations()) {
 					if (annot.getType().equals(INLINE_ANNOT_TYPE)) {
-						must_inline = true;
+						toInline.add(m);
 						break;
 					}
 				}
-				if (!must_inline) {
-					continue;
+			}
+			// Enumerate call graph dependencies among these methods.
+			CallGraph cg = Scene.v().getCallGraph();
+			for (SootMethod m : toInline) {
+				Set<SootMethod> s = new HashSet<SootMethod>();
+				Iterator<Edge> eIter = cg.edgesInto(m);
+				while (eIter.hasNext()) {
+					Edge e = eIter.next();
+					if (!isRealCall(e)) {
+						continue;
+					}
+					SootMethod c = (SootMethod) e.getSrc();
+					if (toInline.contains(c)) {
+						s.add(c);
+					}
 				}
-				inline_calls_to(m);
-				clear_body(m);
+				inlineRevCG.put(m, s);
+			}
+			// Sort methods to inline such that any method m will get inlined
+			// before any of its callers.
+			TopoSorter<SootMethod> sorter =
+				new TopoSorter<SootMethod>(toInline, inlineRevCG);
+			boolean noCycles = sorter.sort();
+			assert(noCycles);
+			toInline = sorter.result();
+			// Perform the inlining.
+			for (SootMethod m : toInline) {
+				inlineCallsTo(m);
+				clearBody(m);
 			}
 			// Update the call graph after inlining.
 			buildCallGraph();
@@ -122,27 +148,32 @@ public class Program
 		return !tgt.isPhantom() && edge.isExplicit();
 	}
 
-	private void inline_calls_to(SootMethod m) {
+	private void inlineCallsTo(SootMethod m) {
 		// TODO: Assuming the inlining code doesn't modify the call
 		// graph (otherwise our iterator might become invalid).
 		CallGraph cg = Scene.v().getCallGraph();
-		Iterator<Edge> iter = cg.edgesInto(m);
-		while (iter.hasNext()) {
-			Edge e = iter.next();
+		Iterator<Edge> eIter = cg.edgesInto(m);
+		while (eIter.hasNext()) {
+			Edge e = eIter.next();
 			if (!isRealCall(e)) {
 				continue;
 			}
 			Stmt invk = e.srcStmt();
 			SootMethod caller = (SootMethod) e.getSrc();
-			// Ensure all calls to m have a single target.
-			Iterator<Edge> calls = cg.edgesOutOf(invk);
-			int numCalls = 0;
-			while (calls.hasNext()) {
-				if (isRealCall(calls.next())) {
-					numCalls++;
+			// Ensure all calls to m have a single non-stub target.
+			Iterator<Edge> cIter = cg.edgesOutOf(invk);
+			while (cIter.hasNext()) {
+				Edge c = cIter.next();
+				if (c == e || !isRealCall(c) || PAGBuilder.isStub(c.tgt())) {
+					continue;
 				}
+				System.err.println
+					("ERROR: Tried to inline at " + invk.toString() + " in " +
+					 caller.toString() + " but it has multiple targets:");
+				System.err.println(m);
+				System.err.println(c.tgt());
+				throw new RuntimeException();
 			}
-			assert(numCalls == 1);
 			// Perform the inlining (unsafely).
 			System.out.println("Inlining " + m.toString() +
 							   " into " + caller.toString() +
@@ -158,7 +189,7 @@ public class Program
 	}
 
 	// Need to update the call graph afterwards.
-	private void clear_body(SootMethod m) {
+	private void clearBody(SootMethod m) {
 		System.out.println("Clearing " + m.toString());
 		JimpleBody empty_body = Jimple.v().newBody(m);
 		m.setActiveBody(empty_body);
