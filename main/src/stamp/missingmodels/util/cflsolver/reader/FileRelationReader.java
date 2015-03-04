@@ -4,14 +4,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
+import stamp.missingmodels.util.cflsolver.core.Edge;
+import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
+import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphEdgeFilter;
 import stamp.missingmodels.util.cflsolver.core.Graph.SimpleGraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
-import stamp.missingmodels.util.cflsolver.core.TypeFilter;
 
 public class FileRelationReader implements RelationReader {
 	private final File directory;
@@ -49,23 +56,23 @@ public class FileRelationReader implements RelationReader {
 	}
 
 	@Override
-	public TypeFilter readTypeFilter(SymbolMap symbols) {
-		/*
-		TypeFilter t = new TypeFilter(contextFreeGrammar.getOpt());
+	public Filter<Edge> readFilter(VertexMap vertices, SymbolMap symbols) {
 		try {
+			List<EdgeStruct> edges = new ArrayList<EdgeStruct>();
+			
 			BufferedReader br = new BufferedReader(new FileReader(new File(this.directory, "ptd.txt")));
 			br.readLine();
 			String line;
 			while((line = br.readLine()) != null) {
 				String[] tupleStr = line.split("\\s+");
-				t.add("H" + tupleStr[1], "V" + tupleStr[0]);
+				edges.add(new EdgeStruct("H" + tupleStr[1], "V" + tupleStr[0], "Flow", Field.DEFAULT_FIELD.field, (short)0));
 			}
 			br.close();
+			
+			return new GraphEdgeFilter(vertices, symbols, edges);
 		} catch(IOException e) {
 			e.printStackTrace();
+			throw new RuntimeException("File for relation ptd not found!");
 		}
-		return t;
-		*/
-		return null;
 	}		
 }

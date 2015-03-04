@@ -100,10 +100,10 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 		RelationReader relationReader = new ShordRelationReader();
 		
 		Graph g = relationReader.readGraph(new DynamicCallgraphRelationManager(callgraph), taintGrammar.getSymbols());
-		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(h, taintGrammar.getOpt(), g, true, 2); 
+		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(h, taintGrammar.getOpt(), g, relationReader.readFilter(g.getVertices(), taintGrammar.getSymbols()), true, 2); 
 		IOUtils.printCallgraphAbductionResult(results, true);
 		
-		Graph gbar = g.transform(new ReachabilitySolver(g.getVertices(), taintGrammar.getOpt()));
+		Graph gbar = g.transform(new ReachabilitySolver(g.getVertices(), taintGrammar.getOpt(), relationReader.readFilter(g.getVertices(), taintGrammar.getSymbols())));
 		String extension = IOUtils.graphEdgesFileExists("param", "graph") ? "graph_new" : "graph";
 		
 		try {

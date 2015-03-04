@@ -92,12 +92,12 @@ public class AbductiveInferenceUtils {
 		}		
 	}
 	
-	public static MultivalueMap<EdgeStruct,Integer> runInference(AbductiveInferenceHelper h, ContextFreeGrammarOpt c, Graph g, boolean shord, int numCuts) {
+	public static MultivalueMap<EdgeStruct,Integer> runInference(AbductiveInferenceHelper h, ContextFreeGrammarOpt c, Graph g, Filter<Edge> filter, boolean shord, int numCuts) {
 		Graph gcur = g;
 		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
-			Graph gbar = gcur.transform(new ReachabilitySolver(gcur.getVertices(), c));
+			Graph gbar = gcur.transform(new ReachabilitySolver(gcur.getVertices(), c, filter));
 			
 			// STEP 2: Run the abductive inference algorithm
 			final Map<EdgeStruct,Boolean> result = runAbductiveInference(h, c, gbar, gcur, shord);
@@ -116,7 +116,7 @@ public class AbductiveInferenceUtils {
 		return allResults;
 	}
 	
-	public static MultivalueMap<EdgeStruct,Integer> runInference(ContextFreeGrammarOpt c, Graph g, boolean shord, int numCuts) {
-		return runInference(new DefaultAbductiveInferenceHelper(), c, g, shord, numCuts);
+	public static MultivalueMap<EdgeStruct,Integer> runInference(ContextFreeGrammarOpt c, Graph g, Filter<Edge> filter, boolean shord, int numCuts) {
+		return runInference(new DefaultAbductiveInferenceHelper(), c, g, filter, shord, numCuts);
 	}
 }

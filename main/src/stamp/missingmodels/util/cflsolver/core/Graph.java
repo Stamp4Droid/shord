@@ -122,6 +122,28 @@ public class Graph {
 		}
 	}
 	
+	public static class GraphEdgeFilter implements Filter<Edge> {
+		private final Graph graph;
+		private final boolean[] symbols;
+		
+		public GraphEdgeFilter(VertexMap vertices, SymbolMap symbolMap, Iterable<EdgeStruct> edges) {
+			this.symbols = new boolean[symbolMap.getNumSymbols()];
+			GraphBuilder gb = new GraphBuilder(vertices, symbolMap);
+			for(EdgeStruct edge : edges) {
+				gb.addOrUpdateEdge(edge);
+				this.symbols[symbolMap.get(edge.symbol).id] = true;
+			}
+			this.graph = gb.getGraph();
+		}
+		
+		@Override
+		public boolean filter(Edge edge) {			
+			Vertex source = this.graph.getVertex(edge.source.id);
+			Vertex sink = this.graph.getVertex(edge.sink.id);
+			return !this.symbols[edge.symbol.id] || source.getCurrentOutgoingEdge(new Edge(edge.symbol, source, sink, edge.field)) != null;
+		}
+	}
+	
 	public interface GraphTransformer {
 		public Graph transform(Iterable<EdgeStruct> edges);
 	}
@@ -179,6 +201,10 @@ public class Graph {
 			}};
 	}
 	
+	public Vertex getVertex(int id) {
+		return this.vertexArray[id];
+	}
+	
 	public VertexMap getVertices() {
 		return this.vertices;
 	}
@@ -193,6 +219,10 @@ public class Graph {
 	
 	public static interface Filter<T> {
 		public boolean filter(T t);
+	}
+	
+	public static interface FilterFactory<X,T> {
+		public Filter<T> filter(X x);
 	}
 	
 	public static class FilterTransformer extends EdgeTransformer {

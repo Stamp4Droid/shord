@@ -45,7 +45,7 @@ public class MissingRefRefAnalysis extends JavaAnalysis {
 		RelationManager relations = new DynamicParamRelationManager(new MultivalueMap<String,String>());
 		ContextFreeGrammarOpt grammar = new TaintPointsToGrammar().getOpt();
 		Graph g = relationReader.readGraph(relations, grammar.getSymbols());
-		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(new TaintPointsToGrammar().getOpt(), g, true, 2);
+		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(grammar, g, relationReader.readFilter(g.getVertices(), grammar.getSymbols()), true, 2);
 
 		IOUtils.printAbductionResult(results, true);
 	}

@@ -6,13 +6,15 @@ import java.util.Set;
 
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
+import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
 import stamp.missingmodels.util.cflsolver.core.Graph.SimpleGraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 
 public class RelationManager {
 	public interface RelationReader {
 		public Graph readGraph(RelationManager relations, SymbolMap symbols);
-		public TypeFilter readTypeFilter(SymbolMap symbols);
+		public Filter<Edge> readFilter(VertexMap vertices, SymbolMap symbols);
 	}
 
 	private final MultivalueMap<String,Relation> relationsByName = new MultivalueMap<String,Relation>();

@@ -7,6 +7,7 @@ import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
+import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
@@ -14,13 +15,21 @@ import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
 public class ReachabilitySolver implements GraphTransformer {
 	private final ContextFreeGrammarOpt contextFreeGrammar;
 	private final VertexMap vertices;
+	private final Filter<Edge> filter;
 	
 	private GraphBuilder graph;
 	private BucketHeap worklist;
 	
-	public ReachabilitySolver(VertexMap vertices, ContextFreeGrammarOpt contextFreeGrammar) {
+	public ReachabilitySolver(VertexMap vertices, ContextFreeGrammarOpt contextFreeGrammar, Filter<Edge> filter) {
 		this.vertices = vertices;
 		this.contextFreeGrammar = contextFreeGrammar;
+		this.filter = filter;
+	}
+	
+	public ReachabilitySolver(VertexMap vertices, ContextFreeGrammarOpt contextFreeGrammar) {
+		this(vertices, contextFreeGrammar, new Filter<Edge>() {
+			@Override
+			public boolean filter(Edge edge) { return true; }});
 	}
 	
 	private void addEdgeHelper(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput) {
@@ -29,6 +38,9 @@ public class ReachabilitySolver implements GraphTransformer {
 		}
 		Edge curEdge = this.graph.getEdge(source, sink, symbol, field);
 		Edge edge = this.graph.addOrUpdateEdge(source, sink, symbol, field, weight, firstInput, secondInput);
+		if(edge != null && !this.filter.filter(edge)) {
+			return;
+		}
 		if(curEdge == null) {
 			this.worklist.push(edge);
 		} else if(edge != null) {
