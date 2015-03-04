@@ -74,7 +74,7 @@ public class AbductiveInferenceUtils {
 	private static void printPaths(Graph g, Iterable<Edge> edges, boolean shord) {
 		//System.out.println("Initial cut edges before context strip: " + edges.size());
 		DomL dom = shord ? (DomL)ClassicProject.g().getTrgt("L") : null;
-		for(Edge edge : edges) {	
+		for(Edge edge : edges) {
 			System.out.println("Cutting Src2Sink edge: " + edge.toString());
 			System.out.println("Edge weight: " + edge.weight);
 			if(dom != null) {

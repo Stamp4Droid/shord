@@ -103,7 +103,7 @@ public class TestsAnalysis extends JavaAnalysis {
 		
 		RelationReader relationReader = new ShordRelationReader();
 		Graph g = relationReader.readGraph(new DynamicCallgraphRelationManager(callgraph), taintGrammar.getSymbols());
-		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(taintGrammar.getOpt(), g, true, 2); 
+		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(taintGrammar.getOpt(), g, relationReader.readFilter(g.getVertices(), taintGrammar.getSymbols()), true, 2); 
 		
 		IOUtils.printAbductionResult(results, true);
 	}

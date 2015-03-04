@@ -124,8 +124,9 @@ public class ReachabilitySolver implements GraphTransformer {
 		}
 
 		long totalTime = System.currentTimeMillis() - time;
-		System.out.println("Total num of edges = " + this.graph.getGraph().getNumEdges());
 		System.out.println("Time: " + totalTime);
+		System.out.println("Number of edges: " + this.graph.getGraph().getNumEdges());
+		System.out.println("Rate: " + (double)this.graph.getGraph().getNumEdges()/totalTime);
 		
 		return this.graph.getGraph();
 	}

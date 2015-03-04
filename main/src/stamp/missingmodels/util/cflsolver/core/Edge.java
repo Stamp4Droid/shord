@@ -164,19 +164,17 @@ public class Edge {
 		return sb.toString();
 	}
 	
-	private boolean checkPath(List<Pair<Edge,Boolean>> path) {
+	// should return null
+	private Vertex checkPath(List<Pair<Edge,Boolean>> path) {
 		Vertex prevVertex = null;
 		for(Pair<Edge,Boolean> pathEdgePair : path) {
 			Vertex checkVertex = pathEdgePair.getY() ? pathEdgePair.getX().source : pathEdgePair.getX().sink;
 			if(prevVertex != null && !prevVertex.equals(checkVertex)) {
-				System.out.println("PATH ERROR AT: " + checkVertex.name);
-				System.out.println(toStringPath(path));
-				System.out.println("END PATH ERROR: " + checkVertex.name);
-				return false;
+				return checkVertex;
 			}
 			prevVertex = pathEdgePair.getY() ? pathEdgePair.getX().sink : pathEdgePair.getX().source;
 		}
-		return true;
+		return null;
 	}
 	
 	public List<Pair<Edge,Boolean>> getPath() {
