@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Graph;
-import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.Graph.SimpleGraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
@@ -22,7 +22,7 @@ public class FileRelationReader implements RelationReader {
 
 	@Override
 	public Graph readGraph(RelationManager relations, SymbolMap symbols) {
-		GraphBuilder gb = new GraphBuilder(symbols);
+		SimpleGraphBuilder gb = new SimpleGraphBuilder(symbols);
 		for(File relationFile : this.directory.listFiles()) {
 			try {
 				String relationName = relationFile.getName().split("\\.")[0];
@@ -33,7 +33,7 @@ public class FileRelationReader implements RelationReader {
 		return gb.getGraph();
 	}
 	
-	private static void readRelation(RelationManager relations, BufferedReader br, GraphBuilder gb, String relationName) throws IOException {
+	private static void readRelation(RelationManager relations, BufferedReader br, SimpleGraphBuilder gb, String relationName) throws IOException {
 		br.readLine();
 		String line;
 		while((line = br.readLine()) != null) {

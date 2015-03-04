@@ -97,7 +97,7 @@ public class AbductiveInferenceUtils {
 		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
-			Graph gbar = gcur.transform(new ReachabilitySolver(c));
+			Graph gbar = gcur.transform(new ReachabilitySolver(gcur.getVertices(), c));
 			
 			// STEP 2: Run the abductive inference algorithm
 			final Map<EdgeStruct,Boolean> result = runAbductiveInference(h, c, gbar, gcur, shord);
@@ -108,7 +108,7 @@ public class AbductiveInferenceUtils {
 			}
 			
 			// STEP 3: Transform graph to remove cut edges
-			gcur = gcur.transform(new EdgeTransformer(gcur.getSymbols()) {
+			gcur = gcur.transform(new EdgeTransformer(gcur.getVertices(), gcur.getSymbols()) {
 				public void process(GraphBuilder gb, EdgeStruct edge) {
 					gb.addOrUpdateEdge(edge.sourceName, edge.sinkName, edge.symbol, edge.field, result.containsKey(edge) && result.get(edge) ? (short)0 : edge.weight);
 				}});

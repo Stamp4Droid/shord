@@ -10,13 +10,11 @@ public class Vertex {
 	public final String name;
 	public final int id;
 
-	private static int numVertices = 0;
-
-	public Vertex(String name, int numSymbols) {
+	public Vertex(int id, String name, int numSymbols) {
+		this.id = id;
+		this.name = name;
 		this.incomingEdges = new EdgeList[numSymbols];
 		this.outgoingEdges = new EdgeSet[numSymbols];
-		this.name = name;
-		this.id = ++numVertices;
 	}
 	
 	public Iterable<Edge> getOutgoingEdges(int symbolInt) {

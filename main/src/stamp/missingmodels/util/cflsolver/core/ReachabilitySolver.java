@@ -9,14 +9,17 @@ import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphTransformer;
+import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
 
 public class ReachabilitySolver implements GraphTransformer {
 	private final ContextFreeGrammarOpt contextFreeGrammar;
+	private final VertexMap vertices;
 	
 	private GraphBuilder graph;
 	private BucketHeap worklist;
 	
-	public ReachabilitySolver(ContextFreeGrammarOpt contextFreeGrammar) {
+	public ReachabilitySolver(VertexMap vertices, ContextFreeGrammarOpt contextFreeGrammar) {
+		this.vertices = vertices;
 		this.contextFreeGrammar = contextFreeGrammar;
 	}
 	
@@ -61,7 +64,7 @@ public class ReachabilitySolver implements GraphTransformer {
 	public Graph transform(Iterable<EdgeStruct> edges) {
 		long time = System.currentTimeMillis();
 		
-		this.graph = new GraphBuilder(this.contextFreeGrammar.getSymbols());
+		this.graph = new GraphBuilder(this.vertices, this.contextFreeGrammar.getSymbols());
 		this.worklist = new BucketHeap();
 		
 		for(EdgeStruct edge : edges) {

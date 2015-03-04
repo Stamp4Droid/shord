@@ -103,7 +103,7 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(h, taintGrammar.getOpt(), g, true, 2); 
 		IOUtils.printCallgraphAbductionResult(results, true);
 		
-		Graph gbar = g.transform(new ReachabilitySolver(taintGrammar.getOpt()));
+		Graph gbar = g.transform(new ReachabilitySolver(g.getVertices(), taintGrammar.getOpt()));
 		String extension = IOUtils.graphEdgesFileExists("param", "graph") ? "graph_new" : "graph";
 		
 		try {
