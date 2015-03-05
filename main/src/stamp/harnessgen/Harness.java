@@ -86,6 +86,7 @@ public class Harness
 		
 		//call the constructor of the comp
 		Local c = init(compClass, Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+		if(c == null) return;
 
 		for(Layout layout : layouts) {
 			//call the callbacks defined in XML
@@ -103,6 +104,11 @@ public class Harness
 
 	private Local init(SootClass klass, List<Type> paramTypes, List<Value> args)
 	{
+		if(!klass.declaresMethod("<init>", paramTypes)) {
+			// This should never happen for a well-
+			System.out.println("ERROR**********Init doesn't exist for <activity> node in AndroidManifest.xml");
+			return null;
+		}
 		SootMethod init = klass.getMethod("<init>", paramTypes);
 		Local c = Jimple.v().newLocal("c"+count++, klass.getType());
 		locals.add(c);
