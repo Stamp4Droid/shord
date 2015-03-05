@@ -36,6 +36,7 @@ public class Program
 	List<SootMethod> toInline = new ArrayList<SootMethod>();
 	Map<SootMethod,Set<SootMethod>> inlineRevCG =
 		new HashMap<SootMethod,Set<SootMethod>>();
+	Set<SootMethod> inlineSites = new HashSet<SootMethod>();
 
 	public static Program g()
 	{
@@ -96,6 +97,7 @@ public class Program
 					m.getTag("VisibilityAnnotationTag");
 				for (AnnotationTag annot : tag.getAnnotations()) {
 					if (annot.getType().equals(INLINE_ANNOT_TYPE)) {
+						assert !PAGBuilder.isStub(m) : "Can't inline stubs";
 						toInline.add(m);
 						break;
 					}
@@ -114,6 +116,8 @@ public class Program
 					SootMethod c = (SootMethod) e.getSrc();
 					if (toInline.contains(c)) {
 						s.add(c);
+					} else {
+						inlineSites.add(c);
 					}
 				}
 				inlineRevCG.put(m, s);
@@ -129,6 +133,15 @@ public class Program
 			for (SootMethod m : toInline) {
 				inlineCallsTo(m);
 				clearBody(m);
+			}
+			// Validate the bodies of the final inline sites, and remove
+			// intermediate variables.
+			for (SootMethod m : inlineSites) {
+				Body body = m.getActiveBody();
+				body.validate();
+				CopyPropagator.v().transform(body);
+				DeadAssignmentEliminator.v().transform(body);
+				UnusedLocalEliminator.v().transform(body);
 			}
 			// Update the call graph after inlining.
 			buildCallGraph();
@@ -178,13 +191,9 @@ public class Program
 			System.out.println("Inlining " + m.toString() +
 							   " into " + caller.toString() +
 							   " at " + invk.toString());
+			assert caller.getActiveBody().getUnits().contains(invk)
+				: "The invocation statement is missing from the caller";
 			SiteInliner.inlineSite(m, invk, caller);
-			// Validate the new body and remove intermediate variables.
-			Body body = caller.getActiveBody();
-			body.validate();
-			CopyPropagator.v().transform(body);
-			DeadAssignmentEliminator.v().transform(body);
-			UnusedLocalEliminator.v().transform(body);
 		}
 	}
 
