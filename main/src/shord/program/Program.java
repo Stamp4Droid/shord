@@ -5,7 +5,6 @@ import soot.options.Options;
 import soot.util.Chain;
 import soot.util.ArrayNumberer;
 import soot.jimple.*;
-import soot.jimple.toolkits.invoke.SiteInliner;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.CallGraphBuilder;
 import soot.jimple.toolkits.callgraph.Edge;
@@ -193,7 +192,7 @@ public class Program
 							   " at " + invk.toString());
 			assert caller.getActiveBody().getUnits().contains(invk)
 				: "The invocation statement is missing from the caller";
-			SiteInliner.inlineSite(m, invk, caller);
+			Inliner.inlineSite(m, invk, caller);
 		}
 	}
 
