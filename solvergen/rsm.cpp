@@ -993,7 +993,7 @@ void intersect_all() {
 void print(std::ostream& os, const SuperNode& sn, const Component& pri_comp) {
     // For invalid points, simply print their identifier.
     if (!sn.fields.get<NODE>().valid()) {
-        os << sn.ref.value();
+        os << sn.ref;
         return;
     }
     const Component& sec_comp = sec_rsm->components[sn.fields.get<SEC_CP>()];

@@ -973,19 +973,19 @@ class CodeGraph {
 public:
     Registry<Variable> vars;
     Ref<Variable> entry;
-    std::set<Ref<Variable>> exits;
+    std::set<Ref<Variable> > exits;
     mi::MultiIndex<mi::Index<SRC, Ref<Variable>,
-                             mi::Table<TGT, Ref<Variable>>>,
+                             mi::Table<TGT, Ref<Variable> > >,
                    mi::Index<TGT, Ref<Variable>,
-                             mi::Table<SRC, Ref<Variable>>>> epsilons;
+                             mi::Table<SRC, Ref<Variable> > > > epsilons;
     mi::MultiIndex<mi::Index<TGT, Ref<Variable>,
                              mi::Index<FLD, Ref<Field>,
-                                       mi::Table<SRC, Ref<Variable>>>>,
-                   mi::Table<FLD, Ref<Field>>> opens;
+                                       mi::Table<SRC, Ref<Variable> > > >,
+                   mi::Table<FLD, Ref<Field> > > opens;
     mi::MultiIndex<mi::Index<SRC, Ref<Variable>,
                              mi::Index<FLD, Ref<Field>,
-                                       mi::Table<TGT, Ref<Variable>>>>,
-                   mi::Table<FLD, Ref<Field>>> closes;
+                                       mi::Table<TGT, Ref<Variable> > > >,
+                   mi::Table<FLD, Ref<Field> > > closes;
 public:
     explicit CodeGraph() {}
     CodeGraph(const CodeGraph&) = default;
@@ -1005,7 +1005,7 @@ public:
         // (except the sink state).
         // TODO: Could do this more efficiently, since Ref's are allocated
         // serially.
-        std::vector<Ref<Variable>> state2var;
+        std::vector<Ref<Variable> > state2var;
         state2var.reserve(callee.num_states());
         for (posint state = 0; state < callee.num_states(); state++) {
             // TODO: Emitting a state for the sink.
@@ -1041,7 +1041,7 @@ public:
     // TODO: Could do this more efficiently using a rescheduling approach.
     void close() {
         // Initialize reachability worklist
-        std::deque<std::pair<Ref<Variable>,Ref<Variable>>> worklist;
+        std::deque<std::pair<Ref<Variable>,Ref<Variable> > > worklist;
         for (const Variable& v : vars) {
             // Each variable is reachable from itself.
             worklist.emplace_back(v.ref, v.ref);
@@ -1058,8 +1058,8 @@ public:
             epsilons.insert(src, tgt);
             worklist.emplace_back(src, tgt);
         };
-        auto add_product = [&](const mi::Table<SRC,Ref<Variable>>& srcs,
-                               const mi::Table<TGT,Ref<Variable>>& tgts,
+        auto add_product = [&](const mi::Table<SRC,Ref<Variable> >& srcs,
+                               const mi::Table<TGT,Ref<Variable> >& tgts,
                                Ref<Field>) {
             for (Ref<Variable> s : srcs) {
                 for (Ref<Variable> t : tgts) {
@@ -1103,7 +1103,7 @@ public:
         // Only the P-partition entry remains an entry on the PN-extended
         // machine (no change needed).
         // Both P-partition and N-partition exits are valid.
-        std::set<Ref<Variable>> new_exits;
+        std::set<Ref<Variable> > new_exits;
         for (Ref<Variable> v : exits) {
             new_exits.insert(v);
             new_exits.insert(to_nvar(v));
@@ -1205,9 +1205,9 @@ public:
 private:
     CodeGraph code_;
     mi::Index<FUN, Ref<Function>,
-              mi::Index<SRC, Ref<Variable>,
-                        mi::Table<TGT, Ref<Variable>>>> calls_;
-    std::set<Ref<Function>> callers_;
+        mi::Index<SRC, Ref<Variable>,
+            mi::Table<TGT, Ref<Variable> > > > calls_;
+    std::set<Ref<Function> > callers_;
     Signature sig_; // Initially set to the empty automaton.
 public:
     explicit Function(const std::string* name_ptr, Ref<Function> ref)
@@ -1280,7 +1280,7 @@ public:
     bool complete() const {
         return code_.entry.valid();
     }
-    const std::set<Ref<Function>>& callers() const {
+    const std::set<Ref<Function> >& callers() const {
         return callers_;
     }
     const Signature& sig() const {

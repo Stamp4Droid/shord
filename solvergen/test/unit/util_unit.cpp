@@ -17,20 +17,19 @@ TUPLE_TAG(third);
 extern const boost::none_t NONE = boost::none;
 
 class Bar {
-    friend Registry<Bar>;
+public:
     typedef std::string Key;
 public:
     const std::string name;
     const Ref<Bar> ref;
     const bool flag;
-private:
+public:
     explicit Bar(const std::string* name, Ref<Bar> ref, bool flag)
 	: name(*name), ref(ref), flag(flag) {}
     bool merge(bool flag) const {
 	assert(flag == this->flag);
 	return false;
     }
-public:
     friend std::ostream& operator<<(std::ostream& os, const Bar& obj);
 };
 
@@ -163,7 +162,7 @@ int main() {
     wl1.enqueue(3);
     std::cout << "Should see 123" << std::endl;
     while (!wl1.empty()) {
-	std::cout << wl1.dequeue()->first;
+	std::cout << wl1.dequeue();
     }
     std::cout << std::endl;
     wl1.enqueue(1);
