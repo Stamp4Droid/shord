@@ -3,6 +3,7 @@
 #include <boost/program_options.hpp>
 #include <boost/regex.hpp>
 #include <cassert>
+#include <chrono>
 #include <cstdlib>
 #include <deque>
 #include <fstream>
@@ -625,6 +626,23 @@ public:
     posint num_states() const {
         return backend_->highest_state + 1;
     }
+    posint num_trans() const {
+        posint count = 0;
+        posint sink = sink_state();
+        for (posint letter = 1; letter <= num_letters(); letter++) {
+            for (posint src = 0; src < num_states(); src++) {
+                if (src == sink) {
+                    continue;
+                }
+                posint tgt = backend_->delta[letter][src];
+                if (tgt == sink) {
+                    continue;
+                }
+                count++;
+            }
+        }
+        return count;
+    }
     posint follow(posint src, posint letter) const {
         return backend_->delta[letter][src];
     }
@@ -1198,17 +1216,21 @@ public:
 class Function {
 public:
     typedef std::string Key;
-    const posint WIDENING_K = 2;
+    const posint WIDENING_K = 1;
 public:
     const std::string name;
     const Ref<Function> ref;
 private:
     CodeGraph code_;
-    mi::Index<FUN, Ref<Function>,
-        mi::Index<SRC, Ref<Variable>,
-            mi::Table<TGT, Ref<Variable> > > > calls_;
+    mi::MultiIndex<
+        mi::Index<FUN, Ref<Function>,
+            mi::Index<SRC, Ref<Variable>,
+                mi::Table<TGT, Ref<Variable> > > >,
+        mi::Table<FUN, Ref<Function> > > calls_;
     std::set<Ref<Function> > callers_;
     Signature sig_; // Initially set to the empty automaton.
+    long ms_spent_ = 0;
+    unsigned revisions_ = 0;
 public:
     explicit Function(const std::string* name_ptr, Ref<Function> ref)
         : name(*name_ptr), ref(ref), sig_(std::vector<Delimiter>(), 1) {
@@ -1280,6 +1302,9 @@ public:
     bool complete() const {
         return code_.entry.valid();
     }
+    const mi::Table<FUN, Ref<Function> >& callees() const {
+        return calls_.sec<0>();
+    }
     const std::set<Ref<Function> >& callers() const {
         return callers_;
     }
@@ -1289,6 +1314,7 @@ public:
     // Returns 'false' if we've reached fixpoint, and sig_ didn't need to be
     // updated. Otherwise updates sig_ and returns 'true'.
     bool update_sig(const Registry<Function>& fun_reg) {
+        auto t_start = std::chrono::steady_clock::now();
         // Current sig_ is step i on the fixpoint process, S(i).
         const Signature& si = sig_;
         // Embed the latest signatures of callees, and produce minimal FSM to
@@ -1317,6 +1343,9 @@ public:
         siUfsi.minimize();
         std::cout << "    Union minimized" << std::endl;
         if (siUfsi == si) { // equivalent to F(Si) <= Si
+            auto t_end = std::chrono::steady_clock::now();
+            ms_spent_ += std::chrono::duration_cast<std::chrono::milliseconds>
+                (t_end - t_start).count();
             return false;
         }
         std::cout << "    New sig was larger" << std::endl;
@@ -1326,6 +1355,10 @@ public:
         siUfsi.minimize();
         swap(sig_, siUfsi);
         std::cout << "    Widened sig minimized" << std::endl;
+        revisions_++;
+        auto t_end = std::chrono::steady_clock::now();
+        ms_spent_ += std::chrono::duration_cast<std::chrono::milliseconds>
+            (t_end - t_start).count();
         return true;
     }
     void to_dot(std::ostream& os, const Registry<Function>& fun_reg,
@@ -1360,6 +1393,19 @@ public:
                << fun_reg[c.get<FUN>()].name << "\"];" << std::endl;
         }
         os << "}" << std::endl;
+    }
+    posint num_states() const {
+        return code_.vars.size();
+    }
+    posint num_trans() const {
+        return (code_.epsilons.size() + code_.opens.size() +
+                code_.closes.size() + calls_.size());
+    }
+    void print_stats(std::ostream& os) const {
+        os << name << "\t" << revisions_ << "\t" << ms_spent_
+           << "\t" << num_states() << "\t" << num_trans()
+           << "\t" << sig_.num_states() << "\t" << sig_.num_trans()
+           << "\t" << callees().size();
     }
 };
 
@@ -1544,5 +1590,16 @@ int main(int argc, char* argv[]) {
         std::ofstream fout(fpath.string());
         EXPECT((bool) fout);
         f.sig().to_tgf(fout, flds);
+    }
+
+    // Print statistics
+    fs::path stats_fpath(outdir/"stats.csv");
+    std::ofstream stats_fout(stats_fpath.string());
+    EXPECT((bool) stats_fout);
+    stats_fout << "Function\tRevisions\tTime spent (ms)"
+               << "\tCode States\tCode Trans\tSig States\tSig Trans\tCallees"
+               << std::endl;
+    for (const Function& f : funs) {
+        f.print_stats(stats_fout);
     }
 }

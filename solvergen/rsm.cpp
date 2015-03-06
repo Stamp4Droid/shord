@@ -920,6 +920,10 @@ public:
             clear_body();
             initial_ = sup_nodes_.mktemp().ref;
         }
+        std::cout << "    Nodes: " << sup_nodes_.size() << std::endl;
+        std::cout << "    Eps moves: " << eps_moves_.size() << std::endl;
+        std::cout << "    Stack moves: " << stack_moves_.size() << std::endl;
+        std::cout << "    Call moves: " << call_moves_.size() << std::endl;
     }
     bool empty_body() const {
         // Before any matching is performed, we can only be certain that the
@@ -963,6 +967,7 @@ void Function::cross_call(Ref<Box> box, const EdgeTail& e_in,
 void intersect_all() {
     // 1st pass: Iterate over all discovered functions, to set up call graph.
     for (Function& f : funs) {
+        std::cout << "Intersecting # " << f.ref << std::endl;
         f.compute_body();
     }
     // 2nd pass: Propagate function emptiness information.
