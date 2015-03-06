@@ -1543,6 +1543,8 @@ int main(int argc, char* argv[]) {
         std::cerr << e.what() << std::endl;
         return EXIT_FAILURE;
     }
+    fs::path outdir = fs::path(outdir_name);
+    fs::create_directory(outdir);
 
     // Parse function graphs
     const std::string FILE_EXTENSION = ".fun.tgf";
@@ -1563,33 +1565,69 @@ int main(int argc, char* argv[]) {
         EXPECT(f.complete());
     }
 
-    fs::path outdir = fs::path(outdir_name);
-    fs::create_directory(outdir);
-    // Update signatures up to fixpoint.
-    Worklist<Ref<Function>,true> worklist;
+    // Calculate call graph SCCs.
+    RefMap<Function,std::vector<Ref<Function> > > calls(funs);
     for (const Function& f : funs) {
-        worklist.enqueue(f.ref);
-    }
-    while (!worklist.empty()) {
-        Function& f = funs[worklist.dequeue()];
-        std::cout << "Processing " << f.name << std::endl;
-        std::cout << "    " << worklist.size() << " left in queue" << std::endl;
-        if (!f.update_sig(funs)) {
-            std::cout << "    No change" << std::endl;
-            continue;
+        for (Ref<Function> c : f.callees()) {
+            calls[f.ref].push_back(c);
         }
-        std::cout << "    Updated, rescheduling callers" << std::endl;
-        for (Ref<Function> c : f.callers()) {
-            if (worklist.enqueue(c)) {
+    }
+    SccGraph<Function> cg(funs, calls);
+
+    // Print out SCC and statistics.
+    Histogram<unsigned> scc_size_freqs;
+    fs::path cg_fpath(outdir/"cg.tgf");
+    std::ofstream cg_fout(cg_fpath.string());
+    EXPECT((bool) cg_fout);
+    for (unsigned i = 0; i < cg.num_sccs(); i++) {
+        unsigned size = cg.scc(i).nodes.size();
+        if (size == 1 && cg.scc(i).trivial) {
+            size = 0;
+        }
+        cg_fout << i << " " << size << std::endl;
+        scc_size_freqs.record(size);
+    }
+    cg_fout << "#" << std::endl;
+    for (unsigned i = 0; i < cg.num_sccs(); i++) {
+        for (unsigned j : cg.scc(i).children) {
+            cg_fout << i << " " << j << std::endl;
+        }
+    }
+    std::cout << "SCC size\tFrequency" << std::endl;
+    std::cout << scc_size_freqs;
+
+    // Update signatures up to fixpoint.
+    // TODO: No need to run twice for trivial SCCs.
+    for (unsigned i = 0; i < cg.num_sccs(); i++) {
+        std::cout << "Processing SCC " << i << " of " << cg.num_sccs()
+                  << std::endl;
+        const auto& scc = cg.scc(i);
+        Worklist<Ref<Function>,true> worklist;
+        for (Ref<Function> f : scc.nodes) {
+            worklist.enqueue(f);
+        }
+        while (!worklist.empty()) {
+            Function& f = funs[worklist.dequeue()];
+            std::cout << "Processing " << f.name << std::endl;
+            if (!f.update_sig(funs)) {
+                std::cout << "    No change" << std::endl;
+                continue;
+            }
+            std::cout << "    Updated, rescheduling callers in SCC"
+                      << std::endl;
+            for (Ref<Function> c : f.callers()) {
+                if (cg.scc_of(c) != i || !worklist.enqueue(c)) {
+                    continue;
+                }
                 std::cout << "    rescheduled " << funs[c].name << std::endl;
             }
+            fs::path fpath(outdir/(f.name + ".sig.tgf"));
+            // TODO: Empty signatures won't be printed.
+            std::cout << "    Printing signature" << std::endl;
+            std::ofstream fout(fpath.string());
+            EXPECT((bool) fout);
+            f.sig().to_tgf(fout, flds);
         }
-        fs::path fpath(outdir/(f.name + ".sig.tgf"));
-        // TODO: Empty signatures won't be printed.
-        std::cout << "    Printing signature" << std::endl;
-        std::ofstream fout(fpath.string());
-        EXPECT((bool) fout);
-        f.sig().to_tgf(fout, flds);
     }
 
     // Print statistics
@@ -1598,8 +1636,12 @@ int main(int argc, char* argv[]) {
     EXPECT((bool) stats_fout);
     stats_fout << "Function\tRevisions\tTime spent (ms)"
                << "\tCode States\tCode Trans\tSig States\tSig Trans\tCallees"
+               << "\tSCC Height\tSCC Size\tCumm SCC Size"
                << std::endl;
     for (const Function& f : funs) {
         f.print_stats(stats_fout);
+        const auto& scc = cg.scc(cg.scc_of(f.ref));
+        stats_fout << "\t" << scc.height << "\t" << scc.nodes.size()
+                   << "\t" << scc.cumm_size << std::endl;
     }
 }

@@ -13,6 +13,8 @@ TUPLE_TAG(id);
 TUPLE_TAG(first);
 TUPLE_TAG(second);
 TUPLE_TAG(third);
+TUPLE_TAG(SRC);
+TUPLE_TAG(DST);
 
 extern const boost::none_t NONE = boost::none;
 
@@ -56,6 +58,20 @@ template<> struct KeyTraits<unsigned int> {
 } // namespace mi
 
 Registry<Bar> bars;
+
+class Node {
+public:
+    typedef std::string Key;
+public:
+    const std::string name;
+    const Ref<Node> ref;
+public:
+    explicit Node(const std::string* name_ptr, Ref<Node> ref)
+        : name(*name_ptr), ref(ref) {}
+    bool merge() {
+        return false;
+    }
+};
 
 int main() {
     std::cout << std::boolalpha;
@@ -169,5 +185,50 @@ int main() {
     assert(!wl1.empty());
     std::cout << std::endl;
 
+    // Example from Wikipedia page on Tarjan's algorithm.
+    Registry<Node> nodes;
+    Ref<Node> n0 = nodes.make("a").ref;
+    Ref<Node> n1 = nodes.make("b").ref;
+    Ref<Node> n2 = nodes.make("c").ref;
+    Ref<Node> n3 = nodes.make("d").ref;
+    Ref<Node> n4 = nodes.make("e").ref;
+    Ref<Node> n5 = nodes.make("f").ref;
+    Ref<Node> n6 = nodes.make("g").ref;
+    Ref<Node> n7 = nodes.make("h").ref;
+    mi::Index<SRC, Ref<Node>, mi::Table<DST, Ref<Node> > > edges;
+    edges.insert(n1, n0);
+    edges.insert(n2, n1);
+    edges.insert(n2, n3);
+    edges.insert(n3, n2);
+    edges.insert(n5, n4);
+    edges.insert(n5, n6);
+    edges.insert(n6, n5);
+    edges.insert(n7, n6);
+    edges.insert(n7, n7);
+    edges.insert(n0, n4);
+    edges.insert(n4, n1);
+    edges.insert(n5, n1);
+    edges.insert(n6, n2);
+    edges.insert(n7, n3);
+    SccGraph<Node> scc_graph(nodes, edges);
+    for (unsigned i = 0; i < scc_graph.num_sccs(); i++) {
+        const auto& scc = scc_graph.sccs()[i];
+        std::cout << "SCC # " << i << " @ level " << scc.height << std::endl;
+        std::cout << "    Nodes:";
+        for (Ref<Node> n : scc.nodes) {
+            std::cout << " " << n;
+        }
+        std::cout << std::endl;
+        std::cout << "    Parents:";
+        for (unsigned j : scc.parents) {
+            std::cout << " " << j;
+        }
+        std::cout << std::endl;
+        std::cout << "    Children:";
+        for (unsigned j : scc.children) {
+            std::cout << " " << j;
+        }
+        std::cout << std::endl;
+    }
     return 0;
 }

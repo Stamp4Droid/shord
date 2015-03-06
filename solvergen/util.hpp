@@ -17,6 +17,7 @@
 #include <memory>
 #include <queue>
 #include <set>
+#include <stack>
 #include <string>
 #include <sys/time.h>
 #include <tuple>
@@ -746,6 +747,144 @@ public:
     }
     Iterator end() const {
 	return Iterator(array.cend());
+    }
+};
+
+template<class K, class V> class RefMap {
+private:
+    std::vector<V> array_;
+public:
+    explicit RefMap(const Registry<K>& keys) : array_(keys.size()) {}
+    RefMap(const RefMap& rhs) = delete;
+    RefMap(RefMap&& rhs) = default;
+    RefMap& operator=(const RefMap& rhs) = delete;
+    V& operator[](Ref<K> ref) {
+	return const_cast<V&>((*const_cast<const RefMap*>(this))[ref]);
+    }
+    const V& operator[](Ref<K> ref) const {
+#ifdef NDEBUG
+	return array_[ref.value()];
+#else
+	return array_.at(ref.value());
+#endif
+    }
+};
+
+// GRAPH ALGORITHMS ===========================================================
+
+// TODO: Should make this a special case of a generic SccGraph<Node>, for
+// Node == Ref<T>.
+template<class T> class SccGraph {
+public:
+    typedef unsigned SccId;
+    struct SCC {
+        std::vector<Ref<T> > nodes;
+        std::set<SccId> parents;
+        std::set<SccId> children;
+        unsigned height = 0;
+        unsigned cumm_size = 0;
+        bool trivial = true;
+    };
+private:
+    struct NodeInfo {
+        int index = -1;
+        int lowlink = -1;
+        bool on_stack = false;
+    };
+private:
+    RefMap<T,SccId> node2scc_;
+    std::vector<SCC> comps_;
+public:
+    // Edges must be provided as a map from Ref<T>'s to sets of Ref<T>'s.
+    template<class Edges>
+    explicit SccGraph(const Registry<T>& nodes, const Edges& edges)
+        : node2scc_(nodes) {
+        RefMap<T,NodeInfo> info(nodes);
+        int next_index = 0;
+        std::stack<Ref<T> > stack;
+        // Run Tarjan's algorithm to compute SCC's.
+        // TODO: Unnecessary virtual function call.
+        std::function<void(Ref<T>)> strong_connect = [&](Ref<T> src) {
+            info[src].index = next_index;
+            info[src].lowlink = next_index;
+            next_index++;
+            stack.push(src);
+            info[src].on_stack = true;
+            for (Ref<T> dst : edges[src]) {
+                if (info[dst].index < 0) {
+                    strong_connect(dst);
+                    info[src].lowlink =
+                        std::min(info[src].lowlink, info[dst].lowlink);
+                } else if (info[dst].on_stack) {
+                    info[src].lowlink =
+                        std::min(info[src].lowlink, info[dst].index);
+                }
+            }
+            if (info[src].lowlink == info[src].index) {
+                SccId scc_id = comps_.size();
+                comps_.emplace_back();
+                SCC& scc = comps_.back();
+                Ref<T> n;
+                do {
+                    n = stack.top();
+                    stack.pop();
+                    info[n].on_stack = false;
+                    scc.nodes.push_back(n);
+                    node2scc_[n] = scc_id;
+                } while (n != src);
+            }
+        };
+        for (const T& n : nodes) {
+            if (info[n.ref].index < 0) {
+                strong_connect(n.ref);
+            }
+        }
+        // Fill out the connections between SCCs.
+        for (SccId src_id = 0; src_id < comps_.size(); src_id++) {
+            SCC& src_scc = comps_[src_id];
+            for (Ref<T> src_n : src_scc.nodes) {
+                for (Ref<T> dst_n : edges[src_n]) {
+                    SccId dst_id = node2scc_[dst_n];
+                    if (dst_id == src_id) {
+                        src_scc.trivial = false;
+                        continue;
+                    }
+                    src_scc.children.insert(dst_id);
+                    comps_[dst_id].parents.insert(src_id);
+                }
+            }
+        }
+        // Calculate statistics for each SCC.
+        // TODO: Could do this externally.
+        for (SccId id = 0; id < comps_.size(); id++) {
+            SCC& scc = comps_[id];
+            scc.cumm_size = scc.nodes.size();
+            for (SccId c_id : scc.children) {
+                const SCC& child = comps_[c_id];
+                scc.height = std::max(child.height + 1, scc.height);
+                scc.cumm_size += child.cumm_size;
+            }
+        }
+    }
+    SccGraph(const SccGraph& rhs) = delete;
+    SccGraph(SccGraph&& rhs) = default;
+    SccGraph& operator=(const SccGraph& rhs) = delete;
+    SccId scc_of(Ref<T> node) const {
+        return node2scc_[node];
+    }
+    SccId num_sccs() const {
+        return comps_.size();
+    }
+    const SCC& scc(SccId id) const {
+#ifdef NDEBUG
+	return comps_[id];
+#else
+	return comps_.at(id);
+#endif
+    }
+    // Returned in reverse topological order.
+    const std::vector<SCC>& sccs() const {
+        return comps_;
     }
 };
 
