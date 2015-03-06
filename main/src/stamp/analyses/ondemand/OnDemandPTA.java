@@ -329,14 +329,17 @@ public class OnDemandPTA extends DemandCSPointsTo
 		return EMPTY_CALLSTACK;
 	}
 	
-	public Node[] retVarNodes(SootMethod m)
+	public Node retVarNode(SootMethod m)
 	{
 		if(!(m.getReturnType() instanceof RefLikeType)
 		   || !Scene.v().getReachableMethods().contains(m))
 			return null;
 		LocalVarNode retNode = pag.findLocalVarNode(Parm.v(m, PointsToAnalysis.RETURN_NODE));
+		/*
 		Node[] retVarNodes = pag.simpleInvLookup(retNode);
 		return retVarNodes;
+		*/
+		return retNode;
 	}
 	
 	public Node parameterNode(SootMethod m, int index)
@@ -346,17 +349,53 @@ public class OnDemandPTA extends DemandCSPointsTo
 		if(!m.isStatic()){
 			if(index == 0){
 				LocalVarNode thisNode = pag.findLocalVarNode(new Pair(m, PointsToAnalysis.THIS_NODE));
-				Node[] thisVarNodes = pag.simpleLookup(thisNode);
-				assert thisVarNodes.length == 1;
-				return thisVarNodes[0];
+				/*
+				Node[] toNodes = pag.simpleLookup(thisNode);
+				int nodeIndex = -1;
+				//StringBuilder builder = new StringBuilder();
+				for(int i = 0; i < toNodes.length; i++){
+					Node node = toNodes[i];
+					if(node instanceof LocalVarNode && ((LocalVarNode) node).getMethod().equals(m)){
+						assert nodeIndex < 0;
+						nodeIndex = i;
+					}
+					//builder.append(", " + node.toString());
+				}
+				return toNodes[nodeIndex];
+				*/
+				return thisNode;
 			} else
 				index--;
 		}
 		if(!(m.getParameterType(index) instanceof RefLikeType))
 			return null;
 		LocalVarNode paramNode = pag.findLocalVarNode(new Pair<SootMethod,Integer>(m, new Integer(index)));
+		/*
 		Node[] paramVarNodes = pag.simpleLookup(paramNode);
 		assert paramVarNodes.length == 1;
 		return paramVarNodes[0];
+		*/
+		return paramNode;
+	}
+	
+	public SootMethod transferEndPoint(VarNode vn)
+	{
+		if(!(vn instanceof LocalVarNode))
+			return null;
+		LocalVarNode lvn = (LocalVarNode) vn;
+		SootMethod m = lvn.getMethod();
+		Object var = lvn.getVariable();
+		if(var instanceof Local)
+			return null;
+		if(var instanceof Pair){
+			Pair p = (Pair) var;
+			if(!p.getO1().equals(m))
+				return null;
+			Object o2 = p.getO2();
+			if(o2.equals(PointsToAnalysis.THIS_NODE) ||  o2 instanceof Integer)
+				return m;
+		} else if(Parm.v(m, PointsToAnalysis.RETURN_NODE).equals(var))
+			return m;
+		return null;
 	}
 }

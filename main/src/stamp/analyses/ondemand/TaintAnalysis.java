@@ -56,7 +56,7 @@ public class TaintAnalysis extends JavaAnalysis
 
 	protected void setup()
 	{
-		Program.g().runSpark();
+		Program.g().runSpark("merge-stringbuffer:false");
 
 		this.dpta = OnDemandPTA.makeDefault();
 		this.taintManager = new TaintManager(dpta);
@@ -96,7 +96,7 @@ public class TaintAnalysis extends JavaAnalysis
 				SootMethod m = (SootMethod) it.next();
 				reachableMethodsWriter.println(m);
 				if(sinkMethods.contains(m)){
-					//System.out.println("R: "+m);			
+					System.out.println("sinkmethod: "+m);			
 					workList.add(m);
 				}
 			}
@@ -227,13 +227,16 @@ public class TaintAnalysis extends JavaAnalysis
 		Body body = sink.retrieveActiveBody();
 		List<Trio<Integer,String,Set<String>>> result = new ArrayList();
 
-		List<Pair<Integer,String>> sinkParams = taintManager.sinkParamsOf(sink);
-
-		for(Pair<Integer,String> sinkParam : sinkParams){
+		for(Pair<Integer,String> sinkParam : taintManager.sinkParamsOf(sink)){
 			int pCount = sinkParam.val0;
 			String sinkLabel = sinkParam.val1;
 
-			Local param = body.getParameterLocal(pCount);
+			Local param;
+			if(!sink.isStatic())
+				param = pCount == 0 ? body.getThisLocal() : body.getParameterLocal(pCount-1);
+			else
+				param = body.getParameterLocal(pCount);
+
 			Set<String> taints = computeTaintSetFor(param, sinkContext);
 			if(!taints.isEmpty())
 				result.add(new Trio(pCount, sinkLabel, taints));
@@ -265,8 +268,11 @@ public class TaintAnalysis extends JavaAnalysis
 				varsVisited.add(vc);
 				
 				AllocAndContextSet pt = (AllocAndContextSet) dpta.pointsToSetFor(vc);
-				for(AllocAndContext obj : pt)
-					objectsWL.add(obj);
+				if(pt == null)
+					System.out.println("Warning: Points-to set for "+vc.var+" is null.");
+				else
+					for(AllocAndContext obj : pt)
+						objectsWL.add(obj);
 			}
 			
 			while(!objectsWL.isEmpty()){
@@ -280,15 +286,25 @@ public class TaintAnalysis extends JavaAnalysis
 					taints.addAll(ts);
 				
 				Set<VarAndContext> vcs = dpta.flowsToSetFor(oc);
-				for(VarAndContext vc : vcs){
-					VarNode dest = vc.var;
-					ImmutableStack<Integer> destContext = vc.context;
-					Collection<LocalVarNode> sources = taintManager.findTaintTransferSourceFor(dest);
-					if(sources == null)
-						continue;
-					for(LocalVarNode src : sources)
-						varsWL.add(new VarAndContext(src, destContext));
-				}
+				if(vcs == null)
+					System.out.println("Warning: Flows-to set for "+ oc.alloc+" is null.");
+				else
+					for(VarAndContext vc : vcs){
+						VarNode dest = vc.var;
+						ImmutableStack<Integer> destContext = vc.context;
+						
+						SootMethod method = dpta.transferEndPoint(dest);
+						if(method == null)
+							continue;
+
+						Collection<LocalVarNode> sources = taintManager.findTaintTransferSourceFor(dest);
+						if(sources == null){
+							System.out.println("possibly missing models. dest: "+dest+" method: "+method.getSignature());
+							continue;
+						}
+						for(LocalVarNode src : sources)
+							varsWL.add(new VarAndContext(src, destContext));
+					}
 			}
 		} while(!varsWL.isEmpty());
 

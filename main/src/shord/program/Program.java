@@ -126,7 +126,11 @@ public class Program
 		cg.build();
 	}
 
-	public void runSpark()
+	public void runSpark(){
+		runSpark("");
+	}
+
+	public void runSpark(String specialOptions)
 	{
 		Scene.v().releaseCallGraph();
 		Scene.v().releasePointsToAnalysis();
@@ -137,6 +141,9 @@ public class Program
 		StringBuilder options = new StringBuilder();
 		options.append("enabled:true");
 		options.append(" verbose:true");
+		options.append(" simulate-natives:false");//our models should take care of this
+		if(specialOptions.trim().length() > 0)
+			options.append(" "+specialOptions);
 		//options.append(" dump-answer:true");
 		options.append(" "+defaultOptions);
 		System.out.println("spark options: "+options.toString());

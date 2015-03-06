@@ -23,9 +23,9 @@ import java.io.*;
  */
 public class TaintManager
 {
-	private Map<AllocNode,Set<String>> allocNodeToTaints = new HashMap();
-	private Map<LocalVarNode,List<LocalVarNode>> dstToSourceTransfer = new HashMap();
-	private Map<SootMethod,List<Pair<Integer,String>>> methodToSinkLabels = new HashMap();
+	public Map<AllocNode,Set<String>> allocNodeToTaints = new HashMap();
+	private Map<LocalVarNode,Set<LocalVarNode>> dstToSourceTransfer = new HashMap();
+	private Map<SootMethod,Set<Pair<Integer,String>>> methodToSinkLabels = new HashMap();
 	private Set<String> interestingSinkLabels;
 	private Set<String> interestingSourceLabels;
 	private OnDemandPTA dpta;
@@ -47,7 +47,7 @@ public class TaintManager
 		interestingSourceLabels.addAll(sourceLabels);
 	}
 
-	public List<Pair<Integer,String>> sinkParamsOf(SootMethod method)
+	public Collection<Pair<Integer,String>> sinkParamsOf(SootMethod method)
 	{
 		return methodToSinkLabels.get(method);
 	}
@@ -178,9 +178,11 @@ public class TaintManager
 				if(to.equals("-1")){
 					//return value is tainted
 					for(SootMethod m : meths){
-						Node[] nodes = dpta.retVarNodes(m);
-						if(nodes != null){
-							for(Node node : nodes)
+						//Node[] nodes = dpta.retVarNodes(m);
+						Node node = dpta.retVarNode(m);
+						//if(nodes != null){
+						if(node != null){
+							//for(Node node : nodes)
 								setTaint((Local) ((LocalVarNode) node).getVariable(), from);
 						}
 					}
@@ -201,9 +203,9 @@ public class TaintManager
 				if(isInterestingSink(to)){
 					for(SootMethod m : meths){
 						if(Scene.v().getReachableMethods().contains(m)){
-							List<Pair<Integer,String>> sinkLabels = methodToSinkLabels.get(m);
+							Set<Pair<Integer,String>> sinkLabels = methodToSinkLabels.get(m);
 							if(sinkLabels == null){
-								sinkLabels = new ArrayList();
+								sinkLabels = new HashSet();
 								methodToSinkLabels.put(m, sinkLabels);
 							}
 							sinkLabels.add(new Pair(fromArgIndex, to));
@@ -217,17 +219,19 @@ public class TaintManager
 				//transfer from fromArgIndex to return
 				for(SootMethod m : meths){
 					LocalVarNode src = (LocalVarNode) dpta.parameterNode(m, Integer.valueOf(fromArgIndex));
-					Node[] nodes = dpta.retVarNodes(m);
-					if(nodes != null && src != null){
-						for(Node node : nodes){
+					//Node[] nodes = dpta.retVarNodes(m);
+					Node node = dpta.retVarNode(m);
+					//if(nodes != null && src != null){
+					if(node != null && src != null){
+					//	for(Node node : nodes){
 							LocalVarNode dst = (LocalVarNode) node;
-							List<LocalVarNode> sources = dstToSourceTransfer.get(dst);
+							Set<LocalVarNode> sources = dstToSourceTransfer.get(dst);
 							if(sources == null){
-								sources = new ArrayList();
+								sources = new HashSet();
 								dstToSourceTransfer.put(dst, sources);
 							}
 							sources.add(src);
-						}
+							//	}
 					}
 				}
 			} else {
@@ -237,9 +241,9 @@ public class TaintManager
 					LocalVarNode src = (LocalVarNode) dpta.parameterNode(m, Integer.valueOf(fromArgIndex));
 					LocalVarNode dst = (LocalVarNode) dpta.parameterNode(m, Integer.valueOf(toArgIndex));
 					if(src != null && dst != null){
-						List<LocalVarNode> sources = dstToSourceTransfer.get(dst);
+						Set<LocalVarNode> sources = dstToSourceTransfer.get(dst);
 						if(sources == null){
-							sources = new ArrayList();
+							sources = new HashSet();
 							dstToSourceTransfer.put(dst, sources);
 						}
 						sources.add(src);

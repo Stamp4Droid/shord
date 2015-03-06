@@ -163,5 +163,12 @@ public class IccgOnDemand extends TaintAnalysis
 			Local right = (Local) ((DefinitionStmt) stmt).getRightOp();
 			taintManager.setTaint(right, f.getSubSignature());
 		}
+		
+		for(Map.Entry<soot.jimple.spark.pag.AllocNode,Set<String>> e : taintManager.allocNodeToTaints.entrySet()){
+			System.out.print("Added taint label to "+e.getKey()+": ");
+			for(String label : e.getValue())
+				System.out.print(label+", ");
+			System.out.println("");
+		}
 	}
 }
