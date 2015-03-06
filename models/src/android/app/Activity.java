@@ -4,8 +4,12 @@ import android.content.ClipboardManager;
 
 public class Activity
 {
+	protected android.content.Intent intent;
+
     public  Activity() 
 	{
+		this.intent = new android.content.Intent();
+
 		this.onCreate(null);
 		this.onStart();
 		this.onRestart();
@@ -77,13 +81,13 @@ public class Activity
 			return null;//TODO
 	}
 	
-	@STAMP(flows = {@Flow(from="!Activity",to="intent")})
+	@STAMP(flows = {@Flow(from="intent", to="!Activity")})
 	public  void startActivityForResult(android.content.Intent intent, int requestCode) 
 	{ 
 		this.onActivityResult(0, 0, new android.content.Intent());
 	}
 
-	@STAMP(flows = {@Flow(from="!Activity",to="intent")})
+	@STAMP(flows = {@Flow(from="intent", to="!Activity"), @Flow(from="options", to="!Activity")})
 	public  void startActivityForResult(android.content.Intent intent, int requestCode, android.os.Bundle options) 
 	{ 
 		this.onActivityResult(0, 0, new android.content.Intent());
@@ -97,5 +101,14 @@ public class Activity
     public final void runOnUiThread(final java.lang.Runnable action) {
 		action.run();
     }
+
+	@STAMP(flows = {@Flow(from="$Activity.GetIntent", to="@return")})
+    public android.content.Intent getIntent() {
+		return this.intent;
+    }
+
+	public void setIntent(android.content.Intent newIntent) {
+		this.intent = newIntent;
+	}
 
 }
