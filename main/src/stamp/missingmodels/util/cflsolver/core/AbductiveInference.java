@@ -13,28 +13,33 @@ import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGra
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
+import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
+import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.Coefficient;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.ConstraintType;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.LinearProgramResult;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.ObjectiveType;
+import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 
 public class AbductiveInference {
-	private final LinearProgram<Edge> lp = new LinearProgram<Edge>();
-	private final HashSet<Edge> edges = new HashSet<Edge>();
-	private final LinkedList<Edge> worklist = new LinkedList<Edge>();
+	public interface AbductiveInferenceHelper {
+		public Iterable<Edge> getBaseEdges(Graph graph);
+		public Iterable<Edge> getInitialEdges(Graph graph);
+	}
 	
 	private final ContextFreeGrammarOpt contextFreeGrammar;
-	private final Set<Edge> baseEdges = new HashSet<Edge>();
-	private final Set<Edge> initialEdges = new HashSet<Edge>();
+	private final AbductiveInferenceHelper helper;
 	
-	public AbductiveInference(ContextFreeGrammarOpt contextFreeGrammar, Graph graph, Iterable<Edge> baseEdges, Iterable<Edge> initialEdges) {
+	private Set<Edge> baseEdges;
+	private Set<Edge> initialEdges;
+	private LinearProgram<Edge> lp;
+	private HashSet<Edge> edges;
+	private LinkedList<Edge> worklist;
+	
+	public AbductiveInference(ContextFreeGrammarOpt contextFreeGrammar, AbductiveInferenceHelper helper) {
 		this.contextFreeGrammar = contextFreeGrammar;
-		for(Edge edge : baseEdges) {
-			this.baseEdges.add(edge);
-		}
-		for(Edge edge : initialEdges) {
-			this.initialEdges.add(edge);
-		}
+		this.helper = helper;
 	}
 	
 	private void setObjective() {
@@ -114,7 +119,8 @@ public class AbductiveInference {
 				boolean includeFirstInput = firstInput.weight > (short)0;
 				boolean includeSecondInput = secondInput.weight > (short)0;
 				// only add production if edge data are equal
-				if(Field.produce(binaryProduction.ignoreFields, firstInput.field, secondInput.field).field != target.field.field) {
+				Field field = Field.produce(binaryProduction.ignoreFields, firstInput.field, secondInput.field);
+				if(field == null || field.field != target.field.field) {
 					continue;
 				}
 				// add edge
@@ -177,37 +183,77 @@ public class AbductiveInference {
 		}
 	}
 	
-	// returns 1 if the edge is in the cut, 0 if the edge is not in the cut
-	private Map<EdgeStruct,Boolean> result = null;
-	public Map<EdgeStruct,Boolean> solve() {
-		if(this.result == null) {
-			// STEP 1: Break initial edges
-			this.setInitialEdges();
-			
-			// STEP 2: Cut edges
-			for(Edge edge : this.initialEdges) {
-				this.addEdge(edge);
-			}
-			while(!this.worklist.isEmpty()) {
-				this.processEdge(this.worklist.removeFirst());
-			}
-			
-			// STEP 3: Set objective
-			this.setObjective();
-			
-			// STEP 4: Solve the linear program
-			LinearProgramResult<Edge> solution = this.lp.solve();
-			
-			// STEP 5: Set up the result
-			this.result = new HashMap<EdgeStruct,Boolean>();
-			for(Edge edge : solution.variableValues.keySet()) {
-				if(this.baseEdges.contains(edge)) {
-					//System.out.println(edge.getStruct() + ": " + solution.variableValues.get(edge));
-					this.result.put(edge.getStruct(), solution.variableValues.get(edge) > 0.5);
-				}
+	public Map<EdgeStruct,Boolean> process(Graph graph) {
+		// STEP 0: Setup
+		this.lp = new LinearProgram<Edge>();
+		this.edges = new HashSet<Edge>();
+		this.worklist = new LinkedList<Edge>();
+		this.baseEdges = new HashSet<Edge>();
+		for(Edge edge : this.helper.getBaseEdges(graph)) {
+			this.baseEdges.add(edge);
+		}
+		this.initialEdges = new HashSet<Edge>();
+		for(Edge edge : this.helper.getInitialEdges(graph)) {
+			this.initialEdges.add(edge);
+		}
+		for(Edge edge : baseEdges) {
+			this.baseEdges.add(edge);
+		}
+		for(Edge edge : initialEdges) {
+			this.initialEdges.add(edge);
+		}
+		
+		// STEP 1: Break initial edges
+		this.setInitialEdges();
+		
+		// STEP 2: Cut edges
+		for(Edge edge : this.initialEdges) {
+			this.addEdge(edge);
+		}
+		while(!this.worklist.isEmpty()) {
+			this.processEdge(this.worklist.removeFirst());
+		}
+		
+		// STEP 3: Set objective
+		this.setObjective();
+		
+		// STEP 4: Solve the linear program
+		LinearProgramResult<Edge> solution = this.lp.solve();
+		
+		// STEP 5: Set up the result
+		// returns 1 if the edge is in the cut, 0 if the edge is not in the cut
+		Map<EdgeStruct,Boolean> result = new HashMap<EdgeStruct,Boolean>();
+		for(Edge edge : solution.variableValues.keySet()) {
+			if(this.baseEdges.contains(edge)) {
+				result.put(edge.getStruct(), solution.variableValues.get(edge) > 0.5);
 			}
 		}
 		
-		return this.result;
+		return result;
+	}
+	
+	public MultivalueMap<EdgeStruct,Integer> process(Graph graph, Filter<Edge> filter, int numCuts) {
+		Graph gcur = graph;
+		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
+		for(int i=0; i<numCuts; i++) {
+			// STEP 1: Run reachability solver
+			Graph gbar = gcur.transform(new ReachabilitySolver(gcur.getVertices(), this.contextFreeGrammar, filter));
+			
+			// STEP 2: Run the abductive inference algorithm
+			final Map<EdgeStruct,Boolean> result = this.process(gbar);
+			for(EdgeStruct edge : result.keySet()) {
+				if(result.get(edge)) {
+					allResults.add(edge, i);
+				}
+			}
+			
+			// STEP 3: Transform graph to remove cut edges
+			gcur = gcur.transform(new EdgeTransformer(gcur.getVertices(), gcur.getSymbols()) {
+				public void process(GraphBuilder gb, EdgeStruct edge) {
+					gb.addOrUpdateEdge(edge.sourceName, edge.sinkName, edge.symbol, edge.field, result.containsKey(edge) && result.get(edge) ? (short)0 : edge.weight);
+				}});
+		}		
+		return allResults;
 	}
 }
+

@@ -9,23 +9,47 @@ import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.processor.TraceReader;
-import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.core.AbductiveInference;
+import stamp.missingmodels.util.cflsolver.core.AbductiveInference.AbductiveInferenceHelper;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
-import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
+import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar.TaintPointsToGrammar;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
-import stamp.missingmodels.util.cflsolver.util.AbductiveInferenceUtils;
+import stamp.missingmodels.util.cflsolver.relation.DynamicParamRelationManager;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
 @Chord(name = "tests")
 public class TestsAnalysis extends JavaAnalysis {
-	//private static ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
-	private static ContextFreeGrammar taintGrammar = new CallgraphTaintGrammar();
+	public static class TestAbductiveInferenceHelper implements AbductiveInferenceHelper {
+		@Override
+		public Iterable<Edge> getBaseEdges(Graph gbar) {
+			return gbar.getEdges(new Filter<Edge>() {
+				@Override
+				public boolean filter(Edge edge) {
+					return edge.symbol.symbol.equals("param") || edge.symbol.symbol.equals("paramPrim");
+					//return edge.symbol.symbol.equals("callgraph");
+				}
+			});
+		}
+		
+		@Override
+		public Iterable<Edge> getInitialEdges(Graph gbar) {
+			return gbar.getEdges(new Filter<Edge>() {
+				@Override
+				public boolean filter(Edge edge) {
+					return edge.symbol.symbol.equals("Src2Sink");
+				}
+			});
+		}
+	}
 	
 	public static int getNumReachableMethods() {
 		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("reachableM");
@@ -85,26 +109,31 @@ public class TestsAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		String[] tokens = System.getProperty("stamp.out.dir").split("_");
-		List<String> reachedMethods = TraceReader.getReachableMethods("profiler/traceouts/", tokens[tokens.length-1]);
 		
+		// reached methods
+		List<String> reachedMethods = TraceReader.getReachableMethods("profiler/traceouts/", tokens[tokens.length-1]);
+		int numReachableMethods = getNumReachableMethods();
+		
+		// dynamic callgraph
 		List<Pair<String,String>> testReachedCallgraph = TraceReader.getOrderedCallgraph("profiler/traceouts", tokens[tokens.length-1]);
 		testReachedCallgraph.addAll(TraceReader.getOrderedCallgraph("profiler/traceouts_test", tokens[tokens.length-1]));
 		
-		int numReachableMethods = getNumReachableMethods();
-		
+		// test dynamic callgraph
 		MultivalueMap<String,String> callgraph = new CallgraphCompleter().completeDynamicCallgraph(TraceReader.getCallgraph("profiler/traceouts/", tokens[tokens.length-1]));
 		List<String> testReachedMethods = TraceReader.getReachableMethods("profiler/traceouts_test/", tokens[tokens.length-1]);
-		
+				
 		System.out.println("Method coverage: " + reachedMethods.size());
 		System.out.println("Number of reachable methods: " + numReachableMethods);
 		System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
 		System.out.println("Test number of reached callgraph edges: " + testReachedCallgraph.size());
 		System.out.println("Test coverage: " + (double)testReachedMethods.size()/numReachableMethods);
 		
-		RelationReader relationReader = new ShordRelationReader();
-		Graph g = relationReader.readGraph(new DynamicCallgraphRelationManager(callgraph), taintGrammar.getSymbols());
-		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(taintGrammar.getOpt(), g, relationReader.readFilter(g.getVertices(), taintGrammar.getSymbols()), true, 2); 
+		RelationReader relationReader = new ShordRelationReader();		
+		RelationManager relations = new DynamicParamRelationManager(callgraph);
+		ContextFreeGrammarOpt grammar = new TaintPointsToGrammar().getOpt();
 		
+		Graph g = relationReader.readGraph(relations, grammar.getSymbols());
+		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(grammar, new TestAbductiveInferenceHelper()).process(g, relationReader.readFilter(g.getVertices(), grammar.getSymbols()), 2);
 		IOUtils.printAbductionResult(results, true);
 	}
 }

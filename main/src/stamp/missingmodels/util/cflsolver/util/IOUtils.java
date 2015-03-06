@@ -15,6 +15,7 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import stamp.analyses.DomL;
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Graph;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
@@ -209,6 +210,25 @@ public class IOUtils {
 			}
 			System.out.println(symbol + ": " + edges.size());
 		}
-		//System.out.println("total edges: " + g.getEdges().size());
+		System.out.println("total edges: " + g.getNumEdges());
+	}
+	
+	// Useful in AbductiveInferenceUtils
+	public static void printSourceSinkEdgePaths(Graph g, Iterable<Edge> sourceSinkEdges, boolean shord) {
+		DomL dom = shord ? (DomL)ClassicProject.g().getTrgt("L") : null;
+		for(Edge edge : sourceSinkEdges) {
+			System.out.println("Cutting Src2Sink edge: " + edge.toString());
+			System.out.println("Edge weight: " + edge.weight);
+			if(dom != null) {
+				String source = dom.get(Integer.parseInt(edge.source.name.substring(1)));
+				String sink = dom.get(Integer.parseInt(edge.sink.name.substring(1)));
+				System.out.println("Edge represents source-sink flow: " + source + " -> " + sink);
+			}
+			System.out.println("Starting edge path...");
+			for(Pair<Edge,Boolean> pathEdgePair : edge.getPath()) {
+				System.out.println("weight " + pathEdgePair.getX().weight + ", " + "isForward " + pathEdgePair.getY() + ": " + pathEdgePair.getX().toString(shord));
+			}
+			System.out.println("Ending edge path");
+		}		
 	}
 }

@@ -5,7 +5,10 @@ import java.util.List;
 
 import shord.project.analyses.JavaAnalysis;
 import stamp.analyses.TestsAnalysis.CallgraphCompleter;
+import stamp.analyses.TestsAnalysis.TestAbductiveInferenceHelper;
 import stamp.missingmodels.processor.TraceReader;
+import stamp.missingmodels.util.cflsolver.core.AbductiveInference;
+import stamp.missingmodels.util.cflsolver.core.AbductiveInference.AbductiveInferenceHelper;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
@@ -18,9 +21,6 @@ import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 import stamp.missingmodels.util.cflsolver.grammars.CallgraphTaintGrammar;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.DynamicCallgraphRelationManager;
-import stamp.missingmodels.util.cflsolver.util.AbductiveInferenceUtils;
-import stamp.missingmodels.util.cflsolver.util.AbductiveInferenceUtils.AbductiveInferenceHelper;
-import stamp.missingmodels.util.cflsolver.util.AbductiveInferenceUtils.DefaultAbductiveInferenceHelper;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
@@ -29,18 +29,18 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 	private AbductiveInferenceHelper getAbductiveInferenceHelper(final MultivalueMap<String,String> baseEdgeFilter, final MultivalueMap<String,String> cutEdgeFilter) {
 		return new AbductiveInferenceHelper() {
 			@Override
-			public Iterable<Edge> getBaseEdges(Graph gbar, Graph gcur) {
-				return gbar.getEdges(new Filter<Edge>() {
+			public Iterable<Edge> getBaseEdges(Graph g) {
+				return g.getEdges(new Filter<Edge>() {
 					@Override
 					public boolean filter(Edge edge) {
-						//return (edge.getSymbol().equals("param") || edge.getSymbol().equals("paramPrim"))
-						return (edge.symbol.symbol.equals("callgraph")) && !baseEdgeFilter.get(edge.source.toString(true)).contains(edge.sink.toString(true));
+						return (edge.symbol.symbol.equals("param") || edge.symbol.symbol.equals("paramPrim"));
+						//return (edge.symbol.symbol.equals("callgraph")) && !baseEdgeFilter.get(edge.source.toString(true)).contains(edge.sink.toString(true));
 					}
 				});
 			}
 
 			@Override
-			public Iterable<Edge> getInitialCutEdges(Graph g) {
+			public Iterable<Edge> getInitialEdges(Graph g) {
 				return g.getEdges(new Filter<Edge>() {
 					@Override
 					public boolean filter(Edge edge) {
@@ -66,12 +66,10 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 
 	@Override
 	public void run() {
-		MultivalueMap<String,String> paramEdges = getGraphEdgesFromFile("param", "graph");
-		MultivalueMap<String,String> paramPrimEdges = getGraphEdgesFromFile("paramPrim", "graph");
+		//MultivalueMap<String,String> paramEdges = getGraphEdgesFromFile("param", "graph");
+		//MultivalueMap<String,String> paramPrimEdges = getGraphEdgesFromFile("paramPrim", "graph");
 		MultivalueMap<String,String> callgraphEdges = getGraphEdgesFromFile("callgraph", "graph");
 		MultivalueMap<String,String> sourceSinkEdges = getGraphEdgesFromFile("Src2Sink", "graph");
-		//AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(getUnion(paramEdges, paramPrimEdges), sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
-		//AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(callgraphEdges, sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
 		
 		String[] tokens = System.getProperty("stamp.out.dir").split("_");
 		
@@ -94,13 +92,15 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 			callgraph.get(key).addAll(callgraphEdges.get(key));
 		}
 		
-		AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(callgraph, sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
+		//AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(getUnion(paramEdges, paramPrimEdges), sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
+		//AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(callgraphEdges, sourceSinkEdges) : new DefaultAbductiveInferenceHelper();
+		AbductiveInferenceHelper h = IOUtils.relationFileExists("param", "graph") ? getAbductiveInferenceHelper(callgraph, sourceSinkEdges) : new TestAbductiveInferenceHelper();
 		
 		ContextFreeGrammar taintGrammar = new CallgraphTaintGrammar();
 		RelationReader relationReader = new ShordRelationReader();
 		
 		Graph g = relationReader.readGraph(new DynamicCallgraphRelationManager(callgraph), taintGrammar.getSymbols());
-		MultivalueMap<EdgeStruct,Integer> results = AbductiveInferenceUtils.runInference(h, taintGrammar.getOpt(), g, relationReader.readFilter(g.getVertices(), taintGrammar.getSymbols()), true, 2); 
+		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(taintGrammar.getOpt(), h).process(g, relationReader.readFilter(g.getVertices(), taintGrammar.getSymbols()), 2);
 		IOUtils.printCallgraphAbductionResult(results, true);
 		
 		Graph gbar = g.transform(new ReachabilitySolver(g.getVertices(), taintGrammar.getOpt(), relationReader.readFilter(g.getVertices(), taintGrammar.getSymbols())));

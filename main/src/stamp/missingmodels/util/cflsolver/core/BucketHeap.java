@@ -45,11 +45,11 @@ public class BucketHeap {
 		return head;
 	}
 
-	public void update(Edge edge) {
+	public void update(Edge edge, short oldWeight) {
 		if(edge.prevWorklist != null) {
 			edge.prevWorklist.nextWorklist = edge.nextWorklist;
 		} else {
-			this.buckets.set(edge.nextWorklist.weight, edge.nextWorklist);
+			this.buckets.set(oldWeight, edge.nextWorklist);
 		}
 		if(edge.nextWorklist != null) {
 			edge.nextWorklist.prevWorklist = edge.prevWorklist;

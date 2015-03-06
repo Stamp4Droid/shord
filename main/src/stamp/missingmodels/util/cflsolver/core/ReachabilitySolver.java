@@ -37,6 +37,7 @@ public class ReachabilitySolver implements GraphTransformer {
 			return;
 		}
 		Edge curEdge = this.graph.getEdge(source, sink, symbol, field);
+		short curWeight = curEdge == null ? (short)-1 : curEdge.weight;
 		Edge edge = this.graph.addOrUpdateEdge(source, sink, symbol, field, weight, firstInput, secondInput);
 		if(edge != null && !this.filter.filter(edge)) {
 			return;
@@ -44,7 +45,7 @@ public class ReachabilitySolver implements GraphTransformer {
 		if(curEdge == null) {
 			this.worklist.push(edge);
 		} else if(edge != null) {
-			this.worklist.update(edge);
+			this.worklist.update(edge, curWeight);
 		}
 	}
 
