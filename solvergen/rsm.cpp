@@ -914,6 +914,12 @@ public:
         }
         // Flag that primary body computation is complete.
         second_pass_ = true;
+        // Pre-emptively clear empty FSMs before exiting.
+        // TODO: Could clean up useless states for non-empty FSMs as well.
+        if (empty_body()) {
+            clear_body();
+            initial_ = sup_nodes_.mktemp().ref;
+        }
     }
     bool empty_body() const {
         // Before any matching is performed, we can only be certain that the
