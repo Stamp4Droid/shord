@@ -1,0 +1,252 @@
+package stamp.analyses.ondemand;
+
+import soot.Scene;
+import soot.SootClass;
+import soot.SootMethod;
+import soot.Local;
+import soot.jimple.spark.sets.P2SetVisitor;
+import soot.jimple.spark.sets.PointsToSetInternal;
+import soot.jimple.spark.pag.Node;
+import soot.jimple.spark.pag.AllocNode;
+import soot.jimple.spark.pag.VarNode;
+import soot.jimple.spark.pag.LocalVarNode;
+
+import stamp.analyses.SootUtils;
+
+import chord.util.tuple.object.Pair;
+
+import java.util.*;
+import java.io.*;
+
+/*
+ * @author Saswat Anand
+ */
+public class TaintManager
+{
+	private Map<AllocNode,Set<String>> allocNodeToTaints = new HashMap();
+	private Map<LocalVarNode,List<LocalVarNode>> dstToSourceTransfer = new HashMap();
+	private Map<SootMethod,List<Pair<Integer,String>>> methodToSinkLabels = new HashMap();
+	private Set<String> interestingSinkLabels;
+	private Set<String> interestingSourceLabels;
+	private OnDemandPTA dpta;
+
+	public TaintManager(OnDemandPTA dpta)
+	{
+		this.dpta = dpta;
+	}
+
+	public void setSinkLabels(Collection<String> sinkLabels)
+	{
+		interestingSinkLabels = new HashSet();
+		interestingSinkLabels.addAll(sinkLabels);
+	}
+
+	public void setSourceLabels(Collection<String> sourceLabels)
+	{
+		interestingSourceLabels = new HashSet();
+		interestingSourceLabels.addAll(sourceLabels);
+	}
+
+	public List<Pair<Integer,String>> sinkParamsOf(SootMethod method)
+	{
+		return methodToSinkLabels.get(method);
+	}
+
+	public Set<SootMethod> sinkMethods()
+	{
+		return methodToSinkLabels.keySet();
+	}
+
+	public Collection<LocalVarNode> findTaintTransferSourceFor(VarNode dstVar)
+	{
+		if(!(dstVar instanceof LocalVarNode))
+			return null;
+		return dstToSourceTransfer.get((LocalVarNode) dstVar);
+	}
+
+	public Set<String> getTaint(AllocNode object)
+	{
+		return allocNodeToTaints.get(object);
+	}
+	
+	public void setTaint(Local local, final String taint)
+	{
+		PointsToSetInternal pt = dpta.ciPointsToSetFor(local);
+		pt.forall(new P2SetVisitor() {
+				public final void visit(Node n) {
+					AllocNode an = (AllocNode) n;
+					Set<String> taints = allocNodeToTaints.get(an);
+					if(taints == null){
+						taints = new HashSet();
+						allocNodeToTaints.put(an, taints);
+					}
+					taints.add(taint);
+				}
+			});
+	}
+
+	protected boolean isInterestingSource(String label)
+	{
+		return interestingSourceLabels == null || interestingSourceLabels.contains(label);
+	}
+
+	protected boolean isInterestingSink(String label)
+	{
+		return interestingSinkLabels == null || interestingSinkLabels.contains(label);
+	}
+
+	private String[] split(String line)
+	{
+		String[] tokens = new String[3];
+		int index = line.indexOf(" ");
+		tokens[0] = line.substring(0, index);
+		
+		String delim = "$stamp$stamp$";
+		
+		index++;
+		char c = line.charAt(index);
+		if((c == '$' || c == '!') && line.startsWith(delim, index+1)){
+			int j = line.indexOf(delim, index+2);
+			tokens[1] = c+line.substring(index+1+delim.length(), j);
+			index = j+delim.length();
+			if(line.charAt(index) != ' ')
+				throw new RuntimeException("Cannot parse annotation "+line);
+		} else {
+			int j = line.indexOf(' ', index);
+			tokens[1] = line.substring(index, j);
+			index = j;
+		}
+		
+		index++;		
+		c = line.charAt(index);
+		if(c == '!' && line.startsWith(delim, index+1)){
+			int j = line.indexOf(delim, index+2);
+			tokens[2] = c+line.substring(index+1+delim.length(), j);
+			index = j+delim.length();
+			if(index != line.length())
+				throw new RuntimeException("Cannot parse annotation "+line);
+		} else {
+			assert c != '$';
+			tokens[2] = line.substring(index, line.length());
+		}
+
+		return tokens;
+	}
+
+	public void readAnnotations()
+	{
+		Scene scene = Scene.v();
+		try{
+			BufferedReader reader = new BufferedReader(new FileReader(new File(System.getProperty("stamp.out.dir"), "stamp_annotations.txt")));
+			String line = reader.readLine();
+			while(line != null){
+				final String[] tokens = split(line);
+				String chordMethodSig = tokens[0];
+				int atSymbolIndex = chordMethodSig.indexOf('@');
+				String className = chordMethodSig.substring(atSymbolIndex+1);
+				if(scene.containsClass(className)){
+					SootClass klass = scene.getSootClass(className);
+					String subsig = SootUtils.getSootSubsigFor(chordMethodSig.substring(0,atSymbolIndex));
+					SootMethod meth = klass.getMethod(subsig);
+					
+					String from = tokens[1];
+					String to = tokens[2];
+
+					boolean b1 = from.charAt(0) == '$' || from.charAt(0) == '!';
+					boolean b2 = to.charAt(0) == '$' || to.charAt(0) == '!';
+					if(b1 && b2){
+						System.out.println("Unsupported annotation type "+line);
+					} else {
+						addFlow(meth, from, to);
+					}
+				}
+				line = reader.readLine();
+			}
+			reader.close();
+		}catch(IOException e){
+			throw new Error(e);
+		}
+	}
+
+	private void addFlow(SootMethod meth, String from, String to) //throws NumberFormatException
+	{
+		//System.out.println("+++ " + meth + " " + from + " " + to);
+		List<SootMethod> meths = SootUtils.overridingMethodsFor(meth);
+		char from0 = from.charAt(0);
+		if(from0 == '$' || from0 == '!') {
+			if(isInterestingSource(from) || isInterestingSink(from)){
+				if(to.equals("-1")){
+					//return value is tainted
+					for(SootMethod m : meths){
+						Node[] nodes = dpta.retVarNodes(m);
+						if(nodes != null){
+							for(Node node : nodes)
+								setTaint((Local) ((LocalVarNode) node).getVariable(), from);
+						}
+					}
+				} else{
+					//parameter is tainted
+					for(SootMethod m : meths){
+						Node node = dpta.parameterNode(m, Integer.valueOf(to));
+						if(node != null)
+							setTaint((Local) ((LocalVarNode) node).getVariable(), from);
+					}
+				}
+			}
+		} else {
+			Integer fromArgIndex = Integer.valueOf(from);
+			char to0 = to.charAt(0);
+			if(to0 == '!'){
+				//sink
+				if(isInterestingSink(to)){
+					for(SootMethod m : meths){
+						if(Scene.v().getReachableMethods().contains(m)){
+							List<Pair<Integer,String>> sinkLabels = methodToSinkLabels.get(m);
+							if(sinkLabels == null){
+								sinkLabels = new ArrayList();
+								methodToSinkLabels.put(m, sinkLabels);
+							}
+							sinkLabels.add(new Pair(fromArgIndex, to));
+						}
+					}
+				}
+			} else if(to0 == '?'){
+				//TODO
+				;
+			} else if(to.equals("-1")){
+				//transfer from fromArgIndex to return
+				for(SootMethod m : meths){
+					LocalVarNode src = (LocalVarNode) dpta.parameterNode(m, Integer.valueOf(fromArgIndex));
+					Node[] nodes = dpta.retVarNodes(m);
+					if(nodes != null && src != null){
+						for(Node node : nodes){
+							LocalVarNode dst = (LocalVarNode) node;
+							List<LocalVarNode> sources = dstToSourceTransfer.get(dst);
+							if(sources == null){
+								sources = new ArrayList();
+								dstToSourceTransfer.put(dst, sources);
+							}
+							sources.add(src);
+						}
+					}
+				}
+			} else {
+				//transfer from fromArgIndex to toArgIndex
+				Integer toArgIndex = Integer.valueOf(to);
+				for(SootMethod m : meths){
+					LocalVarNode src = (LocalVarNode) dpta.parameterNode(m, Integer.valueOf(fromArgIndex));
+					LocalVarNode dst = (LocalVarNode) dpta.parameterNode(m, Integer.valueOf(toArgIndex));
+					if(src != null && dst != null){
+						List<LocalVarNode> sources = dstToSourceTransfer.get(dst);
+						if(sources == null){
+							sources = new ArrayList();
+							dstToSourceTransfer.put(dst, sources);
+						}
+						sources.add(src);
+					}
+				}
+			}
+		}
+	}
+
+}
