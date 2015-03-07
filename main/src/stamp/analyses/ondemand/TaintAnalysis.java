@@ -1,25 +1,18 @@
 package stamp.analyses.ondemand;
 
-import soot.Scene;
 import soot.SootMethod;
 import soot.MethodOrMethodContext;
 import soot.Body;
 import soot.Local;
 import soot.Type;
 import soot.RefLikeType;
-import soot.PointsToSet;
 import soot.jimple.Stmt;
-import soot.jimple.toolkits.callgraph.Edge;
-import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.spark.pag.VarNode;
 import soot.jimple.spark.pag.LocalVarNode;
 import soot.jimple.spark.ondemand.genericutil.ImmutableStack;
 import soot.jimple.spark.ondemand.AllocAndContextSet;
 import soot.jimple.spark.ondemand.AllocAndContext;
 import soot.jimple.spark.ondemand.DemandCSPointsTo.VarAndContext;
-
-import shord.program.Program;
-import shord.project.analyses.JavaAnalysis;
 
 import chord.project.Chord; 
 import chord.util.tuple.object.Pair;
@@ -34,31 +27,19 @@ import java.io.*;
  * @author Saswat Anand
  */
 @Chord(name="taint-ondemand-java")
-public class TaintAnalysis extends JavaAnalysis
+public class TaintAnalysis extends MethodReachabilityAnalysis
 {
 	protected TaintManager taintManager;
-	protected OnDemandPTA dpta;
 	protected JsonWriter writer;
-
-	private Map<SootMethod,List<Edge>> callEdges = new HashMap();
-	private Set<SootMethod> sinkMethods;
 
 	public TaintAnalysis()
 	{
 	}
 
-	public void run()
-	{
-		setup();
-		perform();
-		done();
-	}
-
 	protected void setup()
 	{
-		Program.g().runSpark("merge-stringbuffer:false");
+		super.setup();
 
-		this.dpta = OnDemandPTA.makeDefault();
 		this.taintManager = new TaintManager(dpta);
 
 		try{
@@ -84,74 +65,18 @@ public class TaintAnalysis extends JavaAnalysis
 	protected void perform()
 	{
 		taintManager.readAnnotations();
-
-		this.sinkMethods = taintManager.sinkMethods();
-
-		List<SootMethod> workList = new ArrayList();
-		try{
-			String stampOutDir = System.getProperty("stamp.out.dir");
-			PrintWriter reachableMethodsWriter = new PrintWriter(new BufferedWriter(
-											 new FileWriter(new File(stampOutDir, "reachablemethods.txt"))));
-			for(Iterator<MethodOrMethodContext> it = Scene.v().getReachableMethods().listener(); it.hasNext();){
-				SootMethod m = (SootMethod) it.next();
-				reachableMethodsWriter.println(m);
-				if(sinkMethods.contains(m)){
-					System.out.println("sinkmethod: "+m);			
-					workList.add(m);
-				}
-			}
-			reachableMethodsWriter.close();
-		}catch(IOException e){
-			throw new Error(e);
-		}
+		targetMethods.addAll(taintManager.sinkMethods());
 		
-		CallGraph cg = Scene.v().getCallGraph();
-		Set<SootMethod> visited = new HashSet();
-		while(!workList.isEmpty()){
-			SootMethod tgt = workList.remove(0);
-			if(visited.contains(tgt))
-				continue;
-			visited.add(tgt);
-			Iterator<Edge> edgeIt = cg.edgesInto(tgt);
-			while(edgeIt.hasNext()){
-				Edge edge = edgeIt.next();
-				if(!edge.isExplicit())
-					continue;
-				Stmt stmt = edge.srcStmt();
-				SootMethod src = (SootMethod) edge.src();
-				workList.add(src);
-				List<Edge> outgoingEdges = callEdges.get(src);
-				if(outgoingEdges == null){
-					outgoingEdges = new ArrayList();
-					callEdges.put(src, outgoingEdges);
-				}
-				outgoingEdges.add(edge);
-				//System.out.println("success: "+src+" "+stmt+" "+tgt);
-				//System.out.println("XY: "+src+" "+tgt);
-			}
-		}
-		
-		SootMethod main = Scene.v().getMethod("<stamp.harness.Main1: void main(java.lang.String[])>");
-		traverse(main, dpta.emptyStack(), new HashSet(), null);
-	}
-
-	protected Object visit(SootMethod caller, 
-						   Stmt callStmt, 
-						   SootMethod callee, 
-						   ImmutableStack<Integer> calleeContext, 
-						   Object data)
-	{
-		CallStack cs = data == null ? new CallStack() : (CallStack) data;
-		return cs.append(callStmt, caller);
+		super.perform();
 	}
 
 	protected void visitFinal(SootMethod caller, 
 							  Stmt callStmt, 
 							  SootMethod callee, 
 							  ImmutableStack<Integer> calleeContext, 
-							  Object data,
-							  List<Trio<Integer,String,Set<String>>> flows)
+							  Object data)
 	{
+		List<Trio<Integer,String,Set<String>>> flows = computeTaintFlows(callee, calleeContext);
 		CallStack callStack = (CallStack) visit(caller, callStmt, callee, calleeContext, data);
 		
 		try{
@@ -183,42 +108,6 @@ public class TaintAnalysis extends JavaAnalysis
 			writer.endObject();
 		} catch(IOException e){
 			throw new Error(e);
-		}
-	}
-
-	protected void traverse(SootMethod caller, 
-							ImmutableStack<Integer> callerContext, 
-							Set<SootMethod> visited, 
-							Object data)
-	{
-		List<Edge> outgoingEdges = callEdges.get(caller);
-		if(outgoingEdges == null)
-			return;
-		for(Edge e : outgoingEdges){
-			SootMethod callee = e.tgt();
-			if(visited.contains(callee))
-				continue;
-
-			//check validity of the calledge
-			Stmt callStmt = e.srcStmt();
-			//System.out.println("Query: "+ callStmt + "@" + (path.size()==0 ? "" : path.get(path.size()-1).tgt()) + " callee: "+callee);
-			ImmutableStack<Integer> calleeContext = dpta.calleeContext(callStmt, callee, callerContext);
-			if(calleeContext == null)
-				continue; //invalid edge
-
-			if(sinkMethods.contains(callee)) {
-				List<Trio<Integer,String,Set<String>>> flows = computeTaintFlows(callee, calleeContext);
-				visitFinal(caller, callStmt, callee, calleeContext, data, flows);
-			}
-			else {
-				Object newData = visit(caller, callStmt, callee, calleeContext, data);
-				
-				Set<SootMethod> visitedCopy = new HashSet();
-				visitedCopy.addAll(visited);
-				visitedCopy.add(callee);
-
-				traverse(callee, calleeContext, visitedCopy, newData);
-			}
 		}
 	}
 	
@@ -299,7 +188,8 @@ public class TaintAnalysis extends JavaAnalysis
 
 						Collection<LocalVarNode> sources = taintManager.findTaintTransferSourceFor(dest);
 						if(sources == null){
-							System.out.println("possibly missing models. dest: "+dest+" method: "+method.getSignature());
+							System.out.println("possibly missing models. endpoint: "+
+											   ((LocalVarNode) dest).getVariable()+" in method: "+method.getSignature());
 							continue;
 						}
 						for(LocalVarNode src : sources)

@@ -96,10 +96,11 @@ public class IccgOnDemand extends TaintAnalysis
 							  Stmt callStmt, 
 							  SootMethod callee, 
 							  ImmutableStack<Integer> calleeContext, 
-							  Object data,
-							  List<Trio<Integer,String,Set<String>>> taint)
+							  Object data)
 	{
+		List<Trio<Integer,String,Set<String>>> flows = computeTaintFlows(callee, calleeContext);
 		IccPath iccPath = (IccPath) visit(caller, callStmt, callee, calleeContext, data);
+
 		try{
 			writer.beginObject();
 			
@@ -127,7 +128,7 @@ public class IccgOnDemand extends TaintAnalysis
 
 			writer.name("widget-data");
 			writer.beginArray();
-			for(Trio<Integer,String,Set<String>> e : taint){
+			for(Trio<Integer,String,Set<String>> e : flows){
 				writer.beginObject();
 				writer.name("pindex").value(e.val0);
 				writer.name("sink-label").value(e.val1);

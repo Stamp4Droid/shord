@@ -4,6 +4,7 @@ import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Local;
+import soot.Type;
 import soot.jimple.spark.sets.P2SetVisitor;
 import soot.jimple.spark.sets.PointsToSetInternal;
 import soot.jimple.spark.pag.Node;
@@ -25,6 +26,7 @@ public class TaintManager
 {
 	public Map<AllocNode,Set<String>> allocNodeToTaints = new HashMap();
 	private Map<LocalVarNode,Set<LocalVarNode>> dstToSourceTransfer = new HashMap();
+	private Map<LocalVarNode,Set<LocalVarNode>> srcToDestTransfer = new HashMap();
 	private Map<SootMethod,Set<Pair<Integer,String>>> methodToSinkLabels = new HashMap();
 	private Set<String> interestingSinkLabels;
 	private Set<String> interestingSourceLabels;
@@ -62,6 +64,13 @@ public class TaintManager
 		if(!(dstVar instanceof LocalVarNode))
 			return null;
 		return dstToSourceTransfer.get((LocalVarNode) dstVar);
+	}
+
+	public Collection<LocalVarNode> findTaintTransferDestFor(VarNode srcVar)
+	{
+		if(!(srcVar instanceof LocalVarNode))
+			return null;
+		return srcToDestTransfer.get((LocalVarNode) srcVar);
 	}
 
 	public Set<String> getTaint(AllocNode object)
@@ -171,7 +180,19 @@ public class TaintManager
 	private void addFlow(SootMethod meth, String from, String to) //throws NumberFormatException
 	{
 		//System.out.println("+++ " + meth + " " + from + " " + to);
-		List<SootMethod> meths = SootUtils.overridingMethodsFor(meth);
+
+		//handle compiler-generated methods that result from co-variant return types
+		Set<SootMethod> covariantMethods = new HashSet();
+		String mName = meth.getName();
+		List<Type> mTypes = meth.getParameterTypes();
+		for(SootMethod method : meth.getDeclaringClass().getMethods())
+			if(mName.equals(method.getName()) && mTypes.equals(method.getParameterTypes()))
+				covariantMethods.add(method);
+
+		Set<SootMethod> meths = new HashSet();
+		for(SootMethod m : covariantMethods)
+			meths.addAll(SootUtils.overridingMethodsFor(m));
+
 		char from0 = from.charAt(0);
 		if(from0 == '$' || from0 == '!') {
 			if(isInterestingSource(from) || isInterestingSink(from)){
@@ -219,19 +240,21 @@ public class TaintManager
 				//transfer from fromArgIndex to return
 				for(SootMethod m : meths){
 					LocalVarNode src = (LocalVarNode) dpta.parameterNode(m, Integer.valueOf(fromArgIndex));
-					//Node[] nodes = dpta.retVarNodes(m);
-					Node node = dpta.retVarNode(m);
-					//if(nodes != null && src != null){
-					if(node != null && src != null){
-					//	for(Node node : nodes){
-							LocalVarNode dst = (LocalVarNode) node;
-							Set<LocalVarNode> sources = dstToSourceTransfer.get(dst);
-							if(sources == null){
-								sources = new HashSet();
-								dstToSourceTransfer.put(dst, sources);
-							}
-							sources.add(src);
-							//	}
+					LocalVarNode dst = (LocalVarNode) dpta.retVarNode(m);
+					if(dst != null && src != null){
+						Set<LocalVarNode> sources = dstToSourceTransfer.get(dst);
+						if(sources == null){
+							sources = new HashSet();
+							dstToSourceTransfer.put(dst, sources);
+						}
+						sources.add(src);
+				 
+						Set<LocalVarNode> dests = srcToDestTransfer.get(src);
+						if(dests == null){
+							dests = new HashSet();
+							srcToDestTransfer.put(src, dests);
+						}
+						dests.add(dst);
 					}
 				}
 			} else {
@@ -247,6 +270,13 @@ public class TaintManager
 							dstToSourceTransfer.put(dst, sources);
 						}
 						sources.add(src);
+						
+						Set<LocalVarNode> dests = srcToDestTransfer.get(src);
+						if(dests == null){
+							dests = new HashSet();
+							srcToDestTransfer.put(src, dests);
+						}
+						dests.add(dst);
 					}
 				}
 			}

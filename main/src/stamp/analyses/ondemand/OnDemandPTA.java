@@ -13,6 +13,7 @@ import soot.jimple.StaticInvokeExpr;
 import soot.jimple.SpecialInvokeExpr;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.NewExpr;
 import soot.jimple.spark.sets.EmptyPointsToSet;
 import soot.jimple.spark.sets.PointsToSetInternal;
 import soot.jimple.spark.pag.PAG;
@@ -397,5 +398,10 @@ public class OnDemandPTA extends DemandCSPointsTo
 		} else if(Parm.v(m, PointsToAnalysis.RETURN_NODE).equals(var))
 			return m;
 		return null;
+	}
+	
+	public AllocNode allocNodeFor(SootMethod m, NewExpr ne)
+	{
+		return pag.makeAllocNode(ne, ne.getType(), m);
 	}
 }
