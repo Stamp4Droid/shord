@@ -21,6 +21,7 @@ import stamp.missingmodels.util.cflsolver.core.LinearProgram.ConstraintType;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.LinearProgramResult;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.ObjectiveType;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 public class AbductiveInference {
 	public interface AbductiveInferenceHelper {
@@ -238,6 +239,10 @@ public class AbductiveInference {
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run reachability solver
 			Graph gbar = gcur.transform(new ReachabilitySolver(gcur.getVertices(), this.contextFreeGrammar, filter));
+
+			IOUtils.printGraphStatistics(gbar);
+			IOUtils.printGraphEdges(gbar, "Src2Sink", true);
+
 			
 			// STEP 2: Run the abductive inference algorithm
 			final Map<EdgeStruct,Boolean> result = this.process(gbar);

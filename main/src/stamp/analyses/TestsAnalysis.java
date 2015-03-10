@@ -10,6 +10,7 @@ import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.processor.TraceReader;
 import stamp.missingmodels.util.cflsolver.core.AbductiveInference;
+import stamp.missingmodels.util.cflsolver.core.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.core.AbductiveInference.AbductiveInferenceHelper;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.core.Edge;
@@ -128,12 +129,13 @@ public class TestsAnalysis extends JavaAnalysis {
 		System.out.println("Test number of reached callgraph edges: " + testReachedCallgraph.size());
 		System.out.println("Test coverage: " + (double)testReachedMethods.size()/numReachableMethods);
 		
-		RelationReader relationReader = new ShordRelationReader();		
+		RelationReader reader = new ShordRelationReader();
 		RelationManager relations = new DynamicParamRelationManager(callgraph);
 		ContextFreeGrammarOpt grammar = new TaintPointsToGrammar().getOpt();
 		
-		Graph g = relationReader.readGraph(relations, grammar.getSymbols());
-		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(grammar, new TestAbductiveInferenceHelper()).process(g, relationReader.readFilter(g.getVertices(), grammar.getSymbols()), 2);
+		Graph g = reader.readGraph(relations, grammar.getSymbols());
+		
+		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(grammar, new TestAbductiveInferenceHelper()).process(g, reader.readFilter(g.getVertices(), grammar.getSymbols()), 2);
 		IOUtils.printAbductionResult(results, true);
 	}
 }

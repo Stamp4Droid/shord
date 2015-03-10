@@ -7,13 +7,17 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import stamp.analyses.DomL;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
 import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphEdgeFilter;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.core.Graph.SimpleGraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
@@ -36,26 +40,29 @@ public class ShordRelationReader implements RelationReader {
 		labels.add("$getLatitude");
 		labels.add("$getLongitude");
 		labels.add("$FINE_LOCATION");
-
-		labels.add("$getDeviceId");
-		//labels.add("$AUDIO");
-
+		
+		//labels.add("$getDeviceId");
+		
 		//labels.add("$SMS");
-		//labels.add("$ACCOUNTS");
+		
 		//labels.add("$CONTACTS");
+		
+		//labels.add("$AUDIO");
+		//labels.add("$ACCOUNTS");
 		//labels.add("$CALENDAR");
 		//labels.add("$CONTENT_PROVIDER");
-
+		
 		labels.add("!SOCKET");
+		
 		labels.add("!INTERNET");
+		
 		labels.add("!sendTextMessage");
 		labels.add("!destinationAddress");
 		labels.add("!sendDataMessage");
 		labels.add("!sendMultipartTextMessage");			
-		labels.add("!WebView");
+		//labels.add("!WebView");
 		
-		/*
-		GraphTransformer gt = new EdgeTransformer() {
+		GraphTransformer gt = new EdgeTransformer(gb.getGraph().getVertices(), gb.getGraph().getSymbols()) {
 			@Override
 			public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
 				DomL dom = (DomL)ClassicProject.g().getTrgt("L");
@@ -68,13 +75,12 @@ public class ShordRelationReader implements RelationReader {
 				if(name != null && !labels.contains(name)) {
 					return;
 				}
-				gb.addEdge(edgeStruct, weight);
+				gb.addOrUpdateEdge(edgeStruct);
 			}
 		};
-		*/
 		
-		//return gt.transform(gb.toGraph());
-		return gb.getGraph();
+		//return gb.getGraph();
+		return gb.getGraph().transform(gt);
 	}
 	
 	private static void readRelation(SimpleGraphBuilder gb, Relation relation) {
@@ -93,17 +99,32 @@ public class ShordRelationReader implements RelationReader {
 	public Filter<Edge> readFilter(VertexMap vertices, SymbolMap symbols) {
 		List<EdgeStruct> edges = new ArrayList<EdgeStruct>();
 		
-		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt("ptd");
-		rel.load();
+		ProgramRel relPt = (ProgramRel)ClassicProject.g().getTrgt("ptd");
+		relPt.load();
 		
-		Iterable<int[]> res = rel.getAryNIntTuples();
-		for(int[] tuple : res) {
+		Iterable<int[]> resPt = relPt.getAryNIntTuples();
+		for(int[] tuple : resPt) {
 			String sourceName = "H" + Integer.toString(tuple[1]);
 			String sinkName = "V" + Integer.toString(tuple[0]);
 			edges.add(new EdgeStruct(sourceName, sinkName, "Flow", Field.DEFAULT_FIELD.field, (short)0));
 		}
 		
-		rel.close();
+		relPt.close();
+		
+		ProgramRel relPrim = (ProgramRel)ClassicProject.g().getTrgt("Label2Primd");
+		relPrim.load();
+		
+		Iterable<int[]> resPrim = relPrim.getAryNIntTuples();
+		for(int[] tuple : resPrim) {
+			String sourceName = "L" + Integer.toString(tuple[0]);
+			String sinkName = "U" + Integer.toString(tuple[1]);
+			if(!vertices.contains(sourceName)) {
+				continue;
+			}
+			edges.add(new EdgeStruct(sourceName, sinkName, "Label2Prim", Field.DEFAULT_FIELD.field, (short)0));
+		}
+		
+		relPrim.close();
 		
 		return new GraphEdgeFilter(vertices, symbols, edges);
 	}

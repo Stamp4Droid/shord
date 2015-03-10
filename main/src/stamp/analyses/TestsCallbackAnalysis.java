@@ -33,7 +33,7 @@ public class TestsCallbackAnalysis extends JavaAnalysis {
 				return g.getEdges(new Filter<Edge>() {
 					@Override
 					public boolean filter(Edge edge) {
-						return (edge.symbol.symbol.equals("param") || edge.symbol.symbol.equals("paramPrim"));
+						return ((edge.symbol.symbol.equals("param") || edge.symbol.symbol.equals("paramPrim")) && !baseEdgeFilter.get(edge.source.toString(true)).contains(edge.sink.toString(true)));
 						//return (edge.symbol.symbol.equals("callgraph")) && !baseEdgeFilter.get(edge.source.toString(true)).contains(edge.sink.toString(true));
 					}
 				});

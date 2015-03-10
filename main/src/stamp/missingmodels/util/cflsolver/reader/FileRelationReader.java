@@ -60,14 +60,21 @@ public class FileRelationReader implements RelationReader {
 		try {
 			List<EdgeStruct> edges = new ArrayList<EdgeStruct>();
 			
-			BufferedReader br = new BufferedReader(new FileReader(new File(this.directory, "ptd.txt")));
-			br.readLine();
+			BufferedReader brPt = new BufferedReader(new FileReader(new File(this.directory, "ptd.txt")));
+			brPt.readLine();
 			String line;
-			while((line = br.readLine()) != null) {
+			while((line = brPt.readLine()) != null) {
 				String[] tupleStr = line.split("\\s+");
 				edges.add(new EdgeStruct("H" + tupleStr[1], "V" + tupleStr[0], "Flow", Field.DEFAULT_FIELD.field, (short)0));
 			}
-			br.close();
+			brPt.close();
+
+			BufferedReader brPrim = new BufferedReader(new FileReader(new File(this.directory, "Lable2Prim.txt")));
+			while((line = brPrim.readLine()) != null) {
+				String[] tupleStr = line.split("\\s+");
+				edges.add(new EdgeStruct("L" + tupleStr[1], "U" + tupleStr[2], "Label2Prim", Field.DEFAULT_FIELD.field, (short)0));
+			}
+			brPrim.close();
 			
 			return new GraphEdgeFilter(vertices, symbols, edges);
 		} catch(IOException e) {
