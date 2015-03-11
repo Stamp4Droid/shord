@@ -25,7 +25,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	public static void run(RelationReader reader, ContextFreeGrammarOpt grammar, RelationManager relations) {
 		Graph graph = reader.readGraph(relations, grammar.getSymbols());
 		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar));
-		System.out.println("Printing edges for missing refref grammar:");
+		System.out.println("Printing graph edges:");
 		IOUtils.printGraphStatistics(graphBar);
 		IOUtils.printGraphEdges(graphBar, "Src2Sink", true);
 	}

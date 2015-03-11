@@ -10,7 +10,6 @@ import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
-import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 
 public class Graph {
 	public static class VertexMap {
@@ -141,11 +140,6 @@ public class Graph {
 		public boolean filter(Edge edge) {			
 			Vertex source = this.graph.getVertex(edge.source.id);
 			Vertex sink = this.graph.getVertex(edge.sink.id);
-			if(this.symbols[edge.symbol.id] && source.getCurrentOutgoingEdge(new Edge(edge.symbol, source, sink, edge.field)) == null) {
-				System.out.println("FILTERING: " + new Edge(edge.symbol, source, sink, edge.field));
-				System.out.println("SOURCE: " + ConversionUtils.toStringShord(source.name));
-				System.out.println("SINK: " + ConversionUtils.toStringShord(sink.name));
-			}
 			return !this.symbols[edge.symbol.id] || source.getCurrentOutgoingEdge(new Edge(edge.symbol, source, sink, edge.field)) != null;
 		}
 	}
