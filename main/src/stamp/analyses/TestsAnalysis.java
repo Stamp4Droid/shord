@@ -4,96 +4,143 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import lpsolve.LpSolveException;
+import shord.analyses.DomM;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.processor.TraceReader;
-import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.abduction.AbductiveInferenceRunner;
+import stamp.missingmodels.util.cflsolver.core.AbductiveInference;
+import stamp.missingmodels.util.cflsolver.core.AbductiveInference.AbductiveInferenceHelper;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.cflsolver.core.Edge;
+import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
+import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
+import stamp.missingmodels.util.cflsolver.core.ReachabilitySolver;
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
+import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
+import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar.TaintPointsToGrammar;
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.graph.Graph;
+import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.DynamicParamRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.RelationManager;
-import stamp.missingmodels.util.cflsolver.relation.RelationReader;
-import stamp.missingmodels.util.cflsolver.relation.RelationReader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver.TypeFilter;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.processor.TraceReader;
 import chord.project.Chord;
 
 @Chord(name = "tests")
 public class TestsAnalysis extends JavaAnalysis {
-	private static ContextFreeGrammar taintGrammar = new TaintPointsToGrammar();
+	public static class TestAbductiveInferenceHelper implements AbductiveInferenceHelper {
+		@Override
+		public Iterable<Edge> getBaseEdges(Graph gbar) {
+			return gbar.getEdges(new Filter<Edge>() {
+				@Override
+				public boolean filter(Edge edge) {
+					return edge.symbol.symbol.equals("param") || edge.symbol.symbol.equals("return")
+							|| edge.symbol.symbol.equals("paramPrim") || edge.symbol.symbol.equals("returnPrim");
+				}
+			});
+		}
+		
+		@Override
+		public Iterable<Edge> getInitialEdges(Graph gbar) {
+			return gbar.getEdges(new Filter<Edge>() {
+				@Override
+				public boolean filter(Edge edge) {
+					return edge.symbol.symbol.equals("Src2Sink");
+				}
+			});
+		}
+	}
 	
-	private static int getNumReachableMethods() {
-		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
+	public static int getNumReachableMethods() {
+		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("reachableBase");
 		relReachableM.load();
 		int numReachableMethods = relReachableM.size();
 		relReachableM.close();
 		return numReachableMethods;
 	}
 	
-	private static MultivalueMap<String,String> getFilteredCallgraph(MultivalueMap<String,String> callgraph, List<String> methodsList, int numMethods) {
-		Set<String> includedMethods = new HashSet<String>();
-		for(int i=0; i<numMethods; i++) {
-			if(i>=methodsList.size()) {
-				break;
-			}
-			includedMethods.add(methodsList.get(i));
+	public static MultivalueMap<String,String> getStaticCallgraphReverse() {
+		MultivalueMap<String,String> staticCallgraphReverse = new MultivalueMap<String,String>();
+		ProgramRel relCallgraph = (ProgramRel)ClassicProject.g().getTrgt("callgraph");
+		DomM domM = (DomM)ClassicProject.g().getTrgt("M");
+		relCallgraph.load();
+		for(int[] tuple : relCallgraph.getAryNIntTuples()) {
+			String caller = domM.get(tuple[0]).toString();
+			String callee = domM.get(tuple[1]).toString();
+			staticCallgraphReverse.add(callee, caller);
 		}
-		MultivalueMap<String,String> filteredCallgraph = new MultivalueMap<String,String>();
-		int filteredCallgraphSize = 0;
-		for(String caller : callgraph.keySet()) {
-			if(includedMethods.contains(caller)) {
-				for(String callee : callgraph.get(caller)) {
-					if(includedMethods.contains(callee)) {
-						filteredCallgraph.add(caller, callee);
-						filteredCallgraphSize++;
-					}
+		relCallgraph.close();
+		return staticCallgraphReverse;
+	}
+	
+	public static class CallgraphCompleter {
+		private Set<String> processed = new HashSet<String>();
+		private MultivalueMap<String,String> staticCallgraphReverse;
+		private MultivalueMap<String,String> completeDynamicCallgraph;
+		
+		public CallgraphCompleter() {
+			this.staticCallgraphReverse = getStaticCallgraphReverse();
+			this.completeDynamicCallgraph = new MultivalueMap<String,String>();
+		}
+		
+		private void makeReachable(String method) {
+			if(this.processed.contains(method)) {
+				return;
+			}
+			this.processed.add(method);
+			for(String parent : staticCallgraphReverse.get(method)) {
+				System.out.println("Adding dynamic callgraph completion: " + parent + " -> " + method);
+				this.completeDynamicCallgraph.add(parent, method);
+				this.makeReachable(parent);
+			}
+		}
+		
+		public MultivalueMap<String,String> completeDynamicCallgraph(MultivalueMap<String,String> dynamicCallgraph) {			
+			for(String caller : dynamicCallgraph.keySet()) {
+				this.makeReachable(caller);
+				for(String callee : dynamicCallgraph.get(caller)) {
+					this.makeReachable(callee);
 				}
 			}
+			return this.completeDynamicCallgraph;
 		}
-				
-		System.out.println("Current callgraph size: " + filteredCallgraphSize);
-		return filteredCallgraph;
 	}
 	
 	@Override
 	public void run() {
-		try {
-			RelationReader relationReader = new ShordRelationReader();
-			String[] tokens = System.getProperty("stamp.out.dir").split("_");
-			
-			List<String> reachedMethods = TraceReader.getReachableMethods("../../profiler/traceouts/", tokens[tokens.length-1]);
-			int numReachableMethods = getNumReachableMethods();
-			
-			System.out.println("Method coverage: " + reachedMethods.size());
-			System.out.println("Number of reachable methods: " + numReachableMethods);
-			System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
-			
-			MultivalueMap<String,String> callgraph = TraceReader.getCallgraph("../../profiler/traceouts/", tokens[tokens.length-1]);
-			IOUtils.printRelation("callgraph");
-			
-			double fractionMethodIncrement = 0.1;
-			int numMethods = reachedMethods.size();
-			while(true) {
-				double trueSize = numMethods >= reachedMethods.size() ? (double)reachedMethods.size() : (double)numMethods;
-				System.out.println("Running method coverage: " + trueSize/numReachableMethods);
-
-				RelationManager relations = new DynamicParamRelationManager(getFilteredCallgraph(callgraph, reachedMethods, numMethods));
-				//RelationManager relations = new DynamicParamRelationManager(DroidRecordReader.getCallgraphList("../../callgraphs/", tokens[tokens.length-1]));
-				Graph g = relationReader.readGraph(relations, taintGrammar);
-				TypeFilter t = relationReader.readTypeFilter(taintGrammar);
-				IOUtils.printAbductionResult(AbductiveInferenceRunner.runInference(g, t, true, 2), true);
+		String[] tokens = System.getProperty("stamp.out.dir").split("_");
+		
+		// reached methods
+		List<String> reachedMethods = TraceReader.getReachableMethods("profiler/traceouts/", tokens[tokens.length-1]);
+		int numReachableMethods = getNumReachableMethods();
+		
+		// dynamic callgraph
+		List<Pair<String,String>> testReachedCallgraph = TraceReader.getOrderedCallgraph("profiler/traceouts", tokens[tokens.length-1]);
+		testReachedCallgraph.addAll(TraceReader.getOrderedCallgraph("profiler/traceouts_test", tokens[tokens.length-1]));
+		
+		// test dynamic callgraph
+		MultivalueMap<String,String> callgraph = new CallgraphCompleter().completeDynamicCallgraph(TraceReader.getCallgraph("profiler/traceouts/", tokens[tokens.length-1]));
+		List<String> testReachedMethods = TraceReader.getReachableMethods("profiler/traceouts_test/", tokens[tokens.length-1]);
 				
-				if(numMethods >= reachedMethods.size()) {
-					break;
-				}
-				numMethods += (int)(fractionMethodIncrement*numReachableMethods);
-			}
-		} catch(LpSolveException e) {
-			e.printStackTrace();
-		}
+		System.out.println("Method coverage: " + reachedMethods.size());
+		System.out.println("Number of reachable methods: " + numReachableMethods);
+		System.out.println("Percentage method coverage: " + (double)reachedMethods.size()/numReachableMethods);
+		System.out.println("Test number of reached callgraph edges: " + testReachedCallgraph.size());
+		System.out.println("Test coverage: " + (double)testReachedMethods.size()/numReachableMethods);
+		
+		RelationReader reader = new ShordRelationReader();
+		RelationManager relations = new DynamicParamRelationManager(callgraph);
+		ContextFreeGrammarOpt grammar = new TaintPointsToGrammar().getOpt();
+		
+		Graph g = reader.readGraph(relations, grammar.getSymbols());
+		
+		Graph gbar = g.transform(new ReachabilitySolver(g.getVertices(), grammar, reader.readFilter(g.getVertices(), grammar.getSymbols())));
+		System.out.println("Printing graph edges:");
+		IOUtils.printGraphStatistics(gbar);
+		IOUtils.printGraphEdges(gbar, "Src2Sink", true);
+		
+		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(grammar, new TestAbductiveInferenceHelper()).process(g, reader.readFilter(g.getVertices(), grammar.getSymbols()), 2);
+		IOUtils.printAbductionResult(results, true);
 	}
 }

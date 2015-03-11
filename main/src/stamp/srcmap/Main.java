@@ -2,11 +2,9 @@ package stamp.srcmap;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Map;
@@ -16,8 +14,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-
-import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
 
 public class Main { 
 	private static String[] classpathEntries;

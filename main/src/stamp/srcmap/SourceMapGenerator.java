@@ -34,7 +34,7 @@ import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
-import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
+import stamp.missingmodels.util.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
 
 /*
  * @author Saswat Anand

@@ -1,5 +1,7 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
+
 public class MissingRefRefRelationManager extends RelationManager {
 	public static class MissingRefRefTaintRelationManager extends UnionRelationManager {
 		public MissingRefRefTaintRelationManager() {

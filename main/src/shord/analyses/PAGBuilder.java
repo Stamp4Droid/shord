@@ -66,8 +66,8 @@ import soot.tagkit.Tag;
 import soot.util.NumberedSet;
 import stamp.analyses.SootUtils;
 import stamp.missingmodels.callgraph.PotentialCallbacksAdder;
-import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.jimplesrcmapper.Printer;
 import chord.project.Chord;
 
 /*

@@ -1,6 +1,6 @@
 package stamp.missingmodels.util.cflsolver.grammars;
 
-import stamp.missingmodels.util.cflsolver.graph.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
 
 public class MissingRefRefGrammar extends ContextFreeGrammar {
 	public static class MissingRefRefTaintGrammar extends UnionGrammar {
@@ -18,11 +18,13 @@ public class MissingRefRefGrammar extends ContextFreeGrammar {
 	public MissingRefRefGrammar() {
 		this.addUnaryProduction("Ref2RefT", "ref2RefArgTStub");
 		this.addUnaryProduction("Ref2RefT", "ref2RefRetTStub");
+
 		this.addUnaryProduction("Prim2RefT", "prim2RefArgTStub");
 		this.addUnaryProduction("Prim2RefT", "prim2RefRetTStub");
-		this.addUnaryProduction("Ref2PrimT", "prim2PrimTStub");
+		
+		this.addUnaryProduction("Ref2PrimT", "ref2PrimTStub");
 		this.addUnaryProduction("Prim2PrimT", "prim2PrimTStub");
-
-		this.addProduction("FlowField", new String[]{"Flow", "store", "Flow"}, new boolean[]{false, false, true});
+		
+		//this.addProduction("FlowField", new String[]{"Flow", "store", "Flow"}, new boolean[]{false, false, true});
 	}
 }

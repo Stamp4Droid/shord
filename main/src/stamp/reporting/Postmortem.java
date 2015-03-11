@@ -61,7 +61,6 @@ public class Postmortem extends JavaAnalysis {
 			,PotentialCallbacks.class
 			,AllReachable.class
 			,FileNames.class
-			,MissingModels.class
 		};
 
 		Class[] finalReport = new Class[]{

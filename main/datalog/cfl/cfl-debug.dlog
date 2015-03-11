@@ -9,13 +9,16 @@
 # name=cfl-debug-dlog
 
 .include "V.dom"
+.include "U.dom"
 .include "H.dom"
 .include "C.dom"
 .include "I.dom"
 .include "M.dom"
 .include "T.dom"
+.include "L.dom"
+.include "CL.dom"
 
-.bddvarorder M0xM1_T0_I0_C0xC1_V0_H0
+.bddvarorder L0_M0xM1_CL0_T0_I0_C0xC1_V0_U0_H0
 
 ###################
 # DEBUG RELATIONS
@@ -41,3 +44,8 @@ potentialCallback(m:M) input
 potentialCallbackDependent(m0:M0,m1:M1) output
 potentialCallbackDependent(m0,m1) :- potentialCallback(m0), m0 = m1.
 potentialCallbackDependent(m0,m1) :- potentialCallbackDependent(m0,m2), callgraph(m2,m1).
+
+Label2Primd(l:L,u:U) output
+LCL(l:L,cl:CL) input
+labelPrim(c:C,u:U,cl:CL) input
+Label2Primd(l,u) :- labelPrim(_,u,cl), LCL(l,cl).

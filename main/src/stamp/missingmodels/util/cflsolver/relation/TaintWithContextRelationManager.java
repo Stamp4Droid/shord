@@ -1,5 +1,7 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
+
 public class TaintWithContextRelationManager extends RelationManager {	
 	public TaintWithContextRelationManager() {
 		this.add(new IndexWithContextRelation("pt", "C", 2, null, "V", 1, 0, "Flow"));

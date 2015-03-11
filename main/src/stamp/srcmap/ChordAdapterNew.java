@@ -42,10 +42,9 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
-import stamp.missingmodels.util.xml.XMLObject;
-import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
-import stamp.missingmodels.util.xml.XMLObject.XMLEmptyObject;
-import stamp.missingmodels.util.xml.XMLObject.XMLTextObject;
+import stamp.srcmap.XMLObject.XMLContainerObject;
+import stamp.srcmap.XMLObject.XMLEmptyObject;
+import stamp.srcmap.XMLObject.XMLTextObject;
 
 /*
  * @author Saswat Anand
