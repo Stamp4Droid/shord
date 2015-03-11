@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
+import stamp.srcmap.XMLObject.XMLContainerObject;
 
 public class Main { 
 	private static String[] classpathEntries;

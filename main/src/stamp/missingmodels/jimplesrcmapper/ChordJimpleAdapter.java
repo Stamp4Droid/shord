@@ -22,7 +22,7 @@ import soot.jimple.Stmt;
 import soot.jimple.TableSwitchStmt;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.CodeStructure;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
-import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
+import stamp.srcmap.XMLObject.XMLContainerObject;
 import stamp.srcmap.sourceinfo.jimpleinfo.JimpleSourceInfo;
 
 public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
