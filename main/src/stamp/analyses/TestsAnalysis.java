@@ -35,8 +35,8 @@ public class TestsAnalysis extends JavaAnalysis {
 			return gbar.getEdges(new Filter<Edge>() {
 				@Override
 				public boolean filter(Edge edge) {
-					return edge.symbol.symbol.equals("param") || edge.symbol.symbol.equals("paramPrim");
-					//return edge.symbol.symbol.equals("callgraph");
+					return edge.symbol.symbol.equals("param") || edge.symbol.symbol.equals("return")
+							|| edge.symbol.symbol.equals("paramPrim") || edge.symbol.symbol.equals("returnPrim");
 				}
 			});
 		}

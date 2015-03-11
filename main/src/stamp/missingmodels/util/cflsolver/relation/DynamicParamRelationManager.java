@@ -16,8 +16,14 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		this.clearRelationsByName("param");
 		this.add(new IndexRelation("param", "V", 1, "V", 0, "param", null, (short)1));
 		
+		this.clearRelationsByName("return");
+		this.add(new IndexRelation("return", "V", 1, "V", 0, "return", null, (short)1));
+		
 		this.clearRelationsByName("paramPrim");
 		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim", null, (short)1));
+		
+		this.clearRelationsByName("returnPrim");
+		this.add(new IndexRelation("returnPrim", "U", 1, "U", 0, "returnPrim", null, (short)1));
 	}
 	
 	public DynamicParamRelationManager() {
@@ -49,8 +55,6 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 			}
 		}
 		return false;
-		//return stampMethods.contains(caller) || stampMethods.contains(callee);
-		//return stampMethods.contains(callee);
 	}
 
 	public DynamicParamRelationManager(MultivalueMap<String,String> dynamicCallgraph) {
