@@ -25,9 +25,13 @@ import java.io.*;
 public class TaintManager
 {
 	public Map<AllocNode,Set<String>> allocNodeToTaints = new HashMap();
+
 	private Map<LocalVarNode,Set<LocalVarNode>> dstToSourceTransfer = new HashMap();
 	private Map<LocalVarNode,Set<LocalVarNode>> srcToDestTransfer = new HashMap();
-	private Map<SootMethod,Set<Pair<Integer,String>>> methodToSinkLabels = new HashMap();
+
+	private Map<SootMethod,Map<Integer,Set<String>>> methodToSinkLabels = new HashMap();
+	private Map<SootMethod,Map<Integer,Set<String>>> methodToSourceLabels = new HashMap();
+
 	private Set<String> interestingSinkLabels;
 	private Set<String> interestingSourceLabels;
 	private OnDemandPTA dpta;
@@ -49,14 +53,28 @@ public class TaintManager
 		interestingSourceLabels.addAll(sourceLabels);
 	}
 
-	public Collection<Pair<Integer,String>> sinkParamsOf(SootMethod method)
+	public Map<Integer,Set<String>> sinkParamsOf(SootMethod method)
 	{
 		return methodToSinkLabels.get(method);
 	}
 
 	public Set<SootMethod> sinkMethods()
 	{
-		return methodToSinkLabels.keySet();
+		Set<SootMethod> ret = new HashSet();
+		for(Map.Entry<SootMethod,Map<Integer,Set<String>>> e : methodToSinkLabels.entrySet()){
+			SootMethod m = e.getKey();
+			boolean interesting = false;
+			for(Set<String> labels : e.getValue().values()){
+				for(String label : labels)
+					if(interestingSinkLabels.contains(label)){
+						interesting = true;
+						break;
+					}
+			}
+			if(interesting)
+				ret.add(m);
+		}
+		return ret;
 	}
 
 	public Collection<LocalVarNode> findTaintTransferSourceFor(VarNode dstVar)
@@ -76,6 +94,11 @@ public class TaintManager
 	public Set<String> getTaint(AllocNode object)
 	{
 		return allocNodeToTaints.get(object);
+	}
+
+	public Set<AllocNode> getTaintedAllocs()
+	{
+		return allocNodeToTaints.keySet();
 	}
 	
 	public void setTaint(Local local, final String taint)
@@ -195,25 +218,15 @@ public class TaintManager
 
 		char from0 = from.charAt(0);
 		if(from0 == '$' || from0 == '!') {
-			if(isInterestingSource(from) || isInterestingSink(from)){
-				if(to.equals("-1")){
-					//return value is tainted
-					for(SootMethod m : meths){
-						//Node[] nodes = dpta.retVarNodes(m);
-						Node node = dpta.retVarNode(m);
-						//if(nodes != null){
-						if(node != null){
-							//for(Node node : nodes)
-								setTaint((Local) ((LocalVarNode) node).getVariable(), from);
-						}
-					}
-				} else{
-					//parameter is tainted
-					for(SootMethod m : meths){
-						Node node = dpta.parameterNode(m, Integer.valueOf(to));
-						if(node != null)
-							setTaint((Local) ((LocalVarNode) node).getVariable(), from);
-					}
+			if(to.equals("-1")){
+				//return value is tainted
+				for(SootMethod m : meths){
+					addLabel(methodToSourceLabels, m, -1, from);
+				}
+			} else{
+				//parameter is tainted
+				for(SootMethod m : meths){
+					addLabel(methodToSourceLabels, m, Integer.valueOf(to), from);
 				}
 			}
 		} else {
@@ -221,16 +234,9 @@ public class TaintManager
 			char to0 = to.charAt(0);
 			if(to0 == '!'){
 				//sink
-				if(isInterestingSink(to)){
-					for(SootMethod m : meths){
-						if(Scene.v().getReachableMethods().contains(m)){
-							Set<Pair<Integer,String>> sinkLabels = methodToSinkLabels.get(m);
-							if(sinkLabels == null){
-								sinkLabels = new HashSet();
-								methodToSinkLabels.put(m, sinkLabels);
-							}
-							sinkLabels.add(new Pair(fromArgIndex, to));
-						}
+				for(SootMethod m : meths){
+					if(Scene.v().getReachableMethods().contains(m)){
+						addLabel(methodToSinkLabels, m, fromArgIndex, to);
 					}
 				}
 			} else if(to0 == '?'){
@@ -242,6 +248,7 @@ public class TaintManager
 					LocalVarNode src = (LocalVarNode) dpta.parameterNode(m, Integer.valueOf(fromArgIndex));
 					LocalVarNode dst = (LocalVarNode) dpta.retVarNode(m);
 					if(dst != null && src != null){
+						System.out.println("xfer "+src+" "+dst);
 						Set<LocalVarNode> sources = dstToSourceTransfer.get(dst);
 						if(sources == null){
 							sources = new HashSet();
@@ -282,5 +289,19 @@ public class TaintManager
 			}
 		}
 	}
-
+	
+	private void addLabel(Map<SootMethod,Map<Integer,Set<String>>> methodToLabels, SootMethod m, int paramIndex, String label)
+	{
+		Map<Integer,Set<String>> paramIndexToLabels = methodToLabels.get(m);
+		if(paramIndexToLabels == null){
+			paramIndexToLabels = new HashMap();
+			methodToLabels.put(m, paramIndexToLabels);
+		}
+		Set<String> labels = paramIndexToLabels.get(paramIndex);
+		if(labels == null){
+			labels = new HashSet();
+			paramIndexToLabels.put(paramIndex, labels);
+		}
+		labels.add(label);
+	}
 }

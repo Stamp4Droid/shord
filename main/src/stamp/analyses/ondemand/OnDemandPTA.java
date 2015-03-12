@@ -5,6 +5,7 @@ import soot.Scene;
 import soot.SootMethod;
 import soot.SootField;
 import soot.Local;
+import soot.Type;
 import soot.RefLikeType;
 import soot.PointsToSet;
 import soot.PointsToAnalysis;
@@ -39,18 +40,22 @@ import soot.jimple.spark.ondemand.genericutil.ImmutableStack;
 import soot.jimple.spark.ondemand.genericutil.ArraySet;
 import soot.jimple.spark.ondemand.genericutil.Propagator;
 import soot.jimple.toolkits.callgraph.Edge;
-
+import soot.util.NumberedString;
 import soot.toolkits.scalar.Pair;
 
 import java.util.*; 
 
 public class OnDemandPTA extends DemandCSPointsTo
 {
+	protected Map<VarAndContext,AllocAndContextSet> pointsToCache = new HashMap();
+	protected Map<AllocAndContext,Set<VarAndContext>> flowsToCache = new HashMap();
+	private int cacheHit = 0;
+	private int totalQueries = 0;
+
 	public static OnDemandPTA makeDefault()
 	{
-		return makeWithBudget(500000, 50, DEFAULT_LAZY);
+		return makeWithBudget(1000000, 50, DEFAULT_LAZY);
 	}
-
 	public static OnDemandPTA makeWithBudget(int maxTraversal, int maxPasses, boolean lazy) 
 	{
         PAG pag = (PAG) Scene.v().getPointsToAnalysis();
@@ -64,36 +69,37 @@ public class OnDemandPTA extends DemandCSPointsTo
 		init();
 	}
 
-	ImmutableStack<Integer> calleeContext(Stmt stmt, SootMethod callee, ImmutableStack<Integer> callerContext)
+	Integer getCallSiteFor(Stmt stmt)
 	{
-		if(!stmt.containsInvokeExpr())
-			assert false;
-		ImmutableStack<Integer> calleeContext = null;
 		InvokeExpr ie = stmt.getInvokeExpr();
-		Integer callSite = csInfo.getCallSiteFor(ie);
+		return csInfo.getCallSiteFor(ie);
+	}
+
+	Set<SootMethod> callTargets(Stmt stmt, ImmutableStack<Integer> callerContext)
+	{
+		InvokeExpr ie = stmt.getInvokeExpr();
+
 		if(ie instanceof StaticInvokeExpr || ie instanceof SpecialInvokeExpr){
-			assert ie.getMethod().equals(callee);
-			if(callSite != null)
-				calleeContext = callerContext.push(callSite);
-			else
-				System.out.println("UNSOUND");
+			return Collections.<SootMethod> singleton(ie.getMethod());
 		} else if(!pag.virtualCallsToReceivers.containsKey(ie)){
 			//single outgoing calledge for a VirtualInvokeExpr or InterfaceInvokeExpr
 			Iterator<Edge> it = Scene.v().getCallGraph().edgesOutOf(stmt);
 			SootMethod tgt = it.next().tgt();
-			assert !it.hasNext() && tgt.equals(callee);
-			calleeContext = callerContext.push(callSite);
+			assert !it.hasNext();
+			return Collections.<SootMethod> singleton(tgt);
 		} else {
-			clearState();
-			this.fieldCheckHeuristic = HeuristicType.getHeuristic(heuristicType, pag.getTypeManager(), getMaxPasses());
-			try{
-				Set<SootMethod> callees = refineCallSite(callSite, callerContext);
-				if(callees.contains(callee))
-					calleeContext = callerContext.push(callSite);
-			}catch(TerminateEarlyException e){
-			}
+			Local rcvr = (Local) ((InstanceInvokeExpr) ie).getBase();
+			AllocAndContextSet pt = (AllocAndContextSet) pointsToSetFor(rcvr, callerContext);
+			Set<Type> reachingTypes = new HashSet();
+			for(AllocAndContext obj : pt)
+				reachingTypes.add(obj.alloc.getType());
+			NumberedString invokedMethodSubsig = ie.getMethod().getNumberedSubSignature();
+			Type rcvrType = rcvr.getType();
+			Set<SootMethod> targets = new HashSet();
+			for(Type rt : reachingTypes)
+				targets.addAll(getCallTargetsForType(rt, invokedMethodSubsig, rcvrType, null));
+			return targets;
 		}
-		return calleeContext;
 	}
 
 	public VarNode varNode(Local l)
@@ -117,12 +123,18 @@ public class OnDemandPTA extends DemandCSPointsTo
 
 	public PointsToSet pointsToSetFor(VarAndContext vc)
 	{
-		clearState();
+		totalQueries++;
+		if(pointsToCache.containsKey(vc)){
+			cacheHit++;
+			if(cacheHit % 1000 == 0) System.out.println("points-to cache stat: "+cacheHit+ " "+totalQueries);
+			return pointsToCache.get(vc);
+		}
+
         // must reset the refinement heuristic for each query
         this.fieldCheckHeuristic = HeuristicType.getHeuristic(heuristicType, pag.getTypeManager(), getMaxPasses());
         doPointsTo = true;
         numPasses = 0;
-        PointsToSet contextSensitiveResult = null;
+        AllocAndContextSet contextSensitiveResult = null;
         while (true) {
             numPasses++;
             if (DEBUG_PASS != -1 && numPasses > DEBUG_PASS) {
@@ -141,15 +153,120 @@ public class OnDemandPTA extends DemandCSPointsTo
                 refineP2Set(vc, null);
                 contextSensitiveResult = pointsTo;
             } catch (TerminateEarlyException e) {
+				System.out.println("TerminateEarlyException "+e.getMessage());
             }
             if (!fieldCheckHeuristic.runNewPass()) {
                 break;
             }
         }
+		pointsToCache.put(vc, contextSensitiveResult);
         return contextSensitiveResult;
     }
 
-	public Set<VarAndContext> flowsToSetFor(AllocAndContext allocAndContext) {
+	protected boolean refineP2Set(VarAndContext varAndContext,
+			final PointsToSetInternal badLocs) {
+		nesting++;
+		if (DEBUG) {
+			debugPrint("refining " + varAndContext);
+		}
+		final Set<VarAndContext> marked = new HashSet<VarAndContext>();
+		final Stack<VarAndContext> worklist = new Stack<VarAndContext>();
+		final Propagator<VarAndContext> p = new Propagator<VarAndContext>(
+				marked, worklist);
+		p.prop(varAndContext);
+		IncomingEdgeHandler edgeHandler = new IncomingEdgeHandler() {
+
+			boolean success = true;
+
+			@Override
+			public void handleAlloc(AllocNode allocNode,
+					VarAndContext origVarAndContext) {
+				if (doPointsTo && pointsTo != null) {
+					pointsTo.add(new AllocAndContext(allocNode,
+							origVarAndContext.context));
+				} else {
+					if (badLocs.contains(allocNode)) {
+						success = false;
+					}
+				}
+			}
+
+			@Override
+			public void handleMatchSrc(VarNode matchSrc,
+					PointsToSetInternal intersection, VarNode loadBase,
+					VarNode storeBase, VarAndContext origVarAndContext,
+					SparkField field, boolean refine) {
+				AllocAndContextSet allocContexts = findContextsForAllocs(
+						new VarAndContext(loadBase, origVarAndContext.context),
+						intersection);
+				for (AllocAndContext allocAndContext : allocContexts) {
+					if (DEBUG) {
+						debugPrint("alloc and context " + allocAndContext);
+					}
+					CallingContextSet matchSrcContexts;
+					if (fieldCheckHeuristic.validFromBothEnds(field)) {
+						matchSrcContexts = findUpContextsForVar(
+								allocAndContext, new VarContextAndUp(storeBase,
+										EMPTY_CALLSTACK, EMPTY_CALLSTACK));
+					} else {
+						matchSrcContexts = findVarContextsFromAlloc(
+								allocAndContext, storeBase);
+					}
+					for (ImmutableStack<Integer> matchSrcContext : matchSrcContexts) {
+						if (DEBUG)
+							debugPrint("match source context "
+									+ matchSrcContext);
+						VarAndContext newVarAndContext = new VarAndContext(
+								matchSrc, matchSrcContext);
+						p.prop(newVarAndContext);
+					}
+				}
+			}
+
+			Object getResult() {
+				return Boolean.valueOf(success);
+			}
+
+			@Override
+			void handleAssignSrc(VarAndContext newVarAndContext,
+					VarAndContext origVarAndContext, AssignEdge assignEdge) {
+				if(pointsToCache.containsKey(newVarAndContext)){
+					cacheHit++;
+					//if(cacheHit % 1000 == 0) 
+					//System.out.println("points-to cache stat: "+cacheHit+ " "+totalQueries);
+					pointsTo.addAll(pointsToCache.get(vc));
+				} else
+					p.prop(newVarAndContext);
+			}
+
+			@Override
+			boolean shouldHandleSrc(VarNode src) {
+				if (doPointsTo) {
+					return true;
+				} else {
+					return src.getP2Set().hasNonEmptyIntersection(badLocs);
+				}
+			}
+
+			boolean terminate() {
+				return !success;
+			}
+		};
+		processIncomingEdges(edgeHandler, worklist);
+		nesting--;
+		return (Boolean) edgeHandler.getResult();
+	}
+
+
+	public Set<VarAndContext> flowsToSetFor(AllocAndContext allocAndContext) 
+	{
+		totalQueries++;
+		if(flowsToCache.containsKey(allocAndContext)){
+			cacheHit++;
+			if(cacheHit % 1000 == 0) System.out.println("flows-to cache stat: "+cacheHit+ " "+totalQueries);
+			return flowsToCache.get(allocAndContext);
+		}
+
 		this.fieldCheckHeuristic = HeuristicType.getHeuristic(heuristicType, pag.getTypeManager(), getMaxPasses());
 		numPasses = 0;
 		Set<VarAndContext> smallest = null;
@@ -170,7 +287,7 @@ public class OnDemandPTA extends DemandCSPointsTo
 			try {
 				result = flowsToSetHelper(allocAndContext);
 			} catch (TerminateEarlyException e) {
-
+				System.out.println("TerminateEarlyException "+e.getMessage());
 			}
 			if (result != null) {
 				if (smallest == null || result.size() < smallest.size()) {
@@ -178,9 +295,11 @@ public class OnDemandPTA extends DemandCSPointsTo
 				}
 			}
 			if (!fieldCheckHeuristic.runNewPass()) {
-				return smallest;
+				break;
 			}
 		}
+		flowsToCache.put(allocAndContext, smallest);
+        return smallest;
 	}
 
 	private Set<VarAndContext> flowsToSetHelper(AllocAndContext allocAndContext) {
@@ -201,7 +320,7 @@ public class OnDemandPTA extends DemandCSPointsTo
 				p.prop(vc);
 			}
 			while (!worklist.isEmpty()) {
-				incrementNodesTraversed();
+				if(!incrementNodesTraversed()) return ret;
 				VarAndContext curVarAndContext = worklist.pop();
 				if (DEBUG) {
 					debugPrint("looking at " + curVarAndContext);
@@ -234,8 +353,13 @@ public class OnDemandPTA extends DemandCSPointsTo
 						// newContext = curContext.push(assignEdge
 						// .getCallSite());
 						// }
-						newContext = pushWithRecursionCheck(curContext,
-								assignEdge);
+						try{
+							newContext = pushWithRecursionCheck(curContext,
+																assignEdge);
+						}catch(TerminateEarlyException e){
+							//SA: dont bail out completely. generate less unsound result 
+							continue;
+						}
 					}
 					if (assignEdge.isReturnEdge() && curContext.isEmpty()
 							&& csInfo.isVirtCall(assignEdge.getCallSite())) {

@@ -14,6 +14,8 @@ import soot.jimple.spark.ondemand.AllocAndContextSet;
 import soot.jimple.spark.ondemand.AllocAndContext;
 import soot.jimple.spark.ondemand.DemandCSPointsTo.VarAndContext;
 
+import shord.program.Program;
+
 import chord.project.Chord; 
 import chord.util.tuple.object.Pair;
 import chord.util.tuple.object.Trio;
@@ -32,13 +34,11 @@ public class TaintAnalysis extends MethodReachabilityAnalysis
 	protected TaintManager taintManager;
 	protected JsonWriter writer;
 
-	public TaintAnalysis()
-	{
-	}
-
 	protected void setup()
 	{
-		super.setup();
+		Program.g().runSpark("merge-stringbuffer:false");
+		this.taintManager = new TaintManager(this.dpta);
+		setup(OnDemandPTA.makeDefault());
 
 		this.taintManager = new TaintManager(dpta);
 
@@ -50,6 +50,9 @@ public class TaintAnalysis extends MethodReachabilityAnalysis
 		}catch(IOException e){
 			throw new Error(e);
 		}
+
+		taintManager.readAnnotations();
+		targetMethods.addAll(taintManager.sinkMethods());
 	}
 
 	protected void done()
@@ -62,12 +65,11 @@ public class TaintAnalysis extends MethodReachabilityAnalysis
 		}
 	}
 
-	protected void perform()
+	public void run()
 	{
-		taintManager.readAnnotations();
-		targetMethods.addAll(taintManager.sinkMethods());
-		
-		super.perform();
+		setup();
+		super.run();
+		done();
 	}
 
 	protected void visitFinal(SootMethod caller, 
@@ -188,8 +190,8 @@ public class TaintAnalysis extends MethodReachabilityAnalysis
 
 						Collection<LocalVarNode> sources = taintManager.findTaintTransferSourceFor(dest);
 						if(sources == null){
-							System.out.println("possibly missing models. endpoint: "+
-											   ((LocalVarNode) dest).getVariable()+" in method: "+method.getSignature());
+							//System.out.println("possibly missing models. endpoint: "+
+							//				   ((LocalVarNode) dest).getVariable()+" in method: "+method.getSignature());
 							continue;
 						}
 						for(LocalVarNode src : sources)

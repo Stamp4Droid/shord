@@ -88,7 +88,8 @@ public class GClass
 						List<Value> args = Arrays.asList(new Value[]{NullConstant.v(),
 																	 NullConstant.v(),
 																	 IntConstant.v(0)});
-						init(wClass, paramTypes1, args);
+						Local l = init(wClass, paramTypes1, args);
+                        units.add(Jimple.v().newAssignStmt(Jimple.v().newStaticFieldRef(f.makeRef()), l));
 					}
 					
 					//another constructor
@@ -97,15 +98,15 @@ public class GClass
 					if(wClass.declaresMethod("<init>", paramTypes2)){
 						List<Value> args = Arrays.asList(new Value[]{NullConstant.v(),
 																	 NullConstant.v()});
-						init(wClass, paramTypes2, args);
-					}
-				} else {
-					List<Type> paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context")});
-					List<Value> args = Arrays.asList(new Value[]{NullConstant.v()});
-					if(wClass.declaresMethod("<init>", paramTypes)){
-                        Local l = init(wClass, paramTypes, args);
+						Local l = init(wClass, paramTypes2, args);
                         units.add(Jimple.v().newAssignStmt(Jimple.v().newStaticFieldRef(f.makeRef()), l));
-                    }
+					}
+				} 
+				List<Type> paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context")});
+				List<Value> args = Arrays.asList(new Value[]{NullConstant.v()});
+				if(wClass.declaresMethod("<init>", paramTypes)){
+					Local l = init(wClass, paramTypes, args);
+					units.add(Jimple.v().newAssignStmt(Jimple.v().newStaticFieldRef(f.makeRef()), l));
 				}
 			}
 		}

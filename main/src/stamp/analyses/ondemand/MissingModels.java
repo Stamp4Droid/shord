@@ -21,6 +21,8 @@ import soot.jimple.spark.ondemand.AllocAndContextSet;
 import soot.jimple.spark.ondemand.AllocAndContext;
 import soot.jimple.spark.ondemand.DemandCSPointsTo.VarAndContext;
 
+import shord.program.Program;
+
 import chord.project.Chord; 
 import chord.util.tuple.object.Pair;
 import chord.util.tuple.object.Trio;
@@ -39,9 +41,16 @@ public class MissingModels extends MethodReachabilityAnalysis
 	protected Map<SootMethod,List<AllocNode>> methToAllocNodes = new HashMap();
 	protected TaintManager taintManager;
 
+	public void run()
+	{
+		setup();
+		super.run();
+	}
+
 	protected void setup()
 	{
-		super.setup();
+		Program.g().runSpark("merge-stringbuffer:false");
+		setup(OnDemandPTA.makeDefault());
 
 		taintManager = new TaintManager(dpta);
 		taintManager.setSinkLabels(Arrays.asList(new String[]{})); 
@@ -78,7 +87,6 @@ public class MissingModels extends MethodReachabilityAnalysis
 
 	protected void forwardPropagate(AllocNode an, ImmutableStack<Integer> anContext)
 	{
-		System.out.println("querying "+an);
 		List<AllocAndContext> objectsWL = new ArrayList();
 		Set<AllocAndContext> objectsVisited = new HashSet();
 		objectsWL.add(new AllocAndContext(an, anContext));
@@ -92,15 +100,15 @@ public class MissingModels extends MethodReachabilityAnalysis
 				if(objectsVisited.contains(oc))
 					continue;
 				objectsVisited.add(oc); 
-								
+				System.out.println("to find flows-to of "+oc);
 				Set<VarAndContext> vcs = dpta.flowsToSetFor(oc);
 				if(vcs == null)
-					System.out.println("Warning: Flows-to set for "+ oc.alloc+" is null.");
+					System.out.println("Warning: Flows-to set for "+ oc+" is null.");
 				else
 					for(VarAndContext vc : vcs){
 						VarNode src = vc.var;
 						ImmutableStack<Integer> srcContext = vc.context;
-						
+						System.out.println("taintedvar: "+src+" "+srcContext);
 						SootMethod method = dpta.transferEndPoint(src);
 						if(method == null)
 							continue;
@@ -121,7 +129,7 @@ public class MissingModels extends MethodReachabilityAnalysis
 				if(varsVisited.contains(vc))
 					continue;
 				varsVisited.add(vc);
-				
+				System.out.println("to find points-to set of "+vc.var+" "+vc.context);
 				AllocAndContextSet pt = (AllocAndContextSet) dpta.pointsToSetFor(vc);
 				if(pt == null)
 					System.out.println("Warning: Points-to set for "+vc.var+" is null.");

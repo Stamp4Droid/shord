@@ -18,7 +18,6 @@ import soot.jimple.spark.ondemand.AllocAndContextSet;
 import soot.jimple.spark.ondemand.AllocAndContext;
 import soot.jimple.spark.ondemand.DemandCSPointsTo.VarAndContext;
 
-import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
 
 import chord.util.tuple.object.Pair;
@@ -36,24 +35,12 @@ public abstract class MethodReachabilityAnalysis extends JavaAnalysis
 	protected Map<SootMethod,List<Edge>> callEdges = new HashMap();
 	protected Set<SootMethod> targetMethods = new HashSet();
 
+	protected void setup(OnDemandPTA dpta)
+	{
+		this.dpta = dpta;
+	}
+
 	public void run()
-	{
-		setup();
-		perform();
-		done();
-	}
-
-	protected void setup()
-	{
-		Program.g().runSpark("merge-stringbuffer:false");
-		this.dpta = OnDemandPTA.makeDefault();
-	}
-
-	protected void done()
-	{
-	}
-
-	protected void perform()
 	{
 		List<SootMethod> workList = new ArrayList();
 		try{
@@ -64,7 +51,7 @@ public abstract class MethodReachabilityAnalysis extends JavaAnalysis
 				SootMethod m = (SootMethod) it.next();
 				reachableMethodsWriter.println(m);
 				if(targetMethods.contains(m)){
-					System.out.println("sinkmethod: "+m);			
+					System.out.println("target method: "+m);			
 					workList.add(m);
 				}
 			}
@@ -91,6 +78,7 @@ public abstract class MethodReachabilityAnalysis extends JavaAnalysis
 				Stmt stmt = edge.srcStmt();
 				SootMethod src = (SootMethod) edge.src();
 				workList.add(src);
+				System.out.println("adding to worklist. target: "+tgt+" callstmt: "+stmt+"@"+src);
 				List<Edge> outgoingEdges = callEdges.get(src);
 				if(outgoingEdges == null){
 					outgoingEdges = new ArrayList();
@@ -100,8 +88,14 @@ public abstract class MethodReachabilityAnalysis extends JavaAnalysis
 				//System.out.println("success: "+src+" "+stmt+" "+tgt);
 				//System.out.println("XY: "+src+" "+tgt);
 			}
-			if(root)
-				roots.add(tgt);
+			if(root){
+				//ignore methods that override Thread.run methods
+				//that have only thread_call type incoming calledges in spark's callgraph
+				String subsig = tgt.getSubSignature();
+				if(tgt.isStatic())
+					if(subsig.equals("void <clinit>()") || subsig.equals("void main(java.lang.String[])"))
+						roots.add(tgt);
+			}
 		}
 		
 		for(SootMethod rootMethod : roots){
@@ -134,32 +128,60 @@ public abstract class MethodReachabilityAnalysis extends JavaAnalysis
 							Set<SootMethod> visited, 
 							Object data)
 	{
-		List<Edge> outgoingEdges = callEdges.get(caller);
-		if(outgoingEdges == null)
-			return;
-		for(Edge e : outgoingEdges){
-			SootMethod callee = e.tgt();
-			if(visited.contains(callee))
-				continue;
-
-			//check validity of the calledge
-			Stmt callStmt = e.srcStmt();
-			//System.out.println("Query: "+ callStmt + "@" + (path.size()==0 ? "" : path.get(path.size()-1).tgt()) + " callee: "+callee);
-			ImmutableStack<Integer> calleeContext = dpta.calleeContext(callStmt, callee, callerContext);
-			if(calleeContext == null)
-				continue; //invalid edge
-
-			if(targetMethods.contains(callee)) {
-				visitFinal(caller, callStmt, callee, calleeContext, data);
-			}
-			else {
-				Object newData = visit(caller, callStmt, callee, calleeContext, data);
+		Map<Stmt,List<Edge>> callSiteToEdges = new HashMap();
+		
+		{
+			List<Edge> outgoingEdges = callEdges.get(caller);
+			if(outgoingEdges == null)
+				return;
+			
+			for(Edge e : outgoingEdges){
+				if(visited.contains(e.tgt()))
+					continue;
 				
-				Set<SootMethod> visitedCopy = new HashSet();
-				visitedCopy.addAll(visited);
-				visitedCopy.add(callee);
+				Stmt callStmt = e.srcStmt();
+				List<Edge> es = callSiteToEdges.get(callStmt);
+				if(es == null){
+					es = new ArrayList();
+					callSiteToEdges.put(callStmt, es);
+				}
+				es.add(e);
+			}
+		}
 
-				traverse(callee, calleeContext, visitedCopy, newData);
+		for(Map.Entry<Stmt,List<Edge>> entry : callSiteToEdges.entrySet()){
+			Stmt callStmt = entry.getKey();
+			List<Edge> outgoingEdges = entry.getValue();
+
+			System.out.println("Query: "+ callStmt + "@" + caller + " callerContext: "+callerContext);
+			Set<SootMethod> targets = dpta.callTargets(callStmt, callerContext);
+
+			for(Edge e : outgoingEdges){
+				SootMethod callee = e.tgt();		
+				if(!targets.contains(callee)){
+					System.out.println("invalid calledge to "+callee);
+					continue;
+				}
+				Integer callSite = dpta.getCallSiteFor(callStmt);
+				if(callSite == null){
+					//probably a static method with no params
+					//unsound
+					continue;
+				}
+				ImmutableStack<Integer> calleeContext = callerContext.push(callSite);
+
+				if(targetMethods.contains(callee)) {
+					visitFinal(caller, callStmt, callee, calleeContext, data);
+				}
+				else {
+					Object newData = visit(caller, callStmt, callee, calleeContext, data);
+				
+					Set<SootMethod> visitedCopy = new HashSet();
+					visitedCopy.addAll(visited);
+					visitedCopy.add(callee);
+					
+					traverse(callee, calleeContext, visitedCopy, newData);
+				}
 			}
 		}
 	}
