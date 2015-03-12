@@ -12,8 +12,15 @@ class View
 						
 		onTouchEvent(null);
 		onTrackballEvent(null);
-		onKeyUp(0, null);
+
+		onKeyPreIme(0, null);
 		onKeyDown(0, null);
+		onKeyLongPress(0, null);
+		onKeyUp(0, null);
+		onKeyMultiple(0, 0, null);
+		onKeyShortcut(0, null);
+
+		onCheckIsTextEditor();
 		
 		onFocusChanged(false, 0, null);
 		onWindowFocusChanged(false);
