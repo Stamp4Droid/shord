@@ -37,7 +37,7 @@ public class DynamicCallgraphRelationManager extends TaintPointsToRelationManage
 		for(int[] tuple : callgraphRel.getAryNIntTuples()) {
 			String caller = domM.get(tuple[0]).toString();
 			String callee = domM.get(tuple[1]).toString();
-			if(dynamicCallgraph.get(caller).contains(callee) || DynamicParamRelationManager.isStampCallEdge(caller, callee)) {
+			if(dynamicCallgraph.get(caller).contains(callee) || DynamicParamRelationManager.isStampMethod(callee)) {
 				System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
 				dynamicCallgraphConverted.add("M" + Integer.toString(tuple[0]), "M" + Integer.toString(tuple[1]));
 			}

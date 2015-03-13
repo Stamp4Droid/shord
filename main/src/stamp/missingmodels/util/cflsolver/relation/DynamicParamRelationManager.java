@@ -43,14 +43,26 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		stampMethods.add("<edu.stanford.stamp.harness.ApplicationDriver: void <clinit>()>");
 		stampMethods.add("<android.content.StampSharedPreferences: void <clinit>()>");
 		*/
+		stampMethods.add("<java.");
+		stampMethods.add("<android.");
+		stampMethods.add("<edu.stanford.stamp.");
+		
+		/*
 		stampMethods.add("<java.net.StampURLConnection: ");
 		stampMethods.add("<edu.stanford.stamp.harness");
 		stampMethods.add("<android.content.StampSharedPreferences: ");
+		*/
+	}
+	
+	private static MultivalueMap<String,String> paramMethods = new MultivalueMap<String,String>();
+	
+	public static boolean isParamCallEdge(String caller, String callee) {
+		return paramMethods.get(caller).contains(callee);
 	}
 
-	public static boolean isStampCallEdge(String caller, String callee) {
+	public static boolean isStampMethod(String method) {
 		for(String name : stampMethods) {
-			if(caller.startsWith(name) || callee.startsWith(name)) {
+			if(method.startsWith(name)) {
 				return true;
 			}
 		}
@@ -70,8 +82,8 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		for(int[] tuple : paramRel.getAryNIntTuples()) {
 			String caller = ConversionUtils.getMethodForVar(domV.get(tuple[1])).toString();
 			String callee = ConversionUtils.getMethodForVar(domV.get(tuple[0])).toString();
-			if(dynamicCallgraph.get(caller).contains(callee) || isStampCallEdge(caller, callee)) {
-				//System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
+			//if(dynamicCallgraph.get(caller).contains(callee) || isStampCallEdge(caller, callee)) {
+			if(dynamicCallgraph.get(caller).contains(callee) || isStampMethod(caller) || isParamCallEdge(caller, callee)) {
 				dynamicCallgraphConverted.add("V" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
 			}
 		}
@@ -83,12 +95,34 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		for(int[] tuple : paramPrimRel.getAryNIntTuples()) {
 			String caller = ConversionUtils.getMethodForVar(domU.get(tuple[1])).toString();
 			String callee = ConversionUtils.getMethodForVar(domU.get(tuple[0])).toString();
-			if(dynamicCallgraph.get(caller).contains(callee)) {
-				//System.out.println("dynamic callgraph edge: " + caller + " -> " + callee);
+			if(dynamicCallgraph.get(caller).contains(callee) || isStampMethod(callee) || isParamCallEdge(caller, callee)) {
 				dynamicCallgraphConverted.add("U" + Integer.toString(tuple[1]), "U" + Integer.toString(tuple[0]));
 			}
 		}
 		paramPrimRel.close();
+		
+		ProgramRel returnRel = (ProgramRel)ClassicProject.g().getTrgt("return");
+		returnRel.load();
+		for(int[] tuple : returnRel.getAryNIntTuples()) {
+			String caller = ConversionUtils.getMethodForVar(domV.get(tuple[1])).toString();
+			String callee = ConversionUtils.getMethodForVar(domV.get(tuple[0])).toString();
+			//if(dynamicCallgraph.get(caller).contains(callee) || isStampCallEdge(caller, callee)) {
+			if(dynamicCallgraph.get(caller).contains(callee) || isStampMethod(caller)) {
+				dynamicCallgraphConverted.add("V" + Integer.toString(tuple[1]), "V" + Integer.toString(tuple[0]));
+			}
+		}
+		returnRel.close();	
+		
+		ProgramRel returnPrimRel = (ProgramRel)ClassicProject.g().getTrgt("returnPrim");
+		returnPrimRel.load();
+		for(int[] tuple : returnPrimRel.getAryNIntTuples()) {
+			String caller = ConversionUtils.getMethodForVar(domU.get(tuple[1])).toString();
+			String callee = ConversionUtils.getMethodForVar(domU.get(tuple[0])).toString();
+			if(dynamicCallgraph.get(caller).contains(callee) || isStampMethod(callee)) {
+				dynamicCallgraphConverted.add("U" + Integer.toString(tuple[1]), "U" + Integer.toString(tuple[0]));
+			}
+		}
+		returnPrimRel.close();
 		
 		// STEP 2: Build the extra relations
 		this.add(new IndexRelation("param", "V", 1, "V", 0, "param") {
@@ -98,6 +132,18 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 			}
 		});
 		this.add(new IndexRelation("paramPrim", "U", 1, "U", 0, "paramPrim") {
+			@Override
+			public boolean filter(int[] tuple) {
+				return dynamicCallgraphConverted.get(this.getSource(tuple)).contains(this.getSink(tuple));
+			}
+		});
+		this.add(new IndexRelation("return", "V", 1, "V", 0, "return") {
+			@Override
+			public boolean filter(int[] tuple) {
+				return dynamicCallgraphConverted.get(this.getSource(tuple)).contains(this.getSink(tuple));
+			}
+		});
+		this.add(new IndexRelation("returnPrim", "U", 1, "U", 0, "returnPrim") {
 			@Override
 			public boolean filter(int[] tuple) {
 				return dynamicCallgraphConverted.get(this.getSource(tuple)).contains(this.getSink(tuple));

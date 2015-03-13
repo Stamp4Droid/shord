@@ -36,16 +36,18 @@ public class ShordRelationReader implements RelationReader {
 		}
 		
 		final Set<String> labels = new HashSet<String>();
+		/*
 		labels.add("$LOCATION");
 		labels.add("$getLatitude");
 		labels.add("$getLongitude");
 		labels.add("$FINE_LOCATION");
+		*/
 		
 		//labels.add("$getDeviceId");
 		
 		//labels.add("$SMS");
 		
-		//labels.add("$CONTACTS");
+		labels.add("$CONTACTS");
 		
 		//labels.add("$AUDIO");
 		//labels.add("$ACCOUNTS");
