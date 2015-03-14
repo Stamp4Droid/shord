@@ -31,7 +31,11 @@ public class Graph {
 		}
 		
 		public int get(String name) {
-			return this.vertices.get(name);
+			Integer vertex = this.vertices.get(name);
+			if(vertex == null) {
+				throw new RuntimeException("Missing vertex: " + name);
+			}
+			return vertex;
 		}
 		
 		public String get(int id) {

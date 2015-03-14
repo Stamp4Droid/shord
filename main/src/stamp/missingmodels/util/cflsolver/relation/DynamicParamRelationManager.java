@@ -52,6 +52,7 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 		stampMethods.add("<edu.stanford.stamp.harness");
 		stampMethods.add("<android.content.StampSharedPreferences: ");
 		*/
+		stampMethods.add("<c.");
 	}
 	
 	private static MultivalueMap<String,String> paramMethods = new MultivalueMap<String,String>();
@@ -63,6 +64,7 @@ public class DynamicParamRelationManager extends TaintPointsToRelationManager {
 	public static boolean isStampMethod(String method) {
 		for(String name : stampMethods) {
 			if(method.startsWith(name)) {
+			    System.out.println(method);
 				return true;
 			}
 		}

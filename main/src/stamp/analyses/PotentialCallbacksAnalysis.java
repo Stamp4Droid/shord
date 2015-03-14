@@ -22,9 +22,9 @@ import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Host;
 import soot.tagkit.Tag;
 import soot.util.Switch;
-import stamp.missingmodels.callgraph.PotentialCallbacksBuilder;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.cflsolver.util.PotentialCallbacksBuilder;
 import chord.project.Chord;
 
 /**

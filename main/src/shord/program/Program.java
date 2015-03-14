@@ -23,8 +23,8 @@ import soot.toolkits.scalar.LocalSplitter;
 import soot.util.ArrayNumberer;
 import soot.util.Chain;
 import stamp.app.App;
-import stamp.missingmodels.callgraph.PotentialCallbacksBuilder;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
+import stamp.missingmodels.util.cflsolver.util.PotentialCallbacksBuilder;
 
 public class Program
 {

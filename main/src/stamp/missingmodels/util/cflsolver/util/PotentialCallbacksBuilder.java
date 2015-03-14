@@ -1,4 +1,4 @@
-package stamp.missingmodels.callgraph;
+package stamp.missingmodels.util.cflsolver.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,7 +18,6 @@ import soot.SootClass;
 import soot.SootMethod;
 import soot.util.NumberedString;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
-import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
 
 /**

@@ -64,6 +64,7 @@ public class AbductiveInference {
 	
 	private void addEdge(Edge edge) {
 		if(!this.edges.contains(edge)) {
+			System.out.println("ADDING EDGE: " + edge);
 			this.edges.add(edge);
 			this.worklist.add(edge);
 		}

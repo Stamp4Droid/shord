@@ -13,7 +13,7 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.Stmt;
 import stamp.analyses.PotentialCallbacksAnalysis;
-import stamp.missingmodels.callgraph.PotentialCallbacksAdder;
+import stamp.missingmodels.util.cflsolver.util.PotentialCallbacksAdder;
 import stamp.srcmap.SyntheticMethodMap;
 import chord.util.tuple.object.Pair;
 
