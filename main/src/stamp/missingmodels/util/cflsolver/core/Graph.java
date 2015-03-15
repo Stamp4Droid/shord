@@ -10,6 +10,7 @@ import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 
 public class Graph {
 	public static class VertexMap {
@@ -221,30 +222,6 @@ public class Graph {
 		return this.numEdges;
 	}
 	
-	public static interface Filter<T> {
-		public boolean filter(T t);
-	}
-	
-	public static interface FilterFactory<X,T> {
-		public Filter<T> filter(X x);
-	}
-	
-	public static class FilterTransformer extends EdgeTransformer {
-		private final Filter<EdgeStruct> filter;
-		
-		public FilterTransformer(VertexMap vertices, SymbolMap symbols, Filter<EdgeStruct> filter) {
-			super(vertices, symbols);
-			this.filter = filter;
-		}
-
-		@Override
-		public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
-			if(this.filter.filter(edgeStruct)) {
-				gb.addOrUpdateEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.weight);
-			}
-		}
-	}
-	
 	public Iterable<EdgeStruct> getEdgeStructs(final Filter<EdgeStruct> filter) {
 		return new Iterable<EdgeStruct>() {
 			@Override
@@ -286,7 +263,7 @@ public class Graph {
 		return this.vertices.size();
 	}
 
-	public abstract class TransformIterator<X,Y> implements Iterator<Y> {
+	public static abstract class TransformIterator<X,Y> implements Iterator<Y> {
 		private final Iterator<X> iterator;
 		
 		public TransformIterator(Iterator<X> iterator) {
@@ -322,7 +299,7 @@ public class Graph {
 		}
 	}
 	
-	public abstract class TransformFilter<X,Y> implements Filter<X> {
+	public static abstract class TransformFilter<X,Y> implements Filter<X> {
 		private final Filter<Y> filter;
 		
 		public TransformFilter(Filter<Y> filter) {

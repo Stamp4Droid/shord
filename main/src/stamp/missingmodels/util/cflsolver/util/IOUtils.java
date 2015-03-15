@@ -17,10 +17,10 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.analyses.DomL;
 import stamp.missingmodels.util.cflsolver.core.Edge;
-import stamp.missingmodels.util.cflsolver.core.Graph;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
-import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
+import stamp.missingmodels.util.cflsolver.core.Graph;
 import stamp.missingmodels.util.cflsolver.core.Util.Counter;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 

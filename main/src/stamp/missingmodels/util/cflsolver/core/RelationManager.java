@@ -6,9 +6,9 @@ import java.util.Set;
 
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
-import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
 import stamp.missingmodels.util.cflsolver.core.Graph.SimpleGraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 
 public class RelationManager {

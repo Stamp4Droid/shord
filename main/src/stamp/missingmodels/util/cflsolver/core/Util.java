@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
+import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
+import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
+
 public class Util {	
 	public static class Counter<K> {
 		private Map<K,Integer> counts = new HashMap<K,Integer>();
@@ -131,6 +137,74 @@ public class Util {
 			} else if (!y.equals(other.y))
 				return false;
 			return true;
+		}
+	}
+
+	
+	public static interface Filter<T> {
+		public boolean filter(T t);
+	}
+	
+	public static class OrFilter<T> implements Filter<T> {
+		private final List<Filter<T>> filters = new ArrayList<Filter<T>>();
+		@SuppressWarnings("unchecked")
+		public OrFilter(Filter<T> ... filters) {
+			for(Filter<T> filter : filters) {
+				this.filters.add(filter);
+			}
+		}
+		@Override
+		public boolean filter(T t) {
+			for(Filter<T> filter : this.filters) {
+				if(filter.filter(t)) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+	
+	public static class AndFilter<T> implements Filter<T> {
+		private final List<Filter<T>> filters = new ArrayList<Filter<T>>();
+		@SafeVarargs
+		public AndFilter(Filter<T> ... filters) {
+			for(Filter<T> filter : filters) {
+				this.filters.add(filter);
+			}
+		}
+		@Override
+		public boolean filter(T t) {
+			for(Filter<T> filter : this.filters) {
+				if(!filter.filter(t)) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+	
+	public static class NotFilter<T> implements Filter<T> {
+		public final Filter<T> filter;
+		public NotFilter(Filter<T> filter) { this.filter = filter; }
+		@Override
+		public boolean filter(T t) {
+			return !this.filter.filter(t);
+		}
+	}
+	
+	public static class FilterTransformer extends EdgeTransformer {
+		private final Filter<EdgeStruct> filter;
+		
+		public FilterTransformer(VertexMap vertices, SymbolMap symbols, Filter<EdgeStruct> filter) {
+			super(vertices, symbols);
+			this.filter = filter;
+		}
+
+		@Override
+		public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
+			if(this.filter.filter(edgeStruct)) {
+				gb.addOrUpdateEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.weight);
+			}
 		}
 	}
 }
