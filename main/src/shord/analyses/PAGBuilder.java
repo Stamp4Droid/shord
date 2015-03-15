@@ -42,7 +42,6 @@ import soot.jimple.BinopExpr;
 import soot.jimple.NegExpr;
 import soot.jimple.NewExpr;
 import soot.jimple.VirtualInvokeExpr;
-import soot.jimple.StaticInvokeExpr;
 import soot.jimple.SpecialInvokeExpr;
 import soot.jimple.InterfaceInvokeExpr;
 import soot.jimple.spark.pag.SparkField;
@@ -63,6 +62,7 @@ import stamp.analyses.SootUtils;
 import stamp.harnessgen.*;
 
 import chord.project.Chord;
+import chord.bddbddb.Rel.RelView;
 
 import java.util.*;
 
@@ -71,8 +71,7 @@ import java.util.*;
  * @author Yu Feng
 */
 @Chord(name="base-java", 
-	   consumes={"SC"
-	            },
+	   consumes={"SC"},
 	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
 				 "GlobalAlloc", "Alloc", "NewH",
 				 "Assign", "Load", "Store", 
@@ -114,7 +113,11 @@ import java.util.*;
 						"SpecIM", "StatIM", "VirtIM",
 						"SubSig", "Dispatch",
 						"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
-						"SCH"
+						"SCH",				 
+						"ArgArgTransfer", "ArgRetTransfer", 
+						"ArgArgFlow",
+						"InLabelArg", "InLabelRet",
+						"OutLabelArg", "OutLabelRet"
                         },
 	   signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
 				 "V0,V1:V0xV1", "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
@@ -131,10 +134,14 @@ import java.util.*;
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
                  "M0:M0",
-				 "I0,M0:I0_M0", "I0,M0:I0_M0", "I0,M0:I0_M0",
+				 "I0,M0:I0_M0", "I0,M0:I0_M0", "I0,S0:I0_S0",
 				 "M0,S0:M0_S0", "T0,S0,M0:T0_M0_S0",
 	             "T0:T0", "T0,T1:T0_T1", "T0,M0:T0_M0", "T0,F0:F0_T0", "T0,M0:T0_M0",
-				 "SC0,H0:SC0_H0"
+				 "SC0,H0:SC0_H0",
+				 "M0,Z0,Z1:M0_Z0_Z1", "M0,Z0:M0_Z0", 
+				 "M0,Z0,Z1:M0_Z0_Z1",
+				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0",
+				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0"
                  }
 	   )
 public class PAGBuilder extends JavaAnalysis
@@ -186,18 +193,17 @@ public class PAGBuilder extends JavaAnalysis
 	private DomM domM;
 	private DomF domF;
 	private DomSC domSC;
+	private DomS domS;
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
-	private NumberedSet stubMethods;
-
 	//private Map<Type,StubAllocNode> typeToStubAllocNode = new HashMap();
 
 	private GlobalStringConstantNode gscn = new GlobalStringConstantNode();
 
     static String gInstallAPK = "INSTALL_APK";
 
-	public static final boolean ignoreStubs = false;
+	private boolean ignoreStub;
 
 	void openRels()
 	{
@@ -501,7 +507,6 @@ public class PAGBuilder extends JavaAnalysis
 		//private Map<String, Set<AllocNode>> action2Node = new HashMap();
 		//private Map<String, AllocNode> dataType2Node = new HashMap();
 
-
 		private final boolean isStub;
 
 		MethodPAGBuilder(SootMethod method, boolean isStub)
@@ -549,29 +554,31 @@ public class PAGBuilder extends JavaAnalysis
 			if(!method.isConcrete())
 				return;
 
-			if(isStub) {
-				if(retType instanceof RefType){
-					for(SootClass st: SootUtils.subTypesOf(((RefType) retType).getSootClass())){
-						//for each concrete subtype of method's return type, 
-						//we add a stub alloc node
-						if(!st.isConcrete())
-							continue;
-						assert !st.isInterface();
-						// StubAllocNode n = stubAllocNodeFor(st.getType());
-						StubAllocNode n = new StubAllocNode(st.getType(), method);
-						domH.add(n);
-						stubAllocNodes.add(n);
-						//System.out.println("OO "+method+" "+n);
-					}
+			if(isStub){
+				if(!ignoreStub) {
+					if(retType instanceof RefType){
+						for(SootClass st: SootUtils.subTypesOf(((RefType) retType).getSootClass())){
+							//for each concrete subtype of method's return type, 
+							//we add a stub alloc node
+							if(!st.isConcrete())
+								continue;
+							assert !st.isInterface();
+							// StubAllocNode n = stubAllocNodeFor(st.getType());
+							StubAllocNode n = new StubAllocNode(st.getType(), method);
+							domH.add(n);
+							stubAllocNodes.add(n);
+							//System.out.println("OO "+method+" "+n);
+						}
 					
-				} else if(retType instanceof ArrayType){
-					//TODO: introduce stub alloc node for arrays 
+					} else if(retType instanceof ArrayType){
+						//TODO: introduce stub alloc node for arrays 
+					}
 				}
 				//don't process bodies of stub methods
 				return;
 			} 
 
-			localToVarNode = new HashMap();
+		localToVarNode = new HashMap();
 			Body body = method.retrieveActiveBody();
 			LocalsClassifier lc = new LocalsClassifier(body);
 			primLocals = lc.primLocals();
@@ -690,11 +697,13 @@ public class PAGBuilder extends JavaAnalysis
 			if(!method.isConcrete())
 				return;
 
-			if(isStub) {
-				for(StubAllocNode an : stubAllocNodes){
-					populateHT_HTFilter(an);
-					Alloc(retVar, an);
-					relMH.add(method, an);
+			if(isStub){
+				if(!ignoreStub){
+					for(StubAllocNode an : stubAllocNodes){
+						populateHT_HTFilter(an);
+						Alloc(retVar, an);
+						relMH.add(method, an);
+					}
 				}
 				return;
 			} 
@@ -782,11 +791,12 @@ public class PAGBuilder extends JavaAnalysis
                     else if(isQuasiStaticInvk(s)){
                         relStatIM.add(s, callee);
                     }
-                    else{
-                        assert ie instanceof VirtualInvokeExpr || ie instanceof InterfaceInvokeExpr;
-                        relVirtIM.add(s,callee);
-                    }
-                }
+				}
+				if(ie instanceof VirtualInvokeExpr || ie instanceof InterfaceInvokeExpr){
+					String subsig = callee.getSubSignature();
+					if(domS.contains(subsig))
+						relVirtIM.add(s, subsig);
+				}
 
 				//handle receiver
 				int j = 0;
@@ -950,7 +960,8 @@ public class PAGBuilder extends JavaAnalysis
 
 	void populateCallgraph()
 	{
-		CallGraph cg = Program.g().scene().getCallGraph();
+		Program prog = Program.g();
+		CallGraph cg = prog.scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
         relChaIM.zero();
 		Iterator<Edge> edgeIt = cg.listener();
@@ -966,13 +977,11 @@ public class PAGBuilder extends JavaAnalysis
 				assert false : "tgt = "+tgt +" "+tgt.isAbstract();
 			if(tgt.isPhantom())
 				continue;
-			if(stubMethods.contains(src))
+			if(prog.isStub(src))
 				continue;
 			//System.out.println("stmt: "+stmt+" tgt: "+tgt+ "abstract: "+ tgt.isAbstract());
-			if(ignoreStubs){
-				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
-					continue;
-			}
+			if(prog.exclude(tgt) || (src != null && prog.exclude(src)))
+				continue;
 			relChaIM.add(stmt, tgt);
 		}
 		relChaIM.save();
@@ -981,18 +990,17 @@ public class PAGBuilder extends JavaAnalysis
 	void populateMethods()
 	{
 		domM = (DomM) ClassicProject.g().getTrgt("M");
-		DomS domS = (DomS) ClassicProject.g().getTrgt("S");
+		domS = (DomS) ClassicProject.g().getTrgt("S");
 		Program program = Program.g();
-		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
+
 		Iterator<SootMethod> mIt = program.getMethods();
         domM.add(program.getMainMethod()); //important to add main before any other method
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
 			growZIfNeeded(m.getParameterCount());
-			if(isStub(m)){
-				//System.out.println("stub: "+ m);
-				stubMethods.add(m);
-			}
+			if(program.exclude(m))
+				continue;
+			//System.out.println("adding subsig "+m.getSubSignature());
 			domM.add(m);
 			domS.add(m.getSubSignature());
 		}
@@ -1001,13 +1009,14 @@ public class PAGBuilder extends JavaAnalysis
 
 		ProgramRel relStub = (ProgramRel) ClassicProject.g().getTrgt("Stub");
         relStub.zero();
-		for(Iterator it = stubMethods.iterator(); it.hasNext();){
-			SootMethod stub = (SootMethod) it.next();
-			relStub.add(stub);
+		for(Iterator it = program.getMethods(); it.hasNext();){
+			SootMethod m = (SootMethod) it.next();
+			if(program.isStub(m) && !program.exclude(m))
+				relStub.add(m);
 		}
 		relStub.save();
 	}
-	
+
 	void populateFields()
 	{
 		domF = (DomF) ClassicProject.g().getTrgt("F");
@@ -1045,15 +1054,14 @@ public class PAGBuilder extends JavaAnalysis
 		domU = (DomU) ClassicProject.g().getTrgt("U");
 
 		domH.add(gscn);
-
-		Iterator mIt = Program.g().scene().getReachableMethods().listener();
+		
+		Program prog = Program.g();
+		Iterator mIt = prog.scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
-			if(ignoreStubs){
-				if(stubMethods.contains(m))
-					continue;
-			}
-			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m, stubMethods.contains(m));
+			if(prog.exclude(m))
+				continue;
+			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m, prog.isStub(m));
 			mpagBuilder.pass1();
 			mpagBuilders.add(mpagBuilder);
 		}
@@ -1063,47 +1071,6 @@ public class PAGBuilder extends JavaAnalysis
 		domV.save();
 		domI.save();
 		domU.save();
-	}
-
-	boolean isStub(SootMethod method)
-	{
-		if(!method.isConcrete())
-			return false;
-		PatchingChain<Unit> units = method.retrieveActiveBody().getUnits();
-		Unit unit = units.getFirst();
-		while(unit instanceof IdentityStmt)
-			unit = units.getSuccOf(unit);
-
-		if(!(unit instanceof AssignStmt))
-			return false;
-		Value rightOp = ((AssignStmt) unit).getRightOp();
-		if(!(rightOp instanceof NewExpr))
-			return false;
-		//System.out.println(method.retrieveActiveBody().toString());
-		if(!((NewExpr) rightOp).getType().toString().equals("java.lang.RuntimeException"))
-			return false;
-		Local e = (Local) ((AssignStmt) unit).getLeftOp();
-		
-		//may be there is an assignment (if soot did not optimized it away)
-		Local f = null;
-		unit = units.getSuccOf(unit);
-		if(unit instanceof AssignStmt){
-			f = (Local) ((AssignStmt) unit).getLeftOp();
-			if(!((AssignStmt) unit).getRightOp().equals(e))
-				return false;
-			unit = units.getSuccOf(unit);
-		}
-		//it should be the call to the constructor
-		Stmt s = (Stmt) unit;
-		if(!s.containsInvokeExpr())
-			return false;
-		if(!s.getInvokeExpr().getMethod().getSignature().equals("<java.lang.RuntimeException: void <init>(java.lang.String)>"))
-			return false;
-		unit = units.getSuccOf(unit);
-		if(!(unit instanceof ThrowStmt))
-			return false;
-		Immediate i = (Immediate) ((ThrowStmt) unit).getOp();
-		return i.equals(e) || i.equals(f);
 	}
 	
 	void populateSubSigs()
@@ -1163,6 +1130,7 @@ public class PAGBuilder extends JavaAnalysis
 				workList.add((SootClass) subClass);
 		}
 
+        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		//create dispatch tuple based on the map.
 		ReachableMethods reachableMethods = Program.g().scene().getReachableMethods();
 		for(Map.Entry<SootClass,Set<SootMethod>> entry : dispatchMap.entrySet()){
@@ -1171,7 +1139,8 @@ public class PAGBuilder extends JavaAnalysis
 			for(SootMethod m : cMeths){
 				if(!reachableMethods.contains(m))
 					continue;
-                relDispatch.add(clazz.getType(), m.getSubSignature(), m);
+				if(domM.contains(m))
+					relDispatch.add(clazz.getType(), m.getSubSignature(), m);
 			}
 		}
 		
@@ -1225,6 +1194,7 @@ public class PAGBuilder extends JavaAnalysis
         ProgramRel relClinitTM = (ProgramRel) ClassicProject.g().getTrgt("ClinitTM");
         relClinitTM.zero();
 
+        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Program program = Program.g();		
         for(SootClass klass : program.getClasses()){
 			if(klass.isPhantom())
@@ -1238,11 +1208,14 @@ public class PAGBuilder extends JavaAnalysis
                     relStaticTF.add(type, field);
 
             for(SootMethod meth : klass.getMethods())
-                if(meth.isStatic())
+                if(meth.isStatic() && domM.contains(meth))
                     relStaticTM.add(type, meth);
 			
-			if(klass.declaresMethodByName("<clinit>"))
-				relClinitTM.add(type, klass.getMethodByName("<clinit>"));
+			if(klass.declaresMethodByName("<clinit>")){
+				SootMethod clinit = klass.getMethodByName("<clinit>");
+				if(domM.contains(clinit))
+					relClinitTM.add(type, clinit);
+			}
 
             for(SootClass clazz : SootUtils.subTypesOf(klass))
 				relSubtype.add(clazz.getType(), type);//clazz is subtype of klass
@@ -1301,7 +1274,9 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		Program program = Program.g();		
 		//for(SootClass k : program.getClasses()) System.out.println("kk "+k + (k.hasSuperclass() ? k.getSuperclass() : ""));
-		program.buildCallGraph();
+		//program.buildCallGraph();
+		program.runSpark();
+		ignoreStub = program.ignoreStub();
 
 		fh = Program.g().scene().getOrMakeFastHierarchy();
 		List<MethodPAGBuilder> mpagBuilders = new ArrayList();

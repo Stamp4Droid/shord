@@ -39,7 +39,7 @@ CI(c:C,i:I) input         # stmt i is on the top of c.
 
 StatIM(i:I,m:M) input     # i statically invokes m. 
 SpecIM(i:I,m:M) input     # i special invoke m. 
-VirtIM(i:I,m:M) input     # i virtually invokes m. 
+VirtIM(i:I,s:S) input     # i virtually invokes m. 
 ClassT(t:T) input         # t is concrete or abstract
 StaticTM(t:T,m:M) input   # m is a static method in t.
 StaticTF(t:T,f:F) input   # f is a static field in t.
@@ -108,4 +108,4 @@ reachableCM(0,0).
 reachableCM(0,m) :- ClinitTM(t,m), reachableT(t).
 reachableCM(c,m) :- CICM(_,_,c,m). 
 
-ICM(i,o,m2) :- VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2), HT(h,t), CH(o,h).
+ICM(i,o,m2) :- VirtIM(i,s), Dispatch(t,s,m2), HT(h,t), CH(o,h).

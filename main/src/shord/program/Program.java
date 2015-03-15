@@ -4,7 +4,12 @@ import soot.*;
 import soot.options.Options;
 import soot.util.Chain;
 import soot.util.ArrayNumberer;
+import soot.jimple.NewExpr;
 import soot.jimple.Stmt;
+import soot.jimple.NewExpr;
+import soot.jimple.AssignStmt;
+import soot.jimple.ThrowStmt;
+import soot.jimple.IdentityStmt;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
 import soot.jimple.toolkits.callgraph.CallGraphBuilder;
@@ -30,6 +35,8 @@ public class Program
 	private static Program g;
 	private SootMethod mainMethod;
 	private NumberedSet frameworkClasses;
+	private NumberedSet stubMethods;
+	private ProgramScope scope;
 	private App app;
 
 	public static Program g()
@@ -254,5 +261,82 @@ public class Program
 	public boolean isFrameworkClass(SootClass k)
 	{
 		return frameworkClasses().contains(k);
+	}
+
+	public boolean exclude(SootMethod m)
+	{
+		if(scope != null)
+			return scope.exclude(m);
+		else
+			return false;
+	}
+
+	public boolean isStub(SootMethod m)
+	{
+		if(stubMethods == null)
+			identifyStubMethods();
+		return stubMethods.contains(m);
+	}
+	
+	public boolean ignoreStub()
+	{
+		return scope != null ? scope.ignoreStub() : false;
+	}
+
+	private void identifyStubMethods()
+	{
+		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
+		Iterator<SootMethod> mIt = getMethods();
+		while(mIt.hasNext()){
+			SootMethod m = mIt.next();
+			if(checkIfStub(m))
+				stubMethods.add(m);
+		}		
+	}
+
+	private boolean checkIfStub(SootMethod method)
+	{
+		if(!method.isConcrete())
+			return false;
+		PatchingChain<Unit> units = method.retrieveActiveBody().getUnits();
+		Unit unit = units.getFirst();
+		while(unit instanceof IdentityStmt)
+			unit = units.getSuccOf(unit);
+
+		if(!(unit instanceof AssignStmt))
+			return false;
+		Value rightOp = ((AssignStmt) unit).getRightOp();
+		if(!(rightOp instanceof NewExpr))
+			return false;
+		//System.out.println(method.retrieveActiveBody().toString());
+		if(!((NewExpr) rightOp).getType().toString().equals("java.lang.RuntimeException"))
+			return false;
+		Local e = (Local) ((AssignStmt) unit).getLeftOp();
+		
+		//may be there is an assignment (if soot did not optimized it away)
+		Local f = null;
+		unit = units.getSuccOf(unit);
+		if(unit instanceof AssignStmt){
+			f = (Local) ((AssignStmt) unit).getLeftOp();
+			if(!((AssignStmt) unit).getRightOp().equals(e))
+				return false;
+			unit = units.getSuccOf(unit);
+		}
+		//it should be the call to the constructor
+		Stmt s = (Stmt) unit;
+		if(!s.containsInvokeExpr())
+			return false;
+		if(!s.getInvokeExpr().getMethod().getSignature().equals("<java.lang.RuntimeException: void <init>(java.lang.String)>"))
+			return false;
+		unit = units.getSuccOf(unit);
+		if(!(unit instanceof ThrowStmt))
+			return false;
+		Immediate i = (Immediate) ((ThrowStmt) unit).getOp();
+		return i.equals(e) || i.equals(f);
+	}
+
+	public void setScope(ProgramScope ps)
+	{
+		this.scope = ps;
 	}
 }

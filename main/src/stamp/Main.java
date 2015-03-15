@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.PrintStream;
 
 import shord.program.Program;
+import shord.program.ProgramScope;
+import shord.program.DefaultProgramScope;
 import shord.project.Config;
 
 /*
@@ -42,6 +44,8 @@ public class Main
 
 		Program prog = Program.g();
 		prog.build(harnessClasses, widgetClass);
+		ProgramScope ps = new DefaultProgramScope(prog);
+		prog.setScope(ps);
 
 		setup();
 

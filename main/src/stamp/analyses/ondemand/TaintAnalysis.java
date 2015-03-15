@@ -118,19 +118,19 @@ public class TaintAnalysis extends MethodReachabilityAnalysis
 		Body body = sink.retrieveActiveBody();
 		List<Trio<Integer,String,Set<String>>> result = new ArrayList();
 
-		for(Pair<Integer,String> sinkParam : taintManager.sinkParamsOf(sink)){
-			int pCount = sinkParam.val0;
-			String sinkLabel = sinkParam.val1;
+		for(Map.Entry<Integer,Set<String>> sinkParam : taintManager.sinkParamsOf(sink).entrySet()){
+			int pCount = sinkParam.getKey();
+			for(String sinkLabel : sinkParam.getValue()){
+				Local param;
+				if(!sink.isStatic())
+					param = pCount == 0 ? body.getThisLocal() : body.getParameterLocal(pCount-1);
+				else
+					param = body.getParameterLocal(pCount);
 
-			Local param;
-			if(!sink.isStatic())
-				param = pCount == 0 ? body.getThisLocal() : body.getParameterLocal(pCount-1);
-			else
-				param = body.getParameterLocal(pCount);
-
-			Set<String> taints = computeTaintSetFor(param, sinkContext);
-			if(!taints.isEmpty())
-				result.add(new Trio(pCount, sinkLabel, taints));
+				Set<String> taints = computeTaintSetFor(param, sinkContext);
+				if(!taints.isEmpty())
+					result.add(new Trio(pCount, sinkLabel, taints));
+			}
 		}
 
 		return result;
