@@ -92,7 +92,51 @@ public class Activity
 	{ 
 		this.onActivityResult(0, 0, new android.content.Intent());
 	}
+
+	public  void startActivity(android.content.Intent intent) 
+	{ 
+	}
 	
+	public  void startActivity(android.content.Intent intent, android.os.Bundle options) 
+	{ 
+	}
+
+	@STAMP(flows = {@Flow(from="intent",to="!Activity")})
+	public  boolean startActivityIfNeeded(android.content.Intent intent, int requestCode) 
+	{  
+		return false;
+	}
+
+	@STAMP(flows = {@Flow(from="intent",to="!Activity"),@Flow(from="options",to="!Activity")})
+	public  boolean startActivityIfNeeded(android.content.Intent intent, int requestCode, android.os.Bundle options) 
+	{  
+		return false;
+	}
+
+	@STAMP(flows = {@Flow(from="intent",to="!Activity")})
+	public  boolean startNextMatchingActivity(android.content.Intent intent) 
+	{  
+		return false;
+	}
+
+	@STAMP(flows = {@Flow(from="intent",to="!Activity"),@Flow(from="options",to="!Activity")})
+	public  boolean startNextMatchingActivity(android.content.Intent intent, android.os.Bundle options) 
+	{  
+		return false;
+	}
+
+	@STAMP(flows = {@Flow(from="intent",to="!Activity")})
+	public  void startActivityFromChild(android.app.Activity child, android.content.Intent intent, int requestCode) {  }
+
+	@STAMP(flows = {@Flow(from="intent",to="!Activity"),@Flow(from="options",to="!Activity")})
+	public  void startActivityFromChild(android.app.Activity child, android.content.Intent intent, int requestCode, android.os.Bundle options) {  }
+
+	@STAMP(flows = {@Flow(from="intent",to="!Activity")})
+	public  void startActivityFromFragment(android.app.Fragment fragment, android.content.Intent intent, int requestCode) {  }
+
+	@STAMP(flows = {@Flow(from="intent",to="!Activity"),@Flow(from="options",to="!Activity")})
+	public  void startActivityFromFragment(android.app.Fragment fragment, android.content.Intent intent, int requestCode, android.os.Bundle options) {  }
+
 	public final void showDialog (int id)
 	{
 	    this.onCreateDialog(id);
