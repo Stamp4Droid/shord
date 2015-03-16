@@ -191,7 +191,7 @@ public class AbductiveInference {
 				gb.addOrUpdateEdge(new EdgeStruct(edge.sourceName, edge.sinkName, edge.symbol, edge.field, baseEdgeFilter.filter(edge) ? (short)1 : (short)0));
 			}});
 		Graph graphBar = weightedGraph.transform(new ReachabilitySolver(weightedGraph.getVertices(), this.contextFreeGrammar, filter));
-
+		
 		// STEP 2: Get base and initial edges
 		this.baseEdges = new HashSet<Edge>();
 		for(Edge edge : graphBar.getEdges(new TransformFilter<Edge,EdgeStruct>(baseEdgeFilter) {
@@ -200,8 +200,13 @@ public class AbductiveInference {
 				return x.getStruct(); }})) {
 			this.baseEdges.add(edge);
 		}
+		Filter<EdgeStruct> initialEdgeFilterWeighted = new AndFilter<EdgeStruct>(initialEdgeFilter, new Filter<EdgeStruct>() {
+			@Override
+			public boolean filter(EdgeStruct edge) {
+				return edge.weight > (short)0;
+			}});
 		this.initialEdges = new HashSet<Edge>();
-		for(Edge edge : graphBar.getEdges(new TransformFilter<Edge,EdgeStruct>(initialEdgeFilter) {
+		for(Edge edge : graphBar.getEdges(new TransformFilter<Edge,EdgeStruct>(initialEdgeFilterWeighted) {
 			@Override
 			public EdgeStruct transform(Edge x) {
 				return x.getStruct(); }})) {

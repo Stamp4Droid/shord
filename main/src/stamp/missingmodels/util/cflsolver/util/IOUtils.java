@@ -166,29 +166,12 @@ public class IOUtils {
 		}
 	}
 	
-	public static void printAbductionResult(MultivalueMap<EdgeStruct,Integer> result, boolean shord) {
-		Counter<Integer> totalCut = new Counter<Integer>();
-		for(EdgeStruct edgeStruct : result.keySet()) {
-			if(result.get(edgeStruct).size() > 1) {
-				System.out.println("ERROR: Multiple cuts for edge " + edgeStruct);
-			}
-			for(int cut : result.get(edgeStruct)) {
-				System.out.println("in cut " + cut + ": " + edgeStruct);
-				if(shord) {
-					System.out.println("caller: " + ConversionUtils.getMethodSig(edgeStruct.sourceName));
-					System.out.println("callee: " + ConversionUtils.getMethodSig(edgeStruct.sinkName));
-				}
-				totalCut.increment(cut);
-			}
+	public static void printAbductionResult(MultivalueMap<EdgeStruct,Integer> result, boolean shord, boolean useCallbacks) {
+		ProgramRel relPotentialCallbackDependent = null;
+		if(useCallbacks) {
+			relPotentialCallbackDependent = (ProgramRel)ClassicProject.g().getTrgt("potentialCallbackDependent");
+			relPotentialCallbackDependent.load();
 		}
-		for(int i : totalCut.keySet()) {
-			System.out.println("total cut " + i + ": " + totalCut.getCount(i));
-		}
-	}
-	
-	public static void printCallgraphAbductionResult(MultivalueMap<EdgeStruct,Integer> result, boolean shord) {
-		ProgramRel relPotentialCallbackDependent = (ProgramRel)ClassicProject.g().getTrgt("potentialCallbackDependent");
-		relPotentialCallbackDependent.load();
 		
 		Counter<Integer> totalCut = new Counter<Integer>();
 		for(EdgeStruct edgeStruct : result.keySet()) {
@@ -200,11 +183,13 @@ public class IOUtils {
 				if(shord) {
 					System.out.println("caller: " + ConversionUtils.getMethodSig(edgeStruct.sourceName));
 					System.out.println("callee: " + ConversionUtils.getMethodSig(edgeStruct.sinkName));
-					for(chord.util.tuple.object.Pair<Object, Object> pair : relPotentialCallbackDependent.getAry2ValTuples()) {
-						if(ConversionUtils.getMethodSig(edgeStruct.sourceName).equals(pair.val1.toString())) {
-							System.out.println("potential callback dependent: " + pair.val0);
+					if(useCallbacks) {
+						for(chord.util.tuple.object.Pair<Object, Object> pair : relPotentialCallbackDependent.getAry2ValTuples()) {
+							if(ConversionUtils.getMethodSig(edgeStruct.sourceName).equals(pair.val1.toString())) {
+								System.out.println("potential callback dependent: " + pair.val0);
+							}
 						}
-					}			
+					}
 				}
 				totalCut.increment(cut);
 			}
@@ -213,7 +198,9 @@ public class IOUtils {
 			System.out.println("total cut " + i + ": " + totalCut.getCount(i));
 		}
 		
-		relPotentialCallbackDependent.close();
+		if(useCallbacks) {
+			relPotentialCallbackDependent.close();
+		}
 	}
 	
 	public static void printGraphStatistics(Graph g) {

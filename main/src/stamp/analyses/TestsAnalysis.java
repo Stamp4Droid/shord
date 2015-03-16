@@ -195,6 +195,6 @@ public class TestsAnalysis extends JavaAnalysis {
 		
 		// STEP 5: Abductive inference
 		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(grammar).process(baseEdgeFilter, initialEdgeFilter, g, reader.readFilter(g.getVertices(), grammar.getSymbols()), 2);
-		IOUtils.printAbductionResult(results, true);
+		IOUtils.printAbductionResult(results, true, useCallbacks);
 	}
 }
