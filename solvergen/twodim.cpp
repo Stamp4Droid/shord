@@ -1056,7 +1056,9 @@ public:
             }
         }
     }
-    // TODO: Could do this more efficiently using a rescheduling approach.
+    // TODO:
+    // - Could do this more efficiently using a rescheduling approach.
+    // - Check if an a --eps-> b edge already exists before starting on it.
     void close() {
         // Initialize reachability worklist
         std::deque<std::pair<Ref<Variable>,Ref<Variable> > > worklist;
@@ -1311,21 +1313,37 @@ public:
     const Signature& sig() const {
         return sig_;
     }
+    void inline_nonrec_callees(const Registry<Function>& fun_reg,
+                               const typename SccGraph<Function>::SCC& scc) {
+        FOR(c, calls_) {
+            if (scc.nodes.count(c.get<FUN>()) == 0) {
+                code_.embed(c.get<SRC>(), c.get<TGT>(),
+                            fun_reg[c.get<FUN>()].sig_);
+                code_.close();
+            }
+        }
+    }
     // Returns 'false' if we've reached fixpoint, and sig_ didn't need to be
     // updated. Otherwise updates sig_ and returns 'true'.
-    bool update_sig(const Registry<Function>& fun_reg) {
+    bool update_sig(const Registry<Function>& fun_reg,
+                    const typename SccGraph<Function>::SCC& scc) {
         auto t_start = std::chrono::steady_clock::now();
         // Current sig_ is step i on the fixpoint process, S(i).
         const Signature& si = sig_;
-        // Embed the latest signatures of callees, and produce minimal FSM to
-        // form step i+1, F(S(i)).
+        // Embed the latest signatures of same-SCC callees, and produce
+        // minimal FSM to form step i+1, F(S(i)).
         CodeGraph stage(code_);
-        FOR(c, calls_) {
+        auto stage_embed =
+            [&](const mi::Index<SRC, Ref<Variable>,
+                          mi::Table<TGT, Ref<Variable> > >& ends,
+                Ref<Function> callee) {
             // TODO: Assumes the numbering of the original vars doesn't change
             // on the clone.
-            stage.embed(c.get<SRC>(), c.get<TGT>(),
-                        fun_reg[c.get<FUN>()].sig_);
-        }
+            FOR(e, ends) {
+                stage.embed(e.get<SRC>(), e.get<TGT>(), fun_reg[callee].sig_);
+            }
+        };
+        filter(calls_.pri(), scc.nodes, stage_embed);
         std::cout << "    Embedded calls" << std::endl;
         stage.close();
         std::cout << "    Internal matching done" << std::endl;
@@ -1604,12 +1622,13 @@ int main(int argc, char* argv[]) {
         const auto& scc = cg.scc(i);
         Worklist<Ref<Function>,true> worklist;
         for (Ref<Function> f : scc.nodes) {
+            funs[f].inline_nonrec_callees(funs, scc);
             worklist.enqueue(f);
         }
         while (!worklist.empty()) {
             Function& f = funs[worklist.dequeue()];
             std::cout << "Processing " << f.name << std::endl;
-            if (!f.update_sig(funs)) {
+            if (!f.update_sig(funs, scc)) {
                 std::cout << "    No change" << std::endl;
                 continue;
             }

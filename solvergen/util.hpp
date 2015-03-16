@@ -492,6 +492,30 @@ void join_zip(const LMap& l, const RMap& r, const ZipT& zip) {
     detail::JoinZipHelper<DEPTH>::handle(l, r, zip);
 }
 
+// TODO:
+// - Should implement using iterators?
+// - Only works for sorted containers
+template<class Map, class Set, class Fun, class... Keys>
+static void filter(const Map& map, const Set& set, const Fun& fun,
+                   const Keys&... keys) {
+    auto map_curr = map.begin();
+    auto set_curr = set.begin();
+    const auto map_end = map.end();
+    const auto set_end = set.end();
+    while (map_curr != map_end && set_curr != set_end) {
+        int key_rel = compare(map_curr->first, *set_curr);
+        if (key_rel == 0) {
+            fun(map_curr->second, keys..., map_curr->first);
+        }
+        if (key_rel >= 0) {
+            ++set_curr;
+        }
+        if (key_rel <= 0) {
+            ++map_curr;
+        }
+    }
+}
+
 template<class T, class S>
 bool empty_intersection(const T& a, const S& b) {
     auto a_it = a.begin();
@@ -778,7 +802,7 @@ template<class T> class SccGraph {
 public:
     typedef unsigned SccId;
     struct SCC {
-        std::vector<Ref<T> > nodes;
+        std::set<Ref<T> > nodes;
         std::set<SccId> parents;
         std::set<SccId> children;
         unsigned height = 0;
@@ -829,7 +853,7 @@ public:
                     n = stack.top();
                     stack.pop();
                     info[n].on_stack = false;
-                    scc.nodes.push_back(n);
+                    scc.nodes.insert(n);
                     node2scc_[n] = scc_id;
                 } while (n != src);
             }
