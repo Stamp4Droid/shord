@@ -1185,33 +1185,31 @@ public:
         std::cout << "    DFA minimized" << std::endl;
         return res;
     }
-    void to_dot(std::ostream& os, const Registry<Field>& fld_reg) const {
-        os << "digraph function {" << std::endl;
-        os << "  rankdir=LR;" << std::endl;
-        os << "  node [shape=plaintext,label=\"\"] __phantom__;" << std::endl;
+    void to_tgf(std::ostream& os, const Registry<Field>& fld_reg) const {
         for (const Variable& v : vars) {
-            os << "  node [shape="
-               << (exits.count(v.ref) > 0 ? "double" : "")
-               << "circle,color=black,label=\"" << v.name << "\"] \""
-               << v.name << "\";" << std::endl;
+            os << v.name;
+            if (v.ref == entry) {
+                os << " in";
+            }
+            if (exits.count(v.ref) > 0) {
+                os << " out";
+            }
+            os << std::endl;
         }
-        os << "  __phantom__ -> " << vars[entry].name
-           << " [color=blue];" << std::endl;
         FOR(e, epsilons) {
-            os << "  \"" << vars[e.get<SRC>()].name << "\" -> \""
-               << vars[e.get<TGT>()].name << "\";" << std::endl;
+            os << vars[e.get<SRC>()].name << " "
+               << vars[e.get<TGT>()].name << std::endl;
         }
         FOR(o, opens) {
-            os << "  \"" << vars[o.get<SRC>()].name << "\" -> \""
-               << vars[o.get<TGT>()].name << "\" [label=\"("
-               << fld_reg[o.get<FLD>()].name << "\"];" << std::endl;
+            os << vars[o.get<SRC>()].name << " "
+               << vars[o.get<TGT>()].name << " "
+               << fld_reg[o.get<FLD>()].name << std::endl;
         }
         FOR(c, closes) {
-            os << "  \"" << vars[c.get<SRC>()].name << "\" -> \""
-               << vars[c.get<TGT>()].name << "\" [label=\")"
-               << fld_reg[c.get<FLD>()].name << "\"];" << std::endl;
+            os << vars[c.get<SRC>()].name << " "
+               << vars[c.get<TGT>()].name << " "
+               << fld_reg[c.get<FLD>()].name << std::endl;
         }
-        os << "}" << std::endl;
     }
 };
 
@@ -1379,38 +1377,14 @@ public:
             (t_end - t_start).count();
         return true;
     }
-    void to_dot(std::ostream& os, const Registry<Function>& fun_reg,
+    void to_tgf(std::ostream& os, const Registry<Function>& fun_reg,
                 const Registry<Field>& fld_reg) const {
-        os << "digraph " << name << " {" << std::endl;
-        os << "  rankdir=LR;" << std::endl;
-        os << "  node [shape=plaintext,label=\"\"] __phantom__;" << std::endl;
-        for (const Variable& v : code_.vars) {
-            os << "  node [shape="
-               << (code_.exits.count(v.ref) > 0 ? "double" : "")
-               << "circle,color=black] " << v.name << ";" << std::endl;
-        }
-        os << "  __phantom__ -> " << code_.vars[code_.entry].name
-           << " [color=blue];" << std::endl;
-        FOR(e, code_.epsilons) {
-            os << "  " << code_.vars[e.get<SRC>()].name << " -> "
-               << code_.vars[e.get<TGT>()].name << ";" << std::endl;
-        }
-        FOR(o, code_.opens) {
-            os << "  " << code_.vars[o.get<SRC>()].name << " -> "
-               << code_.vars[o.get<TGT>()].name << " [label=\"("
-               << fld_reg[o.get<FLD>()].name << "\"];" << std::endl;
-        }
-        FOR(c, code_.closes) {
-            os << "  " << code_.vars[c.get<SRC>()].name << " -> "
-               << code_.vars[c.get<TGT>()].name << " [label=\")"
-               << fld_reg[c.get<FLD>()].name << "\"];" << std::endl;
-        }
+        code_.to_tgf(os, fld_reg);
         FOR(c, calls_) {
-            os << "  " << code_.vars[c.get<SRC>()].name << " -> "
-               << code_.vars[c.get<TGT>()].name << " [label=\""
-               << fun_reg[c.get<FUN>()].name << "\"];" << std::endl;
+            os << code_.vars[c.get<SRC>()].name << " "
+               << code_.vars[c.get<TGT>()].name << " "
+               << fun_reg[c.get<FUN>()].name << std::endl;
         }
-        os << "}" << std::endl;
     }
     posint num_states() const {
         return code_.vars.size();
@@ -1604,6 +1578,26 @@ int main(int argc, char* argv[]) {
         }
         cg_fout << i << " " << size << std::endl;
         scc_size_freqs.record(size);
+        if (size < 10) {
+            continue;
+        }
+        const std::set<Ref<Function> >& scc_funs = cg.scc(i).nodes;
+        fs::path scc_fpath(outdir/(std::string("scc") + std::to_string(i) +
+                                   ".tgf"));
+        std::ofstream scc_fout(scc_fpath.string());
+        EXPECT((bool) scc_fout);
+        for (Ref<Function> f : scc_funs) {
+            scc_fout << funs[f].name << std::endl;
+        }
+        scc_fout << "#" << std::endl;
+        for (Ref<Function> src : scc_funs) {
+            for (Ref<Function> tgt : calls[src]) {
+                if (scc_funs.count(tgt) > 0) {
+                    scc_fout << funs[src].name << " " << funs[tgt].name
+                             << std::endl;
+                }
+            }
+        }
     }
     cg_fout << "#" << std::endl;
     for (unsigned i = 0; i < cg.num_sccs(); i++) {
@@ -1662,5 +1656,12 @@ int main(int argc, char* argv[]) {
         const auto& scc = cg.scc(cg.scc_of(f.ref));
         stats_fout << "\t" << scc.height << "\t" << scc.nodes.size()
                    << "\t" << scc.cumm_size << std::endl;
+    }
+
+    std::cout << "Singleton entries:" << std::endl;
+    for (const auto& scc : cg.sccs()) {
+        if (scc.parents.empty() && scc.children.empty()) {
+            std::cout << funs[*(scc.nodes.begin())].name << std::endl;
+        }
     }
 }

@@ -45,7 +45,7 @@ def convert(tgf_fname, print_labels, fout):
                         weight = 2
                     else:
                         shape = 'box'
-                        label = label + ':' + t
+                        label = t if label == '' else label + ':' + t
                 fout.write(('%s [id="%s",tooltip="%s",shape="%s",' +
                             'peripheries=%s,label="%s"];\n')
                            % (state, comp + ':' + state, comp + ':' + state,
