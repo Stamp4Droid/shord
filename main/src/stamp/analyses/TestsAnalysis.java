@@ -43,6 +43,7 @@ public class TestsAnalysis extends JavaAnalysis {
 		return result;
 	}
 	
+	@SafeVarargs
 	public static MultivalueMap<String,String> union(MultivalueMap<String,String> ... edgeLists) {
 		MultivalueMap<String,String> result = new MultivalueMap<String,String>();
 		for(MultivalueMap<String,String> edges : edgeLists) {
@@ -157,11 +158,11 @@ public class TestsAnalysis extends JavaAnalysis {
 	}
 	
 	private static Filter<EdgeStruct> getBaseEdgeFilter(boolean useCallbacks) {
-		return useCallbacks ? new AndFilter(getBaseEdgeFilter(), getGraphEdgeFilter("param", "graph"), getGraphEdgeFilter("paramPrim", "graph"), getGraphEdgeFilter("return", "graph"), getGraphEdgeFilter("returnPrim", "graph")) : getBaseEdgeFilter();
+		return useCallbacks ? new AndFilter<EdgeStruct>(getBaseEdgeFilter(), getGraphEdgeFilter("param", "graph"), getGraphEdgeFilter("paramPrim", "graph"), getGraphEdgeFilter("return", "graph"), getGraphEdgeFilter("returnPrim", "graph")) : getBaseEdgeFilter();
 	}
 	
 	private static Filter<EdgeStruct> getInitialEdgeFilter(boolean useCallbacks) {
-		return useCallbacks ? new AndFilter(getInitialEdgeFilter(), getGraphEdgeFilter("Src2Sink", "graph")) : getInitialEdgeFilter();
+		return useCallbacks ? new AndFilter<EdgeStruct>(getInitialEdgeFilter(), getGraphEdgeFilter("Src2Sink", "graph")) : getInitialEdgeFilter();
 	}
 
 	@Override
