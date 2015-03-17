@@ -46,17 +46,17 @@ def convert(tgf_fname, print_labels, fout):
                     else:
                         shape = 'box'
                         label = t if label == '' else label + ':' + t
-                fout.write(('%s [id="%s",tooltip="%s",shape="%s",' +
+                fout.write(('"%s" [id="%s",tooltip="%s",shape="%s",' +
                             'peripheries=%s,label="%s"];\n')
                            % (state, comp + ':' + state, comp + ':' + state,
                               shape, weight, label))
 
     for e in entries:
-        fout.write('__phantom__ -> %s [color=blue];\n' % e)
+        fout.write('__phantom__ -> "%s" [color=blue];\n' % e)
     for ((src,dst),labels) in trans.iteritems():
         for l in labels:
             edge_id = comp + ':' + src + '--' + l + '->' + comp + ':' + dst
-            fout.write('%s -> %s [id="%s",tooltip="%s",label="%s"];\n' %
+            fout.write('"%s" -> "%s" [id="%s",tooltip="%s",label="%s"];\n' %
                        (src, dst, edge_id, l, l))
     fout.write('}\n')
 

@@ -943,7 +943,7 @@ public:
 public:
     explicit Variable(const std::string* name_ptr, Ref<Variable> ref)
         : name(name_ptr != NULL ? *name_ptr
-               : std::string("#") + std::to_string(ref.value())),
+               : std::string("$") + std::to_string(ref.value())),
           ref(ref) {
         if (name_ptr != NULL) {
             EXPECT(boost::regex_match(name, boost::regex("\\w+")));
@@ -1196,6 +1196,7 @@ public:
             }
             os << std::endl;
         }
+        os << "#" << std::endl;
         FOR(e, epsilons) {
             os << vars[e.get<SRC>()].name << " "
                << vars[e.get<TGT>()].name << std::endl;
@@ -1203,12 +1204,12 @@ public:
         FOR(o, opens) {
             os << vars[o.get<SRC>()].name << " "
                << vars[o.get<TGT>()].name << " "
-               << fld_reg[o.get<FLD>()].name << std::endl;
+               << "(" << fld_reg[o.get<FLD>()].name << std::endl;
         }
         FOR(c, closes) {
             os << vars[c.get<SRC>()].name << " "
                << vars[c.get<TGT>()].name << " "
-               << fld_reg[c.get<FLD>()].name << std::endl;
+               << ")" << fld_reg[c.get<FLD>()].name << std::endl;
         }
     }
 };
