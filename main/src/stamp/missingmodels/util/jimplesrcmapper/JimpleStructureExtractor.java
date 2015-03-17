@@ -1,4 +1,4 @@
-package stamp.missingmodels.jimplesrcmapper;
+package stamp.missingmodels.util.jimplesrcmapper;
 
 import soot.Local;
 import soot.SootClass;

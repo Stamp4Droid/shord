@@ -1,4 +1,4 @@
-package stamp.missingmodels.jimplesrcmapper;
+package stamp.missingmodels.util.jimplesrcmapper;
 
 import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
 
@@ -20,8 +20,8 @@ import soot.jimple.LookupSwitchStmt;
 import soot.jimple.ReturnStmt;
 import soot.jimple.Stmt;
 import soot.jimple.TableSwitchStmt;
-import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.CodeStructure;
-import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
+import stamp.missingmodels.util.jimplesrcmapper.CodeStructureInfo.CodeStructure;
+import stamp.missingmodels.util.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
 import stamp.srcmap.XMLObject.XMLContainerObject;
 import stamp.srcmap.sourceinfo.jimpleinfo.JimpleSourceInfo;
 

@@ -22,7 +22,7 @@ import chord.util.tuple.object.Pair;
  */
 public class IM extends XMLReport
 {
-    public IM()
+    public IM()	
 	{
 		super("Invocation instruction to callees");
     }

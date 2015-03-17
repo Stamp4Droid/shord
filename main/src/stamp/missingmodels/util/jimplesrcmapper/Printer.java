@@ -1,4 +1,4 @@
-package stamp.missingmodels.jimplesrcmapper;
+package stamp.missingmodels.util.jimplesrcmapper;
 
 /* Soot - a J*va Optimization Framework
  * Copyright (C) 2003 Ondrej Lhotak

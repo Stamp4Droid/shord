@@ -1,12 +1,12 @@
-package stamp.missingmodels.jimplesrcmapper;
+package stamp.missingmodels.util.jimplesrcmapper;
 
 import soot.Local;
 import soot.SootClass;
 import soot.SootField;
 import soot.SootMethod;
 import soot.Unit;
-import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.CodeStructure;
-import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
+import stamp.missingmodels.util.jimplesrcmapper.CodeStructureInfo.CodeStructure;
+import stamp.missingmodels.util.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
 
 public class JimpleVisitorWithStructure {
 	/** Visited before writing the class */

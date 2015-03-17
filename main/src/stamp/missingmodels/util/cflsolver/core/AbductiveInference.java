@@ -14,34 +14,29 @@ import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.UnaryProductio
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
-import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.Graph.TransformFilter;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.Coefficient;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.ConstraintType;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.LinearProgramResult;
 import stamp.missingmodels.util.cflsolver.core.LinearProgram.ObjectiveType;
+import stamp.missingmodels.util.cflsolver.core.Util.AndFilter;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 
 public class AbductiveInference {
-	public interface AbductiveInferenceHelper {
-		public Iterable<Edge> getBaseEdges(Graph graph);
-		public Iterable<Edge> getInitialEdges(Graph graph);
-	}
-	
 	private final ContextFreeGrammarOpt contextFreeGrammar;
-	private final AbductiveInferenceHelper helper;
-	
+
 	private Set<Edge> baseEdges;
 	private Set<Edge> initialEdges;
 	private LinearProgram<Edge> lp;
 	private HashSet<Edge> edges;
 	private LinkedList<Edge> worklist;
-	
-	public AbductiveInference(ContextFreeGrammarOpt contextFreeGrammar, AbductiveInferenceHelper helper) {
+
+	public AbductiveInference(ContextFreeGrammarOpt contextFreeGrammar) {
 		this.contextFreeGrammar = contextFreeGrammar;
-		this.helper = helper;
 	}
-	
+
 	private void setObjective() {
 		Collection<Coefficient<Edge>> coefficients = new HashSet<Coefficient<Edge>>();
 		for(Edge edge : this.baseEdges) {
@@ -55,13 +50,13 @@ public class AbductiveInference {
 		}
 		this.lp.setObjective(ObjectiveType.MINIMIZE, coefficients);
 	}
-	
+
 	private void setInitialEdges() {
 		for(Edge edge : this.initialEdges) {
 			this.lp.addConstraint(ConstraintType.GEQ, 1.0, new Coefficient<Edge>(edge, 1.0));
 		}
 	}
-	
+
 	private void addEdge(Edge edge) {
 		if(!this.edges.contains(edge)) {
 			this.edges.add(edge);
@@ -79,7 +74,7 @@ public class AbductiveInference {
 		this.addEdge(firstInput);
 		this.addEdge(secondInput);
 	}
-	
+
 	private void processProduction(UnaryProduction unaryProduction, Edge target) {
 		// iterate over potential inputs
 		Iterable<Edge> potentialInputs = unaryProduction.isInputBackwards ? target.source.getIncomingEdges(unaryProduction.input.id) : target.source.getOutgoingEdges(unaryProduction.input.id);
@@ -171,7 +166,7 @@ public class AbductiveInference {
 		if(this.baseEdges.contains(edge)) {
 			return;
 		}
-		
+
 		for(UnaryProduction unaryProduction : this.contextFreeGrammar.unaryProductionsByTarget[edge.symbol.id]) {
 			this.processProduction(unaryProduction, edge);
 		}
@@ -182,45 +177,60 @@ public class AbductiveInference {
 			this.processProduction(auxProduction, edge);
 		}
 	}
-	
-	public Map<EdgeStruct,Boolean> process(Graph graph) {
+
+	public Map<EdgeStruct,Boolean> process(final Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, Filter<Edge> filter) {
 		// STEP 0: Setup
 		this.lp = new LinearProgram<Edge>();
 		this.edges = new HashSet<Edge>();
 		this.worklist = new LinkedList<Edge>();
+
+		// STEP 1: Compute transitive closure
+		Graph weightedGraph = graph.transform(new EdgeTransformer(graph.getVertices(), graph.getSymbols()) {
+			@Override
+			public void process(GraphBuilder gb, EdgeStruct edge) {
+				gb.addOrUpdateEdge(new EdgeStruct(edge.sourceName, edge.sinkName, edge.symbol, edge.field, baseEdgeFilter.filter(edge) ? (short)1 : (short)0));
+			}});
+		Graph graphBar = weightedGraph.transform(new ReachabilitySolver(weightedGraph.getVertices(), this.contextFreeGrammar, filter));
+		
+		// STEP 2: Get base and initial edges
 		this.baseEdges = new HashSet<Edge>();
-		for(Edge edge : this.helper.getBaseEdges(graph)) {
+		for(Edge edge : graphBar.getEdges(new TransformFilter<Edge,EdgeStruct>(baseEdgeFilter) {
+			@Override
+			public EdgeStruct transform(Edge x) {
+				return x.getStruct(); }})) {
 			this.baseEdges.add(edge);
 		}
+		Filter<EdgeStruct> initialEdgeFilterWeighted = new AndFilter<EdgeStruct>(initialEdgeFilter, new Filter<EdgeStruct>() {
+			@Override
+			public boolean filter(EdgeStruct edge) {
+				return edge.weight > (short)0;
+			}});
 		this.initialEdges = new HashSet<Edge>();
-		for(Edge edge : this.helper.getInitialEdges(graph)) {
+		for(Edge edge : graphBar.getEdges(new TransformFilter<Edge,EdgeStruct>(initialEdgeFilterWeighted) {
+			@Override
+			public EdgeStruct transform(Edge x) {
+				return x.getStruct(); }})) {
 			this.initialEdges.add(edge);
 		}
-		for(Edge edge : baseEdges) {
-			this.baseEdges.add(edge);
-		}
-		for(Edge edge : initialEdges) {
-			this.initialEdges.add(edge);
-		}
-		
-		// STEP 1: Break initial edges
+
+		// STEP 3: Break initial edges
 		this.setInitialEdges();
-		
-		// STEP 2: Cut edges
+
+		// STEP 4: Cut edges
 		for(Edge edge : this.initialEdges) {
 			this.addEdge(edge);
 		}
 		while(!this.worklist.isEmpty()) {
 			this.processEdge(this.worklist.removeFirst());
 		}
-		
-		// STEP 3: Set objective
+
+		// STEP 5: Set objective (order important!)
 		this.setObjective();
-		
-		// STEP 4: Solve the linear program
+
+		// STEP 6: Solve the linear program
 		LinearProgramResult<Edge> solution = this.lp.solve();
-		
-		// STEP 5: Set up the result
+
+		// STEP 7: Set up the result
 		// returns 1 if the edge is in the cut, 0 if the edge is not in the cut
 		Map<EdgeStruct,Boolean> result = new HashMap<EdgeStruct,Boolean>();
 		for(Edge edge : solution.variableValues.keySet()) {
@@ -228,30 +238,29 @@ public class AbductiveInference {
 				result.put(edge.getStruct(), solution.variableValues.get(edge) > 0.5);
 			}
 		}
-		
+
 		return result;
 	}
-	
-	public MultivalueMap<EdgeStruct,Integer> process(Graph graph, Filter<Edge> filter, int numCuts) {
-		Graph gcur = graph;
+
+	public MultivalueMap<EdgeStruct,Integer> process(Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, Filter<Edge> filter, int numCuts) {
+		Filter<EdgeStruct> baseEdgeFilterCur = baseEdgeFilter;
 		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
-		for(int i=0; i<numCuts; i++) {
-			// STEP 1: Run reachability solver
-			Graph gbar = gcur.transform(new ReachabilitySolver(gcur.getVertices(), this.contextFreeGrammar, filter));
-			
-			// STEP 2: Run the abductive inference algorithm
-			final Map<EdgeStruct,Boolean> result = this.process(gbar);
+		for(int i=0; i<numCuts; i++) {			
+			// STEP 1: Run the abductive inference algorithm
+			final Map<EdgeStruct,Boolean> result = this.process(baseEdgeFilterCur, initialEdgeFilter, graph, filter);
 			for(EdgeStruct edge : result.keySet()) {
 				if(result.get(edge)) {
 					allResults.add(edge, i);
 				}
 			}
 			
-			// STEP 3: Transform graph to remove cut edges
-			gcur = gcur.transform(new EdgeTransformer(gcur.getVertices(), gcur.getSymbols()) {
-				public void process(GraphBuilder gb, EdgeStruct edge) {
-					gb.addOrUpdateEdge(edge.sourceName, edge.sinkName, edge.symbol, edge.field, result.containsKey(edge) && result.get(edge) ? (short)0 : edge.weight);
-				}});
+			// STEP 2: Update the filter to exclude new edges
+			baseEdgeFilterCur = new AndFilter<EdgeStruct>(baseEdgeFilterCur, new Filter<EdgeStruct>() {
+				@Override
+				public boolean filter(EdgeStruct edge) {
+					return !result.containsKey(edge) || !result.get(edge);
+				}
+			});
 		}		
 		return allResults;
 	}

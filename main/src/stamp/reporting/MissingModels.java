@@ -1,6 +1,5 @@
 package stamp.reporting;
 
-
 /*
  * @author Osbert Bastani
  **/

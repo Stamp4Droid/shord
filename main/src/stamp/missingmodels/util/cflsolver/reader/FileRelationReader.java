@@ -12,13 +12,13 @@ import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.Graph;
-import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphEdgeFilter;
 import stamp.missingmodels.util.cflsolver.core.Graph.SimpleGraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 
 public class FileRelationReader implements RelationReader {
 	private final File directory;

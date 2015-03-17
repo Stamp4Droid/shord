@@ -1,4 +1,4 @@
-package stamp.missingmodels.jimplesrcmapper;
+package stamp.missingmodels.util.jimplesrcmapper;
 
 import java.util.HashMap;
 import java.util.Set;

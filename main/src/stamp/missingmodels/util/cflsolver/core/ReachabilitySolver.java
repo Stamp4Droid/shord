@@ -7,10 +7,10 @@ import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
-import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphTransformer;
 import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 
 public class ReachabilitySolver implements GraphTransformer {
 	private final ContextFreeGrammarOpt contextFreeGrammar;

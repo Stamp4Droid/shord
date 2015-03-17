@@ -14,7 +14,6 @@ import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.Graph;
 import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
-import stamp.missingmodels.util.cflsolver.core.Graph.Filter;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphEdgeFilter;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphTransformer;
@@ -23,6 +22,7 @@ import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.Relation;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 
 public class ShordRelationReader implements RelationReader {
 	@Override
@@ -36,30 +36,29 @@ public class ShordRelationReader implements RelationReader {
 		}
 		
 		final Set<String> labels = new HashSet<String>();
+
 		labels.add("$LOCATION");
 		labels.add("$getLatitude");
 		labels.add("$getLongitude");
 		labels.add("$FINE_LOCATION");
 		
-		//labels.add("$getDeviceId");
+		labels.add("$getDeviceId");
 		
-		//labels.add("$SMS");
+		labels.add("$CONTACTS");
 		
-		//labels.add("$CONTACTS");
-		
-		//labels.add("$AUDIO");
-		//labels.add("$ACCOUNTS");
-		//labels.add("$CALENDAR");
+		labels.add("$SMS");		
+		labels.add("$ACCOUNTS");
+		labels.add("$CALENDAR");
 		//labels.add("$CONTENT_PROVIDER");
 		
-		//labels.add("!SOCKET");
+		labels.add("!SOCKET");
 		
 		labels.add("!INTERNET");
 		
-		//labels.add("!sendTextMessage");
-		//labels.add("!destinationAddress");
-		//labels.add("!sendDataMessage");
-		//labels.add("!sendMultipartTextMessage");			
+		labels.add("!sendTextMessage");
+		labels.add("!destinationAddress");
+		labels.add("!sendDataMessage");
+		labels.add("!sendMultipartTextMessage");			
 		//labels.add("!WebView");
 		
 		GraphTransformer gt = new EdgeTransformer(gb.getGraph().getVertices(), gb.getGraph().getSymbols()) {

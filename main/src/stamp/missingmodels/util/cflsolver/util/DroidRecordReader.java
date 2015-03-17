@@ -1,4 +1,4 @@
-package stamp.missingmodels.processor;
+package stamp.missingmodels.util.cflsolver.util;
 
 import java.io.BufferedReader;
 import java.io.File;
