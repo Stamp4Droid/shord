@@ -167,7 +167,7 @@ public class TestsAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		// STEP 0: Inputs
-		boolean useCallbacks = true;
+		boolean useCallbacks = false;
 		
 		// STEP 1: Setup
 		RelationReader reader = new ShordRelationReader();
@@ -188,6 +188,7 @@ public class TestsAnalysis extends JavaAnalysis {
 				gb.addOrUpdateEdge(new EdgeStruct(edge.sourceName, edge.sinkName, edge.symbol, edge.field, baseEdgeFilter.filter(edge) ? (short)1 : (short)0));
 			}});
 		Graph gwbar = gw.transform(new ReachabilitySolver(g.getVertices(), grammar, reader.readFilter(g.getVertices(), grammar.getSymbols())));
+		
 		System.out.println("Printing graph edges:");
 		IOUtils.printGraphStatistics(gwbar);
 		IOUtils.printGraphEdges(gwbar, "Src2Sink", true);
@@ -196,5 +197,9 @@ public class TestsAnalysis extends JavaAnalysis {
 		// STEP 5: Abductive inference
 		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(grammar).process(baseEdgeFilter, initialEdgeFilter, g, reader.readFilter(g.getVertices(), grammar.getSymbols()), 2);
 		IOUtils.printAbductionResult(results, true, useCallbacks);
+		
+		// TEMP CODE
+		IOUtils.printGraphToFile(gw, false);
+		IOUtils.printGraphToFile(gwbar, true);
 	}
 }

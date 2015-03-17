@@ -84,6 +84,27 @@ public class IOUtils {
 		}
 	}
 	
+	public static void printGraphToFile(Graph g, boolean isBar) {
+		try {
+			File dir = new File("graph_output");
+			dir.mkdirs();
+			File file = new File(dir, getAppName() + ".graph" + (isBar ? "_bar" : ""));
+			PrintWriter pw = new PrintWriter(file);
+			for(EdgeStruct edge : g.getEdgeStructs()) {
+				StringBuilder str = new StringBuilder();
+				str.append(edge.sourceName).append(",");
+				str.append(edge.sinkName).append(",");
+				str.append(edge.symbol).append(",");
+				str.append(edge.field);
+				pw.println(str);
+			}
+			pw.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Error writing file!");
+		}
+	}
+	
 	public static void printGraphEdges(Graph g, String symbol, boolean shord) {
 		System.out.println("Printing edges: " + symbol);
 		PrintWriter pw = new PrintWriter(System.out);
