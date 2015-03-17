@@ -680,6 +680,11 @@ public:
         }
         return num_states();
     }
+    // TODO: Only defined for minimal DFAs
+    bool empty() const {
+        assert(minimal());
+        return num_states() == 1 && !is_final(0);
+    }
     void add_symb_trans(posint src, Symbol symbol, posint tgt) {
         // TODO: Might be more efficient to keep a map from symbols to letters.
         const auto iter_p =
@@ -1018,6 +1023,31 @@ public:
         swap(a.opens,    b.opens);
         swap(a.closes,   b.closes);
     }
+    std::pair<Signature,Signature> effects_around(Ref<Variable> src,
+                                                  Ref<Variable> dst) const {
+        using std::swap;
+        CodeGraph temp(*this);
+        temp.close();
+        // Compute prefix machine ending at 'src'.
+        std::set<Ref<Variable> > pre_exits;
+        pre_exits.insert(src);
+        swap(temp.exits, pre_exits);
+        decltype(opens) pre_opens; // use empty set, i.e. ignore opens
+        swap(temp.opens, pre_opens);
+        Signature prefix = temp.to_sig();
+        swap(temp.opens, pre_opens);
+        swap(temp.exits, pre_exits);
+        // Compute suffix machine starting from 'dst'.
+        Ref<Variable> old_entry = temp.entry;
+        temp.entry = dst;
+        decltype(closes) suf_closes; // use empty set, i.e. ignore closes
+        swap(temp.closes, suf_closes);
+        Signature suffix = temp.to_sig();
+        swap(temp.closes, suf_closes);
+        temp.entry = old_entry;
+        // Return prefix and suffix in a pair.
+        return std::make_pair(std::move(prefix), std::move(suffix));
+    }
     void embed(Ref<Variable> src, Ref<Variable> tgt, const Signature& callee) {
         // Create temporary variables for all states in callee's signature
         // (except the sink state).
@@ -1312,37 +1342,36 @@ public:
     const Signature& sig() const {
         return sig_;
     }
+    // TODO: 'callers_' aren't updated.
     void inline_nonrec_callees(const Registry<Function>& fun_reg,
                                const typename SccGraph<Function>::SCC& scc) {
+        using std::swap;
+        decltype(calls_) rec_calls;
         FOR(c, calls_) {
             if (scc.nodes.count(c.get<FUN>()) == 0) {
                 code_.embed(c.get<SRC>(), c.get<TGT>(),
                             fun_reg[c.get<FUN>()].sig_);
-                code_.close();
+            } else {
+                rec_calls.insert(c);
             }
         }
+        swap(calls_, rec_calls);
     }
     // Returns 'false' if we've reached fixpoint, and sig_ didn't need to be
     // updated. Otherwise updates sig_ and returns 'true'.
-    bool update_sig(const Registry<Function>& fun_reg,
-                    const typename SccGraph<Function>::SCC& scc) {
+    bool update_sig(const Registry<Function>& fun_reg) {
         auto t_start = std::chrono::steady_clock::now();
         // Current sig_ is step i on the fixpoint process, S(i).
         const Signature& si = sig_;
         // Embed the latest signatures of same-SCC callees, and produce
         // minimal FSM to form step i+1, F(S(i)).
         CodeGraph stage(code_);
-        auto stage_embed =
-            [&](const mi::Index<SRC, Ref<Variable>,
-                          mi::Table<TGT, Ref<Variable> > >& ends,
-                Ref<Function> callee) {
+        FOR(c, calls_) {
             // TODO: Assumes the numbering of the original vars doesn't change
             // on the clone.
-            FOR(e, ends) {
-                stage.embed(e.get<SRC>(), e.get<TGT>(), fun_reg[callee].sig_);
-            }
-        };
-        filter(calls_.pri(), scc.nodes, stage_embed);
+            stage.embed(c.get<SRC>(), c.get<TGT>(),
+                        fun_reg[c.get<FUN>()].sig_);
+        }
         std::cout << "    Embedded calls" << std::endl;
         stage.close();
         std::cout << "    Internal matching done" << std::endl;
@@ -1377,6 +1406,21 @@ public:
         ms_spent_ += std::chrono::duration_cast<std::chrono::milliseconds>
             (t_end - t_start).count();
         return true;
+    }
+    void print_call_effects(std::ostream& os,
+                            const Registry<Function>& fun_reg) const {
+        // TODO: Print actual delimiter names on the transitions.
+        FOR(c, calls_) {
+            std::pair<Signature,Signature> effects =
+                code_.effects_around(c.get<SRC>(), c.get<TGT>());
+            // if (effects.first.empty() || effects.second.empty()) {
+            //     os << name << " " << fun_reg[c.get<FUN>()].name << std::endl;
+            // } else {
+            os << name << " " << fun_reg[c.get<FUN>()].name << " "
+               << effects.first.to_regex() << "|"
+               << effects.second.to_regex() << std::endl;
+            // }
+        }
     }
     void to_tgf(std::ostream& os, const Registry<Function>& fun_reg,
                 const Registry<Field>& fld_reg) const {
@@ -1567,48 +1611,6 @@ int main(int argc, char* argv[]) {
     }
     SccGraph<Function> cg(funs, calls);
 
-    // Print out SCC and statistics.
-    Histogram<unsigned> scc_size_freqs;
-    fs::path cg_fpath(outdir/"cg.tgf");
-    std::ofstream cg_fout(cg_fpath.string());
-    EXPECT((bool) cg_fout);
-    for (unsigned i = 0; i < cg.num_sccs(); i++) {
-        unsigned size = cg.scc(i).nodes.size();
-        if (size == 1 && cg.scc(i).trivial) {
-            size = 0;
-        }
-        cg_fout << i << " " << size << std::endl;
-        scc_size_freqs.record(size);
-        if (size < 10) {
-            continue;
-        }
-        const std::set<Ref<Function> >& scc_funs = cg.scc(i).nodes;
-        fs::path scc_fpath(outdir/(std::string("scc") + std::to_string(i) +
-                                   ".tgf"));
-        std::ofstream scc_fout(scc_fpath.string());
-        EXPECT((bool) scc_fout);
-        for (Ref<Function> f : scc_funs) {
-            scc_fout << funs[f].name << std::endl;
-        }
-        scc_fout << "#" << std::endl;
-        for (Ref<Function> src : scc_funs) {
-            for (Ref<Function> tgt : calls[src]) {
-                if (scc_funs.count(tgt) > 0) {
-                    scc_fout << funs[src].name << " " << funs[tgt].name
-                             << std::endl;
-                }
-            }
-        }
-    }
-    cg_fout << "#" << std::endl;
-    for (unsigned i = 0; i < cg.num_sccs(); i++) {
-        for (unsigned j : cg.scc(i).children) {
-            cg_fout << i << " " << j << std::endl;
-        }
-    }
-    std::cout << "SCC size\tFrequency" << std::endl;
-    std::cout << scc_size_freqs;
-
     // Update signatures up to fixpoint.
     // TODO: No need to run twice for trivial SCCs.
     for (unsigned i = 0; i < cg.num_sccs(); i++) {
@@ -1616,14 +1618,22 @@ int main(int argc, char* argv[]) {
                   << std::endl;
         const auto& scc = cg.scc(i);
         Worklist<Ref<Function>,true> worklist;
+        // Inline non-recursive calls on all functions in the SCC.
         for (Ref<Function> f : scc.nodes) {
             funs[f].inline_nonrec_callees(funs, scc);
+            std::cout << "    Inlined non-recursive calls on " << funs[f].name
+                      << std::endl;
+            fs::path fpath(outdir/(funs[f].name + ".fun.tgf"));
+            std::ofstream fout(fpath.string());
+            EXPECT((bool) fout);
+            funs[f].to_tgf(fout, funs, flds);
             worklist.enqueue(f);
         }
+        // Fixpoint inside the SCC.
         while (!worklist.empty()) {
             Function& f = funs[worklist.dequeue()];
             std::cout << "Processing " << f.name << std::endl;
-            if (!f.update_sig(funs, scc)) {
+            if (!f.update_sig(funs)) {
                 std::cout << "    No change" << std::endl;
                 continue;
             }
@@ -1644,7 +1654,43 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    // Print statistics
+    // Print out call graph and large SCCs.
+    Histogram<unsigned> scc_size_freqs;
+    fs::path cg_fpath(outdir/"cg.tgf");
+    std::ofstream cg_fout(cg_fpath.string());
+    EXPECT((bool) cg_fout);
+    for (unsigned i = 0; i < cg.num_sccs(); i++) {
+        unsigned size = cg.scc(i).nodes.size();
+        if (size == 1 && cg.scc(i).trivial) {
+            size = 0;
+        }
+        cg_fout << i << " " << size << std::endl;
+        scc_size_freqs.record(size);
+        if (size < 10) {
+            continue;
+        }
+        fs::path scc_fpath(outdir/(std::string("scc") + std::to_string(i) +
+                                   ".tgf"));
+        std::ofstream scc_fout(scc_fpath.string());
+        EXPECT((bool) scc_fout);
+        for (Ref<Function> f : cg.scc(i).nodes) {
+            scc_fout << funs[f].name << std::endl;
+        }
+        scc_fout << "#" << std::endl;
+        for (Ref<Function> src : cg.scc(i).nodes) {
+            funs[src].print_call_effects(scc_fout, funs);
+        }
+    }
+    cg_fout << "#" << std::endl;
+    for (unsigned i = 0; i < cg.num_sccs(); i++) {
+        for (unsigned j : cg.scc(i).children) {
+            cg_fout << i << " " << j << std::endl;
+        }
+    }
+
+    // Print statistics.
+    std::cout << "SCC size\tFrequency" << std::endl;
+    std::cout << scc_size_freqs;
     fs::path stats_fpath(outdir/"stats.csv");
     std::ofstream stats_fout(stats_fpath.string());
     EXPECT((bool) stats_fout);
@@ -1657,12 +1703,5 @@ int main(int argc, char* argv[]) {
         const auto& scc = cg.scc(cg.scc_of(f.ref));
         stats_fout << "\t" << scc.height << "\t" << scc.nodes.size()
                    << "\t" << scc.cumm_size << std::endl;
-    }
-
-    std::cout << "Singleton entries:" << std::endl;
-    for (const auto& scc : cg.sccs()) {
-        if (scc.parents.empty() && scc.children.empty()) {
-            std::cout << funs[*(scc.nodes.begin())].name << std::endl;
-        }
     }
 }
