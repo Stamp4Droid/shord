@@ -1,7 +1,9 @@
 package stamp.reporting;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,33 +14,13 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import soot.SootClass;
 import soot.SootMethod;
+import soot.util.MapNumberer;
 import stamp.srcmap.Expr;
 import stamp.srcmap.sourceinfo.RegisterMap;
-import stamp.srcmap.sourceinfo.SourceInfo;
-import chord.util.tuple.object.Pair;
-
-// TODO thin out unused imports
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collection;
-import java.util.List;
-import java.util.ArrayList;
-
-import shord.project.ClassicProject;
-import shord.project.analyses.ProgramRel;
-import shord.analyses.Ctxt;
-import shord.analyses.VarNode;
-
-import stamp.util.Partition;
-
 import chord.bddbddb.Rel.RelView;
-import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Pair;
-
-import soot.util.BitVector;
-import soot.util.MapNumberer;
+import chord.util.tuple.object.Trio;
+// TODO thin out unused imports
 
 /**
  * @author Saswat Anand

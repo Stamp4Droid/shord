@@ -19,7 +19,7 @@ import soot.Modifier;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.util.NumberedString;
-import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
 

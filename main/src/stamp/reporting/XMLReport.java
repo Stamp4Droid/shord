@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import stamp.srcmap.sourceinfo.SourceInfo;
-
 /*
  * @author Saswat Anand
 **/

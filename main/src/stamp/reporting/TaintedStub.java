@@ -3,7 +3,6 @@ package stamp.reporting;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import soot.SootMethod;
-import stamp.srcmap.sourceinfo.SourceInfo;
 
 public class TaintedStub extends XMLReport
 {

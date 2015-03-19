@@ -16,8 +16,6 @@ import shord.analyses.VarNode;
 import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
-
 import soot.SootMethod;
 import soot.Type;
 import soot.Unit;
@@ -29,7 +27,7 @@ import stamp.paths.CtxtVarPoint;
 import stamp.paths.Path;
 import stamp.paths.PathsAdapter;
 import stamp.paths.Step;
-import stamp.srcmap.sourceinfo.SourceInfo;
+import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
 import stamp.util.PropertyHelper;
 import stamp.util.tree.Node;
 import stamp.util.tree.Tree;

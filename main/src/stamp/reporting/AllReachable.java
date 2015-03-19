@@ -3,7 +3,6 @@ package stamp.reporting;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import soot.SootMethod;
-import java.util.*;
 
 public class AllReachable extends XMLReport
 {

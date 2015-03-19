@@ -21,7 +21,6 @@ import soot.tagkit.Tag;
 import soot.util.ArrayNumberer;
 import soot.util.Chain;
 import stamp.missingmodels.entrypoints.EntryPointAugmentsBuilder;
-import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 public class Program
 {

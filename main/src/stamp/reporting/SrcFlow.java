@@ -2,9 +2,8 @@ package stamp.reporting;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import chord.util.tuple.object.Pair;
-
 import soot.SootMethod;
+import chord.util.tuple.object.Pair;
 
 public class SrcFlow extends XMLReport
 {

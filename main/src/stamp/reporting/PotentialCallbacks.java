@@ -10,12 +10,11 @@ import java.util.Set;
 import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
-
 import soot.Modifier;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.util.NumberedString;
+import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
 
 public class PotentialCallbacks extends XMLReport
 {
