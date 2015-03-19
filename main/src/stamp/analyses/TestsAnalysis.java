@@ -93,7 +93,7 @@ public class TestsAnalysis extends JavaAnalysis {
 			}};
 		
 		// edges
-		final MultivalueMap<String,String> edges = union(getStampEdges("param", "V", calleeFilter), getStampEdges("paramPrim", "U", calleeFilter), getStampEdges("return", "V", callerFilter), getStampEdges("returnPrim", "U", callerFilter));
+		final MultivalueMap<String,String> edges = union(getStampEdges("param", "V", callerFilter), getStampEdges("paramPrim", "U", callerFilter), getStampEdges("return", "V", calleeFilter), getStampEdges("returnPrim", "U", calleeFilter));
 		
 		// filter
 		return getFilter(edges);
