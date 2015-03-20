@@ -38,4 +38,9 @@ public class CallStack implements Iterable<Pair<Stmt,SootMethod>>
 	{
 		return callStack.iterator();
 	}
+	
+	public int size()
+	{
+		return callStack.size();
+	}
 }
