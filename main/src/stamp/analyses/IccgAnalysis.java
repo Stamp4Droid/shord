@@ -101,7 +101,7 @@ public class IccgAnalysis extends JavaAnalysis
 		Iterable<Pair<Ctxt,Stmt>> callers = callersOf(callee, calleeContext);
 		if(callers == null){
 			//reached the entry
-			cacheResult(Collections.<WidgetList> emptySet(), path);
+			cacheResult(Collections.<WidgetList> emptySet(), path, true);
 			return;
 		}
 
@@ -125,7 +125,7 @@ public class IccgAnalysis extends JavaAnalysis
 			Set<WidgetList> cachedResult = cache.get(pair);
 			if(cachedResult != null){
 				System.out.println("cachehit: "+cacheHit++);
-				cacheResult(cachedResult, path);
+				cacheResult(cachedResult, path, false);
 				continue;
 			}
 
@@ -161,7 +161,7 @@ public class IccgAnalysis extends JavaAnalysis
 				cache.put(callSite, ws);
 			}
 			ws.add(widgets);
-			debug(callSite, widgets);
+			//debug(callSite, widgets);
 		}
 	}
 
@@ -186,7 +186,7 @@ public class IccgAnalysis extends JavaAnalysis
 		System.out.println(builder.toString());
 	}
 
-	protected void cacheResult(Set<WidgetList> suffixes, List<Trio<Ctxt,Stmt,Set<Ctxt>>> path)
+	protected void cacheResult(Set<WidgetList> suffixes, List<Trio<Ctxt,Stmt,Set<Ctxt>>> path, boolean debug)
 	{
 		int size = path.size();		
 		WidgetList prefix = new WidgetList();
@@ -220,7 +220,36 @@ public class IccgAnalysis extends JavaAnalysis
 				}
 			}
 		}
-		
+		if(debug && prefix.size() == 2) debug(path);
+					
+	}
+
+	protected void debug(List<Trio<Ctxt,Stmt,Set<Ctxt>>> path)
+	{
+		StringBuilder builder = new StringBuilder();
+		int count = 0;
+		for(Trio<Ctxt,Stmt,Set<Ctxt>> trio : path){
+			Ctxt c = trio.val0;
+			Stmt callStmt = trio.val1;
+			Set<Ctxt> widgetObjs = trio.val2;
+
+			Set<String> ids = new HashSet();
+			if(widgetObjs != null){
+				for(Ctxt ctxt : widgetObjs){
+					String id = widgetToId.get(ctxt);
+					if(id == null)
+						id = ctxt.toString();
+					ids.add(id);
+				}
+			}
+			SootMethod m = invkStmtToMethod.get(callStmt);
+			builder.append(count+++". stmt: "+ callStmt+"@"+m.getSignature()+"\n  ctxt: "+c.toString());
+			builder.append("\n  widgets: [");
+			for(String id : ids)
+				builder.append(id+", ");
+			builder.append("]\n");
+		} 
+		System.out.println(builder.toString());
 	}
 
 	protected Set<Ctxt> identifyWidgets(Ctxt context, SootMethod m)
@@ -356,6 +385,7 @@ public class IccgAnalysis extends JavaAnalysis
 	
 	void writeResults(List<Pair<SootMethod,Ctxt>> workList) throws IOException
 	{
+		int pathCount = 0;
 		for(Pair<SootMethod,Ctxt> pair : workList){
 			SootMethod target = pair.val0;
 			Ctxt targetCtxt = pair.val1;
@@ -383,9 +413,14 @@ public class IccgAnalysis extends JavaAnalysis
 			writer.name("context");
 			writer.value(targetCtxt.toString());
 			
-			writer.name("control");
+			//writer.name("control");
+			writer.name("paths");
 			writer.beginArray();
 			for(WidgetList wl : allWidgetList){
+				writer.beginObject();
+				writer.name("id").value(pathCount++);
+				writer.name("length").value(wl.size());
+				writer.name("widgets");
 				writer.beginArray();
 				//for(Trio<Ctxt,Stmt,Set<Ctxt>> widgetInfo : wl){
 					//Stmt callSite = widgetInfo.val1;
@@ -395,18 +430,22 @@ public class IccgAnalysis extends JavaAnalysis
 					//writer.name("context").value(widgetInfo.val0.toString());
 					//writer.name("widgets");
 				for(Set<Ctxt> widgets : wl){
-					writer.beginArray();
 					//Set<Ctxt> widgets = widgetInfo.val2;
+					Set<String> ids = new HashSet();
 					for(Ctxt ctxt : widgets){
 						String id = widgetToId.get(ctxt);
 						if(id == null)
 							id = ctxt.toString();
-						writer.value(id);
+						ids.add(id);
 					}
+					writer.beginArray();
+					for(String id : ids)
+						writer.value(id);
 					writer.endArray();
-					//writer.endObject();
 				}
+
 				writer.endArray();
+				writer.endObject();
 			}
 			writer.endArray();
 			writer.endObject();
