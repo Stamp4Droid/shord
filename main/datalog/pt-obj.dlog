@@ -27,6 +27,7 @@ StoreStat(f:F,v:V)   input   # f = v
 param(u:V,v:V,i:I)   input   # u is the formal parameter, v is actual arg, i is invocation stmt
 return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
 typeFilter(v:V,o:C) input   # type wise, v can point-to o
+ipFilter(c:C,v:V,o:C) input  
 IinvkArg(i:I,n:Z,v:V) input
 
 MV(m:M,v:V) input         # v is a variable in method m
@@ -50,7 +51,7 @@ CtxtInsMeth(m:M) input
 SubSig(m:M,s:S) input     # s is subsignature of m.
 Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 
-CICMtmp(d:C,i:I,c:C,m:M)
+#CICMtmp(d:C,i:I,c:C,m:M) output
 
 ###################
 #    OUTPUT
@@ -78,16 +79,16 @@ reachableCI(c,i) :- MI(m,i), reachableCM(c,m).
 CIC(c,i,d) :- CC(c,d), CI(d,i).
 
 DIC(c,i,o) :- IinvkArg(i,0,v), pt(c,v,o).
-CICMtmp(c,i,o,m) :- reachableCI(c,i), DIC(c,i,o), ICM(i,o,m). 
-CICMtmp(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CIC(c,i,d).
-CICMtmp(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
-CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
-CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
+CICM(c,i,o,m) :- reachableCI(c,i), DIC(c,i,o), ICM(i,o,m). 
+CICM(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CIC(c,i,d).
+CICM(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
+#CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
+#CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
 
 DVDV(d,u,c,v) :- CICM(c,i,d,m), MV(m,u), param(u,v,i).
 DVDV(c,u,d,v) :- CICM(c,i,d,m), MV(m,v), return(u,v,i).
 
-pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), typeFilter(u,o).
+pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), ipFilter(c,u,o).
 
 pt(c,v,o) :- Alloc(v,h), MV(m,v), reachableCM(c,m), CC(c,o), CH(o,h).
 pt(c,v,o) :- GlobalAlloc(v,h), MV(m,v), reachableCM(c,m), CH(o,h).
