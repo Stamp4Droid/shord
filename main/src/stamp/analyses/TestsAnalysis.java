@@ -199,7 +199,9 @@ public class TestsAnalysis extends JavaAnalysis {
 		IOUtils.printAbductionResult(results, true, useCallbacks);
 		
 		// TEMP CODE
-		IOUtils.printGraphToFile(gw, false);
-		IOUtils.printGraphToFile(gwbar, true);
+		Graph gbar = g.transform(new ReachabilitySolver(g.getVertices(), grammar));
+		IOUtils.printGrammar(grammar);
+		IOUtils.printGraphToFile(g, false);
+		IOUtils.printGraphToFile(gbar, true);
 	}
 }

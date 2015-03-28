@@ -16,6 +16,10 @@ import java.util.Set;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.analyses.DomL;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.AuxProduction;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Graph;
@@ -97,6 +101,52 @@ public class IOUtils {
 				str.append(edge.symbol).append(",");
 				str.append(edge.field);
 				pw.println(str);
+			}
+			pw.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Error writing file!");
+		}
+	}
+	
+	public static void printGrammar(ContextFreeGrammarOpt cfg) {
+		try {
+			File dir = new File("graph_output");
+			dir.mkdirs();
+			File file = new File(dir, "flow.grammar");
+			PrintWriter pw = new PrintWriter(file);
+			for(int i=0; i<cfg.binaryProductionsByTarget.length; i++) {
+				for(UnaryProduction up : cfg.unaryProductionsByTarget[i]) {
+					StringBuilder sb = new StringBuilder();
+					sb.append("unary").append(",");
+					sb.append(up.target.symbol).append(",");
+					sb.append(up.input.symbol).append(",");
+					sb.append(up.isInputBackwards).append(",");
+					sb.append(up.ignoreFields);
+					pw.println(sb);
+				}
+				for(BinaryProduction bp : cfg.binaryProductionsByTarget[i]) {
+					StringBuilder sb = new StringBuilder();
+					sb.append("binary").append(",");
+					sb.append(bp.target.symbol).append(",");
+					sb.append(bp.firstInput.symbol).append(",");
+					sb.append(bp.isFirstInputBackwards).append(",");
+					sb.append(bp.secondInput.symbol).append(",");
+					sb.append(bp.isSecondInputBackwards).append(",");
+					sb.append(bp.ignoreFields);
+					pw.println(sb);
+				}
+				for(AuxProduction ap : cfg.auxProductionsByTarget[i]) {
+					StringBuilder sb = new StringBuilder();
+					sb.append("aux").append(",");
+					sb.append(ap.target.symbol).append(",");
+					sb.append(ap.input.symbol).append(",");
+					sb.append(ap.isInputBackwards).append(",");
+					sb.append(ap.auxInput.symbol).append(",");
+					sb.append(ap.isAuxInputBackwards).append(",");
+					sb.append(ap.ignoreFields);
+					pw.println(sb);
+				}
 			}
 			pw.close();
 		} catch(IOException e) {
