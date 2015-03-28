@@ -23,6 +23,7 @@ public class TestsProcessor implements Processor {
 	private final Map<String,Map<Double,Integer>> lpRunningTimes = new HashMap<String,Map<Double,Integer>>();
 	
 	private final Map<String,Map<Double,Integer>> numVariables = new HashMap<String,Map<Double,Integer>>();
+	private final Map<String,Map<Double,Integer>> numUnoptConstraints = new HashMap<String,Map<Double,Integer>>();
 	private final Map<String,Map<Double,Integer>> numConstraints = new HashMap<String,Map<Double,Integer>>();
 	
 	private final Map<String,Map<Double,Integer>> numFlowEdges = new HashMap<String,Map<Double,Integer>>();
@@ -44,6 +45,7 @@ public class TestsProcessor implements Processor {
 		this.lpRunningTimes.put(appName, new HashMap<Double,Integer>());
 		
 		this.numVariables.put(appName, new HashMap<Double,Integer>());
+		this.numUnoptConstraints.put(appName, new HashMap<Double,Integer>());
 		this.numConstraints.put(appName, new HashMap<Double,Integer>());
 		
 		this.numFlowEdges.put(appName, new HashMap<Double,Integer>());
@@ -75,6 +77,10 @@ public class TestsProcessor implements Processor {
 			if(this.numVariables.get(appName).get(this.currentCoverage) == null) {
 				this.numVariables.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
 			}
+		} else if(line.startsWith("Number of productions:")) {
+			if(this.numUnoptConstraints.get(appName).get(this.currentCoverage) == null) {
+				this.numUnoptConstraints.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
+			}
 		} else if(line.startsWith("Number of constraints:")) {
 			if(this.numConstraints.get(appName).get(this.currentCoverage) == null) {
 				this.numConstraints.get(appName).put(this.currentCoverage, Integer.parseInt(line.split(" ")[3].trim()));
@@ -105,13 +111,14 @@ public class TestsProcessor implements Processor {
 
 	@Override
 	public void process(String appName, int appLinesOfCode, int frameworkLinesOfCode) {
-		this.linesOfCode.put(appName, appLinesOfCode+frameworkLinesOfCode);
+		this.linesOfCode.put(appName, appLinesOfCode);
 	}
 
 	@Override
 	public void finishProcessing(String appName) {
 		if(this.lpRunningTimes.get(appName).get(this.currentCoverage) != null
 				&& this.numVariables.get(appName).get(this.currentCoverage) != null
+				&& this.numUnoptConstraints.get(appName).get(this.currentCoverage) != null
 				&& this.numConstraints.get(appName).get(this.currentCoverage) != null
 				&& this.numFlowEdges.get(appName).get(this.currentCoverage) != null
 				&& this.numBaseEdges.get(appName).get(this.currentCoverage) != null
@@ -165,42 +172,50 @@ public class TestsProcessor implements Processor {
 		return numCuts;
 	}
 	
+	private static final String SEPARATOR = " & ";
+	
 	public String getHeader() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("App Name").append(",");
-		sb.append("Coverage").append(",");
-		sb.append("LP Solve Time").append(",");
-		sb.append("# Variables").append(",");
-		sb.append("# Constraints").append(",");
-		sb.append("# Flow Edges").append(",");
-		sb.append("# Base Edges").append(",");
+		sb.append("App Name").append(SEPARATOR);
+		sb.append("Lines of Code").append(SEPARATOR);
+		sb.append("# Flow Edges").append(SEPARATOR);
+		sb.append("# Base Edges").append(SEPARATOR);
+		sb.append("# Variables").append(SEPARATOR);
+		sb.append("# Unoptimized Constraints").append(SEPARATOR);
+		sb.append("# Constraints").append(SEPARATOR);
+		sb.append("# Constraints / # Unoptimized Constraints").append(SEPARATOR);
+		sb.append("ILP Solve Time").append(SEPARATOR);
 		for(int i=0; i<this.getMaxNumCuts(); i++) {
-			sb.append("# Cut Edges " + i).append(",");
+			sb.append("# Cut Edges " + i).append(SEPARATOR);
 		}
-		sb.append("Lines of Code").append(",");
-		return sb.toString();		
+		//sb.append("Coverage").append(SEPARATOR);
+		return sb.substring(0, sb.length()-SEPARATOR.length()).toString();		
 	}
 	
+	private double d = 0;
+	private int n = 0;
 	public String getInfoFor(String appName, double coverage) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(appName).append(",");
-		sb.append(coverage).append(",");
-		sb.append(this.lpRunningTimes.get(appName).get(coverage)).append(",");
-		sb.append(this.numVariables.get(appName).get(coverage)).append(",");
-		sb.append(this.numConstraints.get(appName).get(coverage)).append(",");
-		sb.append(this.numFlowEdges.get(appName).get(coverage)).append(",");
-		sb.append(this.numBaseEdges.get(appName).get(coverage)).append(",");
+		sb.append(appName).append(SEPARATOR);
+		sb.append(this.linesOfCode.get(appName)).append(SEPARATOR);
+		sb.append(this.numFlowEdges.get(appName).get(coverage)).append(SEPARATOR);
+		sb.append(this.numBaseEdges.get(appName).get(coverage)).append(SEPARATOR);
+		sb.append(this.numVariables.get(appName).get(coverage)).append(SEPARATOR);
+		sb.append(this.numUnoptConstraints.get(appName).get(coverage)).append(SEPARATOR);
+		sb.append(this.numConstraints.get(appName).get(coverage)).append(SEPARATOR);
+		sb.append(100.0*this.numConstraints.get(appName).get(coverage)/this.numUnoptConstraints.get(appName).get(coverage)).append(SEPARATOR);
+		sb.append(this.lpRunningTimes.get(appName).get(coverage)/1000.0).append(SEPARATOR);
 		int numCuts = this.getMaxNumCuts();
 		for(int i=0; i<numCuts; i++) {
-			sb.append(this.numCutEdges.get(appName).get(coverage).get(i)).append(",");
+			sb.append(this.numCutEdges.get(appName).get(coverage).get(i)).append(SEPARATOR);
 		}
-		sb.append(this.linesOfCode.get(appName));
-		return sb.toString();
+		return sb.substring(0, sb.length()-SEPARATOR.length()).toString();
 	}
 	
 	public static void printSummary() {
 		TestsProcessor tp = new TestsProcessor();
-		new LogReader("../results_experiment2_with_pcs", tp).run();
+		//new LogReader("/Users/obastani/Documents/Files/stamp/tests_paper/results/results_experiment2/contacts/run_final", tp).run();
+		new LogReader("/Users/obastani/Documents/Files/stamp/results/all_sources", tp).run();
 		//new LogReader("../results_experiment1", tp).run();
 		System.out.println(tp.getHeader());
 		for(String appName : tp.getAppNames()) {
