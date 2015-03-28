@@ -19,6 +19,7 @@ public class ReachabilitySolver implements GraphTransformer {
 	
 	private GraphBuilder graph;
 	private BucketHeap worklist;
+	private int numProductions;
 	
 	public ReachabilitySolver(VertexMap vertices, ContextFreeGrammarOpt contextFreeGrammar, Filter<Edge> filter) {
 		this.vertices = vertices;
@@ -36,6 +37,7 @@ public class ReachabilitySolver implements GraphTransformer {
 		if(field == null) {
 			return;
 		}
+		this.numProductions++;
 		Edge curEdge = this.graph.getEdge(source, sink, symbol, field);
 		short curWeight = curEdge == null ? (short)-1 : curEdge.weight;
 		Edge edge = this.graph.addOrUpdateEdge(source, sink, symbol, field, weight, firstInput, secondInput);
@@ -79,6 +81,7 @@ public class ReachabilitySolver implements GraphTransformer {
 		
 		this.graph = new GraphBuilder(this.vertices, this.contextFreeGrammar.getSymbols());
 		this.worklist = new BucketHeap();
+		this.numProductions = 0;
 		
 		for(EdgeStruct edge : edges) {
 			this.addEdgeHelper(this.graph.getVertex(edge.sourceName), this.graph.getVertex(edge.sinkName), this.contextFreeGrammar.getSymbols().get(edge.symbol), Field.getField(edge.field), edge.weight, null, null);
@@ -128,6 +131,7 @@ public class ReachabilitySolver implements GraphTransformer {
 		System.out.println("Time: " + totalTime);
 		System.out.println("Number of edges: " + this.graph.getGraph().getNumEdges());
 		System.out.println("Rate: " + (double)this.graph.getGraph().getNumEdges()/totalTime);
+		System.out.println("Number of productions: " + this.numProductions);
 		
 		return this.graph.getGraph();
 	}

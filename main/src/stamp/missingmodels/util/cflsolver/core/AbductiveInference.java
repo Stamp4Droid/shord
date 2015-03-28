@@ -200,6 +200,7 @@ public class AbductiveInference {
 				return x.getStruct(); }})) {
 			this.baseEdges.add(edge);
 		}
+		System.out.println("Num base edges: " + this.baseEdges.size());
 		Filter<EdgeStruct> initialEdgeFilterWeighted = new AndFilter<EdgeStruct>(initialEdgeFilter, new Filter<EdgeStruct>() {
 			@Override
 			public boolean filter(EdgeStruct edge) {
@@ -212,6 +213,7 @@ public class AbductiveInference {
 				return x.getStruct(); }})) {
 			this.initialEdges.add(edge);
 		}
+		System.out.println("Num initial edges: " + this.initialEdges.size());
 
 		// STEP 3: Break initial edges
 		this.setInitialEdges();
