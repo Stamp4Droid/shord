@@ -46,3 +46,5 @@ web/web.xml
 
 stamp-url.txt
 web/stamp-url.txt
+
+.DS_Store
