@@ -197,11 +197,5 @@ public class TestsAnalysis extends JavaAnalysis {
 		// STEP 5: Abductive inference
 		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(grammar).process(baseEdgeFilter, initialEdgeFilter, g, reader.readFilter(g.getVertices(), grammar.getSymbols()), 2);
 		IOUtils.printAbductionResult(results, true, useCallbacks);
-		
-		// TEMP CODE
-		Graph gbar = g.transform(new ReachabilitySolver(g.getVertices(), grammar));
-		IOUtils.printGrammar(grammar);
-		IOUtils.printGraphToFile(g, false);
-		IOUtils.printGraphToFile(gbar, true);
 	}
 }
