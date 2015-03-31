@@ -95,7 +95,7 @@ produces={"M", "Z", "K", "I", "H", "V", "T", "F", "U",
 		"SpecIM", "StatIM", "VirtIM",
 		"SubSig", "Dispatch",
 		"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
-		"SCH", "potentialCallback"},
+	  "SCH", "potentialCallback", "reflect"},
 namesOfTypes = { "M", "Z", "K", "I", "H", "V", "T", "F", "U", "S", "SC"},
 types = { DomM.class, DomZ.class, DomK.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomSC.class},
 namesOfSigns = { "GlobalAlloc", "Alloc", "NewH",
@@ -116,7 +116,7 @@ namesOfSigns = { "GlobalAlloc", "Alloc", "NewH",
 		"SpecIM", "StatIM", "VirtIM",
 		"SubSig", "Dispatch",
 		"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
-		"SCH", "potentialCallback"},
+		 "SCH", "potentialCallback", "reflect"},
 signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
 		"V0,V1:V0xV1", "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 		"V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -135,7 +135,7 @@ signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
 		"I0,M0:I0_M0", "I0,M0:I0_M0", "I0,M0:I0_M0",
 		"M0,S0:M0_S0", "T0,S0,M0:T0_M0_S0",
 		"T0:T0", "T0,T1:T0_T1", "T0,M0:T0_M0", "T0,F0:F0_T0", "T0,M0:T0_M0",
-		"SC0,H0:SC0_H0", "M0:M0"})
+	  "SC0,H0:SC0_H0", "M0:M0", "I0:I0"})
 public class PAGBuilder extends JavaAnalysis
 {
 	private ProgramRel relGlobalAlloc;//(l:V,h:H)
@@ -989,6 +989,8 @@ public class PAGBuilder extends JavaAnalysis
 		CallGraph cg = Program.g().scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
 		relChaIM.zero();
+		ProgramRel relReflect = (ProgramRel) ClassicProject.g().getTrgt("reflect");
+		relReflect.zero();
 		Iterator<Edge> edgeIt = cg.listener();
 		while(edgeIt.hasNext()){
 			Edge edge = edgeIt.next();
@@ -1006,6 +1008,10 @@ public class PAGBuilder extends JavaAnalysis
 			if(stubMethods.contains(src))
 				continue;
 			//System.out.println("stmt: "+stmt+" tgt: "+tgt+ "abstract: "+ tgt.isAbstract());
+			if ("<java.lang.reflect.Method: java.lang.Object invoke(java.lang.Object,java.lang.Object[])>".equals(tgt.toString())) {
+				//System.out.println("REFLECTION: " + stmt.toString());
+				relReflect.add(stmt);
+			}
 			if(ignoreStubs) {
 				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
 					continue;
@@ -1015,6 +1021,7 @@ public class PAGBuilder extends JavaAnalysis
 		if(this.usePotentialCallbacksAdder) {
 			this.potentialCallbacksAdder.addRelIM(relChaIM);
 		}
+		relReflect.save();
 		relChaIM.save();
 	}
 
