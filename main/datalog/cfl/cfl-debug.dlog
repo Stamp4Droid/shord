@@ -34,8 +34,8 @@ ci_IM(i:I,m:M) input
 callgraph(m0:M0,m1:M1) output
 callgraph(m0,m1) :- MI(m0,i), ci_IM(i,m1).
 
-ClinitTM(t:T,m:M) input
 ci_reachableM(m:M) input
+ClinitTM(t:T,m:M) input
 reachableBase(m:M) output
 reachableBase(0).
 reachableBase(m) :- ClinitTM(_,m), ci_reachableM(m).
