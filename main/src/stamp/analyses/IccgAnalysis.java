@@ -43,9 +43,11 @@ public class IccgAnalysis extends JavaAnalysis
 	protected Set<SootMethod> targetMethods = new HashSet();
 	protected Map<SootMethod,Map<Ctxt,Set<Pair<Ctxt,Stmt>>>> csCg = new HashMap();
 	protected Map<SootMethod,VarNode> onClickMethToArg = new HashMap();
-	protected Map<Ctxt,String> widgetToId = new HashMap();
+
 	protected ProgramRel relPt;
 	protected JsonWriter writer;
+
+	protected WidgetControlDependencyAnalysis widgetsAnalysis;
 
 	public void run()
 	{
@@ -66,7 +68,7 @@ public class IccgAnalysis extends JavaAnalysis
 			relPt = (ProgramRel) ClassicProject.g().getTrgt("pt");
 			relPt.load();
 
-			mapWidgetsToIds();
+			widgetsAnalysis = new WidgetControlDependencyAnalysis(mapWidgetsToIds());
 			
 			List<Pair<SootMethod,Ctxt>> workList = new ArrayList();
 			for(SootMethod target : targetMethods){
@@ -96,7 +98,7 @@ public class IccgAnalysis extends JavaAnalysis
 	private int cacheHit = 0;
 	protected void traverse(SootMethod callee, 
 							Ctxt calleeContext, 
-							List<Trio<Ctxt,Stmt,Set<Ctxt>>> path)
+							List<Trio<Ctxt,Stmt,Set<String>>> path)
 	{
 		Iterable<Pair<Ctxt,Stmt>> callers = callersOf(callee, calleeContext);
 		if(callers == null){
@@ -110,7 +112,7 @@ public class IccgAnalysis extends JavaAnalysis
 			Stmt callSite = pair.val1;
 			
 			boolean cyclic = false;
-			for(Trio<Ctxt,Stmt,Set<Ctxt>> trio : path){
+			for(Trio<Ctxt,Stmt,Set<String>> trio : path){
 				Ctxt ctxt = trio.val0;
 				Stmt cs = trio.val1;
 				if(cs.equals(callSite) && ctxt.equals(callerContext)){
@@ -133,12 +135,13 @@ public class IccgAnalysis extends JavaAnalysis
 			//if callSite is conditional dependent
 			//on whether a specific widget is clicked
 			//then propagate
-			Set<Ctxt> widgets = null;
+			Set<String> widgets = null;
 			SootMethod caller = invkStmtToMethod.get(callSite);
-			if(caller.getSubSignature().equals("void onClick(android.view.View)"))
-				widgets = identifyWidgets(callerContext, caller);
+			if(caller.getSubSignature().equals("void onClick(android.view.View)")){
+				widgets = widgetsAnalysis.computeWidgetIds(identifyWidgets(callerContext, caller), caller, callSite);
+			}
 
-			List<Trio<Ctxt,Stmt,Set<Ctxt>>> newPath = new ArrayList();
+			List<Trio<Ctxt,Stmt,Set<String>>> newPath = new ArrayList();
 			newPath.addAll(path);
 			newPath.add(new Trio(callerContext, callSite, widgets));
 
@@ -172,12 +175,9 @@ public class IccgAnalysis extends JavaAnalysis
 						   "ctxt: "+callSite.val0);
 		StringBuilder builder = new StringBuilder();
 		builder.append("[ ");
-		for(Set<Ctxt> widgets : wl){
+		for(Set<String> widgets : wl){
 			builder.append("{");
-			for(Ctxt ctxt : widgets){
-				String id = widgetToId.get(ctxt);
-				if(id == null)
-					id = ctxt.toString();
+			for(String id : widgets){
 				builder.append(id+", ");
 			}
 			builder.append("}, ");
@@ -186,15 +186,15 @@ public class IccgAnalysis extends JavaAnalysis
 		System.out.println(builder.toString());
 	}
 
-	protected void cacheResult(Set<WidgetList> suffixes, List<Trio<Ctxt,Stmt,Set<Ctxt>>> path, boolean debug)
+	protected void cacheResult(Set<WidgetList> suffixes, List<Trio<Ctxt,Stmt,Set<String>>> path, boolean debug)
 	{
 		int size = path.size();		
 		WidgetList prefix = new WidgetList();
 		for(int i = size-1; i >= 0; i--){
-			Trio<Ctxt,Stmt,Set<Ctxt>> trio = path.get(i);
+			Trio<Ctxt,Stmt,Set<String>> trio = path.get(i);
 			Ctxt ctxt = trio.val0;
 			Stmt invkStmt = trio.val1;
-			Set<Ctxt> widgets = trio.val2;
+			Set<String> widgets = trio.val2;
 
 			if(widgets != null)
 				prefix.add(0, widgets);
@@ -224,24 +224,15 @@ public class IccgAnalysis extends JavaAnalysis
 					
 	}
 
-	protected void debug(List<Trio<Ctxt,Stmt,Set<Ctxt>>> path)
+	protected void debug(List<Trio<Ctxt,Stmt,Set<String>>> path)
 	{
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
-		for(Trio<Ctxt,Stmt,Set<Ctxt>> trio : path){
+		for(Trio<Ctxt,Stmt,Set<String>> trio : path){
 			Ctxt c = trio.val0;
 			Stmt callStmt = trio.val1;
-			Set<Ctxt> widgetObjs = trio.val2;
+			Set<String> ids = trio.val2;
 
-			Set<String> ids = new HashSet();
-			if(widgetObjs != null){
-				for(Ctxt ctxt : widgetObjs){
-					String id = widgetToId.get(ctxt);
-					if(id == null)
-						id = ctxt.toString();
-					ids.add(id);
-				}
-			}
 			SootMethod m = invkStmtToMethod.get(callStmt);
 			builder.append(count+++". stmt: "+ callStmt+"@"+m.getSignature()+"\n  ctxt: "+c.toString());
 			builder.append("\n  widgets: [");
@@ -262,7 +253,6 @@ public class IccgAnalysis extends JavaAnalysis
 		Set<Ctxt> ret = new HashSet();
 		for(Ctxt obj : objs){
 			ret.add(obj);
-			System.out.println("identifyWidgets: widget: "+obj);
 		}		
 		ptView.free();
 		return ret;
@@ -379,7 +369,7 @@ public class IccgAnalysis extends JavaAnalysis
         relMI.close();
 	}
 
-	static class WidgetList extends ArrayList<Set<Ctxt>>//ArrayList<Trio<Ctxt,Stmt,Set<Ctxt>>>
+	static class WidgetList extends ArrayList<Set<String>>//ArrayList<Trio<Ctxt,Stmt,Set<Ctxt>>>
 	{
 	}
 	
@@ -422,24 +412,9 @@ public class IccgAnalysis extends JavaAnalysis
 				writer.name("length").value(wl.size());
 				writer.name("widgets");
 				writer.beginArray();
-				//for(Trio<Ctxt,Stmt,Set<Ctxt>> widgetInfo : wl){
-					//Stmt callSite = widgetInfo.val1;
-					//SootMethod meth = invkStmtToMethod.get(callSite);
-					//writer.beginObject();
-					//writer.name("method").value(meth.getSignature());
-					//writer.name("context").value(widgetInfo.val0.toString());
-					//writer.name("widgets");
-				for(Set<Ctxt> widgets : wl){
-					//Set<Ctxt> widgets = widgetInfo.val2;
-					Set<String> ids = new HashSet();
-					for(Ctxt ctxt : widgets){
-						String id = widgetToId.get(ctxt);
-						if(id == null)
-							id = ctxt.toString();
-						ids.add(id);
-					}
+				for(Set<String> widgets : wl){
 					writer.beginArray();
-					for(String id : ids)
+					for(String id : widgets)
 						writer.value(id);
 					writer.endArray();
 				}
@@ -452,7 +427,7 @@ public class IccgAnalysis extends JavaAnalysis
 		}
 	}
 	
-	protected void mapWidgetsToIds()
+	protected Map<Ctxt,String> mapWidgetsToIds()
 	{
 		Map<Local,String> localToId = new HashMap();
 
@@ -476,6 +451,7 @@ public class IccgAnalysis extends JavaAnalysis
         DomC domC = (DomC) ClassicProject.g().getTrgt("C");
 		Ctxt emptyCtxt = domC.get(0);
         DomV domV = (DomV) ClassicProject.g().getTrgt("V");
+		Map<Ctxt,String> widgetToId = new HashMap();
 
         for(VarNode vnode : domV){
             if(!(vnode instanceof LocalVarNode))
@@ -492,5 +468,7 @@ public class IccgAnalysis extends JavaAnalysis
 				widgetToId.put(obj, id);
 			view.free();
         }		
+		
+		return widgetToId;
 	}
 }
