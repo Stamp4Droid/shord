@@ -24,3 +24,11 @@ S = [0 1 1;0 0 1;0 0 0;0 1 1]
 F = [1 1 1;1 1 1;0 1 0;1 0 0]
 println(LogisticLossFunction(X,S,F))
 println(LogisticLossGradient(X,S,F))
+
+# logistic loss part 3: minimize
+Xmin = optimize(Xt -> LogisticLossFunction(Xt,S,F), X+0.0).minimum
+println(reshape(Xmin, 2, 7))
+
+using BMF
+importall BMF
+println(ComputeBMF(S,F,2))

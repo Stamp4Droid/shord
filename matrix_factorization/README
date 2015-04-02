@@ -1,2 +1,3 @@
-Example for running scripts: /Applications/Julia-0.3.7.app/Contents/Resources/julia/bin/julia test.jl
+Install Optim: Pkg.install("Optim")
+Example for running scripts:  /Applications/Julia-0.4.0-dev-d61c7e4841.app/Contents/Resources/julia/bin/julia test.jl
 
