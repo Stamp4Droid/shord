@@ -27,6 +27,10 @@ import soot.jimple.AnyNewExpr;
 import soot.jimple.ThrowStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.StaticInvokeExpr;
+import soot.jimple.SpecialInvokeExpr;
+import soot.jimple.InterfaceInvokeExpr;
+import soot.jimple.VirtualInvokeExpr;
 import soot.jimple.CastExpr;
 import soot.jimple.FieldRef;
 import soot.jimple.InstanceFieldRef;
@@ -69,7 +73,8 @@ import java.util.*;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
-	             "Stub" },
+	             "Stub",
+	             "cha", "sub", "nonVirtIM", "virtIM", "FT"},
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class},
 	   namesOfSigns = { "Alloc", "Assign", 
@@ -86,7 +91,8 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
-                        "Stub" },
+                        "Stub",
+						"cha", "sub", "nonVirtIM", "virtIM", "FT" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -101,7 +107,8 @@ import java.util.*;
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
-                 "M0:M0" }
+                 "M0:M0",
+				 "M1,T1,M0:M0xM1_T1", "T1,T0:T0_T1", "I0,M0:I0xM0", "I0,M0:I0xM0", "F0,T0:T0_F0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -746,8 +753,105 @@ public class PAGBuilder extends JavaAnalysis
 		}
 	}
 
+	private boolean isVisible(SootClass from, SootMethod m) {
+		if (m.isPublic() || m.isProtected()) {
+			// Simple check for the 'protected' case, because we only use this
+			// code for cases where 'm' is a supermethod of 'from'.
+			return true;
+		}
+		if (m.isPrivate()) {
+			return from.equals(m.getDeclaringClass());
+		}
+		// m is package
+		return from.getJavaPackageName().equals
+			(m.getDeclaringClass().getJavaPackageName());
+	}
+
+	private Map<SootMethod,SootMethod> callTargets(SootClass cls) {
+		Map<String,SootMethod> sig2tgt = new HashMap<String,SootMethod>();
+		Map<SootMethod,SootMethod> m2tgt =
+			new HashMap<SootMethod,SootMethod>();
+		Set<SootClass> implIfaces = new HashSet<SootClass>();
+		// Only consider concrete classes.
+		if (!cls.isConcrete() || cls.isPhantom()) {
+			return m2tgt;
+		}
+		SootClass c = cls;
+		while (true) {
+			for (SootMethod m : c.getMethods()) {
+				// Only consider virtual methods.
+				if (m.isConstructor() || m.isStatic() || !isVisible(cls, m)) {
+					continue;
+				}
+				String sig = m.getSubSignature();
+				if (sig2tgt.containsKey(sig)) {
+					m2tgt.put(m, sig2tgt.get(sig));
+				} else {
+					sig2tgt.put(sig, m);
+					m2tgt.put(m, m);
+				}
+			}
+			Queue<SootClass> queue = new LinkedList<SootClass>();
+			for (SootClass iface : c.getInterfaces()) {
+				queue.add(iface);
+			}
+			while (!queue.isEmpty()) {
+				SootClass iface = queue.remove();
+				if (!implIfaces.add(iface)) {
+					continue;
+				}
+				for (SootClass i : iface.getInterfaces()) {
+					queue.add(i);
+				}
+			}
+
+			if (!c.hasSuperclass()) {
+				break;
+			}
+			c = c.getSuperclass();
+		}
+		for (SootClass iface : implIfaces) {
+			for (SootMethod m : iface.getMethods()) {
+				m2tgt.put(m, sig2tgt.get(m.getSubSignature()));
+			}
+		}
+		return m2tgt;
+	}
+
 	void populateCallgraph()
 	{
+		ProgramRel relCHA = (ProgramRel) ClassicProject.g().getTrgt("cha");
+		relCHA.zero();
+		for (SootClass cls : Program.g().getClasses()) {
+			for (Map.Entry<SootMethod,SootMethod> p
+					 : callTargets(cls).entrySet()) {
+				relCHA.add(p.getKey(), cls.getType(), p.getValue());
+			}
+		}
+		relCHA.save();
+
+		// TODO: Ignore implicit invocations?
+		// ASYNCTASK, CLINIT, FINALIZE, THREAD, INVOKE_FINALIZE
+		ProgramRel relNonVirtIM =
+			(ProgramRel) ClassicProject.g().getTrgt("nonVirtIM");
+		relNonVirtIM.zero();
+		ProgramRel relVirtIM =
+			(ProgramRel) ClassicProject.g().getTrgt("virtIM");
+		relVirtIM.zero();
+		for (Unit s : domI) {
+			InvokeExpr expr = ((Stmt) s).getInvokeExpr();
+			if (expr instanceof StaticInvokeExpr ||
+				expr instanceof SpecialInvokeExpr) {
+				relNonVirtIM.add(s, expr.getMethod());
+			}
+			if (expr instanceof InterfaceInvokeExpr ||
+				expr instanceof VirtualInvokeExpr) {
+				relVirtIM.add(s, expr.getMethod());
+			}
+		}
+		relNonVirtIM.save();
+		relVirtIM.save();
+
 		CallGraph cg = Program.g().scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
         relChaIM.zero();
@@ -807,6 +911,13 @@ public class PAGBuilder extends JavaAnalysis
 			}
 		}
 		domF.save();
+
+		ProgramRel relFT = (ProgramRel) ClassicProject.g().getTrgt("FT");
+		relFT.zero();
+		for (SparkField f : domF) {
+			relFT.add(f, f.getType());
+		}
+		relFT.save();
 	}
 	
 	void populateTypes()
@@ -817,6 +928,20 @@ public class PAGBuilder extends JavaAnalysis
 		while(typesIt.hasNext())
             domT.add(typesIt.next());
 		domT.save();
+
+		// TODO: Does canStore handle all cases?
+		// BottomType, RefLikeType (AnySubType, ArrayType, NullType, RefType)
+		// ErroneousType, UnusableType, UnknownType
+		ProgramRel relSub = (ProgramRel) ClassicProject.g().getTrgt("sub");
+		relSub.zero();
+		for (Type s : program.getTypes()) {
+			for (Type t : program.getTypes()) {
+				if (canStore(s, t)) {
+					relSub.add(s, t);
+				}
+			}
+		}
+		relSub.save();
 	}
 		
 	void populateDomains(List<MethodPAGBuilder> mpagBuilders)
@@ -824,8 +949,8 @@ public class PAGBuilder extends JavaAnalysis
 		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
 
 		populateMethods();
-		populateFields();
 		populateTypes();
+		populateFields();
 
 		domH = (DomH) ClassicProject.g().getTrgt("H");
 		domV = (DomV) ClassicProject.g().getTrgt("V");
