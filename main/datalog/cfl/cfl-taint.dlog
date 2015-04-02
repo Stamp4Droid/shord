@@ -132,14 +132,14 @@ Label2ObjT(cl,o2) :- Label2ObjT(cl,o1), FptFull(o1,_,o2).
 
 # Sink_full-obj flow
 
-SinkF2Obj(cl,o)  :- SinkF2RefF(c,cl,v), PtFull(c,v,o).
+SinkF2Obj(cl,o)  :- Sink2Label(cl), SinkF2RefF(c,cl,v), PtFull(c,v,o).
 SinkF2Obj(cl,o2) :- Sink2Label(cl), Label2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
 SinkF2Obj(cl,o)  :- Sink2Label(cl), Label2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
 SinkF2Obj(cl,o2) :- SinkF2Obj(cl,o1), FptFull(o1,_,o2).
 
 # Sink_full-prim flow
 
-SinkF2Prim(c,cl,v) :- SinkF2PrimF(c,cl,v).
+SinkF2Prim(c,cl,v) :- Sink2Label(cl), SinkF2PrimF(c,cl,v).
 SinkF2Prim(c,cl,u) :- Sink2Label(cl), Label2Obj(cl,o), PtFull(c,v,o), Prim2RefF(c,u,v). # pt, Prim2RefF are backwards
 SinkF2Prim(c,cl,u) :- Sink2Label(cl), Label2Prim(c,cl,v), Prim2PrimF(c,u,v). # Prim2PrimF is backwards
 

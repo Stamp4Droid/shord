@@ -36,12 +36,12 @@ public class TaintGrammar extends ContextFreeGrammar {
 		this.addBinaryProduction("Label2ObjT", "Label2ObjT", "FlowField", false, true, true);
 		
 		// sinkf
-		this.addBinaryProduction("SinkF2Obj", "SinkF2RefF", "Flow", false, true);
+		this.addProduction("SinkF2Obj", new String[]{"sink2Label", "SinkF2RefF", "Flow"}, new boolean[]{false, false, true});
 		this.addProduction("SinkF2Obj", new String[]{"sink2Label", "Label2Obj", "Flow", "Ref2RefF", "Flow"}, new boolean[]{false, false, false, true, true});
 		this.addProduction("SinkF2Obj", new String[]{"sink2Label", "Label2Prim", "Ref2PrimF", "Flow"}, new boolean[]{false, false, true, true});
 		this.addBinaryProduction("SinkF2Obj", "SinkF2Obj", "FieldFlow", false, true, true);
 		
-		this.addUnaryProduction("SinkF2Prim", "SinkF2PrimF");
+		this.addBinaryProduction("SinkF2Prim", "sink2Label", "SinkF2PrimF");
 		this.addProduction("SinkF2Prim", new String[]{"sink2Label", "Label2Obj", "Flow", "Prim2RefF"}, new boolean[]{false, false, false, true});
 		this.addProduction("SinkF2Prim", new String[]{"sink2Label", "Label2Prim", "Prim2PrimF"}, new boolean[]{false, false, true});
 		
