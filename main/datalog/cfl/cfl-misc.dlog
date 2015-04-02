@@ -1,0 +1,83 @@
+##################
+# Misc. CFL Initialization
+##################
+
+###################
+# CONFIGURATION
+###################
+
+# name=cfl-misc-dlog
+
+.include "V.dom"
+.include "U.dom"
+.include "H.dom"
+.include "C.dom"
+.include "I.dom"
+.include "M.dom"
+.include "T.dom"
+.include "L.dom"
+.include "CL.dom"
+.include "Z.dom"
+
+.bddvarorder L0_Z0_M0xM1_CL0_T0_I0_C0xC1_V0xV1_U0xU1_H0
+
+###################
+# RELATIONS
+###################
+
+# points-to and taint-prim filters
+
+pt(c:C,v:V,o:C) input
+CH(c:C,h:H) input
+ptd(v:V,h:H) output
+ptd(v,h) :- pt(_,v,o), CH(o,h).
+
+Label2Primd(l:L,u:U) output
+LCL(l:L,cl:CL) input
+labelPrim(c:C,u:U,cl:CL) input
+Label2Primd(l,u) :- labelPrim(_,u,cl), LCL(l,cl).
+
+# callgraph, reachable base, and potential callback dependent
+
+MI(m:M,i:I) input
+ci_IM(i:I,m:M) input
+callgraph(m0:M0,m1:M1) output
+callgraph(m0,m1) :- MI(m0,i), ci_IM(i,m1).
+
+ci_reachableM(m:M) input
+ClinitTM(t:T,m:M) input
+reachableBase(m:M) output
+reachableBase(0).
+reachableBase(m) :- ClinitTM(_,m), ci_reachableM(m).
+
+potentialCallback(m:M) input
+potentialCallbackDependent(m0:M0,m1:M1) output
+potentialCallbackDependent(m0,m1) :- potentialCallback(m0), m0 = m1.
+potentialCallbackDependent(m0,m1) :- potentialCallbackDependent(m0,m2), callgraph(m2,m1).
+
+# worst-case alias stubs
+
+Stub(m:M) input
+MmethArg(m:M,z:Z,v:V) input
+MmethRet(m:M,z:Z,v:V) input
+StubParam(m:M,v:V) output
+StubReturn(m:M,v:V) output
+StubParam(m,v) :- Stub(m), MmethArg(m,_,v).
+StubReturn(m,v) :- Stub(m), MmethRet(m,_,v).
+
+# worst-case sources/sinks
+
+Framework(m:M) input
+MmethPrimArg(m:M,z:Z,u:U) input
+MmethPrimRet(m:M,z:Z,u:U) input
+CM(c:C,m:M) input
+FrameworkSource(c:C,v:V) output
+FrameworkSink(c:C,v:V) output
+FrameworkPrimSource(c:C,u:U) output
+FrameworkPrimSink(c:C,u:U) output
+FrameworkSource(c,v) :- Framework(m), MmethArg(m,_,v), CM(c,m).
+FrameworkSource(c,v) :- Framework(m), MmethRet(m,_,v), CM(c,m).
+FrameworkSink(c,v) :- Framework(m), MmethRet(m,_,v), CM(c,m).
+FrameworkPrimSource(c,u) :- Framework(m), MmethPrimArg(m,_,u), CM(c,m).
+FrameworkPrimSource(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
+FrameworkPrimSink(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
