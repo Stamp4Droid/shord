@@ -2,10 +2,12 @@ package stamp.analyses;
 
 import shord.project.analyses.JavaAnalysis;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Graph;
 import stamp.missingmodels.util.cflsolver.core.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.grammars.AliasModelsGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.ImplicitFlowGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefImplicitFlowGrammar;
@@ -26,8 +28,9 @@ import chord.project.Chord;
  */
 @Chord(name = "cflsolver-java")
 public class CFLSolverAnalysis extends JavaAnalysis {
-	public static void run(RelationReader reader, ContextFreeGrammarOpt grammar, RelationManager relations) {
+	public static void run(RelationReader reader, ContextFreeGrammarOpt grammar, RelationManager relations, boolean useFilter) {
 		Graph graph = reader.readGraph(relations, grammar.getSymbols());
+		//Filter<Edge> filter = useFilter ? reader.readFilter(graph.getVertices(), grammar.getSymbols()) : new Filter<Edge>() { public boolean filter(Edge edge) { return true; }};
 		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar));
 		System.out.println("Printing graph edges:");
 		IOUtils.printGraphStatistics(graphBar);
@@ -36,12 +39,12 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new TaintWithContextRelationManager());
-		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager());
-		run(new ShordRelationReader(), new MissingRefRefTaintGrammar().getOpt(), new MissingRefRefRelationManager());
-		run(new ShordRelationReader(), new MissingRefRefImplicitFlowGrammar().getOpt(), new MissingRefRefImplicitFlowRelationManager());
+		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new TaintWithContextRelationManager(), true);
+		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
+		run(new ShordRelationReader(), new MissingRefRefTaintGrammar().getOpt(), new MissingRefRefRelationManager(), true);
+		run(new ShordRelationReader(), new MissingRefRefImplicitFlowGrammar().getOpt(), new MissingRefRefImplicitFlowRelationManager(), true);
 		
-		run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager());
-		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new SourceSinkRelationManager());
+		run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), false);
+		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new SourceSinkRelationManager(), false);
 	}
 }
