@@ -47,13 +47,10 @@ public class WidgetControlDependencyAnalysis
 			dependentToWidgetIds.put(stmt, widgetIds);
 		}
 		System.out.print("widgetIds: ");
-		if(widgetIds != null){
-			System.out.print("[");
-			for(Integer i : widgetIds)
-				System.out.print(i+", ");
-			System.out.print("]");
-		} else
-			System.out.println(" null");
+		System.out.print("[");
+		for(Integer i : widgetIds)
+			System.out.print(i+", ");
+		System.out.print("]");
 		System.out.println(" stmt: "+stmt+"@"+meth.getSignature());
 			
 		Set<String> ret = new HashSet();
@@ -62,7 +59,7 @@ public class WidgetControlDependencyAnalysis
 			if(id == null)
 				id = obj.toString();
 			Integer numId = idToNumId.get(id);
-			boolean drop = false;//widgetIds != null && numId != null && !widgetIds.contains(numId);
+			boolean drop = widgetIds.size() == 0 ? false : (numId == null || !widgetIds.contains(numId));
 			if(!drop)
 				ret.add(id);
 			System.out.println("identifyWidgets: widget: "+obj+" "+id+" "+drop);
@@ -107,7 +104,7 @@ public class WidgetControlDependencyAnalysis
 
 		Set<Pair<Unit,Unit>> dependees = dependentToDependeesSetMap.get(stmt);
 		if(dependees.size() == 0)
-			return null;
+			return Collections.<Integer> emptySet();
 
 		Set<Integer> result = new HashSet();		
 		List<Stmt> workList = new LinkedList();
@@ -123,14 +120,12 @@ public class WidgetControlDependencyAnalysis
 				Stmt dependee = (Stmt) pair.getO1();
 				Stmt targetStmt = (Stmt) pair.getO2();
 				Set<Integer> rs = processDependee(dependee, targetStmt);
-				if(rs == null)
-					return null;
-				else
+				if(rs != null)
 					result.addAll(rs);
 				workList.add(dependee);
 			}
 		}
-		return result;
+		return result.size() == 0 ? Collections.<Integer> emptySet() : result;
 	}
 
 	

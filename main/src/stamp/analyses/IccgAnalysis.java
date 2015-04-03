@@ -13,6 +13,7 @@ import soot.jimple.StaticFieldRef;
 
 import shord.analyses.VarNode;
 import shord.analyses.LocalVarNode;
+import shord.analyses.AllocNode;
 import shord.analyses.Ctxt;
 import shord.analyses.DomC;
 import shord.analyses.DomV;
@@ -40,7 +41,7 @@ public class IccgAnalysis extends JavaAnalysis
 {
 	protected Map<Pair<Ctxt,Stmt>,Set<WidgetList>> cache = new HashMap();
 	protected Map<Stmt,SootMethod> invkStmtToMethod = new HashMap();
-	protected Set<SootMethod> targetMethods = new HashSet();
+	protected Map<SootMethod,Set<Integer>> targetMethods = new HashMap();
 	protected Map<SootMethod,Map<Ctxt,Set<Pair<Ctxt,Stmt>>>> csCg = new HashMap();
 	protected Map<SootMethod,VarNode> onClickMethToArg = new HashMap();
 
@@ -71,7 +72,7 @@ public class IccgAnalysis extends JavaAnalysis
 			widgetsAnalysis = new WidgetControlDependencyAnalysis(mapWidgetsToIds());
 			
 			List<Pair<SootMethod,Ctxt>> workList = new ArrayList();
-			for(SootMethod target : targetMethods){
+			for(SootMethod target : targetMethods.keySet()){
 				System.out.println("contexts of "+target);
 				Iterable<Ctxt> allCtxts = allContextsOf(target);
 				if(allCtxts == null)
@@ -80,8 +81,7 @@ public class IccgAnalysis extends JavaAnalysis
 					System.out.println(ctxt.toString());
 					workList.add(new Pair(target, ctxt));
 					traverse(target, ctxt, new ArrayList());
-				}
-				
+				}				
 			}		
 			//System.out.println("Total number of paths = "+count);
 			
@@ -103,7 +103,7 @@ public class IccgAnalysis extends JavaAnalysis
 		Iterable<Pair<Ctxt,Stmt>> callers = callersOf(callee, calleeContext);
 		if(callers == null){
 			//reached the entry
-			cacheResult(Collections.<WidgetList> emptySet(), path, true);
+			cacheResult(Collections.<WidgetList> emptySet(), path, false);
 			return;
 		}
 
@@ -131,7 +131,6 @@ public class IccgAnalysis extends JavaAnalysis
 				continue;
 			}
 
-
 			//if callSite is conditional dependent
 			//on whether a specific widget is clicked
 			//then propagate
@@ -151,9 +150,24 @@ public class IccgAnalysis extends JavaAnalysis
 	
 	protected void cacheResult(Pair<Ctxt,Stmt> callSite, WidgetList widgets)
 	{
+		//check for cyclic widgetList
+		boolean cyclic = false;
+		if(widgets != null){
+			int widgetListSize = widgets.size();
+			outer:
+			for(int i = 0; i < widgetListSize; i++){
+				for(int j = i+1; j < widgetListSize; j++){
+					if(widgets.get(i).equals(widgets.get(j))){
+						cyclic = true;
+						break outer;
+					}
+				}
+			}
+		}
+
 		//System.out.println("caching "+callSite+" "+(widgets==null));
 		Set<WidgetList> ws = cache.get(callSite);
-		if(widgets == null || widgets.isEmpty()){
+		if(cyclic || widgets == null || widgets.isEmpty()){
 			if(ws == null){
 				ws = Collections.<WidgetList> emptySet();
 				cache.put(callSite, ws);
@@ -236,8 +250,10 @@ public class IccgAnalysis extends JavaAnalysis
 			SootMethod m = invkStmtToMethod.get(callStmt);
 			builder.append(count+++". stmt: "+ callStmt+"@"+m.getSignature()+"\n  ctxt: "+c.toString());
 			builder.append("\n  widgets: [");
-			for(String id : ids)
-				builder.append(id+", ");
+			if(ids != null){
+				for(String id : ids)
+					builder.append(id+", ");
+			}
 			builder.append("]\n");
 		} 
 		System.out.println(builder.toString());
@@ -272,12 +288,18 @@ public class IccgAnalysis extends JavaAnalysis
         rel.load();
 		for(String l : labels){
 			RelView view = rel.getView();
-			view.delete(2); //param index
 			view.selectAndDelete(0, l);
-			Iterable<SootMethod> meths = view.getAry1ValTuples();
-			for(SootMethod m : meths){
+			Iterable<Pair<SootMethod,Integer>> it = view.getAry2ValTuples();
+			for(Pair<SootMethod,Integer> pair : it){
+				SootMethod m = pair.val0;
+				Integer p = pair.val1;
 				System.out.println("target method: "+m);
-				targetMethods.add(m);
+				Set<Integer> params = targetMethods.get(m);
+				if(params == null){
+					params = new HashSet();
+					targetMethods.put(m, params);
+				}
+				params.add(p);
 			}
 		}
 		rel.close();
@@ -372,54 +394,102 @@ public class IccgAnalysis extends JavaAnalysis
 	static class WidgetList extends ArrayList<Set<String>>//ArrayList<Trio<Ctxt,Stmt,Set<Ctxt>>>
 	{
 	}
-	
+
+	/*
+	Set<String> computeTaints(Ctxt ctxt, Stmt callSite, SootMethod target)
+	{
+		Set<String> result = new HashSet();
+		InvokeExpr ie = callSite.getInvokeExpr();
+		Set<Integer> params = targets.get(target);
+		for(Integer p : params){
+			Value arg;
+			if(ie instanceof InstanceInvokeExpr)
+				arg = p == 0 ? ((InstanceInvokeExpr) ie).getBase() : ie.getArgument(p-1);
+			else
+				arg = ie.getArgument(p);
+			if(arg instanceof Constant)
+				continue;
+			
+		}
+	}
+	*/
+
 	void writeResults(List<Pair<SootMethod,Ctxt>> workList) throws IOException
 	{
-		int pathCount = 0;
+		Map<Ctxt,Set<SootMethod>> ctxtToTargetMethods = new HashMap();
 		for(Pair<SootMethod,Ctxt> pair : workList){
 			SootMethod target = pair.val0;
-			Ctxt targetCtxt = pair.val1;
+			Ctxt ctxt = pair.val1;
+			Set<SootMethod> ts = ctxtToTargetMethods.get(ctxt);
+			if(ts == null){
+				ts = new HashSet();
+				ctxtToTargetMethods.put(ctxt, ts);
+			}
+			ts.add(target);
+		}
 
-			Iterable<Pair<Ctxt,Stmt>> callers = callersOf(target, targetCtxt);
-			if(callers == null)
-				continue;
+		int pathCount = 0;
+		for(Map.Entry<Ctxt,Set<SootMethod>> entry : ctxtToTargetMethods.entrySet()){
+			Ctxt targetCtxt = entry.getKey();
+			Set<SootMethod> targets = entry.getValue();
 			
-			Set<WidgetList> allWidgetList = new HashSet();
-
-			for(Pair<Ctxt,Stmt> caller : callers){
-				//check for cached result
-				System.out.println("Querying "+caller);
-				Set<WidgetList> widgetListSet = cache.get(caller);
-				allWidgetList.addAll(widgetListSet);
+			Map<WidgetList,Set<Stmt>> widgetListToCallsites = new HashMap();
+			
+			for(SootMethod target : targets){
+				Iterable<Pair<Ctxt,Stmt>> callers = callersOf(target, targetCtxt);
+				if(callers == null)
+					continue;
+				for(Pair<Ctxt,Stmt> caller : callers){
+					//check for cached result
+					System.out.println("Querying "+caller);
+					Set<WidgetList> widgetListSet = cache.get(caller);
+					for(WidgetList wl : widgetListSet){
+						Set<Stmt> callsites = widgetListToCallsites.get(wl);
+						if(callsites == null){
+							callsites = new HashSet();
+							widgetListToCallsites.put(wl, callsites);
+						}
+						callsites.add(caller.val1);
+					}
+				}
 			}
 
-			if(allWidgetList.isEmpty()) 
+			if(widgetListToCallsites.size() == 0)
 				continue;
-
-			writer.beginObject();
-			writer.name("target");
-			writer.value(target.getSignature());
 			
-			writer.name("context");
-			writer.value(targetCtxt.toString());
+			writer.beginObject();
+			//writer.name("target");
+			//writer.value(target.getSignature());
+			
+			writer.name("source");
+			Object[] ctxtElems = targetCtxt.getElems();
+			assert ctxtElems.length == 1;
+			AllocNode an = (AllocNode) ctxtElems[0];
+			writer.value(an.getType().toString());
 			
 			//writer.name("control");
 			writer.name("paths");
 			writer.beginArray();
-			for(WidgetList wl : allWidgetList){
+			for(Map.Entry<WidgetList,Set<Stmt>> entry1 : widgetListToCallsites.entrySet()){
 				writer.beginObject();
 				writer.name("id").value(pathCount++);
-				writer.name("length").value(wl.size());
+				writer.name("length").value(entry1.getKey().size());
 				writer.name("widgets");
 				writer.beginArray();
-				for(Set<String> widgets : wl){
+				for(Set<String> widgets : entry1.getKey()){
 					writer.beginArray();
 					for(String id : widgets)
 						writer.value(id);
 					writer.endArray();
 				}
-
 				writer.endArray();
+
+				writer.name("launchsite");
+				writer.beginArray();
+				for(Stmt callsite : entry1.getValue())
+					writer.value(invkStmtToMethod.get(callsite).getSignature()+"@"+callsite);
+				writer.endArray();
+
 				writer.endObject();
 			}
 			writer.endArray();
