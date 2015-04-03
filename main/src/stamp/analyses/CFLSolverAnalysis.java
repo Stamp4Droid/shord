@@ -8,6 +8,7 @@ import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
 import stamp.missingmodels.util.cflsolver.grammars.AliasModelsGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.ImplicitFlowGrammar;
+import stamp.missingmodels.util.cflsolver.grammars.ImplicitFlowGrammar.NegligibleImplicitFlowGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefImplicitFlowGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefTaintGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
@@ -41,7 +42,8 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
 		run(new ShordRelationReader(), new MissingRefRefTaintGrammar().getOpt(), new MissingRefRefTaintRelationManager(), true);
 		run(new ShordRelationReader(), new MissingRefRefImplicitFlowGrammar().getOpt(), new MissingRefRefImplicitFlowRelationManager(), true);
-		
+				
+		run(new ShordRelationReader(), new NegligibleImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
 		run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), false);
 		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new SourceSinkRelationManager(), false);
 	}
