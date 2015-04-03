@@ -869,6 +869,7 @@ public:
             for (Ref<T> src_n : src_scc.nodes) {
                 for (Ref<T> dst_n : edges[src_n]) {
                     SccId dst_id = node2scc_[dst_n];
+                    assert(dst_id <= src_id);
                     if (dst_id == src_id) {
                         src_scc.trivial = false;
                         continue;

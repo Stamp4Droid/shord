@@ -1448,108 +1448,6 @@ public:
 
 // TOP-LEVEL CODE =============================================================
 
-template<class Symbol>
-void test_minimization(DFA<Symbol>& dfa) {
-    std::cout << dfa;
-    std::cout << dfa.to_regex() << std::endl;
-    dfa.minimize();
-    std::cout << "Minimized:" << std::endl;
-    std::cout << dfa;
-    std::cout << dfa.to_regex() << std::endl;
-    std::cout << std::endl;
-}
-
-template<class Symbol>
-void test_folding(DFA<Symbol>& dfa, posint depth) {
-    std::cout << dfa;
-    std::cout << dfa.to_regex() << std::endl;
-    dfa.fold(depth);
-    std::cout << "Folded, k = " << depth << ":" << std::endl;
-    std::cout << dfa;
-    std::cout << dfa.to_regex() << std::endl;
-    std::cout << std::endl;
-}
-
-void test_dfa_code() {
-    std::vector<std::string> alph_ab = {"alpha","beta"};
-    std::vector<std::string> alph_abc = {"alpha", "beta", "gamma"};
-    std::vector<std::string> alph_abcde = {"A", "B", "C", "D", "E"};
-
-    DFA<std::string> d1(alph_ab, 3);
-    d1.set_initial(0);
-    d1.set_final(1);
-    d1.add_symb_trans(0, "alpha", 1);
-    d1.add_symb_trans(1, "alpha", 1);
-    d1.add_symb_trans(1, "beta", 2);
-    d1.add_symb_trans(2, "alpha", 2);
-    std::cout << "d1:" << std::endl;
-    test_minimization(d1);
-
-    NFA<std::string> n(alph_ab);
-    n.set_initial(3);
-    n.set_final(1);
-    n.add_eps_trans(3, 0);
-    n.add_symb_trans(0, "alpha", 1);
-    n.add_symb_trans(1, "alpha", 1);
-    n.add_symb_trans(1, "beta", 2);
-    n.add_symb_trans(2, "alpha", 2);
-    std::cout << "n:" << std::endl;
-    DFA<std::string> nd(n);
-    std::cout << "Determinized:" << std::endl;
-    test_minimization(nd);
-
-    std::cout << "d1 and n are " << ((d1 == nd) ? "" : "NOT ") << "equal"
-              << std::endl;
-    std::cout << std::endl;
-
-    DFA<std::string> d2(alph_ab, 2);
-    d2.set_initial(1);
-    d2.set_final(0);
-    d2.add_symb_trans(1, "alpha", 0);
-    d2.add_symb_trans(0, "alpha", 0);
-    std::cout << "d2:" << std::endl;
-    test_minimization(d2);
-
-    std::cout << "d1 and d2 are " << ((d1 == d2) ? "" : "NOT ") << "equal"
-              << std::endl;
-    std::cout << std::endl;
-
-    DFA<std::string> d3(alph_abc, 2);
-    d3.set_initial(0);
-    d3.set_final(1);
-    d3.add_symb_trans(0, "alpha", 1);
-    d3.add_symb_trans(1, "beta", 1);
-    d3.add_symb_trans(1, "gamma", 1);
-    std::cout << "d3:" << std::endl;
-    test_minimization(d3);
-
-    DFA<std::string> d1U3 = d1 | d3;
-    std::cout << "d1 U d3:" << std::endl;
-    test_minimization(d1U3);
-
-    DFA<std::string> aaaa(alph_abc, 5);
-    aaaa.set_initial(0);
-    aaaa.set_final(4);
-    aaaa.add_symb_trans(0, "alpha", 1);
-    aaaa.add_symb_trans(1, "alpha", 2);
-    aaaa.add_symb_trans(2, "alpha", 3);
-    aaaa.add_symb_trans(3, "alpha", 4);
-    std::cout << "aaaa" << std::endl;
-    test_folding(aaaa, 1);
-
-    DFA<std::string> aacUbad(alph_abcde, 6);
-    aacUbad.set_initial(0);
-    aacUbad.set_final(3);
-    aacUbad.add_symb_trans(0, "A", 1);
-    aacUbad.add_symb_trans(1, "A", 2);
-    aacUbad.add_symb_trans(2, "C", 3);
-    aacUbad.add_symb_trans(0, "B", 4);
-    aacUbad.add_symb_trans(4, "A", 5);
-    aacUbad.add_symb_trans(5, "D", 3);
-    std::cout << "aacUbad" << std::endl;
-    test_folding(aacUbad, 1);
-}
-
 int main(int argc, char* argv[]) {
     // User-defined parameters
     std::string indir_name;
@@ -1602,7 +1500,7 @@ int main(int argc, char* argv[]) {
         EXPECT(f.complete());
     }
 
-    // Calculate call graph SCCs.
+    // Calculate call graph SCCs, print relevant stats.
     RefMap<Function,std::vector<Ref<Function> > > calls(funs);
     for (const Function& f : funs) {
         for (Ref<Function> c : f.callees()) {
@@ -1614,10 +1512,11 @@ int main(int argc, char* argv[]) {
     // Update signatures up to fixpoint.
     // TODO: No need to run twice for trivial SCCs.
     for (unsigned i = 0; i < cg.num_sccs(); i++) {
-        std::cout << "Processing SCC " << i << " of " << cg.num_sccs()
-                  << std::endl;
         const auto& scc = cg.scc(i);
+        std::cout << "Processing SCC " << i << " of " << cg.num_sccs()
+                  << " (size " << scc.nodes.size() << ")" << std::endl;
         Worklist<Ref<Function>,true> worklist;
+
         // Inline non-recursive calls on all functions in the SCC.
         for (Ref<Function> f : scc.nodes) {
             funs[f].inline_nonrec_callees(funs, scc);
