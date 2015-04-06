@@ -76,7 +76,7 @@ IHM(i,h,m2) :- VirtIM(i,s), Dispatch(t,s,m2), HT(h,t).
 
 ci_IM(i,m) :- ci_reachableI(i), IinvkArg(i,0,v), ci_pt(v,o), IHM(i,o,m). 
 ci_IM(i,m) :- ci_reachableI(i), StatIM(i,m).
-ci_IM(i,m) :- ci_reachableI(i), SpecIM(i,m).
+ci_IM(i,m) :- ci_reachableI(i), IinvkArg(i,0,v), ci_pt(v,_), SpecIM(i,m).
 
 interprocAssign(u,v) :- ci_IM(i,m), IinvkArg(i,z,v), MmethArg(m,z,u).
 interprocAssign(u,v) :- ci_IM(i,m), IinvkRet(i,z,u), MmethRet(m,z,v).
