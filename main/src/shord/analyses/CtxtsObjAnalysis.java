@@ -344,6 +344,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
                 } else {
                     TIntArrayList rcvSites = new TIntArrayList();
                     ThisVarNode thisVar = methToThis.get(meth);
+					assert thisVar != null : meth.getSignature();
                     Iterable<Object> pts = getPointsTo(thisVar);
 					Set<Ctxt> newCtxts = null;
                     for (Object alloc : pts) {
@@ -528,8 +529,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 		if(!stubs.contains(meth))
 			return false;
 		String sig = meth.getSignature();
-		if(sig.equals("<android.app.Activity: android.view.View findViewById(int)>"))
-			return false;
 		return true;
 	}
 }

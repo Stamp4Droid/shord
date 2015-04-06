@@ -273,7 +273,6 @@ public class ContextsAnalysis extends JavaAnalysis
         Set<SootMethod> roots = new HashSet<SootMethod>();
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
 		
-		boolean ignoreStubs = PAGBuilder.ignoreStubs;
 		stubs = stubMethods();
 		//Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		//while(mIt.hasNext()){
@@ -283,7 +282,7 @@ public class ContextsAnalysis extends JavaAnalysis
 		Iterable<SootMethod> mIt = relReachableM.getAry1ValTuples();
 		for(SootMethod meth : mIt){
 			//SootMethod meth = (SootMethod) mIt.next();
-			if(ignoreStubs && stubs.contains(meth)){
+			if(stubs.contains(meth)){
 				//System.out.println("reachstub "+meth);
 				continue;
 			}

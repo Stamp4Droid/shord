@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 public class Activity
 {
 	protected android.content.Intent intent;
+	public android.view.View view;
 
     public  Activity() 
 	{
@@ -153,6 +154,22 @@ public class Activity
 
 	public void setIntent(android.content.Intent newIntent) {
 		this.intent = newIntent;
+	}
+
+	public  void setContentView(int layoutResID) { 
+		this.view = new android.view.View(this);
+	}
+
+	public  void setContentView(android.view.View view) { 
+		this.view = view;
+	}
+
+	public  void setContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
+		this.view = view;
+	}
+
+	public  void addContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
+		this.view = view;
 	}
 
 }

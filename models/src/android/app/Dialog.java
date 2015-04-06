@@ -1,5 +1,7 @@
 class Dialog
 {
+	public android.view.View view;
+	
 	protected  Dialog(android.content.Context context, boolean cancelable, final android.content.DialogInterface.OnCancelListener cancelListener) { 
 		cancelListener.onCancel(Dialog.this);
 	}
@@ -19,5 +21,20 @@ class Dialog
 	public  void setOnKeyListener(final android.content.DialogInterface.OnKeyListener onKeyListener) {
 		onKeyListener.onKey(Dialog.this, 0, null);
 	}
+	
+	public  void setContentView(int layoutResID) { 
+		this.view = new android.view.View(null);
+	}
 
+	public  void setContentView(android.view.View view) { 
+		this.view = view;
+	}
+
+	public  void setContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
+		this.view = view;
+	}
+
+	public  void addContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
+		this.view = view;
+	}
 }

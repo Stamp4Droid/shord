@@ -36,7 +36,7 @@ import java.io.*;
  * @author Saswat Anand
  */
 @Chord(name="iccg-bdd-java",
-	   consumes={"V", "C", "CICM", "pt", "OutLabelArg", "MI", "MmethArg"})
+	   consumes={"MH", "CH", "CICM", "pt", "OutLabelArg", "MI", "MmethArg"})
 public class IccgAnalysis extends JavaAnalysis
 {
 	protected Map<Pair<Ctxt,Stmt>,Set<WidgetList>> cache = new HashMap();
@@ -499,46 +499,52 @@ public class IccgAnalysis extends JavaAnalysis
 	
 	protected Map<Ctxt,String> mapWidgetsToIds()
 	{
-		Map<Local,String> localToId = new HashMap();
+        ProgramRel relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");		
+        relMH.load();
+        ProgramRel relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");		
+        relCH.load();
 
-		SootClass gClass = Scene.v().getSootClass("stamp.harness.G");
-		SootMethod gClinit = gClass.getMethod("void <clinit>()");
-		for(Unit unit : gClinit.retrieveActiveBody().getUnits()){
-			Stmt stmt = (Stmt) unit;
-			if(!(stmt instanceof DefinitionStmt))
-				continue;
-			Value left = ((DefinitionStmt) stmt).getLeftOp();
-			if(!(left instanceof StaticFieldRef))
-				continue;
-			SootField f = ((StaticFieldRef) left).getField();
-			if(!f.getDeclaringClass().equals(gClass))
-				continue;
-			Local right = (Local) ((DefinitionStmt) stmt).getRightOp();
-			String id = f.getSubSignature();
-			localToId.put(right, id);
-		}
-		
-        DomC domC = (DomC) ClassicProject.g().getTrgt("C");
-		Ctxt emptyCtxt = domC.get(0);
-        DomV domV = (DomV) ClassicProject.g().getTrgt("V");
 		Map<Ctxt,String> widgetToId = new HashMap();
-
-        for(VarNode vnode : domV){
-            if(!(vnode instanceof LocalVarNode))
-				continue;
-			LocalVarNode lvn = (LocalVarNode) vnode;
-			if(!lvn.meth.equals(gClinit))
-				continue;
-			String id = localToId.get(lvn.local);
-			if(id == null)
-				continue;		
-			RelView view = pointsToSetFor(vnode, emptyCtxt);
-			Iterable<Ctxt> objs = view.getAry1ValTuples();
-			for(Ctxt obj : objs)
-				widgetToId.put(obj, id);
-			view.free();
-        }		
-		
+		String widgetsListFile = System.getProperty("stamp.widgets.file");
+		BufferedReader reader;
+		try{
+			reader = new BufferedReader(new FileReader(widgetsListFile));
+			SootClass stampViewClass = Scene.v().getSootClass(reader.readLine().trim());
+			String line;
+			while((line = reader.readLine()) != null){
+				String[] tokens = line.split(",");
+				int id = Integer.parseInt(tokens[0]);
+				String[] widgetInfo = tokens[1].split(" ");
+				String widgetType = widgetInfo[0];
+				String widgetIdStr = widgetInfo[1];
+				if(id >= 0){
+					SootMethod m = stampViewClass.getMethod("android.view.View "+widgetIdStr+"()");
+					RelView view = relMH.getView();
+					view.selectAndDelete(0, m);
+					Iterable<AllocNode> hs = view.getAry1ValTuples();
+					AllocNode an = null;
+					for(AllocNode h : hs){
+						assert an == null;
+						an = h;
+					}
+					view.free();
+					if(an == null)
+						continue;
+					view = relCH.getView();
+					view.selectAndDelete(1, an);
+					Iterable<Ctxt> objs = view.getAry1ValTuples();
+					for(Ctxt obj : objs){
+						widgetToId.put(obj, widgetType+" "+widgetIdStr);
+					}
+					view.free();
+				}
+			}
+			reader.close();
+		}catch(IOException e){
+			throw new Error(e);
+		}
+		relMH.close();
+		relCH.close();
 		return widgetToId;
 	}
 }

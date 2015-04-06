@@ -141,7 +141,10 @@ public class Program
 	{
 		Scene.v().releaseCallGraph();
 		Scene.v().releasePointsToAnalysis();
+		Scene.v().releaseFastHierarchy();
 		G.v().MethodPAG_methodToPag.clear();
+		G.v().ClassHierarchy_classHierarchyMap.clear();
+
 		//run spark
 		Transform sparkTransform = PackManager.v().getTransform( "cg.spark" );
 		String defaultOptions = sparkTransform.getDefaultOptions();

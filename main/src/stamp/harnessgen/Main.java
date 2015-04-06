@@ -64,8 +64,11 @@ public class Main
 		}
 		writer.close();
 
-		SootClass gClass = new GClass(app).getFinalSootClass();
-		writeClass(gClass, driverDirName);
+		SootClass viewClass = new GenerateViewClass(app).getFinalSootClass();
+		writeClass(viewClass, driverDirName);
+
+		//SootClass gClass = new GClass(app).getFinalSootClass();
+		//writeClass(gClass, driverDirName);
 
 		//GuiFix gfix = new GuiFix(app, gClass);
 		//gfix.perform();
