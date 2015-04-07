@@ -314,6 +314,22 @@ public class Graph {
 		}
 	}
 	
+	public static class FilterTransformer extends EdgeTransformer {
+		private final Filter<EdgeStruct> filter;
+		
+		public FilterTransformer(VertexMap vertices, SymbolMap symbols, Filter<EdgeStruct> filter) {
+			super(vertices, symbols);
+			this.filter = filter;
+		}
+
+		@Override
+		public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
+			if(this.filter.filter(edgeStruct)) {
+				gb.addOrUpdateEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.weight);
+			}
+		}
+	}
+	
 	private class FilteredEdgeStructIterator extends TransformIterator<Edge,EdgeStruct> {
 		public FilteredEdgeStructIterator(Filter<EdgeStruct> filter) {
 			super(new FilteredEdgeIterator(new TransformFilter<Edge,EdgeStruct>(filter) {

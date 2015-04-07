@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lpsolve.LpSolve;
-
 public abstract class LinearProgram<T> {
 	public static class Coefficient<T> {
 		public final T variable;
@@ -85,19 +83,6 @@ public abstract class LinearProgram<T> {
 		public Coefficient<T> getCoefficient(T t) {
 			return this.coefficients.get(t);
 		}
-
-		public String toMappedString(Map<Integer,T> variableNames, int numVariables) {
-			StringBuilder sb = new StringBuilder();
-			for(int i=0; i<numVariables; i++) {
-				Coefficient<T> coefficient = this.coefficients.get(variableNames.get(i));
-				if(coefficient == null) {
-					sb.append("0.0 ");
-				} else {
-					sb.append(coefficient.coefficient + " ");
-				}
-			}
-			return sb.toString().trim();
-		}
 	}
 
 	public static class Constraint<T> {
@@ -117,18 +102,6 @@ public abstract class LinearProgram<T> {
 		public Coefficient<T> getCoefficient(T t) {
 			return this.coefficients.get(t);
 		}
-
-		public int convertConstraintType() {
-			switch(this.constraintType) {
-			case LEQ:
-				return LpSolve.LE;
-			case GEQ:
-				return LpSolve.GE;
-			case EQ:
-				return LpSolve.EQ;
-			}
-			throw new RuntimeException("Constraint type not recognized!");
-		}
 		
 		@Override
 		public String toString() {
@@ -139,19 +112,6 @@ public abstract class LinearProgram<T> {
 			sb.delete(sb.length()-2, sb.length());
 			sb.append(this.constraintType.toString()).append(" ").append(constant);
 			return sb.toString();
-		}
-
-		public String toMappedString(Map<Integer,T> variableNames, int numVariables) {
-			StringBuilder sb = new StringBuilder();
-			for(int i=0; i<numVariables; i++) {
-				Coefficient<T> coefficient = this.coefficients.get(variableNames.get(i));
-				if(coefficient == null) {
-					sb.append("0.0 ");
-				} else {
-					sb.append(coefficient.coefficient + " ");
-				}
-			}
-			return sb.toString().trim();
 		}
 	}
 

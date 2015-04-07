@@ -17,6 +17,44 @@ public class LpSolveLinearProgram<T> extends LinearProgram<T> {
 			throw new RuntimeException("Failed to solve LP");
 		}
 	}
+
+	private static <T> int convertConstraintType(Constraint<T> constraint) {
+		switch(constraint.constraintType) {
+		case LEQ:
+			return LpSolve.LE;
+		case GEQ:
+			return LpSolve.GE;
+		case EQ:
+			return LpSolve.EQ;
+		}
+		throw new RuntimeException("Constraint type not recognized!");
+	}
+
+	private static <T> String toMappedString(Constraint<T> constraint, Map<Integer,T> variableNames, int numVariables) {
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<numVariables; i++) {
+			Coefficient<T> coefficient = constraint.getCoefficient(variableNames.get(i));
+			if(coefficient == null) {
+				sb.append("0.0 ");
+			} else {
+				sb.append(coefficient.coefficient + " ");
+			}
+		}
+		return sb.toString().trim();
+	}
+
+	private static <T> String toMappedString(Objective<T> objective, Map<Integer,T> variableNames, int numVariables) {
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<numVariables; i++) {
+			Coefficient<T> coefficient = objective.getCoefficient(variableNames.get(i));
+			if(coefficient == null) {
+				sb.append("0.0 ");
+			} else {
+				sb.append(coefficient.coefficient + " ");
+			}
+		}
+		return sb.toString().trim();
+	}
 	
 	protected LinearProgramResult<T> solveHelper(Objective<T> objective, List<Constraint<T>> constraints) throws LpSolveException {
 		try {
@@ -69,7 +107,7 @@ public class LpSolveLinearProgram<T> extends LinearProgram<T> {
 		LpSolve problem = LpSolve.makeLp(0, numVariables);
 		//problem.setAddRowmode(true); // THIS CAUSES BUGS
 		
-		problem.strSetObjFn(objective.toMappedString(variableNames, numVariables));
+		problem.strSetObjFn(toMappedString(objective, variableNames, numVariables));
 		if(objective.objectiveType == ObjectiveType.MAXIMIZE) {
 			problem.setMaxim();
 		} else if(objective.objectiveType == ObjectiveType.MINIMIZE) {
@@ -80,7 +118,7 @@ public class LpSolveLinearProgram<T> extends LinearProgram<T> {
 		//System.out.println(this.objective.toString());
 		for(Constraint<T> constraint : constraints) {
 			//System.out.println(constraint.toString());
-			problem.strAddConstraint(constraint.toMappedString(variableNames, numVariables), constraint.convertConstraintType(), constraint.constant);
+			problem.strAddConstraint(toMappedString(constraint, variableNames, numVariables), convertConstraintType(constraint), constraint.constant);
 		}
 		
 		// Set variables to be integer valued

@@ -9,12 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
-import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
-import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
-import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
-import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
-
 public class Util {	
 	public static class Counter<K> {
 		private Map<K,Integer> counts = new HashMap<K,Integer>();
@@ -189,22 +183,6 @@ public class Util {
 		@Override
 		public boolean filter(T t) {
 			return !this.filter.filter(t);
-		}
-	}
-	
-	public static class FilterTransformer extends EdgeTransformer {
-		private final Filter<EdgeStruct> filter;
-		
-		public FilterTransformer(VertexMap vertices, SymbolMap symbols, Filter<EdgeStruct> filter) {
-			super(vertices, symbols);
-			this.filter = filter;
-		}
-
-		@Override
-		public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
-			if(this.filter.filter(edgeStruct)) {
-				gb.addOrUpdateEdge(edgeStruct.sourceName, edgeStruct.sinkName, edgeStruct.symbol, edgeStruct.field, edgeStruct.weight);
-			}
 		}
 	}
 }
