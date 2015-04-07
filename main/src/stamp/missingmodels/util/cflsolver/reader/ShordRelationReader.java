@@ -25,6 +25,56 @@ import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 
 public class ShordRelationReader implements RelationReader {
+	private final Filter<EdgeStruct> filter;
+	
+	public ShordRelationReader(Filter<EdgeStruct> filter) {
+		this.filter = filter;
+	}
+	
+	public ShordRelationReader() {
+		final Set<String> labels = new HashSet<String>();
+
+		labels.add("$LOCATION");
+		labels.add("$getLatitude");
+		labels.add("$getLongitude");
+		labels.add("$FINE_LOCATION");
+
+		labels.add("$CONTACTS");
+		
+		labels.add("$getDeviceId");
+		
+		//labels.add("$SMS");
+				
+		//labels.add("$AUDIO");
+		//labels.add("$ACCOUNTS");
+		//labels.add("$CALENDAR");
+		//labels.add("$CONTENT_PROVIDER");
+		
+		labels.add("!INTERNET");
+		
+		labels.add("!SOCKET");
+		
+		labels.add("!sendTextMessage");
+		labels.add("!destinationAddress");
+		labels.add("!sendDataMessage");
+		labels.add("!sendMultipartTextMessage");
+		
+		//labels.add("!WebView");
+
+		final DomL dom = (DomL)ClassicProject.g().getTrgt("L");
+		
+		this.filter = new Filter<EdgeStruct>() {
+			public boolean filter(EdgeStruct edgeStruct) {
+				String name = null;
+				if(edgeStruct.sourceName.startsWith("L")) {
+					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
+				} else if(edgeStruct.sinkName.startsWith("L")) {
+					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
+				}
+				return name == null || labels.contains(name);
+			}};
+	}
+	
 	@Override
 	public Graph readGraph(RelationManager relations, SymbolMap symbols) {
 		SimpleGraphBuilder gb = new SimpleGraphBuilder(symbols);
@@ -35,52 +85,14 @@ public class ShordRelationReader implements RelationReader {
 			}
 		}
 		
-		final Set<String> labels = new HashSet<String>();
-
-		labels.add("$LOCATION");
-		labels.add("$getLatitude");
-		labels.add("$getLongitude");
-		labels.add("$FINE_LOCATION");
-		
-		labels.add("$getDeviceId");
-		
-		//labels.add("$SMS");
-		
-		labels.add("$CONTACTS");
-		
-		//labels.add("$AUDIO");
-		//labels.add("$ACCOUNTS");
-		//labels.add("$CALENDAR");
-		//labels.add("$CONTENT_PROVIDER");
-		
-		labels.add("!SOCKET");
-		
-		labels.add("!INTERNET");
-		
-		labels.add("!sendTextMessage");
-		labels.add("!destinationAddress");
-		labels.add("!sendDataMessage");
-		labels.add("!sendMultipartTextMessage");			
-		//labels.add("!WebView");
-		
 		GraphTransformer gt = new EdgeTransformer(gb.getGraph().getVertices(), gb.getGraph().getSymbols()) {
 			@Override
 			public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
-				DomL dom = (DomL)ClassicProject.g().getTrgt("L");
-				String name = null;
-				if(edgeStruct.sourceName.startsWith("L")) {
-					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
-				} else if(edgeStruct.sinkName.startsWith("L")) {
-					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
+				if(filter.filter(edgeStruct)) {
+					gb.addOrUpdateEdge(edgeStruct);
 				}
-				if(name != null && !labels.contains(name)) {
-					return;
-				}
-				gb.addOrUpdateEdge(edgeStruct);
-			}
-		};
+			}};
 		
-		//return gb.getGraph();
 		return gb.getGraph().transform(gt);
 	}
 	

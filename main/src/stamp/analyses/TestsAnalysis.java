@@ -168,7 +168,7 @@ public class TestsAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		// STEP 0: Inputs
-		boolean useCallbacks = true;
+		boolean useCallbacks = false;
 		
 		// STEP 1: Setup
 		RelationReader reader = new ShordRelationReader();
