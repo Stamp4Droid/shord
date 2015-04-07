@@ -1455,13 +1455,7 @@ public:
             return false;
         }
         std::cout << "    New sig was larger" << std::endl;
-        // If not, widen S(i) U F(S(i)) and set as latest signature.
-        siUfsi.fold(WIDENING_K);
-        std::cout << "    Sig folded" << std::endl;
-        siUfsi.minimize();
         swap(sig_, siUfsi);
-        std::cout << "    Widened sig minimized" << std::endl;
-        revisions_++;
         auto t_end = std::chrono::steady_clock::now();
         ms_spent_ += std::chrono::duration_cast<std::chrono::milliseconds>
             (t_end - t_start).count();
@@ -1608,24 +1602,77 @@ int main(int argc, char* argv[]) {
         }
 
         if (scc.nodes.size() >= 10) {
+            std::cout << "    Pre-composing effects on large SCC" << std::endl;
             fs::path scc_fpath(outdir/(std::string("scc") + std::to_string(i) +
                                        ".tgf"));
             std::ofstream scc_fout(scc_fpath.string());
             EXPECT((bool) scc_fout);
+            fs::path pp_scc_fpath(outdir/(std::string("pp_scc") +
+                                          std::to_string(i) + ".txt"));
+            std::ofstream pp_scc_fout(pp_scc_fpath.string());
+            EXPECT((bool) pp_scc_fout);
+
+            // Create SCC graph, insert self-loops.
+            CodeGraph l_effts, r_effts;
+            // TODO: Could make CodeGraph::Variable into a template parameter.
+            std::map<Ref<Function>, Ref<Variable> > l_vars, r_vars;
             for (Ref<Function> f : scc.nodes) {
                 scc_fout << funs[f].name << std::endl;
+                Ref<Variable> l_v = l_effts.vars.mktemp().ref;
+                l_vars.emplace(f, l_v);
+                l_effts.epsilons.insert(l_v, l_v);
+                Ref<Variable> r_v = r_effts.vars.mktemp().ref;
+                r_vars.emplace(f, r_v);
+                r_effts.epsilons.insert(r_v, r_v);
             }
             scc_fout << "#" << std::endl;
+
+            // Collect base call-surround effects.
+            std::cout << "    Collecting base call effects" << std::endl;
             for (Ref<Function> a : scc.nodes) {
                 // callees() now contains only the intra-SCC targets.
                 for (Ref<Function> b : funs[a].callees()) {
+                    // TODO: Do we really need to pre-minimize base effects?
                     for (const std::pair<Signature,Signature>& ab_efft
                              : funs[a].effects_around_callee(b)) {
                         scc_fout << funs[a].name << " " << funs[b].name << " "
                                  << ab_efft.first.to_regex(flds) << "/"
                                  << ab_efft.second.to_regex(flds) << std::endl;
+                        l_effts.embed(l_vars[a], l_vars[b], ab_efft.first);
+                        r_effts.embed(r_vars[b], r_vars[a], ab_efft.second);
                     }
                 }
+            }
+
+            // Compose effects, integrate self-effects for each function.
+            std::cout << "    Composing effects" << std::endl;
+            l_effts.close();
+            r_effts.close();
+            std::cout << "    Integrating self-effects" << std::endl;
+            for (Ref<Function> f : scc.nodes) {
+                std::cout << "        " << funs[f].name << std::endl;
+                CodeGraph l_self(l_effts);
+                l_self.entry = l_vars[f];
+                l_self.exits.insert(l_vars[f]);
+                l_self.pn_extend();
+                Signature l_sig = l_self.to_sig();
+                if (l_sig.empty()) {
+                    continue;
+                }
+                CodeGraph r_self(r_effts);
+                r_self.entry = r_vars[f];
+                r_self.exits.insert(r_vars[f]);
+                r_self.pn_extend();
+                Signature r_sig = r_self.to_sig();
+                if (r_sig.empty()) {
+                    continue;
+                }
+                // The self-cycles already contain 'epsilon'.
+                funs[f].add_prefix(l_sig);
+                funs[f].add_suffix(r_sig);
+                pp_scc_fout << funs[f].name << " "
+                            << l_sig.to_regex(flds) << " "
+                            << r_sig.to_regex(flds) << std::endl;
             }
         }
 
