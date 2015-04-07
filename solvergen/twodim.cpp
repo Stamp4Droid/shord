@@ -573,6 +573,10 @@ public:
         backend_ = alloc_backend(alphabet_.size(), num_states + 1);
         wrapper_ = new DfaWrapper(backend_);
     }
+    explicit DFA() : DFA(std::vector<Symbol>(), 1) {
+        set_initial(0);
+        minimize();
+    }
     // The last state is assumed to be the sink state.
     static DfaBackend* alloc_backend(posint num_letters, posint num_states) {
         posint sink = num_states - 1;
@@ -1042,6 +1046,21 @@ public:
         swap(a.opens,    b.opens);
         swap(a.closes,   b.closes);
     }
+    static CodeGraph from_sig(const Signature& sig) {
+        CodeGraph res;
+        Ref<Variable> a = res.vars.mktemp().ref;
+        res.entry = a;
+        Ref<Variable> b = res.vars.mktemp().ref;
+        res.exits.insert(b);
+        res.embed(a, b, sig);
+        return res;
+    }
+    void star() {
+        for (Ref<Variable> e : exits) {
+            epsilons.insert(e, entry);
+        }
+        exits.insert(entry);
+    }
     std::pair<Signature,Signature>
     effects_around(Ref<Variable> src, Ref<Variable> dst) const {
         CodeGraph temp(*this);
@@ -1248,6 +1267,28 @@ public:
     }
 };
 
+Signature concat_sigs(const Signature& l_sig, const Signature& r_sig) {
+    CodeGraph res;
+    Ref<Variable> a = res.vars.mktemp().ref;
+    Ref<Variable> b = res.vars.mktemp().ref;
+    Ref<Variable> c = res.vars.mktemp().ref;
+    res.entry = a;
+    res.exits.insert(c);
+    res.embed(a, b, l_sig);
+    res.embed(b, c, r_sig);
+    res.close();
+    res.pn_extend();
+    return res.to_sig();
+}
+
+Signature star_sig(const Signature& sig) {
+    CodeGraph res = CodeGraph::from_sig(sig);
+    res.star();
+    res.close();
+    res.pn_extend();
+    return res.to_sig();
+}
+
 class Function {
 public:
     typedef std::string Key;
@@ -1268,10 +1309,8 @@ private:
     unsigned revisions_ = 0;
 public:
     explicit Function(const std::string* name_ptr, Ref<Function> ref)
-        : name(*name_ptr), ref(ref), sig_(std::vector<Delimiter>(), 1) {
+        : name(*name_ptr), ref(ref) {
         EXPECT(boost::regex_match(name, boost::regex("\\w+")));
-        sig_.set_initial(0);
-        sig_.minimize();
     }
     Function(const Function&) = delete;
     Function(Function&&) = default;
@@ -1360,6 +1399,22 @@ public:
             }
         }
         swap(calls_, rec_calls);
+    }
+    void add_prefix(const Signature& sig) {
+        Ref<Variable> old_entry = code_.entry;
+        Ref<Variable> new_entry = code_.vars.mktemp().ref;
+        code_.entry = new_entry;
+        code_.embed(new_entry, old_entry, sig);
+    }
+    void add_suffix(const Signature& sig) {
+        Ref<Variable> pre_exit = code_.vars.mktemp().ref;
+        Ref<Variable> new_exit = code_.vars.mktemp().ref;
+        for (Ref<Variable> e : code_.exits) {
+            code_.epsilons.insert(e, pre_exit);
+        }
+        code_.exits.clear();
+        code_.exits.insert(new_exit);
+        code_.embed(pre_exit, new_exit, sig);
     }
     // Returns 'false' if we've reached fixpoint, and sig_ didn't need to be
     // updated. Otherwise updates sig_ and returns 'true'.
