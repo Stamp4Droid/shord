@@ -1023,30 +1023,18 @@ public:
         swap(a.opens,    b.opens);
         swap(a.closes,   b.closes);
     }
-    std::pair<Signature,Signature> effects_around(Ref<Variable> src,
-                                                  Ref<Variable> dst) const {
-        using std::swap;
+    std::pair<Signature,Signature>
+    effects_around(Ref<Variable> src, Ref<Variable> dst) const {
         CodeGraph temp(*this);
         temp.close();
-        // Compute prefix machine ending at 'src'.
-        std::set<Ref<Variable> > pre_exits;
-        pre_exits.insert(src);
-        swap(temp.exits, pre_exits);
-        decltype(opens) pre_opens; // use empty set, i.e. ignore opens
-        swap(temp.opens, pre_opens);
-        Signature prefix = temp.to_sig();
-        swap(temp.opens, pre_opens);
-        swap(temp.exits, pre_exits);
-        // Compute suffix machine starting from 'dst'.
-        Ref<Variable> old_entry = temp.entry;
-        temp.entry = dst;
-        decltype(closes) suf_closes; // use empty set, i.e. ignore closes
-        swap(temp.closes, suf_closes);
-        Signature suffix = temp.to_sig();
-        swap(temp.closes, suf_closes);
-        temp.entry = old_entry;
-        // Return prefix and suffix in a pair.
-        return std::make_pair(std::move(prefix), std::move(suffix));
+        CodeGraph pre(temp);
+        pre.exits.clear();
+        pre.exits.insert(src);
+        pre.pn_extend();
+        CodeGraph suf(temp);
+        suf.entry = dst;
+        suf.pn_extend();
+        return std::make_pair(pre.to_sig(), suf.to_sig());
     }
     void embed(Ref<Variable> src, Ref<Variable> tgt, const Signature& callee) {
         // Create temporary variables for all states in callee's signature
