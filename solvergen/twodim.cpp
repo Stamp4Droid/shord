@@ -874,8 +874,23 @@ public:
     std::string to_dot() const {
         return wrapper_->visualize();
     }
-    std::string to_regex() const {
-        return wrapper_->to_regex();
+    template<class... Rest>
+    std::string to_regex(const Rest&... rest) const {
+        std::string s = wrapper_->to_regex();
+        std::ostringstream ss;
+        boost::regex e((num_letters() <= 26) ? "[a-z]" : "a([0-9]+)");
+        boost::sregex_iterator rit(s.begin(), s.end(), e);
+        boost::sregex_iterator rend;
+        unsigned skip_idx = 0;
+        for (; rit != rend; ++rit) {
+            ss << s.substr(skip_idx, rit->position() - skip_idx);
+            posint letter = (num_letters() <= 26)
+                ? (rit->str(0)[0] - 'a') : (std::stoi(rit->str(1)) - 1);
+            ss << alphabet_.at(letter);
+            skip_idx = rit->position() + rit->length();
+        }
+        ss << s.substr(skip_idx, s.length() - skip_idx);
+        return ss.str();
     }
     friend std::ostream& operator<<(std::ostream& os, const DFA& dfa) {
         posint sink = dfa.sink_state();
@@ -983,6 +998,10 @@ public:
     }
     bool operator==(const Delimiter& rhs) const {
         return compare(*this, rhs) == 0;
+    }
+    friend std::ostream& operator<<(std::ostream& os, const Delimiter& d) {
+        os << (d.is_open ? "[" : "]") << d.fld;
+        return os;
     }
     void print(std::ostream& os, const Registry<Field>& fld_reg) const {
         os << (is_open ? "(" : ")") << fld_reg[fld].name;
@@ -1196,11 +1215,8 @@ public:
             nfa.add_symb_trans(c.get<SRC>().value(), d, c.get<TGT>().value());
         }
         // Determinize and minimize the FSM.
-        std::cout << "    NFA constructed" << std::endl;
         Signature res(nfa);
-        std::cout << "    NFA determinized" << std::endl;
         res.minimize();
-        std::cout << "    DFA minimized" << std::endl;
         return res;
     }
     void to_tgf(std::ostream& os, const Registry<Field>& fld_reg) const {
@@ -1348,6 +1364,7 @@ public:
     // Returns 'false' if we've reached fixpoint, and sig_ didn't need to be
     // updated. Otherwise updates sig_ and returns 'true'.
     bool update_sig(const Registry<Function>& fun_reg) {
+        std::cout << "    Revision #" << ++revisions_ << std::endl;
         auto t_start = std::chrono::steady_clock::now();
         // Current sig_ is step i on the fixpoint process, S(i).
         const Signature& si = sig_;
@@ -1395,20 +1412,18 @@ public:
             (t_end - t_start).count();
         return true;
     }
-    void print_call_effects(std::ostream& os,
-                            const Registry<Function>& fun_reg) const {
-        // TODO: Print actual delimiter names on the transitions.
-        FOR(c, calls_) {
-            std::pair<Signature,Signature> effects =
+    std::list<std::pair<Signature,Signature> >
+    effects_around_callee(Ref<Function> callee) const {
+        std::list<std::pair<Signature,Signature> > res;
+        FOR(c, calls_.pri()[callee]) {
+            std::pair<Signature,Signature> call_effts =
                 code_.effects_around(c.get<SRC>(), c.get<TGT>());
-            // if (effects.first.empty() || effects.second.empty()) {
-            //     os << name << " " << fun_reg[c.get<FUN>()].name << std::endl;
-            // } else {
-            os << name << " " << fun_reg[c.get<FUN>()].name << " "
-               << effects.first.to_regex() << "|"
-               << effects.second.to_regex() << std::endl;
-            // }
+            if (call_effts.first.empty() || call_effts.second.empty()) {
+                continue;
+            }
+            res.push_back(std::move(call_effts));
         }
+        return res;
     }
     void to_tgf(std::ostream& os, const Registry<Function>& fun_reg,
                 const Registry<Field>& fld_reg) const {
@@ -1496,6 +1511,26 @@ int main(int argc, char* argv[]) {
         }
     }
     SccGraph<Function> cg(funs, calls);
+    Histogram<unsigned> scc_size_freqs;
+    fs::path cg_fpath(outdir/"cg.tgf");
+    std::ofstream cg_fout(cg_fpath.string());
+    EXPECT((bool) cg_fout);
+    for (unsigned i = 0; i < cg.num_sccs(); i++) {
+        unsigned size = cg.scc(i).nodes.size();
+        if (size == 1 && cg.scc(i).trivial) {
+            size = 0;
+        }
+        cg_fout << i << " " << size << std::endl;
+        scc_size_freqs.record(size);
+    }
+    cg_fout << "#" << std::endl;
+    for (unsigned i = 0; i < cg.num_sccs(); i++) {
+        for (unsigned j : cg.scc(i).children) {
+            cg_fout << i << " " << j << std::endl;
+        }
+    }
+    std::cout << "SCC size\tFrequency" << std::endl;
+    std::cout << scc_size_freqs;
 
     // Update signatures up to fixpoint.
     // TODO: No need to run twice for trivial SCCs.
@@ -1516,6 +1551,29 @@ int main(int argc, char* argv[]) {
             funs[f].to_tgf(fout, funs, flds);
             worklist.enqueue(f);
         }
+
+        if (scc.nodes.size() >= 10) {
+            fs::path scc_fpath(outdir/(std::string("scc") + std::to_string(i) +
+                                       ".tgf"));
+            std::ofstream scc_fout(scc_fpath.string());
+            EXPECT((bool) scc_fout);
+            for (Ref<Function> f : scc.nodes) {
+                scc_fout << funs[f].name << std::endl;
+            }
+            scc_fout << "#" << std::endl;
+            for (Ref<Function> a : scc.nodes) {
+                // callees() now contains only the intra-SCC targets.
+                for (Ref<Function> b : funs[a].callees()) {
+                    for (const std::pair<Signature,Signature>& ab_efft
+                             : funs[a].effects_around_callee(b)) {
+                        scc_fout << funs[a].name << " " << funs[b].name << " "
+                                 << ab_efft.first.to_regex(flds) << "/"
+                                 << ab_efft.second.to_regex(flds) << std::endl;
+                    }
+                }
+            }
+        }
+
         // Fixpoint inside the SCC.
         while (!worklist.empty()) {
             Function& f = funs[worklist.dequeue()];
@@ -1539,56 +1597,20 @@ int main(int argc, char* argv[]) {
             EXPECT((bool) fout);
             f.sig().to_tgf(fout, flds);
         }
-    }
 
-    // Print out call graph and large SCCs.
-    Histogram<unsigned> scc_size_freqs;
-    fs::path cg_fpath(outdir/"cg.tgf");
-    std::ofstream cg_fout(cg_fpath.string());
-    EXPECT((bool) cg_fout);
-    for (unsigned i = 0; i < cg.num_sccs(); i++) {
-        unsigned size = cg.scc(i).nodes.size();
-        if (size == 1 && cg.scc(i).trivial) {
-            size = 0;
+        // Print statistics.
+        fs::path stats_fpath(outdir/"stats.csv");
+        std::ofstream stats_fout(stats_fpath.string());
+        EXPECT((bool) stats_fout);
+        stats_fout << "Function\tRevisions\tTime spent (ms)"
+                   << "\tCode States\tCode Trans\tSig States\tSig Trans\tCallees"
+                   << "\tSCC Height\tSCC Size\tCumm SCC Size"
+                   << std::endl;
+        for (const Function& f : funs) {
+            f.print_stats(stats_fout);
+            const auto& scc = cg.scc(cg.scc_of(f.ref));
+            stats_fout << "\t" << scc.height << "\t" << scc.nodes.size()
+                       << "\t" << scc.cumm_size << std::endl;
         }
-        cg_fout << i << " " << size << std::endl;
-        scc_size_freqs.record(size);
-        if (size < 10) {
-            continue;
-        }
-        fs::path scc_fpath(outdir/(std::string("scc") + std::to_string(i) +
-                                   ".tgf"));
-        std::ofstream scc_fout(scc_fpath.string());
-        EXPECT((bool) scc_fout);
-        for (Ref<Function> f : cg.scc(i).nodes) {
-            scc_fout << funs[f].name << std::endl;
-        }
-        scc_fout << "#" << std::endl;
-        for (Ref<Function> src : cg.scc(i).nodes) {
-            funs[src].print_call_effects(scc_fout, funs);
-        }
-    }
-    cg_fout << "#" << std::endl;
-    for (unsigned i = 0; i < cg.num_sccs(); i++) {
-        for (unsigned j : cg.scc(i).children) {
-            cg_fout << i << " " << j << std::endl;
-        }
-    }
-
-    // Print statistics.
-    std::cout << "SCC size\tFrequency" << std::endl;
-    std::cout << scc_size_freqs;
-    fs::path stats_fpath(outdir/"stats.csv");
-    std::ofstream stats_fout(stats_fpath.string());
-    EXPECT((bool) stats_fout);
-    stats_fout << "Function\tRevisions\tTime spent (ms)"
-               << "\tCode States\tCode Trans\tSig States\tSig Trans\tCallees"
-               << "\tSCC Height\tSCC Size\tCumm SCC Size"
-               << std::endl;
-    for (const Function& f : funs) {
-        f.print_stats(stats_fout);
-        const auto& scc = cg.scc(cg.scc_of(f.ref));
-        stats_fout << "\t" << scc.height << "\t" << scc.nodes.size()
-                   << "\t" << scc.cumm_size << std::endl;
     }
 }
