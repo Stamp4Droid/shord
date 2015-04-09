@@ -1046,6 +1046,23 @@ public:
         swap(a.opens,    b.opens);
         swap(a.closes,   b.closes);
     }
+    void copy(const CodeGraph& other,
+              std::map<Ref<Variable>,Ref<Variable> >& var_map) {
+        for (const Variable& v : other.vars) {
+            var_map[v.ref] = vars.mktemp().ref;
+        }
+        FOR (e, other.epsilons) {
+            epsilons.insert(var_map[e.get<SRC>()], var_map[e.get<TGT>()]);
+        }
+        FOR (o, other.opens) {
+            opens.insert(var_map[o.get<TGT>()], o.get<FLD>(),
+                         var_map[o.get<SRC>()]);
+        }
+        FOR (c, other.closes) {
+            closes.insert(var_map[c.get<SRC>()], c.get<FLD>(),
+                          var_map[c.get<TGT>()]);
+        }
+    }
     static CodeGraph from_sig(const Signature& sig) {
         CodeGraph res;
         Ref<Variable> a = res.vars.mktemp().ref;
@@ -1292,17 +1309,18 @@ Signature star_sig(const Signature& sig) {
 class Function {
 public:
     typedef std::string Key;
+    typedef mi::MultiIndex<
+                mi::Index<FUN, Ref<Function>,
+                    mi::Index<SRC, Ref<Variable>,
+                        mi::Table<TGT, Ref<Variable> > > >,
+                mi::Table<FUN, Ref<Function> > > CallStore;
     const posint WIDENING_K = 1;
 public:
     const std::string name;
     const Ref<Function> ref;
 private:
     CodeGraph code_;
-    mi::MultiIndex<
-        mi::Index<FUN, Ref<Function>,
-            mi::Index<SRC, Ref<Variable>,
-                mi::Table<TGT, Ref<Variable> > > >,
-        mi::Table<FUN, Ref<Function> > > calls_;
+    CallStore calls_;
     std::set<Ref<Function> > callers_;
     Signature sig_; // Initially set to the empty automaton.
     long ms_spent_ = 0;
@@ -1373,6 +1391,12 @@ public:
         EXPECT(fin.eof());
         EXPECT(vars_done);
     }
+    const CodeGraph& code() const {
+        return code_;
+    }
+    const CallStore& calls() const {
+        return calls_;
+    }
     bool complete() const {
         return code_.entry.valid();
     }
@@ -1383,6 +1407,9 @@ public:
         return callers_;
     }
     const Signature& sig() const {
+        return sig_;
+    }
+    Signature& sig() {
         return sig_;
     }
     // TODO: 'callers_' aren't updated.
@@ -1602,102 +1629,81 @@ int main(int argc, char* argv[]) {
         }
 
         if (scc.nodes.size() >= 10) {
-            std::cout << "    Pre-composing effects on large SCC" << std::endl;
-            fs::path scc_fpath(outdir/(std::string("scc") + std::to_string(i) +
-                                       ".tgf"));
-            std::ofstream scc_fout(scc_fpath.string());
-            EXPECT((bool) scc_fout);
-            fs::path pp_scc_fpath(outdir/(std::string("pp_scc") +
-                                          std::to_string(i) + ".txt"));
-            std::ofstream pp_scc_fout(pp_scc_fpath.string());
-            EXPECT((bool) pp_scc_fout);
-
-            // Create SCC graph, insert self-loops.
-            CodeGraph l_effts, r_effts;
-            // TODO: Could make CodeGraph::Variable into a template parameter.
-            std::map<Ref<Function>, Ref<Variable> > l_vars, r_vars;
+            std::cout << "    Inlining all functions inside large SCC"
+                      << std::endl;
+            CodeGraph scc_code;
+            // Mapping from f's vars to corresponding vars in scc_code.
+            std::map<Ref<Function>,
+                     std::map<Ref<Variable>,Ref<Variable> > > var_map;
             for (Ref<Function> f : scc.nodes) {
-                scc_fout << funs[f].name << std::endl;
-                Ref<Variable> l_v = l_effts.vars.mktemp().ref;
-                l_vars.emplace(f, l_v);
-                l_effts.epsilons.insert(l_v, l_v);
-                Ref<Variable> r_v = r_effts.vars.mktemp().ref;
-                r_vars.emplace(f, r_v);
-                r_effts.epsilons.insert(r_v, r_v);
+                scc_code.copy(funs[f].code(), var_map[f]);
             }
-            scc_fout << "#" << std::endl;
-
-            // Collect base call-surround effects.
-            std::cout << "    Collecting base call effects" << std::endl;
-            for (Ref<Function> a : scc.nodes) {
-                // callees() now contains only the intra-SCC targets.
-                for (Ref<Function> b : funs[a].callees()) {
-                    // TODO: Do we really need to pre-minimize base effects?
-                    for (const std::pair<Signature,Signature>& ab_efft
-                             : funs[a].effects_around_callee(b)) {
-                        scc_fout << funs[a].name << " " << funs[b].name << " "
-                                 << ab_efft.first.to_regex(flds) << "/"
-                                 << ab_efft.second.to_regex(flds) << std::endl;
-                        l_effts.embed(l_vars[a], l_vars[b], ab_efft.first);
-                        r_effts.embed(r_vars[b], r_vars[a], ab_efft.second);
+            for (Ref<Function> f : scc.nodes) {
+                // Only intra-SCC calls remain.
+                FOR(c, funs[f].calls()) {
+                    Ref<Function> callee = c.get<FUN>();
+                    scc_code.epsilons.insert
+                        (var_map[f][c.get<SRC>()],
+                         var_map[callee][funs[callee].code().entry]);
+                    for (Ref<Variable> ex : funs[callee].code().exits) {
+                        scc_code.epsilons.insert(var_map[callee][ex],
+                                                 var_map[f][c.get<TGT>()]);
                     }
                 }
             }
 
-            // Compose effects, integrate self-effects for each function.
-            std::cout << "    Composing effects" << std::endl;
-            l_effts.close();
-            r_effts.close();
-            std::cout << "    Integrating self-effects" << std::endl;
-            for (Ref<Function> f : scc.nodes) {
-                std::cout << "        " << funs[f].name << std::endl;
-                CodeGraph l_self(l_effts);
-                l_self.entry = l_vars[f];
-                l_self.exits.insert(l_vars[f]);
-                l_self.pn_extend();
-                Signature l_sig = l_self.to_sig();
-                if (l_sig.empty()) {
-                    continue;
-                }
-                CodeGraph r_self(r_effts);
-                r_self.entry = r_vars[f];
-                r_self.exits.insert(r_vars[f]);
-                r_self.pn_extend();
-                Signature r_sig = r_self.to_sig();
-                if (r_sig.empty()) {
-                    continue;
-                }
-                // The self-cycles already contain 'epsilon'.
-                funs[f].add_prefix(l_sig);
-                funs[f].add_suffix(r_sig);
-                pp_scc_fout << funs[f].name << " "
-                            << l_sig.to_regex(flds) << " "
-                            << r_sig.to_regex(flds) << std::endl;
-            }
-        }
+            std::cout << "    Closing the SCC code graph" << std::endl;
+            scc_code.close();
+            // Print out the post-inline code for the SCC.
+            fs::path scc_fpath(outdir/(std::string("scc") + std::to_string(i) +
+                                       ".fun.tgf"));
+            std::ofstream scc_fout(scc_fpath.string());
+            EXPECT((bool) scc_fout);
+            scc_code.to_tgf(scc_fout, flds);
 
-        // Fixpoint inside the SCC.
-        while (!worklist.empty()) {
-            Function& f = funs[worklist.dequeue()];
-            std::cout << "Processing " << f.name << std::endl;
-            if (!f.update_sig(funs)) {
-                std::cout << "    No change" << std::endl;
-                continue;
+            // Emit signatures by repurposing the full-SCC code graph.
+            for (Ref<Function> f : scc.nodes) {
+                std::cout << "Emitting sig for " << funs[f].name << std::endl;
+                CodeGraph f_code(scc_code);
+                f_code.entry = var_map[f][funs[f].code().entry];
+                for (Ref<Variable> ex : funs[f].code().exits) {
+                    f_code.exits.insert(var_map[f][ex]);
+                }
+                std::cout << "    PN-extending" << std::endl;
+                f_code.pn_extend();
+                std::cout << "    Emitting signature" << std::endl;
+                Signature f_sig = f_code.to_sig();
+                swap(funs[f].sig(), f_sig);
+                fs::path fpath(outdir/(funs[f].name + ".sig.tgf"));
+                std::cout << "    Printing signature" << std::endl;
+                std::ofstream fout(fpath.string());
+                EXPECT((bool) fout);
+                funs[f].sig().to_tgf(fout, flds);
             }
-            std::cout << "    Updated, rescheduling callers in SCC"
-                      << std::endl;
-            for (Ref<Function> c : f.callers()) {
-                if (cg.scc_of(c) != i || !worklist.enqueue(c)) {
+        } else {
+            // Fixpoint inside the SCC.
+            while (!worklist.empty()) {
+                Function& f = funs[worklist.dequeue()];
+                std::cout << "Processing " << f.name << std::endl;
+                if (!f.update_sig(funs)) {
+                    std::cout << "    No change" << std::endl;
                     continue;
                 }
-                std::cout << "    rescheduled " << funs[c].name << std::endl;
+                std::cout << "    Updated, rescheduling callers in SCC"
+                          << std::endl;
+                for (Ref<Function> c : f.callers()) {
+                    if (cg.scc_of(c) != i || !worklist.enqueue(c)) {
+                        continue;
+                    }
+                    std::cout << "    rescheduled " << funs[c].name << std::endl;
+                }
+                fs::path fpath(outdir/(f.name + ".sig.tgf"));
+                // TODO: Empty signatures won't be printed.
+                std::cout << "    Printing signature" << std::endl;
+                std::ofstream fout(fpath.string());
+                EXPECT((bool) fout);
+                f.sig().to_tgf(fout, flds);
             }
-            fs::path fpath(outdir/(f.name + ".sig.tgf"));
-            // TODO: Empty signatures won't be printed.
-            std::cout << "    Printing signature" << std::endl;
-            std::ofstream fout(fpath.string());
-            EXPECT((bool) fout);
-            f.sig().to_tgf(fout, flds);
         }
 
         // Print statistics.
