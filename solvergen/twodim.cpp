@@ -1521,7 +1521,13 @@ public:
             return false;
         }
         std::cout << "    New sig was larger" << std::endl;
+        // If not, widen S(i) U F(S(i)) and set as latest signature.
+        siUfsi.fold(WIDENING_K);
+        std::cout << "    Sig folded" << std::endl;
+        siUfsi.minimize();
         swap(sig_, siUfsi);
+        std::cout << "    Widened sig minimized" << std::endl;
+        revisions_++;
         auto t_end = std::chrono::steady_clock::now();
         ms_spent_ += std::chrono::duration_cast<std::chrono::milliseconds>
             (t_end - t_start).count();
