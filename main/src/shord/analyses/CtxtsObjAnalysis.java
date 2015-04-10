@@ -76,7 +76,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
     private Set<Ctxt> epsilonCtxtSet;
 
-	public static int K = 3;
+	public static int K = 4;
 
     private int[] ItoM;
     private int[] HtoM;

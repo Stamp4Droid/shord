@@ -139,6 +139,7 @@
 			<jar jarfile="${stamp.dir}/bin/api-@{apilevel}/${jarname}">
 			  <fileset dir="api-@{apilevel}/classes">
 				<include name="**/*.class"/>
+				<exclude name="android/view/StampLayoutInflater.class"/>
 			  </fileset>
 			  <fileset dir="api-@{apilevel}">
 				<include name="stamp_stubs.txt"/>

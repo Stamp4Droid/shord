@@ -1,7 +1,7 @@
 class Dialog
 {
-	public android.view.View view;
-	
+	public android.view.LayoutInflater stamp_inflater;
+
 	protected  Dialog(android.content.Context context, boolean cancelable, final android.content.DialogInterface.OnCancelListener cancelListener) { 
 		cancelListener.onCancel(Dialog.this);
 	}
@@ -21,20 +21,20 @@ class Dialog
 	public  void setOnKeyListener(final android.content.DialogInterface.OnKeyListener onKeyListener) {
 		onKeyListener.onKey(Dialog.this, 0, null);
 	}
-	
+
 	public  void setContentView(int layoutResID) { 
-		this.view = new android.view.View(null);
+		this.stamp_inflater = new android.view.StampLayoutInflater(null);
 	}
 
 	public  void setContentView(android.view.View view) { 
-		this.view = view;
+		this.stamp_inflater = view.stamp_inflater;
 	}
 
 	public  void setContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
-		this.view = view;
+		this.stamp_inflater = view.stamp_inflater;
 	}
 
 	public  void addContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
-		this.view = view;
+		this.stamp_inflater = view.stamp_inflater;
 	}
 }

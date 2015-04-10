@@ -17,6 +17,7 @@ import soot.jimple.Jimple;
 import soot.jimple.IntConstant;
 import soot.jimple.NullConstant;
 import soot.jimple.ThisRef;
+import soot.jimple.ParameterRef;
 import soot.util.Chain;
 
 import java.util.List;
@@ -35,38 +36,47 @@ import stamp.app.Widget;
 /*
  * @author Saswat Anand
  */
-public class GenerateViewClass
+public class GenerateInflaterClass
 {
 	private final App app;
-	private SootClass viewClass;
+	private SootClass inflaterClass;
 
-	public GenerateViewClass(App app)
+	public GenerateInflaterClass(App app)
 	{
 		this.app = app;
-		viewClass = new SootClass("stamp.harness.View", Modifier.PUBLIC);
-		viewClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
-		Scene.v().addClass(viewClass);
+		//inflaterClass = Scene.v().getSootClass("android.view.StampLayoutInflater");
+		inflaterClass = new SootClass("android.view.StampLayoutInflater", Modifier.PUBLIC);
+		inflaterClass.setSuperclass(Scene.v().getSootClass("android.view.LayoutInflater"));
+		Scene.v().addClass(inflaterClass);
+		addInit();
 	}
+
 
 	private void addInit()
 	{
-		SootMethod init = new SootMethod("<init>", Collections.EMPTY_LIST, VoidType.v(), Modifier.PUBLIC);
-		viewClass.addMethod(init);
+		Type contextType = RefType.v("android.content.Context");
+		SootMethod init = new SootMethod("<init>", Arrays.asList(new Type[]{contextType}), VoidType.v(), Modifier.PUBLIC);
+		inflaterClass.addMethod(init);
 		init.setActiveBody(Jimple.v().newBody(init));
 		Chain units = init.getActiveBody().getUnits();
-		Local thisLocal = Jimple.v().newLocal("r0", viewClass.getType());
-		init.getActiveBody().getLocals().add(thisLocal);
-		units.add(Jimple.v().newIdentityStmt(thisLocal, new ThisRef(viewClass.getType())));
-		SootMethodRef objectInit = Scene.v().getMethod("<java.lang.Object: void <init>()>").makeRef();
-		units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(thisLocal, objectInit, Collections.EMPTY_LIST)));
+		Chain<Local> locals = init.getActiveBody().getLocals();
+		Local thisLocal = Jimple.v().newLocal("r0", inflaterClass.getType());
+		locals.add(thisLocal);
+		units.add(Jimple.v().newIdentityStmt(thisLocal, new ThisRef(inflaterClass.getType())));
+		Local paramLocal = Jimple.v().newLocal("r1", contextType);
+		locals.add(paramLocal);
+		units.add(Jimple.v().newIdentityStmt(paramLocal, new ParameterRef(contextType, 0)));
+		SootMethodRef superInit = Scene.v().getMethod("<android.view.LayoutInflater: void <init>(android.content.Context)>").makeRef();
+		units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(thisLocal, superInit, paramLocal)));
 		units.add(Jimple.v().newReturnVoidStmt());
 	}
+
 
 	public SootClass getFinalSootClass() throws IOException
 	{
 		String widgetsListFile = System.getProperty("stamp.widgets.file");
 		PrintWriter writer = new PrintWriter(new FileWriter(new File(widgetsListFile)));
-		writer.println(viewClass.getName());
+		writer.println(inflaterClass.getName());
 
 		for(Layout layout : app.allLayouts()){
 			//inflate widgets used in this comp
@@ -79,19 +89,19 @@ public class GenerateViewClass
 											  RefType.v("android.view.View"), 
 											  Modifier.PUBLIC | Modifier.FINAL);
 				
-				if(viewClass.declaresMethod(m.getSubSignature()))
+				if(inflaterClass.declaresMethod(m.getSubSignature()))
 					continue;
 
-				viewClass.addMethod(m);
+				inflaterClass.addMethod(m);
 				writer.println(widget.id + ","+wClass.getType()+" "+m.getName());
 
 				m.setActiveBody(Jimple.v().newBody(m));
 				Chain units = m.getActiveBody().getUnits();
 				Chain<Local> locals = m.getActiveBody().getLocals();
 
-				Local thisLocal = Jimple.v().newLocal("r0", viewClass.getType());
+				Local thisLocal = Jimple.v().newLocal("r0", inflaterClass.getType());
 				locals.add(thisLocal);
-				units.add(Jimple.v().newIdentityStmt(thisLocal, new ThisRef(viewClass.getType())));
+				units.add(Jimple.v().newIdentityStmt(thisLocal, new ThisRef(inflaterClass.getType())));
 				
 				List<Type> paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context")});
 				List<Value> args = Arrays.asList(new Value[]{NullConstant.v()});
@@ -122,7 +132,7 @@ public class GenerateViewClass
 			}
 		}
 		writer.close();
-		return viewClass;
+		return inflaterClass;
 	}
 
 	private void init(SootClass klass, List<Type> paramTypes, List<Value> args, Chain units, Chain<Local> locals)

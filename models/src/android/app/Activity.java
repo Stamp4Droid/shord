@@ -5,7 +5,7 @@ import android.content.ClipboardManager;
 public class Activity
 {
 	protected android.content.Intent intent;
-	public android.view.View view;
+	public android.view.LayoutInflater stamp_inflater;
 
     public  Activity() 
 	{
@@ -155,21 +155,20 @@ public class Activity
 	public void setIntent(android.content.Intent newIntent) {
 		this.intent = newIntent;
 	}
-
+	
 	public  void setContentView(int layoutResID) { 
-		this.view = new android.view.View(this);
+		this.stamp_inflater = new android.view.StampLayoutInflater(this);
 	}
 
 	public  void setContentView(android.view.View view) { 
-		this.view = view;
+		this.stamp_inflater = view.stamp_inflater;
 	}
 
 	public  void setContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
-		this.view = view;
+		this.stamp_inflater = view.stamp_inflater;
 	}
 
 	public  void addContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
-		this.view = view;
+		this.stamp_inflater = view.stamp_inflater;
 	}
-
 }

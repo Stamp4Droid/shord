@@ -42,8 +42,8 @@ public class Main
 		dumpApp(app.toString());
 		dumpClassHierarchy(app);
 		
-		File driverDir = new File(driverDirName, "stamp/harness");
-		driverDir.mkdirs();
+		File driverDir = new File(driverDirName);//, "stamp/harness");
+		//driverDir.mkdirs();
 		
 		PrintWriter writer = new PrintWriter(new FileWriter(new File(harnessListFile)));
 
@@ -60,12 +60,14 @@ public class Main
 				Component comp = comps.get(i);
 				h.addComponent(comp);
 			}
-			writeClass(h.getFinalSootClass(), driverDirName);
+			writeClass(h.getFinalSootClass(), driverDir);
 		}
 		writer.close();
 
-		SootClass viewClass = new GenerateViewClass(app).getFinalSootClass();
-		writeClass(viewClass, driverDirName);
+		writeClass(new GenerateInflaterClass(app).getFinalSootClass(), driverDir);
+
+		//SootClass viewClass = new GenerateInflaterClass(app).getFinalSootClass();
+		//writeClass(viewClass, driverDirName);
 
 		//SootClass gClass = new GClass(app).getFinalSootClass();
 		//writeClass(gClass, driverDirName);
@@ -137,9 +139,10 @@ public class Main
 		writer.close();
 	}
 
-	private static void writeClass(SootClass klass, String driverDirName) throws IOException
+	private static void writeClass(SootClass klass, File driverDir) throws IOException
 	{
-		File file = new File(driverDirName, klass.getName().replace('.','/').concat(".class"));
+		File file = new File(driverDir, klass.getName().replace('.','/').concat(".class"));
+		file.getParentFile().mkdirs();
         OutputStream streamOut = new JasminOutputStream(new FileOutputStream(file));
         PrintWriter writerOut = new PrintWriter(new OutputStreamWriter(streamOut));
         JasminClass jasminClass = new soot.jimple.JasminClass(klass);

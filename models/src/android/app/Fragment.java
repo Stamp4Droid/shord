@@ -1,5 +1,7 @@
 class Fragment
 {
+	public android.view.View view;
+
 	public  Fragment()
 	{
 		this.onHiddenChanged(false);
@@ -8,8 +10,8 @@ class Fragment
 		this.onInflate(null, null, null);
 		this.onAttach(null);
 		this.onCreate(null);
-		this.onViewCreated(null, null);
-		this.onCreateView(null, null, null);
+		this.view = this.onCreateView(null, null, null);
+		this.onViewCreated(this.view, null);
 		this.onActivityCreated(null);
 		this.onStart();
 		this.onResume();
@@ -30,4 +32,9 @@ class Fragment
 		this.onCreateContextMenu(null, null, null);
 		this.onContextItemSelected(null);
 	}
+	
+	public  android.view.View getView() { 
+		return this.view;
+	}
+	
 }

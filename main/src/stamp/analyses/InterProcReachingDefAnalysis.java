@@ -152,18 +152,31 @@ public class InterProcReachingDefAnalysis
 			}
 		} else if(rightOp instanceof InstanceFieldRef || rightOp instanceof ArrayRef){
 			Local base; SparkField field;
+			int index = -1;
 			if(rightOp instanceof InstanceFieldRef){
 				base = (Local) ((InstanceFieldRef) rightOp).getBase();
 				field = ((InstanceFieldRef) rightOp).getField();
 			} else {
-				base = (Local) ((ArrayRef) rightOp).getBase();
+				ArrayRef ar = (ArrayRef) rightOp;
+				base = (Local) ar.getBase();
 				field = ArrayElement.v();
+				if(ar.getIndex() instanceof IntConstant)
+					index = ((IntConstant) ar.getIndex()).value;
 			}
 			for(Trio<Stmt,Immediate,SootMethod> trio : findAlias(base, field)){
 				Stmt stmt = trio.val0;
 				Immediate alias = trio.val1;
 				SootMethod containerMethod = trio.val2;
-				System.out.println("alias: "+stmt);
+				
+				if(index >= 0){
+					ArrayRef ar = (ArrayRef) ((DefinitionStmt) stmt).getLeftOp();
+					if(ar.getIndex() instanceof IntConstant)
+						if(((IntConstant) ar.getIndex()).value != index)
+							continue;
+						else 
+							System.out.println("array index matched");
+				}
+				//System.out.println("alias: "+stmt);
 				if(isInteresting(alias)){
 					if(alias instanceof Local){
 						workList.add(new Trio((Local) alias, stmt, containerMethod));

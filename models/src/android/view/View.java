@@ -1,5 +1,7 @@
 class View
 {
+	public android.view.LayoutInflater stamp_inflater;
+
 	public  View(android.content.Context context) 
 	{ 
 		onFinishInflate();

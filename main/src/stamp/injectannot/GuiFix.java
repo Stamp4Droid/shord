@@ -16,7 +16,7 @@ import soot.jimple.Constant;
 import soot.jimple.IntConstant;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
-import soot.jimple.AssignStmt;
+import soot.jimple.DefinitionStmt;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.util.Chain;
@@ -52,7 +52,17 @@ public class GuiFix extends JavaAnalysis
 	private Map<Integer,List<String>> viewIdToWidgetMeths = new HashMap();
 	private InterProcReachingDefAnalysis iprda = null;
 	private Body body;
-	private SootClass stampViewClass;
+	private SootClass stampInflaterClass;
+	private CallGraph callGraph;
+
+	private final String[] subsigs = {"android.view.View findViewById(int)",
+									  "android.view.View inflate(int resource, android.view.ViewGroup root)",
+									  "android.view.View inflate(org.xmlpull.v1.XmlPullParser parser, android.view.ViewGroup root)",
+									  "android.view.View inflate(int resource, android.view.ViewGroup root, boolean attachToRoot)"
+	};
+	
+	private final String[] classNames = {"android.app.Activity", "android.app.Dialog",
+										 "android.view.View", "android.view.LayoutInflater", "android.view.Window"};
 
 	public GuiFix()
 	{
@@ -60,9 +70,9 @@ public class GuiFix extends JavaAnalysis
 		BufferedReader reader;
 		try{
 			reader = new BufferedReader(new FileReader(widgetsListFile));
-			stampViewClass = Scene.v().getSootClass(reader.readLine().trim());
-			//System.out.println("stampViewClass: "+stampViewClass.getName());
-			//for(SootMethod m : stampViewClass.getMethods())
+			stampInflaterClass = Scene.v().getSootClass(reader.readLine().trim());
+			//System.out.println("stampInflatorClass: "+stampInflatorClass.getName());
+			//for(SootMethod m : stampInflatorClass.getMethods())
 			//	System.out.println("+ "+m.getSignature());
 			String line;
 			while((line = reader.readLine()) != null){
@@ -87,8 +97,8 @@ public class GuiFix extends JavaAnalysis
 	public void run()
 	{
 		this.iprda = new InterProcReachingDefAnalysis();
-		
-		Scene.v().getSootClass("android.view.View").setSuperclass(stampViewClass);
+
+		callGraph = Scene.v().getCallGraph();
 
 		Program prog = Program.g();
 		for(SootClass klass : prog.getClasses()){
@@ -105,64 +115,85 @@ public class GuiFix extends JavaAnalysis
 	
 	private void process()
 	{
-		CallGraph callGraph = Scene.v().getCallGraph();
 		Chain<Unit> units = body.getUnits();
 		Chain<Local> locals = body.getLocals();
 		Iterator<Unit> uit = units.snapshotIterator();
 		while(uit.hasNext()){
 			Stmt stmt = (Stmt) uit.next();
-			if(!stmt.containsInvokeExpr() || !(stmt instanceof AssignStmt))
-				continue;
-			InvokeExpr ie = stmt.getInvokeExpr();
-			SootMethod callee = ie.getMethod();
-			if(!callee.getSubSignature().equals("android.view.View findViewById(int)"))
-				continue;
-
-			Iterator<Edge> edgeIt = callGraph.edgesOutOf(stmt);
-			SootMethod target = null;
-			while(edgeIt.hasNext()){
-				if(target == null)
-					target = (SootMethod) edgeIt.next().getTgt();
-				else{
-					//multple outgoing edges
-					System.out.println("TODO: multiple outgoing edges from "+stmt);
-					target = null;
-					break;
-				}
-			}
+			SootMethod target = callsInflate(stmt);
 			if(target == null)
 				continue;
 
+			InvokeExpr ie = stmt.getInvokeExpr();
 			Set<String> widgetMethNames = getWidgetMethNames(ie.getArg(0), stmt, body.getMethod());
 			if(widgetMethNames.isEmpty())
 				continue;
 
-			Local viewLocal = null;
-			String targetClassName = target.getDeclaringClass().getName();
-			if(targetClassName.equals("android.app.Activity") ||
-			   targetClassName.equals("android.app.Dialog") ||
-			   targetClassName.equals("android.view.Window")){
-				viewLocal = Jimple.v().newLocal("stamp$view", RefType.v("android.view.View"));
-				locals.add(viewLocal);
-				Local base = (Local) ((InstanceInvokeExpr) ie).getBase();
-				SootFieldRef viewFld = target.getDeclaringClass().getFieldByName("view").makeRef();
-				Stmt viewLoadStmt = Jimple.v().newAssignStmt(viewLocal, Jimple.v().newInstanceFieldRef(base, viewFld));
-				units.insertBefore(viewLoadStmt, stmt);
-			} else if(targetClassName.equals("android.view.View"))
-				viewLocal = (Local) ((InstanceInvokeExpr) ie).getBase();
-			else
-				continue;
-
-			Local leftOp = (Local) ((AssignStmt) stmt).getLeftOp();
+			Local inflaterLocal;
+			Local base = (Local) ((InstanceInvokeExpr) ie).getBase();
+			if(target.getDeclaringClass().equals(stampInflaterClass))
+				inflaterLocal = base;
+			else {
+				inflaterLocal = Jimple.v().newLocal("stamp$inflater", stampInflaterClass.getType());
+				locals.add(inflaterLocal);
+				
+				SootFieldRef inflaterFld = target.getDeclaringClass().getFieldByName("stamp_inflater").makeRef();
+				Stmt loadStmt = Jimple.v().newAssignStmt(inflaterLocal, Jimple.v().newInstanceFieldRef(base, inflaterFld));
+				units.insertBefore(loadStmt, stmt);
+			}
+			
+			DefinitionStmt ds = (DefinitionStmt) stmt;
+			Local leftOp = (Local) ds.getLeftOp();
 			for(String subsig : widgetMethNames){
-				SootMethodRef m = stampViewClass.getMethod("android.view.View "+subsig+"()").makeRef();
-				Stmt invkStmt = Jimple.v().newAssignStmt(leftOp, Jimple.v().newVirtualInvokeExpr(viewLocal, m, Collections.EMPTY_LIST));
+				SootMethodRef m = stampInflaterClass.getMethod("android.view.View "+subsig+"()").makeRef();
+				Stmt invkStmt = Jimple.v().newAssignStmt(leftOp, Jimple.v().newVirtualInvokeExpr(inflaterLocal, m, Collections.EMPTY_LIST));
 				units.insertBefore(invkStmt, stmt);
+				System.out.println("replacing "+stmt + " by "+invkStmt+" in "+body.getMethod().getSignature());
 			}
 			units.remove(stmt);
 		}
 	}
+	
+	private SootMethod callsInflate(Stmt stmt)
+	{
+		if(!stmt.containsInvokeExpr() || !(stmt instanceof DefinitionStmt))
+			return null;
 
+		InvokeExpr ie = stmt.getInvokeExpr();
+		String calleeSubsig = ie.getMethod().getSubSignature();
+		boolean match = false;
+		for(String ss : subsigs){
+			if(ss.equals(calleeSubsig)){
+				match = true;
+				break;
+			}
+		}
+		if(!match)
+			return null;
+
+		Iterator<Edge> edgeIt = callGraph.edgesOutOf(stmt);
+		SootMethod target = null;
+		while(edgeIt.hasNext()){
+			if(target == null)
+				target = (SootMethod) edgeIt.next().getTgt();
+			else{
+				//multple outgoing edges
+				System.out.println("TODO: multiple outgoing edges from "+stmt);
+				target = null;
+				break;
+			}
+		}
+		if(target == null)
+			return null;
+
+		String targetClassName = target.getDeclaringClass().getName();
+		for(String cname : classNames){
+			if(targetClassName.equals(cname))
+				return target;
+		}
+		return null;
+	}
+			
 	private Set<String> getWidgetMethNames(Value arg, Stmt stmt, SootMethod method)
 	{
 		Set<String> widgetMeths = new HashSet();
