@@ -951,7 +951,7 @@ void Function::cross_call(Ref<Box> box, const EdgeTail& e_in,
 std::ostream& operator<<(std::ostream& os, const Signature& sig);
 
 void intersect_all(const std::string& out_dir) {
-    Worklist<Ref<Function>,true> empties;
+    Worklist<Ref<Function>,true> to_recalc;
 
     // 1st pass: Iterate over all discovered functions, to set up call graph.
     std::cout << "Performing initial intersection" << std::endl;
@@ -960,7 +960,12 @@ void intersect_all(const std::string& out_dir) {
         f.compute_body();
         if (f.empty_body()) {
             std::cout << "    Empty" << std::endl;
-            empties.enqueue(f.ref);
+            // Reschedule any callers that have already been calculated.
+            for (Ref<Function> c : f.callers()) {
+                if (!funs[c].empty_body()) {
+                    to_recalc.enqueue(c);
+                }
+            }
         } else {
             std::cout << "    Non-empty, printing" << std::endl;
             std::stringstream ss;
@@ -975,31 +980,28 @@ void intersect_all(const std::string& out_dir) {
 
     // 2nd pass: Propagate function emptiness information.
     std::cout << "Propagating emptiness information" << std::endl;
-    while (!empties.empty()) {
-        const Function& callee = funs[empties.dequeue()];
-        std::cout << "Processing # " << callee.ref << std::endl;
-        for (Ref<Function> f_id : callee.callers()) {
-            Function& f = funs[f_id];
-            if (f.empty_body()) {
-                continue;
+    while (!to_recalc.empty()) {
+        Function& f = funs[to_recalc.dequeue()];
+        std::cout << "Re-processing # " << f.ref << std::endl;
+        std::stringstream ss;
+        ss << f.sig << ".fun.tgf";
+        fs::path fpath = fs::path(out_dir)/ss.str();
+        f.compute_body();
+        if (f.empty_body()) {
+            std::cout << "    Became empty" << std::endl;
+            fs::remove(fpath);
+            for (Ref<Function> c : f.callers()) {
+                if (!funs[c].empty_body()) {
+                    to_recalc.enqueue(c);
+                }
             }
-            std::stringstream ss;
-            ss << f.sig << ".fun.tgf";
-            fs::path fpath = fs::path(out_dir)/ss.str();
-            std::cout << "    Re-calculating # " << f.ref << std::endl;
-            f.compute_body();
-            if (f.empty_body()) {
-                std::cout << "        Became empty" << std::endl;
-                fs::remove(fpath);
-                empties.enqueue(f.ref);
-            } else {
-                std::cout << "        Updated, printing" << std::endl;
-                std::ofstream fout(fpath.string());
-                EXPECT((bool) fout);
-                fout << f;
-            }
-            f.clear_body();
+        } else {
+            std::cout << "    Updated, printing" << std::endl;
+            std::ofstream fout(fpath.string());
+            EXPECT((bool) fout);
+            fout << f;
         }
+        f.clear_body();
     }
 }
 
