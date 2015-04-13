@@ -739,7 +739,7 @@ private:
     std::set<Ref<SuperNode> > finals_;
     std::deque<Ref<SuperNode> > bck_list_;
     std::set<Ref<Function> > callers_;
-    bool second_pass_ = false;
+    bool empty_body_ = false;
 private:
     const typename SuperNode::Key& curr() const {
         return sup_nodes_[curr_id()].fields;
@@ -837,16 +837,6 @@ private:
             bck_list_.push_back(point);
         }
     };
-    void clear_body() {
-        sup_nodes_.clear();
-        initial_ = Ref<SuperNode>();
-        eps_moves_.clear();
-        stack_moves_.clear();
-        call_moves_.clear();
-        finals_.clear();
-        assert(fwd_list_.empty());
-        assert(bck_list_.empty());
-    }
 public:
     explicit Function(const Signature* sig, Ref<Function> ref)
         : sig(*sig), ref(ref),
@@ -855,10 +845,6 @@ public:
     Function(Function&&) = default;
     Function& operator=(const Function&) = delete;
     void compute_body() {
-        if (second_pass_) {
-            // Clean up containers from previous iteration.
-            clear_body();
-        }
         // Register the function entry as the initial point.
         initial_ = add_node(sig.get<SRC>(), pri_comp_.initial,
                             sig.get<SEC_CP_FROM>(), sig.get<SEC_ST_FROM>());
@@ -899,7 +885,9 @@ public:
         }
         // Starting from the final points, move backwards and mark useful
         // points (those that can reach an exit). This filtering step is
-        // overapproximate, but sound.
+        // overapproximate, but sound (before any matching is performed, we can
+        // only be certain that the FSM is empty if we can't reach any final
+        // point from the initial.
         while (!bck_list_.empty()) {
             for (Ref<SuperNode> src : eps_moves_[bck_list_.front()]) {
                 mark_useful(src);
@@ -912,23 +900,23 @@ public:
             }
             bck_list_.pop_front();
         }
-        // Flag that primary body computation is complete.
-        second_pass_ = true;
-        // Pre-emptively clear empty FSMs before exiting.
-        // TODO: Could clean up useless states for non-empty FSMs as well.
-        if (empty_body()) {
-            clear_body();
-            initial_ = sup_nodes_.mktemp().ref;
-        }
+        empty_body_ = !sup_nodes_[initial_].useful;
         std::cout << "    Nodes: " << sup_nodes_.size() << std::endl;
         std::cout << "    Eps moves: " << eps_moves_.size() << std::endl;
         std::cout << "    Stack moves: " << stack_moves_.size() << std::endl;
         std::cout << "    Call moves: " << call_moves_.size() << std::endl;
+    void clear_body() {
+        sup_nodes_.clear();
+        initial_ = Ref<SuperNode>();
+        eps_moves_.clear();
+        stack_moves_.clear();
+        call_moves_.clear();
+        finals_.clear();
+        assert(fwd_list_.empty());
+        assert(bck_list_.empty());
     }
     bool empty_body() const {
-        // Before any matching is performed, we can only be certain that the
-        // FSM is empty if we can't reach any final point from the initial.
-        return !sup_nodes_[initial_].useful;
+        return empty_body_;
     }
     void add_caller(Ref<Function> f) {
         callers_.insert(f);
@@ -950,13 +938,9 @@ void Function::cross_call(Ref<Box> box, const EdgeTail& e_in,
     Ref<Component> entered = pri_comp_.boxes[box].comp;
     FOR(s, funs.index()[entered][e_in.get<DST>()][sec_cp_in][sec_st_in]) {
         Function& callee = funs[s.get<REF>()];
-        if (second_pass_) {
-            // In the 2nd pass, don't record callers, and ignore empty callees.
-            if (callee.empty_body()) {
-                continue;
-            }
-        } else {
-            callee.add_caller(ref);
+        callee.add_caller(ref);
+        if (callee.empty_body()) {
+            continue;
         }
         Ref<SuperNode> out_id = sup_nodes_.mktemp().ref;
         call_moves_.insert(out_id, in_id, callee.ref);
@@ -964,31 +948,57 @@ void Function::cross_call(Ref<Box> box, const EdgeTail& e_in,
     }
 }
 
-void intersect_all() {
+std::ostream& operator<<(std::ostream& os, const Signature& sig);
+
+void intersect_all(const std::string& out_dir) {
+    Worklist<Ref<Function>,true> empties;
+
     // 1st pass: Iterate over all discovered functions, to set up call graph.
+    std::cout << "Performing initial intersection" << std::endl;
     for (Function& f : funs) {
         std::cout << "Intersecting # " << f.ref << std::endl;
         f.compute_body();
+        if (f.empty_body()) {
+            std::cout << "    Empty" << std::endl;
+            empties.enqueue(f.ref);
+        } else {
+            std::cout << "    Non-empty, printing" << std::endl;
+            std::stringstream ss;
+            ss << f.sig << ".fun.tgf";
+            fs::path fpath = fs::path(out_dir)/ss.str();
+            std::ofstream fout(fpath.string());
+            EXPECT((bool) fout);
+            fout << f;
+        }
+        f.clear_body();
     }
+
     // 2nd pass: Propagate function emptiness information.
-    Worklist<Ref<Function>,true> worklist;
-    for (const Function& f : funs) {
-        if (f.empty_body()) {
-            for (Ref<Function> c : f.callers()) {
-                worklist.enqueue(c);
+    std::cout << "Propagating emptiness information" << std::endl;
+    while (!empties.empty()) {
+        const Function& callee = funs[empties.dequeue()];
+        std::cout << "Processing # " << callee.ref << std::endl;
+        for (Ref<Function> f_id : callee.callers()) {
+            Function& f = funs[f_id];
+            if (f.empty_body()) {
+                continue;
             }
-        }
-    }
-    while (!worklist.empty()) {
-        Function& f = funs[worklist.dequeue()];
-        if (f.empty_body()) {
-            continue;
-        }
-        f.compute_body();
-        if (f.empty_body()) {
-            for (Ref<Function> c : f.callers()) {
-                worklist.enqueue(c);
+            std::stringstream ss;
+            ss << f.sig << ".fun.tgf";
+            fs::path fpath = fs::path(out_dir)/ss.str();
+            std::cout << "    Re-calculating # " << f.ref << std::endl;
+            f.compute_body();
+            if (f.empty_body()) {
+                std::cout << "        Became empty" << std::endl;
+                fs::remove(fpath);
+                empties.enqueue(f.ref);
+            } else {
+                std::cout << "        Updated, printing" << std::endl;
+                std::ofstream fout(fpath.string());
+                EXPECT((bool) fout);
+                fout << f;
             }
+            f.clear_body();
         }
     }
 }
@@ -1279,23 +1289,8 @@ int main(int argc, char* argv[]) {
     enum_funs();
     std::cout << funs.size() << " functions in total" << std::endl;
     std::cout << "Intersecting functions with secondary RSM" << std::endl;
-    intersect_all();
-
-    // Print out non-empty functions.
     fs::create_directory(out_dir);
-    unsigned count = 0;
-    for (const Function& f : funs) {
-        if (f.empty_body()) {
-            continue;
-        }
-        std::stringstream ss;
-        ss << f.sig << ".fun.tgf";
-        fs::path fpath = fs::path(out_dir)/ss.str();
-        std::ofstream fout(fpath.string());
-        EXPECT((bool) fout);
-        fout << f;
-        std::cout << "Printed # " << ++count << ": " << f.sig << std::endl;
-    }
+    intersect_all(out_dir);
 
     return EXIT_SUCCESS;
 }
