@@ -38,6 +38,8 @@ public class App
 	private Set<String> permissions = new HashSet();
 	private List<String> classes = new ArrayList();
 	private Set<String> frameworkClasses = new HashSet();
+	private PublicXml publicXml;
+	private StringXml stringXml;
 
 	private String pkgName;
 	private String version;
@@ -45,19 +47,24 @@ public class App
 
 	public static App readApp(String apkPath, String apktoolOutDir)
 	{
-		App app = new App();
-	
+		App app = new App(apkPath, apktoolOutDir);
+		return app;
+	}
+
+	public App(String apkPath, String apktoolOutDir)
+	{
 		File manifestFile = new File(apktoolOutDir, "AndroidManifest.xml");				
-		ParseManifest pmf = new ParseManifest(manifestFile, app);
+		ParseManifest pmf = new ParseManifest(manifestFile, this);
 
 		File resDir = new File(apktoolOutDir, "res");
-		List<Layout> layouts = new ParseLayout().process(resDir);
+		publicXml = new PublicXml(new File(resDir, "values/public.xml"));
+		stringXml = new StringXml(new File(resDir, "values/strings.xml"));
+
+		List<Layout> layouts = parseLayouts(resDir);
 		
-		app.collectClassNames(apkPath);
-		app.computeFrameworkClasses();		
-		app.process(apktoolOutDir, layouts);
-		
-		return app;
+		collectClassNames(apkPath);
+		computeFrameworkClasses();		
+		process(apktoolOutDir, layouts);
 	}
 
 	public void process(String apktoolOutDir, List<Layout> layouts)
@@ -377,5 +384,43 @@ public class App
 			}
 		}
 	}
+
+	List<Layout> parseLayouts(File resDir)
+	{
+		File layoutDir = new File(resDir, "layout");
+		File[] layoutFiles = layoutDir.listFiles(new FilenameFilter(){
+				public boolean accept(File dir, String name){
+					return name.endsWith(".xml");
+				}
+			});
+		
+		List<Layout> layouts = new ArrayList();
+		Map<String,Layout> nameToLayout = new HashMap();
+		if(layoutFiles != null){
+			for(File lf : layoutFiles){
+				String layoutFileName = lf.getName();
+				layoutFileName = layoutFileName.substring(0, layoutFileName.length()-4); //drop ".xml"
+				//System.out.println("++ "+layoutFileName);
+				Integer id = publicXml.layoutIdFor(layoutFileName);
+				Layout layout = new Layout(id, lf, publicXml, stringXml);
+				layouts.add(layout);
+				nameToLayout.put(layoutFileName, layout);
+			}
+		}
+		
+		for(Layout layout : layouts){
+			//System.out.println("main layout: "+layout.fileName);
+			for(String includedLayoutName : layout.includedLayouts){
+				Layout includedLayout = nameToLayout.get(includedLayoutName);
+				//System.out.println("included layout: "+includedLayout.fileName);
+				//System.out.println("adding "+includedLayout.widgets.size()+" widgets and "+includedLayout.callbacks+" callbacks.");
+				layout.widgets.addAll(includedLayout.widgets);
+				layout.callbacks.addAll(includedLayout.callbacks);
+			}
+		}
+
+		return layouts;
+	}
+
 
 }

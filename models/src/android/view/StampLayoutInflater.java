@@ -9,6 +9,6 @@ public class StampLayoutInflater extends LayoutInflater
 
 	public android.view.LayoutInflater cloneInContext(android.content.Context newContext)
 	{
-		return this;
+		return this; //TODO: fix
 	}
 }

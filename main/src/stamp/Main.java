@@ -2,6 +2,8 @@ package stamp;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 import java.io.File;
 import java.io.FileReader;
@@ -26,12 +28,12 @@ public class Main
 
 	public static void main(String[] args) throws Exception
 	{
-		String harnessListFile = System.getProperty("stamp.harnesslist.file");
-		List<String> harnessClasses = new ArrayList();
-		BufferedReader reader = new BufferedReader(new FileReader(new File(harnessListFile)));
+		String mainListFile = System.getProperty("stamp.harnesslist.file");
+		List<String> mainClasses = new ArrayList();
+		BufferedReader reader = new BufferedReader(new FileReader(new File(mainListFile)));
 		String line = null;
 		while((line = reader.readLine()) != null){
-			harnessClasses.add(line);
+			mainClasses.add(line);
 		}
 		reader.close();
 
@@ -43,19 +45,22 @@ public class Main
 		String outDir = System.getProperty("stamp.out.dir");
 
 		Program prog = Program.g();
+		Set<String> harnessClasses = new HashSet();
+		//harnessClasses will include mainClasses
+		findHarnessClasses(new File(System.getProperty("stamp.driver.dir")), null, harnessClasses);
 		prog.build(harnessClasses, widgetClass);
 		ProgramScope ps = new DefaultProgramScope(prog);
 		prog.setScope(ps);
 
 		setup();
 
-		if(harnessClasses.size() == 1){
+		if(mainClasses.size() == 1){
 			System.setProperty("chord.work.dir", outDir);
-			prog.setMainClass(harnessClasses.get(0));
+			prog.setMainClass(mainClasses.get(0));
 			shord.project.Main.main(null);
 		} else {
 			int count = 0;
-			for(String h : harnessClasses){
+			for(String h : mainClasses){
 				count++;
 				String chordWorkDir = outDir+File.separator+count;
 				System.setProperty("chord.work.dir", chordWorkDir);
@@ -65,6 +70,24 @@ public class Main
 		}
 		
 		finish();
+	}
+
+
+	private static void findHarnessClasses(File dir, String prefix, Set<String> classNames)
+	{
+		for(File f : dir.listFiles()){
+			if(f.isDirectory()){
+				String newPrefix = prefix == null ? "" : prefix+".";
+				newPrefix += f.getName();
+				findHarnessClasses(f, newPrefix, classNames);
+			} else {
+				String fname = f.getName();
+				if(fname.endsWith(".class")){
+					String cname = (prefix == null ? "" : prefix+".") + fname.substring(0, fname.length()-6);
+					classNames.add(cname);
+				}
+			}
+		}
 	}
 	
 	private static void finish()

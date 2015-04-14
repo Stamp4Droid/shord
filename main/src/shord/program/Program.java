@@ -38,6 +38,8 @@ public class Program
 	private NumberedSet stubMethods;
 	private ProgramScope scope;
 	private App app;
+	private Set<String> harnessClasses;
+	private List<SootMethod> defaultEntryPoints = new ArrayList();
 
 	public static Program g()
 	{
@@ -51,7 +53,7 @@ public class Program
 	{
 	}
 
-	public void build(List<String> harnesses, String widgetsClassName)
+	public void build(Set<String> harnesses, String widgetsClassName)
 	{
         try {
 			StringBuilder options = new StringBuilder();
@@ -77,11 +79,19 @@ public class Program
 
             Scene.v().loadBasicClasses();
 
+			/*
 			for(String h : harnesses){
 				Scene.v().loadClassAndSupport(h);
 			}
 
 			Scene.v().loadClassAndSupport(widgetsClassName);
+			*/
+		
+			this.harnessClasses = harnesses;
+			for(String h : harnesses){
+				//System.out.println("Loading harness class "+h);
+				Scene.v().loadClassAndSupport(h);
+			}
 
 			//String mainClassName = System.getProperty("chord.main.class");
 			//SootClass mainClass = Scene.v().loadClassAndSupport(mainClassName);
@@ -115,22 +125,38 @@ public class Program
 		mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
 		Scene.v().setMainClass(mainClass);
 
-		List entryPoints = new ArrayList();
-		entryPoints.add(mainMethod);
+		defaultEntryPoints.add(mainMethod);
 
 		//workaround soot bug
 		if(mainClass.declaresMethodByName("<clinit>"))
-			entryPoints.add(mainClass.getMethodByName("<clinit>"));
-
-		Scene.v().setEntryPoints(entryPoints);
+			defaultEntryPoints.add(mainClass.getMethodByName("<clinit>"));
 	}
 
-	public void buildCallGraph()
+	public void runCHA()
 	{
-		//run CHA
 		Scene.v().releaseCallGraph();
-		CallGraphBuilder cg = new CallGraphBuilder(DumbPointerAnalysis.v());
-		cg.build();
+		Scene.v().releasePointsToAnalysis();
+		Scene.v().releaseFastHierarchy();
+		G.v().ClassHierarchy_classHierarchyMap.clear();
+		
+		List<SootMethod> entryPoints = new ArrayList(defaultEntryPoints);
+		for(String h : harnessClasses){
+			if(!h.startsWith("stamp.harness.LayoutInflater$"))
+				continue;
+			SootMethod init = Scene.v().getSootClass(h).getMethod("void <init>(android.content.Context)");
+			entryPoints.add(init);
+		}
+		Scene.v().setEntryPoints(entryPoints);
+
+		Transform chaTransform = PackManager.v().getTransform( "cg.cha" );
+		String defaultOptions = chaTransform.getDefaultOptions();
+		StringBuilder options = new StringBuilder();
+		options.append("enabled:true");
+		options.append(" verbose:true");
+		options.append(" "+defaultOptions);
+		System.out.println("CHA options: "+options.toString());
+		chaTransform.setDefaultOptions(options.toString());
+		chaTransform.apply();	
 	}
 
 	public void runSpark(){
@@ -144,6 +170,8 @@ public class Program
 		Scene.v().releaseFastHierarchy();
 		G.v().MethodPAG_methodToPag.clear();
 		G.v().ClassHierarchy_classHierarchyMap.clear();
+
+		Scene.v().setEntryPoints(defaultEntryPoints);
 
 		//run spark
 		Transform sparkTransform = PackManager.v().getTransform( "cg.spark" );
@@ -342,4 +370,5 @@ public class Program
 	{
 		this.scope = ps;
 	}
+	
 }

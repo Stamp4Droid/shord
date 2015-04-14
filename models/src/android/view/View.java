@@ -1,6 +1,6 @@
 class View
 {
-	public android.view.LayoutInflater stamp_inflater;
+	public android.view.StampLayoutInflater stamp_inflater;
 
 	public  View(android.content.Context context) 
 	{ 

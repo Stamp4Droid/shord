@@ -64,7 +64,11 @@ public class Main
 		}
 		writer.close();
 
-		writeClass(new GenerateInflaterClass(app).getFinalSootClass(), driverDir);
+		writeClass(new GenerateAbstractInflaterClass(app).getFinalSootClass(), driverDir);
+
+		for(Layout layout : app.allLayouts()){
+			writeClass(new GenerateInflaterClass(layout).getFinalSootClass(), driverDir);
+		}
 
 		//SootClass viewClass = new GenerateInflaterClass(app).getFinalSootClass();
 		//writeClass(viewClass, driverDirName);

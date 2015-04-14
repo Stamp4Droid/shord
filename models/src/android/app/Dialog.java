@@ -1,6 +1,6 @@
 class Dialog
 {
-	public android.view.LayoutInflater stamp_inflater;
+	public android.view.StampLayoutInflater stamp_inflater;
 
 	protected  Dialog(android.content.Context context, boolean cancelable, final android.content.DialogInterface.OnCancelListener cancelListener) { 
 		cancelListener.onCancel(Dialog.this);
@@ -23,7 +23,7 @@ class Dialog
 	}
 
 	public  void setContentView(int layoutResID) { 
-		this.stamp_inflater = new android.view.StampLayoutInflater(null);
+		//dont make it a stub
 	}
 
 	public  void setContentView(android.view.View view) { 

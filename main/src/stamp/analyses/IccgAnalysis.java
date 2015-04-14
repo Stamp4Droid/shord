@@ -10,6 +10,7 @@ import soot.Unit;
 import soot.jimple.Stmt;
 import soot.jimple.DefinitionStmt;
 import soot.jimple.StaticFieldRef;
+import soot.jimple.spark.pag.SparkField;
 
 import shord.analyses.VarNode;
 import shord.analyses.LocalVarNode;
@@ -36,7 +37,7 @@ import java.io.*;
  * @author Saswat Anand
  */
 @Chord(name="iccg-bdd-java",
-	   consumes={"MH", "CH", "CICM", "pt", "OutLabelArg", "MI", "MmethArg"})
+	   consumes={"fpt", "CICM", "pt", "OutLabelArg", "MI", "MmethArg"})
 public class IccgAnalysis extends JavaAnalysis
 {
 	protected Map<Pair<Ctxt,Stmt>,Set<WidgetList>> cache = new HashMap();
@@ -78,7 +79,7 @@ public class IccgAnalysis extends JavaAnalysis
 				if(allCtxts == null)
 					continue;
 				for(Ctxt ctxt : allCtxts){
-					System.out.println(ctxt.toString());
+					System.out.println("context: "+ctxt.toString());
 					workList.add(new Pair(target, ctxt));
 					traverse(target, ctxt, new ArrayList());
 				}				
@@ -100,6 +101,7 @@ public class IccgAnalysis extends JavaAnalysis
 							Ctxt calleeContext, 
 							List<Trio<Ctxt,Stmt,Set<String>>> path)
 	{
+		System.out.println("Traverse: callee: "+callee.getSignature()+" calleeContext: "+calleeContext);
 		Iterable<Pair<Ctxt,Stmt>> callers = callersOf(callee, calleeContext);
 		if(callers == null){
 			//reached the entry
@@ -499,52 +501,27 @@ public class IccgAnalysis extends JavaAnalysis
 	
 	protected Map<Ctxt,String> mapWidgetsToIds()
 	{
-        ProgramRel relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");		
-        relMH.load();
-        ProgramRel relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");		
-        relCH.load();
-
+        ProgramRel relFpt = (ProgramRel) ClassicProject.g().getTrgt("fpt");		
+        relFpt.load();
+ 
 		Map<Ctxt,String> widgetToId = new HashMap();
-		String widgetsListFile = System.getProperty("stamp.widgets.file");
-		BufferedReader reader;
-		try{
-			reader = new BufferedReader(new FileReader(widgetsListFile));
-			SootClass stampViewClass = Scene.v().getSootClass(reader.readLine().trim());
-			String line;
-			while((line = reader.readLine()) != null){
-				String[] tokens = line.split(",");
-				int id = Integer.parseInt(tokens[0]);
-				String[] widgetInfo = tokens[1].split(" ");
-				String widgetType = widgetInfo[0];
-				String widgetIdStr = widgetInfo[1];
-				if(id >= 0){
-					SootMethod m = stampViewClass.getMethod("android.view.View "+widgetIdStr+"()");
-					RelView view = relMH.getView();
-					view.selectAndDelete(0, m);
-					Iterable<AllocNode> hs = view.getAry1ValTuples();
-					AllocNode an = null;
-					for(AllocNode h : hs){
-						assert an == null;
-						an = h;
-					}
-					view.free();
-					if(an == null)
-						continue;
-					view = relCH.getView();
-					view.selectAndDelete(1, an);
-					Iterable<Ctxt> objs = view.getAry1ValTuples();
-					for(Ctxt obj : objs){
-						widgetToId.put(obj, widgetType+" "+widgetIdStr);
-					}
-					view.free();
-				}
-			}
-			reader.close();
-		}catch(IOException e){
-			throw new Error(e);
+
+		RelView view = relFpt.getView();
+		view.delete(0);
+		Iterable<Pair<SparkField,Ctxt>> iter = view.getAry2ValTuples();
+		for(Pair<SparkField,Ctxt> pair : iter){
+			if(!(pair.val0 instanceof SootField))
+				continue;
+			SootField fld = (SootField) pair.val0;
+			Ctxt obj = pair.val1;
+			String className = fld.getDeclaringClass().getName();
+			if(!className.startsWith("stamp.harness.LayoutInflater$"))
+				continue;
+			String fldSubsig = fld.getSubSignature();
+			widgetToId.put(obj, fldSubsig);
 		}
-		relMH.close();
-		relCH.close();
+		view.free();
+		relFpt.close();
 		return widgetToId;
 	}
 }

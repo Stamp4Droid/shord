@@ -97,6 +97,7 @@
       <jvmarg value="-ea"/>
       <!--sysproperty key="chord.work.dir" file="${stamp.out.dir}"/-->
       <!--sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/-->
+      <sysproperty key="stamp.driver.dir" value="${driver.dir}"/>
 	  <sysproperty key="stamp.scope.excludefile" value="${stamp.dir}/exclude.txt"/>
 	  <sysproperty key="stamp.widgets.file" value="${stamp.out.dir}/widgets.txt"/>
 	  <sysproperty key="stamp.harnesslist.file" value="${stamp.out.dir}/harness.txt"/>

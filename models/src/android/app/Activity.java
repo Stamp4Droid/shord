@@ -5,7 +5,7 @@ import android.content.ClipboardManager;
 public class Activity
 {
 	protected android.content.Intent intent;
-	public android.view.LayoutInflater stamp_inflater;
+	public android.view.StampLayoutInflater stamp_inflater;
 
     public  Activity() 
 	{
@@ -157,7 +157,7 @@ public class Activity
 	}
 	
 	public  void setContentView(int layoutResID) { 
-		this.stamp_inflater = new android.view.StampLayoutInflater(this);
+		//dont make it a stub
 	}
 
 	public  void setContentView(android.view.View view) { 

@@ -12,6 +12,7 @@ import soot.RefType;
 import soot.ArrayType;
 import soot.Type;
 import soot.PointsToSet;
+import soot.PointsToAnalysis;
 import soot.jimple.IntConstant;
 import soot.jimple.Constant;
 import soot.jimple.Stmt;
@@ -25,7 +26,7 @@ import soot.jimple.ArrayRef;
 import soot.jimple.ReturnStmt;
 import soot.jimple.NewExpr;
 import soot.jimple.CastExpr;
-import soot.jimple.spark.pag.PAG;
+//import soot.jimple.spark.pag.PAG;
 import soot.jimple.spark.pag.SparkField;
 import soot.jimple.spark.pag.ArrayElement;
 import soot.jimple.toolkits.callgraph.Edge;
@@ -60,7 +61,8 @@ public class InterProcReachingDefAnalysis
 	private Map<SparkField,List<Quad<Local,Stmt,Immediate,SootMethod>>> fieldToInstanceStores = new HashMap();
 	private Map<SootField,List<Trio<Stmt,Immediate,SootMethod>>> fieldToStaticStores = new HashMap();
 
-	private PAG pag;
+	//private PAG pag;
+	private PointsToAnalysis pta;
 	private CallGraph callGraph;
 
 	public InterProcReachingDefAnalysis()
@@ -257,8 +259,10 @@ public class InterProcReachingDefAnalysis
 
 	private void init()
 	{
-		Program.g().runSpark();
-		this.pag = (PAG) Scene.v().getPointsToAnalysis();
+		//Program.g().runSpark();
+		Program.g().runCHA(); //because gui-fix change the program
+		//this.pag = (PAG) Scene.v().getPointsToAnalysis();
+		this.pta = Scene.v().getPointsToAnalysis();
 		this.callGraph = Scene.v().getCallGraph();
 
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
@@ -319,7 +323,7 @@ public class InterProcReachingDefAnalysis
 			System.out.println("Warning: No stores found for field "+f);
 			ret = Collections.emptyList();
 		} else {
-			PointsToSet localPt = pag.reachingObjects(local);
+			PointsToSet localPt = pta.reachingObjects(local);
 			List<Trio<Stmt,Immediate,SootMethod>> aliases = new ArrayList();
 			ret = aliases;
 			for(Quad<Local,Stmt,Immediate,SootMethod> quad : it){
@@ -329,7 +333,7 @@ public class InterProcReachingDefAnalysis
 				SootMethod containerMethod = quad.val3;
 			
 				//check if base and local can point to a common object
-				PointsToSet basePt = pag.reachingObjects(base);		
+				PointsToSet basePt = pta.reachingObjects(base);		
 				if(localPt.hasNonEmptyIntersection(basePt)){
 					aliases.add(new Trio(stmt, alias, containerMethod));
 				}

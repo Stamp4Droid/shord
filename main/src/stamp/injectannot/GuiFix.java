@@ -14,6 +14,7 @@ import soot.jimple.Jimple;
 import soot.jimple.Stmt;
 import soot.jimple.Constant;
 import soot.jimple.IntConstant;
+import soot.jimple.NullConstant;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.DefinitionStmt;
@@ -52,17 +53,10 @@ public class GuiFix extends JavaAnalysis
 	private Map<Integer,List<String>> viewIdToWidgetMeths = new HashMap();
 	private InterProcReachingDefAnalysis iprda = null;
 	private Body body;
+	private Chain<Unit> units;
+	private Chain<Local> locals;
 	private SootClass stampInflaterClass;
 	private CallGraph callGraph;
-
-	private final String[] subsigs = {"android.view.View findViewById(int)",
-									  "android.view.View inflate(int resource, android.view.ViewGroup root)",
-									  "android.view.View inflate(org.xmlpull.v1.XmlPullParser parser, android.view.ViewGroup root)",
-									  "android.view.View inflate(int resource, android.view.ViewGroup root, boolean attachToRoot)"
-	};
-	
-	private final String[] classNames = {"android.app.Activity", "android.app.Dialog",
-										 "android.view.View", "android.view.LayoutInflater", "android.view.Window"};
 
 	public GuiFix()
 	{
@@ -108,6 +102,9 @@ public class GuiFix extends JavaAnalysis
 				if(!method.isConcrete())
 					continue;
 				this.body = method.retrieveActiveBody();
+				this.units = body.getUnits();
+				this.locals = body.getLocals();
+				System.out.println("gui-fixing "+method.getSignature());
 				process();
 			}
 		}
@@ -115,62 +112,28 @@ public class GuiFix extends JavaAnalysis
 	
 	private void process()
 	{
-		Chain<Unit> units = body.getUnits();
-		Chain<Local> locals = body.getLocals();
 		Iterator<Unit> uit = units.snapshotIterator();
 		while(uit.hasNext()){
 			Stmt stmt = (Stmt) uit.next();
-			SootMethod target = callsInflate(stmt);
-			if(target == null)
-				continue;
-
-			InvokeExpr ie = stmt.getInvokeExpr();
-			Set<String> widgetMethNames = getWidgetMethNames(ie.getArg(0), stmt, body.getMethod());
-			if(widgetMethNames.isEmpty())
-				continue;
-
-			Local inflaterLocal;
-			Local base = (Local) ((InstanceInvokeExpr) ie).getBase();
-			if(target.getDeclaringClass().equals(stampInflaterClass))
-				inflaterLocal = base;
-			else {
-				inflaterLocal = Jimple.v().newLocal("stamp$inflater", stampInflaterClass.getType());
-				locals.add(inflaterLocal);
-				
-				SootFieldRef inflaterFld = target.getDeclaringClass().getFieldByName("stamp_inflater").makeRef();
-				Stmt loadStmt = Jimple.v().newAssignStmt(inflaterLocal, Jimple.v().newInstanceFieldRef(base, inflaterFld));
-				units.insertBefore(loadStmt, stmt);
-			}
 			
-			DefinitionStmt ds = (DefinitionStmt) stmt;
-			Local leftOp = (Local) ds.getLeftOp();
-			for(String subsig : widgetMethNames){
-				SootMethodRef m = stampInflaterClass.getMethod("android.view.View "+subsig+"()").makeRef();
-				Stmt invkStmt = Jimple.v().newAssignStmt(leftOp, Jimple.v().newVirtualInvokeExpr(inflaterLocal, m, Collections.EMPTY_LIST));
-				units.insertBefore(invkStmt, stmt);
-				System.out.println("replacing "+stmt + " by "+invkStmt+" in "+body.getMethod().getSignature());
-			}
-			units.remove(stmt);
+			if(processInflate(stmt))
+				continue;
+
+			if(processFindViewById(stmt))
+				continue;
 		}
 	}
-	
-	private SootMethod callsInflate(Stmt stmt)
+
+	private boolean processFindViewById(Stmt stmt)
 	{
 		if(!stmt.containsInvokeExpr() || !(stmt instanceof DefinitionStmt))
-			return null;
+			return false;
 
 		InvokeExpr ie = stmt.getInvokeExpr();
 		String calleeSubsig = ie.getMethod().getSubSignature();
-		boolean match = false;
-		for(String ss : subsigs){
-			if(ss.equals(calleeSubsig)){
-				match = true;
-				break;
-			}
-		}
-		if(!match)
-			return null;
-
+		if(!calleeSubsig.equals("android.view.View findViewById(int)"))
+		   return false;
+		   
 		Iterator<Edge> edgeIt = callGraph.edgesOutOf(stmt);
 		SootMethod target = null;
 		while(edgeIt.hasNext()){
@@ -184,14 +147,129 @@ public class GuiFix extends JavaAnalysis
 			}
 		}
 		if(target == null)
-			return null;
+			return false;
 
 		String targetClassName = target.getDeclaringClass().getName();
-		for(String cname : classNames){
-			if(targetClassName.equals(cname))
-				return target;
+		if(!targetClassName.equals("android.app.Activity") &&
+		   !targetClassName.equals("android.app.Dialog") &&
+		   !targetClassName.equals("android.view.View"))
+			return false; 
+
+		Set<String> widgetMethNames = getWidgetMethNames(ie.getArg(0), stmt, body.getMethod());
+		if(widgetMethNames.isEmpty())
+			return false;                                
+
+		Local inflaterLocal;
+		inflaterLocal = Jimple.v().newLocal("stamp$inflater", stampInflaterClass.getType());
+		locals.add(inflaterLocal);
+				
+		SootFieldRef inflaterFld = target.getDeclaringClass().getFieldByName("stamp_inflater").makeRef();
+		Stmt loadStmt = Jimple.v().newAssignStmt(inflaterLocal, Jimple.v().newInstanceFieldRef(((InstanceInvokeExpr) ie).getBase(), inflaterFld));
+		units.insertBefore(loadStmt, stmt);
+
+		DefinitionStmt ds = (DefinitionStmt) stmt;
+		Local leftOp = (Local) ds.getLeftOp();
+		for(String subsig : widgetMethNames){
+			SootMethodRef m = stampInflaterClass.getMethod("android.view.View "+subsig+"()").makeRef();
+			Stmt invkStmt = Jimple.v().newAssignStmt(leftOp, Jimple.v().newVirtualInvokeExpr(inflaterLocal, m, Collections.EMPTY_LIST));
+			units.insertBefore(invkStmt, stmt);
+			System.out.println("replacing "+stmt + " by "+invkStmt+" in "+body.getMethod().getSignature());
 		}
-		return null;
+		units.remove(stmt);
+		return true;
+	}
+	
+	private boolean processInflate(Stmt stmt)
+	{
+		if(!stmt.containsInvokeExpr())
+			return false;
+
+		InvokeExpr ie = stmt.getInvokeExpr();
+		String calleeSubsig = ie.getMethod().getSubSignature();
+		boolean inflate = 
+			calleeSubsig.equals("android.view.View inflate(int,android.view.ViewGroup)") ||
+			calleeSubsig.equals("android.view.View inflate(int,android.view.ViewGroup,boolean)");
+		boolean setContentView = 
+			calleeSubsig.equals("void setContentView(int)");
+
+		if(!inflate && !setContentView)
+			return false;
+
+		Iterator<Edge> edgeIt = callGraph.edgesOutOf(stmt);
+		if(!edgeIt.hasNext()) System.out.println("no outgoing call edge from "+stmt);
+		SootMethod target = null;
+		while(edgeIt.hasNext()){
+			if(target == null){
+				target = (SootMethod) edgeIt.next().getTgt();
+				//if(setContentView) System.out.println("setContentView "+target.getSignature());
+			} else{
+				//multple outgoing edges
+				System.out.println("TODO: multiple outgoing edges from "+stmt);
+				target = null;
+				break;
+			}
+		}
+		if(target == null)
+			return false;
+		System.out.println("target: "+target.getSignature()+" at "+stmt);
+		String targetClassName = target.getDeclaringClass().getName();
+		SootFieldRef inflaterFld = null;
+		Local base = null;
+		Local contextLocal = null;
+		Stmt loadCtxtStmt = null;
+		if(setContentView){
+			if(targetClassName.equals("android.app.Activity") ||
+			   targetClassName.equals("android.app.Dialog")){
+			
+				inflaterFld = target.getDeclaringClass().getFieldByName("stamp_inflater").makeRef();
+				base = (Local) ((InstanceInvokeExpr) ie).getBase();
+				contextLocal = base;
+			}
+		} else if(inflate){
+			if(targetClassName.equals("android.view.LayoutInflater")){
+				inflaterFld = Scene.v().getSootClass("android.view.View").getFieldByName("stamp_inflater").makeRef();
+				if(stmt instanceof DefinitionStmt)
+					base = (Local) ((DefinitionStmt) stmt).getLeftOp();
+				else {
+					Value viewGroupArg = ie.getArg(1);
+					if(viewGroupArg instanceof Local)
+						base = (Local) viewGroupArg; 
+				}
+				if(base != null){
+					contextLocal = Jimple.v().newLocal("stamp$context", RefType.v("android.content.Context"));
+					locals.add(contextLocal);
+					SootFieldRef contextFld = Scene.v().getSootClass("android.view.LayoutInflater").getFieldByName("context").makeRef();
+					loadCtxtStmt = Jimple.v().newAssignStmt(contextLocal, Jimple.v().newInstanceFieldRef((Local) ((InstanceInvokeExpr) ie).getBase(), contextFld));
+					
+				}
+			}
+		} else
+			assert false;
+		
+		if(base == null)
+			return false;
+
+		for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt, body.getMethod())){
+			SootClass inflaterSubclass = Scene.v().getSootClass("stamp.harness.LayoutInflater$"+layoutId);
+			
+			Local inflaterLocal = Jimple.v().newLocal("stamp$inflater$"+layoutId, inflaterSubclass.getType());
+			locals.add(inflaterLocal);
+			
+			Stmt newStmt = Jimple.v().newAssignStmt(inflaterLocal, Jimple.v().newNewExpr((RefType) inflaterSubclass.getType()));
+			
+			SootMethodRef initRef = inflaterSubclass.getMethod("void <init>(android.content.Context)").makeRef();
+			Stmt initCallStmt = Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(inflaterLocal, initRef, contextLocal));
+			
+			Stmt storeStmt = Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(base, inflaterFld), inflaterLocal);
+
+			units.insertAfter(storeStmt, stmt);			
+			units.insertAfter(initCallStmt, stmt);
+			units.insertAfter(newStmt, stmt);
+		}
+		if(loadCtxtStmt != null)
+			units.insertAfter(loadCtxtStmt, stmt);
+			  
+		return true;
 	}
 			
 	private Set<String> getWidgetMethNames(Value arg, Stmt stmt, SootMethod method)
@@ -213,4 +291,12 @@ public class GuiFix extends JavaAnalysis
 		return widgetMeths;
 	}
 
+	private Set<Integer> reachingDefsFor(Value arg, Stmt stmt, SootMethod method)
+	{
+		if(arg instanceof Constant){
+			return Collections.<Integer> singleton(((IntConstant) arg).value);
+		} else {
+			return iprda.computeReachingDefsFor((Local) arg, stmt, method);
+		}
+	}
 }

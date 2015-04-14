@@ -25,7 +25,7 @@ public class PublicXml
 		return map.get("id").get(name);
 	}
 
-	public void read(File publicXmlFile)
+	public PublicXml(File publicXmlFile)
 	{
 		try{
 			File tmpFile = File.createTempFile("stamp_android_public_xml", null, null);
