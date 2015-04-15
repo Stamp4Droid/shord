@@ -7,6 +7,7 @@ RSM_SRC = rsm.cpp rsm.hpp util.hpp
 
 CC = g++ -std=c++1y -Wall -Wextra -pedantic -g -O3
 RSM_LIBS = -lboost_system -lboost_filesystem -lboost_program_options -lboost_regex
+# -lpthread -static
 
 # The following functions assume a name formatted as "cls@pri^sec#flags".
 first = $(firstword $(subst $(1), ,$(2)))
