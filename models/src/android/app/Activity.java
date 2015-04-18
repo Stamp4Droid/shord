@@ -78,7 +78,9 @@ public class Activity
 			return LocationManager.getInstance();
 		else if(name.equals(CLIPBOARD_SERVICE))
 			return ClipboardManager.getInstance();
-		else
+		else if(name.equals(LAYOUT_INFLATER_SERVICE))
+			return android.view.LayoutInflater.from(this);
+		else 
 			return null;//TODO
 	}
 	

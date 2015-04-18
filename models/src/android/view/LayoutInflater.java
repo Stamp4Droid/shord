@@ -10,20 +10,5 @@ class LayoutInflater
 		return new StampLayoutInflater(context);
 	}
 	
-	public  android.view.View inflate(int resource, android.view.ViewGroup root) { 
-		if(root == null)
-			return new android.view.View(context);
-		else
-			return root;
-	}
-
-	public  android.view.View inflate(int resource, android.view.ViewGroup root, boolean attachToRoot) { 
-		if(root != null && attachToRoot)
-			return root;
-		else
-			return new android.view.View(context);
-	}
-
-	public  android.content.Context getContext() { throw new RuntimeException("Stub!"); }
-
+	public  android.content.Context getContext() { return context; }
 }

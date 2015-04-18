@@ -1,5 +1,7 @@
 package stamp.app;
 
+import java.util.List;
+
 /*
  * @author Saswat Anand
 */
@@ -9,7 +11,8 @@ public class Widget
 	public final String idStr;
 	public final Integer id;
 	private boolean isCustom;
-
+	private List<Widget> children;
+	
 	public String getClassName()
 	{
 		return className;
@@ -28,6 +31,16 @@ public class Widget
 	public boolean isCustom()
 	{
 		return this.isCustom;
+	}
+
+	void setChildren(List<Widget> children)
+	{
+		this.children = children;
+	}
+
+	public List<Widget> getChildren()
+	{
+		return children;
 	}
 
 	public Widget(String className, String idStr, Integer id)

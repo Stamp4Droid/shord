@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -43,6 +44,7 @@ import stamp.app.Widget;
 public class GenerateInflaterClass
 {
 	private final Layout layout;
+	private final Set<Widget> allWidgets;
 	private final Map<String,SootField> widgetIdToFld = new HashMap();
 
 	private SootClass inflaterClass;
@@ -50,6 +52,7 @@ public class GenerateInflaterClass
 	public GenerateInflaterClass(Layout layout)
 	{
 		this.layout = layout;
+		this.allWidgets = layout.allWidgets();
 		String inflaterClassName = "stamp.harness.LayoutInflater$"+layout.id;
 		inflaterClass = new SootClass(inflaterClassName, Modifier.PUBLIC);
 		inflaterClass.setSuperclass(Scene.v().getSootClass("android.view.StampLayoutInflater"));
@@ -60,7 +63,7 @@ public class GenerateInflaterClass
 
 	private void addFields()
 	{
-		for(Widget widget : layout.widgets){
+		for(Widget widget : allWidgets){
 			if(widget.id < 0)
 				continue; //dont add fields for widgets without id's
 			SootField f = new SootField(GenerateAbstractInflaterClass.widgetMethNameFor(widget),  
@@ -79,7 +82,7 @@ public class GenerateInflaterClass
 		SootMethod init = new SootMethod("<init>", Arrays.asList(new Type[]{contextType}), VoidType.v(), Modifier.PUBLIC);
 		inflaterClass.addMethod(init);
 		init.setActiveBody(Jimple.v().newBody(init));
-		Chain units = init.getActiveBody().getUnits();
+		Chain<Unit> units = init.getActiveBody().getUnits();
 		Chain<Local> locals = init.getActiveBody().getLocals();
 		Local thisLocal = Jimple.v().newLocal("r0", inflaterClass.getType());
 		locals.add(thisLocal);
@@ -96,24 +99,50 @@ public class GenerateInflaterClass
 		units.add(Jimple.v().newAssignStmt(contextLocal, Jimple.v().newInstanceFieldRef(thisLocal, contextFld)));
 
 		//instantiate every widget and store it if widget has an id
-		for(Widget widget : layout.widgets){
-			SootField f = widgetIdToFld.get(widget.idStr);
-			if(f == null && !widget.isCustom())
-				continue;
-			String widgetClassName = widget.getClassName();
-			SootClass wClass = Scene.v().getSootClass(widgetClassName);
-			Local l = Jimple.v().newLocal(widget.idStr, wClass.getType());
-			locals.add(l);
-			Immediate w = initWidget(wClass, units, l, contextLocal);
-			if(f != null){
-				units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(thisLocal, f.makeRef()), w));
-			}
-		}
+		Local rootWidgetLocal = (Local) instantiateWidget(layout.rootWidget, thisLocal, contextLocal, units, locals);
+		assert rootWidgetLocal != null : layout.rootWidget.getClassName();
+			
+		SootFieldRef rootViewFld = Scene.v().getSootClass("android.view.StampLayoutInflater").getFieldByName("root").makeRef();	
+		units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(thisLocal, rootViewFld), rootWidgetLocal));
 		
 		units.add(Jimple.v().newReturnVoidStmt());
 	}
 
-	private Immediate initWidget(SootClass wClass, Chain units, Local widgetLocal, Local contextLocal)
+	private Immediate instantiateWidget(Widget widget, Local thisLocal, Local contextLocal, Chain units, Chain<Local> locals)
+	{
+		String widgetClassName = widget.getClassName();
+		SootClass wClass = Scene.v().getSootClass(widgetClassName);
+		Local l = Jimple.v().newLocal(widget.idStr, wClass.getType());
+		locals.add(l);
+		Immediate w = initWidget(wClass, units, l, contextLocal);
+
+		if(w != null){
+			//store this inflater instance in the "android.view.View.stamp_inflater" field
+			SootFieldRef stamp_inflaterFld = Scene.v().getSootClass("android.view.View").getFieldByName("stamp_inflater").makeRef();
+			units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(w, stamp_inflaterFld), thisLocal));
+
+			//store widget instance in field if it has an id
+			SootField f = widgetIdToFld.get(widget.idStr);
+			if(f != null){
+				units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(thisLocal, f.makeRef()), w));
+			}
+		} else
+			System.out.println("WARNING: could not instantiate widget "+widgetClassName);
+		
+		List<Widget> children = widget.getChildren();
+		if(children != null){
+			SootFieldRef childViewFld = Scene.v().getSootClass("android.view.ViewGroup").getFieldByName("child").makeRef();
+			for(Widget childWidget : children){
+				Immediate childWidgetLocal = instantiateWidget(childWidget, thisLocal, contextLocal, units, locals);
+				if(w != null && childWidgetLocal != null)
+					units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(w, childViewFld), childWidgetLocal));
+			}
+		}
+		return w;
+	}
+
+
+	private Local initWidget(SootClass wClass, Chain units, Local widgetLocal, Local contextLocal)
 	{
 		List<Type> paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context")});
 		List<Value> args = Arrays.asList(new Value[]{contextLocal});
@@ -137,7 +166,7 @@ public class GenerateInflaterClass
 													 IntConstant.v(0)});
 					return initWidget(wClass, paramTypes1, args, units, widgetLocal);
 				} else {
-					return NullConstant.v();
+					return null;
 				}
 			}
 		}
@@ -153,7 +182,7 @@ public class GenerateInflaterClass
 
 	public SootClass getFinalSootClass()
 	{
-		for(Widget widget : layout.widgets){
+		for(Widget widget : allWidgets){
 			SootField f = widgetIdToFld.get(widget.idStr);
 			if(f == null)
 				continue;

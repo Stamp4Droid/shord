@@ -408,6 +408,7 @@ public class App
 			}
 		}
 		
+		/*
 		for(Layout layout : layouts){
 			//System.out.println("main layout: "+layout.fileName);
 			for(String includedLayoutName : layout.includedLayouts){
@@ -416,6 +417,28 @@ public class App
 				//System.out.println("adding "+includedLayout.widgets.size()+" widgets and "+includedLayout.callbacks+" callbacks.");
 				layout.widgets.addAll(includedLayout.widgets);
 				layout.callbacks.addAll(includedLayout.callbacks);
+			}
+		}
+		*/
+		for(Layout layout : layouts){
+			for(Widget widget : layout.widgets){
+				List<Widget> childrenWidgets = new ArrayList();
+				for(Object c : layout.widgetToChildren.get(widget)){
+					if(c instanceof String){
+						Layout includedLayout = nameToLayout.get((String) c);
+						Widget includedLayoutRootWidget = includedLayout.rootWidget;
+						if(includedLayoutRootWidget.getClassName().equals("merge")){
+							for(Object l : includedLayout.widgetToChildren.get(includedLayoutRootWidget))
+								childrenWidgets.add((Widget) l);
+						} else 
+							childrenWidgets.add(includedLayoutRootWidget);
+						layout.callbacks.addAll(includedLayout.callbacks); //TODO: multiple levels of include
+					} else{
+						Widget childWidget = (Widget) c;
+						childrenWidgets.add(childWidget);
+					}
+				}
+				widget.setChildren(childrenWidgets);
 			}
 		}
 

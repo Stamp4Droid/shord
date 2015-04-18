@@ -162,7 +162,8 @@ public class GuiFix extends JavaAnalysis
 		Local inflaterLocal;
 		inflaterLocal = Jimple.v().newLocal("stamp$inflater", stampInflaterClass.getType());
 		locals.add(inflaterLocal);
-				
+
+		//get the inflater, which is stored in the field "stamp_inflater" of the target class
 		SootFieldRef inflaterFld = target.getDeclaringClass().getFieldByName("stamp_inflater").makeRef();
 		Stmt loadStmt = Jimple.v().newAssignStmt(inflaterLocal, Jimple.v().newInstanceFieldRef(((InstanceInvokeExpr) ie).getBase(), inflaterFld));
 		units.insertBefore(loadStmt, stmt);
@@ -213,61 +214,81 @@ public class GuiFix extends JavaAnalysis
 			return false;
 		System.out.println("target: "+target.getSignature()+" at "+stmt);
 		String targetClassName = target.getDeclaringClass().getName();
-		SootFieldRef inflaterFld = null;
-		Local base = null;
-		Local contextLocal = null;
-		Stmt loadCtxtStmt = null;
 		if(setContentView){
 			if(targetClassName.equals("android.app.Activity") ||
 			   targetClassName.equals("android.app.Dialog")){
 			
-				inflaterFld = target.getDeclaringClass().getFieldByName("stamp_inflater").makeRef();
-				base = (Local) ((InstanceInvokeExpr) ie).getBase();
-				contextLocal = base;
+				SootFieldRef inflaterFld = target.getDeclaringClass().getFieldByName("stamp_inflater").makeRef();
+				Local base = (Local) ((InstanceInvokeExpr) ie).getBase();
+				Local contextLocal = base;
+
+				for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt, body.getMethod())){
+					SootClass inflaterSubclass = Scene.v().getSootClass("stamp.harness.LayoutInflater$"+layoutId);
+			
+					Local inflaterLocal = Jimple.v().newLocal("stamp$inflater$"+layoutId, inflaterSubclass.getType());
+					locals.add(inflaterLocal);
+			
+					Stmt newStmt = Jimple.v().newAssignStmt(inflaterLocal, Jimple.v().newNewExpr((RefType) inflaterSubclass.getType()));
+			
+					SootMethodRef initRef = inflaterSubclass.getMethod("void <init>(android.content.Context)").makeRef();
+					Stmt initCallStmt = Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(inflaterLocal, initRef, contextLocal));
+			
+					Stmt storeStmt = Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(base, inflaterFld), inflaterLocal);
+
+					units.insertBefore(newStmt, stmt);
+					units.insertBefore(initCallStmt, stmt);
+					units.insertBefore(storeStmt, stmt);			
+				}
+				units.remove(stmt);
 			}
 		} else if(inflate){
 			if(targetClassName.equals("android.view.LayoutInflater")){
-				inflaterFld = Scene.v().getSootClass("android.view.View").getFieldByName("stamp_inflater").makeRef();
+
+				Local base = (Local) ((InstanceInvokeExpr) ie).getBase();
+
+				Local contextLocal = Jimple.v().newLocal("stamp$context", RefType.v("android.content.Context"));
+				locals.add(contextLocal);
+				SootFieldRef contextFld = Scene.v().getSootClass("android.view.LayoutInflater").getFieldByName("context").makeRef();
+				Stmt loadCtxtStmt = Jimple.v().newAssignStmt(contextLocal, Jimple.v().newInstanceFieldRef(base, contextFld));					
+				units.insertBefore(loadCtxtStmt, stmt);
+
+				Local inflatedViewLocal;
 				if(stmt instanceof DefinitionStmt)
-					base = (Local) ((DefinitionStmt) stmt).getLeftOp();
+					inflatedViewLocal = (Local) ((DefinitionStmt) stmt).getLeftOp();
 				else {
-					Value viewGroupArg = ie.getArg(1);
-					if(viewGroupArg instanceof Local)
-						base = (Local) viewGroupArg; 
+					inflatedViewLocal = Jimple.v().newLocal("stamp$inflatedview", RefType.v("android.view.View"));
+					locals.add(inflatedViewLocal);
 				}
-				if(base != null){
-					contextLocal = Jimple.v().newLocal("stamp$context", RefType.v("android.content.Context"));
-					locals.add(contextLocal);
-					SootFieldRef contextFld = Scene.v().getSootClass("android.view.LayoutInflater").getFieldByName("context").makeRef();
-					loadCtxtStmt = Jimple.v().newAssignStmt(contextLocal, Jimple.v().newInstanceFieldRef((Local) ((InstanceInvokeExpr) ie).getBase(), contextFld));
+
+				for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt, body.getMethod())){
+					SootClass inflaterSubclass = Scene.v().getSootClass("stamp.harness.LayoutInflater$"+layoutId);
+			
+					Local inflaterLocal = Jimple.v().newLocal("stamp$inflater$"+layoutId, inflaterSubclass.getType());
+					locals.add(inflaterLocal);
+			
+					Stmt newStmt = Jimple.v().newAssignStmt(inflaterLocal, Jimple.v().newNewExpr((RefType) inflaterSubclass.getType()));
+			
+					SootMethodRef initRef = inflaterSubclass.getMethod("void <init>(android.content.Context)").makeRef();
+					Stmt initCallStmt = Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(inflaterLocal, initRef, contextLocal));
+			
+					SootFieldRef rootViewFld = Scene.v().getSootClass("android.view.StampLayoutInflater").getFieldByName("root").makeRef();	
+					Stmt getRootStmt = Jimple.v().newAssignStmt(inflatedViewLocal, Jimple.v().newInstanceFieldRef(inflaterLocal, rootViewFld));
 					
+					units.insertBefore(newStmt, stmt);
+					units.insertBefore(initCallStmt, stmt);
+					units.insertBefore(getRootStmt, stmt);
 				}
+
+				Value oldRoot = ie.getArg(1);
+				if(oldRoot instanceof Local){
+					SootFieldRef childFld = Scene.v().getSootClass("android.view.ViewGroup").getFieldByName("child").makeRef();
+					Stmt setChildStmt = Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef((Local) oldRoot, childFld), inflatedViewLocal);					
+					units.insertBefore(setChildStmt, stmt);
+				}
+				units.remove(stmt);
 			}
 		} else
 			assert false;
-		
-		if(base == null)
-			return false;
-
-		for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt, body.getMethod())){
-			SootClass inflaterSubclass = Scene.v().getSootClass("stamp.harness.LayoutInflater$"+layoutId);
-			
-			Local inflaterLocal = Jimple.v().newLocal("stamp$inflater$"+layoutId, inflaterSubclass.getType());
-			locals.add(inflaterLocal);
-			
-			Stmt newStmt = Jimple.v().newAssignStmt(inflaterLocal, Jimple.v().newNewExpr((RefType) inflaterSubclass.getType()));
-			
-			SootMethodRef initRef = inflaterSubclass.getMethod("void <init>(android.content.Context)").makeRef();
-			Stmt initCallStmt = Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(inflaterLocal, initRef, contextLocal));
-			
-			Stmt storeStmt = Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(base, inflaterFld), inflaterLocal);
-
-			units.insertAfter(storeStmt, stmt);			
-			units.insertAfter(initCallStmt, stmt);
-			units.insertAfter(newStmt, stmt);
-		}
-		if(loadCtxtStmt != null)
-			units.insertAfter(loadCtxtStmt, stmt);
 			  
 		return true;
 	}

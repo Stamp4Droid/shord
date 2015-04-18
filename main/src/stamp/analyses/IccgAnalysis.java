@@ -92,6 +92,8 @@ public class IccgAnalysis extends JavaAnalysis
 
 			writer.endArray();
 			writer.close();
+
+			dumpCache();
 		}catch(IOException e){
 			throw new Error(e);
 		}
@@ -154,7 +156,7 @@ public class IccgAnalysis extends JavaAnalysis
 	{
 		//check for cyclic widgetList
 		boolean cyclic = false;
-		if(widgets != null){
+		//if(widgets != null){
 			int widgetListSize = widgets.size();
 			outer:
 			for(int i = 0; i < widgetListSize; i++){
@@ -165,20 +167,15 @@ public class IccgAnalysis extends JavaAnalysis
 					}
 				}
 			}
-		}
+			//}
 
 		//System.out.println("caching "+callSite+" "+(widgets==null));
 		Set<WidgetList> ws = cache.get(callSite);
-		if(cyclic || widgets == null || widgets.isEmpty()){
-			if(ws == null){
-				ws = Collections.<WidgetList> emptySet();
-				cache.put(callSite, ws);
-			}
-		} else{
-			if(ws == null || ws.isEmpty()){
-				ws = new HashSet();
-				cache.put(callSite, ws);
-			}
+		if(ws == null){
+			ws = new HashSet();
+			cache.put(callSite, ws);
+		}
+		if(!cyclic){
 			ws.add(widgets);
 			//debug(callSite, widgets);
 		}
@@ -225,12 +222,12 @@ public class IccgAnalysis extends JavaAnalysis
 					cacheResult(p, allWidgets);
 				}
 			} else{
+				WidgetList allWidgets = new WidgetList();
 				if(prefix.isEmpty()){
 					//both suffix and prefix empty
-					cacheResult(p, null);
+					cacheResult(p, allWidgets);
 				} else{
 					//non-empty prefix, empty suffix
-					WidgetList allWidgets = new WidgetList();
 					allWidgets.addAll(prefix);
 					cacheResult(p, allWidgets);
 				}
@@ -523,5 +520,31 @@ public class IccgAnalysis extends JavaAnalysis
 		view.free();
 		relFpt.close();
 		return widgetToId;
+	}
+	
+	private void dumpCache() throws IOException
+	{
+		String stampOutDir = System.getProperty("stamp.out.dir");
+		PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(stampOutDir, "cache.txt"))));
+		for(Map.Entry<Pair<Ctxt,Stmt>,Set<WidgetList>> entry : cache.entrySet()){
+			Pair<Ctxt,Stmt> callSite = entry.getKey();
+			Set<WidgetList> setOfWidgetList = entry.getValue();
+			Stmt stmt = callSite.val1;
+			writer.print(stmt+"@"+invkStmtToMethod.get(stmt).getSignature()+" ctxt: "+callSite.val0+" widgets: ");
+			writer.print("{");
+			for(WidgetList wl : setOfWidgetList){
+				writer.print("[");
+				for(Set<String> ws : wl){
+					writer.print("{");
+					for(String w : ws)
+						writer.print(w+", ");
+					writer.print("}, ");
+				}
+				writer.print("], ");
+			}
+			writer.print("}");
+			writer.println("");
+		}
+		writer.close();
 	}
 }

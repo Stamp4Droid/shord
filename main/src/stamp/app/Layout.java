@@ -13,11 +13,12 @@ import java.util.*;
 
 public class Layout
 {
-	public final List<Widget> widgets = new ArrayList();
+	final List<Widget> widgets = new ArrayList();
+	public final Widget rootWidget;
 	public final Set<String> callbacks = new HashSet();
 	public final int id;
 	public final String fileName;
-	public final List<String> includedLayouts = new ArrayList();
+	final Map<Widget,List> widgetToChildren = new HashMap();
 
 	Layout(int id, File layoutFile, PublicXml publicXml, StringXml stringXml)
 	{
@@ -40,13 +41,56 @@ public class Layout
 			xpath.setNamespaceContext(new PersonalNamespaceContext());
 
 			findCallbacks(document, xpath, stringXml);
-			findWidgets(document, xpath, publicXml);
+			this.rootWidget = (Widget) findWidgets(document.getDocumentElement(), publicXml);
 		}catch(Exception e){
 			throw new Error(e);
 		}
-
 	}
 
+	private Object findWidgets(Element elem, PublicXml publicXml)
+	{
+		//System.out.println("Widget: "+node.getNodeName());
+		String elemTag = elem.getNodeName();
+		if(elemTag.equals("include")){
+			String layoutId = elem.getAttribute("layout");
+			assert layoutId.startsWith("@layout/") : layoutId;
+			return layoutId.substring(8);
+		}
+		else if(elemTag.equals("fragment"))
+			return null;
+		else if(elemTag.equals("requestFocus"))
+			return null;
+
+		String id = elem.getAttribute("android:id");
+		if(id.isEmpty())
+			;  //no id, harness will just instantiate, but not store in any field
+		else if(id.startsWith("@id/"))
+			id = id.substring(1);
+		else if(id.startsWith("@+id/"))
+			id = id.substring(2);
+		else if(id.startsWith("@*android:id/"))
+			id = id.substring(2);
+		else
+			assert false : id;
+		int numId = -1;
+		if(id.startsWith("id/"))
+			numId = publicXml.idIdFor(id.substring(3));
+		Widget widget = new Widget(elem.getTagName(), id, numId);
+		widgets.add(widget);
+
+		List children = new ArrayList();
+		widgetToChildren.put(widget, children);
+		for (Node child = elem.getFirstChild(); child != null; child = child.getNextSibling()) {
+			if(child.getNodeType() != Node.ELEMENT_NODE)
+				continue;
+			Object childWidget = findWidgets((Element) child, publicXml);
+			if(childWidget != null)
+				children.add(childWidget);
+		}
+		return widget;
+	}
+
+	/*
 	private void findWidgets(Document document, XPath xpath, PublicXml publicXml) throws javax.xml.xpath.XPathExpressionException
 	{		
 		NodeList nodes = (NodeList)
@@ -83,7 +127,8 @@ public class Layout
 			widgets.add(new Widget(elem.getTagName(), id, numId));
 		}
 	}
-	
+	*/
+
 	private void findCallbacks(Document document, XPath xpath, StringXml stringXml) throws javax.xml.xpath.XPathExpressionException
 	{
 		NodeList nodes = (NodeList)
@@ -110,6 +155,21 @@ public class Layout
 		}
 	}
 
+	public Set<Widget> allWidgets()
+	{
+		Set<Widget> allWidgets = new HashSet();
+		findAllWidgets(rootWidget, allWidgets);
+		return allWidgets;
+	}
+
+	private void findAllWidgets(Widget w, Set<Widget> result)
+	{
+		result.add(w);
+		List<Widget> children = w.getChildren();
+		if(children != null)
+			for(Widget wc : children)
+				findAllWidgets(wc, result);
+	}
 
 	public String toString()
 	{

@@ -260,7 +260,8 @@ public class InterProcReachingDefAnalysis
 	private void init()
 	{
 		//Program.g().runSpark();
-		Program.g().runCHA(); //because gui-fix change the program
+		if(!Scene.v().hasCallGraph())
+			Program.g().runCHA(); //because gui-fix change the program
 		//this.pag = (PAG) Scene.v().getPointsToAnalysis();
 		this.pta = Scene.v().getPointsToAnalysis();
 		this.callGraph = Scene.v().getCallGraph();

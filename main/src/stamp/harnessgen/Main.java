@@ -67,7 +67,8 @@ public class Main
 		writeClass(new GenerateAbstractInflaterClass(app).getFinalSootClass(), driverDir);
 
 		for(Layout layout : app.allLayouts()){
-			writeClass(new GenerateInflaterClass(layout).getFinalSootClass(), driverDir);
+			if(!layout.rootWidget.getClassName().equals("merge"))
+				writeClass(new GenerateInflaterClass(layout).getFinalSootClass(), driverDir);
 		}
 
 		//SootClass viewClass = new GenerateInflaterClass(app).getFinalSootClass();
