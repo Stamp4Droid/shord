@@ -6,6 +6,7 @@ import java.util.*;
 import stamp.app.App;
 import stamp.app.Component;
 import stamp.app.Layout;
+import stamp.app.Widget;
 
 import soot.Scene;
 import soot.CompilationDeathException;
@@ -35,7 +36,7 @@ public class Main
 
 		app = App.readApp(apkPath, apktoolOutDir);
 		List<Component> comps = app.components();
-		initSoot(apkPath, androidJar, comps);
+		initSoot(apkPath, androidJar, comps, app.allLayouts());
 		app.findLayouts();
 
 		//dump the app description
@@ -156,7 +157,7 @@ public class Main
         streamOut.close();
 	}
 
-	private static void initSoot(String apkPath, String androidJar, List<Component> comps)
+	private static void initSoot(String apkPath, String androidJar, List<Component> comps, Collection<Layout> layouts)
 	{
         try {
 			StringBuilder options = new StringBuilder();
@@ -175,10 +176,15 @@ public class Main
 													"Option parse error");
             Scene.v().loadBasicClasses();
 
-			Scene.v().loadClassAndSupport("edu.stanford.stamp.harness.ApplicationDriver");
 			for(Component c : comps){
 				Scene.v().loadClassAndSupport(c.name);
 			}
+			
+			for(Layout layout : layouts){
+				for(Widget widget : layout.allWidgets())
+					Scene.v().loadClassAndSupport(widget.getClassName());
+			}
+			
 
 			Scene.v().loadDynamicClasses();
         } catch (Exception e) {

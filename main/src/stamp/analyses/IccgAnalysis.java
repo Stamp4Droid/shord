@@ -70,7 +70,7 @@ public class IccgAnalysis extends JavaAnalysis
 			relPt = (ProgramRel) ClassicProject.g().getTrgt("pt");
 			relPt.load();
 
-			widgetsAnalysis = new WidgetControlDependencyAnalysis(mapWidgetsToIds());
+			widgetsAnalysis = new WidgetControlDependencyAnalysis();
 			
 			List<Pair<SootMethod,Ctxt>> workList = new ArrayList();
 			for(SootMethod target : targetMethods.keySet()){
@@ -495,33 +495,7 @@ public class IccgAnalysis extends JavaAnalysis
 			writer.endObject();
 		}
 	}
-	
-	protected Map<Ctxt,String> mapWidgetsToIds()
-	{
-        ProgramRel relFpt = (ProgramRel) ClassicProject.g().getTrgt("fpt");		
-        relFpt.load();
- 
-		Map<Ctxt,String> widgetToId = new HashMap();
-
-		RelView view = relFpt.getView();
-		view.delete(0);
-		Iterable<Pair<SparkField,Ctxt>> iter = view.getAry2ValTuples();
-		for(Pair<SparkField,Ctxt> pair : iter){
-			if(!(pair.val0 instanceof SootField))
-				continue;
-			SootField fld = (SootField) pair.val0;
-			Ctxt obj = pair.val1;
-			String className = fld.getDeclaringClass().getName();
-			if(!className.startsWith("stamp.harness.LayoutInflater$"))
-				continue;
-			String fldSubsig = fld.getSubSignature();
-			widgetToId.put(obj, fldSubsig);
-		}
-		view.free();
-		relFpt.close();
-		return widgetToId;
-	}
-	
+		
 	private void dumpCache() throws IOException
 	{
 		String stampOutDir = System.getProperty("stamp.out.dir");

@@ -145,37 +145,32 @@ public class GenerateInflaterClass
 	private Local initWidget(SootClass wClass, Chain units, Local widgetLocal, Local contextLocal)
 	{
 		List<Type> paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context")});
-		List<Value> args = Arrays.asList(new Value[]{contextLocal});
+		List<Value> args = null;
 		if(wClass.declaresMethod("<init>", paramTypes)){
-			return initWidget(wClass, paramTypes, args, units, widgetLocal);
+			args = Arrays.asList(new Value[]{contextLocal});
 		} else {
-			List<Type> paramTypes2 = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
-															  RefType.v("android.util.AttributeSet")});
-			if(wClass.declaresMethod("<init>", paramTypes2)){
+			paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
+												  RefType.v("android.util.AttributeSet")});
+			if(wClass.declaresMethod("<init>", paramTypes)){
 				args = Arrays.asList(new Value[]{contextLocal,
 												 NullConstant.v()});
-				return initWidget(wClass, paramTypes2, args, units, widgetLocal);
 			} else {
-				List<Type> paramTypes1 = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
-																  RefType.v("android.util.AttributeSet"), 
-																  IntType.v()});
-				
-				if(wClass.declaresMethod("<init>", paramTypes1)){
+				paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
+													  RefType.v("android.util.AttributeSet"), 
+													  IntType.v()});
+				if(wClass.declaresMethod("<init>", paramTypes)){
 					args = Arrays.asList(new Value[]{contextLocal,
 													 NullConstant.v(),
 													 IntConstant.v(0)});
-					return initWidget(wClass, paramTypes1, args, units, widgetLocal);
 				} else {
+					System.out.println("hello "+wClass.getName()+" "+wClass.isPhantom());for(SootMethod m : wClass.getMethods()) System.out.println(m.getSignature());
 					return null;
 				}
 			}
 		}
-	}
-
-	private Local initWidget(SootClass klass, List<Type> paramTypes, List<Value> args, Chain units, Local widgetLocal)
-	{
-		SootMethod init = klass.getMethod("<init>", paramTypes);
-		units.add(Jimple.v().newAssignStmt(widgetLocal, Jimple.v().newNewExpr(klass.getType())));
+		
+		SootMethod init = wClass.getMethod("<init>", paramTypes);
+		units.add(Jimple.v().newAssignStmt(widgetLocal, Jimple.v().newNewExpr(wClass.getType())));
 		units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(widgetLocal, init.makeRef(), args)));	
 		return widgetLocal;
 	}
