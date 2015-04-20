@@ -260,6 +260,7 @@ public class GuiFix extends JavaAnalysis
 					locals.add(inflatedViewLocal);
 				}
 
+				Value oldRoot = ie.getArg(1);
 				for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt, body.getMethod())){
 					SootClass inflaterSubclass = Scene.v().getSootClass("stamp.harness.LayoutInflater$"+layoutId);
 			
@@ -277,9 +278,13 @@ public class GuiFix extends JavaAnalysis
 					units.insertBefore(newStmt, stmt);
 					units.insertBefore(initCallStmt, stmt);
 					units.insertBefore(getRootStmt, stmt);
+
+					if(oldRoot instanceof Local){
+						SootFieldRef stamp_inflaterFld = Scene.v().getSootClass("android.view.View").getFieldByName("stamp_inflater").makeRef();
+						units.insertBefore(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef((Local) oldRoot, stamp_inflaterFld), inflaterLocal), stmt);
+					}
 				}
 
-				Value oldRoot = ie.getArg(1);
 				if(oldRoot instanceof Local){
 					SootFieldRef childFld = Scene.v().getSootClass("android.view.ViewGroup").getFieldByName("child").makeRef();
 					Stmt setChildStmt = Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef((Local) oldRoot, childFld), inflatedViewLocal);					
