@@ -37,4 +37,9 @@ class Dialog
 	public  void addContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
 		this.stamp_inflater = view.stamp_inflater;
 	}
+
+	public final  android.content.Context getContext()
+	{
+		return this.stamp_inflater.context;
+	}
 }

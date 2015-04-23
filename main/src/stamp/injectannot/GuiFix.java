@@ -10,6 +10,7 @@ import soot.Unit;
 import soot.Local;
 import soot.Value;
 import soot.RefType;
+import soot.Immediate;
 import soot.jimple.Jimple;
 import soot.jimple.Stmt;
 import soot.jimple.Constant;
@@ -76,7 +77,7 @@ public class GuiFix extends JavaAnalysis
 				if(id >= 0){
 					List<String> ws = viewIdToWidgetMeths.get(id);
 					if(ws == null){
-						ws = new ArrayList();
+ 						ws = new ArrayList();
 						viewIdToWidgetMeths.put(id, ws);
 					}
 					ws.add(widgetSubsig);
@@ -121,7 +122,51 @@ public class GuiFix extends JavaAnalysis
 
 			if(processFindViewById(stmt))
 				continue;
+			
+			if(processSetId(stmt))
+				continue;
 		}
+	}
+
+	private boolean processSetId(Stmt stmt)
+	{
+		if(!stmt.containsInvokeExpr())
+			return false;
+
+		InvokeExpr ie = stmt.getInvokeExpr();
+		String calleeSubsig = ie.getMethod().getSubSignature();
+		if(!calleeSubsig.equals("void setId(int)"))
+		   return false;
+		   
+		Iterator<Edge> edgeIt = callGraph.edgesOutOf(stmt);
+		SootMethod target = null;
+		while(edgeIt.hasNext()){
+			if(target == null)
+				target = (SootMethod) edgeIt.next().getTgt();
+			else{
+				//multple outgoing edges
+				System.out.println("TODO: multiple outgoing edges from "+stmt);
+				target = null;
+				break;
+			}
+		}
+		if(target == null)
+			return false;
+		String targetClassName = target.getDeclaringClass().getName();
+		if(!targetClassName.equals("android.view.View"))
+			return false;
+		
+		Local base = (Local) ((InstanceInvokeExpr) ie).getBase();
+		Immediate arg = (Immediate) ie.getArg(0);
+		if(!(arg instanceof Constant)){
+			SootMethodRef targetRef = target.makeRef();
+			for(Integer id : reachingDefsFor(arg, stmt)){
+				Stmt setIdStmt = Jimple.v().newInvokeStmt(Jimple.v().newVirtualInvokeExpr(base, targetRef, IntConstant.v(id)));
+				units.insertBefore(setIdStmt, stmt);
+			}
+			units.remove(stmt);
+		}
+		return true;
 	}
 
 	private boolean processFindViewById(Stmt stmt)
@@ -155,7 +200,7 @@ public class GuiFix extends JavaAnalysis
 		   !targetClassName.equals("android.view.View"))
 			return false; 
 
-		Set<String> widgetMethNames = getWidgetMethNames(ie.getArg(0), stmt, body.getMethod());
+		Set<String> widgetMethNames = getWidgetMethNames(ie.getArg(0), stmt);
 		if(widgetMethNames.isEmpty())
 			return false;                                
 
@@ -222,7 +267,7 @@ public class GuiFix extends JavaAnalysis
 				Local base = (Local) ((InstanceInvokeExpr) ie).getBase();
 				Local contextLocal = base;
 
-				for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt, body.getMethod())){
+				for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt)){
 					SootClass inflaterSubclass = Scene.v().getSootClass("stamp.harness.LayoutInflater$"+layoutId);
 			
 					Local inflaterLocal = Jimple.v().newLocal("stamp$inflater$"+layoutId, inflaterSubclass.getType());
@@ -261,7 +306,7 @@ public class GuiFix extends JavaAnalysis
 				}
 
 				Value oldRoot = ie.getArg(1);
-				for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt, body.getMethod())){
+				for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt)){
 					SootClass inflaterSubclass = Scene.v().getSootClass("stamp.harness.LayoutInflater$"+layoutId);
 			
 					Local inflaterLocal = Jimple.v().newLocal("stamp$inflater$"+layoutId, inflaterSubclass.getType());
@@ -298,7 +343,7 @@ public class GuiFix extends JavaAnalysis
 		return true;
 	}
 			
-	private Set<String> getWidgetMethNames(Value arg, Stmt stmt, SootMethod method)
+	private Set<String> getWidgetMethNames(Value arg, Stmt stmt)
 	{
 		Set<String> widgetMeths = new HashSet();
 		if(arg instanceof Constant){
@@ -307,7 +352,7 @@ public class GuiFix extends JavaAnalysis
 			if(ws != null)
 				widgetMeths.addAll(ws);
 		} else {
-			Set<Integer> viewIds = iprda.computeReachingDefsFor((Local) arg, stmt, method);
+			Set<Integer> viewIds = iprda.computeReachingDefsFor((Local) arg, stmt, body.getMethod());
 			for(Integer viewId : viewIds){
 				List<String> ws = viewIdToWidgetMeths.get(viewId);
 				if(ws != null)
@@ -317,12 +362,12 @@ public class GuiFix extends JavaAnalysis
 		return widgetMeths;
 	}
 
-	private Set<Integer> reachingDefsFor(Value arg, Stmt stmt, SootMethod method)
+	private Set<Integer> reachingDefsFor(Value arg, Stmt stmt)
 	{
 		if(arg instanceof Constant){
 			return Collections.<Integer> singleton(((IntConstant) arg).value);
 		} else {
-			return iprda.computeReachingDefsFor((Local) arg, stmt, method);
+			return iprda.computeReachingDefsFor((Local) arg, stmt, body.getMethod());
 		}
 	}
 }

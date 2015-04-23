@@ -1,6 +1,12 @@
 class ListView
 {
-	void addHeaderView(android.view.View v, java.lang.Object data, boolean isSelectable) {
+    public  void setAdapter(android.widget.ListAdapter adapter)
+    {
+        this.adapter = adapter;
+    }
+
+	void addHeaderView(android.view.View v, java.lang.Object data, boolean isSelectable)
+	{
 		this.child = v;
 	}
 	

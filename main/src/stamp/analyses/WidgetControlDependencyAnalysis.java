@@ -28,11 +28,11 @@ public class WidgetControlDependencyAnalysis
 {
 	private Map<Stmt,Set<Integer>> dependentToWidgetIds = new HashMap();
 	private WidgetIdentifierAnalysis widgetIdentifierAnalysis = new WidgetIdentifierAnalysis();
-	private Map<String,Integer> idToNumId = new HashMap();
+	//private Map<String,Integer> idToNumId = new HashMap();
 
 	public WidgetControlDependencyAnalysis()
 	{
-		readWidgetIds();
+		//readWidgetIds();
 		widgetIdentifierAnalysis.prepare();
 	}
 
@@ -55,18 +55,23 @@ public class WidgetControlDependencyAnalysis
 			
 		Set<String> ret = new HashSet();
 		for(Ctxt obj : widgets){
-			String id = widgetIdentifierAnalysis.findId(obj);
-			if(id == null)
-				id = obj.toString();
-			Integer numId = idToNumId.get(id);
-			boolean drop = widgetIds.size() == 0 ? false : (numId == null || !widgetIds.contains(numId));
+			boolean drop;
+			if(widgetIds.size() == 0)
+				drop = false;
+			else {
+				Integer numId = widgetIdentifierAnalysis.findId(obj);
+				drop = numId == null || !widgetIds.contains(numId);
+				System.out.println("computeWidgetIds: widget: "+obj+" "+numId);
+			}
+			String resourceId = widgetIdentifierAnalysis.findResourceId(obj);
 			if(!drop)
-				ret.add(id);
-			System.out.println("identifyWidgets: widget: "+obj+" "+id+" "+drop);
+				ret.add(resourceId);
+			System.out.println("computeWidgetIds: widget: "+obj+" "+resourceId+" "+drop);
 		}
 		return ret;
 	}
 
+	/*
 	private void readWidgetIds()
 	{
 		String widgetsListFile = System.getProperty("stamp.widgets.file");
@@ -87,7 +92,7 @@ public class WidgetControlDependencyAnalysis
 		}catch(IOException e){
 			throw new Error(e);
 		}
-	}
+	}*/
 
 	private class Analysis {
 		private SimpleLocalDefs ld;

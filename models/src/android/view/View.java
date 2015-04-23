@@ -62,4 +62,15 @@ class View
 	{ 
 		l.onTouch(View.this, null);
 	}
+
+	public final  android.content.Context getContext() 
+	{
+		return this.stamp_inflater.context;
+	}
+
+	public  void setId(int id) 
+	{
+		//dont remove it. Othewise it would become a stub, but the
+		//analysis uses it
+	}
 }

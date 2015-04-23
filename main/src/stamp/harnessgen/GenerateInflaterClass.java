@@ -121,7 +121,12 @@ public class GenerateInflaterClass
 			SootFieldRef stamp_inflaterFld = Scene.v().getSootClass("android.view.View").getFieldByName("stamp_inflater").makeRef();
 			units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(w, stamp_inflaterFld), thisLocal));
 
-			//store widget instance in field if it has an id
+			if(widget.id >= 0){
+				SootMethodRef setIdMeth = Scene.v().getMethod("<android.view.View: void setId(int)>").makeRef();
+				units.add(Jimple.v().newInvokeStmt(Jimple.v().newVirtualInvokeExpr(l, setIdMeth, IntConstant.v(widget.id))));
+			}
+			
+			//store widget instance in field if it has a "resourceId"
 			SootField f = widgetIdToFld.get(widget.idStr);
 			if(f != null){
 				units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(thisLocal, f.makeRef()), w));

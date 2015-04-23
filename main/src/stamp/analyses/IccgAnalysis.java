@@ -140,7 +140,9 @@ public class IccgAnalysis extends JavaAnalysis
 			//then propagate
 			Set<String> widgets = null;
 			SootMethod caller = invkStmtToMethod.get(callSite);
-			if(caller.getSubSignature().equals("void onClick(android.view.View)")){
+			String callerSubsig = caller.getSubSignature();
+			if(callerSubsig.equals("void onClick(android.view.View)") ||
+			   callerSubsig.equals("void onItemClick(android.widget.AdapterView,android.view.View,int,long)")){
 				widgets = widgetsAnalysis.computeWidgetIds(identifyWidgets(callerContext, caller), caller, callSite);
 			}
 
@@ -321,11 +323,10 @@ public class IccgAnalysis extends JavaAnalysis
 			SootMethod m = trio.val0;
 			Integer index = trio.val1;
 			VarNode vn = trio.val2;
-			if(!m.getSubSignature().equals("void onClick(android.view.View)"))
-				continue;
-			if(index != 1)
-				continue;
-			onClickMethToArg.put(m, vn);
+			if(m.getSubSignature().equals("void onClick(android.view.View)") && index == 1)
+				onClickMethToArg.put(m, vn);
+			else if(m.getSubSignature().equals("void onItemClick(android.widget.AdapterView,android.view.View,int,long)") && index == 2)
+				onClickMethToArg.put(m, vn);
 		}
 		rel.close();
 	}

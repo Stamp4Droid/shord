@@ -1,7 +1,13 @@
 package stamp.analyses;
 
 import soot.Scene;
+import soot.SootMethod;
 import soot.SootField;
+import soot.Local;
+import soot.Immediate;
+import soot.jimple.Stmt;
+import soot.jimple.IntConstant;
+import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.spark.pag.SparkField;
 
 import shord.analyses.Ctxt;
@@ -19,7 +25,8 @@ public class WidgetIdentifierAnalysis
 {
 	private Map<Ctxt,Set<Ctxt>> outgoing = new HashMap();
 	private Map<Ctxt,Set<Ctxt>> incoming = new HashMap();
-	private Map<Ctxt,String> widgetToId = new HashMap();
+	private Map<Ctxt,String> widgetToResourceId = new HashMap();
+	private Map<Ctxt,Integer> widgetToId = new HashMap();
 
 	private Traverser fwd = new Traverser(outgoing, true);
 	private Traverser bwd = new Traverser(incoming, false);
@@ -27,12 +34,18 @@ public class WidgetIdentifierAnalysis
 	void prepare()
 	{
 		buildGraph();
+		mapWidgetsToResourceIds();
 		mapWidgetsToIds();
 	}
 
-	String findId(Ctxt widgetObj)
+	Integer findId(Ctxt widgetObj)
 	{
-		String id = widgetToId.get(widgetObj);
+		return widgetToId.get(widgetObj);
+	}
+
+	String findResourceId(Ctxt widgetObj)
+	{
+		String id = widgetToResourceId.get(widgetObj);
 		if(id != null)
 			return id;
 		
@@ -45,7 +58,7 @@ public class WidgetIdentifierAnalysis
 				AllocNode an = (AllocNode) w.getElems()[0];
 				builder.append(an.getType().toString()+" > ");
 			}
-			id = widgetToId.get(result.get(size-1));
+			id = widgetToResourceId.get(result.get(size-1));
 			builder.append(id);
 			return builder.toString();
 		}
@@ -54,7 +67,7 @@ public class WidgetIdentifierAnalysis
 		if(result != null){
 			int size = result.size();
 			StringBuilder builder = new StringBuilder();
-			id = widgetToId.get(result.get(0));
+			id = widgetToResourceId.get(result.get(0));
 			builder.append(id + " > ");
 			for(int i = 1; i < size; i++){
 				Ctxt w = result.get(i);
@@ -95,7 +108,7 @@ public class WidgetIdentifierAnalysis
 			if(path.contains(node))
 				return null;
 			path.add(node);
-			String id = widgetToId.get(node);
+			String id = widgetToResourceId.get(node);
 			if(id != null)
 				return path;
 			Set<Ctxt> succs = outgoing.get(node);
@@ -144,7 +157,7 @@ public class WidgetIdentifierAnalysis
 		relFpt.close();
 	}
 
-	private void mapWidgetsToIds()
+	private void mapWidgetsToResourceIds()
 	{
         ProgramRel relFpt = (ProgramRel) ClassicProject.g().getTrgt("fpt");		
         relFpt.load();
@@ -161,9 +174,34 @@ public class WidgetIdentifierAnalysis
 			if(!className.startsWith("stamp.harness.LayoutInflater$"))
 				continue;
 			String fldSubsig = fld.getSubSignature();
-			widgetToId.put(obj, fldSubsig);
+			widgetToResourceId.put(obj, fldSubsig);
 		}
 		view.free();
 		relFpt.close();
+	}
+	
+	private void mapWidgetsToIds()
+	{
+		ProgramRel relCICM = (ProgramRel) ClassicProject.g().getTrgt("CICM");
+        relCICM.load();
+		RelView view = relCICM.getView();
+		view.delete(0);
+		SootMethod setIdMeth = Scene.v().getMethod("<android.view.View: void setId(int)>");
+		view.selectAndDelete(3, setIdMeth);
+		Iterable<Pair<Stmt,Ctxt>> it = view.getAry2ValTuples();
+		for(Pair<Stmt,Ctxt> pair : it){
+			Stmt invkStmt = pair.val0;
+			Ctxt tgtCtxt = pair.val1;
+			InstanceInvokeExpr ie = (InstanceInvokeExpr) invkStmt.getInvokeExpr();
+			Local base = (Local) ie.getBase();
+			Immediate id = (Immediate) ie.getArg(0);
+			if(!(id instanceof IntConstant)){
+				System.out.println("Unexpected. arg is not constant "+invkStmt);
+				continue;
+			}
+			widgetToId.put(tgtCtxt, ((IntConstant) id).value);
+		}
+		view.free();
+		relCICM.close();
 	}
 }
