@@ -11,6 +11,7 @@
 #include <iterator>
 #include <limits>
 #include <map>
+#include <stack>
 #include <vector>
 #include <utility>
 
@@ -24,6 +25,90 @@
 
 namespace fs = boost::filesystem;
 namespace po = boost::program_options;
+
+// TIMERS =====================================================================
+
+class Timer {
+private:
+    typedef std::chrono::time_point<std::chrono::steady_clock> TimeStamp;
+    typedef std::chrono::milliseconds::rep TimeDiff;
+    struct Phase {
+        TimeDiff ms_spent = 0;
+        std::map<std::string,Phase> sub_phases;
+    };
+private:
+    std::stack<std::pair<Phase*,TimeStamp> > tstamps_;
+    std::map<std::string,Phase> totals_;
+private:
+    void print_indent() {
+        for (unsigned i = 0; i < tstamps_.size(); i++) {
+            std::cout << "    ";
+        }
+    }
+    void print_all() {
+        std::cout << std::endl;
+    }
+    template<class T, class... Rest>
+    void print_all(const T& first, const Rest&... rest) {
+        std::cout << first;
+        print_all(rest...);
+    }
+    void print_rest() {
+        std::cout << std::endl;
+    }
+    template<class T, class... Rest>
+    void print_rest(const T& first, const Rest&... rest) {
+        std::cout << ": " << first;
+        print_all(rest...);
+    }
+    void print_tier(unsigned depth, const std::map<std::string,Phase>& tier) {
+        for (const auto& p : tier) {
+            for (unsigned i = 0; i < depth; i++) {
+                std::cout << "    ";
+            }
+            std::cout << p.first << ": " << p.second.ms_spent << "ms"
+                      << std::endl;
+            print_tier(depth + 1, p.second.sub_phases);
+        }
+    }
+public:
+    template<class... Rest>
+    void start(const std::string& name, const Rest&... rest) {
+        print_indent();
+        std::cout << name;
+        print_rest(rest...);
+        Phase* phase;
+        if (tstamps_.empty()) {
+            phase = &(totals_[name]);
+        } else {
+            phase = &(tstamps_.top().first->sub_phases[name]);
+        }
+        tstamps_.push(std::make_pair(phase, std::chrono::steady_clock::now()));
+    }
+    void done() {
+        assert(!tstamps_.empty());
+        Phase* phase = tstamps_.top().first;
+        TimeStamp t1 = tstamps_.top().second;
+        TimeStamp t2 = std::chrono::steady_clock::now();
+        TimeDiff d = std::chrono::duration_cast<std::chrono::milliseconds>
+            (t2 - t1).count();
+        phase->ms_spent += d;
+        tstamps_.pop();
+        print_indent();
+        std::cout << d << "ms" << std::endl;
+    }
+    template<class... Args>
+    void log(const Args&... args) {
+        print_indent();
+        print_all(args...);
+    }
+    void print_stats() {
+        assert(tstamps_.empty());
+        print_tier(0, totals_);
+    }
+};
+
+Timer timer;
 
 // AUTOMATA ===================================================================
 
@@ -1163,7 +1248,7 @@ public:
                           mi::Table<TGT, Ref<Variable> > >& ops,
                 const mi::Index<SRC, Ref<Variable>,
                           mi::Table<TGT, Ref<Variable> > >& cls,
-                Ref<Field> f) {
+                Ref<Field>) {
             FOR(o, ops) {
                 FOR(c, cls) {
                     // Only record if an epsilon doesn't already exist.
@@ -1290,8 +1375,12 @@ public:
             nfa.add_symb_trans(c.get<SRC>().value(), d, c.get<TGT>().value());
         }
         // Determinize and minimize the FSM.
+        timer.start("Determinizing FSM");
         Signature res(nfa);
+        timer.done();
+        timer.start("Minimizing FSM");
         res.minimize();
+        timer.done();
         return res;
     }
     void to_tgf(std::ostream& os, const Registry<Field>& fld_reg) const {
@@ -1606,6 +1695,7 @@ int main(int argc, char* argv[]) {
     fs::create_directory(outdir);
 
     // Parse function graphs
+    timer.start("Parsing functions");
     const std::string FILE_EXTENSION = ".fun.tgf";
     Registry<Function> funs;
     Registry<Field> flds;
@@ -1616,15 +1706,16 @@ int main(int argc, char* argv[]) {
         }
         size_t name_len = base.size() - FILE_EXTENSION.size();
         std::string name(base.substr(0, name_len));
-        std::cout << "Parsing function " << name << std::endl;
         Function& f = funs.add(name);
         f.parse_file(path, funs, flds);
     }
     for (const Function& f : funs) {
         EXPECT(f.complete());
     }
+    timer.done();
 
     // Calculate call graph SCCs, print relevant stats.
+    timer.start("Calculating SCCs");
     RefMap<Function,std::vector<Ref<Function> > > calls(funs);
     for (const Function& f : funs) {
         for (Ref<Function> c : f.callees()) {
@@ -1650,120 +1741,124 @@ int main(int argc, char* argv[]) {
             cg_fout << i << " " << j << std::endl;
         }
     }
-    std::cout << "SCC size\tFrequency" << std::endl;
-    std::cout << scc_size_freqs;
+    timer.done();
+    timer.log("SCC size\tFrequency");
+    for (const auto& p : scc_size_freqs) {
+        timer.log(p.first, "\t", p.second);
+    }
 
     // Update signatures up to fixpoint.
     // TODO: No need to run twice for trivial SCCs.
     for (unsigned i = 0; i < cg.num_sccs(); i++) {
         const auto& scc = cg.scc(i);
-        std::cout << "Processing SCC " << i << " of " << cg.num_sccs()
-                  << " (size " << scc.nodes.size() << ")" << std::endl;
+        timer.start("Processing SCC", i, " of ", cg.num_sccs(),
+                    " (size ", scc.nodes.size(), ")");
         Worklist<Ref<Function>,true> worklist;
 
-        // Inline non-recursive calls on all functions in the SCC.
+        timer.start("Inlining non-recursive calls in SCC");
         for (Ref<Function> f : scc.nodes) {
             funs[f].inline_nonrec_callees(funs, scc);
-            std::cout << "    Inlined non-recursive calls on " << funs[f].name
-                      << std::endl;
             fs::path fpath(outdir/(funs[f].name + ".fun.tgf"));
             std::ofstream fout(fpath.string());
             EXPECT((bool) fout);
             funs[f].to_tgf(fout, funs, flds);
             worklist.enqueue(f);
         }
+        timer.done();
 
-        if (scc.nodes.size() >= 10) {
-            std::cout << "    Inlining all functions inside large SCC"
-                      << std::endl;
-            CodeGraph scc_code;
-            // Mapping from f's vars to corresponding vars in scc_code.
-            std::map<Ref<Function>,
-                     std::map<Ref<Variable>,Ref<Variable> > > var_map;
-            for (Ref<Function> f : scc.nodes) {
-                scc_code.copy(funs[f].code(), var_map[f]);
-            }
-            for (Ref<Function> f : scc.nodes) {
-                // Only intra-SCC calls remain.
-                FOR(c, funs[f].calls()) {
-                    Ref<Function> callee = c.get<FUN>();
-                    scc_code.epsilons.insert
-                        (var_map[f][c.get<SRC>()],
-                         var_map[callee][funs[callee].code().entry]);
-                    for (Ref<Variable> ex : funs[callee].code().exits) {
-                        scc_code.epsilons.insert(var_map[callee][ex],
-                                                 var_map[f][c.get<TGT>()]);
-                    }
+        timer.start("Constructing joint-SCC code");
+        std::vector<Ref<Function> > entries;
+        CodeGraph scc_code;
+        // Mapping from f's vars to corresponding vars in scc_code.
+        std::map<Ref<Function>,
+                 std::map<Ref<Variable>,Ref<Variable> > > var_map;
+        for (Ref<Function> f : scc.nodes) {
+            scc_code.copy(funs[f].code(), var_map[f]);
+            for (Ref<Function> c : funs[f].callers()) {
+                if (cg.scc_of(c) != i) {
+                    entries.push_back(f);
+                    break;
                 }
-            }
-
-            std::cout << "    Closing the SCC code graph" << std::endl;
-            scc_code.close();
-            // Print out the post-inline code for the SCC.
-            fs::path scc_fpath(outdir/(std::string("scc") + std::to_string(i) +
-                                       ".fun.tgf"));
-            std::ofstream scc_fout(scc_fpath.string());
-            EXPECT((bool) scc_fout);
-            scc_code.to_tgf(scc_fout, flds);
-
-            // Emit signatures by repurposing the full-SCC code graph.
-            for (Ref<Function> f : scc.nodes) {
-                std::cout << "Emitting sig for " << funs[f].name << std::endl;
-                CodeGraph f_code(scc_code);
-                f_code.entry = var_map[f][funs[f].code().entry];
-                for (Ref<Variable> ex : funs[f].code().exits) {
-                    f_code.exits.insert(var_map[f][ex]);
-                }
-                std::cout << "    PN-extending" << std::endl;
-                f_code.pn_extend();
-                std::cout << "    Emitting signature" << std::endl;
-                Signature f_sig = f_code.to_sig();
-                swap(funs[f].sig(), f_sig);
-                fs::path fpath(outdir/(funs[f].name + ".sig.tgf"));
-                std::cout << "    Printing signature" << std::endl;
-                std::ofstream fout(fpath.string());
-                EXPECT((bool) fout);
-                funs[f].sig().to_tgf(fout, flds);
-            }
-        } else {
-            // Fixpoint inside the SCC.
-            while (!worklist.empty()) {
-                Function& f = funs[worklist.dequeue()];
-                std::cout << "Processing " << f.name << std::endl;
-                if (!f.update_sig(funs)) {
-                    std::cout << "    No change" << std::endl;
-                    continue;
-                }
-                std::cout << "    Updated, rescheduling callers in SCC"
-                          << std::endl;
-                for (Ref<Function> c : f.callers()) {
-                    if (cg.scc_of(c) != i || !worklist.enqueue(c)) {
-                        continue;
-                    }
-                    std::cout << "    rescheduled " << funs[c].name << std::endl;
-                }
-                fs::path fpath(outdir/(f.name + ".sig.tgf"));
-                // TODO: Empty signatures won't be printed.
-                std::cout << "    Printing signature" << std::endl;
-                std::ofstream fout(fpath.string());
-                EXPECT((bool) fout);
-                f.sig().to_tgf(fout, flds);
             }
         }
-
-        // Print statistics.
-        fs::path stats_fpath(outdir/"stats.csv");
-        std::ofstream stats_fout(stats_fpath.string());
-        EXPECT((bool) stats_fout);
-        stats_fout << "Function\tRevisions\tTime spent (ms)"
-                   << "\tCode States\tCode Trans\tSig States\tSig Trans\tCallees"
-                   << "\tSCC Height\tSCC Size\tCumm SCC Size"
-                   << std::endl;
-        for (const Function& f : funs) {
-            f.print_stats(stats_fout);
-            const auto& scc = cg.scc(cg.scc_of(f.ref));
-            stats_fout << "\t" << scc.height << "\t" << scc.nodes.size()
-                       << "\t" << scc.cumm_size << std::endl;
+        for (Ref<Function> f : scc.nodes) {
+            // Only intra-SCC calls remain in calls().
+            FOR(c, funs[f].calls()) {
+                Ref<Function> callee = c.get<FUN>();
+                scc_code.epsilons.insert
+                    (var_map[f][c.get<SRC>()],
+                     var_map[callee][funs[callee].code().entry]);
+                for (Ref<Variable> ex : funs[callee].code().exits) {
+                    scc_code.epsilons.insert(var_map[callee][ex],
+                                             var_map[f][c.get<TGT>()]);
+                }
+            }
         }
+        timer.log(entries.size(), " entry points");
+        timer.done();
+
+        timer.start("Closing SCC code graph");
+        scc_code.close();
+        timer.done();
+
+        timer.start("Printing SCC code graph");
+        fs::path scc_fpath
+            (outdir/(std::string("scc") + std::to_string(i) + ".fun.tgf"));
+        std::ofstream scc_fout(scc_fpath.string());
+        EXPECT((bool) scc_fout);
+        scc_code.to_tgf(scc_fout, flds);
+        timer.done();
+
+        // Emit signatures by repurposing the full-SCC code graph.
+        for (Ref<Function> f : entries) {
+            timer.start("Emitting sig for entry", funs[f].name);
+
+            timer.start("Copying SCC code");
+            CodeGraph f_code(scc_code);
+            f_code.entry = var_map[f][funs[f].code().entry];
+            for (Ref<Variable> ex : funs[f].code().exits) {
+                f_code.exits.insert(var_map[f][ex]);
+            }
+            timer.done();
+
+            timer.start("PN-extending function code");
+            f_code.pn_extend();
+            timer.done();
+
+            timer.start("Emitting function signature");
+            Signature f_sig = f_code.to_sig();
+            timer.done();
+            swap(funs[f].sig(), f_sig);
+
+            timer.start("Printing signature");
+            fs::path fpath(outdir/(funs[f].name + ".sig.tgf"));
+            std::ofstream fout(fpath.string());
+            EXPECT((bool) fout);
+            funs[f].sig().to_tgf(fout, flds);
+            timer.done();
+
+            timer.done();
+        }
+
+        timer.done();
     }
+
+    timer.start("Printing function stats");
+    fs::path stats_fpath(outdir/"stats.csv");
+    std::ofstream stats_fout(stats_fpath.string());
+    EXPECT((bool) stats_fout);
+    stats_fout << "Function\tRevisions\tTime spent (ms)"
+               << "\tCode States\tCode Trans\tSig States\tSig Trans\tCallees"
+               << "\tSCC Height\tSCC Size\tCumm SCC Size"
+               << std::endl;
+    for (const Function& f : funs) {
+        f.print_stats(stats_fout);
+        const auto& scc = cg.scc(cg.scc_of(f.ref));
+        stats_fout << "\t" << scc.height << "\t" << scc.nodes.size()
+                   << "\t" << scc.cumm_size << std::endl;
+    }
+    timer.done();
+
+    timer.log("Time breakdown:");
+    timer.print_stats();
 }

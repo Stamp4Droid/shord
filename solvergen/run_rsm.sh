@@ -3,7 +3,7 @@
 SGEN_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
 if [ $# -ne 1 ]; then
-    echo "Usage: $(basename "${BASH_SOURCE[0]}") cfg|rsm <class> <pri> <sec>"
+    echo "Usage: $(basename "${BASH_SOURCE[0]}") <app>"
     exit 1
 fi
 APP="$1"

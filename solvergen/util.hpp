@@ -429,21 +429,21 @@ public:
 
 template<typename T> class Histogram {
 private:
-    std::map<T,unsigned int> freqs;
+    std::map<T,unsigned int> freqs_;
 public:
     void record(const T& val) {
-	auto bounds = freqs.equal_range(val);
+	auto bounds = freqs_.equal_range(val);
 	if (bounds.first == bounds.second) {
-	    freqs.insert(bounds.first, std::make_pair(val, 1));
+	    freqs_.insert(bounds.first, std::make_pair(val, 1));
 	} else {
 	    bounds.first->second++;
 	}
     }
-    friend std::ostream& operator<<(std::ostream& os, const Histogram& ref) {
-	for (const auto& p : ref.freqs) {
-	    os << p.first << "\t" << p.second << std::endl;
-	}
-	return os;
+    typename std::map<T,unsigned int>::const_iterator begin() const {
+        return freqs_.begin();
+    }
+    typename std::map<T,unsigned int>::const_iterator end() const {
+        return freqs_.end();
     }
 };
 
