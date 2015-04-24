@@ -1866,10 +1866,6 @@ int main(int argc, char* argv[]) {
         timer.start("Inlining non-recursive calls in SCC");
         for (Ref<Function> f : scc.nodes) {
             funs[f].inline_nonrec_callees(funs, scc);
-            fs::path fpath(outdir/(funs[f].name + ".fun.tgf"));
-            std::ofstream fout(fpath.string());
-            EXPECT((bool) fout);
-            funs[f].to_tgf(fout, funs, flds);
             worklist.enqueue(f);
         }
         timer.done();
@@ -1882,6 +1878,10 @@ int main(int argc, char* argv[]) {
                  std::map<Ref<Variable>,Ref<Variable> > > var_map;
         for (Ref<Function> f : scc.nodes) {
             scc_code.copy(funs[f].code(), var_map[f]);
+            if (scc.nodes.size() < 10) {
+                entries.push_back(f);
+                continue;
+            }
             for (Ref<Function> c : funs[f].callers()) {
                 if (cg.scc_of(c) != i) {
                     entries.push_back(f);
@@ -1907,14 +1907,6 @@ int main(int argc, char* argv[]) {
 
         timer.start("Closing SCC code graph");
         scc_code.close();
-        timer.done();
-
-        timer.start("Printing SCC code graph");
-        fs::path scc_fpath
-            (outdir/(std::string("scc") + std::to_string(i) + ".fun.tgf"));
-        std::ofstream scc_fout(scc_fpath.string());
-        EXPECT((bool) scc_fout);
-        scc_code.to_tgf(scc_fout, flds);
         timer.done();
 
         // Emit signatures by repurposing the full-SCC code graph.
