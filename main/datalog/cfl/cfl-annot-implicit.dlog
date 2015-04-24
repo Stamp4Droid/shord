@@ -13,7 +13,7 @@
 .include "V.dom"
 .include "U.dom"
 
-.bddvarorder M0_C0_V0xV1_U0xU1
+.bddvarorder M0xM1_C0xC1_V0xV1_U0xU1
 
 ###################
 # INPUT: ANNOTATIONS
@@ -28,6 +28,23 @@ MV(m:M,v:V) input
 MU(m:M,u:U) input
 CM(c:C,m:M) input
 
+# Annotations related to implicit exception flows
+
+Ref2MethodImp(v:V,m:M) input
+Prim2MethodImp(v:U,m:M) input
+Method2MethodImp(m0:M0,m1:M1) input
+Method2RefImp(m:M,v:V) input
+Method2PrimImp(m:M,u:U) input
+
+###################
+# INTERMEDIATE: ANNOTATIONS
+###################
+
+# Annotations related to implicit exception flows
+
+Ref2MethodImpJoin(v:V,m:M)
+Prim2MethodImpJoin(v:U,m:M)
+
 ###################
 # OUTPUT: ANNOTATIONS
 ###################
@@ -37,6 +54,13 @@ Ref2PrimImpCtxt(c:C,v:V,u:U) output
 Prim2RefImpCtxt(c:C,v:U,u:V) output
 Prim2PrimImpCtxt(c:C,v:U,u:U) output
 
+# Annotations related to implicit exception flows
+
+Ref2RefImpCCtxt(c:C0,v:V0,d:C1,u:V1) output
+Ref2PrimImpCCtxt(c:C0,v:V0,d:C1,u:U0) output
+Prim2RefImpCCtxt(c:C0,v:U0,d:C1,u:V0) output
+Prim2PrimImpCCtxt(c:C0,v:U0,d:C1,u:U1) output
+
 ###################
 # RULES: ANNOTATION
 ###################
@@ -45,3 +69,16 @@ Ref2RefImpCtxt(c,v,u) :- Ref2RefImp(v,u), MV(m,v), CM(c,m).
 Ref2PrimImpCtxt(c,v,u) :- Ref2PrimImp(v,u), MV(m,v), CM(c,m).
 Prim2RefImpCtxt(c,v,u) :- Prim2RefImp(v,u), MU(m,v), CM(c,m).
 Prim2PrimImpCtxt(c,v,u) :- Prim2PrimImp(v,u), MU(m,v), CM(c,m).
+
+# Rules related to implicit exception flows
+
+Ref2MethodImpJoin(v,m) :- Ref2MethodImp(v,m).
+Ref2MethodImpJoin(v,m) :- Ref2MethodImpJoin(v,m1), Method2MethodImp(m1,m).
+Prim2MethodImpJoin(v,m) :- Prim2MethodImp(v,m).
+Prim2MethodImpJoin(v,m) :- Prim2MethodImpJoin(v,m1), Method2MethodImp(m1,m).
+
+Ref2RefImpCCtxt(c,v,d,u) :- Ref2MethodImpJoin(v,m), Method2RefImp(m,u), MV(mv,v), CM(c,mv), MV(mu,u), CM(d,mu).
+Ref2PrimImpCCtxt(c,v,d,u) :- Ref2MethodImpJoin(v,m), Method2PrimImp(m,u), MV(mv,v), CM(c,mv), MU(mu,u), CM(d,mu).
+Prim2RefImpCCtxt(c,v,d,u) :- Prim2MethodImpJoin(v,m), Method2RefImp(m,u), MU(mv,v), CM(c,mv), MV(mu,u), CM(d,mu).
+Prim2PrimImpCCtxt(c,v,d,u) :- Prim2MethodImpJoin(v,m), Method2PrimImp(m,u), MU(mv,v), CM(c,mv), MU(mu,u), CM(d,mu).
+

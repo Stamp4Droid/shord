@@ -198,7 +198,7 @@ public class PAGBuilder extends JavaAnalysis
 	//public static NumberedSet stubMethods;
 	public static NumberedSet frameworkMethods;
 
-	private NumberedSet stubMethods;
+	public static NumberedSet stubMethods;
 
 	//private Map<Type,StubAllocNode> typeToStubAllocNode = new HashMap();
 
