@@ -169,7 +169,10 @@ private:
         mi::Index<FROM, posint,
             mi::Table<TO, posint> >,
         mi::Index<TO, posint,
-            mi::Table<FROM, posint> > > trans_;
+            mi::Table<FROM, posint> >,
+        mi::Index<TO, posint,
+            mi::Index<LETTER, posint,
+                mi::Table<FROM, posint> > > > trans_;
 public:
     template<typename C>
     explicit NFA(const C& alphabet)
@@ -230,6 +233,11 @@ public:
     unsigned num_trans() const {
         return trans_.size();
     }
+    // TODO:
+    // - Are all the heuristics necessary?
+    // - Renumber states, to cover holes in numbering?
+    // - Also clean alphabet?
+    // - Perform directly on CodeGraph (do generic renumbering on Registries).
     void simplify() {
         using std::swap;
 
@@ -266,9 +274,60 @@ public:
             }
             bck_list.pop_front();
         }
+        // TODO: Some initial states might now be unreachable => should run
+        // until fixpoint?
 
-        // Prune FSM based on reachability information
-        swap(states_, bck_reached);
+        // Drop states that are only reachable through epsilons.
+        // TODO: Should only do this if it's a single epsilon reaching this
+        // variable? Alternatively merge all states in an epsilon-cycle?
+        // TODO: Assuming order of processing doesn't matter.
+        std::set<posint> new_states;
+        for (posint b : bck_reached) {
+            // Ignore initial states.
+            if (initial_.count(b) > 0) {
+                new_states.insert(b);
+                continue;
+            }
+            // Consider states whose incoming transitions are all epsilons.
+            bool only_inc_eps = true;
+            for (const auto& letter_p : trans_.sec<2>()[b]) {
+                if (letter_p.first == 0) {
+                    continue;
+                }
+                if (!letter_p.second.empty()) {
+                    only_inc_eps = false;
+                    break;
+                }
+            }
+            if (!only_inc_eps) {
+                new_states.insert(b);
+                continue;
+            }
+            // Collect all states 'a' reaching 'b' through an epsilon.
+            std::list<posint> new_srcs;
+            for (posint a : trans_.sec<2>()[b][0]) {
+                // Ignore epsilon self-loops.
+                if (a == b || bck_reached.count(a) == 0) {
+                    continue;
+                }
+                new_srcs.push_back(a);
+                if (final_.count(b) > 0) {
+                    final_.insert(a);
+                }
+            }
+            // Copy all edges (epsilons or not) starting from 'b' over to 'a'.
+            for (posint a : new_srcs) {
+                FOR(e, trans_.pri()[b]) {
+                    trans_.insert(a, e.template get<LETTER>(),
+                                  e.template get<TO>());
+                }
+            }
+            // Don't include 'b' in 'new_states', effectively dropping it from
+            // the FSM (and all transitions starting or ending at it).
+        }
+
+        // Prune states based on the above information.
+        swap(states_, new_states);
         std::set<posint> new_initial;
         for (posint s : initial_) {
             if (states_.count(s) > 0) {
