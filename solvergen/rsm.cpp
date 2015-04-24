@@ -836,7 +836,7 @@ private:
             sn.useful = true;
             bck_list_.push_back(point);
         }
-    };
+    }
 public:
     explicit Function(const Signature* sig, Ref<Function> ref)
         : sig(*sig), ref(ref),

@@ -29,9 +29,10 @@ namespace po = boost::program_options;
 // TIMERS =====================================================================
 
 class Timer {
+public:
+    typedef std::chrono::milliseconds::rep TimeDiff;
 private:
     typedef std::chrono::time_point<std::chrono::steady_clock> TimeStamp;
-    typedef std::chrono::milliseconds::rep TimeDiff;
     struct Phase {
         TimeDiff ms_spent = 0;
         std::map<std::string,Phase> sub_phases;
@@ -85,7 +86,7 @@ public:
         }
         tstamps_.push(std::make_pair(phase, std::chrono::steady_clock::now()));
     }
-    void done() {
+    TimeDiff done() {
         assert(!tstamps_.empty());
         Phase* phase = tstamps_.top().first;
         TimeStamp t1 = tstamps_.top().second;
@@ -96,6 +97,7 @@ public:
         tstamps_.pop();
         print_indent();
         std::cout << d << "ms" << std::endl;
+        return d;
     }
     template<class... Args>
     void log(const Args&... args) {
@@ -157,11 +159,17 @@ public:
 template<class Symbol> class NFA {
 private:
     std::vector<Symbol> alphabet_;
+    std::set<posint> states_;
     std::set<posint> initial_;
     std::set<posint> final_;
-    mi::Index<FROM, posint,
-        mi::Index<LETTER, posint,
-            mi::Table<TO, posint> > > trans_;
+    mi::MultiIndex<
+        mi::Index<FROM, posint,
+            mi::Index<LETTER, posint,
+                mi::Table<TO, posint> > >,
+        mi::Index<FROM, posint,
+            mi::Table<TO, posint> >,
+        mi::Index<TO, posint,
+            mi::Table<FROM, posint> > > trans_;
 public:
     template<typename C>
     explicit NFA(const C& alphabet)
@@ -204,13 +212,92 @@ public:
     }
     void add_trans(posint src, posint letter, posint tgt) {
         assert(letter <= num_letters());
+        states_.insert(src);
+        states_.insert(tgt);
         trans_.insert(src, letter, tgt);
     }
     void set_initial(posint state) {
+        states_.insert(state);
         initial_.insert(state);
     }
     void set_final(posint state) {
+        states_.insert(state);
         final_.insert(state);
+    }
+    unsigned num_states() const {
+        return states_.size();
+    }
+    unsigned num_trans() const {
+        return trans_.size();
+    }
+    void simplify() {
+        using std::swap;
+
+        // Perform forward reachability
+        std::set<posint> fwd_reached(initial_.begin(), initial_.end());
+        std::deque<posint> fwd_list(initial_.begin(), initial_.end());
+        while (!fwd_list.empty()) {
+            posint from = fwd_list.front();
+            for (posint to : trans_.sec<0>()[from]) {
+                if (fwd_reached.insert(to).second) {
+                    fwd_list.push_back(to);
+                }
+            }
+            fwd_list.pop_front();
+        }
+
+        // Perform backward reachability
+        std::set<posint> bck_reached;
+        std::deque<posint> bck_list;
+        for (posint s : final_) {
+            if (fwd_reached.count(s) > 0) {
+                bck_reached.insert(s);
+                bck_list.push_back(s);
+            }
+        }
+        while (!bck_list.empty()) {
+            posint to = bck_list.front();
+            for (posint from : trans_.sec<1>()[to]) {
+                if (fwd_reached.count(from) > 0) {
+                    if (bck_reached.insert(from).second) {
+                        bck_list.push_back(from);
+                    }
+                }
+            }
+            bck_list.pop_front();
+        }
+
+        // Prune FSM based on reachability information
+        swap(states_, bck_reached);
+        std::set<posint> new_initial;
+        for (posint s : initial_) {
+            if (states_.count(s) > 0) {
+                new_initial.insert(s);
+            }
+        }
+        swap(initial_, new_initial);
+        std::set<posint> new_final;
+        for (posint s : final_) {
+            if (states_.count(s) > 0) {
+                new_final.insert(s);
+            }
+        }
+        swap(final_, new_final);
+        decltype(trans_) new_trans;
+        for (const auto& from_p : trans_.pri()) {
+            posint from = from_p.first;
+            if (states_.count(from) == 0) {
+                continue;
+            }
+            FOR(arrow, from_p.second) {
+                if (states_.count(arrow.template get<TO>()) == 0) {
+                    continue;
+                }
+                new_trans.insert(from, arrow.template get<LETTER>(),
+                                 arrow.template get<TO>());
+            }
+        }
+        swap(trans_, new_trans);
     }
     // TODO: Could cache eps_close results (but without emiting d-states for
     // the non-closed n-state sets).
@@ -218,7 +305,7 @@ public:
         std::deque<posint> worklist(states.begin(), states.end());
         while (!worklist.empty()) {
             posint src = worklist.front();
-            for (posint tgt : trans_[src][0]) {
+            for (posint tgt : trans_.pri()[src][0]) {
                 if (states.insert(tgt)) {
                     worklist.push_back(tgt);
                 }
@@ -246,7 +333,7 @@ public:
             for (posint letter = 1; letter <= num_letters(); letter++) {
                 LightSet<posint> tgt_ns_set;
                 for (posint src_ns : src_nsds->first) {
-                    for (posint tgt_ns : trans_[src_ns][letter]) {
+                    for (posint tgt_ns : trans_.pri()[src_ns][letter]) {
                         tgt_ns_set.insert(tgt_ns);
                     }
                 }
@@ -1375,12 +1462,27 @@ public:
             nfa.add_symb_trans(c.get<SRC>().value(), d, c.get<TGT>().value());
         }
         // Determinize and minimize the FSM.
-        timer.start("Determinizing FSM");
+        unsigned n_orig = nfa.num_states();
+        unsigned e_orig = nfa.num_trans();
+        timer.start("Simplifying NFA");
+        nfa.simplify();
+        typename Timer::TimeDiff dt_simpl = timer.done();
+        unsigned n_simpl = nfa.num_states();
+        unsigned e_simpl = nfa.num_trans();
+        timer.start("Determinizing NFA");
         Signature res(nfa);
-        timer.done();
-        timer.start("Minimizing FSM");
+        typename Timer::TimeDiff dt_det = timer.done();
+        unsigned n_det = res.num_states();
+        unsigned e_det = res.num_trans();
+        timer.start("Minimizing DFA");
         res.minimize();
-        timer.done();
+        typename Timer::TimeDiff dt_min = timer.done();
+        unsigned n_min = res.num_states();
+        unsigned e_min = res.num_trans();
+        timer.log("FSMSizes\t",   n_orig,  "\t", e_orig,  "\t",
+                  dt_simpl, "\t", n_simpl, "\t", e_simpl, "\t",
+                  dt_det,   "\t", n_det,   "\t", e_det,   "\t",
+                  dt_min,   "\t", n_min,   "\t", e_min);
         return res;
     }
     void to_tgf(std::ostream& os, const Registry<Field>& fld_reg) const {
@@ -1409,6 +1511,12 @@ public:
                << vars[c.get<TGT>()].name << " "
                << ")" << fld_reg[c.get<FLD>()].name << std::endl;
         }
+    }
+    unsigned num_vars() const {
+        return vars.size();
+    }
+    unsigned num_ops() const {
+        return epsilons.size() + opens.size() + closes.size();
     }
 };
 
