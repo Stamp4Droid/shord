@@ -55,18 +55,26 @@ public class WidgetControlDependencyAnalysis
 			
 		Set<String> ret = new HashSet();
 		for(Ctxt obj : widgets){
-			boolean drop;
-			if(widgetIds.size() == 0)
-				drop = false;
-			else {
-				Integer numId = widgetIdentifierAnalysis.findId(obj);
-				drop = numId == null || !widgetIds.contains(numId);
-				System.out.println("computeWidgetIds: widget: "+obj+" "+numId);
+			if(widgetIds.size() == 0){
+				String resourceId = widgetIdentifierAnalysis.findResourceId(obj);
+				if(resourceId != null)
+					ret.add(resourceId);
+				System.out.println("computeWidgetIds.1: widget: "+obj+" "+resourceId);
+			} else {
+				Set<Integer> numIds = widgetIdentifierAnalysis.findId(obj);
+				if(numIds != null){
+					for(Integer numId : numIds){
+						if(widgetIds.contains(numId)){
+							String resourceId = widgetIdentifierAnalysis.findResourceId(obj);
+							if(resourceId != null)
+								ret.add(resourceId);
+							System.out.println("computeWidgetIds.2: widget: "+obj+" "+numId+" "+resourceId);
+						} else
+							System.out.println("computeWidgetIds.3: widget: "+obj+" "+numId);
+					}
+				} else
+					System.out.println("computeWidgetIds.4: widget: "+obj);
 			}
-			String resourceId = widgetIdentifierAnalysis.findResourceId(obj);
-			if(!drop)
-				ret.add(resourceId);
-			System.out.println("computeWidgetIds: widget: "+obj+" "+resourceId+" "+drop);
 		}
 		return ret;
 	}

@@ -26,7 +26,9 @@ public class WidgetIdentifierAnalysis
 	private Map<Ctxt,Set<Ctxt>> outgoing = new HashMap();
 	private Map<Ctxt,Set<Ctxt>> incoming = new HashMap();
 	private Map<Ctxt,String> widgetToResourceId = new HashMap();
-	private Map<Ctxt,Integer> widgetToId = new HashMap();
+
+	//a widget may be mapped to multiple id's because of over-approximation
+	private Map<Ctxt,Set<Integer>> widgetToId = new HashMap();
 
 	private Traverser fwd = new Traverser(outgoing, true);
 	private Traverser bwd = new Traverser(incoming, false);
@@ -38,7 +40,7 @@ public class WidgetIdentifierAnalysis
 		mapWidgetsToIds();
 	}
 
-	Integer findId(Ctxt widgetObj)
+	Set<Integer> findId(Ctxt widgetObj)
 	{
 		return widgetToId.get(widgetObj);
 	}
@@ -111,7 +113,7 @@ public class WidgetIdentifierAnalysis
 			String id = widgetToResourceId.get(node);
 			if(id != null)
 				return path;
-			Set<Ctxt> succs = outgoing.get(node);
+			Set<Ctxt> succs = graph.get(node);
 			if(succs == null)
 				return null; //dead end
 			for(Ctxt succ : succs){
@@ -199,7 +201,10 @@ public class WidgetIdentifierAnalysis
 				System.out.println("Unexpected. arg is not constant "+invkStmt);
 				continue;
 			}
-			widgetToId.put(tgtCtxt, ((IntConstant) id).value);
+			Set<Integer> ids = widgetToId.get(tgtCtxt);
+			if(ids == null)
+				widgetToId.put(tgtCtxt, (ids = new HashSet()));
+			ids.add(((IntConstant) id).value);
 		}
 		view.free();
 		relCICM.close();

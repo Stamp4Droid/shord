@@ -15,7 +15,8 @@
 .include "Z.dom"
 
 #.bddvarorder C0xC1_V0xV1_H0_F0_I0_T0_T1_M0_S0_M1_Z0
-.bddvarorder F0_I0xM0xM1_S0_T0_V0xV1_T1_H0_C0xC1xC2_Z0
+.bddvarorder F0_I0xM0_S0_T0_V0xV1_T1_H0_C0xC1xC2_Z0
+#.bddvarorder S0_T0_V0xV1_T1_H0_C0xC1xC2_F0xI0xM0_Z0
 
 Assign(v:V,u:V)      input   # v = u
 Alloc(v:V,h:H)       input   # v is the lhs in the new stmt h
@@ -46,9 +47,9 @@ StaticTM(t:T,m:M) input   # m is a static method in t.
 StaticTF(t:T,f:F) input   # f is a static field in t.
 ClinitTM(t:T,m:M) input   # m is the class initializer in m.
 Subtype(t1:T,t2:T) input    # t1 is a subtype of t2.
-CtxtInsMeth(m:M) input
+#CtxtInsMeth(m:M) input
 
-SubSig(m:M,s:S) input     # s is subsignature of m.
+#SubSig(m:M,s:S) input     # s is subsignature of m.
 Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 
 #CICMtmp(d:C,i:I,c:C,m:M) output
