@@ -1914,11 +1914,18 @@ int main(int argc, char* argv[]) {
         const auto& scc = cg.scc(i);
         timer.start("Processing SCC", i, " of ", cg.num_sccs(),
                     " (size ", scc.nodes.size(), ")");
+        fs::path sccdir(outdir/"scc"/std::to_string(i));
+        fs::create_directories(sccdir);
         Worklist<Ref<Function>,true> worklist;
 
         timer.start("Inlining non-recursive calls in SCC");
         for (Ref<Function> f : scc.nodes) {
+            timer.log(funs[f].name);
             funs[f].inline_nonrec_callees(funs, scc);
+            fs::path fpath(sccdir/(funs[f].name + ".fun.tgf"));
+            std::ofstream fout(fpath.string());
+            EXPECT((bool) fout);
+            funs[f].to_tgf(fout, funs, flds);
             worklist.enqueue(f);
         }
         timer.done();
