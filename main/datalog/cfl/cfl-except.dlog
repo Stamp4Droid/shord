@@ -1,0 +1,44 @@
+##################
+# Exception Analysis
+##################
+
+# name=cfl-except-dlog
+
+.include "T.dom"
+.include "M.dom"
+.include "V.dom"
+.include "U.dom"
+.include "I.dom"
+
+.bddvarorder T0_M0xM1_V0xV1_U0_I0
+
+# Variables
+
+MethodExceptionDependeeBase(m:M,t:T,v:V) input
+MethodExceptionDependeePrimBase(m:M,t:T,v:U) input
+CaughtException(i:I,t:T,v:V) input
+ci_IM(i:I,m:M) input
+MI(m:M,i:I) input
+
+MethodExceptionDependee(m:M,t:T,v:V)
+MethodExceptionDependeePrim(m:M,t:T,v:U)
+
+SuperExitDependee(i:I,v:V) output
+HandlerDependee(i:I,v:V,e:V) output
+
+SuperExitDependeePrim(i:I,v:U) output
+HandlerDependeePrim(i:I,v:U,e:V) output
+
+# Rules
+
+MethodExceptionDependee(m,t,v) :- MethodExceptionDependeeBase(m,t,v).
+MethodExceptionDependee(m,t,v) :- MI(m,i), MethodExceptionDependee(mp,t,v), ci_IM(i,mp), !CaughtException(i,t,_).
+
+SuperExitDependee(i,v) :- MethodExceptionDependee(mp,t,v), ci_IM(i,mp), !CaughtException(i,t,_).
+HandlerDependee(i,v,e) :- MethodExceptionDependee(mp,t,v), ci_IM(i,mp), CaughtException(i,t,e).
+
+MethodExceptionDependeePrim(m,t,v) :- MethodExceptionDependeePrimBase(m,t,v).
+MethodExceptionDependeePrim(m,t,v) :- MI(m,i), MethodExceptionDependeePrim(mp,t,v), ci_IM(i,mp), !CaughtException(i,t,_).
+
+SuperExitDependeePrim(i,v) :- MethodExceptionDependeePrim(mp,t,v), ci_IM(i,mp), !CaughtException(i,t,_).
+HandlerDependeePrim(i,v,e) :- MethodExceptionDependeePrim(mp,t,v), ci_IM(i,mp), CaughtException(i,t,e).

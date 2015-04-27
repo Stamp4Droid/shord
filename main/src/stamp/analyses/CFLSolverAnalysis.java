@@ -38,13 +38,19 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
+		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
+		
+		/*
 		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new TaintWithContextRelationManager(), true);
 		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
 		run(new ShordRelationReader(), new MissingRefRefTaintGrammar().getOpt(), new MissingRefRefTaintRelationManager(), true);
 		run(new ShordRelationReader(), new MissingRefRefImplicitFlowGrammar().getOpt(), new MissingRefRefImplicitFlowRelationManager(), true);
-				
+		*/
+		
+		/*
 		run(new ShordRelationReader(), new NegligibleImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
 		run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), false);
 		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new SourceSinkRelationManager(), false);
+		*/
 	}
 }

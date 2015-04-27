@@ -193,7 +193,7 @@ public class PAGBuilder extends JavaAnalysis
 	private DomSC domSC;
 
 	private int maxArgs = -1;
-	private FastHierarchy fh;
+	private static FastHierarchy fh;
 
 	//public static NumberedSet stubMethods;
 	public static NumberedSet frameworkMethods;
@@ -1332,8 +1332,9 @@ public class PAGBuilder extends JavaAnalysis
 		relClinitTM.save();
 	}
 
-	final public boolean canStore(Type objType, Type varType) 
+	final static public boolean canStore(Type objType, Type varType) 
 	{
+		if(fh == null) { fh = Program.g().scene().getOrMakeFastHierarchy(); }
 		if(varType instanceof UnknownType) return true;
 		if(!(varType instanceof RefLikeType)) return false;
 		if(varType == objType) return true;

@@ -116,4 +116,21 @@ public class LocalsToVarNodeMap {
 		}
 		return maps.localToVarNodeMaps.get(method);		
 	}
+	
+	private static Map<SootMethod,Map<LocalVarNode,Local>> inverseMaps = new HashMap<SootMethod,Map<LocalVarNode,Local>>();
+	public static Map<LocalVarNode,Local> getVarNodeToLocalMap(SootMethod method) {
+		Map<LocalVarNode,Local> inverseMap = inverseMaps.get(method);
+		if(inverseMap == null) {
+			inverseMap = new HashMap<LocalVarNode,Local>();
+			Map<Local,LocalVarNode> map = getLocalToVarNodeMap(method);
+			for(Map.Entry<Local,LocalVarNode> entry : map.entrySet()) {
+				if(inverseMap.get(entry.getValue()) != null) {
+					throw new RuntimeException("Duplicate local var: " + entry.getKey() + " and " + inverseMap.get(entry.getValue()));
+				}
+				inverseMap.put(entry.getValue(), entry.getKey());
+			}
+			inverseMaps.put(method, inverseMap);
+		}
+		return inverseMap;
+	}
 }
