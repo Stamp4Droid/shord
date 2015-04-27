@@ -1261,17 +1261,23 @@ public:
     Ref<Variable> entry;
     std::set<Ref<Variable> > exits;
     mi::MultiIndex<mi::Index<SRC, Ref<Variable>,
-                             mi::Table<TGT, Ref<Variable> > >,
+                       mi::Table<TGT, Ref<Variable> > >,
                    mi::Index<TGT, Ref<Variable>,
-                             mi::Table<SRC, Ref<Variable> > > > epsilons;
+                       mi::Table<SRC, Ref<Variable> > > > epsilons;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
-                             mi::Index<SRC, Ref<Variable>,
-                                       mi::Table<TGT, Ref<Variable> > > >,
-                   mi::Table<FLD, Ref<Field> > > opens;
+                       mi::Index<SRC, Ref<Variable>,
+                           mi::Table<TGT, Ref<Variable> > > >,
+                   mi::Table<FLD, Ref<Field> >,
+                   mi::Index<TGT, Ref<Variable>,
+                       mi::Index<FLD, Ref<Field>,
+                           mi::Table<SRC, Ref<Variable> > > > > opens;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
-                             mi::Index<SRC, Ref<Variable>,
-                                       mi::Table<TGT, Ref<Variable> > > >,
-                   mi::Table<FLD, Ref<Field> > > closes;
+                       mi::Index<TGT, Ref<Variable>,
+                           mi::Table<SRC, Ref<Variable> > > >,
+                   mi::Table<FLD, Ref<Field> >,
+                   mi::Index<SRC, Ref<Variable>,
+                       mi::Index<FLD, Ref<Field>,
+                           mi::Table<TGT, Ref<Variable> > > > > closes;
 public:
     explicit CodeGraph() {}
     CodeGraph(const CodeGraph&) = default;
@@ -1299,8 +1305,8 @@ public:
                          var_map[o.get<TGT>()]);
         }
         FOR (c, other.closes) {
-            closes.insert(c.get<FLD>(), var_map[c.get<SRC>()],
-                          var_map[c.get<TGT>()]);
+            closes.insert(c.get<FLD>(), var_map[c.get<TGT>()],
+                          var_map[c.get<SRC>()]);
         }
     }
     static CodeGraph from_sig(const Signature& sig) {
@@ -1357,7 +1363,7 @@ public:
                 if (delim.is_open) {
                     opens.insert(delim.fld, state2var[src], state2var[tgt]);
                 } else {
-                    closes.insert(delim.fld, state2var[src], state2var[tgt]);
+                    closes.insert(delim.fld, state2var[tgt], state2var[src]);
                 }
             }
         }
@@ -1370,72 +1376,72 @@ public:
         }
     }
     void close() {
-        mi::MultiIndex<
-            mi::Index<OUT_SRC, Ref<Variable>,
-                mi::Index<OUT_TGT, Ref<Variable>,
-                    mi::Index<IN_SRC, Ref<Variable>,
-                        mi::Table<IN_TGT, Ref<Variable> > > > >,
-            mi::Index<IN_SRC, Ref<Variable>,
-                mi::Index<IN_TGT, Ref<Variable>,
-                    mi::Index<OUT_SRC, Ref<Variable>,
-                        mi::Table<OUT_TGT, Ref<Variable> > > > >,
-            mi::Index<OUT_SRC, Ref<Variable>,
-                mi::Table<OUT_TGT, Ref<Variable> > > > bounds;
+        mi::Index<OUT_SRC, Ref<Variable>,
+            mi::Table<OUT_TGT, Ref<Variable> > > out_bounds;
+        mi::Index<IN_SRC, Ref<Variable>,
+            mi::Table<IN_TGT, Ref<Variable> > > in_bounds;
         mi::Index<CLE_OUT_SRC, Ref<Variable>,
             mi::Index<CLE_OUT_TGT, Ref<Variable>,
-                mi::Index<CLR_IN_SRC, Ref<Variable>,
-                    mi::Table<CLR_IN_TGT, Ref<Variable> > > > > deps;
-        // The worklist holds in-bounds.
-        Worklist<std::pair<Ref<Variable>,Ref<Variable> >,true> worklist;
+                mi::Table<CLR_IN_SRC, Ref<Variable> > > > deps;
+        Worklist<Ref<Variable>,true> worklist; // holds in_src's
 
         // Record potential epsilons due to parenthesis matching.
         auto rec_bounds =
             [&](const mi::Index<SRC, Ref<Variable>,
                           mi::Table<TGT, Ref<Variable> > >& ops,
-                const mi::Index<SRC, Ref<Variable>,
-                          mi::Table<TGT, Ref<Variable> > >& cls,
+                const mi::Index<TGT, Ref<Variable>,
+                          mi::Table<SRC, Ref<Variable> > >& cls,
                 Ref<Field>) {
-            FOR(o, ops) {
-                FOR(c, cls) {
+            for (const auto& o_p : ops) {
+                Ref<Variable> out_src = o_p.first;
+                for (const auto& c_p : cls) {
+                    Ref<Variable> out_tgt = c_p.first;
                     // Only record if an epsilon doesn't already exist.
-                    if (epsilons.contains(o.get<SRC>(), c.get<TGT>())) {
+                    if (epsilons.contains(out_src, out_tgt)) {
                         continue;
                     }
-                    bounds.insert(o.get<SRC>(), c.get<TGT>(),
-                                  o.get<TGT>(), c.get<SRC>());
-                    worklist.enqueue(std::make_pair(o.get<TGT>(),
-                                                    c.get<SRC>()));
+                    out_bounds.insert(out_src, out_tgt);
+                    for (Ref<Variable> in_src : o_p.second) {
+                        worklist.enqueue(in_src);
+                        for (Ref<Variable> in_tgt : c_p.second) {
+                            in_bounds.insert(in_src, in_tgt);
+                        }
+                    }
                 }
             }
         };
         join_zip<1>(opens.pri(), closes.pri(), rec_bounds);
 
         // Process matching parenthesis pairs up to fixpoint.
+        auto emit_eps = [&](const mi::Table<SRC, Ref<Variable> >& out_srcs,
+                            const mi::Table<TGT, Ref<Variable> >& out_tgts,
+                            Ref<Field>) {
+            for (Ref<Variable> src : out_srcs) {
+                for (Ref<Variable> tgt : out_tgts) {
+                    if (!epsilons.insert(src, tgt) ) {
+                        continue;
+                    }
+                    // TODO: The rescheduling might be redundant here, if the
+                    // dependent out-epsilon had already been emitted.
+                    for (Ref<Variable> clr_in_src : deps[src][tgt]) {
+                        worklist.enqueue(clr_in_src);
+                    }
+                }
+            }
+        };
         while (!worklist.empty()) {
-            std::pair<Ref<Variable>,Ref<Variable> > in_pair =
-                worklist.dequeue();
+            Ref<Variable> in_src = worklist.dequeue();
+            const auto& in_tgts = in_bounds[in_src];
             std::set<Ref<Variable> > reached;
             std::deque<Ref<Variable> > queue;
-            reached.insert(in_pair.first);
-            queue.push_back(in_pair.first);
+            reached.insert(in_src);
+            queue.push_back(in_src);
             while (!queue.empty()) {
                 Ref<Variable> a = queue.front();
                 queue.pop_front();
-                if (a == in_pair.second) {
-                    FOR(o, bounds.sec<0>()[in_pair.first][in_pair.second]) {
-                        if (!epsilons.insert(o.get<OUT_SRC>(),
-                                             o.get<OUT_TGT>())) {
-                            continue;
-                        }
-                        // TODO: The rescheduling might be redundant here, if
-                        // the dependent out-epsilon had already been emitted.
-                        FOR(i, deps[o.get<OUT_SRC>()][o.get<OUT_TGT>()]) {
-                            worklist.enqueue
-                                (std::make_pair(i.get<CLR_IN_SRC>(),
-                                                i.get<CLR_IN_TGT>()));
-                        }
-                    }
-                    break;
+                if (in_tgts.contains(a)) {
+                    join_zip<1>(opens.sec<1>()[in_src], closes.sec<1>()[a],
+                                emit_eps);
                 }
                 // TODO: Record all imm epsilons?
                 for (Ref<Variable> b : epsilons.pri()[a]) {
@@ -1443,8 +1449,8 @@ public:
                         queue.push_back(b);
                     }
                 }
-                for (Ref<Variable> b : bounds.sec<1>()[a]) {
-                    deps.insert(a, b, in_pair.first, in_pair.second);
+                for (Ref<Variable> b : out_bounds[a]) {
+                    deps.insert(a, b, in_src);
                 }
             }
         }
@@ -1669,7 +1675,7 @@ public:
                     code_.opens.insert(fld, src, tgt);
                 } else if (toks[2][0] == ')') {
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
-                    code_.closes.insert(fld, src, tgt);
+                    code_.closes.insert(fld, tgt, src);
                 } else {
                     Function& callee = fun_reg.add(toks[2]);
                     callee.callers_.insert(ref);
