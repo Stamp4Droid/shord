@@ -17,7 +17,6 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.ValueBox;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
-import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 import chord.project.Chord;
 
 @Chord(name = "implicit-exception-java",

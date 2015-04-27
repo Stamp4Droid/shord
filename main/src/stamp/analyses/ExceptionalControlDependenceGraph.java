@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import shord.analyses.Ctxt;
 import shord.analyses.LocalVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
@@ -22,7 +23,8 @@ import soot.toolkits.graph.HashReversibleGraph;
 import soot.toolkits.graph.SimpleDominatorsFinder;
 import soot.toolkits.graph.UnitGraph;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
-import chord.util.tuple.object.Trio;
+import chord.util.tuple.object.Pent;
+import chord.util.tuple.object.Quad;
 /** 
     Intra-procedural Control Dependence Graph
 
@@ -39,12 +41,16 @@ public class ExceptionalControlDependenceGraph {
 	}
 	
 	public static class ExceptionDependeeStruct {
+		public final Ctxt ctxt;
 		public final Unit invokeUnit;
 		public final Unit targetUnit;
+		public final Ctxt varCtxt;
 		public final VarNode var;
-		public ExceptionDependeeStruct(Unit invokeUnit, Unit targetUnit, VarNode var) {
+		public ExceptionDependeeStruct(Ctxt ctxt, Unit invokeUnit, Unit targetUnit, Ctxt varCtxt, VarNode var) {
+			this.ctxt = ctxt;
 			this.invokeUnit = invokeUnit;
 			this.targetUnit = targetUnit;
+			this.varCtxt = varCtxt;
 			this.var = var;
 		}
 	}
@@ -88,11 +94,19 @@ public class ExceptionalControlDependenceGraph {
 		return varNodesByDefUnit.get(var);
 	}
 	
-	private static MultivalueMap<SootMethod,ExceptionDependeeStruct> exceptionDependeeStructs;
-	public static Iterable<ExceptionDependeeStruct> getExceptionDependeeStructs(SootMethod method) {
+	private static Map<SootMethod,MultivalueMap<Unit,ExceptionDependeeStruct>> exceptionDependeeStructs;
+	private static void addExceptionDependeeStruct(SootMethod method, ExceptionDependeeStruct struct) {
+		MultivalueMap<Unit,ExceptionDependeeStruct> structs = exceptionDependeeStructs.get(method);
+		if(structs == null) {
+			structs = new MultivalueMap<Unit,ExceptionDependeeStruct>();
+			exceptionDependeeStructs.put(method, structs);
+		}
+		structs.add(struct.invokeUnit, struct);
+	}
+	public static MultivalueMap<Unit,ExceptionDependeeStruct> getExceptionDependeeStructs(SootMethod method) {
 		if(exceptionDependeeStructs == null) {
 			// STEP 0: Setup
-			exceptionDependeeStructs = new MultivalueMap<SootMethod,ExceptionDependeeStruct>();
+			exceptionDependeeStructs = new HashMap<SootMethod,MultivalueMap<Unit,ExceptionDependeeStruct>>();
 			
 			// STEP 1: Get MI
 			Map<Unit,SootMethod> mi = new HashMap<Unit,SootMethod>();
@@ -109,46 +123,50 @@ public class ExceptionalControlDependenceGraph {
 			// STEP 2a: Process handler dependees
 			ProgramRel relHandlerDependee = (ProgramRel)ClassicProject.g().getTrgt("HandlerDependee");
 			relHandlerDependee.load();
-			for(Trio<Object,Object,Object> trio : relHandlerDependee.getAry3ValTuples()) {
-				System.out.println("HANDLER DEPENDEE: " + trio.val0 + " -> " + trio.val1 + " -> " + trio.val2);
-				exceptionDependeeStructs.add(mi.get((Unit)trio.val0), new ExceptionDependeeStruct((Unit)trio.val0, getUnit((VarNode)trio.val2), (VarNode)trio.val1));
+			for(Pent<Object,Object,Object,Object,Object> pent : relHandlerDependee.getAry5ValTuples()) {
+				System.out.println("HANDLER DEPENDEE: " + pent.val1 + " -> " + pent.val3 + " -> " + pent.val4);
+				addExceptionDependeeStruct(mi.get((Unit)pent.val1), new ExceptionDependeeStruct((Ctxt)pent.val0, (Unit)pent.val1, getUnit((VarNode)pent.val4), (Ctxt)pent.val2, (VarNode)pent.val3));
 			}
 			relHandlerDependee.close();
 			
 			// STEP 2b: Process super exit dependees
 			ProgramRel relSuperExitDependee = (ProgramRel)ClassicProject.g().getTrgt("SuperExitDependee");
 			relSuperExitDependee.load();
-			for(chord.util.tuple.object.Pair<Object,Object> pair : relSuperExitDependee.getAry2ValTuples()) {
-				System.out.println("SUPER EXIT DEPENDEE: " + pair.val0 + " -> " + pair.val1);
-				exceptionDependeeStructs.add(mi.get((Unit)pair.val0), new ExceptionDependeeStruct((Unit)pair.val0, null, (VarNode)pair.val1));
+			for(Quad<Object,Object,Object,Object> quad : relSuperExitDependee.getAry4ValTuples()) {
+				System.out.println("SUPER EXIT DEPENDEE: " + quad.val1 + " -> " + quad.val3);
+				addExceptionDependeeStruct(mi.get((Unit)quad.val1), new ExceptionDependeeStruct((Ctxt)quad.val0, (Unit)quad.val1, null, (Ctxt)quad.val2, (VarNode)quad.val3));
 			}
 			relSuperExitDependee.close();
 
 			// STEP 2c: Process prim handler dependees
 			ProgramRel relHandlerDependeePrim = (ProgramRel)ClassicProject.g().getTrgt("HandlerDependeePrim");
 			relHandlerDependeePrim.load();
-			for(Trio<Object,Object,Object> trio : relHandlerDependeePrim.getAry3ValTuples()) {
-				System.out.println("HANDLER DEPENDEE PRIM: " + trio.val0 + " -> " + trio.val1 + " -> " + trio.val2);
-				exceptionDependeeStructs.add(mi.get((Unit)trio.val0), new ExceptionDependeeStruct((Unit)trio.val0, getUnit((VarNode)trio.val2), (VarNode)trio.val1));
+			for(Pent<Object,Object,Object,Object,Object> pent : relHandlerDependeePrim.getAry5ValTuples()) {
+				System.out.println("HANDLER DEPENDEE PRIM: " + pent.val1 + " -> " + pent.val3 + " -> " + pent.val4);
+				addExceptionDependeeStruct(mi.get((Unit)pent.val1), new ExceptionDependeeStruct((Ctxt)pent.val0, (Unit)pent.val1, getUnit((VarNode)pent.val4), (Ctxt)pent.val2, (VarNode)pent.val3));
 			}
 			relHandlerDependeePrim.close();
 			
 			// STEP 2b: Process prim super exit dependees
 			ProgramRel relSuperExitDependeePrim = (ProgramRel)ClassicProject.g().getTrgt("SuperExitDependeePrim");
 			relSuperExitDependeePrim.load();
-			for(chord.util.tuple.object.Pair<Object,Object> pair : relSuperExitDependeePrim.getAry2ValTuples()) {
-				System.out.println("SUPER EXIT DEPENDEE PRIM: " + pair.val0 + " -> " + pair.val1);
-				exceptionDependeeStructs.add(mi.get((Unit)pair.val0), new ExceptionDependeeStruct((Unit)pair.val0, null, (VarNode)pair.val1));
+			for(Quad<Object,Object,Object,Object> quad : relSuperExitDependeePrim.getAry4ValTuples()) {
+				System.out.println("SUPER EXIT DEPENDEE PRIM: " + quad.val1 + " -> " + quad.val3);
+				addExceptionDependeeStruct(mi.get((Unit)quad.val1), new ExceptionDependeeStruct((Ctxt)quad.val0, (Unit)quad.val1, null, (Ctxt)quad.val2, (VarNode)quad.val3));
 			}
 			relSuperExitDependeePrim.close();
 		}
-		return exceptionDependeeStructs.get(method);
+		MultivalueMap<Unit,ExceptionDependeeStruct> map = exceptionDependeeStructs.get(method);
+		return map == null ? new MultivalueMap<Unit,ExceptionDependeeStruct>() : map;
 	}
 	
 	private static MultivalueMap<Unit,Object> getExceptionalEdges(SootMethod method, Object superExitNode) {
 		MultivalueMap<Unit,Object> edges = new MultivalueMap<Unit,Object>();
-		for(ExceptionDependeeStruct struct : getExceptionDependeeStructs(method)) {
-			edges.add(struct.invokeUnit, struct.targetUnit == null ? superExitNode : struct.targetUnit);
+		MultivalueMap<Unit,ExceptionDependeeStruct> structs = getExceptionDependeeStructs(method);
+		for(Unit unit : structs.keySet()) {
+			for(ExceptionDependeeStruct struct : structs.get(unit)) {
+				edges.add(struct.invokeUnit, struct.targetUnit == null ? superExitNode : struct.targetUnit);
+			}
 		}
 		return edges;
 	}
