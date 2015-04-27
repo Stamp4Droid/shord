@@ -51,7 +51,7 @@ public class ImplicitExceptionAnalysis extends JavaAnalysis {
 		MultivalueMap<Unit,VarNode> unit2Prim = new MultivalueMap<Unit,VarNode>();
 		
 		// STEP 1: Build method2Unit
-		ProgramRel relIM = (ProgramRel)ClassicProject.g().getTrgt("chaIM");
+		ProgramRel relIM = (ProgramRel)ClassicProject.g().getTrgt("ci_IM");
 		relIM.load();
 		for(chord.util.tuple.object.Pair<Object,Object> pair : relIM.getAry2ValTuples()) {
 			Unit unit = (Unit)pair.val0;
@@ -59,6 +59,25 @@ public class ImplicitExceptionAnalysis extends JavaAnalysis {
 			method2Unit.add(method, unit);
 		}
 		relIM.close();
+		
+		/*
+		ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
+		relReachableM.load();
+		for(Object obj : relReachableM.getAry1ValTuples()) {
+			// STEP 0: Setup
+			SootMethod method = (SootMethod)obj;
+			if(PAGBuilder.stubMethods.contains(method)) {
+				continue;
+			}
+			if(!method.hasActiveBody()) {
+				continue;
+			}
+			
+			// STEP 1: Get the control dependence edges
+			MultivalueMap<Unit,Unit> dependeeToDependent = ExceptionalControlDependenceGraph.getExceptionalControlDependenceGraph(method);
+		}
+		relReachableM.close();
+		*/
 		
 		Iterator<MethodOrMethodContext> it = Program.g().scene().getReachableMethods().listener();
 		while(it.hasNext()) {

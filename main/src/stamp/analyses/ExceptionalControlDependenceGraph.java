@@ -16,9 +16,9 @@ import soot.Local;
 import soot.SootMethod;
 import soot.Unit;
 import soot.ValueBox;
-import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.DominatorNode;
 import soot.toolkits.graph.DominatorTree;
+import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.graph.HashReversibleGraph;
 import soot.toolkits.graph.SimpleDominatorsFinder;
 import soot.toolkits.graph.UnitGraph;
@@ -174,14 +174,15 @@ public class ExceptionalControlDependenceGraph {
 	public static MultivalueMap<Unit,Unit> getExceptionalControlDependenceGraph(SootMethod method) {
 		// STEP 0: Setup
 		MultivalueMap<Unit,Unit> dependentToDependees = new MultivalueMap<Unit,Unit>();
-		UnitGraph cfg = new BriefUnitGraph(method.retrieveActiveBody());
+		UnitGraph cfg = new ExceptionalUnitGraph(method.retrieveActiveBody());
 		
 		// STEP 1: Add a super exit node to the cfg
 		HashReversibleGraph reversibleCFG = new HashReversibleGraph(cfg);
 		List<?> tails = reversibleCFG.getTails();
 		Object superExitNode = new Object();
 		reversibleCFG.addNode(superExitNode);
-		for(Iterator<?> it = tails.iterator(); it.hasNext();){
+		Iterator<?> it = tails.iterator();
+		while(it.hasNext()) {
 			reversibleCFG.addEdge(it.next(), superExitNode);
 		}
 		
@@ -197,12 +198,20 @@ public class ExceptionalControlDependenceGraph {
 		
 		// STEP 3: Get the dominator tree
 		DominatorTree domTree = new DominatorTree(new SimpleDominatorsFinder(reversibleCFG.reverse()));
+		reversibleCFG.reverse();
 		
 		// STEP 4: Compute the dependents of node unit
 		for(Unit unit : cfg.getBody().getUnits()) {
 			// STEP 4a: If unit has at most one successor, then nothing control-depends on unit
-			List<Unit> succs = cfg.getSuccsOf(unit);
+			List<?> succs = reversibleCFG.getSuccsOf(unit);
+
+			System.out.println("HERE UNIT: " + unit);
+			for(Object obj : succs) {
+				System.out.println("HERE SUCC: " + obj);
+			}
+			
 			if(succs.size() <= 1) {
+				System.out.println("<=1 SUCCS: " + unit);
 				continue;
 			}
 			
@@ -215,16 +224,24 @@ public class ExceptionalControlDependenceGraph {
 			}
 
 			// STEP 4c: Find the least common ancestor (lca) of unit and succ (for each succ in succs)
-			for(Unit succ : succs) {
+			System.out.println("DEPENDEE: " + unit);
+			for(Object obj : succs) {
+				if(!(obj instanceof Unit)) {
+					continue;
+				}
+				Unit succ = (Unit)obj;
+				System.out.println("SUCC: " + unit + " -> " + succ);
 				Set<Unit> dependents = new HashSet<Unit>();
 				Object lca = succ;
 				while(!ancestors.contains(lca)) {
 					if(lca instanceof Unit) {
+						System.out.println("DEPENDENT: " + lca);
 						dependents.add((Unit)lca);
 					}
 					lca = getImmediateDominator(domTree, lca);
 				}
 				if(lca == unit) {
+					System.out.println("DEPENDENT: " + lca);
 					dependents.add(unit);
 				}
 
