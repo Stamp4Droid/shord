@@ -721,6 +721,10 @@ public:
         swap(a.backend_,  b.backend_);
         swap(a.wrapper_,  b.wrapper_);
     }
+    void clear() {
+        DFA temp;
+        swap(*this, temp);
+    }
     // letters: 1..N
     // 0 is reserved for epsilon
     posint num_letters() const {
@@ -1152,6 +1156,10 @@ public:
         swap(a.opens,    b.opens);
         swap(a.closes,   b.closes);
     }
+    void clear() {
+        CodeGraph temp;
+        swap(*this, temp);
+    }
     void copy(const CodeGraph& other,
               std::map<Ref<Variable>,Ref<Variable> >& var_map) {
         for (const Variable& v : other.vars) {
@@ -1466,6 +1474,14 @@ public:
     Function(const Function&) = delete;
     Function(Function&&) = default;
     Function& operator=(const Function&) = delete;
+    // CAUTION: This clears information relating to other functions, in
+    // particular the set of callers.
+    void clear() {
+        code_.clear();
+        calls_.clear();
+        callers_.clear();
+        sig_.clear();
+    }
     bool merge() {
         return false;
     }
@@ -1601,6 +1617,9 @@ public:
 
 // TOP-LEVEL CODE =============================================================
 
+typedef typename SccGraph<Function>::SCC SCC;
+typedef typename SccGraph<Function>::SccId SccId;
+
 int main(int argc, char* argv[]) {
     // User-defined parameters
     std::string indir_name;
@@ -1689,7 +1708,7 @@ int main(int argc, char* argv[]) {
 
     // Update signatures from the bottom up.
     for (unsigned i = 0; i < cg.num_sccs(); i++) {
-        const auto& scc = cg.scc(i);
+        const SCC& scc = cg.scc(i);
         timer.start("Processing SCC", i, " of ", cg.num_sccs(),
                     " (size ", scc.nodes.size(), ")");
         fs::path sccdir(outdir/"scc"/std::to_string(i));
@@ -1780,6 +1799,28 @@ int main(int argc, char* argv[]) {
             timer.done();
         }
 
+        timer.start("Pre-emptively clearing useless SCCs");
+        auto clear_if_useless = [&](const SCC& scc, SccId curr_id) {
+            for (SccId parent_id : scc.parents) {
+                if (parent_id > curr_id) {
+                    // 'scc' is reachable by another SCC, which hasn't been
+                    // processed yet => we will read it again in the future.
+                    return;
+                }
+            }
+            // We won't be reading the contents of this SCC in the future, so
+            // we can safely clear it.
+            for (Ref<Function> f : scc.nodes) {
+                funs[f].clear();
+            }
+        };
+        clear_if_useless(scc, i);
+        for (SccId child_id : scc.children) {
+            // Re-check all children of this SCC.
+            clear_if_useless(cg.scc(child_id), i);
+        }
+        timer.done();
+
         timer.done();
     }
 
@@ -1793,7 +1834,7 @@ int main(int argc, char* argv[]) {
                << std::endl;
     for (const Function& f : funs) {
         f.print_stats(stats_fout);
-        const auto& scc = cg.scc(cg.scc_of(f.ref));
+        const SCC& scc = cg.scc(cg.scc_of(f.ref));
         stats_fout << "\t" << scc.height << "\t" << scc.nodes.size()
                    << "\t" << scc.cumm_size << std::endl;
     }
