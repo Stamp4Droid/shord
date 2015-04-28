@@ -445,54 +445,6 @@ public:
     }
 };
 
-// Maintains a map from items to blocks, which gets traversed on every merge,
-// to perform renumbering.
-// TODO: Could delay the renumbering (leaving holes temporarily), or use a more
-// efficient data structure (e.g. union-find).
-class SetPartition {
-private:
-    const posint num_items_;
-    posint num_blocks_;
-    posint* map_;
-public:
-    explicit SetPartition(posint n)
-        : num_items_(n), num_blocks_(n), map_(new posint[n]) {
-        for (posint i = 0; i < n; i++) {
-            // Each element forms a singleton block.
-            map_[i] = i;
-        }
-    }
-    ~SetPartition() {
-        delete map_;
-    }
-    posint num_blocks() const {
-        return num_blocks_;
-    }
-    void merge(posint blk_1, posint blk_2) {
-        assert(blk_1 < num_blocks() && blk_2 < num_blocks());
-        if (blk_1 == blk_2) {
-            return;
-        }
-        if (blk_1 > blk_2) {
-            merge(blk_2, blk_1);
-            return;
-        }
-        for (posint i = 0; i < num_items_; i++) {
-            if (map_[i] == blk_2) {
-                map_[i] = blk_1;
-            } else if (map_[i] > blk_2) {
-                map_[i]--;
-            }
-        }
-        num_blocks_--;
-    }
-    // Return the block where item i belongs.
-    posint operator[](posint i) const {
-        assert(i < num_items_);
-        return map_[i];
-    }
-};
-
 template<class T> class Matrix2D {
 private:
     const posint x_len_;
@@ -545,94 +497,11 @@ public:
 
 // Symbols must be comparable (the alphabet gets sorted at construction).
 template<class Symbol> class DFA {
-    enum class StateColor {NONE, INITIAL, FINAL, BOTH};
 private:
     std::vector<Symbol> alphabet_;
     DfaBackend* backend_;
     DfaWrapper* wrapper_;
 private:
-    StateColor color(posint state) const {
-        assert(state < num_states());
-        if (state == initial()) {
-            if (is_final(state)) {
-                return StateColor::BOTH;
-            } else {
-                return StateColor::INITIAL;
-            }
-        }
-        if (is_final(state)) {
-            return StateColor::FINAL;
-        } else {
-            return StateColor::NONE;
-        }
-    }
-    NFA<Symbol> state_merge(const SetPartition& part) const {
-        // TODO: Copying alphabet, but not really using it.
-        NFA<Symbol> res(alphabet_);
-        for (posint letter = 1; letter <= num_letters(); letter++) {
-            for (posint src = 0; src < num_states(); src++) {
-                posint tgt = follow(src, letter);
-                res.add_trans(part[src], letter, part[tgt]);
-            }
-        }
-        res.set_initial(part[initial()]);
-        for (posint state = 0; state < num_states(); state++) {
-            if (is_final(state)) {
-                res.set_final(part[state]);
-            }
-        }
-        return res;
-    }
-    // Equivalent to the partitioning step of the table-filling variant of the
-    // DFA minimization algorithm, run for k iterations (not to fixpoint).
-    // TODO:
-    // - might converge faster than that
-    // - don't have to traverse all elements on every iteration
-    // - can adapt Hopcroft's improved partitioning algorithm instead?
-    SetPartition k_equiv(posint k) const {
-        TriangleMatrix<bool> distinct(num_states(), false);
-        posint sink = sink_state();
-        for (posint i = 0; i < num_states(); i++) {
-            for (posint j = 0; j < i; j++) {
-                if (i == sink || j == sink || color(i) != color(j)) {
-                    distinct(i, j) = true;
-                }
-            }
-        }
-        for (posint len = 1; len <= k; len++) {
-            // We can't update the original array directly; that could
-            // accelerate convergence.
-            TriangleMatrix<bool> temp(num_states(), false);
-            for (posint i = 0; i < num_states(); i++) {
-                for (posint j = 0; j < i; j++) {
-                    if (distinct(i, j)) {
-                        temp(i, j) = true;
-                        continue;
-                    }
-                    temp(i, j) = false;
-                    for (posint l = 1; l <= num_letters(); l++) {
-                        posint ii = follow(i,l);
-                        posint jj = follow(j,l);
-                        if (ii == jj || !distinct(ii, jj)) {
-                            continue;
-                        }
-                        temp(i, j) = true;
-                        break;
-                    }
-                }
-            }
-            swap(distinct, temp);
-        }
-        SetPartition part(num_states());
-        for (posint i = 0; i < num_states(); i++) {
-            for (posint j = 0; j < i; j++) {
-                if (!distinct(i, j)) {
-                    part.merge(part[i], part[j]);
-                }
-            }
-        }
-        return part;
-    }
     void trim_letters() {
         // Compute the full set of letters that can reach each state.
         Matrix2D<bool> reachable(num_states(), num_letters() + 1, false);
@@ -951,16 +820,6 @@ public:
         trim_letters();
         wrapper_->minimize();
         backend_ = wrapper_->get_dfa(); // update the cached backend pointer
-    }
-    void fold(posint depth) {
-        SetPartition part = k_equiv(depth);
-        std::cout << "    Partition calculated" << std::endl;
-        NFA<Symbol> folded = state_merge(part);
-        std::cout << "    States merged" << std::endl;
-        wrapper_ = folded.determinize();
-        std::cout << "    Widened FSM determinized" << std::endl;
-        backend_ = wrapper_->get_dfa();
-        assert(!backend_->minimal); // ensures minimal() => no useless letters
     }
     // TODO: Doing simple product construction; could try a more efficient
     // algorithm.
@@ -1325,19 +1184,6 @@ public:
         }
         exits.insert(entry);
     }
-    std::pair<Signature,Signature>
-    effects_around(Ref<Variable> src, Ref<Variable> dst) const {
-        CodeGraph temp(*this);
-        temp.close();
-        CodeGraph pre(temp);
-        pre.exits.clear();
-        pre.exits.insert(src);
-        pre.pn_extend();
-        CodeGraph suf(temp);
-        suf.entry = dst;
-        suf.pn_extend();
-        return std::make_pair(pre.to_sig(), suf.to_sig());
-    }
     void embed(Ref<Variable> src, Ref<Variable> tgt, const Signature& callee) {
         // Create temporary variables for all states in callee's signature
         // (except the sink state).
@@ -1604,7 +1450,6 @@ public:
                     mi::Index<SRC, Ref<Variable>,
                         mi::Table<TGT, Ref<Variable> > > >,
                 mi::Table<FUN, Ref<Function> > > CallStore;
-    const posint WIDENING_K = 1;
 public:
     const std::string name;
     const Ref<Function> ref;
@@ -1613,8 +1458,6 @@ private:
     CallStore calls_;
     std::set<Ref<Function> > callers_;
     Signature sig_; // Initially set to the empty automaton.
-    long ms_spent_ = 0;
-    unsigned revisions_ = 0;
 public:
     explicit Function(const std::string* name_ptr, Ref<Function> ref)
         : name(*name_ptr), ref(ref) {
@@ -1733,70 +1576,6 @@ public:
         code_.exits.insert(new_exit);
         code_.embed(pre_exit, new_exit, sig);
     }
-    // Returns 'false' if we've reached fixpoint, and sig_ didn't need to be
-    // updated. Otherwise updates sig_ and returns 'true'.
-    bool update_sig(const Registry<Function>& fun_reg) {
-        std::cout << "    Revision #" << ++revisions_ << std::endl;
-        auto t_start = std::chrono::steady_clock::now();
-        // Current sig_ is step i on the fixpoint process, S(i).
-        const Signature& si = sig_;
-        // Embed the latest signatures of same-SCC callees, and produce
-        // minimal FSM to form step i+1, F(S(i)).
-        CodeGraph stage(code_);
-        FOR(c, calls_) {
-            // TODO: Assumes the numbering of the original vars doesn't change
-            // on the clone.
-            stage.embed(c.get<SRC>(), c.get<TGT>(),
-                        fun_reg[c.get<FUN>()].sig_);
-        }
-        std::cout << "    Embedded calls" << std::endl;
-        stage.close();
-        std::cout << "    Internal matching done" << std::endl;
-        stage.pn_extend();
-        std::cout << "    PN-Extended" << std::endl;
-        std::cout << "    " << stage.vars.size() << " vars, "
-                  << (stage.epsilons.size() + stage.opens.size() +
-                      stage.closes.size() + calls_.size()) << " edges"
-                  << std::endl;
-        Signature fsi = stage.to_sig();
-        std::cout << "    New signature calculated" << std::endl;
-        // Check if we've reached fixpoint.
-        Signature siUfsi = si | fsi;
-        std::cout << "    Unioned with previous sig" << std::endl;
-        siUfsi.minimize();
-        std::cout << "    Union minimized" << std::endl;
-        if (siUfsi == si) { // equivalent to F(Si) <= Si
-            auto t_end = std::chrono::steady_clock::now();
-            ms_spent_ += std::chrono::duration_cast<std::chrono::milliseconds>
-                (t_end - t_start).count();
-            return false;
-        }
-        std::cout << "    New sig was larger" << std::endl;
-        // If not, widen S(i) U F(S(i)) and set as latest signature.
-        siUfsi.fold(WIDENING_K);
-        std::cout << "    Sig folded" << std::endl;
-        siUfsi.minimize();
-        swap(sig_, siUfsi);
-        std::cout << "    Widened sig minimized" << std::endl;
-        revisions_++;
-        auto t_end = std::chrono::steady_clock::now();
-        ms_spent_ += std::chrono::duration_cast<std::chrono::milliseconds>
-            (t_end - t_start).count();
-        return true;
-    }
-    std::list<std::pair<Signature,Signature> >
-    effects_around_callee(Ref<Function> callee) const {
-        std::list<std::pair<Signature,Signature> > res;
-        FOR(c, calls_.pri()[callee]) {
-            std::pair<Signature,Signature> call_effts =
-                code_.effects_around(c.get<SRC>(), c.get<TGT>());
-            if (call_effts.first.empty() || call_effts.second.empty()) {
-                continue;
-            }
-            res.push_back(std::move(call_effts));
-        }
-        return res;
-    }
     void to_tgf(std::ostream& os, const Registry<Function>& fun_reg,
                 const Registry<Field>& fld_reg) const {
         code_.to_tgf(os, fld_reg);
@@ -1814,8 +1593,7 @@ public:
                 code_.closes.size() + calls_.size());
     }
     void print_stats(std::ostream& os) const {
-        os << name << "\t" << revisions_ << "\t" << ms_spent_
-           << "\t" << num_states() << "\t" << num_trans()
+        os << name << "\t" << num_states() << "\t" << num_trans()
            << "\t" << sig_.num_states() << "\t" << sig_.num_trans()
            << "\t" << callees().size();
     }
@@ -1909,8 +1687,7 @@ int main(int argc, char* argv[]) {
         timer.log(p.first, "\t", p.second);
     }
 
-    // Update signatures up to fixpoint.
-    // TODO: No need to run twice for trivial SCCs.
+    // Update signatures from the bottom up.
     for (unsigned i = 0; i < cg.num_sccs(); i++) {
         const auto& scc = cg.scc(i);
         timer.start("Processing SCC", i, " of ", cg.num_sccs(),
@@ -1919,6 +1696,8 @@ int main(int argc, char* argv[]) {
         fs::create_directories(sccdir);
         Worklist<Ref<Function>,true> worklist;
 
+        // TODO: No need to do this separately for non-recursive calls.
+        // Can simply do this on the joint-SCC code.
         timer.start("Inlining non-recursive calls in SCC");
         for (Ref<Function> f : scc.nodes) {
             timer.log(funs[f].name);
@@ -2008,8 +1787,8 @@ int main(int argc, char* argv[]) {
     fs::path stats_fpath(outdir/"stats.csv");
     std::ofstream stats_fout(stats_fpath.string());
     EXPECT((bool) stats_fout);
-    stats_fout << "Function\tRevisions\tTime spent (ms)"
-               << "\tCode States\tCode Trans\tSig States\tSig Trans\tCallees"
+    stats_fout << "Function\tCode States\tCode Trans"
+               << "\tSig States\tSig Trans\tCallees"
                << "\tSCC Height\tSCC Size\tCumm SCC Size"
                << std::endl;
     for (const Function& f : funs) {
