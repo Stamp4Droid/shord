@@ -1267,14 +1267,15 @@ public:
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
                        mi::Index<SRC, Ref<Variable>,
                            mi::Table<TGT, Ref<Variable> > > >,
-                   mi::Table<FLD, Ref<Field> >,
+                   mi::Index<FLD, Ref<Field>,
+                       mi::Table<TGT, Ref<Variable> > >,
                    mi::Index<TGT, Ref<Variable>,
                        mi::Index<FLD, Ref<Field>,
-                           mi::Table<SRC, Ref<Variable> > > > > opens;
-    mi::MultiIndex<mi::Index<FLD, Ref<Field>,
-                       mi::Index<TGT, Ref<Variable>,
                            mi::Table<SRC, Ref<Variable> > > >,
-                   mi::Table<FLD, Ref<Field> >,
+                   mi::Table<SRC, Ref<Variable> > > opens;
+    mi::MultiIndex<mi::Index<FLD, Ref<Field>,
+                       mi::Index<SRC, Ref<Variable>,
+                           mi::Table<TGT, Ref<Variable> > > >,
                    mi::Index<SRC, Ref<Variable>,
                        mi::Index<FLD, Ref<Field>,
                            mi::Table<TGT, Ref<Variable> > > > > closes;
@@ -1305,8 +1306,8 @@ public:
                          var_map[o.get<TGT>()]);
         }
         FOR (c, other.closes) {
-            closes.insert(c.get<FLD>(), var_map[c.get<TGT>()],
-                          var_map[c.get<SRC>()]);
+            closes.insert(c.get<FLD>(), var_map[c.get<SRC>()],
+                          var_map[c.get<TGT>()]);
         }
     }
     static CodeGraph from_sig(const Signature& sig) {
@@ -1363,7 +1364,7 @@ public:
                 if (delim.is_open) {
                     opens.insert(delim.fld, state2var[src], state2var[tgt]);
                 } else {
-                    closes.insert(delim.fld, state2var[tgt], state2var[src]);
+                    closes.insert(delim.fld, state2var[src], state2var[tgt]);
                 }
             }
         }
@@ -1376,54 +1377,39 @@ public:
         }
     }
     void close() {
-        mi::Index<OUT_SRC, Ref<Variable>,
-            mi::Table<OUT_TGT, Ref<Variable> > > out_bounds;
-        mi::Index<IN_SRC, Ref<Variable>,
-            mi::Table<IN_TGT, Ref<Variable> > > in_bounds;
+        std::list<std::pair<std::set<Ref<Variable> >,
+                            std::set<Ref<Variable> > > > in_bounds;
         mi::Index<CLE_OUT_SRC, Ref<Variable>,
-            mi::Index<CLE_OUT_TGT, Ref<Variable>,
-                mi::Table<CLR_IN_SRC, Ref<Variable> > > > deps;
+            mi::Table<CLR_IN_SRC, Ref<Variable> > > deps;
         Worklist<Ref<Variable>,true> worklist; // holds in_src's
 
-        // Record potential epsilons due to parenthesis matching.
-        auto rec_bounds =
-            [&](const mi::Index<SRC, Ref<Variable>,
-                          mi::Table<TGT, Ref<Variable> > >& ops,
-                const mi::Index<TGT, Ref<Variable>,
-                          mi::Table<SRC, Ref<Variable> > >& cls,
+        // Record the set of matching in-variables.
+        auto rec_in_bounds =
+            [&](const mi::Table<TGT, Ref<Variable> >& ops,
+                const mi::Index<SRC, Ref<Variable>,
+                          mi::Table<TGT, Ref<Variable> > >& cls,
                 Ref<Field>) {
-            for (const auto& o_p : ops) {
-                Ref<Variable> out_src = o_p.first;
-                for (const auto& c_p : cls) {
-                    Ref<Variable> out_tgt = c_p.first;
-                    // Only record if an epsilon doesn't already exist.
-                    if (epsilons.contains(out_src, out_tgt)) {
-                        continue;
-                    }
-                    out_bounds.insert(out_src, out_tgt);
-                    for (Ref<Variable> in_src : o_p.second) {
-                        worklist.enqueue(in_src);
-                        for (Ref<Variable> in_tgt : c_p.second) {
-                            in_bounds.insert(in_src, in_tgt);
-                        }
-                    }
-                }
+            in_bounds.emplace_back();
+            for (Ref<Variable> in_src : ops) {
+                worklist.enqueue(in_src);
+                in_bounds.back().first.insert(in_src);
+            }
+            for (const auto& in_tgt_p : cls) {
+                in_bounds.back().second.insert(in_tgt_p.first);
             }
         };
-        join_zip<1>(opens.pri(), closes.pri(), rec_bounds);
+        join_zip<1>(opens.sec<0>(), closes.pri(), rec_in_bounds);
 
         // Process matching parenthesis pairs up to fixpoint.
         auto emit_eps = [&](const mi::Table<SRC, Ref<Variable> >& out_srcs,
                             const mi::Table<TGT, Ref<Variable> >& out_tgts,
                             Ref<Field>) {
-            for (Ref<Variable> src : out_srcs) {
-                for (Ref<Variable> tgt : out_tgts) {
-                    if (!epsilons.insert(src, tgt) ) {
+            for (Ref<Variable> out_src : out_srcs) {
+                for (Ref<Variable> out_tgt : out_tgts) {
+                    if (!epsilons.insert(out_src, out_tgt) ) {
                         continue;
                     }
-                    // TODO: The rescheduling might be redundant here, if the
-                    // dependent out-epsilon had already been emitted.
-                    for (Ref<Variable> clr_in_src : deps[src][tgt]) {
+                    for (Ref<Variable> clr_in_src : deps[out_src]) {
                         worklist.enqueue(clr_in_src);
                     }
                 }
@@ -1431,16 +1417,24 @@ public:
         };
         while (!worklist.empty()) {
             Ref<Variable> in_src = worklist.dequeue();
-            const auto& in_tgts = in_bounds[in_src];
+            // Build the set of target variables on the fly.
+            std::set<Ref<Variable> > in_tgts;
+            for (const auto& bound : in_bounds) {
+                if (bound.first.count(in_src) == 0) {
+                    continue;
+                }
+                in_tgts.insert(bound.second.begin(), bound.second.end());
+            }
             std::set<Ref<Variable> > reached;
             std::deque<Ref<Variable> > queue;
             reached.insert(in_src);
             queue.push_back(in_src);
+            // Perform forward reachability calculation.
             while (!queue.empty()) {
                 Ref<Variable> a = queue.front();
                 queue.pop_front();
-                if (in_tgts.contains(a)) {
-                    join_zip<1>(opens.sec<1>()[in_src], closes.sec<1>()[a],
+                if (in_tgts.count(a) > 0) {
+                    join_zip<1>(opens.sec<1>()[in_src], closes.sec<0>()[a],
                                 emit_eps);
                 }
                 // TODO: Record all imm epsilons?
@@ -1449,8 +1443,9 @@ public:
                         queue.push_back(b);
                     }
                 }
-                for (Ref<Variable> b : out_bounds[a]) {
-                    deps.insert(a, b, in_src);
+                // Check if any open starts at this variable.
+                if (opens.sec<2>().contains(a)) {
+                    deps.insert(a, in_src);
                 }
             }
         }
@@ -1502,11 +1497,11 @@ public:
         assert(entry.valid());
         // Collect all used delimiters, to form the FSM's alphabet.
         std::vector<Delimiter> delims;
-        for (Ref<Field> fld : opens.sec<0>()) {
-            delims.emplace_back(true, fld);
+        for (const auto& fld_p : opens.pri()) {
+            delims.emplace_back(true, fld_p.first);
         }
-        for (Ref<Field> fld : closes.sec<0>()) {
-            delims.emplace_back(false, fld);
+        for (const auto& fld_p : closes.pri()) {
+            delims.emplace_back(false, fld_p.first);
         }
         // Build the FSM.
         // XXX: Assumes Ref's are allocated serially.
@@ -1675,7 +1670,7 @@ public:
                     code_.opens.insert(fld, src, tgt);
                 } else if (toks[2][0] == ')') {
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
-                    code_.closes.insert(fld, tgt, src);
+                    code_.closes.insert(fld, src, tgt);
                 } else {
                     Function& callee = fun_reg.add(toks[2]);
                     callee.callers_.insert(ref);
