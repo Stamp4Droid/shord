@@ -6,6 +6,8 @@ import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import soot.Local;
+import soot.PrimType;
+import soot.RefLikeType;
 import soot.RefType;
 import soot.Scene;
 import soot.SootClass;
@@ -15,6 +17,7 @@ import soot.Unit;
 import soot.UnitBox;
 import soot.jimple.IdentityStmt;
 import soot.jimple.Stmt;
+import soot.jimple.ThrowStmt;
 import stamp.analyses.LocalsToVarNodeMap;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import chord.project.Chord;
@@ -71,6 +74,10 @@ public class ExceptionAnalysis extends JavaAnalysis {
 				continue;
 			}
 			Map<Local,LocalVarNode> localsToVarNodes = LocalsToVarNodeMap.getLocalToVarNodeMap(method);
+			if(localsToVarNodes == null) {
+				System.out.println("ERROR: No locals to var nodes map for method " + method);
+				continue;
+			}
 			// STEP 2a: Caught exceptions
 			MultivalueMap<Unit,SootClass> caughtExceptions = new MultivalueMap<Unit,SootClass>();
 			for(Trap trap : method.getActiveBody().getTraps()) {
@@ -93,11 +100,13 @@ public class ExceptionAnalysis extends JavaAnalysis {
 						continue;
 					}
 					for(LocalVarNode var : map.get(klass)) {
-						if(var.local.getType() instanceof RefType) {
+						if(var.local.getType() instanceof RefLikeType) {
 							System.out.println("ThrownException: " + method + " -> " + klass.getType() + " -> " + var);
 							relMethodExceptionDependee.add(method, klass.getType(), var);
-						} else {
+						} else if(var.local.getType() instanceof PrimType){
 							relMethodExceptionDependeePrim.add(method, klass.getType(), var);
+						} else {
+							throw new RuntimeException("Type not recognized!");
 						}
 					}
 				}
@@ -113,10 +122,23 @@ public class ExceptionAnalysis extends JavaAnalysis {
 	private static MultivalueMap<SootClass,LocalVarNode> baseExceptionsThrown(Map<Local,LocalVarNode> map, Unit unit) {
 		MultivalueMap<SootClass,LocalVarNode> result = new MultivalueMap<SootClass,LocalVarNode>();
 		Stmt stmt = (Stmt)unit;
+		// CASE: Invoke parseInt
 		if(stmt.containsInvokeExpr()) {
 			SootMethod callee = stmt.getInvokeExpr().getMethod();
 			if(callee.getSignature().equals("<java.lang.Integer: int parseInt(java.lang.String)>")) {
 				result.add(Scene.v().getSootClass("java.lang.NumberFormatException"), map.get((Local)stmt.getInvokeExpr().getArg(0)));
+			}
+		}
+		// CASE: Array access
+		if(stmt.containsArrayRef()) {
+			result.add(Scene.v().getSootClass("java.lang.ArrayIndexOutOfBoundsException"), map.get((Local)stmt.getArrayRef().getBase()));
+		}
+		// CASE: Exception thrown
+		if(stmt instanceof ThrowStmt) {
+			Local var = (Local)((ThrowStmt)stmt).getOp();
+			RefType type = (RefType)var.getType();
+			for(SootClass klass : getCanStore(type.getSootClass())) {
+				result.add(klass, map.get(var));
 			}
 		}
 		return result;

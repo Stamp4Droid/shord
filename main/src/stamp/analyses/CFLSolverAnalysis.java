@@ -33,13 +33,13 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar));
 		System.out.println("Printing graph edges:");
 		IOUtils.printGraphStatistics(graphBar);
+		IOUtils.printGraphEdges(graphBar, "Label2Ref", true);
 		IOUtils.printGraphEdges(graphBar, "Src2Sink", true);
 	}
 	
 	@Override
 	public void run() {
 		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
-		
 		/*
 		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new TaintWithContextRelationManager(), true);
 		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);

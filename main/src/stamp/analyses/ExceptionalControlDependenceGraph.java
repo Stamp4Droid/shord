@@ -82,7 +82,7 @@ public class ExceptionalControlDependenceGraph {
 						}
 						VarNode curVar = map.get((Local)valueBox.getValue());
 						if(varNodesByDefUnit.get(curVar) != null) {
-							throw new RuntimeException("Duplicate definition for variable: " + curVar);
+							//throw new RuntimeException("Duplicate definition for variable: " + curVar);
 						}
 						varNodesByDefUnit.put(curVar, unit);
 					}
@@ -94,6 +94,7 @@ public class ExceptionalControlDependenceGraph {
 		return varNodesByDefUnit.get(var);
 	}
 	
+	// adds InvokeUnit -> ExceptionDependeeStruct
 	private static Map<SootMethod,MultivalueMap<Unit,ExceptionDependeeStruct>> exceptionDependeeStructs;
 	private static void addExceptionDependeeStruct(SootMethod method, ExceptionDependeeStruct struct) {
 		MultivalueMap<Unit,ExceptionDependeeStruct> structs = exceptionDependeeStructs.get(method);
@@ -202,16 +203,11 @@ public class ExceptionalControlDependenceGraph {
 		
 		// STEP 4: Compute the dependents of node unit
 		for(Unit unit : cfg.getBody().getUnits()) {
+			System.out.println("DEPENDEE: " + unit);
+			
 			// STEP 4a: If unit has at most one successor, then nothing control-depends on unit
 			List<?> succs = reversibleCFG.getSuccsOf(unit);
-
-			System.out.println("HERE UNIT: " + unit);
-			for(Object obj : succs) {
-				System.out.println("HERE SUCC: " + obj);
-			}
-			
 			if(succs.size() <= 1) {
-				System.out.println("<=1 SUCCS: " + unit);
 				continue;
 			}
 			
@@ -224,29 +220,25 @@ public class ExceptionalControlDependenceGraph {
 			}
 
 			// STEP 4c: Find the least common ancestor (lca) of unit and succ (for each succ in succs)
-			System.out.println("DEPENDEE: " + unit);
 			for(Object obj : succs) {
 				if(!(obj instanceof Unit)) {
 					continue;
 				}
 				Unit succ = (Unit)obj;
-				System.out.println("SUCC: " + unit + " -> " + succ);
 				Set<Unit> dependents = new HashSet<Unit>();
 				Object lca = succ;
 				while(!ancestors.contains(lca)) {
 					if(lca instanceof Unit) {
-						System.out.println("DEPENDENT: " + lca);
 						dependents.add((Unit)lca);
 					}
 					lca = getImmediateDominator(domTree, lca);
 				}
 				if(lca == unit) {
-					System.out.println("DEPENDENT: " + lca);
 					dependents.add(unit);
 				}
 
 				for(Unit dependent : dependents) {
-					System.out.println("DEPENDEE TO DEPENDENT: " + dependent + " depends on " + unit);
+					System.out.println("DEPENDENT: " + dependent);
 					dependentToDependees.add(dependent, unit);
 				}
 			}
