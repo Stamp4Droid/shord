@@ -421,6 +421,28 @@ public:
         return new DfaWrapper(res);
     }
     template<class... Rest>
+    void to_tgf(std::ostream& os, const Rest&... rest) const {
+        for (posint s : states_) {
+            os << s;
+            if (initial_.count(s) > 0) {
+                os << " in";
+            }
+            if (final_.count(s) > 0) {
+                os << " out";
+            }
+            os << std::endl;
+        }
+        os << "#" << std::endl;
+        FOR(t, trans_) {
+            os << t.template get<FROM>() << " " << t.template get<TO>();
+            if (t.template get<LETTER>() != 0) {
+                os << " ";
+                alphabet_[t.template get<LETTER>() - 1].print(os, rest...);
+            }
+            os << std::endl;
+        }
+    }
+    template<class... Rest>
     void print(std::ostream& os, const Rest&... rest) const {
         os << "Initial: ";
         for (posint state : initial_) {
@@ -1378,16 +1400,21 @@ public:
         // Determinize and minimize the FSM.
         unsigned n_orig = nfa.num_states();
         unsigned e_orig = nfa.num_trans();
+        timer.log("Original NFA: ", n_orig, " states, ", e_orig,
+                  " transitions");
         timer.start("Simplifying NFA");
         nfa.simplify();
         typename Timer::TimeDiff dt_simpl = timer.done();
         unsigned n_simpl = nfa.num_states();
         unsigned e_simpl = nfa.num_trans();
+        timer.log("Simplified NFA: ", n_simpl, " states, ", e_simpl,
+                  " transitions");
         timer.start("Determinizing NFA");
         Signature res(nfa);
         typename Timer::TimeDiff dt_det = timer.done();
         unsigned n_det = res.num_states();
         unsigned e_det = res.num_trans();
+        timer.log("DFA: ", n_det, " states, ", e_det, " transitions");
         timer.log("FSMSizes\t",   n_orig,  "\t", e_orig,  "\t",
                   dt_simpl, "\t", n_simpl, "\t", e_simpl, "\t",
                   dt_det,   "\t", n_det,   "\t", e_det);
