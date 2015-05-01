@@ -8,6 +8,7 @@ import soot.jimple.NewExpr;
 import soot.jimple.Stmt;
 import soot.jimple.NewExpr;
 import soot.jimple.AssignStmt;
+import soot.jimple.InvokeStmt;
 import soot.jimple.ThrowStmt;
 import soot.jimple.IdentityStmt;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
@@ -253,7 +254,7 @@ public class Program
 			String apkPath = System.getProperty("stamp.apk.path");
 			app = App.readApp(apkPath, apktoolOutDir);
 			app.findLayouts();
-			System.out.println(app.toString());
+			//System.out.println(app.toString());
 		}
 		return app;
 	}
@@ -320,8 +321,10 @@ public class Program
 		Iterator<SootMethod> mIt = getMethods();
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
-			if(checkIfStub(m))
+			if(checkIfStub(m)){
+				System.out.println("Stub: "+m.getSignature());
 				stubMethods.add(m);
+			}
 		}		
 	}
 
@@ -333,6 +336,14 @@ public class Program
 		Unit unit = units.getFirst();
 		while(unit instanceof IdentityStmt)
 			unit = units.getSuccOf(unit);
+
+		//if method is <init>, then next stmt could be a call to super.<init>
+		if(method.getName().equals("<init>")){
+			if(unit instanceof InvokeStmt){
+				if(((InvokeStmt) unit).getInvokeExpr().getMethod().getName().equals("<init>"))
+					unit = units.getSuccOf(unit);
+			}
+		}
 
 		if(!(unit instanceof AssignStmt))
 			return false;

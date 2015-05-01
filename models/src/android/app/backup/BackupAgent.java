@@ -5,7 +5,10 @@ class BackupAgent
 	public  BackupAgent() 
 	{
 		super((android.content.Context)null); 
+	}
 
+	public void callCallbacks()
+	{
 		try{
 			this.onCreate();
 			this.onDestroy();

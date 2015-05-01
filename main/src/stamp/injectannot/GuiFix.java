@@ -191,18 +191,24 @@ public class GuiFix extends JavaAnalysis
 				break;
 			}
 		}
-		if(target == null)
+		if(target == null){
+			System.out.println("processing "+stmt+" target null");
 			return false;
+		}
 
 		String targetClassName = target.getDeclaringClass().getName();
 		if(!targetClassName.equals("android.app.Activity") &&
 		   !targetClassName.equals("android.app.Dialog") &&
-		   !targetClassName.equals("android.view.View"))
+		   !targetClassName.equals("android.view.View")){
+			System.out.println("targetClassName: "+targetClassName);
 			return false; 
+		}
 
 		Set<String> widgetMethNames = getWidgetMethNames(ie.getArg(0), stmt);
-		if(widgetMethNames.isEmpty())
-			return false;                                
+		if(widgetMethNames.isEmpty()){
+			System.out.println("widgetMethNames is empty");
+			return false;             
+		}                   
 
 		Local inflaterLocal;
 		inflaterLocal = Jimple.v().newLocal("stamp$inflater", stampInflaterClass.getType());

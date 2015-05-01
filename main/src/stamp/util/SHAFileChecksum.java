@@ -1,13 +1,20 @@
 package stamp.util;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class SHAFileChecksum
 {
-	public static String compute(String filePath) throws Exception
+	public static String compute(String filePath) throws IOException
     {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
+		MessageDigest md;
+		try{
+			md = MessageDigest.getInstance("SHA-256");
+		}catch(NoSuchAlgorithmException e){
+			throw new Error(e);
+		}
         FileInputStream fis = new FileInputStream(filePath);
  
         byte[] dataBytes = new byte[1024];

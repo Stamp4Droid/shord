@@ -10,7 +10,10 @@ public class Activity
     public  Activity() 
 	{
 		this.intent = new android.content.Intent();
-
+	}
+	
+	public void callCallbacks()
+	{
 		this.onCreate(null);
 		this.onStart();
 		this.onRestart();
@@ -173,4 +176,9 @@ public class Activity
 	public  void addContentView(android.view.View view, android.view.ViewGroup.LayoutParams params) { 
 		this.stamp_inflater = view.stamp_inflater;
 	}
+
+	public  android.view.LayoutInflater getLayoutInflater() {
+		return this.stamp_inflater;
+	}
+
 }

@@ -68,7 +68,7 @@ public class Layout
 			id = id.substring(1);
 		else if(id.startsWith("@+id/"))
 			id = id.substring(2);
-		else if(id.startsWith("@*android:id/"))
+		else if(id.startsWith("@*android:"))
 			id = id.substring(2);
 		else
 			assert false : id;

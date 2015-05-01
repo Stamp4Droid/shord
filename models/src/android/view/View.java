@@ -4,6 +4,10 @@ class View
 
 	public  View(android.content.Context context) 
 	{ 
+	}
+	
+	public void callCallbacks()
+	{
 		onFinishInflate();
 
 		onMeasure(0,0);

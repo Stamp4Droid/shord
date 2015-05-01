@@ -26,4 +26,20 @@ class ViewGroup
 		this.child = child; 
 		this.stamp_inflater = child.stamp_inflater;
 	}
+	
+	protected  void attachViewToParent(android.view.View child, int index, android.view.ViewGroup.LayoutParams params)
+	{
+		this.child = child; 
+		this.stamp_inflater = child.stamp_inflater;		
+	}
+	
+	public  android.view.View getChildAt(int index) 
+	{
+		return this.child;
+	}
+	
+	public  android.view.View getFocusedChild()
+	{
+		return this.child;
+	}
 }

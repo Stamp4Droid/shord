@@ -4,6 +4,10 @@ class Fragment
 
 	public  Fragment()
 	{
+	}
+	
+	public void callCallbacks()
+	{
 		this.onHiddenChanged(false);
 		this.onActivityResult(0, 0, null);
 		this.onInflate(null, null);

@@ -11,6 +11,7 @@ import soot.jimple.Stmt;
 import soot.jimple.DefinitionStmt;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.spark.pag.SparkField;
+import soot.jimple.toolkits.callgraph.ReachableMethods;
 
 import shord.analyses.VarNode;
 import shord.analyses.LocalVarNode;
@@ -18,9 +19,13 @@ import shord.analyses.AllocNode;
 import shord.analyses.Ctxt;
 import shord.analyses.DomC;
 import shord.analyses.DomV;
+import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import shord.project.ClassicProject;
+
+import stamp.app.App;
+import stamp.util.SHAFileChecksum;
 
 import chord.project.Chord;
 import chord.util.tuple.object.Pair;
@@ -44,7 +49,7 @@ public class IccgAnalysis extends JavaAnalysis
 	protected Map<Stmt,SootMethod> invkStmtToMethod = new HashMap();
 	protected Map<SootMethod,Set<Integer>> targetMethods = new HashMap();
 	protected Map<SootMethod,Map<Ctxt,Set<Pair<Ctxt,Stmt>>>> csCg = new HashMap();
-	protected Map<SootMethod,VarNode> onClickMethToArg = new HashMap();
+	protected Map<SootMethod,VarNode> uiCallbackToArg = new HashMap();
 
 	protected ProgramRel relPt;
 	protected JsonWriter writer;
@@ -54,14 +59,11 @@ public class IccgAnalysis extends JavaAnalysis
 	public void run()
 	{
 		try{
-			String stampOutDir = System.getProperty("stamp.out.dir");
-			this.writer = new JsonWriter(new BufferedWriter(new FileWriter(new File(stampOutDir, "flows.json"))));
-			writer.setIndent("  ");
-			writer.beginArray();
+			startWriter();
 
 			populateTargetMethods(Arrays.asList(new String[]{"!Activity"}));
 
-			populateOnClickMethToArg();
+			populateUiCallbackToArg();
 
 			readMI();
 		
@@ -90,9 +92,8 @@ public class IccgAnalysis extends JavaAnalysis
 
 			relPt.close();
 
-			writer.endArray();
-			writer.close();
-
+			stopWriter();
+			
 			dumpCache();
 		}catch(IOException e){
 			throw new Error(e);
@@ -141,10 +142,14 @@ public class IccgAnalysis extends JavaAnalysis
 			Set<String> widgets = null;
 			SootMethod caller = invkStmtToMethod.get(callSite);
 			String callerSubsig = caller.getSubSignature();
+			/*
 			if(callerSubsig.equals("void onClick(android.view.View)") ||
 			   callerSubsig.equals("void onItemClick(android.widget.AdapterView,android.view.View,int,long)")){
 				widgets = widgetsAnalysis.computeWidgetIds(identifyWidgets(callerContext, caller), caller, callSite);
 			}
+			*/
+			if(uiCallbackToArg.get(caller) != null)
+				widgets = widgetsAnalysis.computeWidgetIds(identifyWidgets(callerContext, caller), caller, callSite);
 
 			List<Trio<Ctxt,Stmt,Set<String>>> newPath = new ArrayList();
 			newPath.addAll(path);
@@ -263,7 +268,7 @@ public class IccgAnalysis extends JavaAnalysis
 	protected Set<Ctxt> identifyWidgets(Ctxt context, SootMethod m)
 	{
 		System.out.println("identifyWidgets: ctxt: "+context+" m: "+m.getSignature());
-		VarNode vn = onClickMethToArg.get(m);
+		VarNode vn = uiCallbackToArg.get(m);
 		assert vn != null;
 		RelView ptView = pointsToSetFor(vn, context);
 		Iterable<Ctxt> objs = ptView.getAry1ValTuples();
@@ -314,19 +319,26 @@ public class IccgAnalysis extends JavaAnalysis
 		return callers.keySet();
 	}
 
-	private void populateOnClickMethToArg()
+	private void populateUiCallbackToArg()
 	{
 		ProgramRel rel = (ProgramRel) ClassicProject.g().getTrgt("MmethArg");
         rel.load();
-		Iterable<Trio<SootMethod, Integer, VarNode>> it = rel.getAry3ValTuples();
-		for(Trio<SootMethod, Integer, VarNode> trio : it){
-			SootMethod m = trio.val0;
-			Integer index = trio.val1;
-			VarNode vn = trio.val2;
-			if(m.getSubSignature().equals("void onClick(android.view.View)") && index == 1)
-				onClickMethToArg.put(m, vn);
-			else if(m.getSubSignature().equals("void onItemClick(android.widget.AdapterView,android.view.View,int,long)") && index == 2)
-				onClickMethToArg.put(m, vn);
+		Program prog = Program.g();
+		ReachableMethods reachableMethods = prog.scene().getReachableMethods();
+		UiCallbacks uiCallbacks = new UiCallbacks();
+		for(Map.Entry<SootMethod,Integer> entry : uiCallbacks.allCallbacks().entrySet()){
+			SootMethod callback = entry.getKey();
+			Integer paramIndex = entry.getValue();
+			if(!reachableMethods.contains(callback) || prog.exclude(callback))
+				continue;
+			//Rrishi
+			RelView view = rel.getView();
+			view.selectAndDelete(0, callback);
+			view.selectAndDelete(1, paramIndex);
+			Iterable<VarNode> it = view.getAry1ValTuples();
+			VarNode vn = it.iterator().next();
+			uiCallbackToArg.put(callback, vn);
+			view.free();
 		}
 		rel.close();
 	}
@@ -520,6 +532,28 @@ public class IccgAnalysis extends JavaAnalysis
 			writer.print("}");
 			writer.println("");
 		}
+		writer.close();
+	}
+	
+	private void startWriter() throws IOException
+	{ 
+		String stampOutDir = System.getProperty("stamp.out.dir");
+		this.writer = new JsonWriter(new BufferedWriter(new FileWriter(new File(stampOutDir, "flows.json"))));
+		writer.setIndent("  ");
+		writer.beginObject();
+		App app = Program.g().app();
+		writer.name("pkg").value(app.getPackageName());
+		writer.name("version").value(app.getVersion());
+		String apkPath = app.apkPath();
+		writer.name("sha").value(SHAFileChecksum.compute(apkPath));
+		writer.name("paths");
+		writer.beginArray();
+	}
+	
+	private void stopWriter() throws IOException
+	{
+		writer.endArray();
+		writer.endObject();
 		writer.close();
 	}
 }

@@ -44,6 +44,7 @@ public class App
 	private String pkgName;
 	private String version;
 	private String iconPath;
+	private String apkPath;
 
 	public static App readApp(String apkPath, String apktoolOutDir)
 	{
@@ -53,16 +54,19 @@ public class App
 
 	public App(String apkPath, String apktoolOutDir)
 	{
+		assert apkPath.endsWith(".apk");
+		this.apkPath = apkPath;
+
 		File manifestFile = new File(apktoolOutDir, "AndroidManifest.xml");				
 		ParseManifest pmf = new ParseManifest(manifestFile, this);
 
 		File resDir = new File(apktoolOutDir, "res");
-		publicXml = new PublicXml(new File(resDir, "values/public.xml"));
-		stringXml = new StringXml(new File(resDir, "values/strings.xml"));
+		this.publicXml = new PublicXml(new File(resDir, "values/public.xml"));
+		this.stringXml = new StringXml(new File(resDir, "values/strings.xml"));
 
 		List<Layout> layouts = parseLayouts(resDir);
 		
-		collectClassNames(apkPath);
+		collectClassNames();
 		computeFrameworkClasses();		
 		process(apktoolOutDir, layouts);
 	}
@@ -188,6 +192,11 @@ public class App
 		return iconPath;
 	}
 
+	public String apkPath()
+	{
+		return apkPath;
+	}
+
 	public List<String> allClassNames()
 	{
 		return classes;
@@ -203,9 +212,8 @@ public class App
 		return layouts.values();
 	}
 
-	private void collectClassNames(String apkPath)
+	private void collectClassNames()
 	{
-		assert apkPath.endsWith(".apk");
 		try{
 			File f = new File(apkPath);
 			DexBackedDexFile d = DexFileFactory.loadDexFile(f, 1);
