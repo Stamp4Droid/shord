@@ -27,6 +27,9 @@ CaughtException(i:I,t:T,v:V) input
 MethodExceptionDependee(c:C,m:M,t:T,d:C,v:V)
 MethodExceptionDependeePrim(c:C,m:M,t:T,d:C,v:U)
 
+ActiveException(t:T,d:C,v:V)
+ActiveExceptionPrim(t:T,d:C,v:U)
+
 SuperExitDependee(c:C,i:I,d:C,v:V) output
 HandlerDependee(c:C,i:I,d:C,v:V,e:V) output
 
@@ -37,12 +40,14 @@ HandlerDependeePrim(c:C,i:I,d:C,v:U,e:V) output
 
 MethodExceptionDependee(c,m,t,d,v) :- MethodExceptionDependeeBase(m,t,v), CM(c,m), c=d.
 MethodExceptionDependee(c,m,t,d,v) :- MI(m,i), ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_).
+ActiveException(t,d,v) :- ci_IM(i,mp), CICM(_,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), CaughtException(i,t,_).
 
-SuperExitDependee(c,i,d,v) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_).
+SuperExitDependee(c,i,d,v) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_), ActiveException(t,d,v).
 HandlerDependee(c,i,d,v,e) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), CaughtException(i,t,e).
 
 MethodExceptionDependeePrim(c,m,t,d,v) :- MethodExceptionDependeePrimBase(m,t,v), CM(c,m), c=d.
 MethodExceptionDependeePrim(c,m,t,d,v) :- MI(m,i), ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), !CaughtException(i,t,_).
+ActiveExceptionPrim(t,d,v) :- ci_IM(i,mp), CICM(_,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), CaughtException(i,t,_).
 
-SuperExitDependeePrim(c,i,d,v) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), !CaughtException(i,t,_).
+SuperExitDependeePrim(c,i,d,v) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), !CaughtException(i,t,_), ActiveExceptionPrim(t,d,v).
 HandlerDependeePrim(c,i,d,v,e) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), CaughtException(i,t,e).
