@@ -1,7 +1,10 @@
-package shord.analyses;
+package stamp.analyses;
 
 import java.util.Map;
 
+import shord.analyses.LocalVarNode;
+import shord.analyses.PAGBuilder;
+import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -18,7 +21,6 @@ import soot.UnitBox;
 import soot.jimple.IdentityStmt;
 import soot.jimple.Stmt;
 import soot.jimple.ThrowStmt;
-import stamp.analyses.LocalsToVarNodeMap;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import chord.project.Chord;
 
