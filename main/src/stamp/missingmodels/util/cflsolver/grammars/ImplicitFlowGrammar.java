@@ -12,9 +12,18 @@ import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 public class ImplicitFlowGrammar extends TaintGrammar {
 	public ImplicitFlowGrammar() {
 		this.addUnaryProduction("Ref2RefT", "ref2RefImp");
-		this.addUnaryProduction("Ref2PrimT", "ref2PrimImp");
+		//this.addUnaryProduction("Ref2PrimT", "ref2PrimImp");
 		this.addUnaryProduction("Prim2RefT", "prim2RefImp");
-		this.addUnaryProduction("Prim2PrimT", "prim2PrimImp");
+		//this.addUnaryProduction("Prim2PrimT", "prim2PrimImp");
+		
+		this.addBinaryProduction("Ref2ObjT", "ref2RefImp", "Flow", false, true);
+		this.addBinaryProduction("Prim2ObjT", "prim2RefImp", "Flow", false, true);
+		
+		this.addBinaryProduction("Ref2ObjT", "Ref2ObjT", "FlowField", false, true, true);
+		this.addBinaryProduction("Prim2ObjT", "Prim2ObjT", "FlowField", false, true, true);
+		
+		this.addBinaryProduction("Ref2RefT", "Ref2ObjT", "Flow");
+		this.addBinaryProduction("Prim2RefT", "Prim2ObjT", "Flow");
 	}
 	
 	public static class NegligibleImplicitFlowGrammar extends ContextFreeGrammar {
