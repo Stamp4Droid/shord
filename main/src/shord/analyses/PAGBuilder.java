@@ -915,6 +915,9 @@ public class PAGBuilder extends JavaAnalysis
 							Store(localNodeFor(base), field, localNodeFor(r));
 						if(primLocals.contains(r))
 							StorePrim(localNodeFor(base), field, localNodeFor(r));
+					} else if(rightOp instanceof StringConstant) {
+						//System.out.println("STRING CONST STORE: " + localNodeFor(base) + " <- " + nodeFor((StringConstant)rightOp));
+						Store(localNodeFor(base), field, nodeFor((StringConstant)rightOp));
 					}
 				}
 			} else if(s instanceof AssignStmt) {

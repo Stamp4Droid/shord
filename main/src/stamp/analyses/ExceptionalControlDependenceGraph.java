@@ -125,7 +125,7 @@ public class ExceptionalControlDependenceGraph {
 			ProgramRel relHandlerDependee = (ProgramRel)ClassicProject.g().getTrgt("HandlerDependee");
 			relHandlerDependee.load();
 			for(Pent<Object,Object,Object,Object,Object> pent : relHandlerDependee.getAry5ValTuples()) {
-				System.out.println("HANDLER DEPENDEE: " + pent.val1 + " -> " + pent.val3 + " -> " + pent.val4);
+				//System.out.println("HANDLER DEPENDEE: " + pent.val1 + " -> " + pent.val3 + " -> " + pent.val4);
 				addExceptionDependeeStruct(mi.get((Unit)pent.val1), new ExceptionDependeeStruct((Ctxt)pent.val0, (Unit)pent.val1, getUnit((VarNode)pent.val4), (Ctxt)pent.val2, (VarNode)pent.val3));
 			}
 			relHandlerDependee.close();
@@ -134,7 +134,7 @@ public class ExceptionalControlDependenceGraph {
 			ProgramRel relSuperExitDependee = (ProgramRel)ClassicProject.g().getTrgt("SuperExitDependee");
 			relSuperExitDependee.load();
 			for(Quad<Object,Object,Object,Object> quad : relSuperExitDependee.getAry4ValTuples()) {
-				System.out.println("SUPER EXIT DEPENDEE: " + quad.val1 + " -> " + quad.val3);
+				//System.out.println("SUPER EXIT DEPENDEE: " + quad.val1 + " -> " + quad.val3);
 				addExceptionDependeeStruct(mi.get((Unit)quad.val1), new ExceptionDependeeStruct((Ctxt)quad.val0, (Unit)quad.val1, null, (Ctxt)quad.val2, (VarNode)quad.val3));
 			}
 			relSuperExitDependee.close();
@@ -143,7 +143,7 @@ public class ExceptionalControlDependenceGraph {
 			ProgramRel relHandlerDependeePrim = (ProgramRel)ClassicProject.g().getTrgt("HandlerDependeePrim");
 			relHandlerDependeePrim.load();
 			for(Pent<Object,Object,Object,Object,Object> pent : relHandlerDependeePrim.getAry5ValTuples()) {
-				System.out.println("HANDLER DEPENDEE PRIM: " + pent.val1 + " -> " + pent.val3 + " -> " + pent.val4);
+				//System.out.println("HANDLER DEPENDEE PRIM: " + pent.val1 + " -> " + pent.val3 + " -> " + pent.val4);
 				addExceptionDependeeStruct(mi.get((Unit)pent.val1), new ExceptionDependeeStruct((Ctxt)pent.val0, (Unit)pent.val1, getUnit((VarNode)pent.val4), (Ctxt)pent.val2, (VarNode)pent.val3));
 			}
 			relHandlerDependeePrim.close();
@@ -152,7 +152,7 @@ public class ExceptionalControlDependenceGraph {
 			ProgramRel relSuperExitDependeePrim = (ProgramRel)ClassicProject.g().getTrgt("SuperExitDependeePrim");
 			relSuperExitDependeePrim.load();
 			for(Quad<Object,Object,Object,Object> quad : relSuperExitDependeePrim.getAry4ValTuples()) {
-				System.out.println("SUPER EXIT DEPENDEE PRIM: " + quad.val1 + " -> " + quad.val3);
+				//System.out.println("SUPER EXIT DEPENDEE PRIM: " + quad.val1 + " -> " + quad.val3);
 				addExceptionDependeeStruct(mi.get((Unit)quad.val1), new ExceptionDependeeStruct((Ctxt)quad.val0, (Unit)quad.val1, null, (Ctxt)quad.val2, (VarNode)quad.val3));
 			}
 			relSuperExitDependeePrim.close();
@@ -192,7 +192,7 @@ public class ExceptionalControlDependenceGraph {
 		for(Unit unit : exceptionalEdges.keySet()) {
 			for(Object obj : exceptionalEdges.get(unit)) {
 				String target = obj instanceof Unit ? obj.toString() : "METHOD " + method + " EXIT";
-				System.out.println("ADDING EDGE TO CFG: " + unit + " -> " + target);
+				//System.out.println("ADDING EDGE TO CFG: " + unit + " -> " + target);
 				reversibleCFG.addEdge(unit, obj);
 			}
 		}
@@ -203,7 +203,7 @@ public class ExceptionalControlDependenceGraph {
 		
 		// STEP 4: Compute the dependents of node unit
 		for(Unit unit : cfg.getBody().getUnits()) {
-			System.out.println("DEPENDEE: " + unit);
+			//System.out.println("DEPENDEE: " + unit);
 			
 			// STEP 4a: If unit has at most one successor, then nothing control-depends on unit
 			List<?> succs = reversibleCFG.getSuccsOf(unit);
@@ -238,7 +238,7 @@ public class ExceptionalControlDependenceGraph {
 				}
 
 				for(Unit dependent : dependents) {
-					System.out.println("DEPENDENT: " + dependent);
+					//System.out.println("DEPENDENT: " + dependent);
 					dependentToDependees.add(dependent, unit);
 				}
 			}

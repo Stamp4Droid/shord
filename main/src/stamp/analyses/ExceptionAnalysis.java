@@ -86,7 +86,7 @@ public class ExceptionAnalysis extends JavaAnalysis {
 					for(SootClass klass : getCanStore(trap.getException())) {
 						caughtExceptions.add(unitBox.getUnit(), klass);
 						if(((Stmt)unitBox.getUnit()).containsInvokeExpr()) {
-							System.out.println("CaughtException:" + unitBox.getUnit() + " -> " + klass.getType());
+							//System.out.println("CaughtException:" + unitBox.getUnit() + " -> " + klass.getType());
 							relCaughtException.add(unitBox.getUnit(), klass.getType(), catchVar);
 						}
 					}
@@ -101,7 +101,7 @@ public class ExceptionAnalysis extends JavaAnalysis {
 					}
 					for(LocalVarNode var : map.get(klass)) {
 						if(var.local.getType() instanceof RefLikeType) {
-							System.out.println("ThrownException: " + method + " -> " + klass.getType() + " -> " + var);
+							//System.out.println("ThrownException: " + method + " -> " + klass.getType() + " -> " + var);
 							relMethodExceptionDependee.add(method, klass.getType(), var);
 						} else if(var.local.getType() instanceof PrimType){
 							relMethodExceptionDependeePrim.add(method, klass.getType(), var);

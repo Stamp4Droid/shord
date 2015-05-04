@@ -24,7 +24,7 @@ public class LocalsToVarNodeMap {
 		List<ValueBox> boxes = value.getUseBoxes();
 		for(ValueBox box : boxes) {
 			Value childValue = box.getValue();
-			System.out.println("VALUE recurse: " + childValue);
+			//System.out.println("VALUE recurse: " + childValue);
 			if(value instanceof Local) {
 				LocalVarNode varNode = localToVarNodeMap.get((Local)value);
 				if(varNode != null) {
@@ -45,7 +45,7 @@ public class LocalsToVarNodeMap {
 		List<ValueBox> boxes = isDef ? unit.getDefBoxes() : unit.getUseBoxes();
 		for(ValueBox box : boxes) {
 			Value value = box.getValue();
-			System.out.println("VALUE " + isDef + ": " + value);
+			//System.out.println("VALUE " + isDef + ": " + value);
 			if(value instanceof Local) {
 				LocalVarNode varNode = localToVarNodeMap.get((Local)value);
 				if(varNode != null) {

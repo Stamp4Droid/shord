@@ -62,7 +62,7 @@ public class ImplicitExceptionAnalysis extends JavaAnalysis {
 		
 		for(SootMethod method : methods) {
 			// STEP 0: Setup
-			System.out.println("PROCESSING METHOD: " + method);
+			//System.out.println("PROCESSING METHOD: " + method);
 			if(PAGBuilder.stubMethods.contains(method)) {
 				continue;
 			}
@@ -87,14 +87,14 @@ public class ImplicitExceptionAnalysis extends JavaAnalysis {
 						Ctxt sourceCtxt = struct.varCtxt;
 						LocalVarNode sourceVar = (LocalVarNode)struct.var;
 						Ctxt sinkCtxt = struct.ctxt;
-						for(ValueBox valueBox : dependent.getUseAndDefBoxes()) {
+						for(ValueBox valueBox : dependent.getDefBoxes()) {
 							if(valueBox.getValue() instanceof Local) {
 								LocalVarNode sinkVar = localsToVarNodes.get((Local)valueBox.getValue());
 								// Handle all four case
 								if(sourceVar.local.getType() instanceof RefLikeType) {
 									if(lc.nonPrimLocals().contains(sinkVar.local)) {
 										relRef2RefImp.add(sourceCtxt, sourceVar, sinkCtxt, sinkVar);
-										System.out.println("Ref2RefImpCCtxt Edge: (" + sourceCtxt + ", " + sourceVar + ") -> (" + sinkCtxt + ", " + sinkVar + ")");
+										//System.out.println("Ref2RefImpCCtxt Edge: (" + sourceCtxt + ", " + sourceVar + ") -> (" + sinkCtxt + ", " + sinkVar + ")");
 									} else if(lc.primLocals().contains(sinkVar.local)) {
 										relRef2PrimImp.add(sourceCtxt, sourceVar, sinkCtxt, sinkVar);
 									} else {

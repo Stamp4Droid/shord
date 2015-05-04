@@ -39,7 +39,7 @@ public class ImplicitAnnotationAnalysis extends JavaAnalysis {
 	
 	// This adds that dependentVar depends on parentVar (it uses lc as a switch of ref vs. prim variables)
 	private void addLocalDependents(LocalsClassifier lc, LocalVarNode parentVar, LocalVarNode dependentVar) {
-		System.out.println("LOCAL DEPENDENTS: " + parentVar.local + " -> " + dependentVar.local);
+		//System.out.println("LOCAL DEPENDENTS: " + parentVar.local + " -> " + dependentVar.local);
 		if(lc.nonPrimLocals().contains(parentVar.local)) {
 			if(lc.nonPrimLocals().contains(dependentVar.local)) {
 				this.relRefRefImp.add(parentVar, dependentVar);						
@@ -63,7 +63,7 @@ public class ImplicitAnnotationAnalysis extends JavaAnalysis {
 
 	// This iterates over use locals in the parent and def locals in the dependent and adds them as pairs
 	private void processDependentUnits(Map<Local,LocalVarNode> localToVarNodeMap, LocalsClassifier lc, Unit parent, Unit dependent) {
-		System.out.println("UNIT DEPENDENTS: " + parent + " -> " + dependent);
+		//System.out.println("UNIT DEPENDENTS: " + parent + " -> " + dependent);
 		for(LocalVarNode parentVar : LocalsToVarNodeMap.getVarNodesIn(localToVarNodeMap, parent, false)) {
 			for(LocalVarNode dependentVar : LocalsToVarNodeMap.getVarNodesIn(localToVarNodeMap, dependent, true)) {
 				this.addLocalDependents(lc, parentVar, dependentVar);
@@ -76,18 +76,18 @@ public class ImplicitAnnotationAnalysis extends JavaAnalysis {
 		for(Unit unit : method.getActiveBody().getUnits()) {
 			Stmt s = (Stmt)unit;
 			if(s.containsArrayRef()) {
-				System.out.println("STATEMENT S: " + s);
+				//System.out.println("STATEMENT S: " + s);
 				AssignStmt as = (AssignStmt) s;
 				Value leftOp = as.getLeftOp();
 				ArrayRef ar = s.getArrayRef();
 				if(leftOp instanceof Local) {
-					System.out.println("INSTANCE OF LOCAL");
+					//System.out.println("INSTANCE OF LOCAL");
 					Immediate index = (Immediate)ar.getIndex();
 					if(index instanceof Local) {
 						LocalVarNode indexNode = localToVarNodeMap.get((Local)index);
 						LocalVarNode lNode = localToVarNodeMap.get((Local)leftOp);
 						if(indexNode != null && lNode != null) {
-							System.out.println("INDEX DEPENDENTS!!");
+							//System.out.println("INDEX DEPENDENTS!!");
 							this.addLocalDependents(lc, indexNode, lNode);
 						}
 					}
@@ -110,7 +110,7 @@ public class ImplicitAnnotationAnalysis extends JavaAnalysis {
 			return;
 		}
 
-		System.out.println("PROCESSING METHOD " + method);
+		//System.out.println("PROCESSING METHOD " + method);
 
 		LocalsClassifier lc = new LocalsClassifier(method.getActiveBody());
 		
