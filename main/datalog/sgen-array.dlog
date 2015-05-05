@@ -1,0 +1,32 @@
+# Translation of array facts for older versions of SolverGen
+
+# CONFIGURATION ===============================================================
+
+# name=sgen-array-dlog
+
+.include "V.dom"
+.include "U.dom"
+.include "F.dom"
+
+.bddvarorder V0xV1_U0_F0
+
+# INPUT RELATIONS =============================================================
+
+Load(v:V,b:V,f:F)      input
+Store(b:V,f:F,v:V)     input
+LoadPrim(u:U,b:V,f:F)  input
+StorePrim(b:V,f:F,u:U) input
+
+# OUTPUT RELATIONS ============================================================
+
+ArrLoad(v:V,b:V)      output # v = b[*]
+ArrStore(b:V,v:V)     output # b[*] = v
+ArrLoadPrim(u:U,b:V)  output # u = b[*]
+ArrStorePrim(b:V,u:U) output # b[*] = u
+
+# RULES =======================================================================
+
+ArrLoad(v,b)      :- Load(v,b,0).
+ArrStore(b,v)     :- Store(b,0,v).
+ArrLoadPrim(u,b)  :- LoadPrim(u,b,0).
+ArrStorePrim(b,u) :- StorePrim(b,0,u).

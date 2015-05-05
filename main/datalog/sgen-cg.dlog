@@ -1,0 +1,48 @@
+# Basic call-return facts for SolverGen
+
+# CONFIGURATION ===============================================================
+
+# name=sgen-cg-dlog
+
+.include "Z.dom"
+.include "M.dom"
+.include "V.dom"
+.include "U.dom"
+.include "I.dom"
+
+.bddvarorder Z0_I0xM0_V0xV1_U0xU1
+
+# INPUT RELATIONS =============================================================
+
+ci_IM(i:I,m:M) input
+IinvkRet(i:I,n:Z,v:V) input
+IinvkArg(i:I,n:Z,v:V) input
+IinvkPrimRet(i:I,n:Z,v:U) input
+IinvkPrimArg(i:I,n:Z,v:U) input
+MmethArg(m:M,z:Z,v:V) input
+MmethRet(m:M,z:Z,v:V) input
+MmethPrimArg(m:M,z:Z,v:U) input
+MmethPrimRet(m:M,z:Z,v:U) input
+
+# OUTPUT RELATIONS ============================================================
+
+paramM(u:V,v:V,i:I,m:M) output
+param(u:V,v:V,i:I)      output   # u is the formal parameter, v is actual arg, i is invocation stmt
+returnM(u:V,v:V,i:I,m:M) output
+return(u:V,v:V,i:I)      output   # u is the lhs at callsite, v is the return var, i is invocation stmt
+paramPrimM(u:U,v:U,i:I,m:M) output
+paramPrim(u:U,v:U,i:I)      output   # u is the formal parameter, v is actual arg, i is invocation stmt
+returnPrimM(u:U,v:U,i:I,m:M) output
+returnPrim(u:U,v:U,i:I)      output   # u is the lhs at callsite, v is the return var, i is invocation stmt
+
+# RULES =======================================================================
+
+paramM(u,v,i,m) :- ci_IM(i,m), MmethArg(m,z,u), IinvkArg(i,z,v).
+param(u,v,i)    :- paramM(u,v,i,_).
+returnM(u,v,i,m) :- ci_IM(i,m), MmethRet(m,z,v), IinvkRet(i,z,u).
+return(u,v,i)    :- returnM(u,v,i,_).
+
+paramPrimM(u,v,i,m) :- ci_IM(i,m), MmethPrimArg(m,z,u), IinvkPrimArg(i,z,v).
+paramPrim(u,v,i)    :- paramPrimM(u,v,i,_).
+returnPrimM(u,v,i,m) :- ci_IM(i,m), MmethPrimRet(m,z,v), IinvkPrimRet(i,z,u).
+returnPrim(u,v,i)    :- returnPrimM(u,v,i,_).
