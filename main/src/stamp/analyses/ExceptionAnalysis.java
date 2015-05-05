@@ -11,7 +11,6 @@ import shord.project.analyses.ProgramRel;
 import soot.Local;
 import soot.PrimType;
 import soot.RefLikeType;
-import soot.RefType;
 import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
@@ -20,17 +19,16 @@ import soot.Unit;
 import soot.UnitBox;
 import soot.jimple.IdentityStmt;
 import soot.jimple.Stmt;
-import soot.jimple.ThrowStmt;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import chord.project.Chord;
 
 @Chord(name = "exception-java",
 consumes = { "T", "M", "V", "U", },
-produces = { "CaughtException", "MethodExceptionDependeeBase", "MethodExceptionDependeePrimBase" },
+produces = { "CaughtException", "MethodExceptionDependeeBase", "MethodExceptionDependeePrimBase", "MethodExceptionDependeeBaseVar" },
 namesOfTypes = {},
 types = {},
-namesOfSigns = { "CaughtException", "MethodExceptionDependeeBase", "MethodExceptionDependeePrimBase" },
-signs = { "I0,T0,V0:T0_V0_I0", "M0,T0,V0:T0_M0_V0", "M0,T0,U0:T0_M0_U0" })
+namesOfSigns = { "CaughtException", "MethodExceptionDependeeBase", "MethodExceptionDependeePrimBase", "MethodExceptionDependeeBaseVar" },
+signs = { "I0,T0,V0:T0_V0_I0", "M0,T0,V0:T0_M0_V0", "M0,T0,U0:T0_M0_U0", "M0,V0:M0_V0" })
 public class ExceptionAnalysis extends JavaAnalysis {
 	private static MultivalueMap<SootClass,SootClass> canStore;
 	public static Iterable<SootClass> getCanStore(SootClass lhs) {
@@ -66,6 +64,8 @@ public class ExceptionAnalysis extends JavaAnalysis {
 		relMethodExceptionDependee.zero();
 		ProgramRel relMethodExceptionDependeePrim = (ProgramRel)ClassicProject.g().getTrgt("MethodExceptionDependeePrimBase");
 		relMethodExceptionDependeePrim.zero();
+		ProgramRel relMethodExceptionDependeeVar = (ProgramRel)ClassicProject.g().getTrgt("MethodExceptionDependeeBaseVar");
+		relMethodExceptionDependeeVar.zero();
 		ProgramRel relCaughtException = (ProgramRel)ClassicProject.g().getTrgt("CaughtException");
 		relCaughtException.zero();
 		// STEP 1: Set up canStore relation
@@ -83,45 +83,80 @@ public class ExceptionAnalysis extends JavaAnalysis {
 			// STEP 2a: Caught exceptions
 			MultivalueMap<Unit,SootClass> caughtExceptions = new MultivalueMap<Unit,SootClass>();
 			for(Trap trap : method.getActiveBody().getTraps()) {
+				//System.out.println("TRAP: " + trap.toString());
 				VarNode catchVar = localsToVarNodes.get((Local)((IdentityStmt)trap.getHandlerUnit()).getLeftOp());
-				for(UnitBox unitBox : trap.getUnitBoxes()) {
+				boolean reached = false;
+				for(Unit unit : method.getActiveBody().getUnits()) {
+					if(!reached) {
+						if(unit == trap.getBeginUnit()) {
+							reached = true;
+						} else {
+							continue;
+						}
+					} else if(unit == trap.getEndUnit()) {
+						break;
+					}
+					//System.out.println("TRAPPED UNIT: " + unit.toString());
 					for(SootClass klass : getCanStore(trap.getException())) {
-						caughtExceptions.add(unitBox.getUnit(), klass);
-						if(((Stmt)unitBox.getUnit()).containsInvokeExpr()) {
-							//System.out.println("CaughtException:" + unitBox.getUnit() + " -> " + klass.getType());
-							relCaughtException.add(unitBox.getUnit(), klass.getType(), catchVar);
+						caughtExceptions.add(unit, klass);
+						if(((Stmt)unit).containsInvokeExpr()) {
+							//System.out.println("CaughtException:" + unit + " -> " + klass.getType());
+							relCaughtException.add(unit, klass.getType(), catchVar);
 						}
 					}
 				}
 			}
-			// STEP 2b: Thrown exceptions
 			for(Unit unit : method.getActiveBody().getUnits()) {
-				MultivalueMap<SootClass,LocalVarNode> map = baseExceptionsThrown(localsToVarNodes, unit);
-				for(SootClass klass : map.keySet()) {
+				// STEP 2b: Implicitly thrown exceptions
+				MultivalueMap<SootClass,LocalVarNode> impMap = baseImpExceptionsThrown(localsToVarNodes, unit);
+				for(SootClass klass : impMap.keySet()) {
 					if(caughtExceptions.get(unit).contains(klass)) {
 						continue;
 					}
-					for(LocalVarNode var : map.get(klass)) {
+					for(LocalVarNode var : impMap.get(klass)) {
 						if(var.local.getType() instanceof RefLikeType) {
 							//System.out.println("ThrownException: " + method + " -> " + klass.getType() + " -> " + var);
 							relMethodExceptionDependee.add(method, klass.getType(), var);
-						} else if(var.local.getType() instanceof PrimType){
+						} else if(var.local.getType() instanceof PrimType) {
 							relMethodExceptionDependeePrim.add(method, klass.getType(), var);
 						} else {
 							throw new RuntimeException("Type not recognized!");
 						}
 					}
 				}
+				/*
+				// STEP 2c: Explicitly thrown exceptions
+				for(LocalVarNode var : baseExpExceptionsThrown(localsToVarNodes, unit)) {
+					// Determine if the exception is caught
+					boolean caught = true;
+					for(SootClass klass : getCanStore(((RefType)var.local.getType()).getSootClass())) {
+						if(!caughtExceptions.get(unit).contains(klass)) {
+							caught = false;
+							break;
+						}
+					}
+					if(caught) {
+						continue;
+					}
+					// Add to relation
+					if(var.local.getType() instanceof RefLikeType) {
+						relMethodExceptionDependeeVar.add(method, var);
+					} else {
+						throw new RuntimeException("Type not recognized!");
+					}
+				}
+				*/		
 			}
 		}
 		// STEP 3: Cleanup
 		relReachableM.close();
 		relMethodExceptionDependee.save();
 		relMethodExceptionDependeePrim.save();
+		relMethodExceptionDependeeVar.save();
 		relCaughtException.save();
 	}
 	
-	private static MultivalueMap<SootClass,LocalVarNode> baseExceptionsThrown(Map<Local,LocalVarNode> map, Unit unit) {
+	private static MultivalueMap<SootClass,LocalVarNode> baseImpExceptionsThrown(Map<Local,LocalVarNode> map, Unit unit) {
 		MultivalueMap<SootClass,LocalVarNode> result = new MultivalueMap<SootClass,LocalVarNode>();
 		Stmt stmt = (Stmt)unit;
 		// CASE: Invoke parseInt
@@ -135,14 +170,19 @@ public class ExceptionAnalysis extends JavaAnalysis {
 		if(stmt.containsArrayRef()) {
 			result.add(Scene.v().getSootClass("java.lang.ArrayIndexOutOfBoundsException"), map.get((Local)stmt.getArrayRef().getBase()));
 		}
+		return result;
+	}
+	
+	/*
+	private static Set<LocalVarNode> baseExpExceptionsThrown(Map<Local,LocalVarNode> map, Unit unit) {
+		Set<LocalVarNode> result = new HashSet<LocalVarNode>();
+		Stmt stmt = (Stmt)unit;
 		// CASE: Exception thrown
 		if(stmt instanceof ThrowStmt) {
-			Local var = (Local)((ThrowStmt)stmt).getOp();
-			RefType type = (RefType)var.getType();
-			for(SootClass klass : getCanStore(type.getSootClass())) {
-				result.add(klass, map.get(var));
-			}
+			LocalVarNode var = map.get((Local)((ThrowStmt)stmt).getOp());
+			//result.add(var);
 		}
 		return result;
 	}
+	*/
 }
