@@ -1,6 +1,7 @@
 package stamp.util;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -50,19 +51,42 @@ public class FileHelper {
 		return nonEmptyParts;
 	}
 
-	public static Set<String> listRegularFiles(String dir, String reqdExt) {
-		File dirFile = new File(dir);
-		if (!dirFile.isDirectory()) {
-			String msg = dir + " is not a directory";
+	public static File[] listContents(File dir) {
+		if (!dir.isDirectory()) {
+			String msg = "" + dir + " is not a directory";
 			throw new IllegalArgumentException(msg);
 		}
+		return dir.listFiles();
+	}
+
+	public static Set<String> listRegularFiles(File dir, String reqdExt) {
 		Set<String> contents = new HashSet<String>();
-		for (File f : dirFile.listFiles()) {
-			if (f.isFile() && hasExtension(f.getName(), reqdExt)) {
-				contents.add(f.getAbsolutePath());
+		for (File f : listContents(dir)) {
+			String fName = f.getAbsolutePath();
+			if (f.isFile() && hasExtension(fName, reqdExt)) {
+				contents.add(fName);
 			}
 		}
 		return contents;
+	}
+
+	public static Set<String> listRegularFiles(String dirName,
+											   String reqdExt) {
+		return listRegularFiles(new File(dirName), reqdExt);
+	}
+
+	public static List<File> listSubDirs(File dir) {
+		List<File> subdirs = new ArrayList<File>();
+		for (File f : listContents(dir)) {
+			if (f.isDirectory()) {
+				subdirs.add(f);
+			}
+		}
+		return subdirs;
+	}
+
+	public static List<File> listSubDirs(String dirName) {
+		return listSubDirs(new File(dirName));
 	}
 
 	public static Set<Pair<String,String>> matchBasenames(Set<String> set1,
