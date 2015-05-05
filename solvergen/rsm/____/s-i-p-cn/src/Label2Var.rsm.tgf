@@ -1,0 +1,59 @@
+1 in
+2 
+3 
+4 
+5 Alias
+6 out
+7 
+8 Alias
+9 
+10 
+11 
+12 Alias
+13 out
+14 
+15 Alias
+16 out
+17 
+18 Alias
+#
+1 3 label2Ref
+3 2 _new
+3 3 _asgnRef _paramRef[*] _retRef[*]
+3 4 _statLoadRef
+4 3 _statStoreRef
+3 5 _loadRef[f]
+5 3 _storeRef[f]
+2 6 new
+6 7 statStoreRef
+7 6 statLoadRef
+6 6 asgnRef paramRef[*] retRef[*]
+6 8 storeRef[f]
+8 6 loadRef[f]
+6 6 loadRef[*]
+10 9 _new
+10 10 _asgnRef _paramRef[*] _retRef[*]
+10 11 _statLoadRef
+11 10 _statStoreRef
+10 12 _loadRef[f]
+12 10 _storeRef[f]
+6 10 storeRef[*]
+13 14 statStoreRef
+14 13 statLoadRef
+13 13 asgnRef paramRef[*] retRef[*]
+13 15 storeRef[f]
+15 13 loadRef[f]
+9 13 new
+13 10 storeRef[*]
+6 3 ref2Ref
+13 3 ref2Ref
+16 16 asgnPrim paramPrim[*] retPrim[*] prim2Prim
+16 17 statStorePrim
+17 16 statLoadPrim
+16 18 storePrim[f]
+18 16 loadPrim[f]
+6 16 loadPrim[*] ref2Prim
+13 16 ref2Prim
+16 10 storePrim[*]
+1 16 label2Prim
+16 3 prim2Ref

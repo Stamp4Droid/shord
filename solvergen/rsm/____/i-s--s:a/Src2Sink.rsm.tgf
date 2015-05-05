@@ -1,0 +1,67 @@
+A in
+B
+C
+D out
+1
+2 IntraFun
+3
+4 IntraFun
+5
+6
+7
+8
+#
+A B srcLabel
+B 1 label2Prim label2Ref
+
+1 C _label2Prim _label2Ref
+3 C _label2Prim _label2Ref
+C D sinkLabel
+1 D prim2Sink ref2Sink
+3 D prim2Sink ref2Sink
+
+1 2 paramRef[i] _retRef[i] paramPrim[i] _retPrim[i]
+2 1 retRef[i] _paramRef[i] retPrim[i] _paramPrim[i]
+
+1 1 retRef[*] _paramRef[*] retPrim[*] _paramPrim[*]
+
+1 1  new  asgnRef  storeRef[*]  loadRef[*]  arrStoreRef  arrLoadRef
+1 1 _new _asgnRef _storeRef[*] _loadRef[*] _arrStoreRef _arrLoadRef
+1 1  asgnPrim  storePrim[*]  loadPrim[*]  arrStorePrim  arrLoadPrim
+1 1 _asgnPrim _storePrim[*] _loadPrim[*] _arrStorePrim _arrLoadPrim
+1 1  prim2Prim  prim2Ref  ref2Prim  ref2Ref
+1 1 _prim2Prim _prim2Ref _ref2Prim _ref2Ref
+1 1  prim2SinkByPrim  prim2SinkByRef  ref2SinkByPrim  ref2SinkByRef
+1 1 _prim2SinkByPrim _prim2SinkByRef _ref2SinkByPrim _ref2SinkByRef
+
+1 3 paramRef[*] _retRef[*] paramPrim[*] _retPrim[*]
+
+3 4 paramRef[i] _retRef[i] paramPrim[i] _retPrim[i]
+4 3 retRef[i] _paramRef[i] retPrim[i] _paramPrim[i]
+
+3 3 paramRef[*] _retRef[*] paramPrim[*] _retPrim[*]
+
+3 3  new  asgnRef  storeRef[*]  loadRef[*]  arrStoreRef  arrLoadRef
+3 3 _new _asgnRef _storeRef[*] _loadRef[*] _arrStoreRef _arrLoadRef
+3 3  asgnPrim  storePrim[*]  loadPrim[*]  arrStorePrim  arrLoadPrim
+3 3 _asgnPrim _storePrim[*] _loadPrim[*] _arrStorePrim _arrLoadPrim
+3 3  prim2Prim  prim2Ref  ref2Prim  ref2Ref
+3 3 _prim2Prim _prim2Ref _ref2Prim _ref2Ref
+3 3  prim2SinkByPrim  prim2SinkByRef  ref2SinkByPrim  ref2SinkByRef
+3 3 _prim2SinkByPrim _prim2SinkByRef _ref2SinkByPrim _ref2SinkByRef
+
+1 5 statStoreRef
+3 5 statStoreRef
+5 1 statLoadRef
+
+1 6 _statLoadRef
+3 6 _statLoadRef
+6 1 _statStoreRef
+
+1 7 statStorePrim
+3 7 statStorePrim
+7 1 statLoadPrim
+
+1 8 _statLoadPrim
+3 8 _statLoadPrim
+8 1 _statStorePrim

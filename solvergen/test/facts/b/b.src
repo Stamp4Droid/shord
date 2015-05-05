@@ -1,0 +1,16 @@
+main(x): // the input to 'main' is at 'High' confidentiality level.
+  y = x
+  y = foo(x) // 1
+  z = bar(y) // 2
+
+foo(a):
+  b = qux(a) // 3
+  c <- b // declassifying assignment
+  ret c
+
+bar(e):
+  f = e
+  ret f
+
+qux(g):
+  ret g

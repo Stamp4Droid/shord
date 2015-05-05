@@ -1,0 +1,8 @@
+a
+x
+v
+#
+x v retRef[0]
+v v retRef[0]
+a x paramRef[0]
+x a loadRef[next]

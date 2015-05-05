@@ -1,0 +1,16 @@
+1 
+2 out
+3 in
+4 
+5 
+#
+1 2 new
+2 3 storeRef[*]
+3 1 _new
+2 3 _storeRef[*]
+2 5 statStoreRef
+5 2 statLoadRef
+2 2 asgnRef paramRef[*] retRef[*] loadRef[*]
+3 3 _asgnRef _paramRef[*] _retRef[*] _loadRef[*]
+3 4 _statLoadRef
+4 3 _statStoreRef

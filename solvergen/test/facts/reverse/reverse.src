@@ -1,0 +1,8 @@
+reverse(c):
+    d = null
+    while c != null:
+        t = c.next
+        c.next = d
+        d = c
+        c = t
+    return d

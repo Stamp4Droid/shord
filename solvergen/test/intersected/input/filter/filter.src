@@ -1,0 +1,7 @@
+filter(l):
+  if l == NULL:
+    return NULL
+  elif P(l->contents):
+    return (l->contents, filter(l->next))
+  else:
+    return filter(l->next)

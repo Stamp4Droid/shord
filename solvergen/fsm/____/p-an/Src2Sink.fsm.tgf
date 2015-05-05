@@ -1,0 +1,33 @@
+1 in
+2 out
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+11 
+#
+1 3 srcLabel
+7 2 ref2Sink
+5 2 prim2Sink
+3 4 label2Ref
+3 5 label2Prim
+6 4 loadRef[*]
+11 7 Alias
+7 11 storeRef[*]
+5 8 storePrim[*]
+8 7 Alias
+5 5 asgnPrim paramPrim[*] retPrim[*] prim2Prim
+9 5 loadPrim[*]
+5 10 statStorePrim
+10 5 statLoadPrim
+4 9 Alias
+4 6 Alias
+7 4 ref2Ref
+7 5 ref2Prim
+4 7 Alias
+5 4 prim2Ref
+8 9 Alias

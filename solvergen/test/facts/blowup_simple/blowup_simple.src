@@ -1,0 +1,12 @@
+    main():
+ 1:   x = instantiate()
+
+    instantiate():
+ 2:     bse = new BackStackRecord
+ 3:     while (...):
+ 4:         op = new Op
+14:         t = bse.mTail
+15:         op.prev = t
+16:         t.next = op
+17:         bse.mTail = op
+ 9:     return bse

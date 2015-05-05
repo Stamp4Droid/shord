@@ -1,0 +1,13 @@
+// including a sentinel element
+filter(l):
+    f(l, l->next)
+
+f(prev, curr):
+    if curr == NULL:
+        return
+    next = curr->next
+    if not P(curr->contents):
+        prev->next = next
+        f(prev, next)
+    else:
+        f(curr, next)

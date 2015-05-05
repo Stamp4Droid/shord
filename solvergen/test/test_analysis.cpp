@@ -59,72 +59,57 @@ bool has_empty_prod(EDGE_KIND kind) {
 void main_loop(Edge *base) {
     /* To correctly process an edge, we have to check all the relevant
        productions (where its symbol appears in the RHS). */
-    Edge *other;
-    OutEdgeIterator *out_iter;
-    InEdgeIterator *in_iter;
     switch (base->kind) {
     case 0: /* Flow */
 	/* Flow + assign => Flow */
-	out_iter = get_out_edge_iterator(base->to, 1);
-	while ((other = next_out_edge(out_iter)) != NULL) {
+	for (Edge *other : edges_from(base->to, 1)) {
 	    add_edge(base->from, other->to, 0, INDEX_NONE,
 		     base, false, other, false);
 	}
 	/* Flow + Temp1 => Flow */
-	out_iter = get_out_edge_iterator(base->to, 4);
-	while((other = next_out_edge(out_iter)) != NULL) {
+	for (Edge *other : edges_from(base->to, 4)) {
 	    add_edge(base->from, other->to, 0, INDEX_NONE,
 		     base, false, other, false);
 	}
 	/* Flow + ret[i] => Temp2[i] */
-	out_iter = get_out_edge_iterator(base->to, 3);
-	while((other = next_out_edge(out_iter)) != NULL) {
+	for (Edge *other : edges_from(base->to, 3)) {
 	    add_edge(base->from, other->to, 5, other->index,
 		     base, false, other, false);
 	}
 	break;
     case 1: /* assign */
 	/* Flow + assign => Flow */
-	in_iter = get_in_edge_iterator(base->from, 0);
-	while((other = next_in_edge(in_iter)) != NULL) {
+	for (Edge *other : edges_to(base->from, 0)) {
 	    add_edge(other->from, base->to, 0, INDEX_NONE,
 		     other, false, base, false);
 	}
 	break;
     case 2: /* param */
 	/* param[i] + Temp2[i] => Temp1 */
-	out_iter = get_out_edge_iterator(base->to, 5);
-	while((other = next_out_edge(out_iter)) != NULL) {
-	    if (base->index == other->index) {
-		add_edge(base->from, other->to, 4, INDEX_NONE,
-			 base, false, other, false);
-	    }
+	for (Edge *other : edges_from(base->to, 5, base->index)) {
+	    add_edge(base->from, other->to, 4, INDEX_NONE,
+		     base, false, other, false);
 	}
 	break;
     case 3: /* ret */
 	/* Flow + ret[i] => Temp2[i] */
-	in_iter = get_in_edge_iterator(base->from, 0);
-	while((other = next_in_edge(in_iter)) != NULL) {
+	for (Edge *other : edges_to(base->from, 0)) {
 	    add_edge(other->from, base->to, 5, base->index,
 		     other, false, base, false);
 	}
 	break;
     case 4: /* Temp1 */
 	/* Flow + Temp1 => Flow */
-	in_iter = get_in_edge_iterator(base->from, 0);
-	while((other = next_in_edge(in_iter)) != NULL) {
+	for (Edge *other : edges_to(base->from, 0)) {
 	    add_edge(other->from, base->to, 0, INDEX_NONE,
 		     other, false, base, false);
 	}
 	break;
     case 5: /* Temp2 */
 	/* param[i] + Temp2[i] => Temp1 */
-	in_iter = get_in_edge_iterator(base->from, 2);
-	while((other = next_in_edge(in_iter)) != NULL) {
-	    if (base->index == other->index) {
-		add_edge(other->from, base->to, 4, INDEX_NONE,
-			 other, false, base, false);
-	    }
+	for (Edge *other : edges_to(base->from, 2, base->index)) {
+	    add_edge(other->from, base->to, 4, INDEX_NONE,
+		     other, false, base, false);
 	}
 	break;
     }
@@ -174,10 +159,8 @@ const char *kind2symbol(EDGE_KIND kind) {
 }
 
 std::list<Derivation> all_derivations(Edge *e) {
-    Edge *l, *r;
+    Edge *r;
     std::list<Derivation> derivs;
-    OutEdgeIterator *l_out_iter, *r_out_iter;
-    InEdgeIterator *l_in_iter;
     switch (e->kind) {
     case 0: /* Flow */
 	/* - => Flow */
@@ -185,43 +168,31 @@ std::list<Derivation> all_derivations(Edge *e) {
 	    derivs.push_back(derivation_empty());
 	}
 	/* Flow + assign => Flow */
-	l_out_iter = get_out_edge_iterator(e->from, 0);
-	while ((l = next_out_edge(l_out_iter)) != NULL) {
-	    r_out_iter = get_out_edge_iterator_to_target(l->to, e->to, 1);
-	    while ((r = next_out_edge(r_out_iter)) != NULL) {
+	for (Edge *l : edges_from(e->from, 0)) {
+	    for (Edge *r : edges_between(l->to, e->to, 1)) {
 		derivs.push_back(derivation_double(l, false, r, false));
 	    }
 	}
 	/* Flow + Temp1 => Flow */
-	l_out_iter = get_out_edge_iterator(e->from, 0);
-	while ((l = next_out_edge(l_out_iter)) != NULL) {
-	    r_out_iter = get_out_edge_iterator_to_target(l->to, e->to, 4);
-	    while ((r = next_out_edge(r_out_iter)) != NULL) {
+	for (Edge *l : edges_from(e->from, 0)) {
+	    for (Edge *r : edges_between(l->to, e->to, 4)) {
 		derivs.push_back(derivation_double(l, false, r, false));
 	    }
 	}
 	break;
     case 4: /* Temp1 */
 	/* param[i] + Temp2[i] => Temp1 */
-	l_out_iter = get_out_edge_iterator(e->from, 2);
-	while ((l = next_out_edge(l_out_iter)) != NULL) {
-	    r_out_iter = get_out_edge_iterator_to_target(l->to, e->to, 5);
-	    while ((r = next_out_edge(r_out_iter)) != NULL) {
-		if (l->index == r->index) {
-		    derivs.push_back(derivation_double(l, false, r, false));
-		}
+	for (Edge *l : edges_from(e->from, 2)) {
+	    if ((r = find_edge(l->to, e->to, 5, l->index)) != NULL) {
+		derivs.push_back(derivation_double(l, false, r, false));
 	    }
 	}
 	break;
     case 5: /* Temp2 */
 	/* Flow + ret[i] => Temp2[i] */
-	l_out_iter = get_out_edge_iterator(e->from, 0);
-	while ((l = next_out_edge(l_out_iter)) != NULL) {
-	    r_out_iter = get_out_edge_iterator_to_target(l->to, e->to, 3);
-	    while ((r = next_out_edge(r_out_iter)) != NULL) {
-		if (r->index == e->index) {
-		    derivs.push_back(derivation_double(l, false, r, false));
-		}
+	for (Edge *l : edges_from(e->from, 0)) {
+	    if ((r = find_edge(l->to, e->to, 3, l->index)) != NULL) {
+		derivs.push_back(derivation_double(l, false, r, false));
 	    }
 	}
 	break;
@@ -259,10 +230,55 @@ PATH_LENGTH static_min_length(EDGE_KIND kind) {
     }
 }
 
-bool is_lazy(EDGE_KIND kind) {
-    return false; /* No symbol in this grammar is lazy. */
+bool is_predicate(EDGE_KIND kind) {
+    return false; /* No predicates in this grammar. */
 }
 
-std::list<Edge *> *all_lazy_edges(NODE_REF from, NODE_REF to, EDGE_KIND kind) {
-    assert(false); /* No symbol in this grammar is lazy. */
+bool is_temporary(EDGE_KIND kind) {
+    return kind == 4 || kind == 5;
+}
+
+bool reachable(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index) {
+    switch (kind) {
+    case 0: /* Flow */
+	assert(false);
+    case 1: /* assign */
+	if (find_edge(from, to, 1) != NULL) {
+	    return true;
+	}
+	break;
+    case 2: /* param */
+	if (find_edge(from, to, 2, index) != NULL) {
+	    return true;
+	}
+	break;
+    case 3: /* ret */
+	if (find_edge(from, to, 3, index) != NULL) {
+	    return true;
+	}
+	break;
+    case 4: /* Temp1 */
+	assert(false);
+    case 5: /* Temp2 */
+	assert(false);
+    default:
+	assert(false);
+    }
+    return false;
+}
+
+RELATION_REF num_rels() {
+    return 0;
+}
+
+RELATION_REF rel2ref(const char *rel) {
+    assert(false);
+}
+
+const char *ref2rel(RELATION_REF ref) {
+    assert(false);
+}
+
+ARITY rel_arity(RELATION_REF ref) {
+    assert(false);
 }

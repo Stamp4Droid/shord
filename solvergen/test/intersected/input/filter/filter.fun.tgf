@@ -1,0 +1,14 @@
+A in
+B
+C out
+D
+E
+F out
+G out
+#
+A B )c
+B C (c
+A D )n
+D E filter
+E F
+E G (n

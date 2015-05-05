@@ -1,0 +1,21 @@
+    main():
+ 1:   x = instantiate()
+
+    instantiate():
+ 2:     bse = new BackStackRecord
+ 3:     while (...):
+ 4:         op = new Op
+ 5:         al = new ArrayList
+ 6:         op.removed = al
+10:         if (...):
+11:             bse.mHead = op
+12:             bse.mTail = op
+13:         else:
+14:             t = bse.mTail
+15:             op.prev = t
+16:             t.next = op
+17:             bse.mTail = op
+18:     l = bse.mHead
+19:     while (...):
+20:         l = l.next
+ 9:     return bse

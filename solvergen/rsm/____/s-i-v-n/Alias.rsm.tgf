@@ -1,0 +1,20 @@
+1 out
+2 in out
+3 
+4 
+5 Alias
+6 Alias
+#
+1 4 statStoreRef
+4 1 statLoadRef
+1 1 asgnRef paramRef[*] retRef[*]
+2 2 _asgnRef _paramRef[*] _retRef[*]
+2 3 _statLoadRef
+3 2 _statStoreRef
+2 5 _loadRef[f]
+1 6 storeRef[f]
+6 1 loadRef[f]
+5 2 _storeRef[f]
+2 6 storeRef[f]
+2 4 statStoreRef
+2 1 asgnRef paramRef[*] retRef[*]

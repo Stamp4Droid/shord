@@ -1,0 +1,16 @@
+a
+b
+o
+v0
+a0
+r
+v
+x
+#
+a0 v0 storeRef[f]
+b r retRef[1]
+x a paramRef[1]
+a a0 paramRef[2]
+v v0 paramRef[2]
+v b loadRef[f]
+o v new
