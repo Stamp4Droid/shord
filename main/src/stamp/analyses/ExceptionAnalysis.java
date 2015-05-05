@@ -1,6 +1,8 @@
 package stamp.analyses;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import shord.analyses.LocalVarNode;
 import shord.analyses.PAGBuilder;
@@ -11,14 +13,15 @@ import shord.project.analyses.ProgramRel;
 import soot.Local;
 import soot.PrimType;
 import soot.RefLikeType;
+import soot.RefType;
 import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Trap;
 import soot.Unit;
-import soot.UnitBox;
 import soot.jimple.IdentityStmt;
 import soot.jimple.Stmt;
+import soot.jimple.ThrowStmt;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import chord.project.Chord;
 
@@ -124,18 +127,31 @@ public class ExceptionAnalysis extends JavaAnalysis {
 						}
 					}
 				}
-				/*
 				// STEP 2c: Explicitly thrown exceptions
 				for(LocalVarNode var : baseExpExceptionsThrown(localsToVarNodes, unit)) {
 					// Determine if the exception is caught
 					boolean caught = true;
-					for(SootClass klass : getCanStore(((RefType)var.local.getType()).getSootClass())) {
-						if(!caughtExceptions.get(unit).contains(klass)) {
+					SootClass klass = ((RefType)var.local.getType()).getSootClass();
+					for(SootClass unitThrownKlass : getCanStore(klass)) {
+						if(!caughtExceptions.get(unit).contains(unitThrownKlass)) {
 							caught = false;
 							break;
 						}
 					}
 					if(caught) {
+						continue;
+					}
+					// Determine if the exception is thrown
+					boolean thrown = false;
+					for(SootClass methodThrownKlass : method.getExceptions()) {
+						for(SootClass unitThrownKlass : getCanStore(klass)) {
+							if(PAGBuilder.canStore(unitThrownKlass.getType(), methodThrownKlass.getType())) {
+								thrown = true;
+								break;
+							}
+						}
+					}
+					if(!thrown) {
 						continue;
 					}
 					// Add to relation
@@ -145,7 +161,6 @@ public class ExceptionAnalysis extends JavaAnalysis {
 						throw new RuntimeException("Type not recognized!");
 					}
 				}
-				*/		
 			}
 		}
 		// STEP 3: Cleanup
@@ -173,16 +188,14 @@ public class ExceptionAnalysis extends JavaAnalysis {
 		return result;
 	}
 	
-	/*
 	private static Set<LocalVarNode> baseExpExceptionsThrown(Map<Local,LocalVarNode> map, Unit unit) {
 		Set<LocalVarNode> result = new HashSet<LocalVarNode>();
 		Stmt stmt = (Stmt)unit;
 		// CASE: Exception thrown
 		if(stmt instanceof ThrowStmt) {
 			LocalVarNode var = map.get((Local)((ThrowStmt)stmt).getOp());
-			//result.add(var);
+			result.add(var);
 		}
 		return result;
 	}
-	*/
 }
