@@ -24,13 +24,7 @@ CM(c:C,m:M) input
 pt(c:C,v:V,o:C) input
 CH(c:C,h:H) input
 HTFilter(h:H,t:T) input
-#CICM(c:C,i:I,d:C,m:M) input
-
-CI(c:C,i:I) input
-CC(c:C,d:C) input
-
-CICMtmp(c:C,i:I,d:C,m:M) output
-CICMtmp(c,i,d,m) :- ci_IM(i,m), CI(d,i), CC(c,d).
+CICM(c:C,i:I,d:C,m:M) input
 
 # Exception input relations
 
@@ -49,7 +43,7 @@ MethodExceptionDependee(c:C,m:M,t:T,d:C,v:V) output
 MethodExceptionDependeePrim(c:C,m:M,t:T,d:C,v:U)
 
 # variable v in context d is implicitly leaked due to exception of type t being thrown, and the exception is caught (used as a filter)
-ActiveException(t:T,d:C,v:V) output
+ActiveException(t:T,d:C,v:V)
 ActiveExceptionPrim(t:T,d:C,v:U)
 
 # Output relations
@@ -68,18 +62,18 @@ MethodExceptionDependee(c,m,t,d,v) :- MethodExceptionDependeeBase(m,t,v), CM(c,m
 # handle initialization of MethodExceptionDependee from explicitly thrown exception
 MethodExceptionDependee(c,m,t,d,v) :- MethodExceptionDependeeBaseVar(m,v), CM(c,m), pt(c,v,o), CH(o,h), HTFilter(h,t), c=d.
 # propagates MethodExceptionDependee across invocation sites
-MethodExceptionDependee(c,m,t,d,v) :- MI(m,i), ci_IM(i,mp), CICMtmp(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_).
+MethodExceptionDependee(c,m,t,d,v) :- MI(m,i), ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_).
 # exception is caught
-ActiveException(t,d,v) :- ci_IM(i,mp), CICMtmp(_,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), CaughtException(i,t,_).
+ActiveException(t,d,v) :- ci_IM(i,mp), CICM(_,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), CaughtException(i,t,_).
 
 # same as above for primitive variables
 MethodExceptionDependeePrim(c,m,t,d,v) :- MethodExceptionDependeePrimBase(m,t,v), CM(c,m), c=d.
-MethodExceptionDependeePrim(c,m,t,d,v) :- MI(m,i), ci_IM(i,mp), CICMtmp(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), !CaughtException(i,t,_).
-ActiveExceptionPrim(t,d,v) :- ci_IM(i,mp), CICMtmp(_,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), CaughtException(i,t,_).
+MethodExceptionDependeePrim(c,m,t,d,v) :- MI(m,i), ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), !CaughtException(i,t,_).
+ActiveExceptionPrim(t,d,v) :- ci_IM(i,mp), CICM(_,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), CaughtException(i,t,_).
 
 # output relations
-SuperExitDependee(c,i,d,v) :- ci_IM(i,mp), CICMtmp(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_), ActiveException(t,d,v).
-HandlerDependee(c,i,d,v,e) :- ci_IM(i,mp), CICMtmp(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), CaughtException(i,t,e).
+SuperExitDependee(c,i,d,v) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_), ActiveException(t,d,v).
+HandlerDependee(c,i,d,v,e) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), CaughtException(i,t,e).
 
-SuperExitDependeePrim(c,i,d,v) :- ci_IM(i,mp), CICMtmp(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), !CaughtException(i,t,_), ActiveExceptionPrim(t,d,v).
-HandlerDependeePrim(c,i,d,v,e) :- ci_IM(i,mp), CICMtmp(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), CaughtException(i,t,e).
+SuperExitDependeePrim(c,i,d,v) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), !CaughtException(i,t,_), ActiveExceptionPrim(t,d,v).
+HandlerDependeePrim(c,i,d,v,e) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), CaughtException(i,t,e).
