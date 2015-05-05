@@ -66,7 +66,7 @@ HandlerDependeePrim(c:C,i:I,d:C,v:U,e:V) output
 # these handle initialization of MethodExceptionDependee from the implicitly thrown exception
 MethodExceptionDependee(c,m,t,d,v) :- MethodExceptionDependeeBase(m,t,v), CM(c,m), c=d.
 # handle initialization of MethodExceptionDependee from explicitly thrown exception
-#MethodExceptionDependee(c,m,t,d,v) :- MethodExceptionDependeeBaseVar(m,e:V), CM(c,m), pt(c,v,o), CH(o,h), HTFilter(h,t), c=d.
+MethodExceptionDependee(c,m,t,d,v) :- MethodExceptionDependeeBaseVar(m,v), CM(c,m), pt(c,v,o), CH(o,h), HTFilter(h,t), c=d.
 # propagates MethodExceptionDependee across invocation sites
 MethodExceptionDependee(c,m,t,d,v) :- MI(m,i), ci_IM(i,mp), CICMtmp(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_).
 # exception is caught

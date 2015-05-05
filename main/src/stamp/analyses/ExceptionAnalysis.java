@@ -103,7 +103,7 @@ public class ExceptionAnalysis extends JavaAnalysis {
 					for(SootClass klass : getCanStore(trap.getException())) {
 						caughtExceptions.add(unit, klass);
 						if(((Stmt)unit).containsInvokeExpr()) {
-							//System.out.println("CaughtException:" + unit + " -> " + klass.getType());
+							//System.out.println("CAUGHT EXCEPTION: " + unit + " -> " + klass.getType());
 							relCaughtException.add(unit, klass.getType(), catchVar);
 						}
 					}
@@ -118,7 +118,7 @@ public class ExceptionAnalysis extends JavaAnalysis {
 					}
 					for(LocalVarNode var : impMap.get(klass)) {
 						if(var.local.getType() instanceof RefLikeType) {
-							//System.out.println("ThrownException: " + method + " -> " + klass.getType() + " -> " + var);
+							//System.out.println("THROWN EXCEPTION: " + method + " -> " + klass.getType() + " -> " + var);
 							relMethodExceptionDependee.add(method, klass.getType(), var);
 						} else if(var.local.getType() instanceof PrimType) {
 							relMethodExceptionDependeePrim.add(method, klass.getType(), var);
@@ -129,16 +129,18 @@ public class ExceptionAnalysis extends JavaAnalysis {
 				}
 				// STEP 2c: Explicitly thrown exceptions
 				for(LocalVarNode var : baseExpExceptionsThrown(localsToVarNodes, unit)) {
+					//System.out.println("PROCESSING THROWN EXCEPTION: " + var);
 					// Determine if the exception is caught
-					boolean caught = true;
+					boolean caught = false;
 					SootClass klass = ((RefType)var.local.getType()).getSootClass();
 					for(SootClass unitThrownKlass : getCanStore(klass)) {
-						if(!caughtExceptions.get(unit).contains(unitThrownKlass)) {
-							caught = false;
+						if(caughtExceptions.get(unit).contains(unitThrownKlass)) {
+							caught = true;
 							break;
 						}
 					}
 					if(caught) {
+						//System.out.println("UNIT TRAPPED");
 						continue;
 					}
 					// Determine if the exception is thrown
@@ -152,10 +154,12 @@ public class ExceptionAnalysis extends JavaAnalysis {
 						}
 					}
 					if(!thrown) {
+						//System.out.println("EXCEPTION NOT THROWN");
 						continue;
 					}
 					// Add to relation
 					if(var.local.getType() instanceof RefLikeType) {
+						//System.out.println("METHOD THROWS: " + method + " -> " + var.local.getType());
 						relMethodExceptionDependeeVar.add(method, var);
 					} else {
 						throw new RuntimeException("Type not recognized!");
