@@ -13,7 +13,7 @@
 
   <target name="-analyze-apk">
 	<!-- Run android-apktool to decompile the manifest and resource xml files -->
-	<run-apktool/>	
+	<run-apktool/>
 
     <!-- Read required properties. -->
     <prop-default property="stamp.backend" default="chord"
@@ -88,11 +88,16 @@
 	  <sysproperty key="stamp.widgets.file" value="${stamp.out.dir}/widgets.txt"/>
     </java>
 
+    <!-- Prepare SolverGen I/O directories. -->
+    <property name="stamp.solvergen.indir"
+	      location="${stamp.out.dir}/input/____/"/>
+    <mkdir dir="${stamp.solvergen.indir}"/>
+
     <!-- Run Chord. -->
-    <java classname="stamp.Main" 
+    <java classname="stamp.Main"
 		  dir="${stamp.out.dir}"
 		  maxmemory="${stamp.maxheap}"
-		  fork="true" 
+		  fork="true"
 		  failonerror="true">
       <jvmarg value="-ea"/>
       <!--sysproperty key="chord.work.dir" file="${stamp.out.dir}"/-->
@@ -124,6 +129,8 @@
 	  <sysproperty key="stamp.apktool.out.dir" value="${stamp.out.dir}/apktool-out"/>
 	  <sysproperty key="stamp.apposcopy" value="${stamp.apposcopy}"/>
 	  <sysproperty key="stamp.report.dir" value="${stamp.report.dir}"/>
+          <sysproperty key="stamp.dumper.templates.dir" file="${stamp.dir}/solvergen/input/____/"/>
+          <sysproperty key="stamp.dumper.outdir" file="${stamp.out.dir}/input/____/"/>
       <syspropertyset refid="stamp.analyses.main.sysprops"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
