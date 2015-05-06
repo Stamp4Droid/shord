@@ -17,12 +17,6 @@
   <target name="-build-comps"
           depends="-safe-build-droidrecord" unless="release">
     <mkdir dir="${stamp.dir}/main/gen"/>
-    <xjc schema="${stamp.dir}/solvergen/paths.xsd" package="stamp.paths.raw"
-	 destdir="${stamp.dir}/main/gen" readonly="true">
-      <produces dir="${stamp.dir}/main/gen/stamp/paths/raw"
-		includes="**/*.java"/>
-      <classpath refid="stamp.build.classpath"/>
-    </xjc>
     <!--ant antfile="${stamp.dir}/chord/build.xml"
 	 inheritAll="false" useNativeBasedir="true"/-->
     <ant antfile="${stamp.dir}/annotations/build.xml" target="jar"
