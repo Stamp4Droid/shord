@@ -20,8 +20,12 @@ import soot.SootMethod;
 import soot.Trap;
 import soot.Unit;
 import soot.jimple.IdentityStmt;
+import soot.jimple.InstanceFieldRef;
+import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.InterfaceInvokeExpr;
 import soot.jimple.Stmt;
 import soot.jimple.ThrowStmt;
+import soot.jimple.internal.AbstractInvokeExpr;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import chord.project.Chord;
 
@@ -145,12 +149,19 @@ public class ExceptionAnalysis extends JavaAnalysis {
 					}
 					// Determine if the exception is thrown
 					boolean thrown = false;
-					for(SootClass methodThrownKlass : method.getExceptions()) {
-						for(SootClass unitThrownKlass : getCanStore(klass)) {
+					for(SootClass unitThrownKlass : getCanStore(klass)) {
+						for(SootClass methodThrownKlass : method.getExceptions()) {
 							if(PAGBuilder.canStore(unitThrownKlass.getType(), methodThrownKlass.getType())) {
 								thrown = true;
 								break;
 							}
+						}
+					}
+					// Runtime exceptions don't need to be thrown
+					for(SootClass unitThrownKlass : getCanStore(klass)) {
+						if(PAGBuilder.canStore(unitThrownKlass.getType(), Scene.v().getSootClass("java.lang.RuntimeException").getType())) {
+							thrown = false;
+							break;
 						}
 					}
 					if(!thrown) {
@@ -188,6 +199,14 @@ public class ExceptionAnalysis extends JavaAnalysis {
 		// CASE: Array access
 		if(stmt.containsArrayRef()) {
 			result.add(Scene.v().getSootClass("java.lang.ArrayIndexOutOfBoundsException"), map.get((Local)stmt.getArrayRef().getBase()));
+		}
+		// CASE: Null pointer exception (for instance method call)
+		if(stmt.containsInvokeExpr() && stmt.getInvokeExpr() instanceof InstanceInvokeExpr) {
+			result.add(Scene.v().getSootClass("java.lang.NullPointerException"), map.get((Local)((InstanceInvokeExpr)stmt.getInvokeExpr()).getBase()));
+		}
+		// CASE: Null pointer exepction (for instance field access)
+		if(stmt.containsFieldRef() && !stmt.getFieldRef().getField().isStatic()) {
+			result.add(Scene.v().getSootClass("java.lang.NullPointerException"), map.get((Local)((InstanceFieldRef)stmt.getFieldRef()).getBase()));
 		}
 		return result;
 	}
