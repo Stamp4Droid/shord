@@ -1,5 +1,8 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class AppWidgetProvider
 {
+	@Inline
     public  AppWidgetProvider() 
 	{ 
 		android.content.Context context = new android.test.mock.MockContext();

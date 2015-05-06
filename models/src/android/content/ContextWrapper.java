@@ -1,3 +1,5 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class ContextWrapper
 {
 	protected Context mBase;
@@ -17,12 +19,14 @@ class ContextWrapper
 		return contentResolver;
     }
 	
+	@Inline
 	public  android.content.Intent registerReceiver(android.content.BroadcastReceiver receiver, android.content.IntentFilter filter) { 
 		final BroadcastReceiver r = receiver;
 		r.onReceive(ContextWrapper.this, new Intent());
 		return new Intent();
 	}
 
+	@Inline
 	public  android.content.Intent registerReceiver(android.content.BroadcastReceiver receiver, android.content.IntentFilter filter, java.lang.String broadcastPermission, android.os.Handler scheduler) 
 	{ 
 		final BroadcastReceiver r = receiver;
@@ -31,6 +35,7 @@ class ContextWrapper
 	}
 
 	@STAMP(flows = {@Flow(from="service",to="!Service")})
+	@Inline
     public boolean bindService(android.content.Intent service, android.content.ServiceConnection conn, int flags) 
 	{
 		final android.content.ServiceConnection c = conn;

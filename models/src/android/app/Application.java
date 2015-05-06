@@ -1,12 +1,11 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class Application
 {
+	@Inline
 	public Application()
 	{
 		super(null);
-	}
-	
-	public void callCallbacks()
-	{
 		this.onCreate();
 		this.onLowMemory();
 		this.onTerminate();

@@ -1,6 +1,9 @@
 package android.view;
+import edu.stanford.stamp.annotation.Inline;
+
 public class StampSurfaceHolder implements SurfaceHolder
 {
+	@Inline
 	public   void addCallback(final android.view.SurfaceHolder.Callback callback)
 	{
 		callback.surfaceCreated(StampSurfaceHolder.this);

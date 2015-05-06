@@ -1,3 +1,5 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class LocationManager
 {
 	@STAMP(flows={@Flow(from="$LOCATION",to="@return")})
@@ -6,6 +8,7 @@ class LocationManager
 		return new Location((String) null);
 	}
 
+	@Inline
 	private void registerListener(final android.location.LocationListener listener)
 	{
 		listener.onLocationChanged(getLocation());
@@ -16,16 +19,19 @@ class LocationManager
 
 	}
 	
+	@Inline
 	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener) 
 	{ 
 		registerListener(listener);
 	}
 
+	@Inline
 	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener, android.os.Looper looper) 
 	{ 
 		registerListener(listener);
 	}
 
+	@Inline
 	public  void requestLocationUpdates(long minTime, float minDistance, android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper) 
 	{ 
 		registerListener(listener);
@@ -35,11 +41,13 @@ class LocationManager
         public  void requestLocationUpdates(long minTime, float minDistance, android.location.Criteria criteria, android.app.PendingIntent intent) {
 	}
 
+	@Inline
 	public  void requestSingleUpdate(java.lang.String provider, android.location.LocationListener listener, android.os.Looper looper) 
 	{ 
 		registerListener(listener);
 	}
 
+	@Inline
 	public  void requestSingleUpdate(android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper) 
 	{
 		registerListener(listener);
@@ -74,6 +82,7 @@ class LocationManager
 		return new String();
 	}
 
+	@Inline
 	public  boolean addNmeaListener(final android.location.GpsStatus.NmeaListener listener) {
 		listener.onNmeaReceived(0,getNmea());
 		return true;

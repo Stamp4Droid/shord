@@ -1,3 +1,5 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class TelephonyManager
 {
 	@STAMP(flows = {@Flow(from="$getDeviceSoftwareVersion",to="@return")})
@@ -84,6 +86,7 @@ class TelephonyManager
 	}
 
 
+	@Inline
 	public  void listen(final android.telephony.PhoneStateListener listener, int events) 
 	{
 		listener.onCallStateChanged(0, incomingCallNumber());

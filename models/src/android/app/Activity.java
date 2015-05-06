@@ -1,5 +1,6 @@
 import android.telephony.TelephonyManager;
 import android.location.LocationManager;
+import edu.stanford.stamp.annotation.Inline;
 import android.content.ClipboardManager;
 
 public class Activity
@@ -10,10 +11,6 @@ public class Activity
     public  Activity() 
 	{
 		this.intent = new android.content.Intent();
-	}
-	
-	public void callCallbacks()
-	{
 		this.onCreate(null);
 		this.onStart();
 		this.onRestart();
@@ -88,12 +85,14 @@ public class Activity
 	}
 	
 	@STAMP(flows = {@Flow(from="intent", to="!Activity")})
+	@Inline
 	public  void startActivityForResult(android.content.Intent intent, int requestCode) 
 	{ 
 		this.onActivityResult(0, 0, new android.content.Intent());
 	}
 
 	@STAMP(flows = {@Flow(from="intent", to="!Activity"), @Flow(from="options", to="!Activity")})
+	@Inline
 	public  void startActivityForResult(android.content.Intent intent, int requestCode, android.os.Bundle options) 
 	{ 
 		this.onActivityResult(0, 0, new android.content.Intent());
@@ -148,6 +147,7 @@ public class Activity
 	    this.onCreateDialog(id);
 	}
 
+	@Inline
     public final void runOnUiThread(final java.lang.Runnable action) {
 		action.run();
     }

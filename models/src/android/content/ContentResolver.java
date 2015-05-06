@@ -1,3 +1,5 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class ContentResolver
 {
     private android.content.ContentProvider provider = new android.test.mock.MockContentProvider(null);
@@ -7,6 +9,7 @@ class ContentResolver
 		return provider.query(uri, projection, selection, selectionArgs, sortOrder);
     }
 
+	@Inline
 	public final  void registerContentObserver(android.net.Uri uri, boolean notifyForDescendents, final android.database.ContentObserver observer) { 
 		observer.onChange(true);
 	}

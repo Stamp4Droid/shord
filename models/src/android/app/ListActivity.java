@@ -1,9 +1,10 @@
+import edu.stanford.stamp.annotation.Inline;
+
 public class ListActivity
 {
-    public void callCallbacks()
-	{
-		super.callCallbacks();
-		
+	@Inline
+    public  ListActivity()
+	{		
 		this.onListItemClick(null, null, 0, 0l);
 		this.onRestoreInstanceState(null);
 		this.onDestroy(); 

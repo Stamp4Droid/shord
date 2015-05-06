@@ -1,5 +1,8 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class ClipboardManager
 {
+        @Inline
 	public  void addPrimaryClipChangedListener(android.content.ClipboardManager.OnPrimaryClipChangedListener listener) 
 	{ 
 		listener.onPrimaryClipChanged();

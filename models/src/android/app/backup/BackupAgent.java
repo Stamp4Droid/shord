@@ -1,14 +1,12 @@
 import java.io.IOException;
+import edu.stanford.stamp.annotation.Inline;
 
 class BackupAgent
 {
+	@Inline
 	public  BackupAgent() 
 	{
 		super((android.content.Context)null); 
-	}
-
-	public void callCallbacks()
-	{
 		try{
 			this.onCreate();
 			this.onDestroy();

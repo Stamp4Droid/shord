@@ -1,12 +1,11 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class Fragment
 {
 	public android.view.View view;
 
+	@Inline
 	public  Fragment()
-	{
-	}
-	
-	public void callCallbacks()
 	{
 		this.onHiddenChanged(false);
 		this.onActivityResult(0, 0, null);

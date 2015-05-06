@@ -1,48 +1,55 @@
+import edu.stanford.stamp.annotation.Inline;
+
 class Thread
 {
-    private Runnable r;
-
+	@Inline
     public  Thread() 
     { 
-		this.r = this;
+		this.run();
     }
 
+	@Inline
     public  Thread(java.lang.Runnable runnable) 
     { 
-		this.r = runnable;
+		runnable.run();
     }
 
+	@Inline
 	public  Thread(java.lang.Runnable runnable, java.lang.String threadName)
 	{ 
-		this.r = runnable;
+		runnable.run();
 	}
 
+	@Inline
 	public  Thread(java.lang.String threadName) 
 	{
-		this.r = this;
+		this.run();
 	}
 
+	@Inline
 	public  Thread(java.lang.ThreadGroup group, java.lang.Runnable runnable)
 	{ 
-		this.r = runnable;
+		runnable.run();
 	}
 
+	@Inline
 	public  Thread(java.lang.ThreadGroup group, java.lang.Runnable runnable, java.lang.String threadName) 
 	{ 
-		this.r = runnable;
+		runnable.run();
 	}
 
+	@Inline
 	public  Thread(java.lang.ThreadGroup group, java.lang.String threadName) { 
-		this.r = this;
+		this.run();
 	}
 
+	@Inline
 	public  Thread(java.lang.ThreadGroup group, java.lang.Runnable runnable, java.lang.String threadName, long stackSize) 
 	{ 
-		this.r = runnable;
+		runnable.run();
 	}
 
     public synchronized  void start() 
     { 
-		r.run();
     }
 }
