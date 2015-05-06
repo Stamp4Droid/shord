@@ -2,10 +2,12 @@ package stamp.missingmodels.util.cflsolver.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
@@ -127,6 +129,30 @@ public class Edge {
 	
 	public EdgeStruct getStruct() {
 		return new EdgeStruct(this.source.name, this.sink.name, this.symbol.symbol, this.field.field, this.weight);
+	}
+	
+	private void getPositiveWeightInputsHelper(Set<Edge> processed, List<Edge> result) {
+		if(this.weight == 0 || processed.contains(this)) {
+			return;
+		}
+		processed.add(this);
+		if(this.firstInput == null && this.secondInput == null) {
+			result.add(this);
+		} else {
+			if(this.firstInput != null) {
+				this.firstInput.getPositiveWeightInputsHelper(processed, result);
+			}
+			if(this.secondInput != null) {
+				this.secondInput.getPositiveWeightInputsHelper(processed, result);
+			}
+		}
+	}
+	
+	public Iterable<Edge> getPositiveWeightInputs() {
+		Set<Edge> processed = new HashSet<Edge>();
+		List<Edge> result = new ArrayList<Edge>();
+		getPositiveWeightInputsHelper(processed, result);
+		return result;
 	}
 	
 	private void getPathHelper(List<Pair<Edge,Boolean>> path, boolean isForward) {
