@@ -29,10 +29,4 @@ class AdapterView
 
 		listener.onNothingSelected(this);
     }
-
-	@Inline
-    public void setOnClickListener(android.view.View.OnClickListener l) 
-	{
-		l.onClick(this);
-    }
 }
