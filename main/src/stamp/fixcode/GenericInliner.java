@@ -100,8 +100,9 @@ public class GenericInliner extends JavaAnalysis {
 		toInline = sorter.result();
 		// Perform the inlining.
 		for (SootMethod m : toInline) {
-			inlineCallsTo(m);
-			clearBody(m);
+			if (inlineCallsTo(m)) {
+				clearBody(m);
+			}
 		}
 		// Validate the bodies of the final inline sites, and remove
 		// intermediate variables.
@@ -124,43 +125,51 @@ public class GenericInliner extends JavaAnalysis {
 		return !tgt.isPhantom() && edge.isExplicit();
 	}
 
-	private void inlineCallsTo(SootMethod m) {
-		// TODO: Assuming the inlining code doesn't modify the call
-		// graph (otherwise our iterator might become invalid).
+	private boolean inlineCallsTo(SootMethod m) {
 		CallGraph cg = Scene.v().getCallGraph();
+		List<Edge> calls = new ArrayList<Edge>();
 		Iterator<Edge> eIter = cg.edgesInto(m);
 		while (eIter.hasNext()) {
+			// Collect all call sites to inline.
 			Edge e = eIter.next();
 			if (!isRealCall(e)) {
 				continue;
 			}
+			calls.add(e);
+			// Verify that all calls to m have a single non-stub target.
 			Stmt invk = e.srcStmt();
 			SootMethod caller = (SootMethod) e.getSrc();
-			// Ensure all calls to m have a single non-stub target.
+			List<SootMethod> tgts = new ArrayList<SootMethod>();
 			Iterator<Edge> cIter = cg.edgesOutOf(invk);
 			while (cIter.hasNext()) {
 				Edge c = cIter.next();
-				if (c == e || !isRealCall(c) || Program.g().isStub(c.tgt())) {
-					continue;
+				if (isRealCall(c) && !Program.g().isStub(c.tgt())) {
+					tgts.add(c.tgt());
 				}
-				System.err.println
-					("ERROR: Tried to inline at " + invk.toString() + " in " +
-					 caller.toString() + " but it has multiple targets:");
-				System.err.println(m);
-				System.err.println(c.tgt());
-				throw new RuntimeException();
 			}
-			// Perform the inlining (unsafely).
-			System.out.println("Inlining " + m.toString() +
-							   " into " + caller.toString() +
-							   " at " + invk.toString());
+			if (tgts.size() > 1) {
+				System.err.println("WARNING: Can't inline " + m + ":");
+				System.err.println("The call " + invk + " in " + caller +
+								   " has multiple targets:");
+				for (SootMethod tgt : tgts) {
+					System.err.println(tgt);
+				}
+				return false;
+			}
+		}
+		// Perform the inlining (unsafely).
+		for (Edge e : calls) {
+			Stmt invk = e.srcStmt();
+			SootMethod caller = (SootMethod) e.getSrc();
+			System.out.println("Inlining " + m + " into " + caller +
+							   " at " + invk);
 			assert caller.getActiveBody().getUnits().contains(invk)
 				: "The invocation statement is missing from the caller";
 			SootInliner.inlineSite(m, invk, caller);
 		}
+		return true;
 	}
 
-	// Need to update the call graph afterwards.
 	private void clearBody(SootMethod m) {
 		System.out.println("Clearing " + m.toString());
 		JimpleBody empty_body = Jimple.v().newBody(m);
