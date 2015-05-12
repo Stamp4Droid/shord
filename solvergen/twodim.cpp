@@ -1371,6 +1371,7 @@ public:
     Signature to_sig() const {
         // Assumes at least an entry variable has been set.
         assert(entry.valid());
+        timer.start("Building NFA for function");
         // Collect all used delimiters, to form the FSM's alphabet.
         std::vector<Delimiter> delims;
         for (const auto& fld_p : opens.pri()) {
@@ -1402,19 +1403,20 @@ public:
         unsigned e_orig = nfa.num_trans();
         timer.log("Original NFA: ", n_orig, " states, ", e_orig,
                   " transitions");
+        timer.done();
         timer.start("Simplifying NFA");
         nfa.simplify();
-        typename Timer::TimeDiff dt_simpl = timer.done();
         unsigned n_simpl = nfa.num_states();
         unsigned e_simpl = nfa.num_trans();
         timer.log("Simplified NFA: ", n_simpl, " states, ", e_simpl,
                   " transitions");
+        typename Timer::TimeDiff dt_simpl = timer.done();
         timer.start("Determinizing NFA");
         Signature res(nfa);
-        typename Timer::TimeDiff dt_det = timer.done();
         unsigned n_det = res.num_states();
         unsigned e_det = res.num_trans();
         timer.log("DFA: ", n_det, " states, ", e_det, " transitions");
+        typename Timer::TimeDiff dt_det = timer.done();
         timer.log("FSMSizes\t",   n_orig,  "\t", e_orig,  "\t",
                   dt_simpl, "\t", n_simpl, "\t", e_simpl, "\t",
                   dt_det,   "\t", n_det,   "\t", e_det);
@@ -1789,10 +1791,14 @@ int main(int argc, char* argv[]) {
             }
         }
         timer.log(entries.size(), " entry points");
+        timer.log("Size: ", scc_code.num_vars(), " vars, ",
+                  scc_code.num_ops(), " ops");
         timer.done();
 
         timer.start("Closing SCC code graph");
         scc_code.close();
+        timer.log("Size: ", scc_code.num_vars(), " vars, ",
+                  scc_code.num_ops(), " ops");
         timer.done();
 
         // Emit signatures by repurposing the full-SCC code graph.
@@ -1809,6 +1815,8 @@ int main(int argc, char* argv[]) {
 
             timer.start("PN-extending function code");
             f_code.pn_extend();
+            timer.log("Size: ", f_code.num_vars(), " vars, ",
+                      f_code.num_ops(), " ops");
             timer.done();
 
             timer.start("Emitting function signature");
