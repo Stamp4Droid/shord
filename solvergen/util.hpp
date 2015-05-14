@@ -196,164 +196,6 @@ std::size_t hash(const T& v, const Rest&... rest) {
     return detail::hash_impl(std::hash<T>()(v), rest...);
 }
 
-// HELPER CODE ================================================================
-
-namespace detail {
-
-const boost::filesystem::path&
-get_path(const boost::filesystem::directory_entry& entry) {
-    return entry.path();
-}
-
-template<typename T>
-const T& follow_ptr(T* const& r) {
-    return *r;
-}
-
-template<typename PtrT>
-const typename std::pointer_traits<PtrT>::element_type&
-deref(const PtrT& ptr) {
-    return *ptr;
-}
-
-template<typename T, typename S>
-const S& get_second(const std::pair<T,S>& p) {
-    return p.second;
-}
-
-} // namespace detail
-
-// ITERATOR HANDLING ==========================================================
-
-// Very simple iterator wrapper, cannot write through it (constant iterator).
-// The wrapper code must return a reference to an object. It can do that by
-// either creating and managing a temporary object (hard to do with the current
-// design), or derive a reference to some component of the element at the
-// current position of the underlying iterator (which should remain alive
-// until the underlying iterator's next move).
-// TODO: Missing operators:
-// iter++, copy assignment, destructor, swap
-// TODO: Correctly set the iterator tag, according to the tag of the wrapped
-// iterator.
-template<typename Iter, typename Out,
-	 const Out& F(const typename std::iterator_traits<Iter>::value_type&)>
-class IterWrapper : public std::iterator<std::input_iterator_tag,Out> {
-private:
-    Iter iter;
-public:
-    explicit IterWrapper() {}
-    explicit IterWrapper(Iter iter) : iter(iter) {}
-    IterWrapper(const IterWrapper& rhs) : iter(rhs.iter) {}
-    IterWrapper& operator=(const IterWrapper& rhs) {
-	iter = rhs.iter;
-	return *this;
-    }
-    const Out& operator*() const {
-	return F(*iter);
-    }
-    const Out* operator->() const {
-	return &(operator*());
-    }
-    IterWrapper& operator++() {
-	++iter;
-	return *this;
-    }
-    bool operator==(const IterWrapper& rhs) const {
-	return iter == rhs.iter;
-    }
-    bool operator!=(const IterWrapper& rhs) const {
-	return !(*this == rhs);
-    }
-};
-
-template<typename Map>
-using MappedIter = IterWrapper<typename Map::const_iterator,
-			       typename Map::mapped_type,detail::get_second>;
-
-template<typename PtrIter> using DerefIter =
-    IterWrapper<PtrIter,
-		typename std::pointer_traits<
-		    typename std::iterator_traits<PtrIter>::value_type>
-		::element_type,
-		detail::deref<
-		    typename std::iterator_traits<PtrIter>::value_type> >;
-
-// Takes a constant iterator over const-iterable objects, and returns a
-// constant iterator over the underlying objects.
-// Requirements:
-// - The objects covered by OutIter must defined begin() and end(), and those
-//   must both return an InIter.
-// - InIter must be default-constructible.
-// - All default-constructed iterators of type InIter must compare equal. That
-//   is because sub-iterators are reset to their default values when the outer
-//   iterator moves to the next element, and those default-value iterators will
-//   be used in comparisons.
-//   XXX: This is NOT guaranteed by the standard STL containers.
-// TODO:
-// - Missing operators: iter++, destructor, swap
-// - Could retrieve all the types through OutIter alone, but would need a way
-//   to extract the iterator type from the pointed collection type.
-template<typename OutIter, typename InIter> class Flattener
-    : public std::iterator<std::input_iterator_tag,
-			   typename std::iterator_traits<InIter>::value_type> {
-private:
-    OutIter out_curr;
-    OutIter out_end;
-    InIter sub_curr;
-    InIter sub_end;
-private:
-    void skip_empty_entries() {
-	while (sub_curr == sub_end) {
-	    ++out_curr;
-	    if (out_curr == out_end) {
-		sub_curr = InIter();
-		sub_end = InIter();
-		return;
-	    }
-	    sub_curr = out_curr->begin();
-	    sub_end = out_curr->end();
-	}
-    }
-public:
-    explicit Flattener() {}
-    explicit Flattener(OutIter out_curr, OutIter out_end)
-	: out_curr(out_curr), out_end(out_end) {
-	if (out_curr != out_end) {
-	    sub_curr = out_curr->begin();
-	    sub_end = out_curr->end();
-	    skip_empty_entries();
-	}
-    }
-    Flattener(const Flattener& rhs)
-	: out_curr(rhs.out_curr), out_end(rhs.out_end),
-	  sub_curr(rhs.sub_curr), sub_end(rhs.sub_end) {}
-    Flattener& operator=(const Flattener& rhs) {
-	out_curr = rhs.out_curr;
-	out_end = rhs.out_end;
-	sub_curr = rhs.sub_curr;
-	sub_end = rhs.sub_end;
-	return *this;
-    }
-    const typename Flattener::value_type& operator*() const {
-	return *sub_curr;
-    }
-    const typename Flattener::value_type* operator->() const {
-	return &(*sub_curr);
-    }
-    Flattener& operator++() {
-	++sub_curr;
-	skip_empty_entries();
-	return *this;
-    }
-    bool operator==(const Flattener& rhs) const {
-	return (out_curr == rhs.out_curr && out_end == rhs.out_end &&
-		sub_curr == rhs.sub_curr && sub_end == rhs.sub_end);
-    }
-    bool operator!=(const Flattener& rhs) const {
-	return !(*this == rhs);
-    }
-};
-
 // GENERIC DATA STRUCTURES & ALGORITHMS =======================================
 
 // Properties:
@@ -536,20 +378,47 @@ bool empty_intersection(const T& a, const S& b) {
 
 class Directory {
 public:
-    typedef IterWrapper<boost::filesystem::directory_iterator,
-			boost::filesystem::path,detail::get_path> Iterator;
+    class Iterator;
 private:
-    const boost::filesystem::path path;
+    const boost::filesystem::path path_;
 public:
-    explicit Directory(const std::string& name) : path(name) {
+    explicit Directory(const boost::filesystem::path& path) : path_(path) {
 	EXPECT(boost::filesystem::is_directory(path));
     }
-    Iterator begin() {
-	return Iterator(boost::filesystem::directory_iterator(path));
+    Iterator begin() const {
+	return Iterator(path_);
     }
-    Iterator end() {
-	return Iterator(boost::filesystem::directory_iterator());
+    Iterator end() const {
+	return Iterator();
     }
+public:
+
+    class Iterator : public std::iterator<std::forward_iterator_tag,
+                                          boost::filesystem::path> {
+    private:
+        typename boost::filesystem::directory_iterator iter_;
+    public:
+        explicit Iterator() {}
+        explicit Iterator(const boost::filesystem::path& path) : iter_(path) {}
+	Iterator(const Iterator& rhs) : iter_(rhs.iter_) {}
+	Iterator& operator=(const Iterator& rhs) {
+	    iter_ = rhs.iter_;
+	    return *this;
+	}
+	const boost::filesystem::path& operator*() const {
+	    return iter_->path();
+	}
+	Iterator& operator++() {
+	    ++iter_;
+	    return *this;
+	}
+	bool operator==(const Iterator& rhs) const {
+	    return iter_ == rhs.iter_;
+	}
+	bool operator!=(const Iterator& rhs) const {
+	    return !(*this == rhs);
+	}
+    };
 };
 
 unsigned int current_time() {
@@ -663,8 +532,8 @@ public:
 
 template<typename T, typename Key = typename T::Key> class Registry {
 public:
-    typedef IterWrapper<typename std::vector<T*>::const_iterator, T,
-			detail::follow_ptr<T> > Iterator;
+    class Iterator;
+    class ConstIterator;
 private:
     std::vector<T*> array;
     std::map<Key,T> map;
@@ -760,18 +629,83 @@ public:
     bool empty() const {
 	return array.empty();
     }
+    T& first() {
+	return *(array.front());
+    }
+    T& last() {
+	return *(array.back());
+    }
     const T& first() const {
 	return *(array.front());
     }
     const T& last() const {
 	return *(array.back());
     }
-    Iterator begin() const {
-	return Iterator(array.cbegin());
+    Iterator begin() {
+	return Iterator(array.begin());
     }
-    Iterator end() const {
-	return Iterator(array.cend());
+    Iterator end() {
+	return Iterator(array.end());
     }
+    ConstIterator begin() const {
+	return ConstIterator(array.cbegin());
+    }
+    ConstIterator end() const {
+	return ConstIterator(array.cend());
+    }
+public:
+
+    class Iterator : public std::iterator<std::forward_iterator_tag,T> {
+    private:
+        typename std::vector<T*>::iterator iter_;
+    public:
+	explicit Iterator(const typename std::vector<T*>::iterator& iter)
+            : iter_(iter) {}
+	Iterator(const Iterator& rhs) : iter_(rhs.iter_) {}
+	Iterator& operator=(const Iterator& rhs) {
+	    iter_ = rhs.iter_;
+	    return *this;
+	}
+	T& operator*() const {
+	    return *(*iter_);
+	}
+	Iterator& operator++() {
+	    ++iter_;
+	    return *this;
+	}
+	bool operator==(const Iterator& rhs) const {
+	    return iter_ == rhs.iter_;
+	}
+	bool operator!=(const Iterator& rhs) const {
+	    return !(*this == rhs);
+	}
+    };
+
+    class ConstIterator : public std::iterator<std::forward_iterator_tag,T> {
+    private:
+        typename std::vector<T*>::const_iterator iter_;
+    public:
+	explicit ConstIterator(const typename std::vector<T*>::const_iterator&
+                               iter) : iter_(iter) {}
+	ConstIterator(const ConstIterator& rhs) : iter_(rhs.iter_) {}
+	ConstIterator& operator=(const ConstIterator& rhs) {
+	    iter_ = rhs.iter_;
+	    return *this;
+	}
+	const T& operator*() const {
+	    return *(*iter_);
+	}
+	ConstIterator& operator++() {
+	    ++iter_;
+	    return *this;
+	}
+	bool operator==(const ConstIterator& rhs) const {
+	    return iter_ == rhs.iter_;
+	}
+	bool operator!=(const ConstIterator& rhs) const {
+	    return !(*this == rhs);
+	}
+    };
 };
 
 template<class K, class V> class RefMap {
