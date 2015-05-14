@@ -1541,6 +1541,7 @@ private:
     CodeGraph code_;
     CallStore calls_;
     std::set<Ref<Function> > funs_;
+    std::set<Ref<Function> > entries_;
 public:
     explicit SCC(const std::string* name_ptr, Ref<SCC> ref)
         : name(*name_ptr), ref(ref) {
@@ -1555,13 +1556,17 @@ public:
     const std::set<Ref<Function> >& funs() const {
         return funs_;
     }
+    const std::set<Ref<Function> >& entries() const {
+        return entries_;
+    }
     void add_function(Ref<Function> fun) {
         funs_.insert(fun);
     }
     Variable& add_var(const std::string& name) {
         return code_.vars.add(name);
     }
-    void parse_file(const fs::path& fpath, const Registry<Function>& fun_reg,
+    void parse_file(const fs::path& fpath, Registry<SCC>& scc_reg,
+                    const Registry<Function>& fun_reg,
                     Registry<Field>& fld_reg) {
         std::ifstream fin(fpath.string());
         EXPECT((bool) fin);
@@ -1599,7 +1604,9 @@ public:
                     // Assuming all intra-SCC calls have been inlined in the
                     // previous step.
                     EXPECT(callee.scc < ref);
+                    scc_reg[callee.scc].mark_entry(callee.ref);
                     calls_.insert(callee.ref, src, tgt);
+
                 }
             }
         }
@@ -1614,6 +1621,13 @@ public:
     }
     const mi::Table<FUN, Ref<Function> >& callees() const {
         return calls_.sec<0>();
+    }
+    posint size() const {
+        return funs_.size();
+    }
+    void mark_entry(Ref<Function> f) {
+        assert(funs_.count(f) > 0);
+        entries_.insert(f);
     }
     // CAUTION: Updates the code directly.
     void inline_callees(const Registry<Function>& fun_reg) {
@@ -1754,6 +1768,11 @@ int main(int argc, char* argv[]) {
             Ref<Function> fun = funs.make(fun_name, scc.ref).ref;
             scc.add_function(fun);
         }
+        if (scc.size() < 10) {
+            for (Ref<Function> f : scc.funs()) {
+                scc.mark_entry(f);
+            }
+        }
     }
     timer.log(sccs.size(), " SCCs");
     timer.done();
@@ -1761,7 +1780,7 @@ int main(int argc, char* argv[]) {
     timer.start("Parsing SCCs");
     for (SCC& scc : sccs) {
         fs::path scc_path(indir/(scc.name + FILE_EXTENSION));
-        scc.parse_file(scc_path, funs, flds);
+        scc.parse_file(scc_path, sccs, funs, flds);
     }
     timer.done();
 
@@ -1776,6 +1795,7 @@ int main(int argc, char* argv[]) {
     timer.start("Processing SCCs bottom-up");
     for (SCC& scc : sccs) {
         timer.start("Processing SCC", scc.ref, " of ", sccs.size());
+        timer.log(scc.size(), " functions");
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
 
         timer.start("Inlining callees");
@@ -1789,9 +1809,9 @@ int main(int argc, char* argv[]) {
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
 
         // Emit signatures by repurposing the full-SCC code graph.
-        for (Ref<Function> f_ref : scc.funs()) {
+        for (Ref<Function> f_ref : scc.entries()) {
             Function& f = funs[f_ref];
-            timer.start("Emitting sig for function", f.name);
+            timer.start("Emitting sig for entry", f.name);
 
             timer.start("Copying SCC code");
             CodeGraph f_code = scc.make_fun_code(f);
