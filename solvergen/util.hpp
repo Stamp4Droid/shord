@@ -48,9 +48,9 @@ struct gen_seq<0,Is...> : seq<Is...> {};
 // ERROR HANDLING =============================================================
 
 void expect(const char* file, unsigned int line, bool cond,
-	    std::string err_msg = "(no details)") {
+            std::string err_msg = "(no details)") {
     if (cond) {
-	return;
+        return;
     }
     std::cout.flush();
     std::cerr << file << ", line " << line << ":" << std::endl;
@@ -64,7 +64,7 @@ void expect(const char* file, unsigned int line, bool cond,
 
 template<class T>
 typename std::enable_if<std::is_arithmetic<T>::value ||
-			std::is_enum<T>::value, void>::type
+                        std::is_enum<T>::value, void>::type
 print(std::ostream& os, T val) {
     os << val;
 }
@@ -76,13 +76,13 @@ print(std::ostream& os, T val) {
 
 template<class T>
 typename std::enable_if<std::is_arithmetic<T>::value ||
-			std::is_enum<T>::value, int>::type
+                        std::is_enum<T>::value, int>::type
 compare(const T& lhs, const T& rhs) {
     if (lhs == rhs) {
-	return 0;
+        return 0;
     }
     if (lhs < rhs) {
-	return -1;
+        return -1;
     }
     return 1;
 }
@@ -95,22 +95,22 @@ int set_compare(const T& lhs, const S& rhs) {
     const auto r_end = rhs.end();
 
     while (true) {
-	if (l_curr == l_end) {
-	    if (r_curr == r_end) {
-		return 0;
-	    }
-	    return -1;
-	}
-	if (r_curr == r_end) {
-	    return 1;
-	}
-	int curr_rel = compare(*l_curr, *r_curr);
-	if (curr_rel != 0) {
-	    return curr_rel;
-	}
-	// *l_curr == *r_curr
-	++l_curr;
-	++r_curr;
+        if (l_curr == l_end) {
+            if (r_curr == r_end) {
+                return 0;
+            }
+            return -1;
+        }
+        if (r_curr == r_end) {
+            return 1;
+        }
+        int curr_rel = compare(*l_curr, *r_curr);
+        if (curr_rel != 0) {
+            return curr_rel;
+        }
+        // *l_curr == *r_curr
+        ++l_curr;
+        ++r_curr;
     }
 }
 
@@ -127,33 +127,33 @@ int map_compare(const T& lhs, const S& rhs) {
     const auto r_end = rhs.end();
 
     while (true) {
-	if (l_curr == l_end && r_curr == r_end) {
-	    return 0;
-	}
-	// l_curr != l_end || r_curr != r_end
-	if (l_curr == l_end // => r_curr != r_end
-	    || (r_curr != r_end && r_curr->first < l_curr->first)) {
-	    if (!r_curr->second.empty()) {
-		return -1;
-	    }
-	    ++r_curr;
-	    continue;
-	}
-	// l_curr != l_end
-	if (r_curr == r_end || l_curr->first < r_curr->first) {
-	    if (!l_curr->second.empty()) {
-		return 1;
-	    }
-	    ++l_curr;
-	    continue;
-	}
-	// l_curr != l_end && r_curr != r_end && *l_curr == *r_curr
-	int sub_rel = compare(l_curr->second, r_curr->second);
-	if (sub_rel != 0) {
-	    return sub_rel;
-	}
-	++l_curr;
-	++r_curr;
+        if (l_curr == l_end && r_curr == r_end) {
+            return 0;
+        }
+        // l_curr != l_end || r_curr != r_end
+        if (l_curr == l_end // => r_curr != r_end
+            || (r_curr != r_end && r_curr->first < l_curr->first)) {
+            if (!r_curr->second.empty()) {
+                return -1;
+            }
+            ++r_curr;
+            continue;
+        }
+        // l_curr != l_end
+        if (r_curr == r_end || l_curr->first < r_curr->first) {
+            if (!l_curr->second.empty()) {
+                return 1;
+            }
+            ++l_curr;
+            continue;
+        }
+        // l_curr != l_end && r_curr != r_end && *l_curr == *r_curr
+        int sub_rel = compare(l_curr->second, r_curr->second);
+        if (sub_rel != 0) {
+            return sub_rel;
+        }
+        ++l_curr;
+        ++r_curr;
     }
 }
 
@@ -171,7 +171,7 @@ namespace std {
 // TODO: Will this work correctly with class hierarchies?
 template<class T> struct hash {
     size_t operator()(const T& x) const {
-	return x.hash_code();
+        return x.hash_code();
     }
 };
 
@@ -220,7 +220,7 @@ public:
     Worklist(const Worklist&) = delete;
     Worklist& operator=(const Worklist&) = delete;
     bool empty() const {
-	return queue_.empty();
+        return queue_.empty();
     }
     const std::map<T,unsigned>& reached() const {
         return reached_;
@@ -236,9 +236,9 @@ public:
         return res.first;
     }
     Iterator dequeue() {
-	Iterator ret = queue_.front();
-	queue_.pop_front();
-	return ret;
+        Iterator ret = queue_.front();
+        queue_.pop_front();
+        return ret;
     }
 };
 
@@ -249,23 +249,23 @@ private:
     std::queue<T> queue_;
 public:
     bool empty() const {
-	return queue_.empty();
+        return queue_.empty();
     }
     unsigned size() const {
         return queue_.size();
     }
     bool enqueue(T val) {
-	if (reached_.insert(val).second) {
-	    queue_.push(val);
-	    return true;
-	}
-	return false;
+        if (reached_.insert(val).second) {
+            queue_.push(val);
+            return true;
+        }
+        return false;
     }
     T dequeue() {
-	T val = queue_.front();
-	queue_.pop();
-	reached_.erase(val);
-	return val;
+        T val = queue_.front();
+        queue_.pop();
+        reached_.erase(val);
+        return val;
     }
 };
 
@@ -274,12 +274,12 @@ private:
     std::map<T,unsigned int> freqs_;
 public:
     void record(const T& val) {
-	auto bounds = freqs_.equal_range(val);
-	if (bounds.first == bounds.second) {
-	    freqs_.insert(bounds.first, std::make_pair(val, 1));
-	} else {
-	    bounds.first->second++;
-	}
+        auto bounds = freqs_.equal_range(val);
+        if (bounds.first == bounds.second) {
+            freqs_.insert(bounds.first, std::make_pair(val, 1));
+        } else {
+            bounds.first->second++;
+        }
     }
     typename std::map<T,unsigned int>::const_iterator begin() const {
         return freqs_.begin();
@@ -295,24 +295,24 @@ template<unsigned int DEPTH> struct JoinZipHelper {
     template<class LMap, class RMap, class ZipT, class... KeyTs>
     static void handle(const LMap& l, const RMap& r, const ZipT& zip,
                        const KeyTs&... keys) {
-	auto l_curr = l.begin();
-	auto r_curr = r.begin();
-	const auto l_end = l.end();
-	const auto r_end = r.end();
-	while (l_curr != l_end && r_curr != r_end) {
-	    int key_rel = compare(l_curr->first, r_curr->first);
-	    if (key_rel == 0) {
-		JoinZipHelper<DEPTH-1>::handle(l_curr->second,
-					       r_curr->second, zip,
+        auto l_curr = l.begin();
+        auto r_curr = r.begin();
+        const auto l_end = l.end();
+        const auto r_end = r.end();
+        while (l_curr != l_end && r_curr != r_end) {
+            int key_rel = compare(l_curr->first, r_curr->first);
+            if (key_rel == 0) {
+                JoinZipHelper<DEPTH-1>::handle(l_curr->second,
+                                               r_curr->second, zip,
                                                keys..., l_curr->first);
-	    }
-	    if (key_rel >= 0) {
-		++r_curr;
-	    }
-	    if (key_rel <= 0) {
-		++l_curr;
-	    }
-	}
+            }
+            if (key_rel >= 0) {
+                ++r_curr;
+            }
+            if (key_rel <= 0) {
+                ++l_curr;
+            }
+        }
     }
 };
 
@@ -320,7 +320,7 @@ template<> struct JoinZipHelper<0> {
     template<class LMap, class RMap, class ZipT, class... KeyTs>
     static void handle(const LMap& l, const RMap& r, const ZipT& zip,
                        const KeyTs&... keys) {
-	zip(l, r, keys...);
+        zip(l, r, keys...);
     }
 };
 
@@ -383,13 +383,13 @@ private:
     const boost::filesystem::path path_;
 public:
     explicit Directory(const boost::filesystem::path& path) : path_(path) {
-	EXPECT(boost::filesystem::is_directory(path));
+        EXPECT(boost::filesystem::is_directory(path));
     }
     Iterator begin() const {
-	return Iterator(path_);
+        return Iterator(path_);
     }
     Iterator end() const {
-	return Iterator();
+        return Iterator();
     }
 public:
 
@@ -400,24 +400,24 @@ public:
     public:
         explicit Iterator() {}
         explicit Iterator(const boost::filesystem::path& path) : iter_(path) {}
-	Iterator(const Iterator& rhs) : iter_(rhs.iter_) {}
-	Iterator& operator=(const Iterator& rhs) {
-	    iter_ = rhs.iter_;
-	    return *this;
-	}
-	const boost::filesystem::path& operator*() const {
-	    return iter_->path();
-	}
-	Iterator& operator++() {
-	    ++iter_;
-	    return *this;
-	}
-	bool operator==(const Iterator& rhs) const {
-	    return iter_ == rhs.iter_;
-	}
-	bool operator!=(const Iterator& rhs) const {
-	    return !(*this == rhs);
-	}
+        Iterator(const Iterator& rhs) : iter_(rhs.iter_) {}
+        Iterator& operator=(const Iterator& rhs) {
+            iter_ = rhs.iter_;
+            return *this;
+        }
+        const boost::filesystem::path& operator*() const {
+            return iter_->path();
+        }
+        Iterator& operator++() {
+            ++iter_;
+            return *this;
+        }
+        bool operator==(const Iterator& rhs) const {
+            return iter_ == rhs.iter_;
+        }
+        bool operator!=(const Iterator& rhs) const {
+            return !(*this == rhs);
+        }
     };
 };
 
@@ -494,39 +494,39 @@ private:
 public:
     explicit Ref() : value_(std::numeric_limits<unsigned int>::max()) {}
     explicit Ref(unsigned int value) : value_(value) {
-	EXPECT(valid());
+        EXPECT(valid());
     }
     Ref(const Ref&) = default;
     Ref& operator=(const Ref&) = default;
     friend void swap(Ref& a, Ref& b) {
-	using std::swap;
-	swap(a.value_, b.value_);
+        using std::swap;
+        swap(a.value_, b.value_);
     }
     bool valid() const {
-	return value_ < std::numeric_limits<unsigned int>::max();
+        return value_ < std::numeric_limits<unsigned int>::max();
     }
     unsigned int value() const {
-	return value_;
+        return value_;
     }
     friend int compare(const Ref& lhs, const Ref& rhs) {
-	return compare(lhs.value_, rhs.value_);
+        return compare(lhs.value_, rhs.value_);
     }
     bool operator<(const Ref& rhs) const {
-	return value_ < rhs.value_;
+        return value_ < rhs.value_;
     }
     bool operator==(const Ref& rhs) const {
-	return value_ == rhs.value_;
+        return value_ == rhs.value_;
     }
     bool operator!=(const Ref& rhs) const {
-	return !(*this == rhs);
+        return !(*this == rhs);
     }
     std::size_t hash_code() const {
-	return hash(value_);
+        return hash(value_);
     }
     friend std::ostream& operator<<(std::ostream& os, const Ref& ref) {
-	EXPECT(ref.valid());
-	os << ref.value_;
-	return os;
+        EXPECT(ref.valid());
+        os << ref.value_;
+        return os;
     }
 };
 
@@ -541,39 +541,39 @@ private:
 private:
     template<typename... ArgTs>
     T& insert(const Key* key_ptr, ArgTs&&... args) {
-	Ref<T> next_ref(array.size());
-	T* obj_ptr;
-	if (key_ptr != NULL) {
-	    auto res = map.emplace(*key_ptr, T(key_ptr, next_ref,
-					       std::forward<ArgTs>(args)...));
-	    EXPECT(res.second);
-	    obj_ptr = &(res.first->second);
-	} else {
-	    temps.push_back(T(NULL, next_ref, std::forward<ArgTs>(args)...));
-	    obj_ptr = &(temps.back());
-	}
-	array.push_back(obj_ptr);
-	return *obj_ptr;
+        Ref<T> next_ref(array.size());
+        T* obj_ptr;
+        if (key_ptr != NULL) {
+            auto res = map.emplace(*key_ptr, T(key_ptr, next_ref,
+                                               std::forward<ArgTs>(args)...));
+            EXPECT(res.second);
+            obj_ptr = &(res.first->second);
+        } else {
+            temps.push_back(T(NULL, next_ref, std::forward<ArgTs>(args)...));
+            obj_ptr = &(temps.back());
+        }
+        array.push_back(obj_ptr);
+        return *obj_ptr;
     }
 public:
     explicit Registry() {}
     // TODO: Only works if T is copy-constructible.
     Registry(const Registry& rhs)
-	: array(rhs.array.size(), NULL), map(rhs.map), temps(rhs.temps) {
-	auto update_ptr = [&](T& obj) {
-	    T*& cell = array.at(obj.ref.value());
-	    EXPECT(cell == NULL);
-	    cell = &obj;
-	};
-	for (auto& p : map) {
-	    update_ptr(p.second);
-	}
-	for (T& obj : temps) {
-	    update_ptr(obj);
-	}
+        : array(rhs.array.size(), NULL), map(rhs.map), temps(rhs.temps) {
+        auto update_ptr = [&](T& obj) {
+            T*& cell = array.at(obj.ref.value());
+            EXPECT(cell == NULL);
+            cell = &obj;
+        };
+        for (auto& p : map) {
+            update_ptr(p.second);
+        }
+        for (T& obj : temps) {
+            update_ptr(obj);
+        }
     }
     Registry(Registry&& rhs) {
-	swap(*this, rhs);
+        swap(*this, rhs);
     }
     Registry& operator=(const Registry& rhs) = delete;
     // XXX: This is dangerous/non-portable: The 'array' member variable stores
@@ -582,76 +582,76 @@ public:
     // However, the default implementations of swap on std::map and std::deque
     // don't move the actual heap storage, and thus the pointers remain valid.
     friend void swap(Registry& a, Registry& b) {
-	using std::swap;
-	swap(a.array, b.array);
-	swap(a.map,   b.map);
-	swap(a.temps, b.temps);
+        using std::swap;
+        swap(a.array, b.array);
+        swap(a.map,   b.map);
+        swap(a.temps, b.temps);
     }
     void clear() {
         Registry temp;
         swap(*this, temp);
     }
     T& operator[](Ref<T> ref) {
-	EXPECT(ref.valid());
-	return *(array.at(ref.value()));
+        EXPECT(ref.valid());
+        return *(array.at(ref.value()));
     }
     const T& operator[](Ref<T> ref) const {
-	EXPECT(ref.valid());
-	return *(array.at(ref.value()));
+        EXPECT(ref.valid());
+        return *(array.at(ref.value()));
     }
     template<typename... ArgTs> T& make(const Key& key, ArgTs&&... args) {
-	return insert(&key, std::forward<ArgTs>(args)...);
+        return insert(&key, std::forward<ArgTs>(args)...);
     }
     template<typename... ArgTs> T& add(const Key& key, ArgTs&&... args) {
-	auto it = map.find(key);
-	if (it == map.end()) {
-	    return make(key, std::forward<ArgTs>(args)...);
-	}
-	T& obj = it->second;
-	obj.merge(std::forward<ArgTs>(args)...);
-	return obj;
+        auto it = map.find(key);
+        if (it == map.end()) {
+            return make(key, std::forward<ArgTs>(args)...);
+        }
+        T& obj = it->second;
+        obj.merge(std::forward<ArgTs>(args)...);
+        return obj;
     }
     template<typename... ArgTs> T& mktemp(ArgTs&&... args) {
-	return insert(NULL, std::forward<ArgTs>(args)...);
+        return insert(NULL, std::forward<ArgTs>(args)...);
     }
     T& find(const Key& key) {
-	return map.at(key);
+        return map.at(key);
     }
     const T& find(const Key& key) const {
-	return map.at(key);
+        return map.at(key);
     }
     bool contains(const Key& key) const {
-	return map.count(key) > 0;
+        return map.count(key) > 0;
     }
     unsigned int size() const {
-	return array.size();
+        return array.size();
     }
     bool empty() const {
-	return array.empty();
+        return array.empty();
     }
     T& first() {
-	return *(array.front());
+        return *(array.front());
     }
     T& last() {
-	return *(array.back());
+        return *(array.back());
     }
     const T& first() const {
-	return *(array.front());
+        return *(array.front());
     }
     const T& last() const {
-	return *(array.back());
+        return *(array.back());
     }
     Iterator begin() {
-	return Iterator(array.begin());
+        return Iterator(array.begin());
     }
     Iterator end() {
-	return Iterator(array.end());
+        return Iterator(array.end());
     }
     ConstIterator begin() const {
-	return ConstIterator(array.cbegin());
+        return ConstIterator(array.cbegin());
     }
     ConstIterator end() const {
-	return ConstIterator(array.cend());
+        return ConstIterator(array.cend());
     }
 public:
 
@@ -659,52 +659,52 @@ public:
     private:
         typename std::vector<T*>::iterator iter_;
     public:
-	explicit Iterator(const typename std::vector<T*>::iterator& iter)
+        explicit Iterator(const typename std::vector<T*>::iterator& iter)
             : iter_(iter) {}
-	Iterator(const Iterator& rhs) : iter_(rhs.iter_) {}
-	Iterator& operator=(const Iterator& rhs) {
-	    iter_ = rhs.iter_;
-	    return *this;
-	}
-	T& operator*() const {
-	    return *(*iter_);
-	}
-	Iterator& operator++() {
-	    ++iter_;
-	    return *this;
-	}
-	bool operator==(const Iterator& rhs) const {
-	    return iter_ == rhs.iter_;
-	}
-	bool operator!=(const Iterator& rhs) const {
-	    return !(*this == rhs);
-	}
+        Iterator(const Iterator& rhs) : iter_(rhs.iter_) {}
+        Iterator& operator=(const Iterator& rhs) {
+            iter_ = rhs.iter_;
+            return *this;
+        }
+        T& operator*() const {
+            return *(*iter_);
+        }
+        Iterator& operator++() {
+            ++iter_;
+            return *this;
+        }
+        bool operator==(const Iterator& rhs) const {
+            return iter_ == rhs.iter_;
+        }
+        bool operator!=(const Iterator& rhs) const {
+            return !(*this == rhs);
+        }
     };
 
     class ConstIterator : public std::iterator<std::forward_iterator_tag,T> {
     private:
         typename std::vector<T*>::const_iterator iter_;
     public:
-	explicit ConstIterator(const typename std::vector<T*>::const_iterator&
+        explicit ConstIterator(const typename std::vector<T*>::const_iterator&
                                iter) : iter_(iter) {}
-	ConstIterator(const ConstIterator& rhs) : iter_(rhs.iter_) {}
-	ConstIterator& operator=(const ConstIterator& rhs) {
-	    iter_ = rhs.iter_;
-	    return *this;
-	}
-	const T& operator*() const {
-	    return *(*iter_);
-	}
-	ConstIterator& operator++() {
-	    ++iter_;
-	    return *this;
-	}
-	bool operator==(const ConstIterator& rhs) const {
-	    return iter_ == rhs.iter_;
-	}
-	bool operator!=(const ConstIterator& rhs) const {
-	    return !(*this == rhs);
-	}
+        ConstIterator(const ConstIterator& rhs) : iter_(rhs.iter_) {}
+        ConstIterator& operator=(const ConstIterator& rhs) {
+            iter_ = rhs.iter_;
+            return *this;
+        }
+        const T& operator*() const {
+            return *(*iter_);
+        }
+        ConstIterator& operator++() {
+            ++iter_;
+            return *this;
+        }
+        bool operator==(const ConstIterator& rhs) const {
+            return iter_ == rhs.iter_;
+        }
+        bool operator!=(const ConstIterator& rhs) const {
+            return !(*this == rhs);
+        }
     };
 };
 
@@ -717,13 +717,13 @@ public:
     RefMap(RefMap&& rhs) = default;
     RefMap& operator=(const RefMap& rhs) = delete;
     V& operator[](Ref<K> ref) {
-	return const_cast<V&>((*const_cast<const RefMap*>(this))[ref]);
+        return const_cast<V&>((*const_cast<const RefMap*>(this))[ref]);
     }
     const V& operator[](Ref<K> ref) const {
 #ifdef NDEBUG
-	return array_[ref.value()];
+        return array_[ref.value()];
 #else
-	return array_.at(ref.value());
+        return array_.at(ref.value());
 #endif
     }
 };
@@ -836,9 +836,9 @@ public:
     }
     const SCC& scc(SccId id) const {
 #ifdef NDEBUG
-	return comps_[id];
+        return comps_[id];
 #else
-	return comps_.at(id);
+        return comps_.at(id);
 #endif
     }
     // Returned in reverse topological order.
@@ -1076,10 +1076,10 @@ template<class Tag, class Hd, class Tl>
 struct Getter<Tag, NamedTuple<Tag,Hd,Tl> > {
     typedef Hd FldT;
     static FldT& get(NamedTuple<Tag,Hd,Tl>& ntup) {
-	return ntup.hd;
+        return ntup.hd;
     }
     static const FldT& get(const NamedTuple<Tag,Hd,Tl>& ntup) {
-	return ntup.hd;
+        return ntup.hd;
     }
 };
 
@@ -1087,10 +1087,10 @@ template<class FldN, class Tag, class Hd, class Tl>
 struct Getter<FldN, NamedTuple<Tag,Hd,Tl> > {
     typedef typename Getter<FldN,Tl>::FldT FldT;
     static FldT& get(NamedTuple<Tag,Hd,Tl>& ntup) {
-	return Getter<FldN,Tl>::get(ntup.tl);
+        return Getter<FldN,Tl>::get(ntup.tl);
     }
     static const FldT& get(const NamedTuple<Tag,Hd,Tl>& ntup) {
-	return Getter<FldN,Tl>::get(ntup.tl);
+        return Getter<FldN,Tl>::get(ntup.tl);
     }
 };
 
@@ -1099,7 +1099,7 @@ struct Getter<FldN, NamedTuple<Tag,Hd,Tl> > {
 struct Nil {
     explicit Nil() {}
     bool operator<(const Nil&) const {
-	return false;
+        return false;
     }
     void print(std::ostream&) const {}
 };
@@ -1118,27 +1118,27 @@ public:
     NamedTuple& operator=(const NamedTuple&) = delete;
     template<class... Rest>
     explicit NamedTuple(const Hd& hd, const Rest&... rest)
-	: hd(hd), tl(rest...) {}
+        : hd(hd), tl(rest...) {}
     template<class FldN>
     typename detail::Getter<FldN,NamedTuple>::FldT& get() {
-	return detail::Getter<FldN,NamedTuple>::get(*this);
+        return detail::Getter<FldN,NamedTuple>::get(*this);
     }
     template<class FldN>
     const typename detail::Getter<FldN,NamedTuple>::FldT& get() const {
-	return detail::Getter<FldN,NamedTuple>::get(*this);
+        return detail::Getter<FldN,NamedTuple>::get(*this);
     }
     bool operator<(const NamedTuple& rhs) const {
-	if (hd < rhs.hd) {
-	    return true;
-	}
-	if (rhs.hd < hd) {
-	    return false;
-	}
-	return tl < rhs.tl;
+        if (hd < rhs.hd) {
+            return true;
+        }
+        if (rhs.hd < hd) {
+            return false;
+        }
+        return tl < rhs.tl;
     }
     void print(std::ostream& os) const {
-	os << Tag::name() << "=" << hd << " ";
-	tl.print(os);
+        os << Tag::name() << "=" << hd << " ";
+        tl.print(os);
     }
 };
 
@@ -1172,13 +1172,13 @@ template<class T> struct KeyTraits;
 template<> struct KeyTraits<bool> {
     typedef boost::none_t SizeHint;
     static unsigned int extract_size(const SizeHint&) {
-	return 2;
+        return 2;
     }
     static unsigned int extract_idx(bool val) {
-	return val;
+        return val;
     }
     static bool from_idx(unsigned int idx) {
-	return idx;
+        return idx;
     }
 };
 
@@ -1186,13 +1186,13 @@ template<class T>
 struct KeyTraits<Ref<T> > {
     typedef Registry<T> SizeHint;
     static unsigned int extract_size(const SizeHint& reg) {
-	return reg.size();
+        return reg.size();
     }
     static unsigned int extract_idx(Ref<T> ref) {
-	return ref.value();
+        return ref.value();
     }
     static Ref<T> from_idx(unsigned int idx) {
-	return Ref<T>(idx);
+        return Ref<T>(idx);
     }
 };
 
@@ -1211,8 +1211,8 @@ static const T& id(const T& val) {
 template<typename T, typename V, int I>
 struct TupleInserter {
     static void insert(T& idxs, const V& val) {
-	TupleInserter<T,V,I-1>::insert(idxs, val);
-	std::get<I-1>(idxs).sec_insert(val);
+        TupleInserter<T,V,I-1>::insert(idxs, val);
+        std::get<I-1>(idxs).sec_insert(val);
     }
 };
 
@@ -1232,9 +1232,9 @@ void insert_all(T& idxs, const V& val) {
 
 #define FOR(RES, EXPR) \
     if (bool cond__ = true) \
-	for (typename std::remove_reference<decltype(EXPR)>::type::Tuple RES; \
-	     cond__; cond__ = false) \
-	    for (auto it__ = (EXPR).iter(RES); it__.next();)
+        for (typename std::remove_reference<decltype(EXPR)>::type::Tuple RES; \
+             cond__; cond__ = false) \
+            for (auto it__ = (EXPR).iter(RES); it__.next();)
 
 template<class Tag, class T> class Table {
 public:
@@ -1251,8 +1251,8 @@ public:
     Table(Table&&) = default;
     Table& operator=(const Table&) = delete;
     friend void swap(Table& a, Table& b) {
-	using std::swap;
-	swap(a.store_, b.store_);
+        using std::swap;
+        swap(a.store_, b.store_);
     }
     void clear() {
         Table temp;
@@ -1265,71 +1265,71 @@ public:
         return *this;
     }
     bool insert(const T& val) {
-	return store_.insert(val).second;
+        return store_.insert(val).second;
     }
     bool insert(const Tuple& tuple) {
-	return insert(tuple.hd);
+        return insert(tuple.hd);
     }
     template<class Other>
     void sec_insert(const Other& other) {
-	insert(other.template get<Tag>());
+        insert(other.template get<Tag>());
     }
     bool copy(const Table& src) {
-	unsigned int old_sz = size();
-	// TODO: Is this optimized for sorted source collections?
-	store_.insert(src.store_.cbegin(), src.store_.cend());
-	return old_sz != size();
+        unsigned int old_sz = size();
+        // TODO: Is this optimized for sorted source collections?
+        store_.insert(src.store_.cbegin(), src.store_.cend());
+        return old_sz != size();
     }
     ConstTopIter begin() const {
-	return store_.cbegin();
+        return store_.cbegin();
     }
     ConstTopIter end() const {
-	return store_.cend();
+        return store_.cend();
     }
     Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
+        Iterator it(tgt);
+        it.migrate(*this);
+        return it;
     }
     bool empty() const {
-	return store_.empty();
+        return store_.empty();
     }
     bool contains(const T& val) const {
-	return store_.count(val) > 0;
+        return store_.count(val) > 0;
     }
     bool contains(const Tuple& tuple) const {
-	return contains(tuple.hd);
+        return contains(tuple.hd);
     }
     unsigned int size() const {
-	return store_.size();
+        return store_.size();
     }
 public:
 
     class Iterator {
     private:
-	typename std::set<T>::const_iterator curr;
-	typename std::set<T>::const_iterator end;
-	T& tgt_fld;
-	bool before_start = true;
+        typename std::set<T>::const_iterator curr;
+        typename std::set<T>::const_iterator end;
+        T& tgt_fld;
+        bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
-	void migrate(const Table& table) {
-	    curr = table.store_.cbegin();
-	    end = table.store_.cend();
-	    before_start = true;
-	}
-	bool next() {
-	    if (before_start) {
-		before_start = false;
-	    } else {
-		++curr;
-	    }
-	    if (curr == end) {
-		return false;
-	    }
-	    tgt_fld = *curr;
-	    return true;
-	}
+        explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
+        void migrate(const Table& table) {
+            curr = table.store_.cbegin();
+            end = table.store_.cend();
+            before_start = true;
+        }
+        bool next() {
+            if (before_start) {
+                before_start = false;
+            } else {
+                ++curr;
+            }
+            if (curr == end) {
+                return false;
+            }
+            tgt_fld = *curr;
+            return true;
+        }
     };
 };
 
@@ -1346,8 +1346,8 @@ public:
     Cell(Cell&&) = default;
     Cell& operator=(const Cell&) = delete;
     friend void swap(Cell& a, Cell& b) {
-	using std::swap;
-	swap(a.val_, b.val_);
+        using std::swap;
+        swap(a.val_, b.val_);
     }
     void clear() {
         Cell temp;
@@ -1360,36 +1360,36 @@ public:
         return *this;
     }
     bool insert(const T& val) {
-	if ((bool) val_) {
-	    // can't update the value once set
-	    return false;
-	}
-	val_ = val;
-	return true;
+        if ((bool) val_) {
+            // can't update the value once set
+            return false;
+        }
+        val_ = val;
+        return true;
     }
     bool insert(const Tuple& tuple) {
-	return insert(tuple.hd);
+        return insert(tuple.hd);
     }
     Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
+        Iterator it(tgt);
+        it.migrate(*this);
+        return it;
     }
     bool empty() const {
-	return !((bool) val_);
+        return !((bool) val_);
     }
     bool contains(const T& val) const {
-	return val_ == val;
+        return val_ == val;
     }
     bool contains(const Tuple& tuple) const {
-	return val_ == tuple.hd;
+        return val_ == tuple.hd;
     }
     unsigned int size() const {
-	return ((bool) val_) ? 1 : 0;
+        return ((bool) val_) ? 1 : 0;
     }
     const T& get() const {
         EXPECT((bool) val_);
-	return val_.get();
+        return val_.get();
     }
     const boost::optional<T>& contents() const {
         return val_;
@@ -1398,26 +1398,26 @@ public:
 
     class Iterator {
     private:
-	const Cell* curr;
-	T& tgt_fld;
-	bool before_start = true;
+        const Cell* curr;
+        T& tgt_fld;
+        bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
-	void migrate(const Cell& cell) {
-	    curr = &cell;
-	    before_start = true;
-	}
-	bool next() {
-	    if (!before_start) {
-		return false;
-	    }
-	    before_start = false;
-	    if ((bool) curr->val_) {
-		tgt_fld = curr->val_.get();
-		return true;
-	    }
-	    return false;
-	}
+        explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
+        void migrate(const Cell& cell) {
+            curr = &cell;
+            before_start = true;
+        }
+        bool next() {
+            if (!before_start) {
+                return false;
+            }
+            before_start = false;
+            if ((bool) curr->val_) {
+                tgt_fld = curr->val_.get();
+                return true;
+            }
+            return false;
+        }
     };
 };
 
@@ -1436,8 +1436,8 @@ public:
     Bag(Bag&&) = default;
     Bag& operator=(const Bag&) = delete;
     friend void swap(Bag& a, Bag& b) {
-	using std::swap;
-	swap(a.store_, b.store_);
+        using std::swap;
+        swap(a.store_, b.store_);
     }
     void clear() {
         Bag temp;
@@ -1450,62 +1450,62 @@ public:
         return *this;
     }
     bool insert(const T& val) {
-	store_.push_back(val);
+        store_.push_back(val);
         return true;
     }
     bool insert(const Tuple& tuple) {
-	return insert(tuple.hd);
+        return insert(tuple.hd);
     }
     ConstTopIter begin() const {
-	return store_.cbegin();
+        return store_.cbegin();
     }
     ConstTopIter end() const {
-	return store_.cend();
+        return store_.cend();
     }
     Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
+        Iterator it(tgt);
+        it.migrate(*this);
+        return it;
     }
     bool empty() const {
-	return store_.empty();
+        return store_.empty();
     }
     bool contains(const T& val) const {
         return std::find(store_.begin(), store_.end(), val) != store_.end();
     }
     bool contains(const Tuple& tuple) const {
-	return contains(tuple.hd);
+        return contains(tuple.hd);
     }
     unsigned int size() const {
-	return store_.size();
+        return store_.size();
     }
 public:
 
     class Iterator {
     private:
-	typename std::deque<T>::const_iterator curr;
-	typename std::deque<T>::const_iterator end;
-	T& tgt_fld;
-	bool before_start = true;
+        typename std::deque<T>::const_iterator curr;
+        typename std::deque<T>::const_iterator end;
+        T& tgt_fld;
+        bool before_start = true;
     public:
         explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
-	void migrate(const Bag& bag) {
-	    curr = bag.store_.cbegin();
-	    end = bag.store_.cend();
-	    before_start = true;
-	}
-	bool next() {
-	    if (before_start) {
-		before_start = false;
-	    } else {
-		++curr;
-	    }
-	    if (curr == end) {
-		return false;
-	    }
-	    tgt_fld = *curr;
-	    return true;
-	}
+        void migrate(const Bag& bag) {
+            curr = bag.store_.cbegin();
+            end = bag.store_.cend();
+            before_start = true;
+        }
+        bool next() {
+            if (before_start) {
+                before_start = false;
+            } else {
+                ++curr;
+            }
+            if (curr == end) {
+                return false;
+            }
+            tgt_fld = *curr;
+            return true;
+        }
     };
 };
 
@@ -1528,8 +1528,8 @@ public:
     Index(Index&&) = default;
     Index& operator=(const Index&) = delete;
     friend void swap(Index& a, Index& b) {
-	using std::swap;
-	swap(a.map, b.map);
+        using std::swap;
+        swap(a.map, b.map);
     }
     void clear() {
         Index temp;
@@ -1540,11 +1540,11 @@ public:
     }
     template<class... Rest>
     auto& of(const Key& key, const Rest&... rest) {
-	return map[key].of(rest...);
+        return map[key].of(rest...);
     }
     const Sub& operator[](const Key& key) const {
-	auto it = map.find(key);
-	return (it == map.cend()) ? dummy : it->second;
+        auto it = map.find(key);
+        return (it == map.cend()) ? dummy : it->second;
     }
     const Index& find() const {
         return *this;
@@ -1555,98 +1555,98 @@ public:
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
-	return of(key).insert(rest...);
+        return of(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
-	return insert(tuple.hd, tuple.tl);
+        return insert(tuple.hd, tuple.tl);
     }
     template<class Other>
     void sec_insert(const Other& other) {
-	of(other.template get<Tag>()).sec_insert(other);
+        of(other.template get<Tag>()).sec_insert(other);
     }
     bool copy(const Index& src) {
-	bool grew = false;
-	for (const auto& p : src.map) {
-	    if (of(p.first).copy(p.second)) {
-		grew = true;
-	    }
-	}
-	return grew;
+        bool grew = false;
+        for (const auto& p : src.map) {
+            if (of(p.first).copy(p.second)) {
+                grew = true;
+            }
+        }
+        return grew;
     }
     Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
+        Iterator it(tgt);
+        it.migrate(*this);
+        return it;
     }
     TopIter begin() {
-	return map.begin();
+        return map.begin();
     }
     TopIter end() {
-	return map.end();
+        return map.end();
     }
     ConstTopIter begin() const {
-	return map.cbegin();
+        return map.cbegin();
     }
     ConstTopIter end() const {
-	return map.cend();
+        return map.cend();
     }
     bool empty() const {
-	for (const auto& entry : map) {
-	    if (!entry.second.empty()) {
-		return false;
-	    }
-	}
-	return true;
+        for (const auto& entry : map) {
+            if (!entry.second.empty()) {
+                return false;
+            }
+        }
+        return true;
     }
     template<class... Rest>
     bool contains(const Key& key, const Rest&... rest) const {
-	auto it = map.find(key);
-	return (it == map.cend()) ? false : it->second.contains(rest...);
+        auto it = map.find(key);
+        return (it == map.cend()) ? false : it->second.contains(rest...);
     }
     bool contains(const Tuple& tuple) const {
-	return contains(tuple.hd, tuple.tl);
+        return contains(tuple.hd, tuple.tl);
     }
     unsigned int size() const {
-	unsigned int sz = 0;
-	for (const auto& entry : map) {
-	    sz += entry.second.size();
-	}
-	return sz;
+        unsigned int sz = 0;
+        for (const auto& entry : map) {
+            sz += entry.second.size();
+        }
+        return sz;
     }
 public:
 
     class Iterator {
     private:
-	typename std::map<Key,Sub>::const_iterator map_curr;
-	typename std::map<Key,Sub>::const_iterator map_end;
-	Key& tgt_key;
-	typename Sub::Iterator sub_iter;
-	bool before_start = true;
+        typename std::map<Key,Sub>::const_iterator map_curr;
+        typename std::map<Key,Sub>::const_iterator map_end;
+        Key& tgt_key;
+        typename Sub::Iterator sub_iter;
+        bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
-	void migrate(const Index& idx) {
-	    map_curr = idx.map.cbegin();
-	    map_end = idx.map.cend();
-	    before_start = true;
-	}
-	bool next() {
-	    if (before_start) {
-		before_start = false;
-		if (map_curr == map_end) {
-		    return false;
-		}
-		sub_iter.migrate(map_curr->second);
-	    }
-	    while (!sub_iter.next()) {
-		++map_curr;
-		if (map_curr == map_end) {
-		    return false;
-		}
-		sub_iter.migrate(map_curr->second);
-	    }
-	    tgt_key = map_curr->first;
-	    return true;
-	}
+        explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
+        void migrate(const Index& idx) {
+            map_curr = idx.map.cbegin();
+            map_end = idx.map.cend();
+            before_start = true;
+        }
+        bool next() {
+            if (before_start) {
+                before_start = false;
+                if (map_curr == map_end) {
+                    return false;
+                }
+                sub_iter.migrate(map_curr->second);
+            }
+            while (!sub_iter.next()) {
+                ++map_curr;
+                if (map_curr == map_end) {
+                    return false;
+                }
+                sub_iter.migrate(map_curr->second);
+            }
+            tgt_key = map_curr->first;
+            return true;
+        }
     };
 };
 
@@ -1667,20 +1667,20 @@ public:
     MultiIndex(MultiIndex&&) = default;
     MultiIndex& operator=(const MultiIndex&) = delete;
     friend void swap(MultiIndex& a, MultiIndex& b) {
-	using std::swap;
-	swap(a.pri_, b.pri_);
-	swap(a.sec_, b.sec_);
+        using std::swap;
+        swap(a.pri_, b.pri_);
+        swap(a.sec_, b.sec_);
     }
     void clear() {
         MultiIndex temp;
         swap(*this, temp);
     }
     const Pri& pri() const {
-	return pri_;
+        return pri_;
     }
     template<int I>
     const typename pack_elem<I,Sec...>::type& sec() const {
-	return std::get<I>(sec_);
+        return std::get<I>(sec_);
     }
     MultiIndex& of() {
         return *this;
@@ -1690,57 +1690,57 @@ public:
     }
     template<class... Flds>
     bool insert(const Flds&... flds) {
-	return insert(Tuple(flds...));
+        return insert(Tuple(flds...));
     }
     bool insert(const Tuple& tuple) {
-	if (pri_.insert(tuple)) {
-	    // Only insert on secondary index if tuple wasn't already present.
-	    detail::insert_all(sec_, tuple);
-	    return true;
-	}
-	// TODO: Check that tuple is also present on sec.
-	return false;
+        if (pri_.insert(tuple)) {
+            // Only insert on secondary index if tuple wasn't already present.
+            detail::insert_all(sec_, tuple);
+            return true;
+        }
+        // TODO: Check that tuple is also present on sec.
+        return false;
     }
     template<class Other>
     void sec_insert(const Other& other) {
-	pri_.sec_insert(other);
-	detail::insert_all(sec_, other);
+        pri_.sec_insert(other);
+        detail::insert_all(sec_, other);
     }
     Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
+        Iterator it(tgt);
+        it.migrate(*this);
+        return it;
     }
     bool empty() const {
-	return pri_.empty();
+        return pri_.empty();
     }
     template<class... Flds>
     bool contains(const Flds&... flds) const {
-	return pri_.contains(flds...);
+        return pri_.contains(flds...);
     }
     unsigned int size() const {
-	return pri_.size();
+        return pri_.size();
     }
 public:
 
     class Iterator {
     private:
-	typename Pri::Iterator sub_iter;
+        typename Pri::Iterator sub_iter;
     public:
-	explicit Iterator(Tuple& tgt) : sub_iter(tgt) {}
-	void migrate(const MultiIndex& idx) {
-	    sub_iter.migrate(idx.pri_);
-	}
-	bool next() {
-	    return sub_iter.next();
-	}
+        explicit Iterator(Tuple& tgt) : sub_iter(tgt) {}
+        void migrate(const MultiIndex& idx) {
+            sub_iter.migrate(idx.pri_);
+        }
+        bool next() {
+            return sub_iter.next();
+        }
     };
 };
 
 // SPECIALIZED CONTAINERS =====================================================
 
 template<class Tag, class K, const typename KeyTraits<K>::SizeHint& Hint,
-	 class S> class FlatIndex {
+         class S> class FlatIndex {
 public:
     typedef K Key;
     typedef S Sub;
@@ -1759,8 +1759,8 @@ public:
     FlatIndex(FlatIndex&&) = default;
     FlatIndex& operator=(const FlatIndex&) = delete;
     friend void swap(FlatIndex& a, FlatIndex& b) {
-	using std::swap;
-	swap(a.array, b.array);
+        using std::swap;
+        swap(a.array, b.array);
     }
     void clear() {
         FlatIndex temp;
@@ -1771,14 +1771,14 @@ public:
     }
     template<class... Rest>
     auto& of(const Key& key, const Rest&... rest) {
-	return const_cast<Sub&>((*this)[key]).of(rest...);
+        return const_cast<Sub&>((*this)[key]).of(rest...);
     }
     const Sub& operator[](const Key& key) const {
-	unsigned int i = KeyTraits<Key>::extract_idx(key);
+        unsigned int i = KeyTraits<Key>::extract_idx(key);
 #ifdef NDEBUG
-	return array[i];
+        return array[i];
 #else
-	return array.at(i);
+        return array.at(i);
 #endif
     }
     const FlatIndex& find() const {
@@ -1790,175 +1790,175 @@ public:
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
-	return of(key).insert(rest...);
+        return of(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
-	return insert(tuple.hd, tuple.tl);
+        return insert(tuple.hd, tuple.tl);
     }
     template<class Other>
     void sec_insert(const Other& other) {
-	of(other.template get<Tag>()).sec_insert(other);
+        of(other.template get<Tag>()).sec_insert(other);
     }
     bool copy(const FlatIndex& src) {
-	unsigned int lim = src.array.size();
-	assert(array.size() == lim);
-	bool grew = false;
-	for (unsigned int i = 0; i < lim; i++) {
-	    if (array[i].copy(src.array[i])) {
-		grew = true;
-	    }
-	}
-	return grew;
+        unsigned int lim = src.array.size();
+        assert(array.size() == lim);
+        bool grew = false;
+        for (unsigned int i = 0; i < lim; i++) {
+            if (array[i].copy(src.array[i])) {
+                grew = true;
+            }
+        }
+        return grew;
     }
     Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
+        Iterator it(tgt);
+        it.migrate(*this);
+        return it;
     }
     TopIter begin() {
-	return TopIter(*this, false);
+        return TopIter(*this, false);
     }
     TopIter end() {
-	return TopIter(*this, true);
+        return TopIter(*this, true);
     }
     ConstTopIter begin() const {
-	return ConstTopIter(*this, false);
+        return ConstTopIter(*this, false);
     }
     ConstTopIter end() const {
-	return ConstTopIter(*this, true);
+        return ConstTopIter(*this, true);
     }
     bool empty() const {
-	for (const Sub& entry : array) {
-	    if (!entry.empty()) {
-		return false;
-	    }
-	}
-	return true;
+        for (const Sub& entry : array) {
+            if (!entry.empty()) {
+                return false;
+            }
+        }
+        return true;
     }
     template<class... Rest>
     bool contains(const Key& key, const Rest&... rest) const {
-	return (*this)[key].contains(rest...);
+        return (*this)[key].contains(rest...);
     }
     bool contains(const Tuple& tuple) const {
-	return contains(tuple.hd, tuple.tl);
+        return contains(tuple.hd, tuple.tl);
     }
     unsigned int size() const {
-	unsigned int sz = 0;
-	for (const Sub& entry : array) {
-	    sz += entry.size();
-	}
-	return sz;
+        unsigned int sz = 0;
+        for (const Sub& entry : array) {
+            sz += entry.size();
+        }
+        return sz;
     }
 public:
 
     class Iterator {
     private:
-	unsigned int arr_idx;
-	typename std::vector<Sub>::const_iterator arr_curr;
-	typename std::vector<Sub>::const_iterator arr_end;
-	Key& tgt_key;
-	typename Sub::Iterator sub_iter;
-	bool before_start = true;
+        unsigned int arr_idx;
+        typename std::vector<Sub>::const_iterator arr_curr;
+        typename std::vector<Sub>::const_iterator arr_end;
+        Key& tgt_key;
+        typename Sub::Iterator sub_iter;
+        bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
-	void migrate(const FlatIndex& idx) {
-	    arr_idx = 0;
-	    arr_curr = idx.array.cbegin();
-	    arr_end = idx.array.cend();
-	    before_start = true;
-	}
-	bool next() {
-	    if (before_start) {
-		before_start = false;
-		if (arr_curr == arr_end) {
-		    return false;
-		}
-		sub_iter.migrate(*arr_curr);
-	    }
-	    while (!sub_iter.next()) {
-		++arr_idx;
-		++arr_curr;
-		if (arr_curr == arr_end) {
-		    return false;
-		}
-		sub_iter.migrate(*arr_curr);
-	    }
-	    tgt_key = KeyTraits<Key>::from_idx(arr_idx);
-	    return true;
-	}
+        explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
+        void migrate(const FlatIndex& idx) {
+            arr_idx = 0;
+            arr_curr = idx.array.cbegin();
+            arr_end = idx.array.cend();
+            before_start = true;
+        }
+        bool next() {
+            if (before_start) {
+                before_start = false;
+                if (arr_curr == arr_end) {
+                    return false;
+                }
+                sub_iter.migrate(*arr_curr);
+            }
+            while (!sub_iter.next()) {
+                ++arr_idx;
+                ++arr_curr;
+                if (arr_curr == arr_end) {
+                    return false;
+                }
+                sub_iter.migrate(*arr_curr);
+            }
+            tgt_key = KeyTraits<Key>::from_idx(arr_idx);
+            return true;
+        }
     };
 
     class TopIter : public std::iterator<std::forward_iterator_tag,
-					 std::pair<const Key,Sub&> > {
+                                         std::pair<const Key,Sub&> > {
     public:
-	typedef std::pair<const Key,Sub&> Value;
+        typedef std::pair<const Key,Sub&> Value;
     private:
-	ConstTopIter real_iter;
+        ConstTopIter real_iter;
     public:
-	explicit TopIter(FlatIndex& parent, bool at_end)
-	    : real_iter(parent, at_end) {}
-	TopIter(const TopIter& rhs) : real_iter(rhs.real_iter) {}
-	TopIter& operator=(const TopIter& rhs) {
-	    real_iter = rhs.real_iter;
-	    return *this;
-	}
-	Value operator*() const {
-	    typename ConstTopIter::Value cval = *real_iter;
-	    return Value(cval.first, const_cast<Sub&>(cval.second));
-	}
-	TopIter& operator++() {
-	    ++real_iter;
-	    return *this;
-	}
-	bool operator==(const TopIter& rhs) const {
-	    return real_iter == rhs.real_iter;
-	}
-	bool operator!=(const TopIter& rhs) const {
-	    return !(*this == rhs);
-	}
+        explicit TopIter(FlatIndex& parent, bool at_end)
+            : real_iter(parent, at_end) {}
+        TopIter(const TopIter& rhs) : real_iter(rhs.real_iter) {}
+        TopIter& operator=(const TopIter& rhs) {
+            real_iter = rhs.real_iter;
+            return *this;
+        }
+        Value operator*() const {
+            typename ConstTopIter::Value cval = *real_iter;
+            return Value(cval.first, const_cast<Sub&>(cval.second));
+        }
+        TopIter& operator++() {
+            ++real_iter;
+            return *this;
+        }
+        bool operator==(const TopIter& rhs) const {
+            return real_iter == rhs.real_iter;
+        }
+        bool operator!=(const TopIter& rhs) const {
+            return !(*this == rhs);
+        }
     };
 
     class ConstTopIter
-	: public std::iterator<std::forward_iterator_tag,
-			       std::pair<const Key,const Sub&> > {
+        : public std::iterator<std::forward_iterator_tag,
+                               std::pair<const Key,const Sub&> > {
     public:
-	typedef std::pair<const Key,const Sub&> Value;
+        typedef std::pair<const Key,const Sub&> Value;
     private:
-	unsigned int curr;
-	const FlatIndex& parent;
+        unsigned int curr;
+        const FlatIndex& parent;
     private:
-	void skip_empty() {
-	    while (curr < parent.array.size() && parent.array[curr].empty()) {
-		++curr;
-	    }
-	}
+        void skip_empty() {
+            while (curr < parent.array.size() && parent.array[curr].empty()) {
+                ++curr;
+            }
+        }
     public:
-	explicit ConstTopIter(const FlatIndex& parent, bool at_end)
-	    : curr(at_end ? parent.array.size() : 0), parent(parent) {
-	    skip_empty();
-	}
-	ConstTopIter(const ConstTopIter& rhs)
-	    : curr(rhs.curr), parent(rhs.parent) {}
-	ConstTopIter& operator=(const ConstTopIter& rhs) {
-	    assert(&parent == &(rhs.parent));
-	    curr = rhs.curr;
-	    return *this;
-	}
-	Value operator*() const {
-	    return Value(KeyTraits<Key>::from_idx(curr), parent.array[curr]);
-	}
-	ConstTopIter& operator++() {
-	    ++curr;
-	    skip_empty();
-	    return *this;
-	}
-	bool operator==(const ConstTopIter& rhs) const {
-	    assert(&parent == &(rhs.parent));
-	    return curr == rhs.curr;
-	}
-	bool operator!=(const ConstTopIter& rhs) const {
-	    return !(*this == rhs);
-	}
+        explicit ConstTopIter(const FlatIndex& parent, bool at_end)
+            : curr(at_end ? parent.array.size() : 0), parent(parent) {
+            skip_empty();
+        }
+        ConstTopIter(const ConstTopIter& rhs)
+            : curr(rhs.curr), parent(rhs.parent) {}
+        ConstTopIter& operator=(const ConstTopIter& rhs) {
+            assert(&parent == &(rhs.parent));
+            curr = rhs.curr;
+            return *this;
+        }
+        Value operator*() const {
+            return Value(KeyTraits<Key>::from_idx(curr), parent.array[curr]);
+        }
+        ConstTopIter& operator++() {
+            ++curr;
+            skip_empty();
+            return *this;
+        }
+        bool operator==(const ConstTopIter& rhs) const {
+            assert(&parent == &(rhs.parent));
+            return curr == rhs.curr;
+        }
+        bool operator!=(const ConstTopIter& rhs) const {
+            return !(*this == rhs);
+        }
     };
 };
 
@@ -1975,89 +1975,89 @@ private:
     Store bits = 0;
 public:
     explicit BitSet() {
-	EXPECT(sizeof(Store) * 8 >= KeyTraits<T>::extract_size(Hint));
+        EXPECT(sizeof(Store) * 8 >= KeyTraits<T>::extract_size(Hint));
     }
     BitSet(const BitSet&) = default;
     BitSet(BitSet&&) = default;
     BitSet& operator=(const BitSet&) = delete;
     friend void swap(BitSet& a, BitSet& b) {
-	using std::swap;
-	swap(a.bits, b.bits);
+        using std::swap;
+        swap(a.bits, b.bits);
     }
     bool insert(const T& val) {
-	unsigned int idx = KeyTraits<T>::extract_idx(val);
-	assert(idx < sizeof(Store) * 8);
-	Store prev_bits = bits;
-	bits |= (top_bit >> idx);
-	return prev_bits != bits;
+        unsigned int idx = KeyTraits<T>::extract_idx(val);
+        assert(idx < sizeof(Store) * 8);
+        Store prev_bits = bits;
+        bits |= (top_bit >> idx);
+        return prev_bits != bits;
     }
     bool insert(const Tuple& tuple) {
-	return insert(tuple.hd);
+        return insert(tuple.hd);
     }
     template<class Other>
     void sec_insert(const Other& other) {
-	insert(other.template get<Tag>());
+        insert(other.template get<Tag>());
     }
     bool copy(const BitSet& src) {
-	Store prev_bits = bits;
-	bits |= src.bits;
-	return prev_bits != bits;
+        Store prev_bits = bits;
+        bits |= src.bits;
+        return prev_bits != bits;
     }
     Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
+        Iterator it(tgt);
+        it.migrate(*this);
+        return it;
     }
     bool empty() const {
-	return bits == 0;
+        return bits == 0;
     }
     bool contains(const T& val) const {
-	unsigned int idx = KeyTraits<T>::extract_idx(val);
-	return bits & (top_bit >> idx);
+        unsigned int idx = KeyTraits<T>::extract_idx(val);
+        return bits & (top_bit >> idx);
     }
     bool contains(const Tuple& tuple) const {
-	return contains(tuple.hd);
+        return contains(tuple.hd);
     }
     unsigned int size() const {
-	Store v = bits;
-	unsigned int count = 0;
-	for (; v; v >>= 1) {
-	    count += v & 1;
-	}
-	return count;
+        Store v = bits;
+        unsigned int count = 0;
+        for (; v; v >>= 1) {
+            count += v & 1;
+        }
+        return count;
     }
 public:
 
     class Iterator {
     private:
-	unsigned int curr;
-	const unsigned int lim;
-	T& tgt_fld;
-	const typename BitSet::Store* bits;
-	bool before_start = true;
+        unsigned int curr;
+        const unsigned int lim;
+        T& tgt_fld;
+        const typename BitSet::Store* bits;
+        bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt)
-	    : lim(sizeof(typename BitSet::Store) * 8), tgt_fld(tgt.hd) {}
-	void migrate(const BitSet& set) {
-	    curr = 0;
-	    bits = &(set.bits);
-	    before_start = true;
-	}
-	bool next() {
-	    if (before_start) {
-		before_start = false;
-	    } else {
-		++curr;
-	    }
-	    while (curr < lim) {
-		if (*bits & (top_bit >> curr)) {
-		    tgt_fld = KeyTraits<T>::from_idx(curr);
-		    return true;
-		}
-		++curr;
-	    }
-	    return false;
-	}
+        explicit Iterator(Tuple& tgt)
+            : lim(sizeof(typename BitSet::Store) * 8), tgt_fld(tgt.hd) {}
+        void migrate(const BitSet& set) {
+            curr = 0;
+            bits = &(set.bits);
+            before_start = true;
+        }
+        bool next() {
+            if (before_start) {
+                before_start = false;
+            } else {
+                ++curr;
+            }
+            while (curr < lim) {
+                if (*bits & (top_bit >> curr)) {
+                    tgt_fld = KeyTraits<T>::from_idx(curr);
+                    return true;
+                }
+                ++curr;
+            }
+            return false;
+        }
     };
 };
 
@@ -2077,17 +2077,17 @@ private:
     List list;
 private:
     bool search(const Key& key, typename List::const_iterator& pos) const {
-	pos = list.cbegin();
-	typename List::const_iterator prev = list.cbefore_begin();
-	while (pos != list.cend() && pos->first < key) {
-	    prev = pos;
-	    ++pos;
-	}
-	if (pos != list.cend() && pos->first == key) {
-	    return true;
-	}
-	pos = prev;
-	return false;
+        pos = list.cbegin();
+        typename List::const_iterator prev = list.cbefore_begin();
+        while (pos != list.cend() && pos->first < key) {
+            prev = pos;
+            ++pos;
+        }
+        if (pos != list.cend() && pos->first == key) {
+            return true;
+        }
+        pos = prev;
+        return false;
     }
 public:
     explicit LightIndex() {}
@@ -2095,8 +2095,8 @@ public:
     LightIndex(LightIndex&&) = default;
     LightIndex& operator=(const LightIndex&) = delete;
     friend void swap(LightIndex& a, LightIndex& b) {
-	using std::swap;
-	swap(a.list, b.list);
+        using std::swap;
+        swap(a.list, b.list);
     }
     void clear() {
         LightIndex temp;
@@ -2107,17 +2107,17 @@ public:
     }
     template<class... Rest>
     auto& of(const Key& key, const Rest&... rest) {
-	typename List::const_iterator cpos;
-	typename List::iterator pos =
-	    search(key, cpos)
-	    // HACK: Convert a List::const_iterator to a List::iterator.
-	    ? list.insert_after(cpos, list.cend(), list.cend())
-	    : list.emplace_after(cpos, key, Sub());
-	return pos->second.of(rest...);
+        typename List::const_iterator cpos;
+        typename List::iterator pos =
+            search(key, cpos)
+            // HACK: Convert a List::const_iterator to a List::iterator.
+            ? list.insert_after(cpos, list.cend(), list.cend())
+            : list.emplace_after(cpos, key, Sub());
+        return pos->second.of(rest...);
     }
     const Sub& operator[](const Key& key) const {
-	typename List::const_iterator pos;
-	return search(key, pos) ? pos->second : dummy;
+        typename List::const_iterator pos;
+        return search(key, pos) ? pos->second : dummy;
     }
     const LightIndex& find() const {
         return *this;
@@ -2128,98 +2128,98 @@ public:
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
-	return of(key).insert(rest...);
+        return of(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
-	return insert(tuple.hd, tuple.tl);
+        return insert(tuple.hd, tuple.tl);
     }
     template<class Other>
     void sec_insert(const Other& other) {
-	of(other.template get<Tag>()).sec_insert(other);
+        of(other.template get<Tag>()).sec_insert(other);
     }
     bool copy(const LightIndex& src) {
-	bool grew = false;
-	for (const auto& p : src.list) {
-	    if (of(p.first).copy(p.second)) {
-		grew = true;
-	    }
-	}
-	return grew;
+        bool grew = false;
+        for (const auto& p : src.list) {
+            if (of(p.first).copy(p.second)) {
+                grew = true;
+            }
+        }
+        return grew;
     }
     Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
-	it.migrate(*this);
-	return it;
+        Iterator it(tgt);
+        it.migrate(*this);
+        return it;
     }
     TopIter begin() {
-	return list.begin();
+        return list.begin();
     }
     TopIter end() {
-	return list.end();
+        return list.end();
     }
     ConstTopIter begin() const {
-	return list.cbegin();
+        return list.cbegin();
     }
     ConstTopIter end() const {
-	return list.cend();
+        return list.cend();
     }
     bool empty() const {
-	for (const auto& entry : list) {
-	    if (!entry.second.empty()) {
-		return false;
-	    }
-	}
-	return true;
+        for (const auto& entry : list) {
+            if (!entry.second.empty()) {
+                return false;
+            }
+        }
+        return true;
     }
     template<class... Rest>
     bool contains(const Key& key, const Rest&... rest) const {
-	typename List::const_iterator pos;
-	return search(key, pos) ? pos->second.contains(rest...) : false;
+        typename List::const_iterator pos;
+        return search(key, pos) ? pos->second.contains(rest...) : false;
     }
     bool contains(const Tuple& tuple) const {
-	return contains(tuple.hd, tuple.tl);
+        return contains(tuple.hd, tuple.tl);
     }
     unsigned int size() const {
-	unsigned int sz = 0;
-	for (const auto& entry : list) {
-	    sz += entry.second.size();
-	}
-	return sz;
+        unsigned int sz = 0;
+        for (const auto& entry : list) {
+            sz += entry.second.size();
+        }
+        return sz;
     }
 public:
 
     class Iterator {
     private:
-	typename List::const_iterator list_curr;
-	typename List::const_iterator list_end;
-	Key& tgt_key;
-	typename Sub::Iterator sub_iter;
-	bool before_start = true;
+        typename List::const_iterator list_curr;
+        typename List::const_iterator list_end;
+        Key& tgt_key;
+        typename Sub::Iterator sub_iter;
+        bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
-	void migrate(const LightIndex& idx) {
-	    list_curr = idx.list.cbegin();
-	    list_end = idx.list.cend();
-	    before_start = true;
-	}
-	bool next() {
-	    if (before_start) {
-		before_start = false;
-		if (list_curr == list_end) {
-		    return false;
-		}
-		sub_iter.migrate(list_curr->second);
-	    }
-	    while (!sub_iter.next()) {
-		++list_curr;
-		if (list_curr == list_end) {
-		    return false;
-		}
-		sub_iter.migrate(list_curr->second);
-	    }
-	    tgt_key = list_curr->first;
-	    return true;
-	}
+        explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
+        void migrate(const LightIndex& idx) {
+            list_curr = idx.list.cbegin();
+            list_end = idx.list.cend();
+            before_start = true;
+        }
+        bool next() {
+            if (before_start) {
+                before_start = false;
+                if (list_curr == list_end) {
+                    return false;
+                }
+                sub_iter.migrate(list_curr->second);
+            }
+            while (!sub_iter.next()) {
+                ++list_curr;
+                if (list_curr == list_end) {
+                    return false;
+                }
+                sub_iter.migrate(list_curr->second);
+            }
+            tgt_key = list_curr->first;
+            return true;
+        }
     };
 };
 
@@ -2281,9 +2281,9 @@ public:
     Registry(Registry&& rhs) = default;
     Registry& operator=(const Registry& rhs) = delete;
     friend void swap(Registry& a, Registry& b) {
-	using std::swap;
-	swap(a.obj2ref_, b.obj2ref_);
-	swap(a.ref2obj_, b.ref2obj_);
+        using std::swap;
+        swap(a.obj2ref_, b.obj2ref_);
+        swap(a.ref2obj_, b.ref2obj_);
     }
     void clear() {
         Registry temp;
@@ -2293,12 +2293,12 @@ public:
         return obj2ref_;
     }
     T& operator[](Ref<T> ref) {
-	EXPECT(ref.valid());
-	return ref2obj_.at(ref.value());
+        EXPECT(ref.valid());
+        return ref2obj_.at(ref.value());
     }
     const T& operator[](Ref<T> ref) const {
-	EXPECT(ref.valid());
-	return ref2obj_.at(ref.value());
+        EXPECT(ref.valid());
+        return ref2obj_.at(ref.value());
     }
     template<typename... Flds>
     T& make(const Flds&... flds) {
@@ -2336,31 +2336,31 @@ public:
     template<typename... Flds>
     bool contains(const Flds&... flds) const {
         const mi::Cell<REF, Ref<T> >& ref_cell = obj2ref_.find(flds...);
-	return !ref_cell.empty();
+        return !ref_cell.empty();
     }
     unsigned int size() const {
-	return ref2obj_.size();
+        return ref2obj_.size();
     }
     bool empty() const {
-	return ref2obj_.empty();
+        return ref2obj_.empty();
     }
     const T& first() const {
-	return ref2obj_.front();
+        return ref2obj_.front();
     }
     const T& last() const {
-	return ref2obj_.back();
+        return ref2obj_.back();
     }
     typename std::vector<T>::iterator begin() {
-	return ref2obj_.begin();
+        return ref2obj_.begin();
     }
     typename std::vector<T>::iterator end() {
-	return ref2obj_.end();
+        return ref2obj_.end();
     }
     typename std::vector<T>::const_iterator begin() const {
-	return ref2obj_.cbegin();
+        return ref2obj_.cbegin();
     }
     typename std::vector<T>::const_iterator end() const {
-	return ref2obj_.cend();
+        return ref2obj_.cend();
     }
 };
 
