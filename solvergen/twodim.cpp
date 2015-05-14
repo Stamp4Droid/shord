@@ -26,6 +26,8 @@
 namespace fs = boost::filesystem;
 namespace po = boost::program_options;
 
+const std::string FILE_EXTENSION = ".fun.tgf";
+
 // TIMERS =====================================================================
 
 class Timer {
@@ -1479,7 +1481,52 @@ Signature star_sig(const Signature& sig) {
     return res.to_sig();
 }
 
+class SCC;
+
 class Function {
+public:
+    typedef std::string Key;
+public:
+    const std::string name;
+    const Ref<Function> ref;
+    const Ref<SCC> scc;
+private:
+    Ref<Variable> entry_;
+    std::set<Ref<Variable> > exits_;
+    Signature sig_; // Initially set to the empty automaton.
+public:
+    explicit Function(const std::string* name_ptr, Ref<Function> ref,
+                      Ref<SCC> scc) : name(*name_ptr), ref(ref), scc(scc) {
+        EXPECT(boost::regex_match(name, boost::regex("\\w+")));
+    }
+    Function(const Function&) = delete;
+    Function(Function&&) = default;
+    Function& operator=(const Function&) = delete;
+    bool merge(Ref<SCC> scc) {
+        EXPECT(scc == this->scc);
+        return false;
+    }
+    void parse_file(const fs::path& fpath, SCC& scc);
+    Ref<Variable> entry() const {
+        return entry_;
+    }
+    const std::set<Ref<Variable> >& exits() const {
+        return exits_;
+    }
+    bool complete() const {
+        return entry_.valid();
+    }
+    const Signature& sig() const {
+        return sig_;
+    }
+    void set_sig(Signature&& sig) {
+        using std::swap;
+        Signature temp(std::move(sig));
+        swap(sig_, temp);
+    }
+};
+
+class SCC {
 public:
     typedef std::string Key;
     typedef mi::MultiIndex<
@@ -1489,34 +1536,33 @@ public:
                 mi::Table<FUN, Ref<Function> > > CallStore;
 public:
     const std::string name;
-    const Ref<Function> ref;
+    const Ref<SCC> ref;
 private:
     CodeGraph code_;
     CallStore calls_;
-    std::set<Ref<Function> > callers_;
-    Signature sig_; // Initially set to the empty automaton.
+    std::set<Ref<Function> > funs_;
 public:
-    explicit Function(const std::string* name_ptr, Ref<Function> ref)
+    explicit SCC(const std::string* name_ptr, Ref<SCC> ref)
         : name(*name_ptr), ref(ref) {
         EXPECT(boost::regex_match(name, boost::regex("\\w+")));
     }
-    Function(const Function&) = delete;
-    Function(Function&&) = default;
-    Function& operator=(const Function&) = delete;
-    // CAUTION: This clears information relating to other functions, in
-    // particular the set of callers.
-    void clear() {
-        code_.clear();
-        calls_.clear();
-        callers_.clear();
-        sig_.clear();
-    }
+    SCC(const SCC&) = delete;
+    SCC(SCC&&) = default;
+    SCC& operator=(const SCC&) = delete;
     bool merge() {
         return false;
     }
-    void parse_file(const fs::path& fpath,
-                    Registry<Function>& fun_reg, Registry<Field>& fld_reg) {
-        assert(!complete());
+    const std::set<Ref<Function> >& funs() const {
+        return funs_;
+    }
+    void add_function(Ref<Function> fun) {
+        funs_.insert(fun);
+    }
+    Variable& add_var(const std::string& name) {
+        return code_.vars.add(name);
+    }
+    void parse_file(const fs::path& fpath, const Registry<Function>& fun_reg,
+                    Registry<Field>& fld_reg) {
         std::ifstream fin(fpath.string());
         EXPECT((bool) fin);
         bool vars_done = false;
@@ -1532,21 +1578,10 @@ public:
             if (toks[0] == "#") {
                 EXPECT(toks.size() == 1);
                 EXPECT(!vars_done);
-                EXPECT(code_.entry.valid());
                 vars_done = true;
             } else if (!vars_done) {
-                EXPECT(toks.size() >= 1);
-                Variable& v = code_.vars.make(toks[0]);
-                for (auto it = toks.begin() + 1; it != toks.end(); ++it) {
-                    if (*it == "in") {
-                        EXPECT(!code_.entry.valid());
-                        code_.entry = v.ref;
-                    } else if (*it == "out") {
-                        code_.exits.insert(v.ref);
-                    } else {
-                        EXPECT(false);
-                    }
-                }
+                EXPECT(toks.size() == 1);
+                code_.vars.add(toks[0]);
             } else {
                 EXPECT(toks.size() == 2 || toks.size() == 3);
                 Ref<Variable> src = code_.vars.find(toks[0]).ref;
@@ -1560,8 +1595,10 @@ public:
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
                     code_.closes.insert(fld, src, tgt);
                 } else {
-                    Function& callee = fun_reg.add(toks[2]);
-                    callee.callers_.insert(ref);
+                    const Function& callee = fun_reg.find(toks[2]);
+                    // Assuming all intra-SCC calls have been inlined in the
+                    // previous step.
+                    EXPECT(callee.scc < ref);
                     calls_.insert(callee.ref, src, tgt);
                 }
             }
@@ -1575,51 +1612,29 @@ public:
     const CallStore& calls() const {
         return calls_;
     }
-    bool complete() const {
-        return code_.entry.valid();
-    }
     const mi::Table<FUN, Ref<Function> >& callees() const {
         return calls_.sec<0>();
     }
-    const std::set<Ref<Function> >& callers() const {
-        return callers_;
-    }
-    const Signature& sig() const {
-        return sig_;
-    }
-    Signature& sig() {
-        return sig_;
-    }
-    // TODO: 'callers_' aren't updated.
-    void inline_nonrec_callees(const Registry<Function>& fun_reg,
-                               const typename SccGraph<Function>::SCC& scc) {
-        using std::swap;
-        decltype(calls_) rec_calls;
+    // CAUTION: Updates the code directly.
+    void inline_callees(const Registry<Function>& fun_reg) {
+        // There should be no intra-SCC calls present.
         FOR(c, calls_) {
-            if (scc.nodes.count(c.get<FUN>()) == 0) {
-                code_.embed(c.get<SRC>(), c.get<TGT>(),
-                            fun_reg[c.get<FUN>()].sig_);
-            } else {
-                rec_calls.insert(c);
-            }
+            code_.embed(c.get<SRC>(), c.get<TGT>(),
+                        fun_reg[c.get<FUN>()].sig());
         }
-        swap(calls_, rec_calls);
+        calls_.clear();
     }
-    void add_prefix(const Signature& sig) {
-        Ref<Variable> old_entry = code_.entry;
-        Ref<Variable> new_entry = code_.vars.mktemp().ref;
-        code_.entry = new_entry;
-        code_.embed(new_entry, old_entry, sig);
+    void close_code() {
+        code_.close();
     }
-    void add_suffix(const Signature& sig) {
-        Ref<Variable> pre_exit = code_.vars.mktemp().ref;
-        Ref<Variable> new_exit = code_.vars.mktemp().ref;
-        for (Ref<Variable> e : code_.exits) {
-            code_.epsilons.insert(e, pre_exit);
-        }
-        code_.exits.clear();
-        code_.exits.insert(new_exit);
-        code_.embed(pre_exit, new_exit, sig);
+    CodeGraph make_fun_code(const Function& f) const {
+        EXPECT(funs_.count(f.ref) > 0);
+        EXPECT(f.complete());
+        EXPECT(calls_.empty());
+        CodeGraph res(code_);
+        res.entry = f.entry();
+        res.exits = f.exits();
+        return res;
     }
     void to_tgf(std::ostream& os, const Registry<Function>& fun_reg,
                 const Registry<Field>& fld_reg) const {
@@ -1630,24 +1645,48 @@ public:
                << fun_reg[c.get<FUN>()].name << std::endl;
         }
     }
-    posint num_states() const {
+    posint num_vars() const {
         return code_.vars.size();
     }
-    posint num_trans() const {
+    posint num_ops() const {
         return (code_.epsilons.size() + code_.opens.size() +
                 code_.closes.size() + calls_.size());
     }
-    void print_stats(std::ostream& os) const {
-        os << name << "\t" << num_states() << "\t" << num_trans()
-           << "\t" << sig_.num_states() << "\t" << sig_.num_trans()
-           << "\t" << callees().size();
-    }
 };
 
-// TOP-LEVEL CODE =============================================================
+void Function::parse_file(const fs::path& fpath, SCC& scc) {
+    assert(!entry_.valid());
+    assert(scc.ref == this->scc);
+    std::ifstream fin(fpath.string());
+    EXPECT((bool) fin);
+    std::string line;
+    while (std::getline(fin, line)) {
+        boost::trim(line);
+        if (line.empty()) {
+            continue; // Empty lines are ignored.
+        }
+        std::vector<std::string> toks;
+        boost::split(toks, line, boost::is_any_of(" "),
+                     boost::token_compress_on);
+        EXPECT(toks.size() >= 1);
+        // TODO: The variable might not be present in the SCC, if the member
+        // function is empty.
+        Ref<Variable> v = scc.add_var(toks[0]).ref;
+        for (auto it = toks.begin() + 1; it != toks.end(); ++it) {
+            if (*it == "in") {
+                EXPECT(!entry_.valid());
+                entry_ = v;
+            } else if (*it == "out") {
+                exits_.insert(v);
+            } else {
+                EXPECT(false);
+            }
+        }
+    }
+    EXPECT(entry_.valid());
+}
 
-typedef typename SccGraph<Function>::SCC SCC;
-typedef typename SccGraph<Function>::SccId SccId;
+// TOP-LEVEL CODE =============================================================
 
 int main(int argc, char* argv[]) {
     // User-defined parameters
@@ -1679,199 +1718,110 @@ int main(int argc, char* argv[]) {
         std::cerr << e.what() << std::endl;
         return EXIT_FAILURE;
     }
-    fs::path outdir = fs::path(outdir_name);
+    fs::path indir(indir_name);
+    fs::path outdir(outdir_name);
     fs::create_directory(outdir);
 
-    // Parse function graphs
-    timer.start("Parsing functions");
-    const std::string FILE_EXTENSION = ".fun.tgf";
+    // Registries
+    Registry<SCC> sccs;
     Registry<Function> funs;
     Registry<Field> flds;
-    for (const fs::path& path : Directory(indir_name)) {
-        std::string base(path.filename().string());
-        if (!boost::algorithm::ends_with(base, FILE_EXTENSION)) {
+
+    timer.start("Collecting SCC and function names");
+    // SCCs were printed out in reverse topological order, so we need to parse
+    // them in that order.
+    std::vector<fs::path> scc_paths;
+    std::copy(Directory(indir).begin(), Directory(indir).end(),
+              std::back_inserter(scc_paths));
+    std::sort(scc_paths.begin(), scc_paths.end());
+    for (const fs::path& scc_path : scc_paths) {
+        std::string scc_base(scc_path.filename().string());
+        if (!boost::algorithm::ends_with(scc_base, FILE_EXTENSION)) {
             continue;
         }
-        size_t name_len = base.size() - FILE_EXTENSION.size();
-        std::string name(base.substr(0, name_len));
-        Function& f = funs.add(name);
-        f.parse_file(path, funs, flds);
-    }
-    for (const Function& f : funs) {
-        EXPECT(f.complete());
-    }
-    timer.done();
-
-    // Calculate call graph SCCs, print relevant stats.
-    timer.start("Calculating SCCs");
-    RefMap<Function,std::vector<Ref<Function> > > calls(funs);
-    for (const Function& f : funs) {
-        for (Ref<Function> c : f.callees()) {
-            calls[f.ref].push_back(c);
-        }
-    }
-    SccGraph<Function> cg(funs, calls);
-    Histogram<unsigned> scc_size_freqs;
-    fs::path cg_fpath(outdir/"cg.tgf");
-    std::ofstream cg_fout(cg_fpath.string());
-    EXPECT((bool) cg_fout);
-    for (unsigned i = 0; i < cg.num_sccs(); i++) {
-        unsigned size = cg.scc(i).nodes.size();
-        if (size == 1 && cg.scc(i).trivial) {
-            size = 0;
-        }
-        cg_fout << i << " " << size << std::endl;
-        scc_size_freqs.record(size);
-    }
-    cg_fout << "#" << std::endl;
-    for (unsigned i = 0; i < cg.num_sccs(); i++) {
-        for (unsigned j : cg.scc(i).children) {
-            cg_fout << i << " " << j << std::endl;
-        }
-    }
-    timer.done();
-    timer.log("SCC size\tFrequency");
-    for (const auto& p : scc_size_freqs) {
-        timer.log(p.first, "\t", p.second);
-    }
-
-    // Update signatures from the bottom up.
-    for (unsigned i = 0; i < cg.num_sccs(); i++) {
-        const SCC& scc = cg.scc(i);
-        timer.start("Processing SCC", i, " of ", cg.num_sccs(),
-                    " (size ", scc.nodes.size(), ")");
-        fs::path sccdir(outdir/"scc"/std::to_string(i));
-        fs::create_directories(sccdir);
-        Worklist<Ref<Function>,true> worklist;
-
-        // TODO: No need to do this separately for non-recursive calls.
-        // Can simply do this on the joint-SCC code.
-        timer.start("Inlining non-recursive calls in SCC");
-        for (Ref<Function> f : scc.nodes) {
-            timer.log(funs[f].name);
-            funs[f].inline_nonrec_callees(funs, scc);
-            fs::path fpath(sccdir/(funs[f].name + ".fun.tgf"));
-            std::ofstream fout(fpath.string());
-            EXPECT((bool) fout);
-            funs[f].to_tgf(fout, funs, flds);
-            worklist.enqueue(f);
-        }
-        timer.done();
-
-        timer.start("Constructing joint-SCC code");
-        std::vector<Ref<Function> > entries;
-        CodeGraph scc_code;
-        // Mapping from f's vars to corresponding vars in scc_code.
-        std::map<Ref<Function>,
-                 std::map<Ref<Variable>,Ref<Variable> > > var_map;
-        for (Ref<Function> f : scc.nodes) {
-            scc_code.copy(funs[f].code(), var_map[f]);
-            if (scc.nodes.size() < 10) {
-                entries.push_back(f);
+        size_t scc_name_len = scc_base.size() - FILE_EXTENSION.size();
+        std::string scc_name(scc_base.substr(0, scc_name_len));
+        SCC& scc = sccs.make(scc_name);
+        // Parse function names from files in the corresponding directory.
+        fs::path funs_dir(indir/scc_name);
+        for (const fs::path& fun_path : Directory(funs_dir)) {
+            std::string fun_base(fun_path.filename().string());
+            if (!boost::algorithm::ends_with(fun_base, FILE_EXTENSION)) {
                 continue;
             }
-            for (Ref<Function> c : funs[f].callers()) {
-                if (cg.scc_of(c) != i) {
-                    entries.push_back(f);
-                    break;
-                }
-            }
+            size_t fun_name_len = fun_base.size() - FILE_EXTENSION.size();
+            std::string fun_name(fun_base.substr(0, fun_name_len));
+            Ref<Function> fun = funs.make(fun_name, scc.ref).ref;
+            scc.add_function(fun);
         }
-        for (Ref<Function> f : scc.nodes) {
-            // Only intra-SCC calls remain in calls().
-            FOR(c, funs[f].calls()) {
-                Ref<Function> callee = c.get<FUN>();
-                scc_code.epsilons.insert
-                    (var_map[f][c.get<SRC>()],
-                     var_map[callee][funs[callee].code().entry]);
-                for (Ref<Variable> ex : funs[callee].code().exits) {
-                    scc_code.epsilons.insert(var_map[callee][ex],
-                                             var_map[f][c.get<TGT>()]);
-                }
-            }
-        }
-        timer.log(entries.size(), " entry points");
-        timer.log("Size: ", scc_code.num_vars(), " vars, ",
-                  scc_code.num_ops(), " ops");
-        timer.done();
+    }
+    timer.log(sccs.size(), " SCCs");
+    timer.done();
 
-        timer.start("Closing SCC code graph");
-        scc_code.close();
-        timer.log("Size: ", scc_code.num_vars(), " vars, ",
-                  scc_code.num_ops(), " ops");
+    timer.start("Parsing SCCs");
+    for (SCC& scc : sccs) {
+        fs::path scc_path(indir/(scc.name + FILE_EXTENSION));
+        scc.parse_file(scc_path, funs, flds);
+    }
+    timer.done();
+
+    timer.start("Parsing functions");
+    for (Function& f : funs) {
+        SCC& scc = sccs[f.scc];
+        fs::path fun_path(indir/scc.name/(f.name + FILE_EXTENSION));
+        f.parse_file(fun_path, scc);
+    }
+    timer.done();
+
+    timer.start("Processing SCCs bottom-up");
+    for (SCC& scc : sccs) {
+        timer.start("Processing SCC", scc.ref, " of ", sccs.size());
+        timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
+
+        timer.start("Inlining callees");
+        scc.inline_callees(funs);
         timer.done();
+        timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
+
+        timer.start("Closing SCC code");
+        scc.close_code();
+        timer.done();
+        timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
 
         // Emit signatures by repurposing the full-SCC code graph.
-        for (Ref<Function> f : entries) {
-            timer.start("Emitting sig for entry", funs[f].name);
+        for (Ref<Function> f_ref : scc.funs()) {
+            Function& f = funs[f_ref];
+            timer.start("Emitting sig for function", f.name);
 
             timer.start("Copying SCC code");
-            CodeGraph f_code(scc_code);
-            f_code.entry = var_map[f][funs[f].code().entry];
-            for (Ref<Variable> ex : funs[f].code().exits) {
-                f_code.exits.insert(var_map[f][ex]);
-            }
+            CodeGraph f_code = scc.make_fun_code(f);
             timer.done();
+            timer.log("Size: ", f_code.num_vars(), " vars, ",
+                      f_code.num_ops(), " ops");
 
             timer.start("PN-extending function code");
             f_code.pn_extend();
+            timer.done();
             timer.log("Size: ", f_code.num_vars(), " vars, ",
                       f_code.num_ops(), " ops");
-            timer.done();
 
             timer.start("Emitting function signature");
-            Signature f_sig = f_code.to_sig();
+            f.set_sig(f_code.to_sig());
             timer.done();
-            swap(funs[f].sig(), f_sig);
+            timer.log("Size: ", f.sig().num_states(), " states, ",
+                      f.sig().num_trans(), " transitions");
 
             timer.start("Printing signature");
-            fs::path fpath(outdir/(funs[f].name + ".sig.tgf"));
+            fs::path fpath(outdir/(f.name + ".sig.tgf"));
             std::ofstream fout(fpath.string());
             EXPECT((bool) fout);
-            funs[f].sig().to_tgf(fout, flds);
+            f.sig().to_tgf(fout, flds);
             timer.done();
 
             timer.done();
         }
 
-        timer.start("Pre-emptively clearing useless SCCs");
-        auto clear_if_useless = [&](const SCC& scc, SccId curr_id) {
-            for (SccId parent_id : scc.parents) {
-                if (parent_id > curr_id) {
-                    // 'scc' is reachable by another SCC, which hasn't been
-                    // processed yet => we will read it again in the future.
-                    return;
-                }
-            }
-            // We won't be reading the contents of this SCC in the future, so
-            // we can safely clear it.
-            for (Ref<Function> f : scc.nodes) {
-                funs[f].clear();
-            }
-        };
-        clear_if_useless(scc, i);
-        for (SccId child_id : scc.children) {
-            // Re-check all children of this SCC.
-            clear_if_useless(cg.scc(child_id), i);
-        }
         timer.done();
-
-        timer.done();
-    }
-
-    timer.start("Printing function stats");
-    fs::path stats_fpath(outdir/"stats.csv");
-    std::ofstream stats_fout(stats_fpath.string());
-    EXPECT((bool) stats_fout);
-    stats_fout << "Function\tCode States\tCode Trans"
-               << "\tSig States\tSig Trans\tCallees"
-               << "\tSCC Height\tSCC Size\tCumm SCC Size"
-               << std::endl;
-    for (const Function& f : funs) {
-        f.print_stats(stats_fout);
-        const SCC& scc = cg.scc(cg.scc_of(f.ref));
-        stats_fout << "\t" << scc.height << "\t" << scc.nodes.size()
-                   << "\t" << scc.cumm_size << std::endl;
     }
     timer.done();
 

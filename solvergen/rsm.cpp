@@ -696,7 +696,8 @@ public:
 public:
     const Key fields;
     const Ref<SuperNode> ref;
-    bool useful = false;
+    bool fwd_reached = false;
+    bool bck_reached = false;
 public:
     SuperNode(const Key* fields, Ref<SuperNode> ref)
         // TODO: Possibly inefficient way to default-initialize a Key in case
@@ -714,6 +715,7 @@ typedef mi::NamedTuple<PRI_CP, Ref<Component>, // = PRI_CP_FROM = PRI_CP_TO
                             mi::NamedTuple<SEC_CP_TO, Ref<Component>,
                                 mi::NamedTuple<SEC_ST_TO, Ref<State>,
                                     mi::Nil> > > > > > > Signature;
+std::ostream& operator<<(std::ostream& os, const Signature& sig);
 
 class Function {
 public:
@@ -721,25 +723,49 @@ public:
 public:
     const Signature sig;
     const Ref<Function> ref;
-    const Component& pri_comp_;
 private:
+    bool empty_body_ = false;
+public:
+    explicit Function(const Signature* sig, Ref<Function> ref)
+        : sig(*sig), ref(ref) {}
+    bool empty_body() const {
+        return empty_body_;
+    }
+    void set_empty_body(bool empty) {
+        if (!empty) {
+            // Can only move from non-empty to empty.
+            assert(!empty_body_);
+        } else {
+            empty_body_ = true;
+        }
+    }
+};
+
+Registry<Function> funs;
+
+class Body {
+private:
+    const Component& pri_comp_;
     Registry<SuperNode> sup_nodes_;
-    Ref<SuperNode> initial_;
-    std::deque<Ref<SuperNode> > fwd_list_;
+    std::set<Ref<Function> > incl_funs_;
+    mi::MultiIndex<
+        mi::Index<FUN, Ref<Function>,
+            mi::Table<SRC, Ref<SuperNode> > >,
+        mi::Table<SRC, Ref<SuperNode> > > initials_;
+    mi::MultiIndex<
+        mi::Index<FUN, Ref<Function>,
+            mi::Table<DST, Ref<SuperNode> > >,
+        mi::Table<DST, Ref<SuperNode> > > finals_;
     mi::Index<DST, Ref<SuperNode>,
         mi::Table<SRC, Ref<SuperNode> > > eps_moves_;
     mi::Index<DST, Ref<SuperNode>,
         mi::Index<SRC, Ref<SuperNode>,
             mi::Bag<MOD, SecStackMod> > > stack_moves_;
-    mi::MultiIndex<
-        mi::Index<DST, Ref<SuperNode>,
-            mi::Index<SRC, Ref<SuperNode>,
-                mi::Table<FUN, Ref<Function> > > >,
-        mi::Table<FUN, Ref<Function> > > call_moves_;
-    std::set<Ref<SuperNode> > finals_;
+    mi::Index<DST, Ref<SuperNode>,
+        mi::Index<SRC, Ref<SuperNode>,
+            mi::Table<FUN, Ref<Function> > > > call_moves_;
+    std::deque<Ref<SuperNode> > fwd_list_;
     std::deque<Ref<SuperNode> > bck_list_;
-    std::set<Ref<Function> > callers_;
-    bool empty_body_ = false;
 private:
     const typename SuperNode::Key& curr() const {
         return sup_nodes_[curr_id()].fields;
@@ -749,14 +775,21 @@ private:
     }
     Ref<SuperNode> add_node(Ref<Node> node, Ref<State> pri_state,
                             Ref<Component> sec_comp, Ref<State> sec_state) {
-        unsigned int old_sz = sup_nodes_.size();
-        Ref<SuperNode> point =
-            sup_nodes_.add(node, pri_state, sec_comp, sec_state).ref;
-        if (sup_nodes_.size() > old_sz) {
-            // The SuperNode was not already present.
+        return sup_nodes_.add(node, pri_state, sec_comp, sec_state).ref;
+    }
+    void fwd_visit(Ref<SuperNode> point) {
+        bool& fwd_reached = sup_nodes_[point].fwd_reached;
+        if (!fwd_reached) {
+            fwd_reached = true;
             fwd_list_.push_back(point);
         }
-        return point;
+    }
+    void bck_visit(Ref<SuperNode> point) {
+        bool& bck_reached = sup_nodes_[point].bck_reached;
+        if (!bck_reached) {
+            bck_reached = true;
+            bck_list_.push_back(point);
+        }
     }
     void cross_trans(const EdgeTail& e, const SecMoves& sec_moves) {
         std::list<Ref<State> > pri_st_to;
@@ -777,12 +810,14 @@ private:
                 Ref<SuperNode> next_id =
                     add_node(e.get<DST>(), s, move.get<SEC_CP_TO>(),
                              move.get<SEC_ST_TO>());
+                fwd_visit(next_id);
                 eps_moves_.insert(next_id, curr_id());
             }
             for (const auto& move : sec_moves.stack_moves()) {
                 Ref<SuperNode> next_id =
                     add_node(e.get<DST>(), s, move.get<SEC_CP_TO>(),
                              move.get<SEC_ST_TO>());
+                fwd_visit(next_id);
                 stack_moves_.insert(next_id, curr_id(), move.get<MOD>());
             }
         }
@@ -805,7 +840,28 @@ private:
         }
     }
     void cross_call(Ref<Box> box, const EdgeTail& e_in, Ref<SuperNode> in_id,
-                    Ref<Component> sec_cp_in, Ref<State> sec_st_in);
+                    Ref<Component> sec_cp_in, Ref<State> sec_st_in) {
+        Ref<Component> entered = pri_comp_.boxes[box].comp;
+        FOR(s, funs.index()[entered][e_in.get<DST>()][sec_cp_in][sec_st_in]) {
+            Function& callee = funs[s.get<REF>()];
+            if (callee.empty_body()) {
+                continue;
+            }
+            Ref<SuperNode> out_id = sup_nodes_.mktemp().ref;
+            if (incl_funs_.count(callee.ref) > 0) {
+                // Intra-SCC call: emit epsilon moves instead of calls.
+                for (Ref<SuperNode> sn : initials_.pri()[callee.ref]) {
+                    eps_moves_.insert(sn, in_id);
+                }
+                for (Ref<SuperNode> sn : finals_.pri()[callee.ref]) {
+                    eps_moves_.insert(out_id, sn);
+                }
+            } else {
+                call_moves_.insert(out_id, in_id, callee.ref);
+            }
+            cross_exits(box, e_in.get<TAG>(), callee, out_id);
+        }
+    }
     void cross_exits(Ref<Box> box, Ref<Tag> tag, const Function& callee,
                      Ref<SuperNode> out_id) {
         FOR(exit, pri_comp_.exits.sec<2>()[box]) {
@@ -819,37 +875,42 @@ private:
                     Ref<SuperNode> next_id =
                         add_node(n, exit.get<TO>(), move.get<SEC_CP_TO>(),
                                  move.get<SEC_ST_TO>());
+                    fwd_visit(next_id);
                     eps_moves_.insert(next_id, out_id);
                 }
                 for (const auto& move : moves_out.stack_moves()) {
                     Ref<SuperNode> next_id =
                         add_node(n, exit.get<TO>(), move.get<SEC_CP_TO>(),
                                  move.get<SEC_ST_TO>());
+                    fwd_visit(next_id);
                     stack_moves_.insert(next_id, out_id, move.get<MOD>());
                 }
             }
         }
     }
-    void mark_useful(Ref<SuperNode> point) {
-        SuperNode& sn = sup_nodes_[point];
-        if (!sn.useful) {
-            sn.useful = true;
-            bck_list_.push_back(point);
+public:
+    explicit Body(Ref<Component> pri_comp)
+        : pri_comp_(pri_rsm->components[pri_comp]) {}
+    Body(const Body&) = delete;
+    Body(Body&&) = default;
+    Body& operator=(const Body&) = delete;
+    void add_function(Ref<Function> f) {
+        const Signature& sig = funs[f].sig;
+        EXPECT(sig.get<PRI_CP>() == pri_comp_.ref);
+        incl_funs_.insert(f);
+        initials_.insert(f, add_node(sig.get<SRC>(), pri_comp_.initial,
+                                     sig.get<SEC_CP_FROM>(),
+                                     sig.get<SEC_ST_FROM>()));
+        for (Ref<State> s : pri_comp_.final) {
+            finals_.insert(f, add_node(sig.get<DST>(), s, sig.get<SEC_CP_TO>(),
+                                       sig.get<SEC_ST_TO>()));
         }
     }
-public:
-    explicit Function(const Signature* sig, Ref<Function> ref)
-        : sig(*sig), ref(ref),
-          pri_comp_(pri_rsm->components[sig->get<PRI_CP>()]) {}
-    Function(const Function&) = delete;
-    Function(Function&&) = default;
-    Function& operator=(const Function&) = delete;
-    void compute_body() {
-        // Register the function entry as the initial point.
-        initial_ = add_node(sig.get<SRC>(), pri_comp_.initial,
-                            sig.get<SEC_CP_FROM>(), sig.get<SEC_ST_FROM>());
-        // Starting from the single entry, traverse the function and emit
-        // SuperNodes.
+    void fill() {
+        // Starting from the entries, traverse the code and emit SuperNodes.
+        for (Ref<SuperNode> point : initials_.sec<0>()) {
+            fwd_visit(point);
+        }
         while (!fwd_list_.empty()) {
             const Component& sec_comp =
                 sec_rsm->components[curr().get<SEC_CP>()];
@@ -870,138 +931,144 @@ public:
             }
             fwd_list_.pop_front();
         }
-        // Register function exits as final points (only if we could reach them
-        // from the initial point).
-        for (Ref<State> s : pri_comp_.final) {
-            if (!sup_nodes_.contains(sig.get<DST>(), s, sig.get<SEC_CP_TO>(),
-                                     sig.get<SEC_ST_TO>())) {
-                continue;
-            }
-            Ref<SuperNode> final_id =
-                sup_nodes_.find(sig.get<DST>(), s, sig.get<SEC_CP_TO>(),
-                                sig.get<SEC_ST_TO>()).ref;
-            finals_.insert(final_id);
-            mark_useful(final_id);
-        }
         // Starting from the final points, move backwards and mark useful
         // points (those that can reach an exit). This filtering step is
         // overapproximate, but sound (before any matching is performed, we can
         // only be certain that the FSM is empty if we can't reach any final
-        // point from the initial.
+        // point from the initial).
+        // TODO: Considering a SuperNode useful even if it's only on the path
+        // from an entry point to an exit point that don't match.
+        for (Ref<SuperNode> point : finals_.sec<0>()) {
+            if (!sup_nodes_[point].fwd_reached) {
+                continue;
+            }
+            bck_visit(point);
+        }
         while (!bck_list_.empty()) {
             for (Ref<SuperNode> src : eps_moves_[bck_list_.front()]) {
-                mark_useful(src);
+                bck_visit(src);
             }
             for (const auto& src_p : stack_moves_[bck_list_.front()]) {
-                mark_useful(src_p.first);
+                bck_visit(src_p.first);
             }
-            for (const auto& src_p : call_moves_.pri()[bck_list_.front()]) {
-                mark_useful(src_p.first);
+            for (const auto& src_p : call_moves_[bck_list_.front()]) {
+                bck_visit(src_p.first);
             }
             bck_list_.pop_front();
         }
-        empty_body_ = !sup_nodes_[initial_].useful;
-        std::cout << "    Nodes: " << sup_nodes_.size() << std::endl;
-        std::cout << "    Eps moves: " << eps_moves_.size() << std::endl;
-        std::cout << "    Stack moves: " << stack_moves_.size() << std::endl;
-        std::cout << "    Call moves: " << call_moves_.size() << std::endl;
-    void clear_body() {
-        sup_nodes_.clear();
-        initial_ = Ref<SuperNode>();
-        eps_moves_.clear();
-        stack_moves_.clear();
-        call_moves_.clear();
-        finals_.clear();
-        assert(fwd_list_.empty());
-        assert(bck_list_.empty());
+        // TODO: Some initial points may be unreachable from the final points,
+        // so we could re-run forward and backward propagation, until fixpoint.
+        if (empty()) {
+        }
     }
-    bool empty_body() const {
-        return empty_body_;
+    std::set<Ref<Function> > callees() const {
+        std::set<Ref<Function> > res;
+        for (const auto& dst_p : call_moves_) {
+            if (!sup_nodes_[dst_p.first].bck_reached) {
+                continue;
+            }
+            for (const auto& src_p : dst_p.second) {
+                if (!sup_nodes_[src_p.first].bck_reached) {
+                    continue;
+                }
+                for (Ref<Function> f : src_p.second) {
+                    res.insert(f);
+                }
+            }
+        }
+        return res;
     }
-    void add_caller(Ref<Function> f) {
-        callers_.insert(f);
+    bool empty() const {
+        for (Ref<SuperNode> point : initials_.sec<0>()) {
+            if (sup_nodes_[point].bck_reached) {
+                return false;
+            }
+        }
+        return true;
     }
-    const std::set<Ref<Function> >& callers() const {
-        return callers_;
-    }
-    const mi::Table<FUN, Ref<Function> >& callees() const {
-        return call_moves_.sec<0>();
-    }
-    friend std::ostream& operator<<(std::ostream& os, const Function& fun);
+    friend std::ostream& operator<<(std::ostream& os, const Body& body);
+    void print_function_part(std::ostream& os, Ref<Function> f) const;
 };
 
-Registry<Function> funs;
-
-void Function::cross_call(Ref<Box> box, const EdgeTail& e_in,
-                          Ref<SuperNode> in_id, Ref<Component> sec_cp_in,
-                          Ref<State> sec_st_in) {
-    Ref<Component> entered = pri_comp_.boxes[box].comp;
-    FOR(s, funs.index()[entered][e_in.get<DST>()][sec_cp_in][sec_st_in]) {
-        Function& callee = funs[s.get<REF>()];
-        callee.add_caller(ref);
-        if (callee.empty_body()) {
-            continue;
-        }
-        Ref<SuperNode> out_id = sup_nodes_.mktemp().ref;
-        call_moves_.insert(out_id, in_id, callee.ref);
-        cross_exits(box, e_in.get<TAG>(), callee, out_id);
+Body compute_scc_body(const std::set<Ref<Function> >& scc) {
+    Body body(funs[*(scc.begin())].sig.get<PRI_CP>());
+    for (Ref<Function> f : scc) {
+        body.add_function(f);
     }
+    body.fill();
+    for (Ref<Function> f : scc) {
+        funs[f].set_empty_body(body.empty());
+    }
+    return body;
 }
 
-std::ostream& operator<<(std::ostream& os, const Signature& sig);
-
 void intersect_all(const std::string& out_dir) {
-    Worklist<Ref<Function>,true> to_recalc;
+    using std::swap;
+    RefMap<Function,std::set<Ref<Function> > > calls(funs);
 
-    // 1st pass: Iterate over all discovered functions, to set up call graph.
-    std::cout << "Performing initial intersection" << std::endl;
+    // Some functions may be discovered to be empty before their callers are
+    // processed, so those calls will get dropped before SCC calculation, but
+    // that doesn't affect correctness.
+    std::cout << "Performing first pass over functions" << std::endl;
     for (Function& f : funs) {
-        std::cout << "Intersecting # " << f.ref << std::endl;
-        f.compute_body();
-        if (f.empty_body()) {
+        std::cout << "Intersecting # " << f.ref << " of " << funs.size()
+                  << ": " << f.sig << std::endl;
+        std::set<Ref<Function> > singleton_scc;
+        singleton_scc.insert(f.ref);
+        Body body = compute_scc_body(singleton_scc);
+        if (body.empty()) {
             std::cout << "    Empty" << std::endl;
-            // Reschedule any callers that have already been calculated.
-            for (Ref<Function> c : f.callers()) {
-                if (!funs[c].empty_body()) {
-                    to_recalc.enqueue(c);
-                }
-            }
+            // Ignore calls in the body of an empty function.
+            calls[f.ref];
         } else {
-            std::cout << "    Non-empty, printing" << std::endl;
-            std::stringstream ss;
-            ss << f.sig << ".fun.tgf";
-            fs::path fpath = fs::path(out_dir)/ss.str();
-            std::ofstream fout(fpath.string());
-            EXPECT((bool) fout);
-            fout << f;
+            std::cout << "    Non-empty" << std::endl;
+            std::set<Ref<Function> > callees = body.callees();
+            swap(calls[f.ref], callees);
         }
-        f.clear_body();
     }
 
-    // 2nd pass: Propagate function emptiness information.
-    std::cout << "Propagating emptiness information" << std::endl;
-    while (!to_recalc.empty()) {
-        Function& f = funs[to_recalc.dequeue()];
-        std::cout << "Re-processing # " << f.ref << std::endl;
-        std::stringstream ss;
-        ss << f.sig << ".fun.tgf";
-        fs::path fpath = fs::path(out_dir)/ss.str();
-        f.compute_body();
-        if (f.empty_body()) {
-            std::cout << "    Became empty" << std::endl;
-            fs::remove(fpath);
-            for (Ref<Function> c : f.callers()) {
-                if (!funs[c].empty_body()) {
-                    to_recalc.enqueue(c);
-                }
-            }
-        } else {
-            std::cout << "    Updated, printing" << std::endl;
+    std::cout << "Calculating SCCs" << std::endl;
+    SccGraph<Function> cg(funs, calls);
+    std::cout << "    " << cg.num_sccs() << " SCCs" << std::endl;
+    Histogram<unsigned> scc_size_freqs;
+
+    std::cout << "Propagating emptiness information bottom-up" << std::endl;
+    for (unsigned i = 0; i < cg.num_sccs(); i++) {
+        const auto& scc = cg.scc(i);
+        scc_size_freqs.record(scc.nodes.size());
+        std::cout << "Processing SCC " << i << " of " << cg.num_sccs()
+                  << " (size " <<  scc.nodes.size() <<  ")" << std::endl;
+        Body body = compute_scc_body(scc.nodes);
+        if (body.empty()) {
+            std::cout << "    Empty" << std::endl;
+            continue;
+        }
+        std::cout << "    Non-empty" << std::endl;
+        std::cout << "    Printing SCC code" << std::endl;
+        std::stringstream body_fname;
+        body_fname << std::setfill('0') << std::setw(10) << i << ".fun.tgf";
+        fs::path body_fpath = fs::path(out_dir)/body_fname.str();
+        std::ofstream body_fout(body_fpath.string());
+        EXPECT((bool) body_fout);
+        body_fout << body;
+        std::stringstream scc_dirname;
+        scc_dirname << std::setfill('0') << std::setw(10) << i;
+        fs::path scc_dir(fs::path(out_dir)/scc_dirname.str());
+        fs::create_directory(scc_dir);
+        for (Ref<Function> f : scc.nodes) {
+            std::cout << "    Printing part for " << funs[f].sig << std::endl;
+            std::stringstream fname;
+            fname << funs[f].sig << ".fun.tgf";
+            fs::path fpath = fs::path(scc_dir)/fname.str();
             std::ofstream fout(fpath.string());
             EXPECT((bool) fout);
-            fout << f;
+            body.print_function_part(fout, f);
         }
-        f.clear_body();
+    }
+
+    std::cout << "SCC size\tFrequency" << std::endl;
+    for (const auto& p : scc_size_freqs) {
+        std::cout << p.first << "\t" << p.second << std::endl;
     }
 }
 
@@ -1034,82 +1101,84 @@ std::ostream& operator<<(std::ostream& os, const Signature& sig) {
     return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const Function& fun) {
-    if (fun.empty_body()) {
-        print(os, fun.sup_nodes_[fun.initial_], fun.pri_comp_);
-        os << " in" << std::endl;
-        os << "#" << std::endl;
-        return os;
-    }
+std::ostream& operator<<(std::ostream& os, const Body& body) {
     // Only print useful points.
-    for (const SuperNode& sn : fun.sup_nodes_) {
-        if (!sn.useful) {
+    // Ignore the 'initial' and 'final' flags on points (those are covered on
+    // the function-specific portion).
+    for (const SuperNode& sn : body.sup_nodes_) {
+        if (!sn.bck_reached) {
             continue;
         }
-        print(os, sn, fun.pri_comp_);
-        if (sn.ref == fun.initial_) {
-            os << " in";
-        }
-        if (fun.finals_.count(sn.ref) > 0) {
-            os << " out";
-        }
+        print(os, sn, body.pri_comp_);
         os << std::endl;
     }
     os << "#" << std::endl;
     // Only print arrows between useful points.
-    for (const auto& dst_p : fun.eps_moves_) {
-        const SuperNode& dst = fun.sup_nodes_[dst_p.first];
-        if (!dst.useful) {
+    for (const auto& dst_p : body.eps_moves_) {
+        const SuperNode& dst = body.sup_nodes_[dst_p.first];
+        if (!dst.bck_reached) {
             continue;
         }
         for (Ref<SuperNode> src_id : dst_p.second) {
-            const SuperNode& src = fun.sup_nodes_[src_id];
-            if (!src.useful) {
+            const SuperNode& src = body.sup_nodes_[src_id];
+            if (!src.bck_reached) {
                 continue;
             }
-            print(os, src, fun.pri_comp_);
+            print(os, src, body.pri_comp_);
             os << " ";
-            print(os, dst, fun.pri_comp_);
+            print(os, dst, body.pri_comp_);
             os << std::endl;
         }
     }
-    for (const auto& dst_p : fun.stack_moves_) {
-        const SuperNode& dst = fun.sup_nodes_[dst_p.first];
-        if (!dst.useful) {
+    for (const auto& dst_p : body.stack_moves_) {
+        const SuperNode& dst = body.sup_nodes_[dst_p.first];
+        if (!dst.bck_reached) {
             continue;
         }
         for (const auto& src_p : dst_p.second) {
-            const SuperNode& src = fun.sup_nodes_[src_p.first];
-            if (!src.useful) {
+            const SuperNode& src = body.sup_nodes_[src_p.first];
+            if (!src.bck_reached) {
                 continue;
             }
             for (const SecStackMod& mod : src_p.second) {
-                print(os, src, fun.pri_comp_);
+                print(os, src, body.pri_comp_);
                 os << " ";
-                print(os, dst, fun.pri_comp_);
+                print(os, dst, body.pri_comp_);
                 os << " " << mod << std::endl;
             }
         }
     }
-    for (const auto& dst_p : fun.call_moves_.pri()) {
-        const SuperNode& dst = fun.sup_nodes_[dst_p.first];
-        if (!dst.useful) {
+    for (const auto& dst_p : body.call_moves_) {
+        const SuperNode& dst = body.sup_nodes_[dst_p.first];
+        if (!dst.bck_reached) {
             continue;
         }
         for (const auto& src_p : dst_p.second) {
-            const SuperNode& src = fun.sup_nodes_[src_p.first];
-            if (!src.useful) {
+            const SuperNode& src = body.sup_nodes_[src_p.first];
+            if (!src.bck_reached) {
                 continue;
             }
             for (Ref<Function> callee : src_p.second) {
-                print(os, src, fun.pri_comp_);
+                print(os, src, body.pri_comp_);
                 os << " ";
-                print(os, dst, fun.pri_comp_);
+                print(os, dst, body.pri_comp_);
                 os << " " << funs[callee].sig << std::endl;
             }
         }
     }
     return os;
+}
+
+void Body::print_function_part(std::ostream& os, Ref<Function> f) const {
+    assert(incl_funs_.count(f) > 0);
+    for (Ref<SuperNode> point : initials_.pri()[f]) {
+        print(os, sup_nodes_[point], pri_comp_);
+        os << " in" << std::endl;
+    }
+    for (Ref<SuperNode> point : finals_.pri()[f]) {
+        print(os, sup_nodes_[point], pri_comp_);
+        os << " out" << std::endl;
+    }
 }
 
 // FUNCTION ENUMERATION =======================================================
