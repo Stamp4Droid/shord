@@ -175,6 +175,59 @@ private:
         mi::Index<TO, posint,
             mi::Index<LETTER, posint,
                 mi::Table<FROM, posint> > > > trans_;
+private:
+    // TODO:
+    // - Renumber states, to cover holes in numbering?
+    // - Also clean alphabet?
+    // - Perform directly on CodeGraph (do generic renumbering on Registries).
+    void prune_states(std::set<posint>&& new_states) {
+        using std::swap;
+        std::set<posint> temp(std::move(new_states));
+        swap(states_, temp);
+        std::set<posint> new_initial;
+        for (posint s : initial_) {
+            if (states_.count(s) > 0) {
+                new_initial.insert(s);
+            }
+        }
+        swap(initial_, new_initial);
+        std::set<posint> new_final;
+        for (posint s : final_) {
+            if (states_.count(s) > 0) {
+                new_final.insert(s);
+            }
+        }
+        swap(final_, new_final);
+        decltype(trans_) new_trans;
+        for (const auto& from_p : trans_.pri()) {
+            posint from = from_p.first;
+            if (states_.count(from) == 0) {
+                continue;
+            }
+            FOR(arrow, from_p.second) {
+                if (states_.count(arrow.template get<TO>()) == 0) {
+                    continue;
+                }
+                new_trans.insert(from, arrow.template get<LETTER>(),
+                                 arrow.template get<TO>());
+            }
+        }
+        swap(trans_, new_trans);
+    }
+    // TODO: Could cache eps_close results (but without emiting d-states for
+    // the non-closed n-state sets).
+    void eps_close(LightSet<posint>& states) const {
+        std::deque<posint> worklist(states.begin(), states.end());
+        while (!worklist.empty()) {
+            posint src = worklist.front();
+            for (posint tgt : trans_.pri()[src][0]) {
+                if (states.insert(tgt)) {
+                    worklist.push_back(tgt);
+                }
+            }
+            worklist.pop_front();
+        }
+    }
 public:
     template<typename C>
     explicit NFA(const C& alphabet)
@@ -235,14 +288,7 @@ public:
     unsigned num_trans() const {
         return trans_.size();
     }
-    // TODO:
-    // - Are all the heuristics necessary?
-    // - Renumber states, to cover holes in numbering?
-    // - Also clean alphabet?
-    // - Perform directly on CodeGraph (do generic renumbering on Registries).
-    void simplify() {
-        using std::swap;
-
+    void prune_useless_states() {
         // Perform forward reachability
         std::set<posint> fwd_reached(initial_.begin(), initial_.end());
         std::deque<posint> fwd_list(initial_.begin(), initial_.end());
@@ -278,13 +324,16 @@ public:
         }
         // TODO: Some initial states might now be unreachable => should run
         // until fixpoint?
-
-        // Drop states that are only reachable through epsilons.
-        // TODO: Should only do this if it's a single epsilon reaching this
-        // variable? Alternatively merge all states in an epsilon-cycle?
+        // Prune states based on the above information.
+        prune_states(std::move(bck_reached));
+    }
+    // Drop states that are only reachable through epsilons.
+    // TODO: Should only do this if it's a single epsilon reaching this
+    // variable? Alternatively merge all states in an epsilon-cycle?
+    void merge_epsilons() {
         // TODO: Assuming order of processing doesn't matter.
         std::set<posint> new_states;
-        for (posint b : bck_reached) {
+        for (posint b : states_) {
             // Ignore initial states.
             if (initial_.count(b) > 0) {
                 new_states.insert(b);
@@ -309,7 +358,7 @@ public:
             std::list<posint> new_srcs;
             for (posint a : trans_.sec<2>()[b][0]) {
                 // Ignore epsilon self-loops.
-                if (a == b || bck_reached.count(a) == 0) {
+                if (a == b) {
                     continue;
                 }
                 new_srcs.push_back(a);
@@ -327,52 +376,7 @@ public:
             // Don't include 'b' in 'new_states', effectively dropping it from
             // the FSM (and all transitions starting or ending at it).
         }
-
-        // Prune states based on the above information.
-        swap(states_, new_states);
-        std::set<posint> new_initial;
-        for (posint s : initial_) {
-            if (states_.count(s) > 0) {
-                new_initial.insert(s);
-            }
-        }
-        swap(initial_, new_initial);
-        std::set<posint> new_final;
-        for (posint s : final_) {
-            if (states_.count(s) > 0) {
-                new_final.insert(s);
-            }
-        }
-        swap(final_, new_final);
-        decltype(trans_) new_trans;
-        for (const auto& from_p : trans_.pri()) {
-            posint from = from_p.first;
-            if (states_.count(from) == 0) {
-                continue;
-            }
-            FOR(arrow, from_p.second) {
-                if (states_.count(arrow.template get<TO>()) == 0) {
-                    continue;
-                }
-                new_trans.insert(from, arrow.template get<LETTER>(),
-                                 arrow.template get<TO>());
-            }
-        }
-        swap(trans_, new_trans);
-    }
-    // TODO: Could cache eps_close results (but without emiting d-states for
-    // the non-closed n-state sets).
-    void eps_close(LightSet<posint>& states) const {
-        std::deque<posint> worklist(states.begin(), states.end());
-        while (!worklist.empty()) {
-            posint src = worklist.front();
-            for (posint tgt : trans_.pri()[src][0]) {
-                if (states.insert(tgt)) {
-                    worklist.push_back(tgt);
-                }
-            }
-            worklist.pop_front();
-        }
+        prune_states(std::move(new_states));
     }
     DfaWrapper* determinize() const {
         // TODO: Can check if the NFA already contains no epsilons before
@@ -1403,30 +1407,35 @@ public:
         // Determinize and minimize the FSM.
         unsigned n_orig = nfa.num_states();
         unsigned e_orig = nfa.num_trans();
-        timer.log("Original NFA: ", n_orig, " states, ", e_orig,
-                  " transitions");
+        timer.log("Size: ", n_orig, " states, ", e_orig, " transitions");
         timer.done();
-        timer.start("Simplifying NFA");
-        nfa.simplify();
-        unsigned n_simpl = nfa.num_states();
-        unsigned e_simpl = nfa.num_trans();
-        timer.log("Simplified NFA: ", n_simpl, " states, ", e_simpl,
-                  " transitions");
-        typename Timer::TimeDiff dt_simpl = timer.done();
+        timer.start("Pruning NFA");
+        nfa.prune_useless_states();
+        unsigned n_prune = nfa.num_states();
+        unsigned e_prune = nfa.num_trans();
+        timer.log("Size: ", n_prune, " states, ", e_prune, " transitions");
+        typename Timer::TimeDiff dt_prune = timer.done();
+        timer.start("Merging epsilons");
+        nfa.merge_epsilons();
+        unsigned n_merge = nfa.num_states();
+        unsigned e_merge = nfa.num_trans();
+        timer.log("Size: ", n_merge, " states, ", e_merge, " transitions");
+        typename Timer::TimeDiff dt_merge = timer.done();
         timer.start("Determinizing NFA");
         Signature res(nfa);
         unsigned n_det = res.num_states();
         unsigned e_det = res.num_trans();
-        timer.log("DFA: ", n_det, " states, ", e_det, " transitions");
+        timer.log("Size: ", n_det, " states, ", e_det, " transitions");
         typename Timer::TimeDiff dt_det = timer.done();
         timer.start("Minimizing DFA");
         res.minimize();
         unsigned n_min = res.num_states();
         unsigned e_min = res.num_trans();
-        timer.log("Minimal DFA: ", n_min, " states, ", e_min, " transitions");
+        timer.log("Size: ", n_min, " states, ", e_min, " transitions");
         typename Timer::TimeDiff dt_min = timer.done();
         timer.log("FSMSizes\t",   n_orig,  "\t", e_orig,  "\t",
-                  dt_simpl, "\t", n_simpl, "\t", e_simpl, "\t",
+                  dt_prune, "\t", n_prune, "\t", e_prune, "\t",
+                  dt_merge, "\t", n_merge, "\t", e_merge, "\t",
                   dt_det,   "\t", n_det,   "\t", e_det,   "\t",
                   dt_min,   "\t", n_min,   "\t", e_min);
         return res;
@@ -1834,7 +1843,8 @@ int main(int argc, char* argv[]) {
     timer.start("Processing SCCs bottom-up");
     for (SCC& scc : sccs) {
         timer.start("Processing SCC", scc.ref, " of ", sccs.size());
-        timer.log(scc.size(), " functions");
+        timer.log(scc.size(), " functions, ", scc.entries().size(),
+                  " entries");
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
 
         timer.start("Inlining callees");
@@ -1848,9 +1858,11 @@ int main(int argc, char* argv[]) {
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
 
         // Emit signatures by repurposing the full-SCC code graph.
+        posint f_num = 0;
         for (Ref<Function> f_ref : scc.entries()) {
             Function& f = funs[f_ref];
-            timer.start("Emitting sig for entry", f.name);
+            timer.start("Emitting sig for entry", f_num, " of ",
+                        scc.entries().size(), ": ", f.name);
 
             timer.start("Copying SCC code");
             CodeGraph f_code = scc.make_fun_code(f);
@@ -1877,6 +1889,7 @@ int main(int argc, char* argv[]) {
             f.sig().to_tgf(fout, flds);
             timer.done();
 
+            f_num++;
             timer.done();
         }
 
