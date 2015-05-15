@@ -1506,6 +1506,9 @@ public:
         EXPECT(scc == this->scc);
         return false;
     }
+    void clear() {
+        sig_.clear();
+    }
     void parse_file(const fs::path& fpath, SCC& scc);
     Ref<Variable> entry() const {
         return entry_;
@@ -1542,6 +1545,8 @@ private:
     CallStore calls_;
     std::set<Ref<Function> > funs_;
     std::set<Ref<Function> > entries_;
+    std::set<Ref<SCC> > children_;
+    std::set<Ref<SCC> > parents_;
 public:
     explicit SCC(const std::string* name_ptr, Ref<SCC> ref)
         : name(*name_ptr), ref(ref) {
@@ -1552,6 +1557,31 @@ public:
     SCC& operator=(const SCC&) = delete;
     bool merge() {
         return false;
+    }
+    void clear() {
+        code_.clear();
+        calls_.clear();
+    }
+    void clear_if_useless(Ref<SCC> curr, Registry<Function>& fun_reg) {
+        for (Ref<SCC> p : parents_) {
+            if (curr < p) {
+                // This SCC is reachable by another SCC, which hasn't been
+                // processed yet => we will read it again in the future.
+                return;
+            }
+        }
+        // We won't be reading the contents of this SCC in the future, so we can
+        // safely clear it.
+        clear();
+        for (Ref<Function> f : entries_) {
+            fun_reg[f].clear();
+        }
+    }
+    const std::set<Ref<SCC> >& children() const {
+        return children_;
+    }
+    const std::set<Ref<SCC> >& parents() const {
+        return parents_;
     }
     const std::set<Ref<Function> >& funs() const {
         return funs_;
@@ -1604,7 +1634,9 @@ public:
                     // Assuming all intra-SCC calls have been inlined in the
                     // previous step.
                     EXPECT(callee.scc < ref);
+                    children_.insert(callee.scc);
                     scc_reg[callee.scc].mark_entry(callee.ref);
+                    scc_reg[callee.scc].parents_.insert(ref);
                     calls_.insert(callee.ref, src, tgt);
 
                 }
@@ -1840,6 +1872,14 @@ int main(int argc, char* argv[]) {
 
             timer.done();
         }
+
+        timer.start("Pre-emptively clearing useless SCCs");
+        scc.clear_if_useless(scc.ref, funs);
+        for (Ref<SCC> child : scc.children()) {
+            // Re-check all children of this SCC.
+            sccs[child].clear_if_useless(scc.ref, funs);
+        }
+        timer.done();
 
         timer.done();
     }
