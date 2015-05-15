@@ -958,8 +958,6 @@ public:
         }
         // TODO: Some initial points may be unreachable from the final points,
         // so we could re-run forward and backward propagation, until fixpoint.
-        if (empty()) {
-        }
     }
     std::set<Ref<Function> > callees() const {
         std::set<Ref<Function> > res;
@@ -990,7 +988,7 @@ public:
     void print_function_part(std::ostream& os, Ref<Function> f) const;
 };
 
-Body compute_scc_body(const std::set<Ref<Function> >& scc) {
+Body make_scc_body(const std::set<Ref<Function> >& scc) {
     Body body(funs[*(scc.begin())].sig.get<PRI_CP>());
     for (Ref<Function> f : scc) {
         body.add_function(f);
@@ -1002,43 +1000,72 @@ Body compute_scc_body(const std::set<Ref<Function> >& scc) {
     return body;
 }
 
+Body make_fun_body(Ref<Function> f) {
+    std::set<Ref<Function> > singleton_scc;
+    singleton_scc.insert(f);
+    return make_scc_body(singleton_scc);
+}
+
 void intersect_all(const std::string& out_dir) {
     using std::swap;
-    RefMap<Function,std::set<Ref<Function> > > calls(funs);
-
-    // Some functions may be discovered to be empty before their callers are
-    // processed, so those calls will get dropped before SCC calculation, but
-    // that doesn't affect correctness.
-    std::cout << "Performing first pass over functions" << std::endl;
+    std::cout << "Creating dummy callgraph" << std::endl;
+    std::map<Ref<Function>,std::set<Ref<Function> > > calls;
     for (Function& f : funs) {
-        std::cout << "Intersecting # " << f.ref << " of " << funs.size()
-                  << ": " << f.sig << std::endl;
-        std::set<Ref<Function> > singleton_scc;
-        singleton_scc.insert(f.ref);
-        Body body = compute_scc_body(singleton_scc);
-        if (body.empty()) {
-            std::cout << "    Empty" << std::endl;
-            // Ignore calls in the body of an empty function.
-            calls[f.ref];
-        } else {
-            std::cout << "    Non-empty" << std::endl;
-            std::set<Ref<Function> > callees = body.callees();
-            swap(calls[f.ref], callees);
-        }
+        calls[f.ref];
     }
+    SccGraph<Ref<Function> > cg(calls);
 
-    std::cout << "Calculating SCCs" << std::endl;
-    SccGraph<Function> cg(funs, calls);
-    std::cout << "    " << cg.num_sccs() << " SCCs" << std::endl;
-    Histogram<unsigned> scc_size_freqs;
+    unsigned prev_num_funs;
+    unsigned num_passes = 0;
+    do {
+        num_passes++;
+        std::cout << "Performing pass # " << num_passes << ": "
+                  << calls.size() << " non-empty functions" << std::endl;
+        prev_num_funs = calls.size();
+        calls.clear();
 
-    std::cout << "Propagating emptiness information bottom-up" << std::endl;
+        std::cout << "Processing functions in bottom-up order" << std::endl;
+        for (unsigned i = 0; i < cg.num_sccs(); i++) {
+            const auto& scc = cg.scc(i);
+            std::cout << "Processing SCC " << i << " of " << cg.num_sccs()
+                      << " (size " <<  scc.nodes.size() <<  ")" << std::endl;
+            unsigned f_num = 0;
+            for (Ref<Function> f : scc.nodes) {
+                std::cout << "    Intersecting function # " << f_num << " of "
+                          << scc.nodes.size() << ": " << funs[f].sig
+                          << std::endl;
+                Body body = make_fun_body(f);
+                if (body.empty()) {
+                    std::cout << "        Empty" << std::endl;
+                } else {
+                    std::cout << "        Non-empty" << std::endl;
+                    calls.emplace(f, body.callees());
+                }
+                f_num++;
+            }
+        }
+
+        std::cout << "Computing new callgraph" << std::endl;
+        SccGraph<Ref<Function> > new_cg(calls);
+        swap(cg, new_cg);
+        std::cout << "    " << cg.num_sccs() << " SCCs" << std::endl;
+        Histogram<unsigned> scc_size_freqs;
+        for (const auto& scc : cg.sccs()) {
+            scc_size_freqs.record(scc.nodes.size());
+        }
+        std::cout << "    SCC size\tFrequency" << std::endl;
+        for (const auto& p : scc_size_freqs) {
+            std::cout << "    " << p.first << "\t" << p.second << std::endl;
+        }
+    } while (calls.size() < prev_num_funs);
+
+    std::cout << "Emitting SCC code bottom-up" << std::endl;
     for (unsigned i = 0; i < cg.num_sccs(); i++) {
         const auto& scc = cg.scc(i);
-        scc_size_freqs.record(scc.nodes.size());
         std::cout << "Processing SCC " << i << " of " << cg.num_sccs()
                   << " (size " <<  scc.nodes.size() <<  ")" << std::endl;
-        Body body = compute_scc_body(scc.nodes);
+        Body body = make_scc_body(scc.nodes);
+        // TODO: We shouldn't find empty SCCs (or calls to non-existent SCCs).
         if (body.empty()) {
             std::cout << "    Empty" << std::endl;
             continue;
@@ -1064,11 +1091,6 @@ void intersect_all(const std::string& out_dir) {
             EXPECT((bool) fout);
             body.print_function_part(fout, f);
         }
-    }
-
-    std::cout << "SCC size\tFrequency" << std::endl;
-    for (const auto& p : scc_size_freqs) {
-        std::cout << p.first << "\t" << p.second << std::endl;
     }
 }
 

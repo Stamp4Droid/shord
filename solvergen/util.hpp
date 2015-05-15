@@ -732,15 +732,13 @@ public:
 
 // TODO: Should make this a special case of a generic SccGraph<Node>, for
 // Node == Ref<T>.
-template<class T> class SccGraph {
+template<class NodeId> class SccGraph {
 public:
     typedef unsigned SccId;
     struct SCC {
-        std::set<Ref<T> > nodes;
+        std::set<NodeId> nodes;
         std::set<SccId> parents;
         std::set<SccId> children;
-        unsigned height = 0;
-        unsigned cumm_size = 0;
         bool trivial = true;
     };
 private:
@@ -750,25 +748,31 @@ private:
         bool on_stack = false;
     };
 private:
-    RefMap<T,SccId> node2scc_;
+    std::map<NodeId,SccId> node2scc_;
     std::vector<SCC> comps_;
 public:
-    // Edges must be provided as a map from Ref<T>'s to sets of Ref<T>'s.
-    template<class Edges>
-    explicit SccGraph(const Registry<T>& nodes, const Edges& edges)
-        : node2scc_(nodes) {
-        RefMap<T,NodeInfo> info(nodes);
+    friend void swap(SccGraph& a, SccGraph& b) {
+        using std::swap;
+        swap(a.node2scc_, b.node2scc_);
+        swap(a.comps_,    b.comps_);
+    }
+    // Edges to nodes that don't have an entry in 'edges' are silently ignored.
+    explicit SccGraph(const std::map<NodeId,std::set<NodeId> >& edges) {
+        std::map<NodeId,NodeInfo> info;
         int next_index = 0;
-        std::stack<Ref<T> > stack;
+        std::stack<NodeId> stack;
         // Run Tarjan's algorithm to compute SCC's.
         // TODO: Unnecessary virtual function call.
-        std::function<void(Ref<T>)> strong_connect = [&](Ref<T> src) {
+        std::function<void(NodeId)> strong_connect = [&](NodeId src) {
             info[src].index = next_index;
             info[src].lowlink = next_index;
             next_index++;
             stack.push(src);
             info[src].on_stack = true;
-            for (Ref<T> dst : edges[src]) {
+            for (NodeId dst : edges.at(src)) {
+                if (edges.find(dst) == edges.end()) {
+                    continue;
+                }
                 if (info[dst].index < 0) {
                     strong_connect(dst);
                     info[src].lowlink =
@@ -782,7 +786,7 @@ public:
                 SccId scc_id = comps_.size();
                 comps_.emplace_back();
                 SCC& scc = comps_.back();
-                Ref<T> n;
+                NodeId n;
                 do {
                     n = stack.top();
                     stack.pop();
@@ -792,17 +796,21 @@ public:
                 } while (n != src);
             }
         };
-        for (const T& n : nodes) {
-            if (info[n.ref].index < 0) {
-                strong_connect(n.ref);
+        for (const auto& p : edges) {
+            NodeId n = p.first;
+            if (info[n].index < 0) {
+                strong_connect(n);
             }
         }
         // Fill out the connections between SCCs.
         for (SccId src_id = 0; src_id < comps_.size(); src_id++) {
             SCC& src_scc = comps_[src_id];
-            for (Ref<T> src_n : src_scc.nodes) {
-                for (Ref<T> dst_n : edges[src_n]) {
-                    SccId dst_id = node2scc_[dst_n];
+            for (NodeId src_n : src_scc.nodes) {
+                for (NodeId dst_n : edges.at(src_n)) {
+                    if (edges.find(dst_n) == edges.end()) {
+                        continue;
+                    }
+                    SccId dst_id = node2scc_.at(dst_n);
                     assert(dst_id <= src_id);
                     if (dst_id == src_id) {
                         src_scc.trivial = false;
@@ -813,23 +821,12 @@ public:
                 }
             }
         }
-        // Calculate statistics for each SCC.
-        // TODO: Could do this externally.
-        for (SccId id = 0; id < comps_.size(); id++) {
-            SCC& scc = comps_[id];
-            scc.cumm_size = scc.nodes.size();
-            for (SccId c_id : scc.children) {
-                const SCC& child = comps_[c_id];
-                scc.height = std::max(child.height + 1, scc.height);
-                scc.cumm_size += child.cumm_size;
-            }
-        }
     }
     SccGraph(const SccGraph& rhs) = delete;
     SccGraph(SccGraph&& rhs) = default;
     SccGraph& operator=(const SccGraph& rhs) = delete;
-    SccId scc_of(Ref<T> node) const {
-        return node2scc_[node];
+    SccId scc_of(NodeId node) const {
+        return node2scc_.at(node);
     }
     SccId num_sccs() const {
         return comps_.size();
