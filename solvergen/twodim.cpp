@@ -1419,9 +1419,16 @@ public:
         unsigned e_det = res.num_trans();
         timer.log("DFA: ", n_det, " states, ", e_det, " transitions");
         typename Timer::TimeDiff dt_det = timer.done();
+        timer.start("Minimizing DFA");
+        res.minimize();
+        unsigned n_min = res.num_states();
+        unsigned e_min = res.num_trans();
+        timer.log("Minimal DFA: ", n_min, " states, ", e_min, " transitions");
+        typename Timer::TimeDiff dt_min = timer.done();
         timer.log("FSMSizes\t",   n_orig,  "\t", e_orig,  "\t",
                   dt_simpl, "\t", n_simpl, "\t", e_simpl, "\t",
-                  dt_det,   "\t", n_det,   "\t", e_det);
+                  dt_det,   "\t", n_det,   "\t", e_det,   "\t",
+                  dt_min,   "\t", n_min,   "\t", e_min);
         return res;
     }
     void to_tgf(std::ostream& os, const Registry<Field>& fld_reg) const {
