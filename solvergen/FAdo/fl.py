@@ -26,7 +26,7 @@ Finite languages manipulation
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA."""
 
 import fa
-from copy import copy, deepcopy
+from copy import copy
 from common import *
 import random
 
@@ -185,6 +185,22 @@ class FL(object):
                 new.addFinal(s)
         return new
 
+    def toDFA(self):
+        """ Generates a DFA recognizing the language
+
+        :rtype: ADFA
+
+        .. versionadded:: 1.2"""
+        return self.trieFA()
+
+    def toNFA(self):
+        """Generates a NFA recognizing the language
+
+        :rtype: ANFA
+
+        .. versionadded:: 1.2"""
+        return self.toDFA().toANFA()
+
     # noinspection PyUnboundLocalVariable
     def multiLineAutomaton(self):
         """Generates the trivial linear ANFA equivalent to this language
@@ -240,6 +256,16 @@ class AFA(object):
        This is just a container for some common methods. **Not to be used directly!!**"""
     def __init__(self):
         self.Dead = None
+        self.delta = dict()
+        self.Initial = None
+        self.States = []
+        self.Final = set()
+
+    @abstractmethod
+    def addState(self):
+        """
+        :rtype: int"""
+        pass
 
     def setDeadState(self, sti):
         """Identifies the dead state
@@ -331,7 +357,7 @@ class AFA(object):
     def evalRank(self):
         """Evaluates the rank map of a automaton
 
-        :return: pair sets of states by rank map, reverse delta acessability map
+        :return: pair of sets of states by rank map, reverse delta accessability map
         :rtype: tuple"""
         (deltaC, rdelta) = self._getRdelta()
         rank, deltai = {}, {}
@@ -362,6 +388,7 @@ class AFA(object):
         :return: set of leaves
         :rtype: set"""
 
+        # noinspection PyUnresolvedReferences
         def _last(s1):
             queue, done = {s1}, set()
             while queue:
@@ -386,6 +413,10 @@ class ADFA(fa.DFA, AFA):
     """Acyclic Deterministic Finite Automata class
 
     .. inheritance-diagram:: ADFA"""
+    def __init__(self):
+        fa.DFA.__init__(self)
+        AFA.__init__(self)
+
     def __repr__(self):
         return 'ADFA({0:s})'.format(self.__str__())
 
@@ -393,6 +424,7 @@ class ADFA(fa.DFA, AFA):
         """Make the ADFA complete
 
         :param int dead: a state to be identified as dead state if one was not identified yet
+        :rtype: ADFA
 
         .. attention::
            The object is modified in place"""
@@ -408,6 +440,7 @@ class ADFA(fa.DFA, AFA):
             for k in self.Sigma:
                 if k not in self.delta.get(st, {}).keys():
                     self.addTransition(st, k, self.Dead)
+        return self
 
     def dup(self):
         """Duplicate the basic structure into a new ADFA. Basically a copy.deep.
@@ -438,6 +471,15 @@ class ADFA(fa.DFA, AFA):
             for c in self.delta[s]:
                 new.addTransition(s, c, self.delta[s][c])
         return new
+
+    def wordGenerator(self):
+        """Creates a random word generator
+
+        :return: the random word generator
+        :rtype: RndWGen
+
+        .. versionadded:: 1.2"""
+        return RndWGen(self)
 
     def minimal(self):
         """Finds the minimal equivalent ADFA
@@ -470,6 +512,10 @@ class ADFA(fa.DFA, AFA):
         new = deepcopy(self)
         new.trim()
         new.complete()
+        if new.Dead is None:
+            deadName = None
+        else:
+            deadName = new.States[new.Dead]
         (rank, rdelta) = new.evalRank()
         toBeDeleted = []
         maxr = len(rank) - 2
@@ -485,6 +531,8 @@ class ADFA(fa.DFA, AFA):
                     (d0, s0) = (d1, s1)
                 j += 1
         new.deleteStates(toBeDeleted)
+        if deadName is not None:
+            new.Dead = new.stateIndex(deadName)
         return new
 
     def level(self):
@@ -545,7 +593,7 @@ class ADFA(fa.DFA, AFA):
                             g = gp[(j1, i1)]
                         if g + 1 <= _range(self.stateIndex(i), self.stateIndex(j)):
                             gp[(self.stateIndex(i), self.stateIndex(j))] = min(gp[(self.stateIndex(i),
-                                                                                 self.stateIndex(j))], g + 1)
+                                                                                   self.stateIndex(j))], g + 1)
         return gp
 
     def minDFCA(self):
@@ -616,7 +664,68 @@ class ADFA(fa.DFA, AFA):
             new.addFinal(s)
         return new
 
+    def toNFA(self):
+        """Converts the ADFA in a equivalent NFA
 
+        :rtype: ANFA
+
+        .. versionadded:: 1.2"""
+        return self.toANFA()
+
+
+class RndWGen(object):
+    """Word random generator class
+
+    .. versionadded:: 1.2"""
+    def __init__(self, aut):
+        """
+        :param aut: automata recognizing the language
+        :type aut: ADFA """
+        self.Sigma = list(aut.Sigma)
+        self.table = dict()
+        self.aut = aut.minimal()
+        rank, _ = self.aut.evalRank()
+        deltai = self.aut.deltaR()
+        mrank = max(rank)
+        for i in range(0, mrank + 1):
+            for s in rank[i]:
+                self.table.setdefault(s, {})
+                if self.aut.finalP(s):
+                    final = 1
+                else:
+                    final = 0
+                self.table[s][None] = sum([self.table[s].get(c, 0) for c in self.Sigma])
+                for c in self.Sigma:
+                    rs = deltai[s].get(c, [])
+                    for r in rs:
+                        self.table.setdefault(r, {})
+                        self.table[r][c] = self.table[s][None] + final
+
+    @staticmethod
+    def _rndChoose(l):
+        sm = sum(l)
+        r = random.randint(1,sm)
+        for i, j in enumerate(l):
+            if r <= j:
+                return i
+            else:
+                r -= j
+
+    def next(self):
+        """Next word
+
+        :return: a new random word"""
+        word = Word()
+        s = self.aut.Initial
+        while True:
+            if self.aut.finalP(s) and random.randint(1, self.table[s][None] + 1) == 1:
+                return word
+            i = self._rndChoose([self.table[s].get(c, 0) for c in self.Sigma])
+            word.append(self.Sigma[i])
+            s = self.aut.delta[s][self.Sigma[i]]
+
+
+# noinspection PyUnresolvedReferences
 class ANFA(fa.NFA, AFA):
     """Acyclic Nondeterministic Finite Automata class
 

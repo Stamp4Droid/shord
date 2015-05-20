@@ -35,6 +35,38 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA."""
 import fa
 from comboperations import *
 
+# Useful automata
+
+
+def emptyDFA(sigma=None):
+    """
+    Returns the minimal DFA for emptyset (incomplete)
+
+    :param sigma:
+    :return:
+    """
+    d = DFA()
+    if sigma is not None:
+        d.setSigma(sigma)
+    i = d.addState()
+    d.setInitial(i)
+    return d
+
+def epsilonDFA(sigma=None):
+    """
+    Returns the minimal DFA for {epsilon} (incomplete)
+
+    :param sigma:
+    :return:
+    """
+    d = DFA()
+    if sigma is not None:
+        d.setSigma(sigma)
+    i = d.addState()
+    d.setInitial(i)
+    d.addFinal(i)
+    return d
+
 ### Worst case automata for each operation
 
 witnessDFA = {"toDFA": [("toDFAWCMF", "int"),
@@ -59,13 +91,14 @@ witnessDFA = {"toDFA": [("toDFAWCMF", "int"),
 
 def toDFAWC2MF(m=5):
     """ Worst case automata for toDFA(NFA) with n > 2, k=2
-    @see: A. R. Meyer and M. J. Fischer. Economy of description by automata,
+    ..seealso::
+    A. R. Meyer and M. J. Fischer. Economy of description by automata,
     grammars, and formal systems. Twelfth Annual Symposium on
     Switching and Automata Theory, 1971,  188–191. IEEE Society Press.
 
-    :arg m: number of states
+    :param m: number of states
     :type m: integer
-    :returns: a dfa
+    :return: a dfa
     :rtype: DFA"""
 
     if m < 3:
@@ -85,7 +118,7 @@ def toDFAWC2MF(m=5):
 
 def toDFAWC2(m=5):
     """ Worst case automata for toDFA(NFA) with n > 2, k=2
-    @see: F.R. Moore. On the bounds for state-set size in the proofs
+    ..seealso:: F.R. Moore. On the bounds for state-set size in the proofs
     of equivalence between deterministic, nondeterministic, and
     two-way finite automata. IEEE Transactions on computers, 2:1211–1214, 1971.
 
@@ -113,7 +146,7 @@ def toDFAWC2(m=5):
 
 def toDFAWC3(m=5):
     """ Worst case automata for toDFA(NFA) with n > 2, k=3.
-    @see: O. B. Lupanov. A comparison of two types of finite sources.
+    ..seealso:: O. B. Lupanov. A comparison of two types of finite sources.
     Problemy Kibernetiki, 9:321–326, 1963.
     
     :arg m: number of states
@@ -147,7 +180,7 @@ def toDFAWC3(m=5):
 def reversalWC3M(m=5):
     """ Worst case automata for reversal(DFA) with m > 2, k=3.
 
-    @see: Boris G. Mirkin. On dual automata. Kibernetika, 2:7–10, 1966.
+    ..seealso:: Boris G. Mirkin. On dual automata. Kibernetika, 2:7–10, 1966.
    
     :arg m: number of states
     :type m: integer
@@ -173,7 +206,7 @@ def starSC(m=5):
 
 def starWC(m=5):
     """ Worst case automata for star(DFA) with m > 2, k=2
-    @see: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
+    ..seealso:: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
     of some basic operations on regular languages.
     Theor. Comput. Sci., 125(2):315–328, 1994.
 
@@ -201,7 +234,7 @@ def starWC(m=5):
 def starWCM(m=5):
     """ Worst case automata for star(DFA) with m > 2, k=2
 
-    @see: A. N. Maslov. Estimates of the number of states of
+    ..seealso:: A. N. Maslov. Estimates of the number of states of
     finite automata. Dokllady Akademii Nauk SSSR, 194:1266–1268, 1970. 
     
     :arg m: number of states
@@ -243,7 +276,7 @@ def concatSC(m, n, k=1):
 def concatWCM(m=4, n=4):
     """ Worst case automata for catenation(DFA,DFA) with m,n > 1, k=2,
 
-    @see: A. N. Maslov. Estimates of the number of states of
+    ..seealso:: A. N. Maslov. Estimates of the number of states of
     finite automata. Dokllady Akademii Nauk SSSR, 194:1266–1268, 1970. 
     :arg m: number of states
     :arg n: number of states
@@ -281,7 +314,7 @@ def concatWCM(m=4, n=4):
 
 def concatWC(m=6, n=6):
     """ Worst case automata for catenation(DFA,DFA) with m,n > 1
-    @see: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
+    ..seealso:: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
     of some basic operations on regular languages.
     Theor. Comput. Sci., 125(2):315–328, 1994.
     :arg m: number of states
@@ -315,7 +348,7 @@ def concatWC(m=6, n=6):
 def interWC(m=6, n=5):
     """ Worst case automata for intersection(DFA,DFA) with m,n >1
 
-    @see: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
+    ..seealso:: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
     of some basic operations on regular languages.
     Theor. Comput. Sci., 125(2):315–328, 1994.
     :arg m: number of states
@@ -346,7 +379,7 @@ def interWC(m=6, n=5):
 
 def disjWC(m=6, n=5):
     """ Worst case automata for disjunction(DFA,DFA) with m,n >1
-    @see: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
+    ..seealso:: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
     of some basic operations on regular languages.
     Theor. Comput. Sci., 125(2):315–328, 1994.
     :arg m: number of states
@@ -383,7 +416,7 @@ def disjWC(m=6, n=5):
 def reversalMB(m=8):
     """Worst case automata for reversal(DFA)
 
-    @see: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
+    ..seealso:: S. Yu, Q. Zhuang, and K. Salomaa. The state complexities
     of some basic operations on regular languages.
     Theor. Comput. Sci., 125(2):315–328, 1994.
     :arg m: number of states
@@ -413,7 +446,7 @@ def reversalMB(m=8):
 def reversalWC3L(m=5):
     """ Worst case automata for reversal(DFA) with m > 2, k=3
 
-    @see: E. L. Leiss. Succinct representation of regular languages
+    ..seealso:: E. L. Leiss. Succinct representation of regular languages
         by boolean automata ii. Theor. Comput. Sci., 38:133–136, 1985.
     :arg m: number of states
     :type m: integer
@@ -469,7 +502,7 @@ def reversalternaryWC(m=5):
 
 def reversalbinaryWC(m=5):
     """Worst case automata for reversal(DFA) binary
-    @see: G. Jir{\'a}skov{\'a} and J. S\v ebej. Note on Reversal of binary regular languages. Proc. DCFS 2011, 
+    ..seealso:: G. Jir{\'a}skov{\'a} and J. S\v ebej. Note on Reversal of binary regular languages. Proc. DCFS 2011,
     LNCS 6808, Springer, pp 212-221.
     @arg m: number of states
     @type m: integer
@@ -507,9 +540,12 @@ def reversalbinaryWC(m=5):
 
 def shuffleWC(m=3, n=3):
     """Worst case automata for shuffle(DFA,DFA) with m.n>1
-    @see:C. Campeanu, K. Salomaa, and S. Yu. Tight lower bound for
+
+    ..seealso::
+     C. Campeanu, K. Salomaa, and S. Yu. Tight lower bound for
     the state complexity of shuffle of regular languages.
     Journal of Automata, Languages and Combinatorics, 7(3):303–310, 2002.
+
     :arg m: number of states
     :arg n: number of states
     :type m: integer
@@ -546,7 +582,8 @@ def shuffleWC(m=3, n=3):
 
 def starDisjWC(m=6, n=5):
     """Worst case automata for starDisj(DFA,DFA) with m.n>1
-     @see: Arto Salomaa, Kai Salomaa, and Sheng Yu. 'State complexity of
+
+     ..seealso: Arto Salomaa, Kai Salomaa, and Sheng Yu. 'State complexity of
     combined operations'. Theor. Comput. Sci., 383(2-3):140–152, 2007.
     :arg m: number of states
     :arg n: number of states
@@ -583,7 +620,7 @@ def starDisjWC(m=6, n=5):
 
 def starInterBC(m=3, n=3):
     """Bad case automata for starInter(DFA,DFA) with m,n>1
-    @see: Arto Salomaa, Kai Salomaa, and Sheng Yu. 'State complexity of
+    ..seealso:: Arto Salomaa, Kai Salomaa, and Sheng Yu. 'State complexity of
     combined operations'. Theor. Comput. Sci., 383(2-3):140–152, 2007.
     :arg m: number of states
     :arg n: number of states
@@ -628,7 +665,7 @@ def starInterBC(m=3, n=3):
 
 def disjWStarWC(m=6, n=5):
     """
-     @see: Yuan Gao and Sheng Yu. 'State complexity of union and intersection
+     ..seealso:: Yuan Gao and Sheng Yu. 'State complexity of union and intersection
   combined with star and reversal'. CoRR, abs/1006.3755, 2010.
   :arg m: number of states
   :arg n: number of states
@@ -671,7 +708,7 @@ def disjWStarWC(m=6, n=5):
 def unionWCTk2(m=6, n=6):
     """ @ worst-case family union where
     @m>=2 and n>=2 and k=2
-    @see: Gao, Y., Salomaa, K., Yu, S.: Transition complexity of
+    ..seealso:: Gao, Y., Salomaa, K., Yu, S.: Transition complexity of
     incomplete dfas. Fundam. Inform.  110(1-4), 143–158 (2011)
     @ the conjecture in this article fails for this family
     :arg m: number of states
@@ -962,6 +999,7 @@ def boundarySC(n, k):
     return 4 ** (n - 1) - nCr(n - 1, k - 1) + 2 ** (n - k) * 2 ** (n - 1) - 3 ** (n - k) * 2 ** (k - 1) + 2 ** (
         k - 1) * 2 ** (n - 1) - 3 ** (k - 1) * 2 ** (n - k) + 1
 
+# Don't care automata
 
 def dcMilano1(n):
     """Return the special dcNFA to prove the titness of proposed bound
@@ -1016,3 +1054,122 @@ def dcMilano2(n):
         new.addTransition(st[s + 2 * n], 'b', st[s])
     new.addFinal(st[n - 1])
     return new
+
+# Closure operations
+
+def suffWCe(m=3):
+    """Witness for suff(L) when L does not have empty as a quotient
+
+     :rtype: DFA
+
+     ..seealso:
+          Janusz A. Brzozowski, Galina Jirásková, Chenglong Zou,
+          Quotient Complexity of Closed Languages.
+          Theory Comput. Syst. 54(2): 277-292 (2014)
+
+     """
+    if m< 3:
+        raise TestsError("number of states must be greater than 2")
+    f = DFA()
+    f.setSigma(["a", "b"])
+    f.States = range(m)
+    f.setInitial(0)
+    f.addFinal(0)
+    f.addTransition(0, "a", 1)
+    f.addTransition(1, "a", 2)
+    f.addTransition(0, "b", 0)
+    f.addTransition(1, "b", 0)
+    for i in range(2, m):
+        f.addTransition(i, "a", (i + 1) % m)
+        f.addTransition(i, "b", i)
+    return f
+
+def suffWCd(m=3):
+
+    """Witness for suff(L) when L has  empty as a quotient
+
+    :rtype: DFA
+
+    ..seealso: as above
+    """
+    if m< 3:
+        raise TestsError("number of states must be greater than 2")
+    f = DFA()
+    f.setSigma(["a", "b"])
+    f.States = range(m)
+    f.setInitial(0)
+    f.addFinal(0)
+    f.addTransition(0, "a", 1)
+    f.addTransition(1, "a", 2)
+    f.addTransition(0, "b", m-1)
+    f.addTransition(1, "b", 0)
+    f.addTransition(m-1, "b", m-1)
+    f.addTransition(m-1, "a", m-1)
+    for i in range(2, m-1):
+        f.addTransition(i, "a", (i + 1) % (m-1))
+        f.addTransition(i, "b", i)
+    return f
+
+def suffWCsynt(m=3):
+  """ Worst case witness for synt of suff(L)
+
+  """
+  if m< 3:
+     raise TestsError("number of states must be greater than 2")
+  f = DFA()
+  f.setSigma(["a", "b", "c", "d", "e"])
+  f.States = range(m)
+  f.setInitial(0)
+  f.addFinal(m-1)
+  f.addTransition(0, "a", 0)
+  f.addTransition(0, "b", 0)
+  f.addTransition(0, "c", 0)
+  f.addTransition(0, "d", 0)
+  f.addTransition(0, "e", 1)
+  f.addTransition(1, "a", 2)
+  f.addTransition(1, "b", 2)
+  f.addTransition(1, "c", 1)
+  f.addTransition(1, "d", 1)
+  f.addTransition(1, "e", 1)
+  f.addTransition(2, "b", 1)
+  f.addTransition(2, "e", 1)
+  f.addTransition(2, "c", 2)
+  f.addTransition(2, "d", 2)
+  f.addTransition(2, "a", 3)
+  for i in range(3,m-1):
+    f.addTransition(i, "a", (i+1)% m)
+    f.addTransition(i,"b",i)
+    f.addTransition(i,"c",i)
+    f.addTransition(i,"d",i)
+    f.addTransition(i,"e",1)
+  f.addTransition(m-1,"a",1)
+  f.addTransition(m-1,"c",1)
+  f.addTransition(m-1,"e",1)
+  f.addTransition(m-1,"d",0)
+  return f
+
+def booleanWCSymGrp(m=3):
+  """Witness for symmetric group
+
+   :rtype: DFA
+   ..seealso:
+   	Jason Bell, Janusz A. Brzozowski, Nelma Moreira, Rogério Reis.
+   	Symmetric Groups and Quotient Complexity of Boolean Operations.
+   	ICALP (2) 2014: 1-12
+  """
+  if m< 3:
+     raise TestsError("number of states must be greater than 2")
+  f = DFA()
+  f.setSigma(["a", "b"])
+  f.States = range(m)
+  f.setInitial(0)
+  f.addFinal(0)
+  f.addFinal(1)
+  f.addTransition(0, "a", 1)
+  f.addTransition(1, "a", 0)
+  f.addTransition(0, "b", 1)
+  f.addTransition(1, "b", 2)
+  for i in range(2, m):
+    f.addTransition(i, "b", (i + 1) % m)
+    f.addTransition(i, "a", i)
+  return f

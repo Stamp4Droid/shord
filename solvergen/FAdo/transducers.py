@@ -5,7 +5,7 @@ Transducer manipulation.
 
 .. versionadded:: 1.0
 
-.. *Authors:* Rogério Reis & Nelma Moreira
+.. *Authors:* Rogério Reis, Nelma Moreira & Stavros Konstantinidis
 
 .. *This is part of FAdo project*   http://fado.dcc.fc.up.pt.
 
@@ -204,6 +204,54 @@ class GFT(Transducer):
                                 cst = mst
                             new.addTransition(cst, z[n - 1][0], z[n - 1][1], lst)
         return new
+
+    def listOfTransitions(self):
+        """ Collects into a sorted list the transitions of the transducer.
+        :param GFT t
+        :rtype: set of tuples"""
+        def _comp(v1, v2):
+            (v11, v12, v13, v14) = v1
+            (v21, v22, v23, v24) = v2
+            if v11 < v21:
+                return -1
+            if v11 > v21:
+                return 1
+            if v12 < v22:
+                return -1
+            if v12 > v22:
+                return 1
+            if v13 < v23:
+                return -1
+            if v13 > v23:
+                return 1
+            return 0
+
+        trList = []
+        for s in self.delta:
+            for c in self.delta[s]:
+                for (oc, s1) in self.delta[s][c]:
+                    trList.append((s, c, oc, s1))
+        trList.sort(_comp)
+        return trList
+
+    def codeOfTransducer(self):
+        """ Appends into one string the codes of the alphabets and initial and final
+        state sets and the set of transitions
+        :param GFT t
+        :rtype: tuple"""
+
+        def _codeOfSet(S):
+            """ Collects into a sorted list the elements of the set S and then
+                returns the string representation of the list. The set S normally
+                consists of integers or strings
+            :param set S
+            :rtype: str"""
+            L = [x for x in S]
+            L.sort()
+            return str(L)
+
+        return ('GFT', _codeOfSet(self.Sigma) + _codeOfSet(self.Output) + _codeOfSet(self.Initial) +\
+               _codeOfSet(self.Final) + str(self.listOfTransitions()))
 
 
 class SFT(GFT):

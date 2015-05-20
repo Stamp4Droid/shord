@@ -33,8 +33,7 @@ import functools
 import tempfile
 import subprocess
 
-FAdoVersion = "1.0A1"
-
+FAdoVersion = "1.2b2"
 
 class fnhException(Exception):
     pass
@@ -70,7 +69,11 @@ class CFGerror(fnhException):
     pass
 
 
-class FAdoGeneralError(Exception):
+class FAdoError(Exception):
+    pass
+
+
+class FAdoGeneralError(FAdoError):
     def __init__(self, msg):
         self.msg = msg
 
@@ -122,6 +125,10 @@ class DuplicateName(DFAerror):
 
     def __str__(self):
         return "State  number %s repeated" % self.number
+
+
+class FAdoSyntacticError(FAdoError):
+    pass
 
 
 class DFASyntaticError(DFAerror):
@@ -197,6 +204,11 @@ class DFAnotComplete(DFAerror):
         return "Dfa is not complete"
 
 
+class DFAnotMinimal(DFAerror):
+    def __str__(self):
+        return "Dfa is not minimal"
+
+
 class DFAinputError(DFAerror):
     def __init__(self, word):
         self.word = word
@@ -257,6 +269,12 @@ class IllegalBias(FAdoGeneralError):
 class CodesError(FAdoGeneralError):
     pass
 
+class CodingTheoryError(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return "FAdo: coding theory error. Message: " + self.msg
 
 class PropertyNotSatisfied(CodesError):
     def __str__(self):
@@ -291,6 +309,7 @@ class NotSP(DFAerror):
 
 EmptySet = "@empty_set"
 Epsilon = "@epsilon"
+DeadName = "@DeaD"
 
 DEBUG = False
 
@@ -586,7 +605,7 @@ class Drawable(object):
         if os.name == 'nt':
             os.system("start %s" % fnamePDF)
         else:
-            os.system("xdg-open %s" % fnamePDF)
+            os.system("open %s" % fnamePDF)
         return fnamePDF
 
     def makePNG(self, fileName=None, size="30,20"):
@@ -624,3 +643,52 @@ class Drawable(object):
         :type size: str
         :rtype: str"""
         pass
+
+
+class Word(object):
+    """Class to implement generic words as iterables with pretty-print
+
+    Basically a unified way to deal with words with caracters of of sizes different of one with no much fuss"""
+    def __init__(self, it=[]):
+        self.Sigma = set()
+        self.data = []
+        self.simple = True
+        for c in it:
+            self.append(c)
+
+    def __repr__(self):
+        return "Word:%s" % self.__str__()
+
+    def __str__(self):
+        if self.simple:
+            return "".join(self.data)
+        else:
+            return str(self.data)
+
+    def __len__(self):
+        return len(self.data)
+
+    def __contains__(self, item):
+        return item in self.data
+
+    def __getitem__(self, item):
+        return self.data[item]
+
+    def append(self, value):
+        if len(value) != 1:
+            self.simple = False
+        self.Sigma.add(value)
+        self.data.append(value)
+
+    def dup(self):
+        return deepcopy(self)
+
+    def __add__(self, other):
+        if not isinstance(other, Word):
+            raise FAdoSyntacticError()
+        else:
+            new = self.dup()
+            for c in other:
+                new.append(c)
+            return new
+

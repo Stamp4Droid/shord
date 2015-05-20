@@ -157,7 +157,7 @@ class ParserFAdo(Yappy):
         self.alphabet = set()
         self.alphabetOut = set()
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     @staticmethod
     def defaultSemRule(lst, context=None):
         """Defines the default semantic rule for Yappy
@@ -166,7 +166,7 @@ class ParserFAdo(Yappy):
         :returns: first argument semantics"""
         return lst[0]
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     @staticmethod
     def emptySemRule(lst, context=None):
         """Defines the empty semantic rule for Yappy
@@ -175,7 +175,7 @@ class ParserFAdo(Yappy):
         :returns: empty list"""
         return []
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def startDFASemRule(self, lst, context=None):
         """
 
@@ -199,7 +199,7 @@ class ParserFAdo(Yappy):
         self.theList.append(new)
         self.initLocal()
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def startTDFASemRule(self, lst, context=None):
         """
 
@@ -208,7 +208,7 @@ class ParserFAdo(Yappy):
         """
         pass
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def startNFASemRule(self, lst, context=None):
         """
 
@@ -231,7 +231,7 @@ class ParserFAdo(Yappy):
         self.theList.append(new)
         self.initLocal()
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def startTRANSSemRule(self, lst, context=None):
             """
 
@@ -259,7 +259,7 @@ class ParserFAdo(Yappy):
             self.theList.append(new)
             self.initLocal()
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def finalSemRule(self, lst, context=None):
         """
 
@@ -268,7 +268,7 @@ class ParserFAdo(Yappy):
         self.finals.append(lst[0])
         self.states.add(lst[0])
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def initialSemRule(self, lst, context=None):
         """
 
@@ -277,7 +277,7 @@ class ParserFAdo(Yappy):
         self.initials.append(lst[0])
         self.states.add(lst[0])
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def firstTransitionSemRule(self, lst, context=None):
         """
 
@@ -288,7 +288,7 @@ class ParserFAdo(Yappy):
         self.states.add(lst[2])
         self.transitions.append((lst[0], lst[1], lst[2]))
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def firstTTransitionSemRule(self, lst, context=None):
         """
 
@@ -296,7 +296,7 @@ class ParserFAdo(Yappy):
         :param context:"""
         pass
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def firstTransitionTransSemRule(self, lst, context=None):
         """
 
@@ -309,7 +309,7 @@ class ParserFAdo(Yappy):
             self.TRtype = "GFT"
         self.transitions.append((lst[0], lst[1], lst[2], lst[3]))
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def firstDeclareState(self, lst, context=None):
         """
 
@@ -318,7 +318,7 @@ class ParserFAdo(Yappy):
         self.states.add(lst[0])
         self.initials.append(lst[0])
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def addAlphabet(self, lst, context=None):
         """
 
@@ -326,7 +326,7 @@ class ParserFAdo(Yappy):
         :param context:"""
         self.alphabet.add(lst[0])
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def addAlphabetOut(self, lst, context=None):
         """
 
@@ -334,7 +334,7 @@ class ParserFAdo(Yappy):
         :param context:"""
         self.alphabetOut.add(lst[0])
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def declareState(self, lst, context=None):
         """
 
@@ -342,7 +342,7 @@ class ParserFAdo(Yappy):
         :param context:"""
         self.states.add(lst[0])
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def firstTransitionESemRule(self, lst, context=None):
         """
 
@@ -353,7 +353,7 @@ class ParserFAdo(Yappy):
         self.states.add(lst[0])
         self.states.add(lst[2])
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def transitionSemRule(self, lst, context=None):
         """
 
@@ -363,7 +363,7 @@ class ParserFAdo(Yappy):
         self.states.add(lst[0])
         self.states.add(lst[2])
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def transitionTransSemRule(self, lst, context=None):
         """
 
@@ -375,7 +375,7 @@ class ParserFAdo(Yappy):
         self.states.add(lst[0])
         self.states.add(lst[3])
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def transitionTSemRule(self, lst, context=None):
         """
 
@@ -383,7 +383,7 @@ class ParserFAdo(Yappy):
         :param context:"""
         pass
 
-    #noinspection PyUnusedLocal
+    # noinspection PyUnusedLocal
     def transitionESemRule(self, lst, context=None):
         """
 

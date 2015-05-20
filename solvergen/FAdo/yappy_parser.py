@@ -49,7 +49,7 @@ _Version = "1.9.4"
 NIL = ""
 
 
-class Lexer:
+class Lexer(object):
     """Class for lexical analyser to use with the parser
 
         :var rules: lexical rules
@@ -286,7 +286,7 @@ class TableError(YappyError):
         return "%s" % self.value
 
 
-class CFGrammar:
+class CFGrammar(object):
     """ Class for context-free grammars
 
         :var rules: grammar rules
@@ -669,7 +669,7 @@ class CFGrammar:
                                 break
 
 
-class LRtable:
+class LRtable(object):
     """Class for construction of a *LR* table
 
         :var gr: a context-free grammar
@@ -1325,7 +1325,7 @@ class LALRtable(LALRtable1):
             return f
 
 
-class LogLR:
+class LogLR(object):
     """Class for LR table construction report:
         @ivar expect: number of shit/reduce conflicts expected
         @type expect: integer
@@ -1347,7 +1347,7 @@ class LogLR:
             self.conflicts[type] = [(i, a, value1, value2)]
 
 
-class LRparser:
+class LRparser(object):
     """Class for LR parser
 
        @ivar cfgr: context free grammar 
@@ -1402,6 +1402,7 @@ class LRparser:
             self.nosemrules = args['nosemrules']
         else:
             self.nosemrules = 0
+
         db = whichdb.whichdb(table_shelve)
         if not (db == None or db == "" or no_table == 0):
             try:
@@ -1674,7 +1675,7 @@ class LRparser:
         return gr
 
 
-class LRBuildparser:
+class LRBuildparser(object):
     """Class for LR parser: without shelve and semantic rules(obsolete)
     """
 
@@ -1800,8 +1801,8 @@ class Yappy(LRparser):
             grammar = self.parse_grammar(grammar, {'locals': locals()}, args)
         if args.has_key('usrdir') and os.path.isdir(args['usrdir']):
             table = string.rstrip(args['usrdir']) + '/' + table
-        if os.path.dirname(table) == "" or os.path.exists(os.path.dirname(table)):
-            LRparser.__init__(self, grammar, table, no_table, tabletype, operators, noconflicts, expect, **args)
+        if   os.path.dirname(table) == "" or os.path.exists(os.path.dirname(table)):
+            LRparser.__init__(self, grammar,table, no_table, tabletype, operators, noconflicts, expect, **args)
         else:
             sys.stderr.write("Directory %s do not exist\n" % table)
             sys.exit()
@@ -2019,7 +2020,7 @@ class Yappy_grammar(Yappy):
         return self.context['rules']
 
 
-class Stack:
+class Stack(object):
     """ A simple class to implement stacks"""
 
     def __init__(self, start=[]):

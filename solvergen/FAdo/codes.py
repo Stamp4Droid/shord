@@ -3,7 +3,7 @@
 
 .. versionadded:: 1.0
 
-.. *Authors:* Rogério Reis & Nelma Moreira
+.. *Authors:* Rogério Reis, Nelma Moreira & Stavros Konstantinidis
 
 .. *This is part of FAdo project*   http://fado.dcc.fc.up.pt.
 
@@ -32,15 +32,127 @@ import fa
 import fl
 
 
+def fixedHierSubset(x, y):
+    """ Returns whether x==y, or the fixed property with name x is a subset of y
+    Currently (Jan 2015) the fixed properties names are   'UD_codes',
+    'Prefix_codes', 'Suffix_codes', 'Infix_codes', 'Outfix_codes', 'Hypercodes'
+    :param tuple x
+    :param tuple y
+    :rtype: bool
+    """
+    if x == y:
+        return True
+    if x[0] != 'Fixed' or y[0] != 'Fixed':
+        return False
+    if x[1] == 'Hypercodes' or y[1] == 'UD_codes':
+        return True
+    if x[1] == 'UD_codes' or y[1] == 'Hypercodes':
+        return False
+    if x[1] == 'Infix_codes':
+        if y[1] == 'Outfix_codes':
+            return False
+        else:
+            return True
+    if x[1] == 'Outfix_codes':
+        if y[1] == 'Infix_codes':
+            return False
+        else:
+            return True
+    if y[1] == 'Infix_codes' or y[1] == 'Outfix_codes':
+        return False
+    if x[1] == y[1]:
+        return True
+    else:
+        return False
+
+
+def isSubclass(p1, p2):
+    """Which property (language class) is a subclass of the other (if any).
+       It returns 1 if p1 is a subclass of p2; 2 if p2 is a subclass of p1;
+       3 if they are equal; 0 otherwise
+    :param IPTProp p1: an input preserving transducer property
+    :param IPTProp p2: an input preserving transducer property
+    :rtype: int    """
+
+    def _lessEqualID(X, Y):
+        """ Returns whether the property with ID X is a subset of that with ID Y.
+        This is the case when X has a subset X1, say, such that each property named
+        in X1 is  a subset of some property named in Y
+        :param set X
+        :param set Y
+        :rtype: bool
+        """
+        YL = [y for y in Y]
+        YDel = []
+        for x in X:
+            for y in YL:
+                if fixedHierSubset(x, y):
+                    YDel.append(y)
+            YL = [y for y in YL if y not in YDel]
+            if len(YL) == 0:
+                return True
+        return False
+
+    if p1.Sigma != p2.Sigma:
+        return 0
+    if p1.ID <= p2.ID:
+        if p2.ID <= p1.ID:
+            return 3
+        else:
+            return 2
+    if p2.ID <= p1.ID:
+        return 1
+    if _lessEqualID(p1.ID, p2.ID):
+        return 1
+    if _lessEqualID(p2.ID, p1.ID):
+        return 2
+    return 0
+
+
+def unionOfIDs(X, Y):
+    """ Returns the "union" of the two sets: property ID X and propoerty ID Y.
+    The result is the set union minus any element in one set that names
+    a property containing a property named in the other set
+    :param set X
+    :param set Y
+    :rtype: set
+    """
+    Z = set() | X
+    XL = [x for x in X]
+    YL = [y for y in Y]
+    while len(XL) > 0 and len(YL) > 0:
+        x = XL.pop()
+        YDel = []
+        for j in range(0, len(YL)):
+            y = YL[j]
+            if fixedHierSubset(x, y):
+                YDel.append(y)
+            elif fixedHierSubset(y, x):
+                Z.add(y)
+                YDel.append(y)
+                Z.remove(x)
+                break
+            else:
+                pass
+        YL = [y for y in YL if y not in YDel]
+    return Z | set(YL)
+
+
 class CodeProperty(object):
     """
-
     .. seealso:: K. Dudzinski and S. Konstantinidis: Formal descriptions of code properties: decidability, complexity,
-        implementation. International Journal of Foundations of Computer Science 23:1 (2012), 67--85.
+       implementation. International Journal of Foundations of Computer Science 23:1 (2012), 67--85.
 
     :var Sigma: the alphabet"""
-    def __init__(self):
-        self.Sigma = set()
+    def __init__(self, name, alph):
+        if name is None:
+            raise CodingTheoryError('new property must have a name')
+        self.Sigma = alph
+        self.ID = set()
+        if type(name) is set:
+            self.ID.update(name)
+        else:
+            self.ID.add(name)
 
     @abstractmethod
     def satisfiesP(self, aut):
@@ -86,12 +198,12 @@ class IPTProp(CodeProperty):
 
     :var SFT Aut: the transducer defining the property
     :var set Sigma: alphabet"""
-    def __init__(self, aut):
+    def __init__(self, aut, name=None):
         """ Constructor
-
         :param SFT aut: Input preserving transducer"""
-        super(IPTProp, self).__init__()
-        self.Sigma = aut.Sigma
+        if name is None:
+            name = aut.codeOfTransducer()
+        super(IPTProp, self).__init__(name, aut.Sigma)
         self.Aut = aut
 
     def __and__(self, other):
@@ -99,16 +211,27 @@ class IPTProp(CodeProperty):
 
         :param IPTProp other: right hand operand
         :rtype: IPTProp """
+        sub = isSubclass(self, other)
+        if sub == 1 or sub == 3:
+            return self
         if isinstance(other, IATProp):
+            if sub == 2:
+                return other
             nt = other.Aut.dup()
             n = nt.addState()
             nt.addInitial(n)
             nt.addFinal(n)
             for s in nt.Sigma:
                 nt.addTransition(n, s, s, n)
-            return IPTProp(self.Aut | nt)
+            name = unionOfIDs(self.ID, other.ID)
+            pty = IPTProp(self.Aut | nt, name)
+            return pty
         else:
-            return IPTProp(self.Aut | other.Aut)
+            if sub == 2:
+                return other
+            name = unionOfIDs(self.ID, other.ID)
+            pty = IPTProp(self.Aut | other.Aut, name)
+            return pty
 
     def notSatisfiesW(self, aut):
         """Return a witness of non-satisfaction of the property by the automaton language
@@ -116,7 +239,11 @@ class IPTProp(CodeProperty):
         :param DFA|NFA aut: the automaton
         :return: word witness pair
         :rtype: tuple"""
-        return self.Aut.inIntersection(aut).outIntersection(aut).nonFunctionalW()[1:]
+        u, v, w = self.Aut.inIntersection(aut).outIntersection(aut).nonFunctionalW()
+        if u == v:
+            return u, w
+        else:
+            return u, v
 
     def satisfiesP(self, aut):
         """Satisfaction of the property by the automaton language
@@ -152,8 +279,11 @@ class IPTProp(CodeProperty):
         return self.notMaximalW(aut.toNFA(), U) is None
 
 
+ErrDetectProp = IPTProp  # another name for IPTProp
+
+
 class IATProp(IPTProp):
-    """Input Altering Trnaducer Property
+    """Input Altering Transducer Property
 
     .. inheritance-diagram:: IATProp"""
 
@@ -162,16 +292,27 @@ class IATProp(IPTProp):
 
         :param IPTProp other: right hand operand
         :rtype: IPTProp """
-        if type(other) is IPTProp:
+        sub = isSubclass(self, other)
+        if sub == 1 or sub == 3:
+            return self
+        if not isinstance(other, IATProp):
+            if sub == 2:
+                return other
             nt = self.Aut.dup()
             n = nt.addState()
             nt.addInitial(n)
             nt.addFinal(n)
             for s in nt.Sigma:
                 nt.addTransition(n, s, s, n)
-            return IPTProp(other.Aut | nt)
+            name = unionOfIDs(self.ID, other.ID)
+            pty = IPTProp(other.Aut | nt, name)
+            return pty
         else:
-            return IATProp(self.Aut | other.Aut)
+            if sub == 2:
+                return other
+            name = unionOfIDs(self.ID, other.ID)
+            pty = IATProp(self.Aut | other.Aut, name)
+            return pty
 
     def notSatisfiesW(self, aut):
         """Return a witness of non-satisfaction of the property by the automaton language
@@ -263,19 +404,14 @@ class FixedProp(CodeProperty):
         :rtype: str"""
         pass
 
-    def __init__(self):
-        super(FixedProp, self).__init__()
-        self.Name = None
 
+class UDCodeProp(FixedProp):
+    """ Uniquely decodable Code Property
 
-class CodeProp(FixedProp):
-    """ Code Property
+    .. inheritance-diagram:: UDCodeProp"""
 
-    .. inheritance-diagram:: CodeProp"""
-
-    def __init__(self):
-        super(CodeProp, self).__init__()
-        self.Name = "Uniquely Decodable Codes"
+    def __init__(self, alphabet):
+        super(UDCodeProp, self).__init__(('Fixed', 'UD_codes'), alphabet)
 
     def notSatisfiesW(self, aut):
         """Test whether the language is a code.
@@ -294,7 +430,7 @@ class CodeProp(FixedProp):
                 i1 = j + 1
             return l
 
-        n = aut.toNFA()   #.eliminateEpsilonTransitions()
+        n = aut.toNFA()   # .eliminateEpsilonTransitions()
         for i in n.Initial:
             if i in n.Final:
                 return [Epsilon], [Epsilon, Epsilon]
@@ -322,7 +458,6 @@ class CodeProp(FixedProp):
 
     def maximalP(self, aut, U=None):
         """Tests if the language is maximal w.r.t. the property
-
         :param DFA|NFA aut: the automaton
         :param DFA|NFA U: Universe of permitted words (Sigma^* as default)
         :rtype: bool"""
@@ -338,16 +473,16 @@ class CodeProp(FixedProp):
         return self.notSatisfiesW(aut) == (None, None)
 
 
-class PrefixProp(IATProp, FixedProp):
+class PrefixProp(TrajProp, FixedProp):
     """ Prefix Property
 
     .. inheritance-diagram:: PrefixProp"""
     def __init__(self, t):
-        IATProp.__init__(self, t)
-        self.Name = "Prefix Codes"
+        name = ('Fixed','Prefix_codes')
+        IATProp.__init__(self, t, name)
 
-    def satisfiesP(self, aut):
-        """Satisfaction of the property by the automaton language
+    def satisfiesPrefixP(self, aut):
+        """Satisfaction of property by the automaton language: faster than satisfiesP
 
         :param DFA|NFA aut: the automaton
         :rtype: bool"""
@@ -362,54 +497,44 @@ class PrefixProp(IATProp, FixedProp):
             return IATProp.satisfiesP(self, aut)
 
 
-class SuffixProp(IATProp, FixedProp):
+class SuffixProp(TrajProp, FixedProp):
     """ Suffix Property
 
     .. inheritance-diagram:: SuffixProp"""
 
     def __init__(self, t):
-        IATProp.__init__(self, t)
-        self.Name = "Suffix Codes"
+        name = ('Fixed','Suffix_codes')
+        IATProp.__init__(self, t, name)
 
 
-class InfixProp(IATProp, FixedProp):
+class InfixProp(PrefixProp, SuffixProp):
     """ Infix Property
 
     .. inheritance-diagram:: InfixProp"""
 
     def __init__(self, t):
-        IATProp.__init__(self, t)
-        self.Name = "Infix Codes"
+        name = ('Fixed','Infix_codes')
+        IATProp.__init__(self, t, name)
 
 
-class OutfixProp(IATProp, FixedProp):
+class OutfixProp(PrefixProp, SuffixProp):
     """ Outfix Property
 
     .. inheritance-diagram:: PrefixProp"""
 
     def __init__(self, t):
-        IATProp.__init__(self, t)
-        self.Name = "Outfix Codes"
+        name = ('Fixed','Outfix_codes')
+        IATProp.__init__(self, t, name)
 
 
-class HypercodeProp(IATProp, FixedProp):
+class HypercodeProp(InfixProp, OutfixProp):
     """ Hypercode Property
 
     .. inheritance-diagram:: PrefixProp"""
 
     def __init__(self, t):
-        IATProp.__init__(self, t)
-        self.Name = "Hypercodes"
-
-
-class ErrDetectProp(IPTProp, FixedProp):
-    """ Error Detecting Property
-
-    .. inheritance-diagram:: ErrDetectProp"""
-    def __init__(self, tr):
-        FixedProp.__init__(self)
-        IPTProp.__init__(self, tr)
-        self.Name = "Error Detecting Codes"
+        name = ('Fixed','Hypercodes')
+        IATProp.__init__(self, t, name)
 
 
 class ErrCorrectProp(ErrDetectProp):
@@ -446,13 +571,15 @@ class ErrCorrectProp(ErrDetectProp):
         return ErrDetectProp(self.Aut.inverse().composition(self.Aut)).notMaximalW(aut, U)
 
 
-def buildCodeProp():
-    """Builds a CodeProp (from thin air ;-)
+def buildUDCodeProperty(alphabet):
+    """Builds a UDCodeProp (from thin air ;-)
 
-    Actually a dummy function
+    :param set alphabet: alphabet
+    :rtype: UDCodeProp"""
+    return UDCodeProp(alphabet)
 
-    :rtype: CodeProp"""
-    return CodeProp()
+
+buildUDCodeProp = buildUDCodeProperty
 
 
 def buildTrajPropS(regex, sigma):
@@ -507,7 +634,7 @@ def buildErrorDetectPropF(fname):
     :param str fname: file name
     :rtype: ErrDetectProp"""
     t = fio.readOneFromFile(fname)
-    return ErrDetectProp(t)
+    return IPTProp(t)
 
 
 def buildErrorDetectPropS(s):
@@ -516,7 +643,7 @@ def buildErrorDetectPropS(s):
     :param str s: transducer string
     :rtype: ErrDetectProp"""
     t = fio.readOneFromString(s)
-    return ErrDetectProp(t)
+    return IPTProp(t)
 
 
 def buildErrorCorrectPropF(fname):
@@ -900,4 +1027,3 @@ def constructCode(n, l, p, ipt=False, seed=None):
             cnt += 1
             lt.append(w)
     return lt
-

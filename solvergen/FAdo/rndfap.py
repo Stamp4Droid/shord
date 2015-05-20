@@ -91,7 +91,7 @@ class ICDFArgen(object):
             else:
                 r -= foo
                 bar *= m
-        return m * k - 1  # todo check the need of this return
+        return m * k - 1
 
     def _rndT(self, i):
         r = random.randint(0, i + self.pn - 1)

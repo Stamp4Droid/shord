@@ -788,8 +788,8 @@ class regexp(object):
         return self.wordDerivative(word).ewp()
 
     def reversal(self):
-        """
-            Reversal of regexp
+        """Reversal of regexp
+
         :rtype: regexp"""
         return self.__copy__()
 
@@ -909,10 +909,11 @@ class specialConstant(regexp):
         return set()
 
     def reversal(self):
-        """
-            Reversal of regexp
+        """Reversal of regexp
+
         :rtype: regexp"""
         return self.__copy__()
+
 
 class epsilon(specialConstant):
     """Class that represents the empty word.
@@ -1312,8 +1313,7 @@ class disj(connective):
         self.arg2._nfaFollowEpsilonStep(conditions)
 
     def reversal(self):
-        """
-            Reversal of regexp
+        """Reversal of regexp
         :rtype: regexp"""
         return disj(self.arg1.reversal(), self.arg2.reversal(), sigma=self.Sigma)
 
@@ -1519,6 +1519,7 @@ class star(regexp):
         au_initial = au.Initial.pop()
         au.addTransition(s0, Epsilon, s1)
         au.addTransition(s1, Epsilon, s0)
+#        au.addTransition(list(au.Final)[0], Epsilon, au_initial)
         au.addTransition(s0, Epsilon, au_initial)
         au.addTransition(list(au.Final)[0], Epsilon, s1)  # we know by contruction
         au.setInitial([s0])  # that there is only one final state,
@@ -1559,8 +1560,8 @@ class star(regexp):
             nfa.addTransition(iter_state, Epsilon, final)
 
     def reversal(self):
-        """
-            Reversal of regexp
+        """Reversal of regexp
+
         :rtype: regexp"""
         return star(self.arg.reversal(), sigma=self.Sigma)
 
@@ -1763,8 +1764,7 @@ class concat(connective):
             nfa.mergeStates(target, interm)
 
     def reversal(self):
-        """
-            Reversal of regexp
+        """Reversal of regexp
         :rtype: regexp"""
         return concat(self.arg2.reversal(), self.arg1.reversal(), sigma=self.Sigma)
 

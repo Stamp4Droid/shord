@@ -322,7 +322,7 @@ class cfgGenerator(object):
 class reStringRGenerator(cfgGenerator):
     """Uniform random Generator for reStrings"""
 
-    def __init__(self, Sigma=["a", "b"], size=10, cfgr=None, epsilon=None, empty=None, ident="Ti"):
+    def __init__(self, Sigma=["a", "b"], size=10, cfgr=None, eps=None, empty=None, ident="Ti"):
         """ Uniform random generator for regular expressions. Used without arguments generates an uncollapsible re
                 over {a,b} with size 10. For generate an arbitary re over an alphabet of 10 symbols of size 100:
                 reStringRGenerator (small_alphabet(10),100,reStringRGenerator.g_regular_base)
@@ -344,7 +344,7 @@ class reStringRGenerator(cfgGenerator):
         self.Sigma = Sigma
         for i in self.Sigma:
             self.base.append((ident, i))
-        if epsilon is not None:
+        if eps is not None:
             self.base.append((ident, common.Epsilon))
         if empty is not None:
             self.base.append((ident, common.EmptySet))
