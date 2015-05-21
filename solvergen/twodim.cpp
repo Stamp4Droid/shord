@@ -1151,25 +1151,17 @@ public:
     Registry<Variable> vars;
     Ref<Variable> entry;
     std::set<Ref<Variable> > exits;
-    mi::MultiIndex<mi::Index<SRC, Ref<Variable>,
-                       mi::Table<TGT, Ref<Variable> > >,
-                   mi::Index<TGT, Ref<Variable>,
-                       mi::Table<SRC, Ref<Variable> > > > epsilons;
+    mi::Index<SRC, Ref<Variable>,
+        mi::Table<TGT, Ref<Variable> > > epsilons;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
-                       mi::Index<SRC, Ref<Variable>,
-                           mi::Table<TGT, Ref<Variable> > > >,
-                   mi::Index<FLD, Ref<Field>,
-                       mi::Table<TGT, Ref<Variable> > >,
-                   mi::Index<TGT, Ref<Variable>,
-                       mi::Index<FLD, Ref<Field>,
+                       mi::Index<TGT, Ref<Variable>,
                            mi::Table<SRC, Ref<Variable> > > >,
-                   mi::Table<SRC, Ref<Variable> > > opens;
+                   mi::Table<SRC, Ref<Variable> >,
+                   mi::Table<FLD, Ref<Field> > > opens;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
                        mi::Index<SRC, Ref<Variable>,
                            mi::Table<TGT, Ref<Variable> > > >,
-                   mi::Index<SRC, Ref<Variable>,
-                       mi::Index<FLD, Ref<Field>,
-                           mi::Table<TGT, Ref<Variable> > > > > closes;
+                   mi::Table<FLD, Ref<Field> > > closes;
 public:
     explicit CodeGraph() {}
     CodeGraph(const CodeGraph&) = default;
@@ -1197,8 +1189,8 @@ public:
             epsilons.insert(var_map[e.get<SRC>()], var_map[e.get<TGT>()]);
         }
         FOR (o, other.opens) {
-            opens.insert(o.get<FLD>(), var_map[o.get<SRC>()],
-                         var_map[o.get<TGT>()]);
+            opens.insert(o.get<FLD>(), var_map[o.get<TGT>()],
+                         var_map[o.get<SRC>()]);
         }
         FOR (c, other.closes) {
             closes.insert(c.get<FLD>(), var_map[c.get<SRC>()],
@@ -1244,7 +1236,7 @@ public:
                     continue;
                 }
                 if (delim.is_open) {
-                    opens.insert(delim.fld, state2var[src], state2var[tgt]);
+                    opens.insert(delim.fld, state2var[tgt], state2var[src]);
                 } else {
                     closes.insert(delim.fld, state2var[src], state2var[tgt]);
                 }
@@ -1267,36 +1259,23 @@ public:
 
         // Record the set of matching in-variables.
         auto rec_in_bounds =
-            [&](const mi::Table<TGT, Ref<Variable> >& ops,
+            [&](const mi::Index<TGT, Ref<Variable>,
+                          mi::Table<SRC, Ref<Variable> > >& ops,
                 const mi::Index<SRC, Ref<Variable>,
                           mi::Table<TGT, Ref<Variable> > >& cls,
                 Ref<Field>) {
             in_bounds.emplace_back();
-            for (Ref<Variable> in_src : ops) {
-                worklist.enqueue(in_src);
-                in_bounds.back().first.insert(in_src);
+            for (const auto& in_src_p : ops) {
+                worklist.enqueue(in_src_p.first);
+                in_bounds.back().first.insert(in_src_p.first);
             }
             for (const auto& in_tgt_p : cls) {
                 in_bounds.back().second.insert(in_tgt_p.first);
             }
         };
-        join_zip<1>(opens.sec<0>(), closes.pri(), rec_in_bounds);
+        join_zip<1>(opens.pri(), closes.pri(), rec_in_bounds);
 
         // Process matching parenthesis pairs up to fixpoint.
-        auto emit_eps = [&](const mi::Table<SRC, Ref<Variable> >& out_srcs,
-                            const mi::Table<TGT, Ref<Variable> >& out_tgts,
-                            Ref<Field>) {
-            for (Ref<Variable> out_src : out_srcs) {
-                for (Ref<Variable> out_tgt : out_tgts) {
-                    if (!epsilons.insert(out_src, out_tgt) ) {
-                        continue;
-                    }
-                    for (Ref<Variable> clr_in_src : deps[out_src]) {
-                        worklist.enqueue(clr_in_src);
-                    }
-                }
-            }
-        };
         while (!worklist.empty()) {
             Ref<Variable> in_src = worklist.dequeue();
             // Build the set of target variables on the fly.
@@ -1315,18 +1294,34 @@ public:
             while (!queue.empty()) {
                 Ref<Variable> a = queue.front();
                 queue.pop_front();
+                auto emit_eps =
+                    [&](const mi::Index<TGT, Ref<Variable>,
+                                  mi::Table<SRC, Ref<Variable> > >& o_edges,
+                        const mi::Index<SRC, Ref<Variable>,
+                                  mi::Table<TGT, Ref<Variable> > >& c_edges,
+                        Ref<Field>) {
+                    for (Ref<Variable> out_src : o_edges[in_src]) {
+                        for (Ref<Variable> out_tgt : c_edges[a]) {
+                            if (!epsilons.insert(out_src, out_tgt) ) {
+                                continue;
+                            }
+                            for (Ref<Variable> clr_in_src : deps[out_src]) {
+                                worklist.enqueue(clr_in_src);
+                            }
+                        }
+                    }
+                };
                 if (in_tgts.count(a) > 0) {
-                    join_zip<1>(opens.sec<1>()[in_src], closes.sec<0>()[a],
-                                emit_eps);
+                    join_zip<1>(opens.pri(), closes.pri(), emit_eps);
                 }
                 // TODO: Record all imm epsilons?
-                for (Ref<Variable> b : epsilons.pri()[a]) {
+                for (Ref<Variable> b : epsilons[a]) {
                     if (reached.insert(b).second) {
                         queue.push_back(b);
                     }
                 }
                 // Check if any open starts at this variable.
-                if (opens.sec<2>().contains(a)) {
+                if (opens.sec<0>().contains(a)) {
                     deps.insert(a, in_src);
                 }
             }
@@ -1366,10 +1361,10 @@ public:
         // from P to N.
         decltype(opens) new_opens;
         FOR(o, opens) {
-            new_opens.insert(o.get<FLD>(), to_nvar(o.get<SRC>()),
-                             to_nvar(o.get<TGT>()));
-            new_opens.insert(o.get<FLD>(), o.get<SRC>(),
-                             to_nvar(o.get<TGT>()));
+            new_opens.insert(o.get<FLD>(), to_nvar(o.get<TGT>()),
+                             to_nvar(o.get<SRC>()));
+            new_opens.insert(o.get<FLD>(), to_nvar(o.get<TGT>()),
+                             o.get<SRC>());
         }
         swap(opens, new_opens);
         // Closes remain only between variables on the P-partition.
@@ -1380,11 +1375,11 @@ public:
         timer.start("Building NFA for function");
         // Collect all used delimiters, to form the FSM's alphabet.
         std::vector<Delimiter> delims;
-        for (const auto& fld_p : opens.pri()) {
-            delims.emplace_back(true, fld_p.first);
+        for (Ref<Field> fld : opens.sec<1>()) {
+            delims.emplace_back(true, fld);
         }
-        for (const auto& fld_p : closes.pri()) {
-            delims.emplace_back(false, fld_p.first);
+        for (Ref<Field> fld : closes.sec<0>()) {
+            delims.emplace_back(false, fld);
         }
         // Build the FSM.
         // XXX: Assumes Ref's are allocated serially.
@@ -1472,6 +1467,9 @@ public:
     }
     unsigned num_ops() const {
         return epsilons.size() + opens.size() + closes.size();
+    }
+    unsigned num_fields() const {
+        return opens.sec<1>().size() + closes.sec<0>().size();
     }
 };
 
@@ -1641,7 +1639,7 @@ public:
                     code_.epsilons.insert(src, tgt);
                 } else if (toks[2][0] == '(') {
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
-                    code_.opens.insert(fld, src, tgt);
+                    code_.opens.insert(fld, tgt, src);
                 } else if (toks[2][0] == ')') {
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
                     code_.closes.insert(fld, src, tgt);
@@ -1881,6 +1879,8 @@ int main(int argc, char* argv[]) {
             timer.done();
             timer.log("Size: ", f.sig().num_states(), " states, ",
                       f.sig().num_trans(), " transitions");
+            timer.log("Fields: from ", f_code.num_fields(), " to ",
+                      f.sig().num_letters());
 
             timer.start("Printing signature");
             fs::path fpath(outdir/(f.name + ".sig.tgf"));
@@ -1905,6 +1905,7 @@ int main(int argc, char* argv[]) {
     }
     timer.done();
 
+    // Print stats
     timer.log("Time breakdown:");
     timer.print_stats();
 }
