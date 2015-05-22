@@ -168,10 +168,6 @@ private:
         mi::Index<FROM, posint,
             mi::Index<LETTER, posint,
                 mi::Table<TO, posint> > >,
-        mi::Index<FROM, posint,
-            mi::Table<TO, posint> >,
-        mi::Index<TO, posint,
-            mi::Table<FROM, posint> >,
         mi::Index<TO, posint,
             mi::Index<LETTER, posint,
                 mi::Table<FROM, posint> > > > trans_;
@@ -288,45 +284,6 @@ public:
     unsigned num_trans() const {
         return trans_.size();
     }
-    void prune_useless_states() {
-        // Perform forward reachability
-        std::set<posint> fwd_reached(initial_.begin(), initial_.end());
-        std::deque<posint> fwd_list(initial_.begin(), initial_.end());
-        while (!fwd_list.empty()) {
-            posint from = fwd_list.front();
-            for (posint to : trans_.sec<0>()[from]) {
-                if (fwd_reached.insert(to).second) {
-                    fwd_list.push_back(to);
-                }
-            }
-            fwd_list.pop_front();
-        }
-
-        // Perform backward reachability
-        std::set<posint> bck_reached;
-        std::deque<posint> bck_list;
-        for (posint s : final_) {
-            if (fwd_reached.count(s) > 0) {
-                bck_reached.insert(s);
-                bck_list.push_back(s);
-            }
-        }
-        while (!bck_list.empty()) {
-            posint to = bck_list.front();
-            for (posint from : trans_.sec<1>()[to]) {
-                if (fwd_reached.count(from) > 0) {
-                    if (bck_reached.insert(from).second) {
-                        bck_list.push_back(from);
-                    }
-                }
-            }
-            bck_list.pop_front();
-        }
-        // TODO: Some initial states might now be unreachable => should run
-        // until fixpoint?
-        // Prune states based on the above information.
-        prune_states(std::move(bck_reached));
-    }
     // Drop states that are only reachable through epsilons.
     // TODO: Should only do this if it's a single epsilon reaching this
     // variable? Alternatively merge all states in an epsilon-cycle?
@@ -341,7 +298,7 @@ public:
             }
             // Consider states whose incoming transitions are all epsilons.
             bool only_inc_eps = true;
-            for (const auto& letter_p : trans_.sec<2>()[b]) {
+            for (const auto& letter_p : trans_.sec<0>()[b]) {
                 if (letter_p.first == 0) {
                     continue;
                 }
@@ -356,7 +313,7 @@ public:
             }
             // Collect all states 'a' reaching 'b' through an epsilon.
             std::list<posint> new_srcs;
-            for (posint a : trans_.sec<2>()[b][0]) {
+            for (posint a : trans_.sec<0>()[b][0]) {
                 // Ignore epsilon self-loops.
                 if (a == b) {
                     continue;
@@ -1086,6 +1043,8 @@ public:
 public:
     const std::string name;
     const Ref<Variable> ref;
+private:
+    bool useful_ = true;
 public:
     explicit Variable(const std::string* name_ptr, Ref<Variable> ref)
         : name(name_ptr != NULL ? *name_ptr
@@ -1100,6 +1059,12 @@ public:
     Variable& operator=(const Variable&) = delete;
     bool merge() {
         return false;
+    }
+    bool useful() const {
+        return useful_;
+    }
+    void mark_useless() {
+        useful_ = false;
     }
 };
 
@@ -1146,14 +1111,21 @@ TUPLE_TAG(CLR_IN_SRC);
 TUPLE_TAG(CLR_IN_TGT);
 
 // Only covers intra-method edges.
+// Invariant: entry, exits, and all endpoints of epsilons, opens and closes are
+// useful variables.
 class CodeGraph {
 public:
     Registry<Variable> vars;
     Ref<Variable> entry;
     std::set<Ref<Variable> > exits;
-    mi::Index<SRC, Ref<Variable>,
-        mi::Table<TGT, Ref<Variable> > > epsilons;
+    mi::MultiIndex<mi::Index<SRC, Ref<Variable>,
+                       mi::Table<TGT, Ref<Variable> > >,
+                   mi::Index<TGT, Ref<Variable>,
+                       mi::Table<SRC, Ref<Variable> > > > epsilons;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
+                       mi::Index<SRC, Ref<Variable>,
+                           mi::Table<TGT, Ref<Variable> > > >,
+                   mi::Index<FLD, Ref<Field>,
                        mi::Index<TGT, Ref<Variable>,
                            mi::Table<SRC, Ref<Variable> > > >,
                    mi::Table<SRC, Ref<Variable> >,
@@ -1161,6 +1133,9 @@ public:
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
                        mi::Index<SRC, Ref<Variable>,
                            mi::Table<TGT, Ref<Variable> > > >,
+                   mi::Index<FLD, Ref<Field>,
+                       mi::Index<TGT, Ref<Variable>,
+                           mi::Table<SRC, Ref<Variable> > > >,
                    mi::Table<FLD, Ref<Field> > > closes;
 public:
     explicit CodeGraph() {}
@@ -1180,39 +1155,9 @@ public:
         CodeGraph temp;
         swap(*this, temp);
     }
-    void copy(const CodeGraph& other,
-              std::map<Ref<Variable>,Ref<Variable> >& var_map) {
-        for (const Variable& v : other.vars) {
-            var_map[v.ref] = vars.mktemp().ref;
-        }
-        FOR (e, other.epsilons) {
-            epsilons.insert(var_map[e.get<SRC>()], var_map[e.get<TGT>()]);
-        }
-        FOR (o, other.opens) {
-            opens.insert(o.get<FLD>(), var_map[o.get<TGT>()],
-                         var_map[o.get<SRC>()]);
-        }
-        FOR (c, other.closes) {
-            closes.insert(c.get<FLD>(), var_map[c.get<SRC>()],
-                          var_map[c.get<TGT>()]);
-        }
-    }
-    static CodeGraph from_sig(const Signature& sig) {
-        CodeGraph res;
-        Ref<Variable> a = res.vars.mktemp().ref;
-        res.entry = a;
-        Ref<Variable> b = res.vars.mktemp().ref;
-        res.exits.insert(b);
-        res.embed(a, b, sig);
-        return res;
-    }
-    void star() {
-        for (Ref<Variable> e : exits) {
-            epsilons.insert(e, entry);
-        }
-        exits.insert(entry);
-    }
     void embed(Ref<Variable> src, Ref<Variable> tgt, const Signature& callee) {
+        assert(vars[src].useful());
+        assert(vars[tgt].useful());
         // Create temporary variables for all states in callee's signature
         // (except the sink state).
         // TODO: Could do this more efficiently, since Ref's are allocated
@@ -1236,7 +1181,7 @@ public:
                     continue;
                 }
                 if (delim.is_open) {
-                    opens.insert(delim.fld, state2var[tgt], state2var[src]);
+                    opens.insert(delim.fld, state2var[src], state2var[tgt]);
                 } else {
                     closes.insert(delim.fld, state2var[src], state2var[tgt]);
                 }
@@ -1273,7 +1218,7 @@ public:
                 in_bounds.back().second.insert(in_tgt_p.first);
             }
         };
-        join_zip<1>(opens.pri(), closes.pri(), rec_in_bounds);
+        join_zip<1>(opens.sec<0>(), closes.pri(), rec_in_bounds);
 
         // Process matching parenthesis pairs up to fixpoint.
         while (!worklist.empty()) {
@@ -1312,73 +1257,204 @@ public:
                     }
                 };
                 if (in_tgts.count(a) > 0) {
-                    join_zip<1>(opens.pri(), closes.pri(), emit_eps);
+                    join_zip<1>(opens.sec<0>(), closes.pri(), emit_eps);
                 }
                 // TODO: Record all imm epsilons?
-                for (Ref<Variable> b : epsilons[a]) {
+                for (Ref<Variable> b : epsilons.pri()[a]) {
                     if (reached.insert(b).second) {
                         queue.push_back(b);
                     }
                 }
                 // Check if any open starts at this variable.
-                if (opens.sec<0>().contains(a)) {
+                if (opens.sec<1>().contains(a)) {
                     deps.insert(a, in_src);
                 }
             }
         }
     }
-    // Simply make a copy of each state, and leave it to the DFA library to
-    // remove any unreachable states.
+    // Simply makes a copy of each state; should prune later to remove
+    // unreachable states.
+    // XXX: Implementation assumes Ref's are allocated serially.
     void pn_extend() {
         using std::swap;
+        assert(entry.valid());
         // The original set of variables form the P-partition. Make a copy of
         // each variable for the N-partition.
+        RefMap<Variable,Ref<Variable> > to_nvar(vars);
         posint orig_vars = vars.size();
         for (posint i = 0; i < orig_vars; i++) {
-            vars.mktemp();
+            Ref<Variable> pvar(i);
+            if (vars[pvar].useful()) {
+                to_nvar[pvar] = vars.mktemp().ref;
+            }
         }
-        auto to_nvar = [orig_vars](Ref<Variable> pvar) -> Ref<Variable> {
-            // XXX: Assumes Ref's are allocated serially.
-            return Ref<Variable>(pvar.value() + orig_vars);
-        };
         // Only the P-partition entry remains an entry on the PN-extended
         // machine (no change needed).
         // Both P-partition and N-partition exits are valid.
         std::set<Ref<Variable> > new_exits;
         for (Ref<Variable> v : exits) {
             new_exits.insert(v);
-            new_exits.insert(to_nvar(v));
+            new_exits.insert(to_nvar[v]);
         }
         swap(exits, new_exits);
         // Epsilon transitions are copied on the N-partition.
         decltype(epsilons) new_epsilons;
         FOR(e, epsilons) {
             new_epsilons.insert(e.get<SRC>(), e.get<TGT>());
-            new_epsilons.insert(to_nvar(e.get<SRC>()), to_nvar(e.get<TGT>()));
+            new_epsilons.insert(to_nvar[e.get<SRC>()], to_nvar[e.get<TGT>()]);
         }
         swap(epsilons, new_epsilons);
         // Opens are moved to the N-partition, and also serve as transitions
         // from P to N.
         decltype(opens) new_opens;
         FOR(o, opens) {
-            new_opens.insert(o.get<FLD>(), to_nvar(o.get<TGT>()),
-                             to_nvar(o.get<SRC>()));
-            new_opens.insert(o.get<FLD>(), to_nvar(o.get<TGT>()),
-                             o.get<SRC>());
+            new_opens.insert(o.get<FLD>(), to_nvar[o.get<SRC>()],
+                             to_nvar[o.get<TGT>()]);
+            new_opens.insert(o.get<FLD>(), o.get<SRC>(),
+                             to_nvar[o.get<TGT>()]);
         }
         swap(opens, new_opens);
         // Closes remain only between variables on the P-partition.
     }
+    // Ignores parenthesis matching.
+    void prune_useless_states() {
+        assert(entry.valid());
+        // Perform forward reachability
+        RefSet<Variable> fwd_reached(vars);
+        std::deque<Ref<Variable> > fwd_list;
+        auto fwd_visit = [&](Ref<Variable> v) {
+            assert(vars[v].useful());
+            if (!fwd_reached.contains(v)) {
+                fwd_reached.insert(v);
+                fwd_list.push_back(v);
+            }
+        };
+        fwd_visit(entry);
+        while (!fwd_list.empty()) {
+            Ref<Variable> src = fwd_list.front();
+            for (Ref<Variable> tgt : epsilons.pri()[src]) {
+                fwd_visit(tgt);
+            }
+            for (const auto& fld_p : opens.pri()) {
+                for (Ref<Variable> tgt : fld_p.second[src]) {
+                    fwd_visit(tgt);
+                }
+            }
+            for (const auto& fld_p : closes.pri()) {
+                for (Ref<Variable> tgt : fld_p.second[src]) {
+                    fwd_visit(tgt);
+                }
+            }
+            fwd_list.pop_front();
+        }
+        // Perform backward reachability
+        RefSet<Variable> bck_reached(vars);
+        std::deque<Ref<Variable> > bck_list;
+        auto bck_visit = [&](Ref<Variable> v) {
+            assert(vars[v].useful());
+            if (!fwd_reached.contains(v)) {
+                return;
+            }
+            if (!bck_reached.contains(v)) {
+                bck_reached.insert(v);
+                bck_list.push_back(v);
+            }
+        };
+        for (Ref<Variable> v : exits) {
+            bck_visit(v);
+        }
+        while (!bck_list.empty()) {
+            Ref<Variable> tgt = bck_list.front();
+            for (Ref<Variable> src : epsilons.sec<0>()[tgt]) {
+                bck_visit(src);
+            }
+            for (const auto& fld_p : opens.sec<0>()) {
+                for (Ref<Variable> src : fld_p.second[tgt]) {
+                    bck_visit(src);
+                }
+            }
+            for (const auto& fld_p : closes.sec<0>()) {
+                for (Ref<Variable> src : fld_p.second[tgt]) {
+                    bck_visit(src);
+                }
+            }
+            bck_list.pop_front();
+        }
+        // Prune states based on the above information.
+        using std::swap;
+        if (!bck_reached.contains(entry)) {
+            // Special case: empty FSM
+            clear();
+            entry = vars.mktemp().ref;
+            return;
+        }
+        for (Variable& v : vars) {
+            if (!bck_reached.contains(v.ref)) {
+                assert(v.ref != entry);
+                v.mark_useless();
+            }
+        }
+        std::set<Ref<Variable> > new_exits;
+        for (Ref<Variable> v : exits) {
+            if (vars[v].useful()) {
+                new_exits.insert(v);
+            }
+        }
+        assert(!new_exits.empty());
+        swap(exits, new_exits);
+        decltype(epsilons) new_epsilons;
+        for (const auto& src_p : epsilons.pri()) {
+            if (!vars[src_p.first].useful()) {
+                continue;
+            }
+            for (Ref<Variable> tgt : src_p.second) {
+                if (!vars[tgt].useful()) {
+                    continue;
+                }
+                new_epsilons.insert(src_p.first, tgt);
+            }
+        }
+        swap(epsilons, new_epsilons);
+        decltype(opens) new_opens;
+        for (const auto& fld_p : opens.pri()) {
+            for (const auto& src_p : fld_p.second) {
+                if (!vars[src_p.first].useful()) {
+                    continue;
+                }
+                for (Ref<Variable> tgt : src_p.second) {
+                    if (!vars[tgt].useful()) {
+                        continue;
+                    }
+                    new_opens.insert(fld_p.first, src_p.first, tgt);
+                }
+            }
+        }
+        swap(opens, new_opens);
+        decltype(closes) new_closes;
+        for (const auto& fld_p : closes.pri()) {
+            for (const auto& src_p : fld_p.second) {
+                if (!vars[src_p.first].useful()) {
+                    continue;
+                }
+                for (Ref<Variable> tgt : src_p.second) {
+                    if (!vars[tgt].useful()) {
+                        continue;
+                    }
+                    new_closes.insert(fld_p.first, src_p.first, tgt);
+                }
+            }
+        }
+        swap(closes, new_closes);
+    }
     Signature to_sig() const {
-        // Assumes at least an entry variable has been set.
         assert(entry.valid());
         timer.start("Building NFA for function");
         // Collect all used delimiters, to form the FSM's alphabet.
         std::vector<Delimiter> delims;
-        for (Ref<Field> fld : opens.sec<1>()) {
+        for (Ref<Field> fld : opens.sec<2>()) {
             delims.emplace_back(true, fld);
         }
-        for (Ref<Field> fld : closes.sec<0>()) {
+        for (Ref<Field> fld : closes.sec<1>()) {
             delims.emplace_back(false, fld);
         }
         // Build the FSM.
@@ -1399,17 +1475,11 @@ public:
             Delimiter d(false, c.get<FLD>());
             nfa.add_symb_trans(c.get<SRC>().value(), d, c.get<TGT>().value());
         }
-        // Determinize and minimize the FSM.
         unsigned n_orig = nfa.num_states();
         unsigned e_orig = nfa.num_trans();
         timer.log("Size: ", n_orig, " states, ", e_orig, " transitions");
         timer.done();
-        timer.start("Pruning NFA");
-        nfa.prune_useless_states();
-        unsigned n_prune = nfa.num_states();
-        unsigned e_prune = nfa.num_trans();
-        timer.log("Size: ", n_prune, " states, ", e_prune, " transitions");
-        typename Timer::TimeDiff dt_prune = timer.done();
+        // Determinize and minimize the FSM.
         timer.start("Merging epsilons");
         nfa.merge_epsilons();
         unsigned n_merge = nfa.num_states();
@@ -1429,7 +1499,6 @@ public:
         timer.log("Size: ", n_min, " states, ", e_min, " transitions");
         typename Timer::TimeDiff dt_min = timer.done();
         timer.log("FSMSizes\t",   n_orig,  "\t", e_orig,  "\t",
-                  dt_prune, "\t", n_prune, "\t", e_prune, "\t",
                   dt_merge, "\t", n_merge, "\t", e_merge, "\t",
                   dt_det,   "\t", n_det,   "\t", e_det,   "\t",
                   dt_min,   "\t", n_min,   "\t", e_min);
@@ -1437,6 +1506,9 @@ public:
     }
     void to_tgf(std::ostream& os, const Registry<Field>& fld_reg) const {
         for (const Variable& v : vars) {
+            if (!v.useful()) {
+                continue;
+            }
             os << v.name;
             if (v.ref == entry) {
                 os << " in";
@@ -1463,37 +1535,21 @@ public:
         }
     }
     unsigned num_vars() const {
-        return vars.size();
+        unsigned count = 0;
+        for (const Variable& v : vars) {
+            if (v.useful()) {
+                count++;
+            }
+        }
+        return count;
     }
     unsigned num_ops() const {
         return epsilons.size() + opens.size() + closes.size();
     }
     unsigned num_fields() const {
-        return opens.sec<1>().size() + closes.sec<0>().size();
+        return opens.sec<2>().size() + closes.sec<1>().size();
     }
 };
-
-Signature concat_sigs(const Signature& l_sig, const Signature& r_sig) {
-    CodeGraph res;
-    Ref<Variable> a = res.vars.mktemp().ref;
-    Ref<Variable> b = res.vars.mktemp().ref;
-    Ref<Variable> c = res.vars.mktemp().ref;
-    res.entry = a;
-    res.exits.insert(c);
-    res.embed(a, b, l_sig);
-    res.embed(b, c, r_sig);
-    res.close();
-    res.pn_extend();
-    return res.to_sig();
-}
-
-Signature star_sig(const Signature& sig) {
-    CodeGraph res = CodeGraph::from_sig(sig);
-    res.star();
-    res.close();
-    res.pn_extend();
-    return res.to_sig();
-}
 
 class SCC;
 
@@ -1639,7 +1695,7 @@ public:
                     code_.epsilons.insert(src, tgt);
                 } else if (toks[2][0] == '(') {
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
-                    code_.opens.insert(fld, tgt, src);
+                    code_.opens.insert(fld, src, tgt);
                 } else if (toks[2][0] == ')') {
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
                     code_.closes.insert(fld, src, tgt);
@@ -1868,8 +1924,20 @@ int main(int argc, char* argv[]) {
             timer.log("Size: ", f_code.num_vars(), " vars, ",
                       f_code.num_ops(), " ops");
 
+            timer.start("Pruning function code");
+            f_code.prune_useless_states();
+            timer.done();
+            timer.log("Size: ", f_code.num_vars(), " vars, ",
+                      f_code.num_ops(), " ops");
+
             timer.start("PN-extending function code");
             f_code.pn_extend();
+            timer.done();
+            timer.log("Size: ", f_code.num_vars(), " vars, ",
+                      f_code.num_ops(), " ops");
+
+            timer.start("Pruning function code");
+            f_code.prune_useless_states();
             timer.done();
             timer.log("Size: ", f_code.num_vars(), " vars, ",
                       f_code.num_ops(), " ops");

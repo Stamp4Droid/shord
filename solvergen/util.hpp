@@ -728,6 +728,30 @@ public:
     }
 };
 
+template<class K> class RefSet {
+private:
+    std::vector<bool> bitset_;
+public:
+    explicit RefSet(const Registry<K>& keys) : bitset_(keys.size()) {}
+    RefSet(const RefSet& rhs) = delete;
+    RefSet(RefSet&& rhs) = default;
+    RefSet& operator=(const RefSet& rhs) = delete;
+    bool contains(Ref<K> ref) const {
+#ifdef NDEBUG
+        return bitset_[ref.value()];
+#else
+        return bitset_.at(ref.value());
+#endif
+    }
+    void insert(Ref<K> ref) {
+#ifdef NDEBUG
+        bitset_[ref.value()] = true;
+#else
+        bitset_.at(ref.value()) = true;
+#endif
+    }
+};
+
 // GRAPH ALGORITHMS ===========================================================
 
 // TODO: Should make this a special case of a generic SccGraph<Node>, for
