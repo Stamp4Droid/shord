@@ -395,88 +395,67 @@ class Partitioning {
 public:
     typedef unsigned ElemId;
     typedef unsigned PartId;
-    typedef unsigned Idx;
 private:
-    PartId num_parts_;
     const ElemId num_elems_;
-    // TODO: Could instead use one doubly-linked list per part.
-    std::vector<ElemId> elems_;
-    std::vector<std::pair<Idx,Idx> > part2ends_;
+    std::vector<std::set<ElemId> > part2elems_;
     std::vector<PartId> elem2part_;
 public:
     explicit Partitioning(ElemId num_elems)
-        : num_parts_(1), num_elems_(num_elems), elems_(num_elems),
-          elem2part_(num_elems) {
+        : num_elems_(num_elems), elem2part_(num_elems, 0) {
+        part2elems_.emplace_back();
         for (ElemId i = 0; i < num_elems; i++) {
-            elems_[i] = i;
+            part2elems_.back().insert(i);
         }
-        part2ends_.emplace_back(0, num_elems);
-        elem2part_.assign(num_elems, 0);
     }
     PartId num_parts() const {
-        return num_parts_;
+        return part2elems_.size();
     }
     ElemId num_elems() const {
         return num_elems_;
     }
     unsigned part_size(PartId p) const {
-        return part2ends_[p].second - part2ends_[p].first;
+        return part2elems_[p].size();
     }
     std::list<std::pair<PartId,PartId> > refine(const std::set<ElemId>& xs) {
+        using std::swap;
         std::list<std::pair<PartId,PartId> > updates;
         // TODO: Could use a vector instead of a map.
-        std::map<PartId,Idx> part2split;
+        std::map<PartId,std::set<ElemId> > part2split;
         for (ElemId x : xs) {
             PartId p = elem2part_[x];
-            Idx p_begin = part2ends_[p].first;
-            Idx p_end = part2ends_[p].second;
-            Idx& p_split = part2split.emplace(p, p_end).first->second;
-            // TODO: This performs a lot of work at each step. It could be bad
-            // if 'xs' covers a large portion of some part p.
-            auto x_pos = std::equal_range(elems_.begin() + p_begin,
-                                          elems_.begin() + p_split, x);
-            assert(x_pos.second == x_pos.first + 1);
-            // The elements to the left of the split remain sorted, and since
-            // 'xs' are stored in ascending order in a std::set, the elements
-            // to the right of the split will be in descending order.
-            std::rotate(x_pos.first, x_pos.first + 1,
-                        elems_.begin() + p_split);
-            p_split--;
+            part2elems_[p].erase(x);
+            part2split[p].insert(x);
         }
-        for (const auto& p_split : part2split) {
+        for (auto& p_split : part2split) {
             PartId p = p_split.first;
-            Idx split = p_split.second;
-            // Fix the order to the right of the split point.
-            std::reverse(elems_.begin() + split,
-                         elems_.begin() + part2ends_[p].second);
-            if (split == part2ends_[p].first) {
+            std::set<ElemId>& split = p_split.second;
+            if (part2elems_[p].empty()) {
                 // The entire part was covered.
+                swap(part2elems_[p], split);
                 continue;
             }
             // Record the right half as a new part.
-            PartId q = num_parts_++;
-            Idx q_begin = split;
-            Idx q_end = part2ends_[p].second;
-            part2ends_.emplace_back(q_begin, q_end);
-            part2ends_[p].second = q_begin;
-            for (Idx i = q_begin; i < q_end; i++) {
-                elem2part_[elems_[i]] = q;
+            PartId q = part2elems_.size();
+            part2elems_.emplace_back();
+            swap(part2elems_[q], split);
+            for (ElemId e : part2elems_[q]) {
+                elem2part_[e] = q;
             }
             updates.emplace_back(p, q);
         }
         return updates;
     }
-    typename std::vector<ElemId>::const_iterator begin(PartId p) const {
-        return elems_.begin() + part2ends_[p].first;
+    typename std::set<ElemId>::const_iterator begin(PartId p) const {
+        return part2elems_[p].begin();
     }
-    typename std::vector<ElemId>::const_iterator end(PartId p) const {
-        return elems_.begin() + part2ends_[p].second;
+    typename std::set<ElemId>::const_iterator end(PartId p) const {
+        return part2elems_[p].end();
+    }
+    const std::set<ElemId>& elems_of(PartId p) const {
+        return part2elems_[p];
     }
     bool part_contains(PartId p, ElemId x) const {
-        auto x_pos
-            = std::equal_range(elems_.begin() + part2ends_[p].first,
-                               elems_.begin() + part2ends_[p].second, x);
-        return x_pos.first != x_pos.second;
+        return part2elems_[p].count(x) > 0;
     }
     PartId part_of(ElemId x) const {
         return elem2part_[x];
@@ -632,9 +611,9 @@ public:
             PartId A = worklist.dequeue();
             for (const auto& letter_p : rev_trans) {
                 std::set<unsigned> X;
-                for (auto it = P.begin(A); it != P.end(A); ++it) {
+                for (unsigned tgt : P.elems_of(A)) {
                     const mi::Table<FROM, unsigned>& srcs =
-                        letter_p.second[*it];
+                        letter_p.second[tgt];
                     X.insert(srcs.begin(), srcs.end());
                 }
                 for (auto u : P.refine(X)) {
