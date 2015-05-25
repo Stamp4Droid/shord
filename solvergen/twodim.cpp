@@ -613,6 +613,15 @@ public:
         if (finals_.empty()) {
             return DFA();
         }
+        // Set up reverse ordering of transitions.
+        mi::Index<LETTER, unsigned,
+            mi::Index<TO, unsigned,
+                mi::Table<FROM, unsigned> > > rev_trans;
+        for (unsigned src = 0; src < num_states(); src++) {
+            for (unsigned letter = 0; letter < num_letters(); letter++) {
+                rev_trans.insert(letter, follow(src, letter), src);
+            }
+        }
         // Partition states according to the Hopcroft minimization algorithm.
         typedef typename Partitioning::PartId PartId;
         Partitioning P(num_states());
@@ -621,12 +630,12 @@ public:
         worklist.enqueue(F);
         while (!worklist.empty()) {
             PartId A = worklist.dequeue();
-            for (unsigned c = 0; c < num_letters(); c++) {
+            for (const auto& letter_p : rev_trans) {
                 std::set<unsigned> X;
-                for (unsigned src = 0; src < num_states(); src++) {
-                    if (P.part_contains(A, follow(src, c))) {
-                        X.insert(src);
-                    }
+                for (auto it = P.begin(A); it != P.end(A); ++it) {
+                    const mi::Table<FROM, unsigned>& srcs =
+                        letter_p.second[*it];
+                    X.insert(srcs.begin(), srcs.end());
                 }
                 for (auto u : P.refine(X)) {
                     PartId Y = u.first; // == Y\X
