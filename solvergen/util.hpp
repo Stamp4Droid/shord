@@ -267,6 +267,9 @@ public:
         reached_.erase(val);
         return val;
     }
+    bool contains(T val) const {
+        return reached_.count(val) > 0;
+    }
 };
 
 template<typename T> class Histogram {
@@ -373,6 +376,56 @@ bool empty_intersection(const T& a, const S& b) {
     }
     return true;
 }
+
+template<class T> class Matrix2D {
+private:
+    const unsigned x_len_;
+    const unsigned y_len_;
+    T* array_;
+public:
+    Matrix2D(unsigned x_len, unsigned y_len, const T& val)
+        : x_len_(x_len), y_len_(y_len), array_(new T[x_len*y_len]) {
+        std::fill_n(array_, x_len * y_len, val);
+    }
+    ~Matrix2D() {
+        delete array_;
+    }
+    T& operator()(unsigned i, unsigned j) {
+        assert(i < x_len_ && j < y_len_);
+        return array_[i*y_len_ + j];
+    }
+};
+
+// Lower-left triangle (without the main diagonal): only care about elements
+// M[i][j] with i > j.
+// TODO: Could store only the required elements: ((n - 1) * n / 2) cells in
+// total, use formula (i * (i - 1) / 2 + j) to calculate the index.
+// TODO: Could specialize for bools: store 8 bools in a byte.
+template<class T> class TriangleMatrix {
+private:
+    unsigned size_;
+    T* array_;
+public:
+    TriangleMatrix(unsigned n, const T& val) : size_(n), array_(new T[n*n]) {
+        for (unsigned i = 0; i < n; i++) {
+            for (unsigned j = 0; j < i; j++) {
+                array_[i*n + j] = val;
+            }
+        }
+    }
+    ~TriangleMatrix() {
+        delete array_;
+    }
+    friend void swap(TriangleMatrix& a, TriangleMatrix& b) {
+        using std::swap;
+        swap(a.size_, b.size_);
+        swap(a.array_, b.array_);
+    }
+    T& operator()(unsigned i, unsigned j) {
+        assert(i < size_ && j < size_ && i != j);
+        return (i > j) ? array_[i*size_ + j] : array_[j*size_ + i];
+    }
+};
 
 // OS SERVICES ================================================================
 

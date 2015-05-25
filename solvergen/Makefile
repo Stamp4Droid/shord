@@ -64,9 +64,8 @@ bin/rsm\#%: $(RSM_SRC)
 bin/rsm.out: rsm.cpp util.hpp
 	$(CC) -I . -o bin/rsm.out rsm.cpp $(RSM_LIBS)
 
-bin/twodim.out: twodim.cpp util.hpp amore/libAMoRE.a
-	$(CC) -I . -I amore/include/ -L amore \
-	-o bin/twodim.out twodim.cpp -lAMoRE $(RSM_LIBS)
+bin/twodim.out: twodim.cpp util.hpp
+	$(CC) -I . -o bin/twodim.out twodim.cpp $(RSM_LIBS)
 
 # When some other target depends on amore/libAMoRE.a, invoke that sub-project's
 # Makefile to check for changes.
