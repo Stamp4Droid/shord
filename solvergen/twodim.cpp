@@ -1568,13 +1568,18 @@ int main(int argc, char* argv[]) {
 
     timer.start("Processing SCCs bottom-up");
     for (SCC& scc : sccs) {
-        timer.start("Processing SCC", scc.ref, " of ", sccs.size());
+        timer.start("Processing SCC", scc.name, " (", scc.ref, " of ",
+                    sccs.size(), ")");
         timer.log(scc.size(), " functions, ", scc.entries().size(),
                   " entries");
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
 
         timer.start("Inlining callees");
         scc.inline_callees(funs);
+        fs::path inl_path(outdir/(scc.name + ".fun.tgf"));
+        std::ofstream inl_out(inl_path.string());
+        EXPECT((bool) inl_out);
+        scc.to_tgf(inl_out, funs, flds);
         timer.done();
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
 
