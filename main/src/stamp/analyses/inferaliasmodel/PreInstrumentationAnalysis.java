@@ -4,9 +4,13 @@ import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
+import soot.Value;
+import soot.Local;
 import soot.RefLikeType;
 import soot.jimple.Stmt;
 import soot.jimple.DefinitionStmt;
+import soot.jimple.AnyNewExpr;
+import soot.jimple.NewExpr;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
@@ -28,14 +32,15 @@ import chord.project.Chord;
 public class PreInstrumentationAnalysis extends JavaAnalysis
 {
 	private int methIndex;
-	private SootMethod method;
+	private String methSig;
+	private SootMethod meth;
 	private Chain<Unit> units;
+	private MatchAllocToInitAnalysis invkInitAnalysis;
 	private CallGraph callGraph;
 	private PrintWriter instrInfoWriter;
-	private PrintWriter eventInfoWriter;
 	private int eventId = 0;
 
-	public enum EventType { METHCALLARG, NEW, METHPARAM };
+	public enum EventType { METHCALLARG, METHPARAM };
 
 	public void run()
 	{
@@ -47,9 +52,6 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 			
 			File instrInfoFile = new File(outDir, "instrinfo.txt");
 			instrInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(instrInfoFile)));
-			
-			File eventInfoFile = new File(outDir, "eventinfo.txt");
-			eventInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(eventInfoFile)));
 
 			Program prog = Program.g();
 			prog.runCHA();
@@ -61,20 +63,26 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 			for(SootClass klass : prog.getClasses()){
 				if(prog.isFrameworkClass(klass))
 					continue;
+				String className = klass.getName();
+				if(className.startsWith("stamp.harness.") || className.equals("android.view.StampLayoutInflater"))
+					continue;
 				for(SootMethod method : klass.getMethods()){
 					if(!method.isConcrete())
 						continue;
-					this.method = method;
+
+					this.meth = method;
+					this.methSig = bcSig(method);
 					this.methIndex = (int) methNumberer.get(method);
-					methodInfoWriter.println(methIndex +" "+method.getSignature());
 					this.units = method.retrieveActiveBody().getUnits();
+					this.invkInitAnalysis = null;
+
+					methodInfoWriter.println(methIndex +" "+method.getSignature());
 					System.out.println("preinst: "+method.getSignature());
 					process(methIndex);
 				}
 			}
 			
 			methodInfoWriter.close();
-			eventInfoWriter.close();
 			instrInfoWriter.close();
 		}catch(IOException e){
 			throw new Error(e);
@@ -95,7 +103,27 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 
 	private void processNewStmt(Stmt stmt, int stmtIndex)
 	{
-		return;
+		if(!(stmt instanceof DefinitionStmt))
+			return;
+		Value leftOp = ((DefinitionStmt) stmt).getLeftOp();
+		Value rightOp = ((DefinitionStmt) stmt).getRightOp();
+		if(!(leftOp instanceof Local) || !(rightOp instanceof AnyNewExpr))
+			return;
+		if(rightOp instanceof NewExpr){
+			if(invkInitAnalysis == null)
+				invkInitAnalysis = new MatchAllocToInitAnalysis(meth.retrieveActiveBody());
+			int argIndex = 0;
+			for(Stmt initInvkStmt : invkInitAnalysis.invokeInitStmtsFor(stmt)){
+				int bytecodeOffset = bco(initInvkStmt);
+				if(bytecodeOffset >= 0){
+					instrInfoWriter.println(EventType.METHCALLARG+" "+methSig+" "+bytecodeOffset+" "+argIndex+" "+eventId+" "+methIndex+" "+stmtIndex);
+					eventId++;
+				} else
+					System.out.println("bco unavailable: "+meth.getSignature());
+			}
+		} else {
+			//TODO: handle array allocation sites
+		}
 	}
 
 	private void processInvkStmt(Stmt stmt, int stmtIndex)
@@ -124,11 +152,17 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 		}
 		if(!instrument)
 			return;
-	
-		output(stmt, stmtIndex, -1);		
+
+		int argIndex = -1;
+		int bytecodeOffset = bco(stmt);
+		if(bytecodeOffset >= 0){
+			instrInfoWriter.println(EventType.METHCALLARG+" "+methSig+" "+bytecodeOffset+" "+argIndex+" "+eventId+" "+methIndex+" "+stmtIndex);
+			eventId++;
+		} else
+			System.out.println("bco unavailable: "+meth.getSignature());
 	}
 		
-	void output(Stmt stmt, int stmtIndex, int argIndex)
+	int bco(Stmt stmt)
 	{
 		int bytecodeOffset = -1;
 		for(Tag tag : stmt.getTags()){
@@ -137,13 +171,13 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 				break;
 			}
 		}
-		assert bytecodeOffset >= 0;
+		return bytecodeOffset;
+	}
 
+	String bcSig(SootMethod method)
+	{
 		String sig = method.getBytecodeSignature();
 		sig = sig.substring(sig.indexOf(' ')+1, sig.length()-1)+"@L"+method.getDeclaringClass().getName().replace('.', '/')+";";
-
-		instrInfoWriter.println(sig+" "+bytecodeOffset+" "+eventId);
-		eventInfoWriter.println(eventId+" "+EventType.METHCALLARG+" "+methIndex+" "+stmtIndex+" "+argIndex);
-		eventId++;
+		return sig;
 	}
 }
