@@ -31,7 +31,11 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 	private SootMethod method;
 	private Chain<Unit> units;
 	private CallGraph callGraph;
-	private PrintWriter writer;
+	private PrintWriter instrInfoWriter;
+	private PrintWriter eventInfoWriter;
+	private int eventId = 0;
+
+	public enum EventType { METHCALLARG, NEW, METHPARAM };
 
 	public void run()
 	{
@@ -42,13 +46,16 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 			outDir.mkdirs();
 			
 			File instrInfoFile = new File(outDir, "instrinfo.txt");
-			writer = new PrintWriter(new BufferedWriter(new FileWriter(instrInfoFile)));
+			instrInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(instrInfoFile)));
 			
+			File eventInfoFile = new File(outDir, "eventinfo.txt");
+			eventInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(eventInfoFile)));
+
 			Program prog = Program.g();
 			prog.runCHA();
 			
 			File methodsInfoFile = new File(outDir, "methods.txt");
-			PrintWriter methodsInfoFileWriter = new PrintWriter(new BufferedWriter(new FileWriter(methodsInfoFile)));
+			PrintWriter methodInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(methodsInfoFile)));
 			callGraph = Scene.v().getCallGraph();
 			ArrayNumberer<SootMethod> methNumberer = Scene.v().getMethodNumberer();
 			for(SootClass klass : prog.getClasses()){
@@ -59,15 +66,16 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 						continue;
 					this.method = method;
 					this.methIndex = (int) methNumberer.get(method);
-					methodsInfoFileWriter.println(methIndex +" "+method.getSignature());
+					methodInfoWriter.println(methIndex +" "+method.getSignature());
 					this.units = method.retrieveActiveBody().getUnits();
 					System.out.println("preinst: "+method.getSignature());
 					process(methIndex);
 				}
 			}
 			
-			methodsInfoFileWriter.close();
-			writer.close();
+			methodInfoWriter.close();
+			eventInfoWriter.close();
+			instrInfoWriter.close();
 		}catch(IOException e){
 			throw new Error(e);
 		}
@@ -122,11 +130,6 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 		
 	void output(Stmt stmt, int stmtIndex, int argIndex)
 	{
-		if(methIndex >= 65536 || stmtIndex >= 65536)
-			throw new RuntimeException("unexpected "+ "methIndex = "+methIndex+" stmtIndex = "+stmtIndex);
-		
-		int id = (methIndex << 16) | stmtIndex;
-
 		int bytecodeOffset = -1;
 		for(Tag tag : stmt.getTags()){
 			if(tag instanceof BytecodeOffsetTag){
@@ -138,6 +141,9 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 
 		String sig = method.getBytecodeSignature();
 		sig = sig.substring(sig.indexOf(' ')+1, sig.length()-1)+"@L"+method.getDeclaringClass().getName().replace('.', '/')+";";
-		writer.println(sig+" "+bytecodeOffset+" "+argIndex+" "+id);
+
+		instrInfoWriter.println(sig+" "+bytecodeOffset+" "+eventId);
+		eventInfoWriter.println(eventId+" "+EventType.METHCALLARG+" "+methIndex+" "+stmtIndex+" "+argIndex);
+		eventId++;
 	}
 }
