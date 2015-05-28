@@ -6,6 +6,7 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
 import soot.Local;
+import soot.Type;
 import soot.RefLikeType;
 import soot.jimple.Stmt;
 import soot.jimple.DefinitionStmt;
@@ -18,6 +19,7 @@ import soot.tagkit.BytecodeOffsetTag;
 import soot.util.ArrayNumberer;
 import soot.util.Chain;
 
+import stamp.analyses.IdentifyCallbackMethods;
 import shord.project.analyses.JavaAnalysis;
 import shord.program.Program;
 
@@ -55,6 +57,10 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 
 			Program prog = Program.g();
 			prog.runCHA();
+
+			IdentifyCallbackMethods cbAnalysis = new IdentifyCallbackMethods();
+			cbAnalysis.analyze();
+			Set<SootMethod> callbacks = cbAnalysis.allCallbacks();
 			
 			File methodsInfoFile = new File(outDir, "methods.txt");
 			PrintWriter methodInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(methodsInfoFile)));
@@ -69,7 +75,7 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 				for(SootMethod method : klass.getMethods()){
 					if(!method.isConcrete())
 						continue;
-
+					
 					this.meth = method;
 					this.methSig = bcSig(method);
 					this.methIndex = (int) methNumberer.get(method);
@@ -79,6 +85,18 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 					methodInfoWriter.println(methIndex +" "+method.getSignature());
 					System.out.println("preinst: "+method.getSignature());
 					process(methIndex);
+
+					if(callbacks.contains(method)){
+						assert !method.isStatic();
+						instrInfoWriter.println(EventType.METHPARAM+" "+methSig+" "+"0"+" "+eventId+" "+methIndex);			
+						int paramIndex = 1;
+						for(Type paramType : method.getParameterTypes()){
+							if(paramType instanceof RefLikeType){
+								instrInfoWriter.println(EventType.METHPARAM+" "+methSig+" "+paramIndex+" "+eventId+" "+methIndex);
+							}
+							paramIndex++;
+						}
+					}
 				}
 			}
 			
@@ -91,6 +109,8 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 	
 	private void process(int methIndex)
 	{
+
+
 		Iterator<Unit> uit = units.snapshotIterator();
 		int stmtIndex = 0;
 		while(uit.hasNext()){
