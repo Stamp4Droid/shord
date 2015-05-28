@@ -130,6 +130,9 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 		if(!(leftOp instanceof Local) || !(rightOp instanceof AnyNewExpr))
 			return;
 		if(rightOp instanceof NewExpr){
+			String type = rightOp.getType().toString();
+			if(type.equals("java.lang.String") || type.equals("java.lang.StringBuffer") || type.equals("java.lang.StringBuilder"))
+				return;
 			if(invkInitAnalysis == null)
 				invkInitAnalysis = new MatchAllocToInitAnalysis(meth.retrieveActiveBody());
 			int argIndex = 0;
