@@ -88,11 +88,13 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 
 					if(callbacks.contains(method)){
 						assert !method.isStatic();
-						instrInfoWriter.println(EventType.METHPARAM+" "+methSig+" "+"0"+" "+eventId+" "+methIndex);			
+						instrInfoWriter.println(EventType.METHPARAM+" "+methSig+" "+"0"+" "+eventId+" "+methIndex);
+						eventId++;
 						int paramIndex = 1;
 						for(Type paramType : method.getParameterTypes()){
 							if(paramType instanceof RefLikeType){
 								instrInfoWriter.println(EventType.METHPARAM+" "+methSig+" "+paramIndex+" "+eventId+" "+methIndex);
+								eventId++;
 							}
 							paramIndex++;
 						}
@@ -157,7 +159,12 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 		if(!(stmt instanceof DefinitionStmt))
 			return;
 
-		if(!(((DefinitionStmt) stmt).getLeftOp().getType() instanceof RefLikeType))
+		Type retType = ((DefinitionStmt) stmt).getLeftOp().getType();
+		if(!(retType instanceof RefLikeType))
+			return;
+
+		String retTypeStr = retType.toString();
+		if(retTypeStr.equals("java.lang.String") || retTypeStr.equals("java.lang.StringBuffer") || retTypeStr.equals("java.lang.StringBuilder"))
 			return;
 
 		Iterator<Edge> edgeIt = callGraph.edgesOutOf(stmt);
