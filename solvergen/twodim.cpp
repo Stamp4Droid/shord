@@ -830,7 +830,8 @@ public:
                         Ref<Field>) {
                     for (Ref<Variable> out_src : o_edges[in_src]) {
                         for (Ref<Variable> out_tgt : c_edges[a]) {
-                            if (!epsilons.insert(out_src, out_tgt) ) {
+                            if (out_src == out_tgt ||
+                                !epsilons.insert(out_src, out_tgt)) {
                                 continue;
                             }
                             for (Ref<Variable> clr_in_src : deps[out_src]) {
@@ -1030,6 +1031,7 @@ public:
         swap(closes, new_closes);
     }
     void merge_epsilons() {
+        typedef typename decltype(epsilons)::Tuple Tuple;
         Worklist<Ref<Variable>,true> worklist;
         auto enqueue = [&](Ref<Variable> v) {
             // Consider non-initial states with a single incoming epsilon.
@@ -1067,10 +1069,10 @@ public:
             Ref<Variable> a = *(epsilons.sec<0>()[b].begin());
             // Move all transitions out of 'b' onto 'a'.
             epsilons.merge<SRC>(a, b);
+            epsilons.erase(Tuple(a, a)); // remove any created self-loops
             opens.merge<SRC>(a, b);
             closes.merge<SRC>(a, b);
             // Delete all transitions into 'tgt', then remove 'tgt'.
-            typedef typename decltype(epsilons)::Tuple Tuple;
             epsilons.erase(Tuple(a, b));
             vars[b].mark_useless();
             auto it = exits.find(b);
@@ -1323,7 +1325,9 @@ public:
                 Ref<Variable> src = code_.vars.find(toks[0]).ref;
                 Ref<Variable> tgt = code_.vars.find(toks[1]).ref;
                 if (toks.size() == 2) {
-                    code_.epsilons.insert(src, tgt);
+                    if (src != tgt) {
+                        code_.epsilons.insert(src, tgt);
+                    }
                 } else if (toks[2][0] == '(') {
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
                     code_.opens.insert(fld, src, tgt);
