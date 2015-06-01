@@ -1282,22 +1282,22 @@ static const T& id(const T& val) {
     return val;
 }
 
-template<typename T, typename V, int I>
-struct TupleInserter {
-    static void insert(T& idxs, const V& val) {
-        TupleInserter<T,V,I-1>::insert(idxs, val);
+template<class Idxs, class V, int I>
+struct SecInsertHelper {
+    static void apply(Idxs& idxs, const V& val) {
         std::get<I-1>(idxs).sec_insert(val);
+        SecInsertHelper<Idxs,V,I-1>::apply(idxs, val);
     }
 };
 
-template<typename T, typename V>
-struct TupleInserter<T,V,0> {
-    static void insert(T&, const V&) {}
+template<class Idxs, class V>
+struct SecInsertHelper<Idxs,V,0> {
+    static void apply(Idxs&, const V&) {}
 };
 
-template<typename T, typename V>
-void insert_all(T& idxs, const V& val) {
-    TupleInserter<T,V,std::tuple_size<T>::value>::insert(idxs, val);
+template<class Idxs, class V>
+void sec_insert_all(Idxs& idxs, const V& val) {
+    SecInsertHelper<Idxs,V,std::tuple_size<Idxs>::value>::apply(idxs, val);
 }
 
 } // namespace detail
@@ -1595,7 +1595,7 @@ public:
 private:
     static const Sub dummy;
 private:
-    std::map<Key,Sub> map;
+    std::map<Key,Sub> map_;
 public:
     explicit Index() {}
     Index(const Index&) = default;
@@ -1603,7 +1603,7 @@ public:
     Index& operator=(const Index&) = delete;
     friend void swap(Index& a, Index& b) {
         using std::swap;
-        swap(a.map, b.map);
+        swap(a.map_, b.map_);
     }
     void clear() {
         Index temp;
@@ -1614,11 +1614,11 @@ public:
     }
     template<class... Rest>
     auto& of(const Key& key, const Rest&... rest) {
-        return map[key].of(rest...);
+        return map_[key].of(rest...);
     }
     const Sub& operator[](const Key& key) const {
-        auto it = map.find(key);
-        return (it == map.cend()) ? dummy : it->second;
+        auto it = map_.find(key);
+        return (it == map_.cend()) ? dummy : it->second;
     }
     const Index& find() const {
         return *this;
@@ -1640,7 +1640,7 @@ public:
     }
     bool copy(const Index& src) {
         bool grew = false;
-        for (const auto& p : src.map) {
+        for (const auto& p : src.map_) {
             if (of(p.first).copy(p.second)) {
                 grew = true;
             }
@@ -1653,19 +1653,19 @@ public:
         return it;
     }
     TopIter begin() {
-        return map.begin();
+        return map_.begin();
     }
     TopIter end() {
-        return map.end();
+        return map_.end();
     }
     ConstTopIter begin() const {
-        return map.cbegin();
+        return map_.cbegin();
     }
     ConstTopIter end() const {
-        return map.cend();
+        return map_.cend();
     }
     bool empty() const {
-        for (const auto& entry : map) {
+        for (const auto& entry : map_) {
             if (!entry.second.empty()) {
                 return false;
             }
@@ -1674,15 +1674,15 @@ public:
     }
     template<class... Rest>
     bool contains(const Key& key, const Rest&... rest) const {
-        auto it = map.find(key);
-        return (it == map.cend()) ? false : it->second.contains(rest...);
+        auto it = map_.find(key);
+        return (it == map_.cend()) ? false : it->second.contains(rest...);
     }
     bool contains(const Tuple& tuple) const {
         return contains(tuple.hd, tuple.tl);
     }
     unsigned int size() const {
         unsigned int sz = 0;
-        for (const auto& entry : map) {
+        for (const auto& entry : map_) {
             sz += entry.second.size();
         }
         return sz;
@@ -1699,8 +1699,8 @@ public:
     public:
         explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
         void migrate(const Index& idx) {
-            map_curr = idx.map.cbegin();
-            map_end = idx.map.cend();
+            map_curr = idx.map_.cbegin();
+            map_end = idx.map_.cend();
             before_start = true;
         }
         bool next() {
@@ -1769,7 +1769,7 @@ public:
     bool insert(const Tuple& tuple) {
         if (pri_.insert(tuple)) {
             // Only insert on secondary index if tuple wasn't already present.
-            detail::insert_all(sec_, tuple);
+            detail::sec_insert_all(sec_, tuple);
             return true;
         }
         // TODO: Check that tuple is also present on sec.
@@ -1778,7 +1778,7 @@ public:
     template<class Other>
     void sec_insert(const Other& other) {
         pri_.sec_insert(other);
-        detail::insert_all(sec_, other);
+        detail::sec_insert_all(sec_, other);
     }
     Iterator iter(Tuple& tgt) const {
         Iterator it(tgt);
