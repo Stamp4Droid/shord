@@ -164,44 +164,6 @@ private:
             mi::Index<LETTER, unsigned,
                 mi::Table<FROM, unsigned> > > > trans_;
 private:
-    // TODO:
-    // - Renumber states, to cover holes in numbering?
-    // - Also clean alphabet?
-    // - Perform directly on CodeGraph (do generic renumbering on Registries).
-    void prune_states(std::set<unsigned>&& new_states) {
-        using std::swap;
-        std::set<unsigned> temp(std::move(new_states));
-        swap(states_, temp);
-        std::set<unsigned> new_initial;
-        for (unsigned s : initial_) {
-            if (states_.count(s) > 0) {
-                new_initial.insert(s);
-            }
-        }
-        swap(initial_, new_initial);
-        std::set<unsigned> new_final;
-        for (unsigned s : final_) {
-            if (states_.count(s) > 0) {
-                new_final.insert(s);
-            }
-        }
-        swap(final_, new_final);
-        decltype(trans_) new_trans;
-        for (const auto& from_p : trans_.pri()) {
-            unsigned from = from_p.first;
-            if (states_.count(from) == 0) {
-                continue;
-            }
-            FOR(arrow, from_p.second) {
-                if (states_.count(arrow.template get<TO>()) == 0) {
-                    continue;
-                }
-                new_trans.insert(from, arrow.template get<LETTER>(),
-                                 arrow.template get<TO>());
-            }
-        }
-        swap(trans_, new_trans);
-    }
     // TODO: Could cache eps_close results (but without emiting d-states for
     // the non-closed n-state sets).
     void eps_close(LightSet<unsigned>& states) const {
@@ -275,57 +237,6 @@ public:
     }
     unsigned num_trans() const {
         return trans_.size();
-    }
-    // Drop states that are only reachable through epsilons.
-    // TODO: Should only do this if it's a single epsilon reaching this
-    // variable? Alternatively merge all states in an epsilon-cycle?
-    void merge_epsilons() {
-        // TODO: Assuming order of processing doesn't matter.
-        std::set<unsigned> new_states;
-        for (unsigned b : states_) {
-            // Ignore initial states.
-            if (initial_.count(b) > 0) {
-                new_states.insert(b);
-                continue;
-            }
-            // Consider states whose incoming transitions are all epsilons.
-            bool only_inc_eps = true;
-            for (const auto& letter_p : trans_.sec<0>()[b]) {
-                if (letter_p.first == 0) {
-                    continue;
-                }
-                if (!letter_p.second.empty()) {
-                    only_inc_eps = false;
-                    break;
-                }
-            }
-            if (!only_inc_eps) {
-                new_states.insert(b);
-                continue;
-            }
-            // Collect all states 'a' reaching 'b' through an epsilon.
-            std::list<unsigned> new_srcs;
-            for (unsigned a : trans_.sec<0>()[b][0]) {
-                // Ignore epsilon self-loops.
-                if (a == b) {
-                    continue;
-                }
-                new_srcs.push_back(a);
-                if (final_.count(b) > 0) {
-                    final_.insert(a);
-                }
-            }
-            // Copy all edges (epsilons or not) starting from 'b' over to 'a'.
-            for (unsigned a : new_srcs) {
-                FOR(e, trans_.pri()[b]) {
-                    trans_.insert(a, e.template get<LETTER>(),
-                                  e.template get<TO>());
-                }
-            }
-            // Don't include 'b' in 'new_states', effectively dropping it from
-            // the FSM (and all transitions starting or ending at it).
-        }
-        prune_states(std::move(new_states));
     }
     DFA<Symbol> determinize() const {
         // TODO: Can check if the NFA already contains no epsilons before
@@ -989,7 +900,7 @@ public:
         // Closes remain only between variables on the P-partition.
     }
     // Ignores parenthesis matching.
-    void prune_useless_states() {
+    void prune() {
         assert(entry.valid());
         // Perform forward reachability
         RefSet<Variable> fwd_reached(vars);
@@ -1118,6 +1029,61 @@ public:
         }
         swap(closes, new_closes);
     }
+    void merge_epsilons() {
+        Worklist<Ref<Variable>,true> worklist;
+        auto enqueue = [&](Ref<Variable> v) {
+            // Consider non-initial states with a single incoming epsilon.
+            if (!vars[v].useful() || v == entry
+                || epsilons.sec<0>()[v].size() != 1) {
+                return;
+            }
+            // Consider states whose incoming transitions are all epsilons.
+            bool only_inc_eps = true;
+            for (const auto& fld_p : opens.sec<0>()) {
+                if (!fld_p.second[v].empty()) {
+                    only_inc_eps = false;
+                    break;
+                }
+            }
+            if (!only_inc_eps) {
+                return;
+            }
+            for (const auto& fld_p : closes.sec<0>()) {
+                if (!fld_p.second[v].empty()) {
+                    only_inc_eps = false;
+                    break;
+                }
+            }
+            if (!only_inc_eps) {
+                return;
+            }
+            worklist.enqueue(v);
+        };
+        for (const Variable& v : vars) {
+            enqueue(v.ref);
+        }
+        while (!worklist.empty()) {
+            Ref<Variable> b = worklist.dequeue();
+            Ref<Variable> a = *(epsilons.sec<0>()[b].begin());
+            // Move all transitions out of 'b' onto 'a'.
+            epsilons.merge<SRC>(a, b);
+            opens.merge<SRC>(a, b);
+            closes.merge<SRC>(a, b);
+            // Delete all transitions into 'tgt', then remove 'tgt'.
+            typedef typename decltype(epsilons)::Tuple Tuple;
+            epsilons.erase(Tuple(a, b));
+            vars[b].mark_useless();
+            auto it = exits.find(b);
+            if (it != exits.end()) {
+                exits.erase(it);
+                exits.insert(a);
+            }
+            // Re-try all variables reachable from 'a' through epsilons.
+            for (Ref<Variable> v : epsilons.pri()[a]) {
+                enqueue(v);
+            }
+        }
+    }
     Signature to_sig() const {
         assert(entry.valid());
         timer.start("Building NFA for function");
@@ -1152,12 +1118,6 @@ public:
         timer.log("Size: ", n_orig, " states, ", e_orig, " transitions");
         timer.done();
         // Determinize and minimize the FSM.
-        timer.start("Merging epsilons");
-        nfa.merge_epsilons();
-        unsigned n_merge = nfa.num_states();
-        unsigned e_merge = nfa.num_trans();
-        timer.log("Size: ", n_merge, " states, ", e_merge, " transitions");
-        typename Timer::TimeDiff dt_merge = timer.done();
         timer.start("Determinizing NFA");
         Signature dfa = nfa.determinize();
         unsigned n_det = dfa.num_states();
@@ -1171,7 +1131,6 @@ public:
         timer.log("Size: ", n_min, " states, ", e_min, " transitions");
         typename Timer::TimeDiff dt_min = timer.done();
         timer.log("FSMSizes\t",   n_orig,  "\t", e_orig,  "\t",
-                  dt_merge, "\t", n_merge, "\t", e_merge, "\t",
                   dt_det,   "\t", n_det,   "\t", e_det,   "\t",
                   dt_min,   "\t", n_min,   "\t", e_min);
         return min;
@@ -1597,35 +1556,41 @@ int main(int argc, char* argv[]) {
 
             timer.start("Copying SCC code");
             CodeGraph f_code = scc.make_fun_code(f);
-            timer.done();
             timer.log("Size: ", f_code.num_vars(), " vars, ",
                       f_code.num_ops(), " ops");
+            timer.done();
 
             timer.start("Pruning function code");
-            f_code.prune_useless_states();
-            timer.done();
+            f_code.prune();
             timer.log("Size: ", f_code.num_vars(), " vars, ",
                       f_code.num_ops(), " ops");
+            timer.done();
 
             timer.start("PN-extending function code");
             f_code.pn_extend();
-            timer.done();
             timer.log("Size: ", f_code.num_vars(), " vars, ",
                       f_code.num_ops(), " ops");
+            timer.done();
 
             timer.start("Pruning function code");
-            f_code.prune_useless_states();
-            timer.done();
+            f_code.prune();
             timer.log("Size: ", f_code.num_vars(), " vars, ",
                       f_code.num_ops(), " ops");
+            timer.done();
+
+            timer.start("Merging epsilons");
+            f_code.merge_epsilons();
+            timer.log("Size: ", f_code.num_vars(), " vars, ",
+                      f_code.num_ops(), " ops");
+            timer.done();
 
             timer.start("Emitting function signature");
             f.set_sig(f_code.to_sig());
-            timer.done();
             timer.log("Size: ", f.sig().num_states(), " states, ",
                       f.sig().num_trans(), " transitions");
             timer.log("Fields: from ", f_code.num_fields(), " to ",
                       f.sig().num_letters());
+            timer.done();
 
             timer.start("Printing signature");
             fs::path fpath(outdir/(f.name + ".sig.tgf"));

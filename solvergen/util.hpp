@@ -1270,6 +1270,9 @@ struct KeyTraits<Ref<T> > {
     }
 };
 
+template<class Tag, class T> class Table;
+template<class Tag, class Key, class Sub> class Index;
+
 namespace detail {
 
 template<class T, class S>
@@ -1300,6 +1303,109 @@ void sec_insert_all(Idxs& idxs, const V& val) {
     SecInsertHelper<Idxs,V,std::tuple_size<Idxs>::value>::apply(idxs, val);
 }
 
+template<class Idxs, int I>
+struct MoveHelper {
+    static void apply(Idxs& tgt, Idxs&& src) {
+        std::get<I-1>(tgt).move(std::get<I-1>(src));
+        MoveHelper<Idxs,I-1>::apply(tgt, std::forward(src));
+    }
+};
+
+template<class Idxs>
+struct MoveHelper<Idxs,0> {
+    static void apply(Idxs&, Idxs&&) {}
+};
+
+template<class Idxs>
+void move_all(Idxs& tgt, Idxs&& src) {
+    MoveHelper<Idxs,std::tuple_size<Idxs>::value>::apply
+        (tgt, std::forward(src));
+}
+
+template<class Tag, class Idxs, class Key, int I>
+struct MergeHelper {
+    static void apply(Idxs& idxs, const Key& tgt, const Key& src) {
+        std::get<I-1>(idxs).template merge<Tag>(tgt, src);
+        MergeHelper<Tag,Idxs,Key,I-1>::apply(idxs, tgt, src);
+    }
+};
+
+template<class Tag, class Idxs, class Key>
+struct MergeHelper<Tag,Idxs,Key,0> {
+    static void apply(Idxs&, const Key&, const Key&) {}
+};
+
+template<class Tag, class Idxs, class Key>
+void merge_all(Idxs& idxs, const Key& tgt, const Key& src) {
+    MergeHelper<Tag,Idxs,Key,std::tuple_size<Idxs>::value>::apply
+        (idxs, tgt, src);
+}
+
+template<class Idxs, class V, int I>
+struct EraseHelper {
+    static bool apply(Idxs& idxs, const V& val) {
+        bool res_a = std::get<I>(idxs).erase(val);
+        bool res_b = EraseHelper<Idxs,V,I-1>::apply(idxs, val);
+        assert(res_a == res_b);
+        return res_a;
+    }
+};
+
+template<class Idxs, class V>
+struct EraseHelper<Idxs,V,0> {
+    static bool apply(Idxs& idxs, const V& val) {
+        return std::get<0>(idxs).erase(val);
+    }
+};
+
+template<class Idxs, class V>
+bool erase_all(Idxs& idxs, const V& val) {
+    return EraseHelper<Idxs,V,std::tuple_size<Idxs>::value-1>::apply
+        (idxs, val);
+}
+
+template<class Idx, class Tag_, class Key_>
+struct TableMerger {
+    static void apply(Idx&, const Key_&, const Key_&) {}
+};
+
+template<class Tag, class T>
+struct TableMerger<Table<Tag,T>,Tag,T> {
+    static void apply(Table<Tag,T>& tab, const T& tgt, const T& src) {
+        if (tab.store_.erase(src) != 0) {
+            tab.store_.insert(tgt);
+        }
+    }
+};
+
+template<class Idx, class Tag_, class Key_>
+struct IndexMerger {
+    static void apply(Idx& idx, const Key_& tgt, const Key_& src) {
+        for (auto& p : idx.map_) {
+            p.second.template merge<Tag_>(tgt, src);
+        }
+    }
+};
+
+template<class Tag, class Key, class Sub>
+struct IndexMerger<Index<Tag,Key,Sub>,Tag,Key> {
+    static void apply(Index<Tag,Key,Sub>& idx, const Key& tgt,
+                      const Key& src) {
+        auto src_it = idx.map_.find(src);
+        if (src_it == idx.map_.end()) {
+            return;
+        }
+        Sub& tgt_sub = idx.map_[tgt];
+        if (tgt_sub.empty()) {
+            using std::swap;
+            swap(tgt_sub, src_it->second);
+        } else {
+            tgt_sub.move(std::move(src_it->second));
+        }
+        idx.map_.erase(src_it);
+    }
+};
+
 } // namespace detail
 
 // BASE CONTAINERS & OPERATIONS ===============================================
@@ -1311,6 +1417,8 @@ void sec_insert_all(Idxs& idxs, const V& val) {
             for (auto it__ = (EXPR).iter(RES); it__.next();)
 
 template<class Tag, class T> class Table {
+    template<class Idx, class Tag_, class Key_>
+    friend class detail::TableMerger;
 public:
     class Iterator;
     friend Iterator;
@@ -1348,11 +1456,31 @@ public:
     void sec_insert(const Other& other) {
         insert(other.template get<Tag>());
     }
+    template<class Tuple_>
+    bool erase(const Tuple_& tuple) {
+        auto it = store_.find(tuple.template get<Tag>());
+        if (it == store_.end()) {
+            return false;
+        }
+        store_.erase(it);
+        return true;
+    }
     bool copy(const Table& src) {
         unsigned int old_sz = size();
         // TODO: Is this optimized for sorted source collections?
         store_.insert(src.store_.cbegin(), src.store_.cend());
         return old_sz != size();
+    }
+    void move(Table&& src) {
+        store_.insert(src.store_.begin(), src.store_.end());
+        src.clear();
+    }
+    // XXX: The user should only specify the Tag_ parameter, otherwise
+    // they might supply a Key_ type that doesn't match the Tag_, and template
+    // specialization will silently produce the wrong result.
+    template<class Tag_, class Key_>
+    void merge(const Key_& tgt, const Key_& src) {
+        detail::TableMerger<Table,Tag_,Key_>::apply(*this, tgt, src);
     }
     ConstTopIter begin() const {
         return store_.cbegin();
@@ -1584,6 +1712,8 @@ public:
 };
 
 template<class Tag, class K, class S> class Index {
+    template<class Idx, class Tag_, class Key_>
+    friend class detail::IndexMerger;
 public:
     typedef K Key;
     typedef S Sub;
@@ -1638,6 +1768,17 @@ public:
     void sec_insert(const Other& other) {
         of(other.template get<Tag>()).sec_insert(other);
     }
+    template<class Tuple_>
+    bool erase(const Tuple_& tuple) {
+        auto it = map_.find(tuple.template get<Tag>());
+        if (it == map_.end() || !(it->second.erase(tuple))) {
+            return false;
+        }
+        if (it->second.empty()) {
+            map_.erase(it);
+        }
+        return true;
+    }
     bool copy(const Index& src) {
         bool grew = false;
         for (const auto& p : src.map_) {
@@ -1646,6 +1787,33 @@ public:
             }
         }
         return grew;
+    }
+    void move(Index&& src) {
+        auto l_it = map_.begin();
+        auto r_it = src.map_.begin();
+        const auto l_end = map_.end();
+        const auto r_end = src.map_.end();
+        while (l_it != l_end && r_it != r_end) {
+            int key_rel = compare(l_it->first, r_it->first);
+            if (key_rel < 0) {
+                ++l_it;
+            } else if (key_rel > 0) {
+                map_.emplace_hint(l_it, r_it->first, std::move(r_it->second));
+                ++r_it;
+            } else {
+                l_it->second.move(std::move(r_it->second));
+                ++l_it;
+                ++r_it;
+            }
+        }
+        while (r_it != r_end) {
+            map_.emplace_hint(l_it, r_it->first, std::move(r_it->second));
+            ++r_it;
+        }
+    }
+    template<class Tag_, class Key_>
+    void merge(const Key_& tgt, const Key_& src) {
+        detail::IndexMerger<Index,Tag_,Key_>::apply(*this, tgt, src);
     }
     Iterator iter(Tuple& tgt) const {
         Iterator it(tgt);
@@ -1679,6 +1847,9 @@ public:
     }
     bool contains(const Tuple& tuple) const {
         return contains(tuple.hd, tuple.tl);
+    }
+    bool has_key(const Key& key) const {
+        return map_.find(key) != map_.cend();
     }
     unsigned int size() const {
         unsigned int sz = 0;
@@ -1779,6 +1950,23 @@ public:
     void sec_insert(const Other& other) {
         pri_.sec_insert(other);
         detail::sec_insert_all(sec_, other);
+    }
+    // XXX: Only works if both dimensions cover all fields.
+    template<class Tuple_>
+    bool erase(const Tuple_& tuple) {
+        bool pri_erased = pri_.erase(tuple);
+        bool sec_erased = detail::erase_all(sec_, tuple);
+        assert(pri_erased == sec_erased);
+        return pri_erased;
+    }
+    void move(MultiIndex&& src) {
+        pri_.move(std::move(src.pri_));
+        detail::move_all(sec_, std::move(src.sec_));
+    }
+    template<class Tag, class Key>
+    void merge(const Key& tgt, const Key& src) {
+        pri_.merge<Tag>(tgt, src);
+        detail::merge_all<Tag>(sec_, tgt, src);
     }
     Iterator iter(Tuple& tgt) const {
         Iterator it(tgt);
