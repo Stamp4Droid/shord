@@ -695,17 +695,17 @@ TUPLE_TAG(CLR_IN_SRC);
 TUPLE_TAG(CLR_IN_TGT);
 
 // Only covers intra-method edges.
-// Invariant: entry, exits, and all endpoints of epsilons, opens and closes are
-// useful variables.
+// Invariant: initial, finals, and all endpoints of epsilons, opens and closes
+// are useful variables.
 class CodeGraph {
-public:
-    Registry<Variable> vars;
-    Ref<Variable> entry;
-    std::set<Ref<Variable> > exits;
+private:
+    Registry<Variable> vars_;
+    Ref<Variable> initial_;
+    std::set<Ref<Variable> > finals_;
     mi::MultiIndex<mi::Index<SRC, Ref<Variable>,
                        mi::Table<TGT, Ref<Variable> > >,
                    mi::Index<TGT, Ref<Variable>,
-                       mi::Table<SRC, Ref<Variable> > > > epsilons;
+                       mi::Table<SRC, Ref<Variable> > > > epsilons_;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
                        mi::Index<SRC, Ref<Variable>,
                            mi::Table<TGT, Ref<Variable> > > >,
@@ -713,14 +713,14 @@ public:
                        mi::Index<TGT, Ref<Variable>,
                            mi::Table<SRC, Ref<Variable> > > >,
                    mi::Table<SRC, Ref<Variable> >,
-                   mi::Table<FLD, Ref<Field> > > opens;
+                   mi::Table<FLD, Ref<Field> > > opens_;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
                        mi::Index<SRC, Ref<Variable>,
                            mi::Table<TGT, Ref<Variable> > > >,
                    mi::Index<FLD, Ref<Field>,
                        mi::Index<TGT, Ref<Variable>,
                            mi::Table<SRC, Ref<Variable> > > >,
-                   mi::Table<FLD, Ref<Field> > > closes;
+                   mi::Table<FLD, Ref<Field> > > closes_;
 public:
     explicit CodeGraph() {}
     CodeGraph(const CodeGraph&) = default;
@@ -728,20 +728,43 @@ public:
     CodeGraph& operator=(const CodeGraph&) = delete;
     friend void swap(CodeGraph& a, CodeGraph& b) {
         using std::swap;
-        swap(a.vars,     b.vars);
-        swap(a.entry,    b.entry);
-        swap(a.exits,    b.exits);
-        swap(a.epsilons, b.epsilons);
-        swap(a.opens,    b.opens);
-        swap(a.closes,   b.closes);
+        swap(a.vars_,     b.vars_);
+        swap(a.initial_,  b.initial_);
+        swap(a.finals_,   b.finals_);
+        swap(a.epsilons_, b.epsilons_);
+        swap(a.opens_,    b.opens_);
+        swap(a.closes_,   b.closes_);
     }
     void clear() {
         CodeGraph temp;
         swap(*this, temp);
     }
+    Variable& add_var(const std::string& name) {
+        return vars_.add(name);
+    }
+    void add_epsilon(Ref<Variable> src, Ref<Variable> tgt) {
+        if (src != tgt) {
+            epsilons_.insert(src, tgt);
+        }
+    }
+    void add_open(Ref<Field> fld, Ref<Variable> src, Ref<Variable> tgt) {
+        opens_.insert(fld, src, tgt);
+    }
+    void add_close(Ref<Field> fld, Ref<Variable> src, Ref<Variable> tgt) {
+        closes_.insert(fld, src, tgt);
+    }
+    void complete(Ref<Variable> initial,
+                  const std::set<Ref<Variable> >& finals) {
+        assert(!initial_.valid() && finals_.empty());
+        initial_ = initial;
+        finals_.insert(finals.begin(), finals.end());
+    }
+    const Registry<Variable>& vars() const {
+        return vars_;
+    }
     void embed(Ref<Variable> src, Ref<Variable> tgt, const Signature& callee) {
-        assert(vars[src].useful());
-        assert(vars[tgt].useful());
+        assert(vars_[src].useful());
+        assert(vars_[tgt].useful());
         // Create temporary variables for all states in callee's signature
         // (except the sink state).
         // TODO: Could do this more efficiently, since Ref's are allocated
@@ -750,7 +773,7 @@ public:
         state2var.reserve(callee.num_states());
         for (unsigned state = 0; state < callee.num_states(); state++) {
             // TODO: Emitting a state for the sink.
-            state2var.push_back(vars.mktemp().ref);
+            state2var.push_back(vars_.mktemp().ref);
         }
         // Copy all transitions, except those to/from the sink state.
         unsigned sink = callee.sink_state();
@@ -766,16 +789,16 @@ public:
                     continue;
                 }
                 if (delim.is_open) {
-                    opens.insert(delim.fld, state2var[src], state2var[tgt]);
+                    opens_.insert(delim.fld, state2var[src], state2var[tgt]);
                 } else {
-                    closes.insert(delim.fld, state2var[src], state2var[tgt]);
+                    closes_.insert(delim.fld, state2var[src], state2var[tgt]);
                 }
             }
         }
         // Connect the newly constructed subgraph to the rest of the code.
-        epsilons.insert(src, state2var[callee.initial()]);
+        epsilons_.insert(src, state2var[callee.initial()]);
         for (unsigned state : callee.finals()) {
-            epsilons.insert(state2var[state], tgt);
+            epsilons_.insert(state2var[state], tgt);
         }
     }
     void close() {
@@ -801,7 +824,7 @@ public:
                 in_bounds.back().second.insert(in_tgt_p.first);
             }
         };
-        join_zip<1>(opens.sec<0>(), closes.pri(), rec_in_bounds);
+        join_zip<1>(opens_.sec<0>(), closes_.pri(), rec_in_bounds);
 
         // Process matching parenthesis pairs up to fixpoint.
         while (!worklist.empty()) {
@@ -831,7 +854,7 @@ public:
                     for (Ref<Variable> out_src : o_edges[in_src]) {
                         for (Ref<Variable> out_tgt : c_edges[a]) {
                             if (out_src == out_tgt ||
-                                !epsilons.insert(out_src, out_tgt)) {
+                                !epsilons_.insert(out_src, out_tgt)) {
                                 continue;
                             }
                             for (Ref<Variable> clr_in_src : deps[out_src]) {
@@ -841,16 +864,16 @@ public:
                     }
                 };
                 if (in_tgts.count(a) > 0) {
-                    join_zip<1>(opens.sec<0>(), closes.pri(), emit_eps);
+                    join_zip<1>(opens_.sec<0>(), closes_.pri(), emit_eps);
                 }
                 // TODO: Record all imm epsilons?
-                for (Ref<Variable> b : epsilons.pri()[a]) {
+                for (Ref<Variable> b : epsilons_.pri()[a]) {
                     if (reached.insert(b).second) {
                         queue.push_back(b);
                     }
                 }
                 // Check if any open starts at this variable.
-                if (opens.sec<1>().contains(a)) {
+                if (opens_.sec<1>().contains(a)) {
                     deps.insert(a, in_src);
                 }
             }
@@ -861,70 +884,70 @@ public:
     // XXX: Implementation assumes Ref's are allocated serially.
     void pn_extend() {
         using std::swap;
-        assert(entry.valid());
+        assert(initial_.valid());
         // The original set of variables form the P-partition. Make a copy of
         // each variable for the N-partition.
-        RefMap<Variable,Ref<Variable> > to_nvar(vars);
-        unsigned orig_vars = vars.size();
+        RefMap<Variable,Ref<Variable> > to_nvar(vars_);
+        unsigned orig_vars = vars_.size();
         for (unsigned i = 0; i < orig_vars; i++) {
             Ref<Variable> pvar(i);
-            if (vars[pvar].useful()) {
-                to_nvar[pvar] = vars.mktemp().ref;
+            if (vars_[pvar].useful()) {
+                to_nvar[pvar] = vars_.mktemp().ref;
             }
         }
         // Only the P-partition entry remains an entry on the PN-extended
         // machine (no change needed).
         // Both P-partition and N-partition exits are valid.
-        std::set<Ref<Variable> > new_exits;
-        for (Ref<Variable> v : exits) {
-            new_exits.insert(v);
-            new_exits.insert(to_nvar[v]);
+        std::set<Ref<Variable> > new_finals;
+        for (Ref<Variable> v : finals_) {
+            new_finals.insert(v);
+            new_finals.insert(to_nvar[v]);
         }
-        swap(exits, new_exits);
+        swap(finals_, new_finals);
         // Epsilon transitions are copied on the N-partition.
-        decltype(epsilons) new_epsilons;
-        FOR(e, epsilons) {
+        decltype(epsilons_) new_epsilons;
+        FOR(e, epsilons_) {
             new_epsilons.insert(e.get<SRC>(), e.get<TGT>());
             new_epsilons.insert(to_nvar[e.get<SRC>()], to_nvar[e.get<TGT>()]);
         }
-        swap(epsilons, new_epsilons);
+        swap(epsilons_, new_epsilons);
         // Opens are moved to the N-partition, and also serve as transitions
         // from P to N.
-        decltype(opens) new_opens;
-        FOR(o, opens) {
+        decltype(opens_) new_opens;
+        FOR(o, opens_) {
             new_opens.insert(o.get<FLD>(), to_nvar[o.get<SRC>()],
                              to_nvar[o.get<TGT>()]);
             new_opens.insert(o.get<FLD>(), o.get<SRC>(),
                              to_nvar[o.get<TGT>()]);
         }
-        swap(opens, new_opens);
+        swap(opens_, new_opens);
         // Closes remain only between variables on the P-partition.
     }
     // Ignores parenthesis matching.
     void prune() {
-        assert(entry.valid());
+        assert(initial_.valid());
         // Perform forward reachability
-        RefSet<Variable> fwd_reached(vars);
+        RefSet<Variable> fwd_reached(vars_);
         std::deque<Ref<Variable> > fwd_list;
         auto fwd_visit = [&](Ref<Variable> v) {
-            assert(vars[v].useful());
+            assert(vars_[v].useful());
             if (!fwd_reached.contains(v)) {
                 fwd_reached.insert(v);
                 fwd_list.push_back(v);
             }
         };
-        fwd_visit(entry);
+        fwd_visit(initial_);
         while (!fwd_list.empty()) {
             Ref<Variable> src = fwd_list.front();
-            for (Ref<Variable> tgt : epsilons.pri()[src]) {
+            for (Ref<Variable> tgt : epsilons_.pri()[src]) {
                 fwd_visit(tgt);
             }
-            for (const auto& fld_p : opens.pri()) {
+            for (const auto& fld_p : opens_.pri()) {
                 for (Ref<Variable> tgt : fld_p.second[src]) {
                     fwd_visit(tgt);
                 }
             }
-            for (const auto& fld_p : closes.pri()) {
+            for (const auto& fld_p : closes_.pri()) {
                 for (Ref<Variable> tgt : fld_p.second[src]) {
                     fwd_visit(tgt);
                 }
@@ -932,10 +955,10 @@ public:
             fwd_list.pop_front();
         }
         // Perform backward reachability
-        RefSet<Variable> bck_reached(vars);
+        RefSet<Variable> bck_reached(vars_);
         std::deque<Ref<Variable> > bck_list;
         auto bck_visit = [&](Ref<Variable> v) {
-            assert(vars[v].useful());
+            assert(vars_[v].useful());
             if (!fwd_reached.contains(v)) {
                 return;
             }
@@ -944,20 +967,20 @@ public:
                 bck_list.push_back(v);
             }
         };
-        for (Ref<Variable> v : exits) {
+        for (Ref<Variable> v : finals_) {
             bck_visit(v);
         }
         while (!bck_list.empty()) {
             Ref<Variable> tgt = bck_list.front();
-            for (Ref<Variable> src : epsilons.sec<0>()[tgt]) {
+            for (Ref<Variable> src : epsilons_.sec<0>()[tgt]) {
                 bck_visit(src);
             }
-            for (const auto& fld_p : opens.sec<0>()) {
+            for (const auto& fld_p : opens_.sec<0>()) {
                 for (Ref<Variable> src : fld_p.second[tgt]) {
                     bck_visit(src);
                 }
             }
-            for (const auto& fld_p : closes.sec<0>()) {
+            for (const auto& fld_p : closes_.sec<0>()) {
                 for (Ref<Variable> src : fld_p.second[tgt]) {
                     bck_visit(src);
                 }
@@ -966,82 +989,82 @@ public:
         }
         // Prune states based on the above information.
         using std::swap;
-        if (!bck_reached.contains(entry)) {
+        if (!bck_reached.contains(initial_)) {
             // Special case: empty FSM
             clear();
-            entry = vars.mktemp().ref;
+            initial_ = vars_.mktemp().ref;
             return;
         }
-        for (Variable& v : vars) {
+        for (Variable& v : vars_) {
             if (!bck_reached.contains(v.ref)) {
-                assert(v.ref != entry);
+                assert(v.ref != initial_);
                 v.mark_useless();
             }
         }
-        std::set<Ref<Variable> > new_exits;
-        for (Ref<Variable> v : exits) {
-            if (vars[v].useful()) {
-                new_exits.insert(v);
+        std::set<Ref<Variable> > new_finals;
+        for (Ref<Variable> v : finals_) {
+            if (vars_[v].useful()) {
+                new_finals.insert(v);
             }
         }
-        assert(!new_exits.empty());
-        swap(exits, new_exits);
-        decltype(epsilons) new_epsilons;
-        for (const auto& src_p : epsilons.pri()) {
-            if (!vars[src_p.first].useful()) {
+        assert(!new_finals.empty());
+        swap(finals_, new_finals);
+        decltype(epsilons_) new_epsilons;
+        for (const auto& src_p : epsilons_.pri()) {
+            if (!vars_[src_p.first].useful()) {
                 continue;
             }
             for (Ref<Variable> tgt : src_p.second) {
-                if (!vars[tgt].useful()) {
+                if (!vars_[tgt].useful()) {
                     continue;
                 }
                 new_epsilons.insert(src_p.first, tgt);
             }
         }
-        swap(epsilons, new_epsilons);
-        decltype(opens) new_opens;
-        for (const auto& fld_p : opens.pri()) {
+        swap(epsilons_, new_epsilons);
+        decltype(opens_) new_opens;
+        for (const auto& fld_p : opens_.pri()) {
             for (const auto& src_p : fld_p.second) {
-                if (!vars[src_p.first].useful()) {
+                if (!vars_[src_p.first].useful()) {
                     continue;
                 }
                 for (Ref<Variable> tgt : src_p.second) {
-                    if (!vars[tgt].useful()) {
+                    if (!vars_[tgt].useful()) {
                         continue;
                     }
                     new_opens.insert(fld_p.first, src_p.first, tgt);
                 }
             }
         }
-        swap(opens, new_opens);
-        decltype(closes) new_closes;
-        for (const auto& fld_p : closes.pri()) {
+        swap(opens_, new_opens);
+        decltype(closes_) new_closes;
+        for (const auto& fld_p : closes_.pri()) {
             for (const auto& src_p : fld_p.second) {
-                if (!vars[src_p.first].useful()) {
+                if (!vars_[src_p.first].useful()) {
                     continue;
                 }
                 for (Ref<Variable> tgt : src_p.second) {
-                    if (!vars[tgt].useful()) {
+                    if (!vars_[tgt].useful()) {
                         continue;
                     }
                     new_closes.insert(fld_p.first, src_p.first, tgt);
                 }
             }
         }
-        swap(closes, new_closes);
+        swap(closes_, new_closes);
     }
     void merge_epsilons() {
-        typedef typename decltype(epsilons)::Tuple Tuple;
+        typedef typename decltype(epsilons_)::Tuple Tuple;
         Worklist<Ref<Variable>,true> worklist;
         auto enqueue = [&](Ref<Variable> v) {
             // Consider non-initial states with a single incoming epsilon.
-            if (!vars[v].useful() || v == entry
-                || epsilons.sec<0>()[v].size() != 1) {
+            if (!vars_[v].useful() || v == initial_
+                || epsilons_.sec<0>()[v].size() != 1) {
                 return;
             }
             // Consider states whose incoming transitions are all epsilons.
             bool only_inc_eps = true;
-            for (const auto& fld_p : opens.sec<0>()) {
+            for (const auto& fld_p : opens_.sec<0>()) {
                 if (!fld_p.second[v].empty()) {
                     only_inc_eps = false;
                     break;
@@ -1050,7 +1073,7 @@ public:
             if (!only_inc_eps) {
                 return;
             }
-            for (const auto& fld_p : closes.sec<0>()) {
+            for (const auto& fld_p : closes_.sec<0>()) {
                 if (!fld_p.second[v].empty()) {
                     only_inc_eps = false;
                     break;
@@ -1061,57 +1084,57 @@ public:
             }
             worklist.enqueue(v);
         };
-        for (const Variable& v : vars) {
+        for (const Variable& v : vars_) {
             enqueue(v.ref);
         }
         while (!worklist.empty()) {
             Ref<Variable> b = worklist.dequeue();
-            Ref<Variable> a = *(epsilons.sec<0>()[b].begin());
+            Ref<Variable> a = *(epsilons_.sec<0>()[b].begin());
             // Move all transitions out of 'b' onto 'a'.
-            epsilons.merge<SRC>(a, b);
-            epsilons.erase(Tuple(a, a)); // remove any created self-loops
-            opens.merge<SRC>(a, b);
-            closes.merge<SRC>(a, b);
+            epsilons_.merge<SRC>(a, b);
+            epsilons_.erase(Tuple(a, a)); // remove any created self-loops
+            opens_.merge<SRC>(a, b);
+            closes_.merge<SRC>(a, b);
             // Delete all transitions into 'tgt', then remove 'tgt'.
-            epsilons.erase(Tuple(a, b));
-            vars[b].mark_useless();
-            auto it = exits.find(b);
-            if (it != exits.end()) {
-                exits.erase(it);
-                exits.insert(a);
+            epsilons_.erase(Tuple(a, b));
+            vars_[b].mark_useless();
+            auto it = finals_.find(b);
+            if (it != finals_.end()) {
+                finals_.erase(it);
+                finals_.insert(a);
             }
             // Re-try all variables reachable from 'a' through epsilons.
-            for (Ref<Variable> v : epsilons.pri()[a]) {
+            for (Ref<Variable> v : epsilons_.pri()[a]) {
                 enqueue(v);
             }
         }
     }
     Signature to_sig() const {
-        assert(entry.valid());
+        assert(initial_.valid());
         timer.start("Building NFA for function");
         // Collect all used delimiters, to form the FSM's alphabet.
         std::vector<Delimiter> delims;
-        for (Ref<Field> fld : opens.sec<2>()) {
+        for (Ref<Field> fld : opens_.sec<2>()) {
             delims.emplace_back(true, fld);
         }
-        for (Ref<Field> fld : closes.sec<1>()) {
+        for (Ref<Field> fld : closes_.sec<1>()) {
             delims.emplace_back(false, fld);
         }
         // Build the FSM.
         // XXX: Assumes Ref's are allocated serially.
         NFA<Delimiter> nfa(delims);
-        nfa.set_initial(entry.value());
-        for (Ref<Variable> v : exits) {
+        nfa.set_initial(initial_.value());
+        for (Ref<Variable> v : finals_) {
             nfa.set_final(v.value());
         }
-        FOR(e, epsilons) {
+        FOR(e, epsilons_) {
             nfa.add_eps_trans(e.get<SRC>().value(), e.get<TGT>().value());
         }
-        FOR(o, opens) {
+        FOR(o, opens_) {
             Delimiter d(true, o.get<FLD>());
             nfa.add_symb_trans(o.get<SRC>().value(), d, o.get<TGT>().value());
         }
-        FOR(c, closes) {
+        FOR(c, closes_) {
             Delimiter d(false, c.get<FLD>());
             nfa.add_symb_trans(c.get<SRC>().value(), d, c.get<TGT>().value());
         }
@@ -1138,38 +1161,38 @@ public:
         return min;
     }
     void to_tgf(std::ostream& os, const Registry<Field>& fld_reg) const {
-        for (const Variable& v : vars) {
+        for (const Variable& v : vars_) {
             if (!v.useful()) {
                 continue;
             }
             os << v.name;
-            if (v.ref == entry) {
+            if (v.ref == initial_) {
                 os << " in";
             }
-            if (exits.count(v.ref) > 0) {
+            if (finals_.count(v.ref) > 0) {
                 os << " out";
             }
             os << std::endl;
         }
         os << "#" << std::endl;
-        FOR(e, epsilons) {
-            os << vars[e.get<SRC>()].name << " "
-               << vars[e.get<TGT>()].name << std::endl;
+        FOR(e, epsilons_) {
+            os << vars_[e.get<SRC>()].name << " "
+               << vars_[e.get<TGT>()].name << std::endl;
         }
-        FOR(o, opens) {
-            os << vars[o.get<SRC>()].name << " "
-               << vars[o.get<TGT>()].name << " "
+        FOR(o, opens_) {
+            os << vars_[o.get<SRC>()].name << " "
+               << vars_[o.get<TGT>()].name << " "
                << "(" << fld_reg[o.get<FLD>()].name << std::endl;
         }
-        FOR(c, closes) {
-            os << vars[c.get<SRC>()].name << " "
-               << vars[c.get<TGT>()].name << " "
+        FOR(c, closes_) {
+            os << vars_[c.get<SRC>()].name << " "
+               << vars_[c.get<TGT>()].name << " "
                << ")" << fld_reg[c.get<FLD>()].name << std::endl;
         }
     }
     unsigned num_vars() const {
         unsigned count = 0;
-        for (const Variable& v : vars) {
+        for (const Variable& v : vars_) {
             if (v.useful()) {
                 count++;
             }
@@ -1177,10 +1200,10 @@ public:
         return count;
     }
     unsigned num_ops() const {
-        return epsilons.size() + opens.size() + closes.size();
+        return epsilons_.size() + opens_.size() + closes_.size();
     }
     unsigned num_fields() const {
-        return opens.sec<2>().size() + closes.sec<1>().size();
+        return opens_.sec<2>().size() + closes_.sec<1>().size();
     }
 };
 
@@ -1194,8 +1217,8 @@ public:
     const Ref<Function> ref;
     const Ref<SCC> scc;
 private:
-    Ref<Variable> entry_;
-    std::set<Ref<Variable> > exits_;
+    Ref<Variable> initial_;
+    std::set<Ref<Variable> > finals_;
     Signature sig_; // Initially set to the empty automaton.
 public:
     explicit Function(const std::string* name_ptr, Ref<Function> ref,
@@ -1213,14 +1236,14 @@ public:
         sig_.clear();
     }
     void parse_file(const fs::path& fpath, SCC& scc);
-    Ref<Variable> entry() const {
-        return entry_;
+    Ref<Variable> initial() const {
+        return initial_;
     }
-    const std::set<Ref<Variable> >& exits() const {
-        return exits_;
+    const std::set<Ref<Variable> >& finals() const {
+        return finals_;
     }
     bool complete() const {
-        return entry_.valid();
+        return initial_.valid();
     }
     const Signature& sig() const {
         return sig_;
@@ -1296,7 +1319,7 @@ public:
         funs_.insert(fun);
     }
     Variable& add_var(const std::string& name) {
-        return code_.vars.add(name);
+        return code_.add_var(name);
     }
     void parse_file(const fs::path& fpath, Registry<SCC>& scc_reg,
                     const Registry<Function>& fun_reg,
@@ -1319,21 +1342,19 @@ public:
                 vars_done = true;
             } else if (!vars_done) {
                 EXPECT(toks.size() == 1);
-                code_.vars.add(toks[0]);
+                code_.add_var(toks[0]);
             } else {
                 EXPECT(toks.size() == 2 || toks.size() == 3);
-                Ref<Variable> src = code_.vars.find(toks[0]).ref;
-                Ref<Variable> tgt = code_.vars.find(toks[1]).ref;
+                Ref<Variable> src = code_.vars().find(toks[0]).ref;
+                Ref<Variable> tgt = code_.vars().find(toks[1]).ref;
                 if (toks.size() == 2) {
-                    if (src != tgt) {
-                        code_.epsilons.insert(src, tgt);
-                    }
+                    code_.add_epsilon(src, tgt);
                 } else if (toks[2][0] == '(') {
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
-                    code_.opens.insert(fld, src, tgt);
+                    code_.add_open(fld, src, tgt);
                 } else if (toks[2][0] == ')') {
                     Ref<Field> fld = fld_reg.add(toks[2].substr(1)).ref;
-                    code_.closes.insert(fld, src, tgt);
+                    code_.add_close(fld, src, tgt);
                 } else {
                     const Function& callee = fun_reg.find(toks[2]);
                     // Assuming all intra-SCC calls have been inlined in the
@@ -1383,30 +1404,28 @@ public:
         EXPECT(f.complete());
         EXPECT(calls_.empty());
         CodeGraph res(code_);
-        res.entry = f.entry();
-        res.exits = f.exits();
+        res.complete(f.initial(), f.finals());
         return res;
     }
     void to_tgf(std::ostream& os, const Registry<Function>& fun_reg,
                 const Registry<Field>& fld_reg) const {
         code_.to_tgf(os, fld_reg);
         FOR(c, calls_) {
-            os << code_.vars[c.get<SRC>()].name << " "
-               << code_.vars[c.get<TGT>()].name << " "
+            os << code_.vars()[c.get<SRC>()].name << " "
+               << code_.vars()[c.get<TGT>()].name << " "
                << fun_reg[c.get<FUN>()].name << std::endl;
         }
     }
     unsigned num_vars() const {
-        return code_.vars.size();
+        return code_.vars().size();
     }
     unsigned num_ops() const {
-        return (code_.epsilons.size() + code_.opens.size() +
-                code_.closes.size() + calls_.size());
+        return code_.num_ops() + calls_.size();
     }
 };
 
 void Function::parse_file(const fs::path& fpath, SCC& scc) {
-    assert(!entry_.valid());
+    assert(!initial_.valid());
     assert(scc.ref == this->scc);
     std::ifstream fin(fpath.string());
     EXPECT((bool) fin);
@@ -1425,16 +1444,16 @@ void Function::parse_file(const fs::path& fpath, SCC& scc) {
         Ref<Variable> v = scc.add_var(toks[0]).ref;
         for (auto it = toks.begin() + 1; it != toks.end(); ++it) {
             if (*it == "in") {
-                EXPECT(!entry_.valid());
-                entry_ = v;
+                EXPECT(!initial_.valid());
+                initial_ = v;
             } else if (*it == "out") {
-                exits_.insert(v);
+                finals_.insert(v);
             } else {
                 EXPECT(false);
             }
         }
     }
-    EXPECT(entry_.valid());
+    EXPECT(initial_.valid());
 }
 
 // TOP-LEVEL CODE =============================================================
