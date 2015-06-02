@@ -205,4 +205,20 @@
 	</sequential>
   </macrodef>
 
+  <macrodef name="run-unapk">
+	<sequential>
+	  <java classname="edu.stanford.stamp.unapk.App"
+			maxmemory="${stamp.maxheap}"
+			fork="true"
+			failonerror="true">
+		<jvmarg value="-ea"/>
+		<classpath>
+		  <pathelement location="${stamp.dir}/lib/unapk.jar"/>
+		</classpath>
+		<arg value="${apk}"/>
+		<arg value="${stamp.out.dir}/apktool-out"/> <!--This path is hardcoded in other areas of STAMP, we'll leave it as apktool-out for consistency, even if we use unapk.-->
+	  </java>
+	</sequential>
+  </macrodef>
+
 </project>
