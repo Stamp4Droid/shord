@@ -21,6 +21,7 @@
 #include <string>
 #include <sys/time.h>
 #include <tuple>
+#include <type_traits>
 #include <vector>
 
 // TYPE TRAITS ================================================================
@@ -1416,6 +1417,29 @@ bool erase_all(Idxs& idxs, const V& val) {
         (idxs, val);
 }
 
+template<class Tag, class Idxs, class T, int I>
+struct SubtractHelper {
+    static bool apply(Idxs& idxs, const std::set<T>& rhs) {
+        bool res_a = std::get<I>(idxs).template subtract<Tag>(rhs);
+        bool res_b = SubtractHelper<Tag,Idxs,T,I-1>::apply(idxs, rhs);
+        assert(res_a == res_b);
+        return res_a;
+    }
+};
+
+template<class Tag, class Idxs, class T>
+struct SubtractHelper<Tag,Idxs,T,0> {
+    static bool apply(Idxs& idxs, const std::set<T>& rhs) {
+        return std::get<0>(idxs).template subtract<Tag>(rhs);
+    }
+};
+
+template<class Tag, class Idxs, class T>
+bool subtract_all(Idxs& idxs, const std::set<T>& rhs) {
+    return SubtractHelper<Tag,Idxs,T,std::tuple_size<Idxs>::value-1>::apply
+        (idxs, rhs);
+}
+
 template<class Idx, class Tag_, class Key_>
 struct TableMerger {
     static void apply(Idx&, const Key_&, const Key_&) {}
@@ -1517,6 +1541,28 @@ public:
         }
         store_.erase(it);
         return true;
+    }
+    template<class Tag_>
+    typename std::enable_if<std::is_same<Tag,Tag_>::value, bool>::type
+    subtract(const std::set<T>& rhs) {
+        bool erased_any = false;
+        auto l_it = store_.begin();
+        auto r_it = rhs.begin();
+        auto l_end = store_.end();
+        auto r_end = rhs.end();
+        while (l_it != l_end && r_it != r_end) {
+            int rel = compare(*l_it, *r_it);
+            if (rel < 0) {
+                ++l_it;
+            } else if (rel > 0) {
+                ++r_it;
+            } else {
+                erased_any = true;
+                l_it = store_.erase(l_it);
+                ++r_it;
+            }
+        }
+        return erased_any;
     }
     bool copy(const Table& src) {
         unsigned int old_sz = size();
@@ -1866,6 +1912,46 @@ public:
         }
         return true;
     }
+    template<class Tag_>
+    typename std::enable_if<std::is_same<Tag,Tag_>::value, bool>::type
+    subtract(const std::set<Key>& rhs) {
+        bool erased_any = false;
+        auto l_it = map_.begin();
+        auto r_it = rhs.begin();
+        auto l_end = map_.end();
+        auto r_end = rhs.end();
+        while (l_it != l_end && r_it != r_end) {
+            int rel = compare(l_it->first, *r_it);
+            if (rel < 0) {
+                ++l_it;
+            } else if (rel > 0) {
+                ++r_it;
+            } else {
+                if (!l_it->second.empty()) {
+                    erased_any = true;
+                }
+                l_it = map_.erase(l_it);
+                ++r_it;
+            }
+        }
+        return erased_any;
+    }
+    template<class Tag_, class Key_>
+    typename std::enable_if<!std::is_same<Tag,Tag_>::value, bool>::type
+    subtract(const std::set<Key_>& rhs) {
+        bool erased_any = false;
+        for (auto it = map_.begin(); it != map_.end();) {
+            if (it->second.subtract<Tag_>(rhs)) {
+                erased_any = true;
+                if (it->second.empty()) {
+                    it = map_.erase(it);
+                    continue;
+                }
+            }
+            ++it;
+        }
+        return erased_any;
+    }
     bool copy(const Index& src) {
         bool grew = false;
         for (const auto& p : src.map_) {
@@ -2043,6 +2129,13 @@ public:
     bool erase(const Tuple_& tuple) {
         bool pri_erased = pri_.erase(tuple);
         bool sec_erased = detail::erase_all(sec_, tuple);
+        assert(pri_erased == sec_erased);
+        return pri_erased;
+    }
+    template<class Tag_, class Key_>
+    bool subtract(const std::set<Key_>& rhs) {
+        bool pri_erased = pri_.subtract<Tag_>(rhs);
+        bool sec_erased = detail::subtract_all<Tag_>(sec_, rhs);
         assert(pri_erased == sec_erased);
         return pri_erased;
     }

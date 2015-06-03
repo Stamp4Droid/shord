@@ -1012,28 +1012,17 @@ public:
             bck_list.pop_front();
         }
         // Prune states based on the above information.
-        typedef mi::NamedTuple<SRC, Ref<Variable>, mi::Nil> SrcTuple;
-        typedef mi::NamedTuple<TGT, Ref<Variable>, mi::Nil> TgtTuple;
+        std::set<Ref<Variable> > dropped;
         if (approx_mode) {
-            int erased = 0;
-            int count = 0;
             for (Variable& v : vars_) {
-                std::cout << erased << " " << count << std::endl;
-                count++;
                 if (!v.useful()
                     || approx_init.count(v.ref) > 0
                     || approx_fin.count(v.ref) > 0
                     || bck_reached.contains(v.ref)) {
                     continue;
                 }
-                erased++;
                 v.mark_useless();
-                epsilons_.erase(SrcTuple(v.ref));
-                epsilons_.erase(TgtTuple(v.ref));
-                opens_.erase(SrcTuple(v.ref));
-                opens_.erase(TgtTuple(v.ref));
-                closes_.erase(SrcTuple(v.ref));
-                closes_.erase(TgtTuple(v.ref));
+                dropped.insert(v.ref);
             }
         } else {
             if (!bck_reached.contains(initial_)) {
@@ -1049,15 +1038,16 @@ public:
                 assert(v.ref != initial_);
                 v.mark_useless();
                 finals_.erase(v.ref);
-                epsilons_.erase(SrcTuple(v.ref));
-                epsilons_.erase(TgtTuple(v.ref));
-                opens_.erase(SrcTuple(v.ref));
-                opens_.erase(TgtTuple(v.ref));
-                closes_.erase(SrcTuple(v.ref));
-                closes_.erase(TgtTuple(v.ref));
+                dropped.insert(v.ref);
             }
             assert(!finals_.empty());
         }
+        epsilons_.subtract<SRC>(dropped);
+        epsilons_.subtract<TGT>(dropped);
+        opens_.subtract<SRC>(dropped);
+        opens_.subtract<TGT>(dropped);
+        closes_.subtract<SRC>(dropped);
+        closes_.subtract<TGT>(dropped);
     }
     void merge_epsilons() {
         assert(initial_.valid());
