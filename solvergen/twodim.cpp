@@ -711,16 +711,13 @@ private:
                            mi::Table<TGT, Ref<Variable> > > >,
                    mi::Index<FLD, Ref<Field>,
                        mi::Index<TGT, Ref<Variable>,
-                           mi::Table<SRC, Ref<Variable> > > >,
-                   mi::Table<SRC, Ref<Variable> >,
-                   mi::Table<FLD, Ref<Field> > > opens_;
+                           mi::Table<SRC, Ref<Variable> > > > > opens_;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
                        mi::Index<SRC, Ref<Variable>,
                            mi::Table<TGT, Ref<Variable> > > >,
                    mi::Index<FLD, Ref<Field>,
                        mi::Index<TGT, Ref<Variable>,
-                           mi::Table<SRC, Ref<Variable> > > >,
-                   mi::Table<FLD, Ref<Field> > > closes_;
+                           mi::Table<SRC, Ref<Variable> > > > > closes_;
 public:
     explicit CodeGraph() {}
     CodeGraph(const CodeGraph&) = default;
@@ -873,8 +870,11 @@ public:
                     }
                 }
                 // Check if any open starts at this variable.
-                if (opens_.sec<1>().contains(a)) {
-                    deps.insert(a, in_src);
+                for (const auto& fld_p : opens_.pri()) {
+                    if (fld_p.second.has_key(a)) {
+                        deps.insert(a, in_src);
+                        break;
+                    }
                 }
             }
         }
@@ -924,8 +924,20 @@ public:
         // Closes remain only between variables on the P-partition.
     }
     // Ignores parenthesis matching.
-    void prune() {
-        assert(initial_.valid());
+    void prune(const std::set<Ref<Variable> >& approx_init
+                   = std::set<Ref<Variable> >(),
+               const std::set<Ref<Variable> >& approx_fin
+                   = std::set<Ref<Variable> >()) {
+        bool approx_mode;
+        if (!approx_init.empty()) {
+            assert(!initial_.valid());
+            assert(finals_.empty());
+            approx_mode = true;
+        } else {
+            assert(approx_fin.empty());
+            assert(initial_.valid());
+            approx_mode = false;
+        }
         // Perform forward reachability
         RefSet<Variable> fwd_reached(vars_);
         std::deque<Ref<Variable> > fwd_list;
@@ -936,7 +948,13 @@ public:
                 fwd_list.push_back(v);
             }
         };
-        fwd_visit(initial_);
+        if (approx_mode) {
+            for (Ref<Variable> v : approx_init) {
+                fwd_visit(v);
+            }
+        } else {
+            fwd_visit(initial_);
+        }
         while (!fwd_list.empty()) {
             Ref<Variable> src = fwd_list.front();
             for (Ref<Variable> tgt : epsilons_.pri()[src]) {
@@ -967,8 +985,14 @@ public:
                 bck_list.push_back(v);
             }
         };
-        for (Ref<Variable> v : finals_) {
-            bck_visit(v);
+        if (approx_mode) {
+            for (Ref<Variable> v : approx_fin) {
+                bck_visit(v);
+            }
+        } else {
+            for (Ref<Variable> v : finals_) {
+                bck_visit(v);
+            }
         }
         while (!bck_list.empty()) {
             Ref<Variable> tgt = bck_list.front();
@@ -988,74 +1012,57 @@ public:
             bck_list.pop_front();
         }
         // Prune states based on the above information.
-        using std::swap;
-        if (!bck_reached.contains(initial_)) {
-            // Special case: empty FSM
-            clear();
-            initial_ = vars_.mktemp().ref;
-            return;
-        }
-        for (Variable& v : vars_) {
-            if (!bck_reached.contains(v.ref)) {
+        typedef mi::NamedTuple<SRC, Ref<Variable>, mi::Nil> SrcTuple;
+        typedef mi::NamedTuple<TGT, Ref<Variable>, mi::Nil> TgtTuple;
+        if (approx_mode) {
+            int erased = 0;
+            int count = 0;
+            for (Variable& v : vars_) {
+                std::cout << erased << " " << count << std::endl;
+                count++;
+                if (!v.useful()
+                    || approx_init.count(v.ref) > 0
+                    || approx_fin.count(v.ref) > 0
+                    || bck_reached.contains(v.ref)) {
+                    continue;
+                }
+                erased++;
+                v.mark_useless();
+                epsilons_.erase(SrcTuple(v.ref));
+                epsilons_.erase(TgtTuple(v.ref));
+                opens_.erase(SrcTuple(v.ref));
+                opens_.erase(TgtTuple(v.ref));
+                closes_.erase(SrcTuple(v.ref));
+                closes_.erase(TgtTuple(v.ref));
+            }
+        } else {
+            if (!bck_reached.contains(initial_)) {
+                // Special case: empty FSM
+                clear();
+                initial_ = vars_.mktemp().ref;
+                return;
+            }
+            for (Variable& v : vars_) {
+                if (!v.useful() || bck_reached.contains(v.ref)) {
+                    continue;
+                }
                 assert(v.ref != initial_);
                 v.mark_useless();
+                finals_.erase(v.ref);
+                epsilons_.erase(SrcTuple(v.ref));
+                epsilons_.erase(TgtTuple(v.ref));
+                opens_.erase(SrcTuple(v.ref));
+                opens_.erase(TgtTuple(v.ref));
+                closes_.erase(SrcTuple(v.ref));
+                closes_.erase(TgtTuple(v.ref));
             }
+            assert(!finals_.empty());
         }
-        std::set<Ref<Variable> > new_finals;
-        for (Ref<Variable> v : finals_) {
-            if (vars_[v].useful()) {
-                new_finals.insert(v);
-            }
-        }
-        assert(!new_finals.empty());
-        swap(finals_, new_finals);
-        decltype(epsilons_) new_epsilons;
-        for (const auto& src_p : epsilons_.pri()) {
-            if (!vars_[src_p.first].useful()) {
-                continue;
-            }
-            for (Ref<Variable> tgt : src_p.second) {
-                if (!vars_[tgt].useful()) {
-                    continue;
-                }
-                new_epsilons.insert(src_p.first, tgt);
-            }
-        }
-        swap(epsilons_, new_epsilons);
-        decltype(opens_) new_opens;
-        for (const auto& fld_p : opens_.pri()) {
-            for (const auto& src_p : fld_p.second) {
-                if (!vars_[src_p.first].useful()) {
-                    continue;
-                }
-                for (Ref<Variable> tgt : src_p.second) {
-                    if (!vars_[tgt].useful()) {
-                        continue;
-                    }
-                    new_opens.insert(fld_p.first, src_p.first, tgt);
-                }
-            }
-        }
-        swap(opens_, new_opens);
-        decltype(closes_) new_closes;
-        for (const auto& fld_p : closes_.pri()) {
-            for (const auto& src_p : fld_p.second) {
-                if (!vars_[src_p.first].useful()) {
-                    continue;
-                }
-                for (Ref<Variable> tgt : src_p.second) {
-                    if (!vars_[tgt].useful()) {
-                        continue;
-                    }
-                    new_closes.insert(fld_p.first, src_p.first, tgt);
-                }
-            }
-        }
-        swap(closes_, new_closes);
     }
     void merge_epsilons() {
+        assert(initial_.valid());
         typedef typename decltype(epsilons_)::Tuple Tuple;
-        Worklist<Ref<Variable>,true> worklist;
+        Worklist<Ref<Variable>,true> worklist; // will never reprocess
         auto enqueue = [&](Ref<Variable> v) {
             // Consider non-initial states with a single incoming epsilon.
             if (!vars_[v].useful() || v == initial_
@@ -1114,11 +1121,11 @@ public:
         timer.start("Building NFA for function");
         // Collect all used delimiters, to form the FSM's alphabet.
         std::vector<Delimiter> delims;
-        for (Ref<Field> fld : opens_.sec<2>()) {
-            delims.emplace_back(true, fld);
+        for (const auto& fld_p : opens_.pri()) {
+            delims.emplace_back(true, fld_p.first);
         }
-        for (Ref<Field> fld : closes_.sec<1>()) {
-            delims.emplace_back(false, fld);
+        for (const auto& fld_p : closes_.pri()) {
+            delims.emplace_back(false, fld_p.first);
         }
         // Build the FSM.
         // XXX: Assumes Ref's are allocated serially.
@@ -1201,9 +1208,6 @@ public:
     }
     unsigned num_ops() const {
         return epsilons_.size() + opens_.size() + closes_.size();
-    }
-    unsigned num_fields() const {
-        return opens_.sec<2>().size() + closes_.sec<1>().size();
     }
 };
 
@@ -1396,8 +1400,19 @@ public:
         }
         calls_.clear();
     }
-    void close_code() {
+    void close() {
         code_.close();
+    }
+    void pre_prune(const Registry<Function>& fun_reg) {
+        std::set<Ref<Variable> > entry_initials;
+        std::set<Ref<Variable> > entry_finals;
+        for (Ref<Function> f : entries_) {
+            entry_initials.insert(fun_reg[f].initial());
+            for (Ref<Variable> v : fun_reg[f].finals()) {
+                entry_finals.insert(v);
+            }
+        }
+        code_.prune(entry_initials, entry_finals);
     }
     CodeGraph make_fun_code(const Function& f) const {
         EXPECT(funs_.count(f.ref) > 0);
@@ -1562,11 +1577,16 @@ int main(int argc, char* argv[]) {
         std::ofstream inl_out(inl_path.string());
         EXPECT((bool) inl_out);
         scc.to_tgf(inl_out, funs, flds);
-        timer.done();
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
+        timer.done();
+
+        timer.start("Pre-pruning SCC code");
+        scc.pre_prune(funs);
+        timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
+        timer.done();
 
         timer.start("Closing SCC code");
-        scc.close_code();
+        scc.close();
         timer.done();
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
 
@@ -1611,8 +1631,6 @@ int main(int argc, char* argv[]) {
             f.set_sig(f_code.to_sig());
             timer.log("Size: ", f.sig().num_states(), " states, ",
                       f.sig().num_trans(), " transitions");
-            timer.log("Fields: from ", f_code.num_fields(), " to ",
-                      f.sig().num_letters());
             timer.done();
 
             timer.start("Printing signature");

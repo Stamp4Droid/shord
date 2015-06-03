@@ -1237,6 +1237,58 @@ struct TupleTraits<NamedTuple<Tag,Hd,Tl> > {
     static const unsigned int value = TupleTraits<Tl>::SIZE + 1;
 };
 
+template<class NT, class Tag>
+struct TupleContains;
+
+template<class Tag>
+struct TupleContains<Nil,Tag> {
+    static const bool value = false;
+};
+
+template<class Tag, class Hd, class Tl>
+struct TupleContains<NamedTuple<Tag,Hd,Tl>,Tag> {
+    static const bool value = true;
+};
+
+template<class Tag, class Hd, class Tl, class Tag_>
+struct TupleContains<NamedTuple<Tag,Hd,Tl>,Tag_> {
+    static const bool value = TupleContains<Tl,Tag_>::value;
+};
+
+template<class NT1, class NT2, class Sfinae = void>
+struct TuplesAreDisjoint;
+
+template<class NT2>
+struct TuplesAreDisjoint<Nil, NT2> {
+    static const bool value = true;
+};
+
+template<class Tag, class Hd, class Tl, class NT2>
+struct TuplesAreDisjoint<NamedTuple<Tag,Hd,Tl>, NT2,
+           typename std::enable_if<TupleContains<NT2,Tag>::value>::type> {
+    static const bool value = false;
+};
+
+template<class Tag, class Hd, class Tl, class NT2>
+struct TuplesAreDisjoint<NamedTuple<Tag,Hd,Tl>, NT2,
+            typename std::enable_if<!TupleContains<NT2,Tag>::value>::type> {
+    static const bool value = TuplesAreDisjoint<Tl,NT2>::value;
+};
+
+template<class NT1, class NT2>
+struct TupleIsSubset;
+
+template<class NT2>
+struct TupleIsSubset<Nil,NT2> {
+    static const bool value = true;
+};
+
+template<class Tag, class Hd, class Tl, class NT2>
+struct TupleIsSubset<NamedTuple<Tag,Hd,Tl>,NT2> {
+    static const bool value = (TupleIsSubset<Tl,NT2>::value &&
+                               TupleContains<NT2,Tag>::value);
+};
+
 #define TUPLE_TAG(NAME) struct NAME {static const char* name() {return #NAME;}}
 
 // HELPER CODE ================================================================
@@ -1457,7 +1509,8 @@ public:
         insert(other.template get<Tag>());
     }
     template<class Tuple_>
-    bool erase(const Tuple_& tuple) {
+    typename std::enable_if<TupleContains<Tuple_,Tag>::value, bool>::type
+    erase(const Tuple_& tuple) {
         auto it = store_.find(tuple.template get<Tag>());
         if (it == store_.end()) {
             return false;
@@ -1769,7 +1822,41 @@ public:
         of(other.template get<Tag>()).sec_insert(other);
     }
     template<class Tuple_>
-    bool erase(const Tuple_& tuple) {
+    typename std::enable_if<
+        (!TupleContains<Tuple_,Tag>::value &&
+         !TuplesAreDisjoint<Tuple_,typename Sub::Tuple>::value), bool>::type
+    erase(const Tuple_& tuple) {
+        bool erased_any = false;
+        for (auto it = map_.begin(); it != map_.end();) {
+            if (it->second.erase(tuple)) {
+                erased_any = true;
+                if (it->second.empty()) {
+                    it = map_.erase(it);
+                    continue;
+                }
+            }
+            ++it;
+        }
+        return erased_any;
+    }
+    template<class Tuple_>
+    typename std::enable_if<
+        (TupleContains<Tuple_,Tag>::value &&
+         TuplesAreDisjoint<Tuple_,typename Sub::Tuple>::value), bool>::type
+    erase(const Tuple_& tuple) {
+        auto it = map_.find(tuple.template get<Tag>());
+        if (it == map_.end()) {
+            return false;
+        }
+        bool erased_any = !it->second.empty();
+        map_.erase(it);
+        return erased_any;
+    }
+    template<class Tuple_>
+    typename std::enable_if<
+        (TupleContains<Tuple_,Tag>::value &&
+         !TuplesAreDisjoint<Tuple_,typename Sub::Tuple>::value), bool>::type
+    erase(const Tuple_& tuple) {
         auto it = map_.find(tuple.template get<Tag>());
         if (it == map_.end() || !(it->second.erase(tuple))) {
             return false;
