@@ -1267,7 +1267,6 @@ private:
     CodeGraph code_;
     CallStore calls_;
     std::set<Ref<Function> > funs_;
-    std::set<Ref<Function> > entries_;
     std::set<Ref<SCC> > children_;
     std::set<Ref<SCC> > parents_;
 public:
@@ -1293,10 +1292,10 @@ public:
                 return;
             }
         }
-        // We won't be reading the contents of this SCC in the future, so we can
-        // safely clear it.
+        // We won't be reading the contents of this SCC in the future, so we
+        // can safely clear it.
         clear();
-        for (Ref<Function> f : entries_) {
+        for (Ref<Function> f : funs_) {
             fun_reg[f].clear();
         }
     }
@@ -1308,9 +1307,6 @@ public:
     }
     const std::set<Ref<Function> >& funs() const {
         return funs_;
-    }
-    const std::set<Ref<Function> >& entries() const {
-        return entries_;
     }
     void add_function(Ref<Function> fun) {
         funs_.insert(fun);
@@ -1358,7 +1354,6 @@ public:
                     // previous step.
                     EXPECT(callee.scc < ref);
                     children_.insert(callee.scc);
-                    scc_reg[callee.scc].mark_entry(callee.ref);
                     scc_reg[callee.scc].parents_.insert(ref);
                     calls_.insert(callee.ref, src, tgt);
 
@@ -1380,10 +1375,6 @@ public:
     unsigned size() const {
         return funs_.size();
     }
-    void mark_entry(Ref<Function> f) {
-        assert(funs_.count(f) > 0);
-        entries_.insert(f);
-    }
     // CAUTION: Updates the code directly.
     void inline_callees(const Registry<Function>& fun_reg) {
         // There should be no intra-SCC calls present.
@@ -1397,15 +1388,15 @@ public:
         code_.close();
     }
     void pre_prune(const Registry<Function>& fun_reg) {
-        std::set<Ref<Variable> > entry_initials;
-        std::set<Ref<Variable> > entry_finals;
-        for (Ref<Function> f : entries_) {
-            entry_initials.insert(fun_reg[f].initial());
+        std::set<Ref<Variable> > all_initials;
+        std::set<Ref<Variable> > all_finals;
+        for (Ref<Function> f : funs_) {
+            all_initials.insert(fun_reg[f].initial());
             for (Ref<Variable> v : fun_reg[f].finals()) {
-                entry_finals.insert(v);
+                all_finals.insert(v);
             }
         }
-        code_.prune(entry_initials, entry_finals);
+        code_.prune(all_initials, all_finals);
     }
     CodeGraph make_fun_code(const Function& f) const {
         EXPECT(funs_.count(f.ref) > 0);
@@ -1532,11 +1523,6 @@ int main(int argc, char* argv[]) {
             Ref<Function> fun = funs.make(fun_name, scc.ref).ref;
             scc.add_function(fun);
         }
-        if (scc.size() < 10) {
-            for (Ref<Function> f : scc.funs()) {
-                scc.mark_entry(f);
-            }
-        }
     }
     timer.log(sccs.size(), " SCCs");
     timer.done();
@@ -1560,8 +1546,7 @@ int main(int argc, char* argv[]) {
     for (SCC& scc : sccs) {
         timer.start("Processing SCC", scc.name, " (", scc.ref, " of ",
                     sccs.size(), ")");
-        timer.log(scc.size(), " functions, ", scc.entries().size(),
-                  " entries");
+        timer.log(scc.size(), " functions");
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
 
         timer.start("Inlining callees");
@@ -1573,11 +1558,6 @@ int main(int argc, char* argv[]) {
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
         timer.done();
 
-        timer.start("Pre-pruning SCC code");
-        scc.pre_prune(funs);
-        timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
-        timer.done();
-
         timer.start("Closing SCC code");
         scc.close();
         timer.done();
@@ -1585,10 +1565,10 @@ int main(int argc, char* argv[]) {
 
         // Emit signatures by repurposing the full-SCC code graph.
         unsigned f_num = 0;
-        for (Ref<Function> f_ref : scc.entries()) {
+        for (Ref<Function> f_ref : scc.funs()) {
             Function& f = funs[f_ref];
-            timer.start("Emitting sig for entry", f_num, " of ",
-                        scc.entries().size(), ": ", f.name);
+            timer.start("Emitting sig for function", f_num, " of ",
+                        scc.funs().size(), ": ", f.name);
 
             timer.start("Copying SCC code");
             CodeGraph f_code = scc.make_fun_code(f);
