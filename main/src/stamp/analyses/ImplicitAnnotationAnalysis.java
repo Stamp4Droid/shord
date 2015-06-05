@@ -18,6 +18,7 @@ import soot.Value;
 import soot.jimple.ArrayRef;
 import soot.jimple.AssignStmt;
 import soot.jimple.Stmt;
+import stamp.missingmodels.util.cflsolver.util.LocalsToVarNodeMap;
 import chord.project.Chord;
 
 /**

@@ -1,4 +1,4 @@
-package stamp.analyses;
+package stamp.missingmodels.util.cflsolver.util;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import shord.analyses.DomU;
+import shord.analyses.DomV;
 import shord.analyses.LocalVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
@@ -65,6 +67,7 @@ public class LocalsToVarNodeMap {
 	
 	// This constructs a map from Locals to VarNodes for each (reachable) method in the program
 	private Map<SootMethod,Map<Local,LocalVarNode>> localToVarNodeMaps = null;
+	private Map<VarNode,stamp.missingmodels.util.cflsolver.core.Util.Pair<String,Integer>> varNodeToRelationIndexMap = null;
 	private void constructLocalToVarNodeMaps() {
 		this.localToVarNodeMaps = new HashMap<SootMethod,Map<Local,LocalVarNode>>();
 		ProgramRel relMV = (ProgramRel)ClassicProject.g().getTrgt("MV");
@@ -106,6 +109,16 @@ public class LocalsToVarNodeMap {
 			}
 		}
 		relMU.close();
+		
+		this.varNodeToRelationIndexMap = new HashMap<VarNode,stamp.missingmodels.util.cflsolver.core.Util.Pair<String,Integer>>();
+		DomV domV = (DomV)ClassicProject.g().getTrgt("V");
+		for(int i=0; i<domV.size(); i++) {
+			this.varNodeToRelationIndexMap.put(domV.get(i), new stamp.missingmodels.util.cflsolver.core.Util.Pair<String,Integer>("V",i));
+		}
+		DomU domU = (DomU)ClassicProject.g().getTrgt("U");
+		for(int i=0; i<domU.size(); i++) {
+			this.varNodeToRelationIndexMap.put(domU.get(i), new stamp.missingmodels.util.cflsolver.core.Util.Pair<String,Integer>("V",i));
+		}
 	}
 	
 	private static LocalsToVarNodeMap maps = new LocalsToVarNodeMap();
@@ -115,6 +128,13 @@ public class LocalsToVarNodeMap {
 			maps.constructLocalToVarNodeMaps();
 		}
 		return maps.localToVarNodeMaps.get(method);		
+	}
+	
+	public static stamp.missingmodels.util.cflsolver.core.Util.Pair<String,Integer> getIndexFor(VarNode varNode) {
+		if(maps.varNodeToRelationIndexMap == null) {
+			maps.constructLocalToVarNodeMaps();
+		}
+		return maps.varNodeToRelationIndexMap.get(varNode);
 	}
 	
 	private static Map<SootMethod,Map<LocalVarNode,Local>> inverseMaps = new HashMap<SootMethod,Map<LocalVarNode,Local>>();

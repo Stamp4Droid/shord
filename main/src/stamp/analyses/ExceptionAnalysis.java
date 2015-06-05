@@ -27,6 +27,7 @@ import soot.jimple.Stmt;
 import soot.jimple.ThrowStmt;
 import soot.jimple.internal.AbstractInvokeExpr;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.util.LocalsToVarNodeMap;
 import chord.project.Chord;
 
 @Chord(name = "exception-java",

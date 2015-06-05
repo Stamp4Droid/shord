@@ -17,8 +17,10 @@ import soot.RefLikeType;
 import soot.SootMethod;
 import soot.Unit;
 import soot.ValueBox;
-import stamp.analyses.ExceptionalControlDependenceGraph.ExceptionDependeeStruct;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.util.ExceptionalControlDependenceGraph;
+import stamp.missingmodels.util.cflsolver.util.LocalsToVarNodeMap;
+import stamp.missingmodels.util.cflsolver.util.ExceptionalControlDependenceGraph.ExceptionDependeeStruct;
 import chord.project.Chord;
 
 @Chord(name = "implicit-exception-java",
