@@ -1440,48 +1440,6 @@ bool subtract_all(Idxs& idxs, const std::set<T>& rhs) {
         (idxs, rhs);
 }
 
-template<class Idx, class Tag_, class Key_>
-struct TableMerger {
-    static void apply(Idx&, const Key_&, const Key_&) {}
-};
-
-template<class Tag, class T>
-struct TableMerger<Table<Tag,T>,Tag,T> {
-    static void apply(Table<Tag,T>& tab, const T& tgt, const T& src) {
-        if (tab.store_.erase(src) != 0) {
-            tab.store_.insert(tgt);
-        }
-    }
-};
-
-template<class Idx, class Tag_, class Key_>
-struct IndexMerger {
-    static void apply(Idx& idx, const Key_& tgt, const Key_& src) {
-        for (auto& p : idx.map_) {
-            p.second.template merge<Tag_>(tgt, src);
-        }
-    }
-};
-
-template<class Tag, class Key, class Sub>
-struct IndexMerger<Index<Tag,Key,Sub>,Tag,Key> {
-    static void apply(Index<Tag,Key,Sub>& idx, const Key& tgt,
-                      const Key& src) {
-        auto src_it = idx.map_.find(src);
-        if (src_it == idx.map_.end()) {
-            return;
-        }
-        Sub& tgt_sub = idx.map_[tgt];
-        if (tgt_sub.empty()) {
-            using std::swap;
-            swap(tgt_sub, src_it->second);
-        } else {
-            tgt_sub.move(std::move(src_it->second));
-        }
-        idx.map_.erase(src_it);
-    }
-};
-
 } // namespace detail
 
 // BASE CONTAINERS & OPERATIONS ===============================================
@@ -1493,8 +1451,6 @@ struct IndexMerger<Index<Tag,Key,Sub>,Tag,Key> {
             for (auto it__ = (EXPR).iter(RES); it__.next();)
 
 template<class Tag, class T> class Table {
-    template<class Idx, class Tag_, class Key_>
-    friend class detail::TableMerger;
 public:
     class Iterator;
     friend Iterator;
@@ -1574,12 +1530,12 @@ public:
         store_.insert(src.store_.begin(), src.store_.end());
         src.clear();
     }
-    // XXX: The user should only specify the Tag_ parameter, otherwise
-    // they might supply a Key_ type that doesn't match the Tag_, and template
-    // specialization will silently produce the wrong result.
-    template<class Tag_, class Key_>
-    void merge(const Key_& tgt, const Key_& src) {
-        detail::TableMerger<Table,Tag_,Key_>::apply(*this, tgt, src);
+    template<class Tag_>
+    typename std::enable_if<std::is_same<Tag,Tag_>::value>::type
+    merge(const T& tgt, const T& src) {
+        if (store_.erase(src) != 0) {
+            store_.insert(tgt);
+        }
     }
     ConstTopIter begin() const {
         return store_.cbegin();
@@ -1811,8 +1767,6 @@ public:
 };
 
 template<class Tag, class K, class S> class Index {
-    template<class Idx, class Tag_, class Key_>
-    friend class detail::IndexMerger;
 public:
     typedef K Key;
     typedef S Sub;
@@ -1984,9 +1938,28 @@ public:
             ++r_it;
         }
     }
+    template<class Tag_>
+    typename std::enable_if<std::is_same<Tag,Tag_>::value>::type
+    merge(const Key& tgt, const Key& src) {
+        auto src_it = map_.find(src);
+        if (src_it == map_.end()) {
+            return;
+        }
+        Sub& tgt_sub = map_[tgt];
+        if (tgt_sub.empty()) {
+            using std::swap;
+            swap(tgt_sub, src_it->second);
+        } else {
+            tgt_sub.move(std::move(src_it->second));
+        }
+        map_.erase(src_it);
+    }
     template<class Tag_, class Key_>
-    void merge(const Key_& tgt, const Key_& src) {
-        detail::IndexMerger<Index,Tag_,Key_>::apply(*this, tgt, src);
+    typename std::enable_if<!std::is_same<Tag,Tag_>::value>::type
+    merge(const Key_& tgt, const Key_& src) {
+        for (auto& p : map_) {
+            p.second.template merge<Tag_>(tgt, src);
+        }
     }
     Iterator iter(Tuple& tgt) const {
         Iterator it(tgt);
