@@ -804,6 +804,12 @@ public:
         mi::Index<CLE_OUT_SRC, Ref<Variable>,
             mi::Table<CLR_IN_SRC, Ref<Variable> > > deps;
         Worklist<Ref<Variable>,true> worklist; // holds in_src's
+        std::set<Ref<Variable> > open_srcs;
+        for (const auto& fld_p : opens_.pri()) {
+            for (const auto& src_p : fld_p.second) {
+                open_srcs.insert(src_p.first);
+            }
+        }
 
         // Record the set of matching in-variables.
         auto rec_in_bounds =
@@ -870,11 +876,8 @@ public:
                     }
                 }
                 // Check if any open starts at this variable.
-                for (const auto& fld_p : opens_.pri()) {
-                    if (fld_p.second.has_key(a)) {
-                        deps.insert(a, in_src);
-                        break;
-                    }
+                if (open_srcs.count(a) > 0) {
+                    deps.insert(a, in_src);
                 }
             }
         }
