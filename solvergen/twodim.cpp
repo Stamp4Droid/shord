@@ -1425,7 +1425,7 @@ public:
         }
     }
     unsigned num_vars() const {
-        return code_.vars().size();
+        return code_.num_vars();
     }
     unsigned num_ops() const {
         return code_.num_ops() + calls_.size();
