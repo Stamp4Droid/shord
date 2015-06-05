@@ -132,6 +132,9 @@ public class ReachabilitySolver implements GraphTransformer {
 		System.out.println("Number of edges: " + this.graph.getGraph().getNumEdges());
 		System.out.println("Rate: " + (double)this.graph.getGraph().getNumEdges()/totalTime);
 		System.out.println("Number of productions: " + this.numProductions);
+		for(String symbol : this.graph.counts.keySet()) {
+			System.out.println("COUNT FOR " + symbol + ": " + this.graph.counts.getCount(symbol));
+		}
 		
 		return this.graph.getGraph();
 	}

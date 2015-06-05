@@ -10,6 +10,7 @@ import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
+import stamp.missingmodels.util.cflsolver.core.Util.Counter;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 
 public class Graph {
@@ -101,6 +102,7 @@ public class Graph {
 			return this.addOrUpdateEdge(this.graph.getVertex(source), this.graph.getVertex(sink), this.graph.symbols.get(symbol), Field.getField(field), weight, null, null);
 		}
 		
+		public Counter<String> counts = new Counter<String>();
 		public Edge addOrUpdateEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput) {
 			Edge curEdge = this.getEdge(source, sink, symbol, field);
 			if(curEdge == null) {
@@ -111,6 +113,7 @@ public class Graph {
 				source.addOutgoingEdge(edge);
 				sink.addIncomingEdge(edge);
 				this.graph.numEdges++;
+				this.counts.increment(symbol.symbol);
 				return edge;
 			} else if(weight<curEdge.weight) {
 				curEdge.weight = weight;
