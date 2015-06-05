@@ -119,9 +119,11 @@ public class ShordRelationReader implements RelationReader {
 		for(int[] tuple : resPt) {
 			String sourceName = "H" + Integer.toString(tuple[1]);
 			String sinkName = "V" + Integer.toString(tuple[0]);
+			if(!vertices.contains(sourceName) || !vertices.contains(sinkName)) {
+				continue;
+			}
 			edges.add(new EdgeStruct(sourceName, sinkName, "Flow", Field.DEFAULT_FIELD.field, (short)0));
-		}
-		
+		}		
 		relPt.close();
 		
 		ProgramRel relPrim = (ProgramRel)ClassicProject.g().getTrgt("Label2Primd");
@@ -131,12 +133,11 @@ public class ShordRelationReader implements RelationReader {
 		for(int[] tuple : resPrim) {
 			String sourceName = "L" + Integer.toString(tuple[0]);
 			String sinkName = "U" + Integer.toString(tuple[1]);
-			if(!vertices.contains(sourceName)) {
+			if(!vertices.contains(sourceName) || !vertices.contains(sinkName)) {
 				continue;
 			}
 			edges.add(new EdgeStruct(sourceName, sinkName, "Label2Prim", Field.DEFAULT_FIELD.field, (short)0));
 		}
-		
 		relPrim.close();
 		
 		return new GraphEdgeFilter(vertices, symbols, edges);
