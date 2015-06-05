@@ -64,6 +64,8 @@ public class Layout
 		String id = elem.getAttribute("android:id");
 		if(id.isEmpty())
 			;  //no id, harness will just instantiate, but not store in any field
+		else if(id.startsWith("@android:id/"))
+			id = id.substring(1);
 		else if(id.startsWith("@id/"))
 			id = id.substring(1);
 		else if(id.startsWith("@+id/"))
