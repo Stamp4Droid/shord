@@ -1052,14 +1052,30 @@ public:
         closes_.subtract<SRC>(dropped);
         closes_.subtract<TGT>(dropped);
     }
-    void merge_epsilons() {
-        assert(initial_.valid());
+    void merge_epsilons(const std::set<Ref<Variable> >& approx_init
+                            = std::set<Ref<Variable> >(),
+                        const std::set<Ref<Variable> >& approx_fin
+                            = std::set<Ref<Variable> >()) {
+        bool approx_mode;
+        if (!approx_init.empty()) {
+            assert(!initial_.valid());
+            assert(finals_.empty());
+            approx_mode = true;
+        } else {
+            assert(approx_fin.empty());
+            assert(initial_.valid());
+            approx_mode = false;
+        }
         typedef typename decltype(epsilons_)::Tuple Tuple;
         Worklist<Ref<Variable>,true> worklist; // will never reprocess
         auto enqueue = [&](Ref<Variable> v) {
             // Consider non-initial states with a single incoming epsilon.
-            if (!vars_[v].useful() || v == initial_
-                || epsilons_.sec<0>()[v].size() != 1) {
+            if (!vars_[v].useful() || epsilons_.sec<0>()[v].size() != 1) {
+                return;
+            }
+            if ((approx_mode &&
+                 (approx_init.count(v) > 0 || approx_fin.count(v) > 0))
+                || (!approx_mode && v == initial_)) {
                 return;
             }
             // Consider states whose incoming transitions are all epsilons.
@@ -1092,16 +1108,18 @@ public:
             Ref<Variable> a = *(epsilons_.sec<0>()[b].begin());
             // Move all transitions out of 'b' onto 'a'.
             epsilons_.merge<SRC>(a, b);
-            epsilons_.erase(Tuple(a, a)); // remove any created self-loops
             opens_.merge<SRC>(a, b);
             closes_.merge<SRC>(a, b);
             // Delete all transitions into 'tgt', then remove 'tgt'.
+            epsilons_.erase(Tuple(a, a)); // remove any created self-loops
             epsilons_.erase(Tuple(a, b));
             vars_[b].mark_useless();
-            auto it = finals_.find(b);
-            if (it != finals_.end()) {
-                finals_.erase(it);
-                finals_.insert(a);
+            if (!approx_mode) {
+                auto it = finals_.find(b);
+                if (it != finals_.end()) {
+                    finals_.erase(it);
+                    finals_.insert(a);
+                }
             }
             // Re-try all variables reachable from 'a' through epsilons.
             for (Ref<Variable> v : epsilons_.pri()[a]) {
@@ -1397,6 +1415,17 @@ public:
             }
         }
         code_.prune(all_initials, all_finals);
+    }
+    void pre_merge_epsilons(const Registry<Function>& fun_reg) {
+        std::set<Ref<Variable> > all_initials;
+        std::set<Ref<Variable> > all_finals;
+        for (Ref<Function> f : funs_) {
+            all_initials.insert(fun_reg[f].initial());
+            for (Ref<Variable> v : fun_reg[f].finals()) {
+                all_finals.insert(v);
+            }
+        }
+        code_.merge_epsilons(all_initials, all_finals);
     }
     CodeGraph make_fun_code(const Function& f) const {
         EXPECT(funs_.count(f.ref) > 0);
