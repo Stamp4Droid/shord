@@ -13,7 +13,15 @@
 
   <target name="-analyze-apk">
 	<!-- Run android-apktool to decompile the manifest and resource xml files -->
-	<run-apktool/>	
+	<if>
+	 <equals arg1="${stamp.apk.toolchain}" arg2="unapk" />
+	 <then>
+	   <run-unapk/>
+	 </then>
+	 <else>
+	   <run-apktool/>
+	 </else>
+	</if>
 
     <!-- Read required properties. -->
     <prop-default property="stamp.backend" default="chord"

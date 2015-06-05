@@ -70,8 +70,10 @@ public class Layout
 			id = id.substring(2);
 		else if(id.startsWith("@*android:"))
 			id = id.substring(2);
-		else
+		else {
+			System.err.println(fileName);
 			assert false : id;
+		}
 		int numId = -1;
 		if(id.startsWith("id/"))
 			numId = publicXml.idIdFor(id.substring(3));
