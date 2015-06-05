@@ -1,0 +1,120 @@
+##################
+# CFL Initialization
+##################
+
+###################
+# CONFIGURATION
+###################
+
+# name=cfl-alias-models-dlog
+
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "F.dom"
+.include "I.dom"
+
+.bddvarorder M0_C0_M1_C1_M2_C2_V0_V1_I0_F0
+
+##########
+# INPUTS #
+##########
+
+pt(c:C,v:V,o:C) input
+fpt(o1:C,f:F,o2:C) input
+
+Assign(v:V,u:V) input
+Store(v:V,f:F,u:V) input
+Load(v:V,u:V,f:F) input
+
+param(v:V,u:V,i:I) input
+return(v:V,u:V,i:I) input
+CC(c:C,d:C) input
+CI(c:C,i:I) input
+
+CM(c:C,m:M) input
+
+StubParam(m:M,v:V) input
+StubReturn(m:M,v:V) input
+
+################
+# INTERMEDIATE #
+################
+
+Flow(o:C1,c:C0,v:V0) output
+FlowField(o1:C,f:F,o2:C) output
+
+Bassign(m:M,v:V) output
+assignE(m:M,v:V) output
+
+###########
+# OUTPUTS #
+###########
+
+# full output
+
+FlowPre(o:C2,c:C0,m:M0) output
+FlowPost(c1:C0,m:M0,c2:C1,v:V0) output
+FlowPrePost(c1:C0,m1:M0,c2:C1,m2:M1) output
+
+FlowFieldPost(c:C0,m:M0,f:F0,o:C2) output
+FlowFieldAnyPost(c:C0,m:M0,o:C2) output
+
+FlowNew(o:C2,c:C0,v:V0) output
+
+#########
+# RULES #
+#########
+
+# initialization
+
+Flow(o,c,v) :- pt(c,v,o).
+FlowField(o1,f,o2) :- fpt(o2,f,o1).
+
+Bassign(m,v) :- StubParam(m,v).
+assignE(m,v) :- StubReturn(m,v).
+
+# A_v rules
+
+FlowPre(o,c,m) :- Flow(o,c,v), Bassign(m,v).
+FlowPre(o,c,m) :- Flow(o,cp,v), Store(u,_,v), FlowPost(c,m,cp,u).
+FlowPre(o,c,m) :- FlowField(o,_,op), FlowPre(op,c,m).
+
+# A^v rules
+
+FlowPost(c1,m,c2,v) :- assignE(m,v), CM(c1,m), c1=c2.
+FlowPost(c1,m,c2,v) :- FlowPost(c1,m,c2,u), Assign(v,u).
+FlowPost(c1,m,c2,v) :- FlowPost(c1,m,cp,u), param(v,u,i), CC(cp,c2), CI(c2,i).
+FlowPost(c1,m,c2,v) :- FlowPost(c1,m,cp,u), return(v,u,i), CC(c2,cp), CI(cp,i).
+FlowPost(c1,m,c2,v) :- FlowPost(c1,m,c2,u), Load(v,u,_).
+
+FlowFieldPost(c,m,f,o) :- FlowPost(c,m,cp,v), Store(u,f,v), Flow(o,cp,u).
+FlowFieldAnyPost(c,m,o) :- FlowPre(o,c,m).
+
+FlowPost(c1,m,c2,v) :- FlowFieldPost(c1,m,f,o), Flow(o,c2,u), Load(v,u,f).
+FlowPost(c1,m,c2,v) :- FlowFieldAnyPost(c1,m,o), Flow(o,c2,u), Load(v,u,_).
+
+# A^w_v rules
+
+FlowPrePost(c1,m1,c2,m2) :- FlowPost(c1,m1,c2,v), Bassign(m2,v).
+FlowPrePost(c1,m1,c2,m2) :- FlowFieldPost(c1,m1,_,o), FlowPre(o,c2,m2).
+FlowPrePost(c1,m1,c2,m2) :- FlowFieldAnyPost(c1,m1,o), FlowPre(o,c2,m2).
+FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c2,m2,c1,m1).
+FlowPrePost(c1,m1,c2,m2) :- FlowPost(c1,m1,cp,v), Store(u,_,v), FlowPost(c2,m2,cp,u).
+
+FlowFieldAnyPost(c,m,o) :- FlowPrePost(c,m,cp,mp), FlowPre(o,cp,mp).
+
+# Stitching rules
+
+FlowNew(o,c,v) :- FlowPre(o,c,m), assignE(m,v).
+FlowNew(o,c,v) :- FlowPre(o,cp,m), FlowPost(cp,m,c,u), Load(v,u,_).
+# this is two rules in the context-free grammar
+FlowNew(o,c,v) :- FlowPre(o,cp,m), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
+
+FlowPre(o,c,m) :- FlowPre(o,cp,mp), FlowPrePost(cp,mp,c,m).
+
+FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,c2,mp), assignE(mp,v).
+FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,cp,mp), FlowPost(cp,mp,c2,u), Load(v,u,_).
+
+#FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c1,m1,cp,mp), FlowPrePost(c2,m2,cp,mp).
+FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c1,m1,cp,mp), FlowPrePost(cp,mp,c2,m2).
