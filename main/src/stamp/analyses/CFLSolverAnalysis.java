@@ -1,6 +1,8 @@
 package stamp.analyses;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import shord.project.ClassicProject;
@@ -19,10 +21,12 @@ import stamp.missingmodels.util.cflsolver.core.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
+import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 import stamp.missingmodels.util.cflsolver.grammars.AliasModelsGrammar;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.AliasModelsRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.AliasModelsFilterRelationManager;
+import stamp.missingmodels.util.cflsolver.util.AliasModelsSynthesis;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
@@ -85,13 +89,13 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			if(flowEdge.weight == (short)0) {
 				continue;
 			}
-			System.out.println("Flow Edge: " + flowEdge.toString(true));
-			for(Edge input : flowEdge.getPositiveWeightInputs()) {
-				if(input.weight == (short)0) {
-					continue;
-				}
-				System.out.println("Positive weight input: " + input.toString(true));
-				System.out.println("Positive weight input rep: " + input.toString());
+			System.out.println("FLOW EDGE: " + flowEdge.toString(true));
+			List<Pair<EdgeStruct,Boolean>> path = new ArrayList<Pair<EdgeStruct,Boolean>>();
+			for(Pair<Edge,Boolean> pair : flowEdge.getPath()) {
+				path.add(new Pair<EdgeStruct,Boolean>(pair.getX().getStruct(), pair.getY()));
+			}
+			for(EdgeStruct edge : AliasModelsSynthesis.synthesize(path)) {
+				System.out.println("MODEL EDGE: " + edge.toString(true));
 			}
 		}
 		IOUtils.printGraphStatistics(graphBar);
