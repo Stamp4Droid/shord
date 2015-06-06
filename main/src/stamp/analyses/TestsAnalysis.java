@@ -6,10 +6,12 @@ import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.cflsolver.core.AbductiveInference;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
+import stamp.missingmodels.util.cflsolver.core.Graph;
 import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
-import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphEdgeFilter;
 import stamp.missingmodels.util.cflsolver.core.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
@@ -19,6 +21,7 @@ import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar.TaintPointsToGrammar;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
+import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.PointsToFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.util.ConversionUtils;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
@@ -180,7 +183,8 @@ public class TestsAnalysis extends JavaAnalysis {
 		Filter<EdgeStruct> initialEdgeFilter = getInitialEdgeFilter(useCallbacks);
 		
 		// STEP 3: Get graph
-		Graph g = reader.readGraph(relations, grammar.getSymbols());
+		Graph g = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
+		Filter<Edge> f = new GraphEdgeFilter(g.getVertices(), grammar.getSymbols(), reader.readGraph(new PointsToFilterRelationManager(), grammar.getSymbols()));
 		
 		// STEP 4: Print statistics and relations
 		Graph gw = g.transform(new EdgeTransformer(g.getVertices(), g.getSymbols()) {
@@ -188,14 +192,14 @@ public class TestsAnalysis extends JavaAnalysis {
 			public void process(GraphBuilder gb, EdgeStruct edge) {
 				gb.addOrUpdateEdge(new EdgeStruct(edge.sourceName, edge.sinkName, edge.symbol, edge.field, baseEdgeFilter.filter(edge) ? (short)1 : (short)0));
 			}});
-		Graph gwbar = gw.transform(new ReachabilitySolver(g.getVertices(), grammar, reader.readFilter(g.getVertices(), grammar.getSymbols())));
+		Graph gwbar = gw.transform(new ReachabilitySolver(g.getVertices(), grammar, f));
 		System.out.println("Printing graph edges:");
 		IOUtils.printGraphStatistics(gwbar);
 		IOUtils.printGraphEdges(gwbar, "Src2Sink", true);
 		printGraphEdgesToFile(gwbar, useCallbacks);
 		
 		// STEP 5: Abductive inference
-		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(grammar).process(baseEdgeFilter, initialEdgeFilter, g, reader.readFilter(g.getVertices(), grammar.getSymbols()), 2);
+		MultivalueMap<EdgeStruct,Integer> results = new AbductiveInference(grammar).process(baseEdgeFilter, initialEdgeFilter, g, f, 2);
 		IOUtils.printAbductionResult(results, true, useCallbacks);
 	}
 }

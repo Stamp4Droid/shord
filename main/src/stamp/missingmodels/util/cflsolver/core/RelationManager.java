@@ -1,22 +1,21 @@
 package stamp.missingmodels.util.cflsolver.core;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
+import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
-import stamp.missingmodels.util.cflsolver.core.Graph.SimpleGraphBuilder;
-import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
-import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 
 public class RelationManager {
 	public interface RelationReader {
-		public Graph readGraph(RelationManager relations, SymbolMap symbols);
-		public Filter<Edge> readFilter(VertexMap vertices, SymbolMap symbols);
+		public Iterable<EdgeStruct> readGraph(RelationManager relations, SymbolMap symbols);
 	}
-
+	
 	private final MultivalueMap<String,Relation> relationsByName = new MultivalueMap<String,Relation>();
 	private final MultivalueMap<String,Relation> relationsBySymbol = new MultivalueMap<String,Relation>();
 	
@@ -55,37 +54,33 @@ public class RelationManager {
 		return Collections.unmodifiableCollection(this.relationsBySymbol.get(symbol));
 	}
 	
-	public static abstract class Relation {
-		public abstract String getName();
-		
-		public abstract String getSource(int[] tuple);
-		public abstract String getSink(int[] tuple);
-		public abstract String getSymbol();
-		
-		public abstract int getField(int[] tuple);
-		
-		public abstract short getWeight(int[] tuple);
-		
-		public boolean filter(int[] tuple) {
-			return true;
-		}
-		
-		public void addEdge(SimpleGraphBuilder gb, int[] tuple) {
-			if(!this.filter(tuple)) {
-				return;
-			}
-			
-			String source = this.getSource(tuple);
-			String sink = this.getSink(tuple);
-			String symbol = this.getSymbol();
-			int field = this.getField(tuple);
-			short weight = this.getWeight(tuple);
-			
-			gb.addOrUpdateEdge(source, sink, symbol, field, weight);
-		}
+	public static interface Relation {
+		public String getName();
+		public String getSource(int[] tuple);
+		public String getSink(int[] tuple);
+		public String getSymbol();
+		public int getField(int[] tuple);
+		public short getWeight(int[] tuple);
+		public boolean filter(int[] tuple);
 	}
 	
-	public static class IndexRelation extends Relation {
+	public static Collection<EdgeStruct> readRelation(Relation relation, int[] tuple) {
+		List<EdgeStruct> edge = new ArrayList<EdgeStruct>();
+		if(!relation.filter(tuple)) {
+			return edge;
+		}
+		
+		String source = relation.getSource(tuple);
+		String sink = relation.getSink(tuple);
+		String symbol = relation.getSymbol();
+		int field = relation.getField(tuple);
+		short weight = relation.getWeight(tuple);
+		
+		edge.add(new EdgeStruct(source, sink, symbol, field, weight));
+		return edge;
+	}
+	
+	public static class IndexRelation implements Relation {
 		private final String name;
 		
 		private final String sourceName;
@@ -145,9 +140,14 @@ public class RelationManager {
 		public short getWeight(int[] tuple) {
 			return this.weight;
 		}
+
+		@Override
+		public boolean filter(int[] tuple) {
+			return true;
+		}
 	}
 
-	public static class IndexWithContextRelation extends Relation {
+	public static class IndexWithContextRelation implements Relation {
 		private final String name;
 		
 		private final String sourceName;

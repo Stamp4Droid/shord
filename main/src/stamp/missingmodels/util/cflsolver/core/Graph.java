@@ -1,9 +1,7 @@
 package stamp.missingmodels.util.cflsolver.core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.Symbol;
@@ -53,34 +51,32 @@ public class Graph {
 		}
 	}
 	
-	public static class SimpleGraphBuilder {
-		private final SymbolMap symbols;
-		private final List<EdgeStruct> edges = new ArrayList<EdgeStruct>();
-		public SimpleGraphBuilder(SymbolMap symbols) {
-			this.symbols = symbols;
-		}
-		
-		public void addOrUpdateEdge(EdgeStruct edge) {
-			this.edges.add(edge);
-		}
-		
-		public void addOrUpdateEdge(String source, String sink, String symbol, int field, short weight) {
-			this.addOrUpdateEdge(new EdgeStruct(source, sink, symbol, field, weight));
-		}
-		
-		public Graph getGraph() {
-			GraphBuilder gb = new GraphBuilder(new VertexMap(this.edges), this.symbols);
-			for(EdgeStruct edge : this.edges) {
+	public static Graph getGraph(VertexMap vertices, SymbolMap symbols, Iterable<EdgeStruct> edges) {
+		GraphBuilder gb = new GraphBuilder(vertices, symbols);
+		for(EdgeStruct edge : edges) {
+			if(vertices.contains(edge.sourceName) && vertices.contains(edge.sinkName)) {
 				gb.addOrUpdateEdge(edge);
 			}
-			return gb.getGraph();
 		}
+		return gb.getGraph();
 	}
 	
-	// Note: semantics of GraphBuilder are not the same as SimpleGraphBuilder
-	// In particular, modifying GraphBuilder after getGraph will change the previously returned graph
+	public static Graph getGraph(SymbolMap symbols, Iterable<EdgeStruct> edges) {
+		VertexMap vertices = new VertexMap(edges);
+		GraphBuilder gb = new GraphBuilder(vertices, symbols);
+		for(EdgeStruct edge : edges) {
+			if(vertices.contains(edge.sourceName) && vertices.contains(edge.sinkName)) {
+				gb.addOrUpdateEdge(edge);
+			}
+		}
+		return gb.getGraph();
+	}
+	
+	// Note: Modifying GraphBuilder after getGraph will change the previously returned graph
 	public static class GraphBuilder {
 		private final Graph graph;
+		private final Counter<String> counts = new Counter<String>();
+		private int numEdges = 0;
 		
 		public GraphBuilder(VertexMap vertices, SymbolMap symbols) {
 			this.graph = new Graph(vertices, symbols);
@@ -102,7 +98,6 @@ public class Graph {
 			return this.addOrUpdateEdge(this.graph.getVertex(source), this.graph.getVertex(sink), this.graph.symbols.get(symbol), Field.getField(field), weight, null, null);
 		}
 		
-		public Counter<String> counts = new Counter<String>();
 		public Edge addOrUpdateEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput) {
 			Edge curEdge = this.getEdge(source, sink, symbol, field);
 			if(curEdge == null) {
@@ -112,7 +107,7 @@ public class Graph {
 				edge.secondInput = secondInput;
 				source.addOutgoingEdge(edge);
 				sink.addIncomingEdge(edge);
-				this.graph.numEdges++;
+				this.numEdges++;
 				this.counts.increment(symbol.symbol);
 				return edge;
 			} else if(weight<curEdge.weight) {
@@ -127,6 +122,14 @@ public class Graph {
 		
 		public Vertex getVertex(String name) {
 			return this.graph.getVertex(name);
+		}
+		
+		public int getNumEdges() {
+			return this.numEdges;
+		}
+
+		public int getCount(String symbol) {
+			return this.counts.getCount(symbol);
 		}
 	}
 	
@@ -178,7 +181,6 @@ public class Graph {
 	private final Vertex[] vertexArray;
 	private final VertexMap vertices;
 	private final SymbolMap symbols;
-	private int numEdges = 0;
 	
 	public Graph(VertexMap vertices, SymbolMap symbols) {
 		this.vertices = vertices;
@@ -219,10 +221,6 @@ public class Graph {
 	
 	public SymbolMap getSymbols() {
 		return this.symbols;
-	}
-	
-	public int getNumEdges() {
-		return this.numEdges;
 	}
 	
 	public Iterable<EdgeStruct> getEdgeStructs(final Filter<EdgeStruct> filter) {

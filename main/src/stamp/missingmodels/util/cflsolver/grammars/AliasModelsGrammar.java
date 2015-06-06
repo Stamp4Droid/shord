@@ -11,47 +11,6 @@ public class AliasModelsGrammar extends ContextFreeGrammar {
 		}
 	}
 	
-	public static class ActiveAliasModelsGrammar extends ContextFreeGrammar {
-		public ActiveAliasModelsGrammar() {
-			AliasModelsGrammar g = new AliasModelsGrammar();
-			for(List<UnaryProduction> ups : g.unaryProductionsByTarget) {
-				for(UnaryProduction up : ups) {
-					this.addUnaryProduction(up.target.symbol, up.input.symbol, up.isInputBackwards, up.ignoreFields, up.ignoreContexts);
-				}
-			}
-			for(List<BinaryProduction> bps : g.binaryProductionsByTarget) {
-				for(BinaryProduction bp : bps) {
-					if(bp.firstInput.symbol.equals("Flow") && bp.secondInput.symbol.equals("Bassign")) {
-						continue;
-					}
-					if(bp.firstInput.symbol.equals("FlowPost") && bp.secondInput.symbol.equals("assignE")) {
-						continue;
-					}
-					this.addBinaryProduction(bp.target.symbol, bp.firstInput.symbol, bp.secondInput.symbol, bp.isFirstInputBackwards, bp.isSecondInputBackwards, bp.ignoreFields, bp.ignoreContexts);
-				}
-			}
-			for(List<AuxProduction> aps : g.auxProductionsByTarget) {
-				for(AuxProduction ap : aps) {
-					this.addAuxProduction(ap.target.symbol, ap.input.symbol, ap.auxInput.symbol, ap.isAuxInputFirst, ap.isInputBackwards, ap.isAuxInputBackwards, ap.ignoreFields, ap.ignoreContexts);
-				}
-			}
-			this.addProduction("FlowPre", new String[]{"activeObject", "Flow", "Bassign"});
-			
-			this.addProduction("FlowPre", new String[]{"Flow", "Bassign", "ActiveMethod"});
-			this.addAuxProduction("activeObject", "objectSelf", "FlowPre", false);
-			
-			this.addAuxProduction("ActiveMethod", "methodSelf", "FlowPre", false);
-			this.addAuxProduction("ActiveMethod", "methodSelf", "FlowPrePost", false);
-			this.addBinaryProduction("FlowPost", "ActiveMethod", "assignE");
-		}
-	}
-	
-	public static class TaintActiveAliasModelsGrammar extends UnionGrammar {
-		public TaintActiveAliasModelsGrammar() {
-			super(new ActiveAliasModelsGrammar(), new TaintGrammar());
-		}
-	}
-	
 	public AliasModelsGrammar() {
 		// (1) A_v rules
 		

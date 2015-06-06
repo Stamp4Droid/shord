@@ -33,10 +33,6 @@ CH(c:C,h:H) input
 ptd(v:V,h:H) output
 ptd(v,h) :- pt(_,v,o), CH(o,h).
 
-#VT(v:V,t:T) input
-#HTFilter(h:H,t:T) input
-#ptd(v,h) :- VT(v,t), HTFilter(h,t).
-
 fpt(o1:C,f:F,o2:C) input
 fptd(h1:H,f:F,h2:H) output
 fptd(h1,f,h2) :- fpt(o1,f,o2), CH(o1,h1), CH(o2,h2).

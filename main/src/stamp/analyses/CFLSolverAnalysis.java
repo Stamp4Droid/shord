@@ -1,24 +1,27 @@
 package stamp.analyses;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
+import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
+import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
+import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphEdgeFilter;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphTransformer;
+import stamp.missingmodels.util.cflsolver.core.Graph.VertexMap;
 import stamp.missingmodels.util.cflsolver.core.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
-import stamp.missingmodels.util.cflsolver.grammars.AliasModelsGrammar;
-import stamp.missingmodels.util.cflsolver.grammars.ImplicitFlowGrammar;
-import stamp.missingmodels.util.cflsolver.grammars.ImplicitFlowGrammar.NegligibleImplicitFlowGrammar;
-import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefImplicitFlowGrammar;
-import stamp.missingmodels.util.cflsolver.grammars.MissingRefRefGrammar.MissingRefRefTaintGrammar;
-import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
+import stamp.missingmodels.util.cflsolver.grammars.AliasModelsGrammar.TaintAliasModelsGrammar;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.relation.AliasModelsRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.ImplicitFlowRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.MissingRefRefRelationManager.MissingRefRefImplicitFlowRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.MissingRefRefRelationManager.MissingRefRefTaintRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.SourceSinkRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.TaintWithContextRelationManager;
+import stamp.missingmodels.util.cflsolver.relation.AliasModelsRelationManager.TaintAliasModelsRelationManager;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
@@ -27,30 +30,95 @@ import chord.project.Chord;
  */
 @Chord(name = "cflsolver-java")
 public class CFLSolverAnalysis extends JavaAnalysis {
-	public static void run(RelationReader reader, ContextFreeGrammarOpt grammar, RelationManager relations, boolean useFilter) {
-		Graph graph = reader.readGraph(relations, grammar.getSymbols());
-		//Filter<Edge> filter = useFilter ? reader.readFilter(graph.getVertices(), grammar.getSymbols()) : new Filter<Edge>() { public boolean filter(Edge edge) { return true; }};
-		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar));
-		System.out.println("Printing graph edges:");
+	public static GraphTransformer getSourceSinkFilterTransformer(VertexMap vertices, SymbolMap symbols) {
+		final Set<String> labels = new HashSet<String>();
+		// Source labels
+		labels.add("$LOCATION");
+		labels.add("$getLatitude");
+		labels.add("$getLongitude");
+		labels.add("$FINE_LOCATION");
+		labels.add("$CONTACTS");
+		labels.add("$getDeviceId");
+		//labels.add("$SMS");
+		//labels.add("$AUDIO");
+		//labels.add("$ACCOUNTS");
+		//labels.add("$CALENDAR");
+		//labels.add("$CONTENT_PROVIDER");
+		
+		// Sink labels
+		labels.add("!INTERNET");
+		labels.add("!SOCKET");
+		labels.add("!sendTextMessage");
+		labels.add("!destinationAddress");
+		labels.add("!sendDataMessage");
+		labels.add("!sendMultipartTextMessage");
+		
+		final DomL dom = (DomL)ClassicProject.g().getTrgt("L");
+		final Filter<EdgeStruct> filter = new Filter<EdgeStruct>() {
+			public boolean filter(EdgeStruct edgeStruct) {
+				String name = null;
+				if(edgeStruct.sourceName.startsWith("L")) {
+					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
+				} else if(edgeStruct.sinkName.startsWith("L")) {
+					name = dom.get(Integer.parseInt(edgeStruct.sourceName.substring(1)));
+				}
+				return name == null || labels.contains(name);
+			}
+		};
+		return new EdgeTransformer(vertices, symbols) {
+			@Override
+			public void process(GraphBuilder gb, EdgeStruct edgeStruct) {
+				if(filter.filter(edgeStruct)) {
+					gb.addOrUpdateEdge(edgeStruct);
+				}
+			}
+		};
+	}
+	
+	public static void run(RelationReader reader, ContextFreeGrammarOpt grammar, RelationManager relations, RelationManager filterRelations) {
+		Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
+		graph = graph.transform(getSourceSinkFilterTransformer(graph.getVertices(), grammar.getSymbols()));
+		Filter<Edge> filter = new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols()));
+		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
+		for(Edge flowEdge : graphBar.getEdges(new Filter<Edge>() { public boolean filter(Edge e) { return e.symbol.symbol.equals("Flow"); }})) {
+			System.out.println("Flow Edge: " + flowEdge.toString(true));
+			System.out.println();
+			for(Edge input : flowEdge.getPositiveWeightInputs()) {
+				if(input.weight == (short)0) {
+					continue;
+				}
+				System.out.println("Positive weight input: " + input.toString(true));
+				System.out.println("Positive weight input rep: " + input.toString());
+				System.out.println();
+			}
+		}
 		IOUtils.printGraphStatistics(graphBar);
-		IOUtils.printGraphEdges(graphBar, "Label2Ref", true);
-		IOUtils.printGraphEdges(graphBar, "Src2Sink", true);
+		//IOUtils.printGraphEdges(graphBar, "Flow", true);
+	}
+	
+	public static void run(RelationReader reader, ContextFreeGrammarOpt grammar, RelationManager relations) {
+		run(reader, grammar, relations, new RelationManager());
 	}
 	
 	@Override
 	public void run() {
-		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
-		/*
-		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new TaintWithContextRelationManager(), true);
-		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
-		run(new ShordRelationReader(), new MissingRefRefTaintGrammar().getOpt(), new MissingRefRefTaintRelationManager(), true);
-		run(new ShordRelationReader(), new MissingRefRefImplicitFlowGrammar().getOpt(), new MissingRefRefImplicitFlowRelationManager(), true);
-		*/
+		// Basic taint analysis
+		//run(new ShordRelationReader(), new TaintGrammar().getOpt(), new TaintWithContextRelationManager());
 		
+		// Implicit flows and missing refref
 		/*
-		run(new ShordRelationReader(), new NegligibleImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager(), true);
-		run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), false);
-		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new SourceSinkRelationManager(), false);
+		run(new ShordRelationReader(), new ImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager());
+		run(new ShordRelationReader(), new MissingRefRefTaintGrammar().getOpt(), new MissingRefRefTaintRelationManager());
+		run(new ShordRelationReader(), new MissingRefRefImplicitFlowGrammar().getOpt(), new MissingRefRefImplicitFlowRelationManager());
+		run(new ShordRelationReader(), new NegligibleImplicitFlowGrammar().getOpt(), new ImplicitFlowRelationManager());
 		*/
+
+		// Source-sink inference
+		//run(new ShordRelationReader(), new TaintGrammar().getOpt(), new SourceSinkRelationManager());
+		
+		// Alias models inference
+		//String filename = "../../alias_models/alias_model_traces/AliasModelFlow.trace";
+		//String filename = "../../alias_models/alias_model_traces/2B_SMSBot.log";
+		run(new ShordRelationReader(), new TaintAliasModelsGrammar().getOpt(), new TaintAliasModelsRelationManager(), new RelationManager());
 	}
 }
