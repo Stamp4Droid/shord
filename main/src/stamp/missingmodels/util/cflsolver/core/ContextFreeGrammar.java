@@ -1,6 +1,7 @@
 package stamp.missingmodels.util.cflsolver.core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,10 @@ public class ContextFreeGrammar {
 		
 		public int getNumSymbols() {
 			return this.numSymbols;
+		}
+		
+		public Collection<String> getSymbols() {
+			return this.symbols.keySet();
 		}
 	}
 	

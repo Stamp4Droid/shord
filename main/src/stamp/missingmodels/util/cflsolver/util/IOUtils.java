@@ -275,6 +275,7 @@ public class IOUtils {
 	}
 	
 	public static void printGraphStatistics(Graph g) {
+		int totalNumEdges = 0;
 		for(int symbolInt=0; symbolInt<g.getSymbols().getNumSymbols(); symbolInt++) {
 			final String symbol = g.getSymbols().get(symbolInt).symbol;
 			if(!symbol.equals(symbol)) continue;
@@ -287,8 +288,9 @@ public class IOUtils {
 				edges.add(edge.sink.name.substring(1) + " " + edge.source.name.substring(1));
 			}
 			System.out.println(symbol + ": " + edges.size());
+			totalNumEdges += edges.size();
 		}
-		System.out.println("total edges: " + g.getNumEdges());
+		System.out.println("total edges: " + totalNumEdges);
 	}
 	
 	// CLEANUP: from AbductiveInferenceUtils
