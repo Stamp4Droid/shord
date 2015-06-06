@@ -435,6 +435,7 @@ public class App
 					if(c instanceof String){
 						Layout includedLayout = nameToLayout.get((String) c);
 						Widget includedLayoutRootWidget = includedLayout.rootWidget;
+						//System.out.println(includedLayoutRootWidget+" "+includedLayout+" "+c);
 						if(includedLayoutRootWidget.getClassName().equals("merge")){
 							for(Object l : includedLayout.widgetToChildren.get(includedLayoutRootWidget))
 								childrenWidgets.add((Widget) l);

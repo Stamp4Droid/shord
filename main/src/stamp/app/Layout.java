@@ -56,22 +56,20 @@ public class Layout
 			assert layoutId.startsWith("@layout/") : layoutId;
 			return layoutId.substring(8);
 		}
-		else if(elemTag.equals("fragment"))
-			return null;
 		else if(elemTag.equals("requestFocus"))
 			return null;
 
 		String id = elem.getAttribute("android:id");
 		if(id.isEmpty())
 			;  //no id, harness will just instantiate, but not store in any field
-		else if(id.startsWith("@android:id/"))
-			id = id.substring(1);
 		else if(id.startsWith("@id/"))
 			id = id.substring(1);
 		else if(id.startsWith("@+id/"))
 			id = id.substring(2);
 		else if(id.startsWith("@*android:"))
 			id = id.substring(2);
+		else if(id.startsWith("@android:"))
+			id = id.substring(1);
 		else {
 			System.err.println(fileName);
 			assert false : id;
@@ -79,7 +77,18 @@ public class Layout
 		int numId = -1;
 		if(id.startsWith("id/"))
 			numId = publicXml.idIdFor(id.substring(3));
-		Widget widget = new Widget(elem.getTagName(), id, numId);
+		String tagName = elem.getTagName();
+		Widget widget;
+		if(elemTag.equals("fragment")){
+			String className = elem.getAttribute("class");
+			if(className.length() == 0)
+				className = elem.getAttribute("android:name");
+			else
+				assert elem.getAttribute("android:name").length() == 0;
+			assert className.length() > 0 : fileName;
+			widget = new Widget(className, id, numId, true);
+		} else
+			widget = new Widget(elemTag, id, numId);
 		widgets.add(widget);
 
 		List children = new ArrayList();

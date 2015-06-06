@@ -10,6 +10,7 @@ public class Widget
 	private String className;
 	public final String idStr;
 	public final Integer id;
+	public final boolean isFragment;
 	private boolean isCustom;
 	private List<Widget> children;
 	
@@ -45,14 +46,20 @@ public class Widget
 
 	public Widget(String className, String idStr, Integer id)
 	{
+		this(className, idStr, id, false);
+	}
+
+	public Widget(String className, String idStr, Integer id, boolean isFragment)
+	{
 		this.className = className;
 		this.idStr = idStr;
 		this.id = id;
+		this.isFragment = isFragment;
 	}
 	
 	public String toString()
 	{
-		return "{\"class\": \""+className+"\", \"id-str\": \""+idStr+"\", \"id\": "+id+"}";
+		return "{\"class\": \""+className+"\", \"id-str\": \""+idStr+"\", \"id\": "+id+"\", \"fragment\": \""+isFragment+"\"}";
 	}
 	
 	public boolean equals(Object other)

@@ -1,6 +1,7 @@
 class Fragment
 {
 	public android.view.View view;
+	public android.view.StampLayoutInflater stamp_inflater;
 
 	public  Fragment()
 	{

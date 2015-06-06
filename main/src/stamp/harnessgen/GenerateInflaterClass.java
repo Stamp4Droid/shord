@@ -112,16 +112,25 @@ public class GenerateInflaterClass
 	{
 		String widgetClassName = widget.getClassName();
 		SootClass wClass = Scene.v().getSootClass(widgetClassName);
+		if(wClass.isPhantom())
+			return null;
+
+		boolean isFragment = widget.isFragment;
 		Local l = Jimple.v().newLocal(widget.idStr, wClass.getType());
 		locals.add(l);
-		Immediate w = initWidget(wClass, units, l, contextLocal);
+		Immediate w = initWidget(wClass, units, l, contextLocal, isFragment);
 
 		if(w != null){
 			//store this inflater instance in the "android.view.View.stamp_inflater" field
-			SootFieldRef stamp_inflaterFld = Scene.v().getSootClass("android.view.View").getFieldByName("stamp_inflater").makeRef();
+			SootFieldRef stamp_inflaterFld;
+			if(isFragment)
+				stamp_inflaterFld = Scene.v().getSootClass("android.app.Fragment").getFieldByName("stamp_inflater").makeRef();
+			else
+				stamp_inflaterFld = Scene.v().getSootClass("android.view.View").getFieldByName("stamp_inflater").makeRef();
+
 			units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(w, stamp_inflaterFld), thisLocal));
 
-			if(widget.id >= 0){
+			if(widget.id >= 0 && !isFragment){
 				SootMethodRef setIdMeth = Scene.v().getMethod("<android.view.View: void setId(int)>").makeRef();
 				units.add(Jimple.v().newInvokeStmt(Jimple.v().newVirtualInvokeExpr(l, setIdMeth, IntConstant.v(widget.id))));
 			}
@@ -134,42 +143,51 @@ public class GenerateInflaterClass
 		} else
 			System.out.println("WARNING: could not instantiate widget "+widgetClassName);
 		
-		List<Widget> children = widget.getChildren();
-		if(children != null){
-			SootFieldRef childViewFld = Scene.v().getSootClass("android.view.ViewGroup").getFieldByName("child").makeRef();
-			for(Widget childWidget : children){
-				Immediate childWidgetLocal = instantiateWidget(childWidget, thisLocal, contextLocal, units, locals);
-				if(w != null && childWidgetLocal != null)
-					units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(w, childViewFld), childWidgetLocal));
+		if(!isFragment){
+			List<Widget> children = widget.getChildren();
+			if(children != null){
+				SootFieldRef childViewFld = Scene.v().getSootClass("android.view.ViewGroup").getFieldByName("child").makeRef();
+				for(Widget childWidget : children){
+					Immediate childWidgetLocal = instantiateWidget(childWidget, thisLocal, contextLocal, units, locals);
+					if(w != null && childWidgetLocal != null)
+						units.add(Jimple.v().newAssignStmt(Jimple.v().newInstanceFieldRef(w, childViewFld), childWidgetLocal));
+				}
 			}
 		}
 		return w;
 	}
 
-
-	private Local initWidget(SootClass wClass, Chain units, Local widgetLocal, Local contextLocal)
+	private Local initWidget(SootClass wClass, Chain units, Local widgetLocal, Local contextLocal, boolean isFragment)
 	{
-		List<Type> paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context")});
-		List<Value> args = null;
-		if(wClass.declaresMethod("<init>", paramTypes)){
-			args = Arrays.asList(new Value[]{contextLocal});
+		List<Type> paramTypes;
+		List<Value> args;
+		if(isFragment){
+			paramTypes = Collections.<Type> emptyList();
+			if(!wClass.declaresMethod("<init>", paramTypes))
+				assert false : wClass+" "+wClass.getSuperclass();
+			args = Collections.<Value> emptyList();
 		} else {
-			paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
-												  RefType.v("android.util.AttributeSet")});
+			paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context")});
 			if(wClass.declaresMethod("<init>", paramTypes)){
-				args = Arrays.asList(new Value[]{contextLocal,
-												 NullConstant.v()});
+				args = Arrays.asList(new Value[]{contextLocal});
 			} else {
 				paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
-													  RefType.v("android.util.AttributeSet"), 
-													  IntType.v()});
+													  RefType.v("android.util.AttributeSet")});
 				if(wClass.declaresMethod("<init>", paramTypes)){
 					args = Arrays.asList(new Value[]{contextLocal,
-													 NullConstant.v(),
-													 IntConstant.v(0)});
+													 NullConstant.v()});
 				} else {
-					System.out.println("hello "+wClass.getName()+" "+wClass.isPhantom());for(SootMethod m : wClass.getMethods()) System.out.println(m.getSignature());
-					return null;
+					paramTypes = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
+														  RefType.v("android.util.AttributeSet"), 
+														  IntType.v()});
+					if(wClass.declaresMethod("<init>", paramTypes)){
+						args = Arrays.asList(new Value[]{contextLocal,
+														 NullConstant.v(),
+													 IntConstant.v(0)});
+					} else {
+						System.out.println("hello "+wClass.getName()+" "+wClass.isPhantom());for(SootMethod m : wClass.getMethods()) System.out.println(m.getSignature());
+						return null;
+					}
 				}
 			}
 		}
