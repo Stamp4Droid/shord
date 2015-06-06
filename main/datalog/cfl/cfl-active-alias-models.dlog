@@ -13,14 +13,20 @@
 .include "V.dom"
 .include "F.dom"
 .include "I.dom"
+.include "H.dom"
 
-.bddvarorder M0_C0_M1_C1_M2_C2_V0_V1_I0_F0
+.bddvarorder M0_C0_M1_C1_M2_C2_V0_V1_I0_F0_H0
 
 ##########
 # INPUTS #
 ##########
 
-# full input
+# Seed input
+
+FlowDyn(o:H,v:V) input
+CH(o1:C,o2:H) input
+
+# Full input
 
 FlowPre(o:C2,c:C0,m:M0) input
 FlowPost(c1:C0,m:M0,c2:C1,v:V0) input
@@ -70,8 +76,8 @@ ActiveFlowNew(o:C2,c:C0,v:V0) output
 #########
 
 # seed relation
-
-ActiveFlowNew(o,c,v) :- FlowNew(o,c,v).
+#ActiveFlowNew(o,c,v) :- FlowNew(o,c,v).
+ActiveFlowNew(o,c,u) :- FlowNew(o,c,u), FlowDyn(o1,v), CH(o,o1), return(v,u,i), CI(c,i).
 
 # A_v rules
 
@@ -107,11 +113,11 @@ ActiveFlowPre(o,cp,mp) :- FlowPre(o,cp,mp), ActiveFlowFieldAnyPost(c,m,o), FlowP
 
 # Stitching rules
 
-ActiveFlowPre(o,c,m) :- FlowPre(o,c,m), FlowNew(o,c,v), assignE(m,v).
-ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), FlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
-ActiveFlowPost(cp,m,c,u) :- FlowPre(o,cp,m), FlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
-ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), FlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
-ActiveFlowPre(op,cp,m) :- FlowPre(o,cp,m), FlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
+ActiveFlowPre(o,c,m) :- FlowPre(o,c,m), ActiveFlowNew(o,c,v), assignE(m,v).
+ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
+ActiveFlowPost(cp,m,c,u) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
+ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
+ActiveFlowPre(op,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
 
 ActiveFlowPre(o,cp,mp) :- FlowPre(o,cp,mp), ActiveFlowPre(o,c,m), FlowPrePost(cp,mp,c,m).
 ActiveFlowPrePost(cp,mp,c,m) :- FlowPre(o,cp,mp), ActiveFlowPre(o,c,m), FlowPrePost(cp,mp,c,m).

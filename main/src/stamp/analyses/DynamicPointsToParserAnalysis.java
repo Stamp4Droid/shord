@@ -30,7 +30,8 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		relFlowDyn.zero();
 		for(Pair<VarNode,Integer> varNode : ptDyn.keySet()) {
 			for(Pair<SiteAllocNode,Integer> allocNode : ptDyn.get(varNode)) {
-				//relFlowDyn.add(allocNode.getY(), varNode.getY());
+				System.out.println("DYNAMIC POINTS TO: " + varNode + " -> " + allocNode);
+				relFlowDyn.add(new int[]{allocNode.getY(), varNode.getY()});
 			}
 		}
 		relFlowDyn.save();
