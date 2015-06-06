@@ -85,13 +85,14 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		graph = graph.transform(getSourceSinkFilterTransformer(graph.getVertices(), grammar.getSymbols()));
 		Filter<Edge> filter = new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols()));
 		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
-		for(Edge flowEdge : graphBar.getEdges(new Filter<Edge>() { public boolean filter(Edge e) { return e.symbol.symbol.equals("FlowNew"); }})) {
+		for(Edge flowEdge : graphBar.getEdges(new Filter<Edge>() { public boolean filter(Edge e) { return e.symbol.symbol.equals("FlowFinal"); }})) {
 			if(flowEdge.weight == (short)0) {
 				continue;
 			}
 			System.out.println("FLOW EDGE: " + flowEdge.toString(true));
 			List<Pair<EdgeStruct,Boolean>> path = new ArrayList<Pair<EdgeStruct,Boolean>>();
 			for(Pair<Edge,Boolean> pair : flowEdge.getPath()) {
+				System.out.println("PATH EDGE: " + pair.getX().toString(true));
 				path.add(new Pair<EdgeStruct,Boolean>(pair.getX().getStruct(), pair.getY()));
 			}
 			for(EdgeStruct edge : AliasModelsSynthesis.synthesize(path)) {
@@ -125,6 +126,6 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		//run(new ShordRelationReader(), new TaintAliasModelsPointsToGrammar().getOpt(), new TaintAliasModelsPointsToRelationManager(), new TypeFilterRelationManager());
 		//run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), new AliasModelsFilterRelationManager());
 		
-		run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), new AliasModelsFilterRelationManager());
+		run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(true), new AliasModelsFilterRelationManager(true));
 	}
 }

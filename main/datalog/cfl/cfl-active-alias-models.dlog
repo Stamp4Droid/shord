@@ -36,6 +36,7 @@ FlowFieldPost(c:C0,m:M0,f:F0,o:C2) input
 FlowFieldAnyPost(c:C0,m:M0,o:C2) input
 
 FlowNew(o:C2,c:C0,v:V0) input
+FlowFinal(o:C2,c:C0,v:V0) input
 
 # Misc inputs
 
@@ -70,6 +71,7 @@ ActiveFlowFieldPost(c:C0,m:M0,f:F0,o:C2) output
 ActiveFlowFieldAnyPost(c:C0,m:M0,o:C2) output
 
 ActiveFlowNew(o:C2,c:C0,v:V0) output
+ActiveFlowFinal(o:C2,c:C0,v:V0) output
 
 #########
 # RULES #
@@ -77,7 +79,7 @@ ActiveFlowNew(o:C2,c:C0,v:V0) output
 
 # seed relation
 #ActiveFlowNew(o,c,v) :- FlowNew(o,c,v).
-ActiveFlowNew(o,c,u) :- FlowNew(o,c,u), FlowDyn(o1,v), CH(o,o1), return(v,u,i), CI(c,i).
+ActiveFlowFinal(o,c,v) :- FlowFinal(o,c,v), FlowDyn(op,v), CH(o,op).
 
 # A_v rules
 
@@ -128,3 +130,7 @@ ActiveFlowPost(cp,mp,c2,u) :- FlowPrePost(c1,m,cp,mp), ActiveFlowPost(c1,m,c2,v)
 
 ActiveFlowPrePost(c1,m1,cp,mp) :- FlowPrePost(c1,m1,cp,mp), ActiveFlowPrePost(c1,m1,c2,m2), FlowPrePost(cp,mp,c2,m2).
 ActiveFlowPrePost(cp,mp,c2,m2) :- FlowPrePost(c1,m1,cp,mp), ActiveFlowPrePost(c1,m1,c2,m2), FlowPrePost(cp,mp,c2,m2).
+
+# Traverse return edge
+ActiveFlowNew(o,cp,u) :- FlowNew(o,cp,u), ActiveFlowFinal(o,c,v), return(v,u,i), CC(c,cp), CI(cp,i).
+

@@ -90,5 +90,8 @@ public class AliasModelsGrammar extends ContextFreeGrammar {
 		
 		// semantics for FlowFieldAny
 		this.addProduction("FlowNew", new String[]{"FlowFieldAny", "Flow", "load"}, true);
+		
+		// Traverse return edge
+		this.addBinaryProduction("FlowFinal", "FlowNew", "return");
 	}
 }

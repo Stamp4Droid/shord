@@ -56,6 +56,7 @@ FlowFieldPostD(m:M,f:F,o:C) output
 FlowFieldAnyPostD(m:M,o:C) output
 
 FlowNewD(o:C,v:V) output
+FlowFinalD(o:C,v:V) output
 
 #########
 # RULES #
@@ -111,3 +112,6 @@ FlowPostD(m,v) :- FlowPrePostD(m,mp), assignE(mp,v).
 FlowPostD(m,v) :- FlowPrePostD(m,mp), FlowPostD(mp,u), Load(v,u,_).
 
 FlowPrePostD(m1,m2) :- FlowPrePostD(m1,mp), FlowPrePostD(m2,mp).
+
+# Traverse return edge
+FlowFinalD(o,v) :- FlowNewD(o,u), return(v,u,_).
