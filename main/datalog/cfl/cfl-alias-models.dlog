@@ -14,7 +14,7 @@
 .include "F.dom"
 .include "I.dom"
 
-.bddvarorder M0_C0_M1_C1_M2_C2_V0_V1_I0_F0
+.bddvarorder V0_V1_M0_C0_M1_C1_M2_C2_I0_F0
 
 ##########
 # INPUTS #
