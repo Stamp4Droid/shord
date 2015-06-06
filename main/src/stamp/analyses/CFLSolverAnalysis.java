@@ -122,6 +122,5 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		//run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), new AliasModelsFilterRelationManager());
 		
 		run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), new AliasModelsFilterRelationManager());
-
 	}
 }
