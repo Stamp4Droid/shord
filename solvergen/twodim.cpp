@@ -702,21 +702,21 @@ private:
     Registry<Variable> vars_;
     Ref<Variable> initial_;
     std::set<Ref<Variable> > finals_;
-    mi::MultiIndex<mi::Index<SRC, Ref<Variable>,
+    mi::MultiIndex<mi::RefIndex<SRC, Variable,
                        mi::Table<TGT, Ref<Variable> > >,
-                   mi::Index<TGT, Ref<Variable>,
+                   mi::RefIndex<TGT, Variable,
                        mi::Table<SRC, Ref<Variable> > > > epsilons_;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
-                       mi::Index<SRC, Ref<Variable>,
+                       mi::RefIndex<SRC, Variable,
                            mi::Table<TGT, Ref<Variable> > > >,
                    mi::Index<FLD, Ref<Field>,
-                       mi::Index<TGT, Ref<Variable>,
+                       mi::RefIndex<TGT, Variable,
                            mi::Table<SRC, Ref<Variable> > > > > opens_;
     mi::MultiIndex<mi::Index<FLD, Ref<Field>,
-                       mi::Index<SRC, Ref<Variable>,
+                       mi::RefIndex<SRC, Variable,
                            mi::Table<TGT, Ref<Variable> > > >,
                    mi::Index<FLD, Ref<Field>,
-                       mi::Index<TGT, Ref<Variable>,
+                       mi::RefIndex<TGT, Variable,
                            mi::Table<SRC, Ref<Variable> > > > > closes_;
 public:
     explicit CodeGraph() {}
@@ -813,9 +813,9 @@ public:
 
         // Record the set of matching in-variables.
         auto rec_in_bounds =
-            [&](const mi::Index<TGT, Ref<Variable>,
+            [&](const mi::RefIndex<TGT, Variable,
                           mi::Table<SRC, Ref<Variable> > >& ops,
-                const mi::Index<SRC, Ref<Variable>,
+                const mi::RefIndex<SRC, Variable,
                           mi::Table<TGT, Ref<Variable> > >& cls,
                 Ref<Field>) {
             in_bounds.emplace_back();
@@ -849,9 +849,9 @@ public:
                 Ref<Variable> a = queue.front();
                 queue.pop_front();
                 auto emit_eps =
-                    [&](const mi::Index<TGT, Ref<Variable>,
+                    [&](const mi::RefIndex<TGT, Variable,
                                   mi::Table<SRC, Ref<Variable> > >& o_edges,
-                        const mi::Index<SRC, Ref<Variable>,
+                        const mi::RefIndex<SRC, Variable,
                                   mi::Table<TGT, Ref<Variable> > >& c_edges,
                         Ref<Field>) {
                     for (Ref<Variable> out_src : o_edges[in_src]) {
@@ -1374,7 +1374,6 @@ public:
                     children_.insert(callee.scc);
                     scc_reg[callee.scc].parents_.insert(ref);
                     calls_.insert(callee.ref, src, tgt);
-
                 }
             }
         }

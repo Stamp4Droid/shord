@@ -2641,6 +2641,322 @@ public:
 template<class Tag, class K, class S>
 const S LightIndex<Tag,K,S>::dummy;
 
+template<class Tag, class T, class S> class RefIndex {
+public:
+    typedef Ref<T> Key;
+    typedef S Sub;
+    class Iterator;
+    friend Iterator;
+    class TopIter;
+    friend TopIter;
+    class ConstTopIter;
+    friend ConstTopIter;
+    typedef NamedTuple<Tag,Ref<T>,typename Sub::Tuple> Tuple;
+private:
+    static const Sub dummy;
+private:
+    std::deque<Sub> array_;
+private:
+    void grow(unsigned new_sz) {
+        unsigned old_sz = array_.size();
+        if (old_sz >= new_sz) {
+            return;
+        }
+        array_.resize(new_sz);
+    }
+public:
+    explicit RefIndex() {}
+    RefIndex(const RefIndex&) = default;
+    RefIndex(RefIndex&&) = default;
+    RefIndex& operator=(const RefIndex&) = delete;
+    friend void swap(RefIndex& a, RefIndex& b) {
+        using std::swap;
+        swap(a.array_, b.array_);
+    }
+    void clear() {
+        RefIndex temp;
+        swap(*this, temp);
+    }
+    RefIndex& of() {
+        return *this;
+    }
+    template<class... Rest>
+    auto& of(Ref<T> key, const Rest&... rest) {
+        grow(key.value() + 1);
+        return array_[key.value()].of(rest...);
+    }
+    const Sub& operator[](Ref<T> key) const {
+        if (key.value() >= array_.size()) {
+            return dummy;
+        }
+        return array_[key.value()];
+    }
+    const RefIndex& find() const {
+        return *this;
+    }
+    template<class... Rest>
+    const auto& find(Ref<T> key, const Rest&... rest) const {
+        return (*this)[key].find(rest...);
+    }
+    template<class... Rest>
+    bool insert(Ref<T> key, const Rest&... rest) {
+        return of(key).insert(rest...);
+    }
+    bool insert(const Tuple& tuple) {
+        return insert(tuple.hd, tuple.tl);
+    }
+    template<class Tuple_>
+    void sec_insert(const Tuple_& tuple) {
+        of(tuple.template get<Tag>()).sec_insert(tuple);
+    }
+    template<class Tuple_>
+    typename std::enable_if<
+        (!TupleContains<Tuple_,Tag>::value &&
+         !TuplesAreDisjoint<Tuple_,typename Sub::Tuple>::value), bool>::type
+    erase(const Tuple_& tuple) {
+        bool erased_any = false;
+        for (Sub& sub : array_) {
+            if (sub.erase(tuple)) {
+                erased_any = true;
+            }
+        }
+        return erased_any;
+    }
+    template<class Tuple_>
+    typename std::enable_if<
+        (TupleContains<Tuple_,Tag>::value &&
+         TuplesAreDisjoint<Tuple_,typename Sub::Tuple>::value), bool>::type
+    erase(const Tuple_& tuple) {
+        Ref<T> key = tuple.template get<Tag>();
+        if (key.value() >= array_.size()) {
+            return false;
+        }
+        Sub& sub = array_[key.value()];
+        bool erased_any = !sub.empty();
+        sub.clear();
+        return erased_any;
+    }
+    template<class Tuple_>
+    typename std::enable_if<
+        (TupleContains<Tuple_,Tag>::value &&
+         !TuplesAreDisjoint<Tuple_,typename Sub::Tuple>::value), bool>::type
+    erase(const Tuple_& tuple) {
+        Ref<T> key = tuple.template get<Tag>();
+        if (key.value() >= array_.size()) {
+            return false;
+        }
+        return array_[key.value()].erase(tuple);
+    }
+    template<class Tag_>
+    typename std::enable_if<std::is_same<Tag,Tag_>::value, bool>::type
+    subtract(const std::set<Ref<T> >& rhs) {
+        bool erased_any = false;
+        for (Ref<T> key : rhs) {
+            if (key.value() >= array_.size()) {
+                break;
+            }
+            Sub& sub = array_[key.value()];
+            if (!sub.empty()) {
+                erased_any = true;
+            }
+            sub.clear();
+        }
+        return erased_any;
+    }
+    template<class Tag_, class Key_>
+    typename std::enable_if<!std::is_same<Tag,Tag_>::value, bool>::type
+    subtract(const std::set<Key_>& rhs) {
+        bool erased_any = false;
+        for (Sub& sub : array_) {
+            if (sub.subtract<Tag_>(rhs)) {
+                erased_any = true;
+            }
+        }
+        return erased_any;
+    }
+    void move(RefIndex&& src) {
+        grow(src.array_.size());
+        for (unsigned i = 0; i < src.array_.size(); i++) {
+            if (array_[i].empty()) {
+                using std::swap;
+                swap(array_[i], src.array_[i]);
+            } else {
+                array_[i].move(std::move(src.array_[i]));
+            }
+        }
+    }
+    template<class Tag_>
+    typename std::enable_if<std::is_same<Tag,Tag_>::value>::type
+    merge(Ref<T> tgt, Ref<T> src) {
+        if (src.value() >= array_.size()) {
+            return;
+        }
+        grow(tgt.value() + 1);
+        Sub& tgt_sub = array_[tgt.value()];
+        if (tgt_sub.empty()) {
+            using std::swap;
+            swap(tgt_sub, array_[src.value()]);
+        } else {
+            tgt_sub.move(std::move(array_[src.value()]));
+        }
+    }
+    template<class Tag_, class Key_>
+    typename std::enable_if<!std::is_same<Tag,Tag_>::value>::type
+    merge(const Key_& tgt, const Key_& src) {
+        for (Sub& sub : array_) {
+            sub.template merge<Tag_>(tgt, src);
+        }
+    }
+    Iterator iter(Tuple& tgt) const {
+        Iterator it(tgt);
+        it.migrate(*this);
+        return it;
+    }
+    TopIter begin() {
+        return TopIter(*this, false);
+    }
+    TopIter end() {
+        return TopIter(*this, true);
+    }
+    ConstTopIter begin() const {
+        return ConstTopIter(*this, false);
+    }
+    ConstTopIter end() const {
+        return ConstTopIter(*this, true);
+    }
+    bool empty() const {
+        for (const Sub& sub : array_) {
+            if (!sub.empty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    template<class... Rest>
+    bool contains(Ref<T> key, const Rest&... rest) const {
+        if (key.value() >= array_.size()) {
+            return false;
+        }
+        return array_[key.value()].contains(rest...);
+    }
+    bool contains(const Tuple& tuple) const {
+        return contains(tuple.hd, tuple.tl);
+    }
+    unsigned size() const {
+        unsigned sz = 0;
+        for (const Sub& sub : array_) {
+            sz += sub.size();
+        }
+        return sz;
+    }
+public:
+
+    class Iterator {
+    private:
+        typename std::deque<Sub>::const_iterator start;
+        typename std::deque<Sub>::const_iterator curr;
+        typename std::deque<Sub>::const_iterator end;
+        Ref<T>& tgt_key;
+        typename Sub::Iterator sub_iter;
+        bool before_start = true;
+    public:
+        explicit Iterator(Tuple& tgt) : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
+        void migrate(const RefIndex& idx) {
+            start = idx.array_.cbegin();
+            curr = start;
+            end = idx.array_.cend();
+            before_start = true;
+        }
+        bool next() {
+            if (before_start) {
+                before_start = false;
+                if (curr == end) {
+                    return false;
+                }
+                sub_iter.migrate(*curr);
+            }
+            while (!sub_iter.next()) {
+                ++curr;
+                if (curr == end) {
+                    return false;
+                }
+                sub_iter.migrate(*curr);
+            }
+            tgt_key = Ref<T>(curr-start);
+            return true;
+        }
+    };
+
+    class TopIter : public std::iterator<std::forward_iterator_tag,
+                                         std::pair<const Ref<T>,Sub&> > {
+    public:
+        typedef std::pair<const Ref<T>,Sub&> Value;
+    private:
+        ConstTopIter real_iter;
+    public:
+        explicit TopIter(RefIndex& parent, bool at_end)
+            : real_iter(parent, at_end) {}
+        TopIter(const TopIter& rhs) = default;
+        TopIter& operator=(const TopIter& rhs) = default;
+        Value operator*() const {
+            typename ConstTopIter::Value cval = *real_iter;
+            return Value(cval.first, const_cast<Sub&>(cval.second));
+        }
+        TopIter& operator++() {
+            ++real_iter;
+            return *this;
+        }
+        bool operator==(const TopIter& rhs) const {
+            return real_iter == rhs.real_iter;
+        }
+        bool operator!=(const TopIter& rhs) const {
+            return !(*this == rhs);
+        }
+    };
+
+    class ConstTopIter
+        : public std::iterator<std::forward_iterator_tag,
+                               std::pair<const Ref<T>,const Sub&> > {
+    public:
+        typedef std::pair<const Ref<T>,const Sub&> Value;
+    private:
+        unsigned curr;
+        const RefIndex& parent;
+    private:
+        void skip_empty() {
+            while (curr < parent.array_.size()
+                   && parent.array_[curr].empty()) {
+                ++curr;
+            }
+        }
+    public:
+        explicit ConstTopIter(const RefIndex& parent, bool at_end)
+            : curr(at_end ? parent.array_.size() : 0), parent(parent) {
+            skip_empty();
+        }
+        ConstTopIter(const ConstTopIter& rhs) = default;
+        ConstTopIter& operator=(const ConstTopIter& rhs) = default;
+        Value operator*() const {
+            return Value(Ref<T>(curr), parent.array_[curr]);
+        }
+        ConstTopIter& operator++() {
+            ++curr;
+            skip_empty();
+            return *this;
+        }
+        bool operator==(const ConstTopIter& rhs) const {
+            assert(&parent == &(rhs.parent));
+            return curr == rhs.curr;
+        }
+        bool operator!=(const ConstTopIter& rhs) const {
+            return !(*this == rhs);
+        }
+    };
+};
+
+template<class Tag, class T, class S>
+const S RefIndex<Tag,T,S>::dummy;
+
 } // namespace mi
 
 // REGISTRY FOR NAMED TUPLE KEYS ==============================================
