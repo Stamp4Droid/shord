@@ -87,6 +87,10 @@ public class Graph {
 		}
 		
 		public Edge getEdge(Vertex source, Vertex sink, Symbol symbol, Field field) {
+			return new Edge(symbol, source, sink, field);
+		}
+		
+		public Edge getCurrentEdge(Vertex source, Vertex sink, Symbol symbol, Field field) {
 			return source.getCurrentOutgoingEdge(new Edge(symbol, source, sink, field));
 		}
 		
@@ -99,7 +103,7 @@ public class Graph {
 		}
 		
 		public Edge addOrUpdateEdge(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput) {
-			Edge curEdge = this.getEdge(source, sink, symbol, field);
+			Edge curEdge = this.getCurrentEdge(source, sink, symbol, field);
 			if(curEdge == null) {
 				Edge edge = new Edge(symbol, source, sink, field);
 				edge.weight = weight;
@@ -139,12 +143,10 @@ public class Graph {
 		
 		public GraphEdgeFilter(VertexMap vertices, SymbolMap symbolMap, Iterable<EdgeStruct> edges) {
 			this.symbols = new boolean[symbolMap.getNumSymbols()];
-			GraphBuilder gb = new GraphBuilder(vertices, symbolMap);
 			for(EdgeStruct edge : edges) {
-				gb.addOrUpdateEdge(edge);
 				this.symbols[symbolMap.get(edge.symbol).id] = true;
 			}
-			this.graph = gb.getGraph();
+			this.graph = Graph.getGraph(vertices, symbolMap, edges);
 		}
 		
 		@Override

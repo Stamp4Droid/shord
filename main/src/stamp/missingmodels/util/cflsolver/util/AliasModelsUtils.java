@@ -129,7 +129,6 @@ public class AliasModelsUtils {
 				}
 				Stmt stmtInvocation = getStmtFor(variable);
 				if(!stmtInvocation.containsInvokeExpr()) {
-					//throw new RuntimeException("Expected invocation statement: " + stmtInvocation);
 					System.out.println("Expected invocation statement: " + stmtInvocation);
 					continue;
 				}

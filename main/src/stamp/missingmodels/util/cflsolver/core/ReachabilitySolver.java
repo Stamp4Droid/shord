@@ -21,6 +21,7 @@ public class ReachabilitySolver implements GraphTransformer {
 	private BucketHeap worklist;
 	private int numProductions;
 	
+	// NOTE: Filter should ONLY depend on edge source, sink, symbol, and/or field
 	public ReachabilitySolver(VertexMap vertices, ContextFreeGrammarOpt contextFreeGrammar, Filter<Edge> filter) {
 		this.vertices = vertices;
 		this.contextFreeGrammar = contextFreeGrammar;
@@ -34,16 +35,13 @@ public class ReachabilitySolver implements GraphTransformer {
 	}
 	
 	private void addEdgeHelper(Vertex source, Vertex sink, Symbol symbol, Field field, short weight, Edge firstInput, Edge secondInput) {
-		if(field == null) {
+		if(field == null || !this.filter.filter(this.graph.getEdge(source, sink, symbol, field))) {
 			return;
 		}
 		this.numProductions++;
-		Edge curEdge = this.graph.getEdge(source, sink, symbol, field);
+		Edge curEdge = this.graph.getCurrentEdge(source, sink, symbol, field);
 		short curWeight = curEdge == null ? (short)-1 : curEdge.weight;
 		Edge edge = this.graph.addOrUpdateEdge(source, sink, symbol, field, weight, firstInput, secondInput);
-		if(edge != null && !this.filter.filter(edge)) {
-			return;
-		}
 		if(curEdge == null) {
 			this.worklist.push(edge);
 		} else if(edge != null) {

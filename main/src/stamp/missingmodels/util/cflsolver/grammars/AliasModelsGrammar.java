@@ -1,13 +1,12 @@
 package stamp.missingmodels.util.cflsolver.grammars;
 
-import java.util.List;
-
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
 
 public class AliasModelsGrammar extends ContextFreeGrammar {
-	public static class TaintAliasModelsGrammar extends UnionGrammar {
-		public TaintAliasModelsGrammar() {
-			super(new AliasModelsGrammar(), new TaintGrammar());
+	public static class TaintAliasModelsPointsToGrammar extends UnionGrammar {
+		public TaintAliasModelsPointsToGrammar() {
+			super(new PointsToGrammar(), new AliasModelsGrammar(), new TaintGrammar());
+			this.addUnaryProduction("Flow", "FlowNew");
 		}
 	}
 	

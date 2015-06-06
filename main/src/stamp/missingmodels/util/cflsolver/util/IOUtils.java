@@ -7,10 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import shord.project.ClassicProject;
@@ -158,14 +156,32 @@ public class IOUtils {
 	public static void printGraphEdges(Graph g, String symbol, boolean shord) {
 		System.out.println("Printing edges: " + symbol);
 		PrintWriter pw = new PrintWriter(System.out);
-		printGraphEdges(g, symbol, shord, pw, true);
+		printGraphEdges(g, symbol, shord, pw);
 		pw.flush();
 	}
 	
+	public static void printGraphEdgesFormatted(Graph g, final String symbol, boolean shord, PrintWriter pw) {
+		Set<String> edgeStrings = new HashSet<String>();
+		for(Edge edge : g.getEdges(new Filter<Edge>() { public boolean filter(Edge edge) { return edge.symbol.symbol.equals(symbol); }})) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(shord ? ConversionUtils.toStringShord(edge.source.name) : edge.source.name.substring(1)).append(SEPARATOR);
+			sb.append(shord ? ConversionUtils.toStringShord(edge.sink.name) : edge.sink.name.substring(1)).append(SEPARATOR);
+			sb.append(edge.field.field).append(SEPARATOR);
+			sb.append(edge.weight);
+			edgeStrings.add(sb.toString());
+		}
+		List<String> edgeList = new ArrayList<String>(edgeStrings);
+		Collections.sort(edgeList);
+		for(String edge : edgeList) {
+			pw.println(edge);
+		}
+	}
+	
 	public static void printGraphEdgesToFile(Graph g, String symbol, boolean shord, String extension) {
+		int x = 0; if(x == 0) { throw new RuntimeException("This code has not been tested!"); }
 		try {
 			PrintWriter pw = new PrintWriter(new File(getAppOutputDirectory(), symbol + "." + extension));
-			printGraphEdges(g, symbol, shord, pw, false);
+			printGraphEdgesFormatted(g, symbol, shord, pw);
 			pw.close();
 		} catch(IOException e) {
 			e.printStackTrace();
@@ -177,14 +193,15 @@ public class IOUtils {
 		return new File(getAppOutputDirectory(), symbol + "." + extension).exists();
 	}
 	
-	public static Map<Pair<String,String>,Integer> readGraphEdgesFromFile(String symbol, String extension) {
+	public static Iterable<EdgeStruct> readGraphEdgesFromFile(String symbol, String extension) {
+		int x = 0; if(x == 0) { throw new RuntimeException("This code has not been tested!"); }
 		try {
-			Map<Pair<String,String>,Integer> edges = new HashMap<Pair<String,String>,Integer>();
+			List<EdgeStruct> edges = new ArrayList<EdgeStruct>();
 			BufferedReader br = new BufferedReader(new FileReader(new File(getAppOutputDirectory(), symbol + "." + extension)));
 			String line;
 			while((line = br.readLine()) != null) {
 				String[] tokens = line.split(SEPARATOR);
-				edges.put(new Pair<String,String>(tokens[0], tokens[1]), Integer.parseInt(tokens[2]));
+				edges.add(new EdgeStruct(tokens[0], tokens[1], symbol, Integer.parseInt(tokens[2]), Short.parseShort(tokens[3])));
 			}
 			br.close();
 			return edges;
@@ -212,23 +229,10 @@ public class IOUtils {
 		rel.close();
 	}
 	
-	// if shord = true, prints "edgeSymbol#sourceToString#sinkToString"
-	// otherwise, prints "edgeSymbol#source#sink"
-	private static void printGraphEdges(Graph g, final String symbol, boolean shord, PrintWriter pw, boolean prependRelationName) {
+	private static void printGraphEdges(Graph g, final String symbol, boolean shord, PrintWriter pw) {
 		Set<String> edgeStrings = new HashSet<String>();
-		for(Edge edge : g.getEdges(new Filter<Edge>() {
-			@Override
-			public boolean filter(Edge edge) {
-				return edge.symbol.symbol.equals(symbol);
-			}})) {
-			StringBuilder sb = new StringBuilder();
-			if(prependRelationName) {
-				sb.append(edge.symbol.symbol).append(SEPARATOR);
-			}
-			sb.append(shord ? ConversionUtils.toStringShord(edge.source.name) : edge.source.name.substring(1)).append(SEPARATOR);
-			sb.append(shord ? ConversionUtils.toStringShord(edge.sink.name) : edge.sink.name.substring(1)).append(SEPARATOR);
-			sb.append(edge.weight);
-			edgeStrings.add(sb.toString());
+		for(Edge edge : g.getEdges(new Filter<Edge>() { public boolean filter(Edge edge) { return edge.symbol.symbol.equals(symbol); }})) {
+			edgeStrings.add(edge.toString(shord));
 		}
 		List<String> edgeList = new ArrayList<String>(edgeStrings);
 		Collections.sort(edgeList);

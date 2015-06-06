@@ -1,6 +1,7 @@
 package stamp.missingmodels.util.processor;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -75,6 +76,7 @@ public class AliasModelsProcessor {
 	public final Set<Integer> frameworkAbstractObjects = new HashSet<Integer>();
 	
 	public AliasModelsProcessor(String filename) {
+		System.out.println("Reading file: " + new File(filename).getAbsolutePath());
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			String line;

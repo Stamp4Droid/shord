@@ -116,5 +116,4 @@ FlowPre(o,c,m) :- FlowPre(o,cp,mp), FlowPrePost(cp,mp,c,m).
 FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,c2,mp), assignE(mp,v).
 FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,cp,mp), FlowPost(cp,mp,c2,u), Load(v,u,_).
 
-#FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c1,m1,cp,mp), FlowPrePost(c2,m2,cp,mp).
 FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c1,m1,cp,mp), FlowPrePost(cp,mp,c2,m2).

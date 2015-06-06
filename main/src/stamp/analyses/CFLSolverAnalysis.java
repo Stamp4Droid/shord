@@ -7,8 +7,8 @@ import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
-import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge;
+import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Graph;
 import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
 import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
@@ -19,9 +19,10 @@ import stamp.missingmodels.util.cflsolver.core.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
-import stamp.missingmodels.util.cflsolver.grammars.AliasModelsGrammar.TaintAliasModelsGrammar;
+import stamp.missingmodels.util.cflsolver.grammars.AliasModelsGrammar;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.relation.AliasModelsRelationManager.TaintAliasModelsRelationManager;
+import stamp.missingmodels.util.cflsolver.relation.AliasModelsRelationManager;
+import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.AliasModelsFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
@@ -80,20 +81,20 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		graph = graph.transform(getSourceSinkFilterTransformer(graph.getVertices(), grammar.getSymbols()));
 		Filter<Edge> filter = new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols()));
 		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
-		for(Edge flowEdge : graphBar.getEdges(new Filter<Edge>() { public boolean filter(Edge e) { return e.symbol.symbol.equals("Flow"); }})) {
+		for(Edge flowEdge : graphBar.getEdges(new Filter<Edge>() { public boolean filter(Edge e) { return e.symbol.symbol.equals("FlowNew"); }})) {
+			if(flowEdge.weight == (short)0) {
+				continue;
+			}
 			System.out.println("Flow Edge: " + flowEdge.toString(true));
-			System.out.println();
 			for(Edge input : flowEdge.getPositiveWeightInputs()) {
 				if(input.weight == (short)0) {
 					continue;
 				}
 				System.out.println("Positive weight input: " + input.toString(true));
 				System.out.println("Positive weight input rep: " + input.toString());
-				System.out.println();
 			}
 		}
 		IOUtils.printGraphStatistics(graphBar);
-		//IOUtils.printGraphEdges(graphBar, "Flow", true);
 	}
 	
 	public static void run(RelationReader reader, ContextFreeGrammarOpt grammar, RelationManager relations) {
@@ -117,8 +118,10 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		//run(new ShordRelationReader(), new TaintGrammar().getOpt(), new SourceSinkRelationManager());
 		
 		// Alias models inference
-		//String filename = "../../alias_models/alias_model_traces/AliasModelFlow.trace";
-		//String filename = "../../alias_models/alias_model_traces/2B_SMSBot.log";
-		run(new ShordRelationReader(), new TaintAliasModelsGrammar().getOpt(), new TaintAliasModelsRelationManager(), new RelationManager());
+		//run(new ShordRelationReader(), new TaintAliasModelsPointsToGrammar().getOpt(), new TaintAliasModelsPointsToRelationManager(), new TypeFilterRelationManager());
+		//run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), new AliasModelsFilterRelationManager());
+		
+		run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(), new AliasModelsFilterRelationManager());
+
 	}
 }

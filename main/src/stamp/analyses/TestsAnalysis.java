@@ -127,8 +127,8 @@ public class TestsAnalysis extends JavaAnalysis {
 	private static MultivalueMap<String,String> getGraphEdgesFromFile(String relationName, String extension) {
 		MultivalueMap<String,String> result = new MultivalueMap<String,String>();
 		try {
-			for(Pair<String,String> pair : IOUtils.readGraphEdgesFromFile(relationName, extension).keySet()) {
-				result.add(pair.getX(), pair.getY());
+			for(EdgeStruct edge : IOUtils.readGraphEdgesFromFile(relationName, extension)) {
+				result.add(edge.sourceName, edge.sinkName);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

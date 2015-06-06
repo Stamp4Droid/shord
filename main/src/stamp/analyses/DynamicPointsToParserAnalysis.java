@@ -21,7 +21,8 @@ signs = { "H0,V0:V0_H0" })
 public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
-		String filename = "";
+		String[] tokens = System.getProperty("stamp.out.dir").split("_");
+		String filename = "../../alias_models/alias_models_traces/" + tokens[tokens.length-1] + ".trace";
 		
 		// STEP 0: Fill in dynamic flow (ret -> app allocation)
 		MultivalueMap<Pair<VarNode,Integer>,Pair<SiteAllocNode,Integer>> ptDyn = AliasModelsUtils.getPtDynRetApp(new AliasModelsProcessor(filename));		
@@ -29,7 +30,7 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		relFlowDyn.zero();
 		for(Pair<VarNode,Integer> varNode : ptDyn.keySet()) {
 			for(Pair<SiteAllocNode,Integer> allocNode : ptDyn.get(varNode)) {
-				relFlowDyn.add(varNode.getY(), allocNode.getY());
+				//relFlowDyn.add(allocNode.getY(), varNode.getY());
 			}
 		}
 		relFlowDyn.save();

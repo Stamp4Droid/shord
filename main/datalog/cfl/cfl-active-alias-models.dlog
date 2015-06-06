@@ -63,9 +63,15 @@ ActiveFlowPrePost(c1:C0,m1:M0,c2:C1,m2:M1) output
 ActiveFlowFieldPost(c:C0,m:M0,f:F0,o:C2) output
 ActiveFlowFieldAnyPost(c:C0,m:M0,o:C2) output
 
+ActiveFlowNew(o:C2,c:C0,v:V0) output
+
 #########
 # RULES #
 #########
+
+# seed relation
+
+ActiveFlowNew(o,c,v) :- FlowNew(o,c,v).
 
 # A_v rules
 
