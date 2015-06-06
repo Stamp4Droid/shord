@@ -127,6 +127,8 @@ public class ParseManifest
 			assert name != null : node.getNodeName();
 			
 			Component comp = addComp(new Component(fixName(name), componentType));
+			if(comp == null)
+				continue;
 			setIntentFilters(comp, node);
 
 			boolean exported;
@@ -216,7 +218,10 @@ public class ParseManifest
 		List<Component> comps = app.components();
 		for(Component comp : comps){
 			if(comp.name.equals(c.name)){
-				assert c.type.equals(comp.type);
+				if(!c.type.equals(comp.type)){
+					System.out.println("ignoring invalid component: "+comp.name + " " + c.type + " "+comp.type);
+					return null;
+				}
 				return comp;
 			}
 		}
