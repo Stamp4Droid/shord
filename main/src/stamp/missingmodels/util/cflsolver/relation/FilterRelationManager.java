@@ -26,7 +26,6 @@ public class FilterRelationManager {
 				this.add(new IndexWithContextRelation("ActiveFlowPostField", "M", 1, 0, "C", 3, null, "FlowPostField", 2, (short)0));
 				this.add(new IndexWithContextRelation("ActiveFlowPostAnyField", "M", 1, 0, "C", 2, null, "FlowPostAnyField", null, (short)0));
 				this.add(new IndexWithContextRelation("ActiveFlowNew", "C", 0, null, "V", 2, 1, "FlowNew", null, (short)0));
-				this.add(new IndexWithContextRelation("ActiveFlowFinal", "C", 0, null, "V", 2, 1, "FlowFinal", null, (short)0));
 			} else {
 				this.add(new IndexRelation("ActiveFlowPre", "C", 0, "M", 2, "FlowPre", null, (short)0));
 				this.add(new IndexRelation("ActiveFlowPost", "M", 1, "V", 3, "FlowPost", null, (short)0));
@@ -34,7 +33,6 @@ public class FilterRelationManager {
 				this.add(new IndexRelation("ActiveFlowPostField", "M", 1, "C", 3, "FlowPostField", 2, (short)0));
 				this.add(new IndexRelation("ActiveFlowPostAnyField", "M", 1, "C", 2, "FlowPostAnyField", null, (short)0));
 				this.add(new IndexRelation("ActiveFlowNew", "C", 0, "V", 2, "FlowNew", null, (short)0));
-				this.add(new IndexRelation("ActiveFlowFinal", "C", 0, "V", 2, "FlowFinal", null, (short)0));
 			}
 		}
 	}

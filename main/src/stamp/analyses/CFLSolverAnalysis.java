@@ -85,7 +85,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		graph = graph.transform(getSourceSinkFilterTransformer(graph.getVertices(), grammar.getSymbols()));
 		Filter<Edge> filter = new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols()));
 		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
-		for(Edge flowEdge : graphBar.getEdges(new Filter<Edge>() { public boolean filter(Edge e) { return e.symbol.symbol.equals("FlowFinal"); }})) {
+		for(Edge flowEdge : graphBar.getEdges(new Filter<Edge>() { public boolean filter(Edge e) { return e.symbol.symbol.equals("FlowNew"); }})) {
 			if(flowEdge.weight == (short)0) {
 				continue;
 			}

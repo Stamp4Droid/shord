@@ -40,6 +40,7 @@ public class AliasModelsSynthesis {
 			// STEP 1a: Get edge data
 			EdgeStruct prevEdge = path.get(i).getX();
 			String symbol = prevEdge.symbol;
+			short weight = (short)0;
 			// STEP 1b: Add worst-case sub-graph if Bassign or assignE
 			if(symbol.equals("Bassign") || symbol.equalsIgnoreCase("assignE")) {
 				if(!prevStub) {
@@ -48,9 +49,10 @@ public class AliasModelsSynthesis {
 				}
 				prevStub = !prevStub;
 				symbol = "assign";
+				weight = (short)1;
 			}
 			// STEP 1c: Build edge
-			edges.add(new EdgeStruct(prevEdge.sourceName, prevEdge.sinkName, symbol, -1, (short)0));
+			edges.add(new EdgeStruct(prevEdge.sourceName, prevEdge.sinkName, symbol, -1, weight));
 		}
 		Graph graph = Graph.getGraph(grammar.getSymbols(), edges);
 		

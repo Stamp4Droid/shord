@@ -32,6 +32,7 @@ return(v:V,u:V,i:I) input
 CC(c:C,d:C) input
 CI(c:C,i:I) input
 
+MV(m:M,v:V) input
 CM(c:C,m:M) input
 
 StubParam(m:M,v:V) input
@@ -64,7 +65,6 @@ FlowFieldPost(c:C0,m:M0,f:F0,o:C2) output
 FlowFieldAnyPost(c:C0,m:M0,o:C2) output
 
 FlowNew(o:C2,c:C0,v:V0) output
-FlowFinal(o:C2,c:C0,v:V0) output
 
 #########
 # RULES #
@@ -78,18 +78,18 @@ FlowField(o1,f,o2) :- fpt(o2,f,o1).
 Bassign(m,v) :- StubParam(m,v).
 assignE(m,v) :- StubReturn(m,v).
 
-BassignCtxt(c,m,v) :- Bassign(m,v), param(v,_,i), CI(c,i).
-assignECtxt(c,m,v) :- assignE(m,v), return(_,v,i), CI(c,i).
+BassignCtxt(c,m,v) :- Bassign(m,u), param(u,v,_), MV(mp,v), CM(c,mp).
+assignECtxt(c,m,v) :- assignE(m,u), return(v,u,_), MV(mp,v), CM(c,mp).
 
 # A_v rules
 
-FlowPre(o,c,m) :- Flow(o,c,v), Bassign(m,v).
+FlowPre(o,c,m) :- Flow(o,c,u), param(v,u,_), Bassign(m,v).
 FlowPre(o,c,m) :- Flow(o,cp,v), Store(u,_,v), FlowPost(c,m,cp,u).
 FlowPre(o,c,m) :- FlowField(o,_,op), FlowPre(op,c,m).
 
 # A^v rules
 
-FlowPost(c1,m,c2,v) :- assignE(m,v), CM(c1,m), c1=c2.
+FlowPost(c1,m,c2,v) :- assignE(m,u), return(v,u,_), MV(mp,v), CM(c1,mp), c1=c2.
 FlowPost(c1,m,c2,v) :- FlowPost(c1,m,c2,u), Assign(v,u).
 FlowPost(c1,m,c2,v) :- FlowPost(c1,m,cp,u), param(v,u,i), CC(cp,c2), CI(c2,i).
 FlowPost(c1,m,c2,v) :- FlowPost(c1,m,cp,u), return(v,u,i), CC(c2,cp), CI(cp,i).
@@ -103,7 +103,7 @@ FlowPost(c1,m,c2,v) :- FlowFieldAnyPost(c1,m,o), Flow(o,c2,u), Load(v,u,_).
 
 # A^w_v rules
 
-FlowPrePost(c1,m1,c2,m2) :- FlowPost(c1,m1,c2,v), Bassign(m2,v).
+FlowPrePost(c1,m1,c2,m2) :- FlowPost(c1,m1,c2,u), param(v,u,_), Bassign(m2,v).
 FlowPrePost(c1,m1,c2,m2) :- FlowFieldPost(c1,m1,_,o), FlowPre(o,c2,m2).
 FlowPrePost(c1,m1,c2,m2) :- FlowFieldAnyPost(c1,m1,o), FlowPre(o,c2,m2).
 FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c2,m2,c1,m1).
@@ -113,17 +113,14 @@ FlowFieldAnyPost(c,m,o) :- FlowPrePost(c,m,cp,mp), FlowPre(o,cp,mp).
 
 # Stitching rules
 
-FlowNew(o,c,v) :- FlowPre(o,c,m), assignE(m,v).
-FlowNew(o,c,v) :- FlowPre(o,cp,m), FlowPost(cp,m,c,u), Load(v,u,_).
+FlowNew(o,c,v) :- FlowPre(o,c,m), assignE(m,u), return(v,u,_), MV(mp,v), CM(c,mp).
+#FlowNew(o,c,v) :- FlowPre(o,cp,m), FlowPost(cp,m,c,u), Load(v,u,_).
 # this is two rules in the context-free grammar
-FlowNew(o,c,v) :- FlowPre(o,cp,m), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
+#FlowNew(o,c,v) :- FlowPre(o,cp,m), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
 
 FlowPre(o,c,m) :- FlowPre(o,cp,mp), FlowPrePost(cp,mp,c,m).
 
-FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,c2,mp), assignE(mp,v).
+FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,c2,mp), assignE(mp,u), return(v,u,_), MV(mpp,v), CM(c2,mpp).
 FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,cp,mp), FlowPost(cp,mp,c2,u), Load(v,u,_).
 
 FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c1,m1,cp,mp), FlowPrePost(cp,mp,c2,m2).
-
-# Traverse return edge
-FlowFinal(o,c,v) :- FlowNew(o,cp,u), return(v,u,i), CC(c,cp), CI(cp,i).

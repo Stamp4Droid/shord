@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.util.AliasModelsUtils;
 
 public class AliasModelsProcessor {
 	public static class Variable {
@@ -134,7 +135,25 @@ public class AliasModelsProcessor {
 	}
 	
 	public static void main(String[] args) {
-		String filename = "../alias_models/alias_model_traces/eat24.apk.trace";
-		new AliasModelsProcessor(filename).printStatistics();
+		String filename = "../alias_models/alias_models_traces/SMSBot.trace";
+		System.out.println(new File(filename).getAbsolutePath());
+		AliasModelsProcessor processor = new AliasModelsProcessor(filename);
+		MultivalueMap<Variable,Variable> ptDynRetToApp = new MultivalueMap<Variable,Variable>();
+		for(Variable variable : processor.retsToAbstractObjects.keySet()) {
+			for(int abstractObjectId : processor.retsToAbstractObjects.get(variable)) {
+				if(processor.appAbstractObjectsToAllocations.containsKey(abstractObjectId)) {
+					Variable abstractObject = processor.appAbstractObjectsToAllocations.get(abstractObjectId);
+					ptDynRetToApp.add(variable, abstractObject);
+				}
+			}
+		}
+		int counter = 0;
+		for(Variable variable : ptDynRetToApp.keySet()) {
+			for(Variable abstractObject : ptDynRetToApp.get(variable)) {
+				System.out.println(variable + " -> " + abstractObject);
+				counter++;
+			}
+		}
+		System.out.println(counter);
 	}
 }

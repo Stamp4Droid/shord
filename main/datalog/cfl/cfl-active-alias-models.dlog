@@ -36,7 +36,6 @@ FlowFieldPost(c:C0,m:M0,f:F0,o:C2) input
 FlowFieldAnyPost(c:C0,m:M0,o:C2) input
 
 FlowNew(o:C2,c:C0,v:V0) input
-FlowFinal(o:C2,c:C0,v:V0) input
 
 # Misc inputs
 
@@ -48,6 +47,8 @@ param(v:V,u:V,i:I) input
 return(v:V,u:V,i:I) input
 CC(c:C,d:C) input
 CI(c:C,i:I) input
+CM(c:C,m:M) input
+MV(m:M,v:V) input
 
 # Intermediate inputs
 
@@ -71,7 +72,6 @@ ActiveFlowFieldPost(c:C0,m:M0,f:F0,o:C2) output
 ActiveFlowFieldAnyPost(c:C0,m:M0,o:C2) output
 
 ActiveFlowNew(o:C2,c:C0,v:V0) output
-ActiveFlowFinal(o:C2,c:C0,v:V0) output
 
 #########
 # RULES #
@@ -79,7 +79,7 @@ ActiveFlowFinal(o:C2,c:C0,v:V0) output
 
 # seed relation
 #ActiveFlowNew(o,c,v) :- FlowNew(o,c,v).
-ActiveFlowFinal(o,c,v) :- FlowFinal(o,c,v), FlowDyn(op,v), CH(o,op).
+ActiveFlowNew(o,c,v) :- FlowNew(o,c,v), FlowDyn(op,v), CH(o,op).
 
 # A_v rules
 
@@ -101,7 +101,7 @@ ActiveFlowFieldAnyPost(c1,m,o) :- FlowFieldAnyPost(c1,m,o), ActiveFlowPost(c1,m,
 
 # A^w_v rules
 
-ActiveFlowPost(c1,m1,c2,v) :- FlowPost(c1,m1,c2,v), ActiveFlowPrePost(c1,m1,c2,m2), Bassign(m2,v).
+ActiveFlowPost(c1,m1,c2,u) :- FlowPost(c1,m1,c2,u), ActiveFlowPrePost(c1,m1,c2,m2), param(v,u,_), Bassign(m2,v).
 ActiveFlowFieldPost(c1,m1,f,o) :- FlowPre(o,c2,m2), ActiveFlowPrePost(c1,m1,c2,m2), FlowFieldPost(c1,m1,f,o).
 ActiveFlowPre(o,c2,m2) :- FlowPre(o,c2,m2), ActiveFlowPrePost(c1,m1,c2,m2), FlowFieldPost(c1,m1,_,o).
 ActiveFlowFieldAnyPost(c1,m1,o) :- FlowPre(o,c2,m2), ActiveFlowPrePost(c1,m1,c2,m2), FlowFieldAnyPost(c1,m1,o).
@@ -115,22 +115,18 @@ ActiveFlowPre(o,cp,mp) :- FlowPre(o,cp,mp), ActiveFlowFieldAnyPost(c,m,o), FlowP
 
 # Stitching rules
 
-ActiveFlowPre(o,c,m) :- FlowPre(o,c,m), ActiveFlowNew(o,c,v), assignE(m,v).
-ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
-ActiveFlowPost(cp,m,c,u) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
-ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
-ActiveFlowPre(op,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
+ActiveFlowPre(o,c,m) :- FlowPre(o,c,m), ActiveFlowNew(o,c,v), assignE(m,u), return(v,u,_), MV(mp,v), CM(c,mp).
+#ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
+#ActiveFlowPost(cp,m,c,u) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
+#ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
+#ActiveFlowPre(op,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
 
 ActiveFlowPre(o,cp,mp) :- FlowPre(o,cp,mp), ActiveFlowPre(o,c,m), FlowPrePost(cp,mp,c,m).
 ActiveFlowPrePost(cp,mp,c,m) :- FlowPre(o,cp,mp), ActiveFlowPre(o,c,m), FlowPrePost(cp,mp,c,m).
 
-ActiveFlowPrePost(c1,m,c2,mp) :- FlowPrePost(c1,m,c2,mp), ActiveFlowPost(c1,m,c2,v), assignE(mp,v).
+ActiveFlowPrePost(c1,m,c2,mp) :- FlowPrePost(c1,m,c2,mp), ActiveFlowPost(c1,m,c2,v), assignE(mp,u), return(v,u,_), MV(mpp,v), CM(c2,mpp).
 ActiveFlowPrePost(c1,m,cp,mp) :- FlowPrePost(c1,m,cp,mp), ActiveFlowPost(c1,m,c2,v), FlowPost(cp,mp,c2,u), Load(v,u,_).
 ActiveFlowPost(cp,mp,c2,u) :- FlowPrePost(c1,m,cp,mp), ActiveFlowPost(c1,m,c2,v), FlowPost(cp,mp,c2,u), Load(v,u,_).
 
 ActiveFlowPrePost(c1,m1,cp,mp) :- FlowPrePost(c1,m1,cp,mp), ActiveFlowPrePost(c1,m1,c2,m2), FlowPrePost(cp,mp,c2,m2).
 ActiveFlowPrePost(cp,mp,c2,m2) :- FlowPrePost(c1,m1,cp,mp), ActiveFlowPrePost(c1,m1,c2,m2), FlowPrePost(cp,mp,c2,m2).
-
-# Traverse return edge
-ActiveFlowNew(o,cp,u) :- FlowNew(o,cp,u), ActiveFlowFinal(o,c,v), return(v,u,i), CC(c,cp), CI(cp,i).
-
