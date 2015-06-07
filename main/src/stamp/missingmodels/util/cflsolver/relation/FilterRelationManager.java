@@ -19,7 +19,6 @@ public class FilterRelationManager {
 	public static class AliasModelsFilterRelationManager extends RelationManager {
 		public AliasModelsFilterRelationManager(boolean useContext) {
 			if(useContext) {
-
 				this.add(new IndexWithContextRelation("ActiveFlowPre", "C", 0, null, "M", 2, 1, "FlowPre", null, (short)0));
 				this.add(new IndexWithContextRelation("ActiveFlowPost", "M", 1, 0, "V", 3, 2, "FlowPost", null, (short)0));
 				this.add(new IndexWithContextRelation("ActiveFlowPrePost", "M", 1, 0, "M", 3, 2, "FlowPrePost", null, (short)0));

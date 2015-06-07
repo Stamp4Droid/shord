@@ -42,7 +42,7 @@ public class AliasModelsSynthesis {
 			String symbol = prevEdge.symbol;
 			short weight = (short)0;
 			// STEP 1b: Add worst-case sub-graph if Bassign or assignE
-			if(symbol.equals("Bassign") || symbol.equalsIgnoreCase("assignE")) {
+			if(symbol.equals("Bassign") || symbol.equals("assignE")) {
 				if(!prevStub) {
 					String stub = path.get(i).getY() ? prevEdge.sinkName : prevEdge.sourceName;
 					edges.addAll(getStubEdges(stub));
@@ -61,7 +61,7 @@ public class AliasModelsSynthesis {
 		
 		// STEP 3: Get the source-sink path
 		String source = path.get(0).getY() ? path.get(0).getX().sourceName : path.get(0).getX().sinkName;
-		String sink = path.get(path.size()-1).getY() ? path.get(path.size()-1).getX().sourceName : path.get(path.size()-1).getX().sinkName;
+		String sink = path.get(path.size()-1).getY() ? path.get(path.size()-1).getX().sinkName : path.get(path.size()-1).getX().sourceName;
 		int symbolId = grammar.getSymbols().get("Flow").id;
 		
 		Edge flowEdge = null;
@@ -71,12 +71,15 @@ public class AliasModelsSynthesis {
 				break;
 			}
 		}
-		if(flowEdge == null) { throw new RuntimeException("Source-sink edge not found!"); }
+		if(flowEdge == null) { System.out.println("Source-sink edge not found!"); return new ArrayList<EdgeStruct>(); }
 		
 		// STEP 3: Get positive weight inputs
 		List<EdgeStruct> modelEdges = new ArrayList<EdgeStruct>();
-		for(Edge edge : flowEdge.getPositiveWeightInputs()) {
-			modelEdges.add(edge.getStruct());
+		for(Pair<Edge,Boolean> pair : flowEdge.getPath()) {
+			System.out.println("NEW PATH EDGE: " + pair.getX().toString(true));
+			if(pair.getX().weight > (short)0) {
+				modelEdges.add(pair.getX().getStruct());
+			}
 		}
 		return modelEdges;
 	}

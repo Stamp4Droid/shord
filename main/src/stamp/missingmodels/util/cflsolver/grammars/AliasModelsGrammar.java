@@ -65,10 +65,10 @@ public class AliasModelsGrammar extends ContextFreeGrammar {
 		this.addBinaryProduction("FlowNew", "FlowPre", "assignE");
 		
 		// Flow -> Flow Store[f] FlowBar Flow Load[f]
-		this.addProduction("FlowNew", new String[]{"FlowPre", "FlowPost", "load"}, true);
+		//this.addProduction("FlowNew", new String[]{"FlowPre", "FlowPost", "load"}, true);
 		
 		// FlowField -> Flow Store[f] FlowBar
-		this.addBinaryProduction("FlowFieldAny", "FlowPre", "FlowPre", false, true);
+		//this.addBinaryProduction("FlowFieldAny", "FlowPre", "FlowPre", false, true);
 		
 		// (4ii) A_v rules
 		
@@ -89,6 +89,6 @@ public class AliasModelsGrammar extends ContextFreeGrammar {
 		this.addBinaryProduction("FlowPrePost", "FlowPrePost", "FlowPrePost", false, true);
 		
 		// semantics for FlowFieldAny
-		this.addProduction("FlowNew", new String[]{"FlowFieldAny", "Flow", "load"}, true);
+		//this.addProduction("FlowNew", new String[]{"FlowFieldAny", "Flow", "load"}, true);
 	}
 }
