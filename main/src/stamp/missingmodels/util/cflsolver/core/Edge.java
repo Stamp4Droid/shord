@@ -159,9 +159,10 @@ public class Edge {
 		if(this.firstInput == null) {
 			path.add(new Pair<Edge,Boolean>(this, isForward));
 		} else {
-			if(this.source.equals(this.firstInput.source) && this.sink.equals(this.firstInput.sink)) {
+			boolean secondInputLoop = this.secondInput != null && this.secondInput.source.equals(this.secondInput.sink);
+			if(this.source.equals(this.firstInput.source) && this.sink.equals(this.firstInput.sink) && !secondInputLoop) {
 				this.firstInput.getPathHelper(path, isForward);
-			} else if(this.source.equals(this.firstInput.sink) && this.sink.equals(this.firstInput.source)) { 
+			} else if(this.source.equals(this.firstInput.sink) && this.sink.equals(this.firstInput.source) && !secondInputLoop) { 
 				this.firstInput.getPathHelper(path, !isForward);
 			} else {
 				Edge comesFirst = this.source.equals(this.firstInput.source) || this.source.equals(this.firstInput.sink) ? this.firstInput : this.secondInput;

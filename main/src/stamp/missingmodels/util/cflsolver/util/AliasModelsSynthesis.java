@@ -76,7 +76,6 @@ public class AliasModelsSynthesis {
 		// STEP 3: Get positive weight inputs
 		List<EdgeStruct> modelEdges = new ArrayList<EdgeStruct>();
 		for(Pair<Edge,Boolean> pair : flowEdge.getPath()) {
-			System.out.println("NEW PATH EDGE: " + pair.getX().toString(true));
 			if(pair.getX().weight > (short)0) {
 				modelEdges.add(pair.getX().getStruct());
 			}
