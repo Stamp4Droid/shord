@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
+import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
@@ -88,8 +90,18 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 		return modelsForThreshold;
 	}
 	
+	public static boolean checkActiveFlowNew() {
+		ProgramRel relActiveFlowNew = (ProgramRel)ClassicProject.g().getTrgt("ActiveFlowNew");
+		relActiveFlowNew.load();
+		return relActiveFlowNew.size() > 0;
+	}
+	
 	@Override
 	public void run() {
+		if(!checkActiveFlowNew()) {
+			System.out.println("ERROR: No active flow edges found!");
+			return;
+		}
 		Map<Integer,List<List<EdgeStruct>>> modelsForThreshold = getIterativeRun(2, 10);
 		for(int threshold : modelsForThreshold.keySet()) {
 			System.out.println("MODELS FOR THRESHOLD: " + threshold);
