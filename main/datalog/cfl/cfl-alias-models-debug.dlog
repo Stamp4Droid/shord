@@ -84,10 +84,10 @@ FlowPostD(m,v) :- FlowPreD(o,m), FlowD(o,u), Load(v,u,_).
 # A^w_v rules
 
 FlowPrePostD(m1,m2) :- FlowPostD(m1,v), BassignD(v,m2).
+
+FlowPrePostD(m1,m2) :- FlowFieldPostD(m1,_,o), FlowPreD(o,m2).
 FlowPrePostD(m1,m2) :- FlowPreD(o,m1), FlowPreD(o,m2).
 FlowPrePostD(m1,m2) :- FlowPostD(m1,v), Store(u,_,v), FlowPostD(m2,u).
-
-FlowFieldAnyPostD(m,o) :- FlowPrePostD(m,mp), FlowPreD(o,mp).
 
 # Full rules
 
