@@ -18,11 +18,11 @@ import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
 import stamp.missingmodels.util.cflsolver.core.Util.AndFilter;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
-import stamp.missingmodels.util.cflsolver.grammars.AliasModelsGrammar;
-import stamp.missingmodels.util.cflsolver.grammars.AliasModelsGrammar.AliasModelsLimGrammar;
+import stamp.missingmodels.util.cflsolver.grammars.AliasModelsLimGrammar;
+import stamp.missingmodels.util.cflsolver.grammars.AliasModelsLimGrammar.AliasModelsGrammar;
 import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
-import stamp.missingmodels.util.cflsolver.relation.AliasModelsRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.AliasModelsRelationManager.AliasModelsLimRelationManager;
+import stamp.missingmodels.util.cflsolver.relation.AliasModelsLimRelationManager;
+import stamp.missingmodels.util.cflsolver.relation.AliasModelsLimRelationManager.AliasModelsRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.AliasModelsFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.AliasModelsLimFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.util.AliasModelsSynthesis;
@@ -47,31 +47,31 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 		return rejectedVertices;
 	}
 	
-	public static Set<String> getVertexFilter() {
+	public static Graph getVertexFilterGraph() {
 		// Run full analysis only to get active methods
 		RelationReader reader = new ShordRelationReader();
 		ContextFreeGrammarOpt grammar = new AliasModelsLimGrammar().getOpt();
-		RelationManager relations = new AliasModelsLimRelationManager();
-		RelationManager filterRelations = new AliasModelsLimFilterRelationManager();
+		RelationManager relations = new AliasModelsLimRelationManager(true);
+		RelationManager filterRelations = new AliasModelsLimFilterRelationManager(true);
 		Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
 		Filter<Edge> filter = new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols()));
-		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
-		return getVertexFilterHelper(graphBar);
+		return graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
 	}
 	
-	public static Graph getAliasModels() {
+	public static Graph getAliasModels(Set<String> vertexFilter) {
 		RelationReader reader = new ShordRelationReader();
 		ContextFreeGrammarOpt grammar = new AliasModelsGrammar().getOpt();
 		RelationManager relations = new AliasModelsRelationManager(true);
 		RelationManager filterRelations = new AliasModelsFilterRelationManager(true);
 		Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
-		Filter<Edge> filter = new AndFilter(new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols())), new GraphVertexFilter(graph.getVertices(), getVertexFilter()));
+		Filter<Edge> filter = new AndFilter(new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols())), new GraphVertexFilter(graph.getVertices(), vertexFilter));
 		return graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
 	}
 	
 	@Override
 	public void run() {
-		Graph graphBar = getAliasModels();
+		Graph vertexFilterGraph = getVertexFilterGraph();
+		Graph graphBar = getAliasModels(getVertexFilterHelper(vertexFilterGraph));
 		for(Edge flowEdge : graphBar.getEdges(new Filter<Edge>() { public boolean filter(Edge e) { return e.symbol.symbol.equals("FlowNew"); }})) {
 			if(flowEdge.weight == (short)0) {
 				continue;
@@ -87,6 +87,7 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 				System.out.println(text + pair.getX().toString(true) + " (" + pair.getY() + ")");
 			}
 		}
+		IOUtils.printGraphStatistics(vertexFilterGraph);
 		IOUtils.printGraphStatistics(graphBar);
 	}
 }

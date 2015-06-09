@@ -10,6 +10,7 @@ import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
 import stamp.missingmodels.util.cflsolver.core.Util.Counter;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 public class Graph {
 	public static class VertexMap {
@@ -150,7 +151,7 @@ public class Graph {
 		}
 		
 		@Override
-		public boolean filter(Edge edge) {			
+		public boolean filter(Edge edge) {
 			Vertex source = this.graph.getVertex(edge.source.id);
 			Vertex sink = this.graph.getVertex(edge.sink.id);
 			return !this.symbols[edge.symbol.id] || source.getCurrentOutgoingEdge(new Edge(edge.symbol, source, sink, edge.field)) != null;

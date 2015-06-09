@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
-import stamp.missingmodels.util.cflsolver.util.AliasModelsUtils;
 
 public class AliasModelsProcessor {
 	public static class Variable {
