@@ -9,6 +9,14 @@ public class AliasModelsGrammar extends ContextFreeGrammar {
 			this.addUnaryProduction("Flow", "FlowNew");
 		}
 	}
+
+	public static class AliasModelsLimGrammar extends ContextFreeGrammar {
+		public AliasModelsLimGrammar() {
+			this.addUnaryProduction("FlowPreFull", "FlowPre");
+			this.addBinaryProduction("FlowPreFull", "FlowPreFull", "FlowPrePost");
+			this.addBinaryProduction("FlowNew", "FlowPreFull", "assignE");
+		}
+	}
 	
 	public AliasModelsGrammar() {
 		// (1) A_v rules

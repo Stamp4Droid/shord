@@ -13,8 +13,9 @@
 .include "V.dom"
 .include "F.dom"
 .include "I.dom"
+.include "H.dom"
 
-.bddvarorder V0_V1_M0_C0_M1_C1_M2_C2_I0_F0
+.bddvarorder V0_V1_M0_C0_M1_C1_M2_C2_I0_F0_H0
 
 ##########
 # INPUTS #
@@ -37,6 +38,9 @@ CM(c:C,m:M) input
 
 StubParam(m:M,v:V) input
 StubReturn(m:M,v:V) input
+
+HVFilter(v:V,h:H) input
+CH(o:C,h:H) input
 
 ################
 # INTERMEDIATE #
@@ -64,6 +68,7 @@ FlowPrePost(c1:C0,m1:M0,c2:C1,m2:M1) output
 FlowFieldPost(c:C0,m:M0,f:F0,o:C2) output
 FlowFieldAnyPost(c:C0,m:M0,o:C2) output
 
+FlowPreFull(o:C2,c:C0,m:M0) output
 FlowNew(o:C2,c:C0,v:V0) output
 
 #########
@@ -109,18 +114,24 @@ FlowPrePost(c1,m1,c2,m2) :- FlowFieldAnyPost(c1,m1,o), FlowPre(o,c2,m2).
 FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c2,m2,c1,m1).
 FlowPrePost(c1,m1,c2,m2) :- FlowPost(c1,m1,cp,v), Store(u,_,v), FlowPost(c2,m2,cp,u).
 
-FlowFieldAnyPost(c,m,o) :- FlowPrePost(c,m,cp,mp), FlowPre(o,cp,mp).
+#FlowFieldAnyPost(c,m,o) :- FlowPrePost(c,m,cp,mp), FlowPre(o,cp,mp).
 
 # Stitching rules
 
-FlowNew(o,c,v) :- FlowPre(o,c,m), assignE(m,u), return(v,u,_), MV(mp,v), CM(c,mp).
+#FlowNew(o,c,v) :- FlowPre(o,c,m), assignE(m,u), return(v,u,_), MV(mp,v), CM(c,mp), HVFilter(v,h), CH(o,h).
 #FlowNew(o,c,v) :- FlowPre(o,cp,m), FlowPost(cp,m,c,u), Load(v,u,_).
 # this is two rules in the context-free grammar
 #FlowNew(o,c,v) :- FlowPre(o,cp,m), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
 
-FlowPre(o,c,m) :- FlowPre(o,cp,mp), FlowPrePost(cp,mp,c,m).
+#FlowPre(o,c,m) :- FlowPre(o,cp,mp), FlowPrePost(cp,mp,c,m).
 
-FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,c2,mp), assignE(mp,u), return(v,u,_), MV(mpp,v), CM(c2,mpp).
-FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,cp,mp), FlowPost(cp,mp,c2,u), Load(v,u,_).
+#FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,c2,mp), assignE(mp,u), return(v,u,_), MV(mpp,v), CM(c2,mpp).
+#FlowPost(c1,m,c2,v) :- FlowPrePost(c1,m,cp,mp), FlowPost(cp,mp,c2,u), Load(v,u,_).
 
-FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c1,m1,cp,mp), FlowPrePost(cp,mp,c2,m2).
+#FlowPrePost(c1,m1,c2,m2) :- FlowPrePost(c1,m1,cp,mp), FlowPrePost(cp,mp,c2,m2).
+
+# Full rules
+
+FlowPreFull(o,c,m) :- FlowPre(o,c,m).
+FlowPreFull(o,c,m) :- FlowPre(o,cp,mp), FlowPrePost(cp,mp,c,m).
+FlowNew(o,c,v) :- FlowPreFull(o,c,m), assignE(m,u), return(v,u,_), MV(mp,v), CM(c,mp), HVFilter(v,h), CH(o,h).

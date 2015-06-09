@@ -128,6 +128,9 @@ public class AliasModelsUtils {
 					continue;
 				}
 				Stmt stmtInvocation = getStmtFor(variable);
+				if(stmtInvocation == null) {
+					continue;
+				}
 				if(!stmtInvocation.containsInvokeExpr()) {
 					System.out.println("Expected invocation statement: " + stmtInvocation);
 					continue;

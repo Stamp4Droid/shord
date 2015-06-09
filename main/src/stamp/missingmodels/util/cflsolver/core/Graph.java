@@ -157,6 +157,24 @@ public class Graph {
 		}
 	}
 	
+	public static class GraphVertexFilter implements Filter<Edge> {
+		private final boolean[] filter;
+		public GraphVertexFilter(VertexMap vertices, Iterable<String> rejectedVertices) {
+			this.filter = new boolean[vertices.size()];
+			for(int i=0; i<vertices.size(); i++) {
+				this.filter[i] = true;
+			}
+			for(String rejectedVertex : rejectedVertices) {
+				this.filter[vertices.get(rejectedVertex)] = false;
+			}
+		}
+
+		@Override
+		public boolean filter(Edge t) {
+			return this.filter[t.source.id] && this.filter[t.sink.id];
+		}
+	}
+	
 	public interface GraphTransformer {
 		public Graph transform(Iterable<EdgeStruct> edges);
 	}

@@ -24,6 +24,7 @@
 # Seed input
 
 FlowDyn(o:H,v:V) input
+HVFilter(v:V,h:H) input
 CH(o1:C,o2:H) input
 
 # Full input
@@ -35,6 +36,7 @@ FlowPrePost(c1:C0,m1:M0,c2:C1,m2:M1) input
 FlowFieldPost(c:C0,m:M0,f:F0,o:C2) input
 FlowFieldAnyPost(c:C0,m:M0,o:C2) input
 
+FlowPreFull(o:C2,c:C0,m:M0) input
 FlowNew(o:C2,c:C0,v:V0) input
 
 # Misc inputs
@@ -71,6 +73,7 @@ ActiveFlowPrePost(c1:C0,m1:M0,c2:C1,m2:M1) output
 ActiveFlowFieldPost(c:C0,m:M0,f:F0,o:C2) output
 ActiveFlowFieldAnyPost(c:C0,m:M0,o:C2) output
 
+ActiveFlowPreFull(o:C2,c:C0,m:M0) output
 ActiveFlowNew(o:C2,c:C0,v:V0) output
 
 #########
@@ -79,7 +82,7 @@ ActiveFlowNew(o:C2,c:C0,v:V0) output
 
 # seed relation
 #ActiveFlowNew(o,c,v) :- FlowNew(o,c,v).
-ActiveFlowNew(o,c,v) :- FlowNew(o,c,v), FlowDyn(op,v), CH(o,op).
+ActiveFlowNew(o,c,v) :- !Flow(o,c,v), FlowNew(o,c,v), FlowDyn(op,v), CH(o,op).
 
 # A_v rules
 
@@ -110,23 +113,30 @@ ActiveFlowPrePost(c2,m2,c1,m1) :- ActiveFlowPrePost(c1,m1,c2,m2).
 ActiveFlowPost(c1,m1,cp,v) :- FlowPost(c1,m1,cp,v), ActiveFlowPrePost(c1,m1,c2,m2), FlowPost(c2,m2,cp,u), Store(u,_,v).
 ActiveFlowPost(c1,m1,cp,u) :- FlowPost(c1,m1,cp,u), ActiveFlowPrePost(c1,m1,c2,m2), FlowPost(c2,m2,cp,v), Store(u,_,v).
 
-ActiveFlowPrePost(c,m,cp,mp) :- FlowPrePost(c,m,cp,mp), ActiveFlowFieldAnyPost(c,m,o), FlowPre(o,cp,mp).
-ActiveFlowPre(o,cp,mp) :- FlowPre(o,cp,mp), ActiveFlowFieldAnyPost(c,m,o), FlowPrePost(c,m,cp,mp).
+#ActiveFlowPrePost(c,m,cp,mp) :- FlowPrePost(c,m,cp,mp), ActiveFlowFieldAnyPost(c,m,o), FlowPre(o,cp,mp).
+#ActiveFlowPre(o,cp,mp) :- FlowPre(o,cp,mp), ActiveFlowFieldAnyPost(c,m,o), FlowPrePost(c,m,cp,mp).
 
 # Stitching rules
 
-ActiveFlowPre(o,c,m) :- FlowPre(o,c,m), ActiveFlowNew(o,c,v), assignE(m,u), return(v,u,_), MV(mp,v), CM(c,mp).
+#ActiveFlowPre(o,c,m) :- FlowPre(o,c,m), ActiveFlowNew(o,c,v), assignE(m,u), return(v,u,_), MV(mp,v), CM(c,mp), HVFilter(v,h), CH(o,h).
 #ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
 #ActiveFlowPost(cp,m,c,u) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPost(cp,m,c,u), Load(v,u,_).
 #ActiveFlowPre(o,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
 #ActiveFlowPre(op,cp,m) :- FlowPre(o,cp,m), ActiveFlowNew(o,c,v), FlowPre(op,cp,m), Flow(op,c,u), Load(v,u,_).
 
-ActiveFlowPre(o,cp,mp) :- FlowPre(o,cp,mp), ActiveFlowPre(o,c,m), FlowPrePost(cp,mp,c,m).
-ActiveFlowPrePost(cp,mp,c,m) :- FlowPre(o,cp,mp), ActiveFlowPre(o,c,m), FlowPrePost(cp,mp,c,m).
+#ActiveFlowPre(o,cp,mp) :- FlowPre(o,cp,mp), ActiveFlowPre(o,c,m), FlowPrePost(cp,mp,c,m).
+#ActiveFlowPrePost(cp,mp,c,m) :- FlowPre(o,cp,mp), ActiveFlowPre(o,c,m), FlowPrePost(cp,mp,c,m).
 
-ActiveFlowPrePost(c1,m,c2,mp) :- FlowPrePost(c1,m,c2,mp), ActiveFlowPost(c1,m,c2,v), assignE(mp,u), return(v,u,_), MV(mpp,v), CM(c2,mpp).
-ActiveFlowPrePost(c1,m,cp,mp) :- FlowPrePost(c1,m,cp,mp), ActiveFlowPost(c1,m,c2,v), FlowPost(cp,mp,c2,u), Load(v,u,_).
-ActiveFlowPost(cp,mp,c2,u) :- FlowPrePost(c1,m,cp,mp), ActiveFlowPost(c1,m,c2,v), FlowPost(cp,mp,c2,u), Load(v,u,_).
+#ActiveFlowPrePost(c1,m,c2,mp) :- FlowPrePost(c1,m,c2,mp), ActiveFlowPost(c1,m,c2,v), assignE(mp,u), return(v,u,_), MV(mpp,v), CM(c2,mpp).
+#ActiveFlowPrePost(c1,m,cp,mp) :- FlowPrePost(c1,m,cp,mp), ActiveFlowPost(c1,m,c2,v), FlowPost(cp,mp,c2,u), Load(v,u,_).
+#ActiveFlowPost(cp,mp,c2,u) :- FlowPrePost(c1,m,cp,mp), ActiveFlowPost(c1,m,c2,v), FlowPost(cp,mp,c2,u), Load(v,u,_).
 
-ActiveFlowPrePost(c1,m1,cp,mp) :- FlowPrePost(c1,m1,cp,mp), ActiveFlowPrePost(c1,m1,c2,m2), FlowPrePost(cp,mp,c2,m2).
-ActiveFlowPrePost(cp,mp,c2,m2) :- FlowPrePost(c1,m1,cp,mp), ActiveFlowPrePost(c1,m1,c2,m2), FlowPrePost(cp,mp,c2,m2).
+#ActiveFlowPrePost(c1,m1,cp,mp) :- FlowPrePost(c1,m1,cp,mp), ActiveFlowPrePost(c1,m1,c2,m2), FlowPrePost(cp,mp,c2,m2).
+#ActiveFlowPrePost(cp,mp,c2,m2) :- FlowPrePost(c1,m1,cp,mp), ActiveFlowPrePost(c1,m1,c2,m2), FlowPrePost(cp,mp,c2,m2).
+
+# Full rules
+
+ActiveFlowPre(o,c,m) :- ActiveFlowPreFull(o,c,m).
+ActiveFlowPreFull(o,cp,mp) :- FlowPrePost(cp,mp,c,m), ActiveFlowPreFull(o,c,m), FlowPreFull(o,cp,mp).
+ActiveFlowPrePost(cp,mp,c,m) :- FlowPrePost(cp,mp,c,m), ActiveFlowPreFull(o,c,m), FlowPreFull(o,cp,mp).
+ActiveFlowPreFull(o,c,m) :- FlowPreFull(o,c,m), ActiveFlowNew(o,c,v), assignE(m,u), return(v,u,_), MV(mp,v), CM(c,mp), HVFilter(v,h), CH(o,h).

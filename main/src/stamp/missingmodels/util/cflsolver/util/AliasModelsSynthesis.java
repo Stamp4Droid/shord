@@ -1,7 +1,6 @@
 package stamp.missingmodels.util.cflsolver.util;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +30,7 @@ public class AliasModelsSynthesis {
 		return edges;
 	}
 	
-	public static Collection<EdgeStruct> synthesize(List<Pair<EdgeStruct,Boolean>> path) {
+	public static List<Pair<EdgeStruct,Boolean>> synthesize(List<Pair<EdgeStruct,Boolean>> path) {
 		ContextFreeGrammarOpt grammar = new PointsToGrammar().getOpt();
 		// STEP 1: Build graph
 		List<EdgeStruct> edges = new ArrayList<EdgeStruct>();
@@ -48,7 +47,7 @@ public class AliasModelsSynthesis {
 					edges.addAll(getStubEdges(stub));
 				}
 				prevStub = !prevStub;
-				symbol = "assign";
+				symbol = symbol.equals("Bassign") ? "param" : "return";
 				weight = (short)1;
 			}
 			// STEP 1c: Build edge
@@ -71,14 +70,12 @@ public class AliasModelsSynthesis {
 				break;
 			}
 		}
-		if(flowEdge == null) { System.out.println("Source-sink edge not found!"); return new ArrayList<EdgeStruct>(); }
+		if(flowEdge == null) { System.out.println("Source-sink edge not found!"); return new ArrayList<Pair<EdgeStruct,Boolean>>(); }
 		
 		// STEP 3: Get positive weight inputs
-		List<EdgeStruct> modelEdges = new ArrayList<EdgeStruct>();
+		List<Pair<EdgeStruct,Boolean>> modelEdges = new ArrayList<Pair<EdgeStruct,Boolean>>();
 		for(Pair<Edge,Boolean> pair : flowEdge.getPath()) {
-			if(pair.getX().weight > (short)0) {
-				modelEdges.add(pair.getX().getStruct());
-			}
+			modelEdges.add(new Pair<EdgeStruct,Boolean>(pair.getX().getStruct(),pair.getY()));
 		}
 		return modelEdges;
 	}

@@ -16,6 +16,13 @@ public class FilterRelationManager {
 		}
 	}
 	
+	public static class AliasModelsLimFilterRelationManager extends RelationManager {
+		public AliasModelsLimFilterRelationManager() {
+			this.add(new IndexWithContextRelation("ActiveFlowPreFull", "C", 0, null, "M", 2, 1, "FlowPreFull", null, (short)0));
+			this.add(new IndexWithContextRelation("ActiveFlowNew", "C", 0, null, "V", 2, 1, "FlowNew", null, (short)0));
+		}
+	}
+	
 	public static class AliasModelsFilterRelationManager extends RelationManager {
 		public AliasModelsFilterRelationManager(boolean useContext) {
 			if(useContext) {
