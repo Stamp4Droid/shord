@@ -185,4 +185,12 @@ public class Util {
 			return !this.filter.filter(t);
 		}
 	}
+	
+	public static <T> Set<T> union(Set<T> ... sets) {
+		Set<T> union = new HashSet<T>();
+		for(Set<T> set : sets) {
+			union.addAll(set);
+		}
+		return union;
+	}
 }

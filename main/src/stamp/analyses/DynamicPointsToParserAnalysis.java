@@ -25,7 +25,7 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		String filename = "../../alias_models/alias_models_traces/" + tokens[tokens.length-1] + ".trace";
 		
 		// STEP 0: Fill in dynamic flow (ret -> app allocation)
-		MultivalueMap<Pair<VarNode,Integer>,Pair<SiteAllocNode,Integer>> ptDyn = AliasModelsUtils.getPtDynRetApp(new AliasModelsProcessor(filename));		
+		MultivalueMap<Pair<VarNode,Integer>,Pair<SiteAllocNode,Integer>> ptDyn = AliasModelsUtils.ProcessorUtils.getPtDynRetApp(new AliasModelsProcessor(filename));		
 		ProgramRel relFlowDyn = (ProgramRel)ClassicProject.g().getTrgt("FlowDyn");
 		relFlowDyn.zero();
 		for(Pair<VarNode,Integer> varNode : ptDyn.keySet()) {
