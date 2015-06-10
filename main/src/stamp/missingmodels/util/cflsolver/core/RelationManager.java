@@ -9,6 +9,7 @@ import java.util.Set;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.SymbolMap;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
+import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 
 public class RelationManager {
@@ -93,7 +94,9 @@ public class RelationManager {
 		
 		private final short weight;
 		
-		public IndexRelation(String name, String sourceDom, int sourceIndex, String sinkDom, int sinkIndex, String symbol, Integer fieldIndex, short weight) {
+		private final Filter<int[]> filter;
+		
+		public IndexRelation(String name, String sourceDom, int sourceIndex, String sinkDom, int sinkIndex, String symbol, Integer fieldIndex, short weight, Filter<int[]> filter) {
 			this.name = name;
 			
 			this.sourceName = sourceDom;
@@ -105,8 +108,14 @@ public class RelationManager {
 			this.fieldIndex = fieldIndex;
 			
 			this.weight = weight;
+			
+			this.filter = filter;
 		}
 		
+		public IndexRelation(String name, String sourceDom, int sourceIndex, String sinkDom, int sinkIndex, String symbol, Integer fieldIndex, short weight) {
+			this(name, sourceDom, sourceIndex, sinkDom, sinkIndex, symbol, fieldIndex, weight, new Filter<int[]>() { public boolean filter(int[] tuple) { return true; }});
+		}
+			
 		public IndexRelation(String name, String sourceName, int sourceIndex, String sinkName, int sinkIndex, String symbol) {
 			this(name, sourceName, sourceIndex, sinkName, sinkIndex, symbol, null, (short)0);
 		}
@@ -143,7 +152,7 @@ public class RelationManager {
 
 		@Override
 		public boolean filter(int[] tuple) {
-			return true;
+			return this.filter.filter(tuple);
 		}
 	}
 
@@ -168,7 +177,9 @@ public class RelationManager {
 		private final boolean hasSinkContext;
 		private final boolean hasField;
 		
-		public IndexWithContextRelation(String relationName, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol, Integer fieldIndex, short weight) {
+		private final Filter<int[]> filter;
+		
+		public IndexWithContextRelation(String relationName, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol, Integer fieldIndex, short weight, Filter<int[]> filter) {
 			this.name = relationName;
 
 			this.hasSourceContext = sourceContextIndex != null;
@@ -189,7 +200,14 @@ public class RelationManager {
 
 			this.sourceName = sourceName;
 			this.sinkName = sinkName;
+			
+			this.filter = filter;
 		}
+		
+		public IndexWithContextRelation(String relationName, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol, Integer fieldIndex, short weight) {
+			this(relationName, sourceName, sourceIndex, sourceContextIndex, sinkName, sinkIndex, sinkContextIndex, symbol, fieldIndex, weight, new Filter<int[]>() { public boolean filter(int[] tuple) { return true; }});
+		}
+
 		
 		public IndexWithContextRelation(String name, String sourceName, int sourceIndex, Integer sourceContextIndex, String sinkName, int sinkIndex, Integer sinkContextIndex, String symbol, Integer fieldIndex) {
 			this(name, sourceName, sourceIndex, sourceContextIndex, sinkName, sinkIndex, sinkContextIndex, symbol, fieldIndex, (short)0);
@@ -231,7 +249,7 @@ public class RelationManager {
 
 		@Override
 		public boolean filter(int[] tuple) {
-			return true;
+			return this.filter.filter(tuple);
 		}
 	}
 }

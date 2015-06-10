@@ -30,6 +30,7 @@ import stamp.missingmodels.util.cflsolver.relation.AliasModelsLimRelationManager
 import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.AliasModelsFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.AliasModelsLimFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.util.AliasModelsUtils;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
 /**
@@ -112,9 +113,5 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 				}
 			}
 		}
-		//System.out.println("FLOW EDGE: " + flowEdge.toString(true));
-		//System.out.println("PATH EDGE: " + pair.getX().toString(true));
-		//String text = (pair.getX().weight > (short)0) ? "MODEL EDGE: " : "INTERMEDIATE EDGE: ";
-		//System.out.println(text + pair.getX().toString(true) + " (" + pair.getY() + ")");
 	}
 }

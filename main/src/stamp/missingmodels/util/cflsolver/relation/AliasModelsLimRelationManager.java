@@ -45,7 +45,7 @@ public class AliasModelsLimRelationManager extends RelationManager {
 			this.add(new IndexWithContextRelation("assignE", "M", 0, 1, "V", 2, 1, "assignE", null, (short)1));
 		} else {
 			this.add(new IndexRelation("ActiveFlowPre", "C", 0, "M", 2, "FlowPre", null, (short)1));
-			this.add(new IndexRelation("ActiveFlowPrePost", "M", 0, "M", 3, "FlowPrePost", null, (short)1));
+			this.add(new IndexRelation("ActiveFlowPrePost", "M", 1, "M", 3, "FlowPrePost", null, (short)1));
 			this.add(new IndexRelation("assignE", "M", 0, "V", 2, "assignE", null, (short)1));
 		}
 	}
