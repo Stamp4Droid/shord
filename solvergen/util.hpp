@@ -1448,6 +1448,95 @@ bool subtract_all(Idxs& idxs, const std::set<T>& rhs) {
 
 } // namespace detail
 
+// TODO: Could specialize these operations for individual classes.
+// TODO: Can't project a MultiIndex.
+// XXX: Could be overapproximate, if we get an empty submap at some level.
+
+template<class TgtIdx, class SrcIdx, class CachedKeys>
+typename std::enable_if<TgtIdx::DEPTH == 0 && SrcIdx::DEPTH == 0 &&
+                        std::is_same<typename TgtIdx::Tag,
+                                     typename SrcIdx::Tag>::value>::type
+project(TgtIdx& tgt, const SrcIdx& src, const CachedKeys&) {
+    for (const auto& val : src) {
+        tgt.insert(val);
+    }
+}
+
+template<class TgtIdx, class SrcIdx, class CachedKeys>
+typename std::enable_if<TgtIdx::DEPTH == 0 && SrcIdx::DEPTH == 0 &&
+                        !std::is_same<typename TgtIdx::Tag,
+                                      typename SrcIdx::Tag>::value>::type
+project(TgtIdx& tgt, const SrcIdx&, const CachedKeys& keys) {
+    tgt.insert(keys.template get<typename TgtIdx::Tag>());
+}
+
+template<class TgtIdx, class SrcIdx, class CachedKeys>
+typename std::enable_if<TgtIdx::DEPTH == 0 && SrcIdx::DEPTH != 0 &&
+                        std::is_same<typename TgtIdx::Tag,
+                                     typename SrcIdx::Tag>::value>::type
+project(TgtIdx& tgt, const SrcIdx& src, const CachedKeys&) {
+    for (const auto& p : src) {
+        tgt.insert(p.first);
+    }
+}
+
+template<class TgtIdx, class SrcIdx, class CachedKeys>
+typename std::enable_if<TgtIdx::DEPTH == 0 && SrcIdx::DEPTH != 0 &&
+                        !std::is_same<typename TgtIdx::Tag,
+                                      typename SrcIdx::Tag>::value>::type
+project(TgtIdx& tgt, const SrcIdx& src, const CachedKeys& keys) {
+    typedef NamedTuple<typename SrcIdx::Tag, typename SrcIdx::Key,
+                       CachedKeys> MoreKeys;
+    for (const auto& p : src) {
+        project(tgt, p.second, MoreKeys(p.first, keys));
+    }
+}
+
+template<class TgtIdx, class SrcIdx, class CachedKeys>
+typename std::enable_if<TgtIdx::DEPTH != 0 && SrcIdx::DEPTH == 0 &&
+                        std::is_same<typename TgtIdx::Tag,
+                                     typename SrcIdx::Tag>::value>::type
+project(TgtIdx& tgt, const SrcIdx& src, const CachedKeys& keys) {
+    for (const auto& val : src) {
+        project(tgt.of(val), src, keys);
+    }
+}
+
+template<class TgtIdx, class SrcIdx, class CachedKeys>
+typename std::enable_if<TgtIdx::DEPTH != 0 && SrcIdx::DEPTH == 0 &&
+                        !std::is_same<typename TgtIdx::Tag,
+                                      typename SrcIdx::Tag>::value>::type
+project(TgtIdx& tgt, const SrcIdx& src, const CachedKeys& keys) {
+    project(tgt.of(keys.template get<typename TgtIdx::Tag>()), src, keys);
+}
+
+template<class TgtIdx, class SrcIdx, class CachedKeys>
+typename std::enable_if<TgtIdx::DEPTH != 0 && SrcIdx::DEPTH != 0 &&
+                        std::is_same<typename TgtIdx::Tag,
+                                     typename SrcIdx::Tag>::value>::type
+project(TgtIdx& tgt, const SrcIdx& src, const CachedKeys& keys) {
+    for (const auto& p : src) {
+        project(tgt.of(p.first), p.second, keys);
+    }
+}
+
+template<class TgtIdx, class SrcIdx, class CachedKeys>
+typename std::enable_if<TgtIdx::DEPTH != 0 && SrcIdx::DEPTH != 0 &&
+                        !std::is_same<typename TgtIdx::Tag,
+                                      typename SrcIdx::Tag>::value>::type
+project(TgtIdx& tgt, const SrcIdx& src, const CachedKeys& keys) {
+    typedef NamedTuple<typename SrcIdx::Tag, typename SrcIdx::Key,
+                       CachedKeys> MoreKeys;
+    for (const auto& p : src) {
+        project(tgt, p.second, MoreKeys(p.first, keys));
+    }
+}
+
+template<class TgtIdx, class SrcIdx>
+void project(TgtIdx& tgt, const SrcIdx& src) {
+    project(tgt, src, Nil());
+}
+
 // BASE CONTAINERS & OPERATIONS ===============================================
 
 #define FOR(RES, EXPR) \
@@ -1464,6 +1553,7 @@ public:
     friend Iterator;
     typedef typename std::set<Key>::const_iterator ConstTopIter;
     typedef NamedTuple<Tag,Key,Nil> Tuple;
+    static const unsigned DEPTH = 0;
 private:
     std::set<Key> store_;
 public:
@@ -1788,6 +1878,7 @@ public:
     typedef typename std::map<Key,Sub>::iterator TopIter;
     typedef typename std::map<Key,Sub>::const_iterator ConstTopIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
+    static const unsigned DEPTH = Sub::DEPTH + 1;
 private:
     static const Sub dummy;
 private:
@@ -2180,6 +2271,7 @@ public:
     class ConstTopIter;
     friend ConstTopIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
+    static const unsigned DEPTH = Sub::DEPTH + 1;
 private:
     std::vector<Sub> array;
 public:
@@ -2402,6 +2494,7 @@ public:
     class Iterator;
     friend Iterator;
     typedef NamedTuple<Tag,Key,Nil> Tuple;
+    static const unsigned DEPTH = 0;
 private:
     Store bits = 0;
 public:
@@ -2503,6 +2596,7 @@ public:
     typedef typename List::iterator TopIter;
     typedef typename List::const_iterator ConstTopIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
+    static const unsigned DEPTH = Sub::DEPTH + 1;
 private:
     static const Sub dummy;
 private:
@@ -2670,6 +2764,7 @@ public:
     class ConstTopIter;
     friend ConstTopIter;
     typedef NamedTuple<Tag,Ref<K>,typename Sub::Tuple> Tuple;
+    static const unsigned DEPTH = Sub::DEPTH + 1;
 private:
     static const Sub dummy;
 private:

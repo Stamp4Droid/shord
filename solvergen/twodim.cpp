@@ -702,22 +702,17 @@ private:
     Registry<Variable> vars_;
     Ref<Variable> initial_;
     std::set<Ref<Variable> > finals_;
-    mi::MultiIndex<mi::RefIndex<SRC, Variable,
-                       mi::Table<TGT, Ref<Variable> > >,
-                   mi::RefIndex<TGT, Variable,
-                       mi::Table<SRC, Ref<Variable> > > > epsilons_;
-    mi::MultiIndex<mi::Index<FLD, Ref<Field>,
-                       mi::RefIndex<SRC, Variable,
-                           mi::Table<TGT, Ref<Variable> > > >,
-                   mi::Index<FLD, Ref<Field>,
-                       mi::RefIndex<TGT, Variable,
-                           mi::Table<SRC, Ref<Variable> > > > > opens_;
-    mi::MultiIndex<mi::Index<FLD, Ref<Field>,
-                       mi::RefIndex<SRC, Variable,
-                           mi::Table<TGT, Ref<Variable> > > >,
-                   mi::Index<FLD, Ref<Field>,
-                       mi::RefIndex<TGT, Variable,
-                           mi::Table<SRC, Ref<Variable> > > > > closes_;
+    mi::MultiIndex<
+        mi::RefIndex<SRC, Variable,
+            mi::Table<TGT, Ref<Variable> > >,
+        mi::RefIndex<TGT, Variable,
+            mi::Table<SRC, Ref<Variable> > > > epsilons_;
+    mi::RefIndex<SRC, Variable,
+        mi::Index<FLD, Ref<Field>,
+            mi::Table<TGT, Ref<Variable> > > > opens_;
+    mi::RefIndex<SRC, Variable,
+        mi::Index<FLD, Ref<Field>,
+            mi::Table<TGT, Ref<Variable> > > > closes_;
 public:
     explicit CodeGraph() {}
     CodeGraph(const CodeGraph&) = default;
@@ -745,10 +740,10 @@ public:
         }
     }
     void add_open(Ref<Field> fld, Ref<Variable> src, Ref<Variable> tgt) {
-        opens_.insert(fld, src, tgt);
+        opens_.insert(src, fld, tgt);
     }
     void add_close(Ref<Field> fld, Ref<Variable> src, Ref<Variable> tgt) {
-        closes_.insert(fld, src, tgt);
+        closes_.insert(src, fld, tgt);
     }
     void complete(Ref<Variable> initial,
                   const std::set<Ref<Variable> >& finals) {
@@ -786,9 +781,9 @@ public:
                     continue;
                 }
                 if (delim.is_open) {
-                    opens_.insert(delim.fld, state2var[src], state2var[tgt]);
+                    opens_.insert(state2var[src], delim.fld, state2var[tgt]);
                 } else {
-                    closes_.insert(delim.fld, state2var[src], state2var[tgt]);
+                    closes_.insert(state2var[src], delim.fld, state2var[tgt]);
                 }
             }
         }
@@ -799,59 +794,60 @@ public:
         }
     }
     void close() {
-        std::list<std::pair<std::set<Ref<Variable> >,
-                            std::set<Ref<Variable> > > > in_bounds;
-        mi::Index<CLE_OUT_SRC, Ref<Variable>,
+        mi::RefIndex<CLE_OUT_SRC, Variable,
             mi::Table<CLR_IN_SRC, Ref<Variable> > > deps;
         Worklist<Ref<Variable>,true> worklist; // holds in_src's
-        std::set<Ref<Variable> > open_srcs;
-        for (const auto& fld_p : opens_.pri()) {
-            for (const auto& src_p : fld_p.second) {
-                open_srcs.insert(src_p.first);
+
+        // Set up custom projections for opens and closes.
+        mi::Table<SRC, Ref<Variable> > opens_src;
+        mi::project(opens_src, opens_);
+        mi::Index<FLD, Ref<Field>,
+            mi::Index<TGT, Ref<Variable>,
+                mi::Table<SRC, Ref<Variable> > > > opens_fld_tgt_src;
+        mi::project(opens_fld_tgt_src, opens_);
+        mi::Index<FLD, Ref<Field>,
+            mi::Index<SRC, Ref<Variable>,
+                mi::Table<TGT, Ref<Variable> > > > closes_fld_src_tgt;
+        mi::project(closes_fld_src_tgt, closes_);
+
+        // Populate worklist.
+        for (const auto& fld_p : opens_fld_tgt_src) {
+            for (const auto& tgt_p : fld_p.second) {
+                worklist.enqueue(tgt_p.first);
             }
         }
-
-        // Record the set of matching in-variables.
-        auto rec_in_bounds =
-            [&](const mi::RefIndex<TGT, Variable,
-                          mi::Table<SRC, Ref<Variable> > >& ops,
-                const mi::RefIndex<SRC, Variable,
-                          mi::Table<TGT, Ref<Variable> > >& cls,
-                Ref<Field>) {
-            in_bounds.emplace_back();
-            for (const auto& in_src_p : ops) {
-                worklist.enqueue(in_src_p.first);
-                in_bounds.back().first.insert(in_src_p.first);
-            }
-            for (const auto& in_tgt_p : cls) {
-                in_bounds.back().second.insert(in_tgt_p.first);
-            }
-        };
-        join_zip<1>(opens_.sec<0>(), closes_.pri(), rec_in_bounds);
 
         // Process matching parenthesis pairs up to fixpoint.
         while (!worklist.empty()) {
             Ref<Variable> in_src = worklist.dequeue();
             // Build the set of target variables on the fly.
-            std::set<Ref<Variable> > in_tgts;
-            for (const auto& bound : in_bounds) {
-                if (bound.first.count(in_src) == 0) {
-                    continue;
+            RefSet<Variable> in_tgts(vars_);
+            auto collect_tgts =
+                [&](const mi::Index<TGT, Ref<Variable>,
+                              mi::Table<SRC, Ref<Variable> > >& o_edges,
+                    const mi::Index<SRC, Ref<Variable>,
+                              mi::Table<TGT, Ref<Variable> > >& c_edges,
+                    Ref<Field>) {
+                if (!o_edges.has_key(in_src)) {
+                    return;
                 }
-                in_tgts.insert(bound.second.begin(), bound.second.end());
-            }
-            std::set<Ref<Variable> > reached;
+                for (const auto& src_p : c_edges) {
+                    in_tgts.insert(src_p.first);
+                }
+            };
+            join_zip<1>(opens_fld_tgt_src, closes_fld_src_tgt, collect_tgts);
+            // Perform forward reachability calculation.
+            RefSet<Variable> reached(vars_);
             std::deque<Ref<Variable> > queue;
             reached.insert(in_src);
             queue.push_back(in_src);
-            // Perform forward reachability calculation.
             while (!queue.empty()) {
                 Ref<Variable> a = queue.front();
                 queue.pop_front();
                 auto emit_eps =
-                    [&](const mi::RefIndex<TGT, Variable,
+                    [&](const mi::Index<TGT, Ref<Variable>,
                                   mi::Table<SRC, Ref<Variable> > >& o_edges,
-                        const mi::RefIndex<SRC, Variable,
+                        const mi::Index<SRC, Ref<Variable>,
                                   mi::Table<TGT, Ref<Variable> > >& c_edges,
                         Ref<Field>) {
                     for (Ref<Variable> out_src : o_edges[in_src]) {
@@ -866,17 +862,18 @@ public:
                         }
                     }
                 };
-                if (in_tgts.count(a) > 0) {
-                    join_zip<1>(opens_.sec<0>(), closes_.pri(), emit_eps);
+                if (in_tgts.contains(a)) {
+                    join_zip<1>(opens_fld_tgt_src, closes_fld_src_tgt,
+                                emit_eps);
                 }
                 // TODO: Record all imm epsilons?
                 for (Ref<Variable> b : epsilons_.pri()[a]) {
-                    if (reached.insert(b).second) {
+                    if (reached.insert(b)) {
                         queue.push_back(b);
                     }
                 }
                 // Check if any open starts at this variable.
-                if (open_srcs.count(a) > 0) {
+                if (opens_src.contains(a)) {
                     deps.insert(a, in_src);
                 }
             }
@@ -918,9 +915,9 @@ public:
         // from P to N.
         decltype(opens_) new_opens;
         FOR(o, opens_) {
-            new_opens.insert(o.get<FLD>(), to_nvar[o.get<SRC>()],
+            new_opens.insert(to_nvar[o.get<SRC>()], o.get<FLD>(),
                              to_nvar[o.get<TGT>()]);
-            new_opens.insert(o.get<FLD>(), o.get<SRC>(),
+            new_opens.insert(o.get<SRC>(), o.get<FLD>(),
                              to_nvar[o.get<TGT>()]);
         }
         swap(opens_, new_opens);
@@ -942,6 +939,10 @@ public:
             approx_mode = false;
         }
         // Perform forward reachability
+        mi::RefIndex<SRC, Variable,
+            mi::Table<TGT, Ref<Variable> > > fwd_map(epsilons_.pri());
+        mi::project(fwd_map, opens_);
+        mi::project(fwd_map, closes_);
         RefSet<Variable> fwd_reached(vars_);
         std::deque<Ref<Variable> > fwd_list;
         auto fwd_visit = [&](Ref<Variable> v) {
@@ -960,22 +961,16 @@ public:
         }
         while (!fwd_list.empty()) {
             Ref<Variable> src = fwd_list.front();
-            for (Ref<Variable> tgt : epsilons_.pri()[src]) {
+            for (Ref<Variable> tgt : fwd_map[src]) {
                 fwd_visit(tgt);
-            }
-            for (const auto& fld_p : opens_.pri()) {
-                for (Ref<Variable> tgt : fld_p.second[src]) {
-                    fwd_visit(tgt);
-                }
-            }
-            for (const auto& fld_p : closes_.pri()) {
-                for (Ref<Variable> tgt : fld_p.second[src]) {
-                    fwd_visit(tgt);
-                }
             }
             fwd_list.pop_front();
         }
         // Perform backward reachability
+        mi::RefIndex<TGT, Variable,
+            mi::Table<SRC, Ref<Variable> > > bck_map(epsilons_.sec<0>());
+        mi::project(bck_map, opens_);
+        mi::project(bck_map, closes_);
         RefSet<Variable> bck_reached(vars_);
         std::deque<Ref<Variable> > bck_list;
         auto bck_visit = [&](Ref<Variable> v) {
@@ -998,18 +993,8 @@ public:
         }
         while (!bck_list.empty()) {
             Ref<Variable> tgt = bck_list.front();
-            for (Ref<Variable> src : epsilons_.sec<0>()[tgt]) {
+            for (Ref<Variable> src : bck_map[tgt]) {
                 bck_visit(src);
-            }
-            for (const auto& fld_p : opens_.sec<0>()) {
-                for (Ref<Variable> src : fld_p.second[tgt]) {
-                    bck_visit(src);
-                }
-            }
-            for (const auto& fld_p : closes_.sec<0>()) {
-                for (Ref<Variable> src : fld_p.second[tgt]) {
-                    bck_visit(src);
-                }
             }
             bck_list.pop_front();
         }
@@ -1065,36 +1050,30 @@ public:
             assert(initial_.valid());
             approx_mode = false;
         }
+        // Filter out invalid states for merging.
+        RefSet<Variable> invalid(vars_);
+        FOR(o, opens_) {
+            invalid.insert(o.get<TGT>()); // non-epsilon incoming transition
+        }
+        FOR(c, closes_) {
+            invalid.insert(c.get<TGT>()); // non-epsilon incoming transition
+        }
+        if (approx_mode) {
+            for (Ref<Variable> v : approx_init) {
+                invalid.insert(v); // can't drop this; will be used later
+            }
+            for (Ref<Variable> v : approx_fin) {
+                invalid.insert(v); // can't drop this; will be used later
+            }
+        } else {
+            invalid.insert(initial_); // initial state
+        }
+        // Merge until fixpoint
         typedef typename decltype(epsilons_)::Tuple Tuple;
-        Worklist<Ref<Variable>,true> worklist; // will never reprocess
+        Worklist<Ref<Variable>,true> worklist;
         auto enqueue = [&](Ref<Variable> v) {
-            // Consider non-initial states with a single incoming epsilon.
-            if (!vars_[v].useful() || epsilons_.sec<0>()[v].size() != 1) {
-                return;
-            }
-            if ((approx_mode &&
-                 (approx_init.count(v) > 0 || approx_fin.count(v) > 0))
-                || (!approx_mode && v == initial_)) {
-                return;
-            }
-            // Consider states whose incoming transitions are all epsilons.
-            bool only_inc_eps = true;
-            for (const auto& fld_p : opens_.sec<0>()) {
-                if (!fld_p.second[v].empty()) {
-                    only_inc_eps = false;
-                    break;
-                }
-            }
-            if (!only_inc_eps) {
-                return;
-            }
-            for (const auto& fld_p : closes_.sec<0>()) {
-                if (!fld_p.second[v].empty()) {
-                    only_inc_eps = false;
-                    break;
-                }
-            }
-            if (!only_inc_eps) {
+            if (!vars_[v].useful() || // state already dropped
+                invalid.contains(v)) { // can't merge this state
                 return;
             }
             worklist.enqueue(v);
@@ -1104,7 +1083,11 @@ public:
         }
         while (!worklist.empty()) {
             Ref<Variable> b = worklist.dequeue();
+            if (epsilons_.sec<0>()[b].size() != 1) { // 0 or 2+ incoming eps
+                continue;
+            }
             Ref<Variable> a = *(epsilons_.sec<0>()[b].begin());
+            assert(a != b);
             // Move all transitions out of 'b' onto 'a'.
             epsilons_.merge<SRC>(a, b);
             opens_.merge<SRC>(a, b);
@@ -1131,11 +1114,15 @@ public:
         timer.start("Building NFA for function");
         // Collect all used delimiters, to form the FSM's alphabet.
         std::vector<Delimiter> delims;
-        for (const auto& fld_p : opens_.pri()) {
-            delims.emplace_back(true, fld_p.first);
+        mi::Table<FLD, Ref<Field> > opens_fld;
+        mi::project(opens_fld, opens_);
+        for (Ref<Field> fld: opens_fld) {
+            delims.emplace_back(true, fld);
         }
-        for (const auto& fld_p : closes_.pri()) {
-            delims.emplace_back(false, fld_p.first);
+        mi::Table<FLD, Ref<Field> > closes_fld;
+        mi::project(closes_fld, closes_);
+        for (Ref<Field> fld: closes_fld) {
+            delims.emplace_back(false, fld);
         }
         // Build the FSM.
         // XXX: Assumes Ref's are allocated serially.
