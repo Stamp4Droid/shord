@@ -797,12 +797,18 @@ public:
         return bitset_.at(ref.value());
 #endif
     }
-    void insert(Ref<K> ref) {
+    bool insert(Ref<K> ref) {
 #ifdef NDEBUG
-        bitset_[ref.value()] = true;
+        if (bitset_[ref.value()]) {
+            return false;
+        }
 #else
-        bitset_.at(ref.value()) = true;
+        if (bitset_.at(ref.value())) {
+            return false;
+        }
 #endif
+        bitset_[ref.value()] = true;
+        return true;
     }
 };
 
@@ -1323,8 +1329,8 @@ struct KeyTraits<Ref<T> > {
     }
 };
 
-template<class Tag, class T> class Table;
-template<class Tag, class Key, class Sub> class Index;
+template<class T, class K> class Table;
+template<class T, class K, class S> class Index;
 
 namespace detail {
 
@@ -1450,17 +1456,19 @@ bool subtract_all(Idxs& idxs, const std::set<T>& rhs) {
              cond__; cond__ = false) \
             for (auto it__ = (EXPR).iter(RES); it__.next();)
 
-template<class Tag, class T> class Table {
+template<class T, class K> class Table {
 public:
+    typedef T Tag;
+    typedef K Key;
     class Iterator;
     friend Iterator;
-    typedef typename std::set<T>::const_iterator ConstTopIter;
-    typedef NamedTuple<Tag,T,Nil> Tuple;
+    typedef typename std::set<Key>::const_iterator ConstTopIter;
+    typedef NamedTuple<Tag,Key,Nil> Tuple;
 private:
-    std::set<T> store_;
+    std::set<Key> store_;
 public:
     explicit Table() {}
-    // TODO: Only works if T is copy-constructible.
+    // TODO: Only works if Key is copy-constructible.
     Table(const Table&) = default;
     Table(Table&&) = default;
     Table& operator=(const Table&) = delete;
@@ -1478,7 +1486,7 @@ public:
     const Table& find() const {
         return *this;
     }
-    bool insert(const T& val) {
+    bool insert(const Key& val) {
         return store_.insert(val).second;
     }
     bool insert(const Tuple& tuple) {
@@ -1500,7 +1508,7 @@ public:
     }
     template<class Tag_>
     typename std::enable_if<std::is_same<Tag,Tag_>::value, bool>::type
-    subtract(const std::set<T>& rhs) {
+    subtract(const std::set<Key>& rhs) {
         bool erased_any = false;
         auto l_it = store_.begin();
         auto r_it = rhs.begin();
@@ -1532,7 +1540,7 @@ public:
     }
     template<class Tag_>
     typename std::enable_if<std::is_same<Tag,Tag_>::value>::type
-    merge(const T& tgt, const T& src) {
+    merge(const Key& tgt, const Key& src) {
         if (store_.erase(src) != 0) {
             store_.insert(tgt);
         }
@@ -1551,7 +1559,7 @@ public:
     bool empty() const {
         return store_.empty();
     }
-    bool contains(const T& val) const {
+    bool contains(const Key& val) const {
         return store_.count(val) > 0;
     }
     bool contains(const Tuple& tuple) const {
@@ -1564,9 +1572,9 @@ public:
 
     class Iterator {
     private:
-        typename std::set<T>::const_iterator curr;
-        typename std::set<T>::const_iterator end;
-        T& tgt_fld;
+        typename std::set<Key>::const_iterator curr;
+        typename std::set<Key>::const_iterator end;
+        Key& tgt_fld;
         bool before_start = true;
     public:
         explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
@@ -1590,13 +1598,15 @@ public:
     };
 };
 
-template<class Tag, class T> class Cell {
+template<class T, class K> class Cell {
 public:
+    typedef T Tag;
+    typedef K Key;
     class Iterator;
     friend Iterator;
-    typedef NamedTuple<Tag,T,Nil> Tuple;
+    typedef NamedTuple<Tag,Key,Nil> Tuple;
 private:
-    boost::optional<T> val_;
+    boost::optional<Key> val_;
 public:
     explicit Cell() {}
     Cell(const Cell&) = default;
@@ -1616,7 +1626,7 @@ public:
     const Cell& find() const {
         return *this;
     }
-    bool insert(const T& val) {
+    bool insert(const Key& val) {
         if ((bool) val_) {
             // can't update the value once set
             return false;
@@ -1635,7 +1645,7 @@ public:
     bool empty() const {
         return !((bool) val_);
     }
-    bool contains(const T& val) const {
+    bool contains(const Key& val) const {
         return val_ == val;
     }
     bool contains(const Tuple& tuple) const {
@@ -1644,11 +1654,11 @@ public:
     unsigned int size() const {
         return ((bool) val_) ? 1 : 0;
     }
-    const T& get() const {
+    const Key& get() const {
         EXPECT((bool) val_);
         return val_.get();
     }
-    const boost::optional<T>& contents() const {
+    const boost::optional<Key>& contents() const {
         return val_;
     }
 public:
@@ -1656,7 +1666,7 @@ public:
     class Iterator {
     private:
         const Cell* curr;
-        T& tgt_fld;
+        Key& tgt_fld;
         bool before_start = true;
     public:
         explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
@@ -1678,17 +1688,19 @@ public:
     };
 };
 
-template<class Tag, class T> class Bag {
+template<class T, class K> class Bag {
 public:
+    typedef T Tag;
+    typedef K Key;
     class Iterator;
     friend Iterator;
-    typedef typename std::deque<T>::const_iterator ConstTopIter;
-    typedef NamedTuple<Tag,T,Nil> Tuple;
+    typedef typename std::deque<Key>::const_iterator ConstTopIter;
+    typedef NamedTuple<Tag,Key,Nil> Tuple;
 private:
-    std::deque<T> store_;
+    std::deque<Key> store_;
 public:
     explicit Bag() {}
-    // TODO: Only works if T is copy-constructible.
+    // TODO: Only works if Key is copy-constructible.
     Bag(const Bag&) = default;
     Bag(Bag&&) = default;
     Bag& operator=(const Bag&) = delete;
@@ -1706,7 +1718,7 @@ public:
     const Bag& find() const {
         return *this;
     }
-    bool insert(const T& val) {
+    bool insert(const Key& val) {
         store_.push_back(val);
         return true;
     }
@@ -1727,7 +1739,7 @@ public:
     bool empty() const {
         return store_.empty();
     }
-    bool contains(const T& val) const {
+    bool contains(const Key& val) const {
         return std::find(store_.begin(), store_.end(), val) != store_.end();
     }
     bool contains(const Tuple& tuple) const {
@@ -1740,9 +1752,9 @@ public:
 
     class Iterator {
     private:
-        typename std::deque<T>::const_iterator curr;
-        typename std::deque<T>::const_iterator end;
-        T& tgt_fld;
+        typename std::deque<Key>::const_iterator curr;
+        typename std::deque<Key>::const_iterator end;
+        Key& tgt_fld;
         bool before_start = true;
     public:
         explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
@@ -1766,8 +1778,9 @@ public:
     };
 };
 
-template<class Tag, class K, class S> class Index {
+template<class T, class K, class S> class Index {
 public:
+    typedef T Tag;
     typedef K Key;
     typedef S Sub;
     class Iterator;
@@ -2041,8 +2054,8 @@ public:
     };
 };
 
-template<class Tag, class K, class S>
-const S Index<Tag,K,S>::dummy;
+template<class T, class K, class S>
+const S Index<T,K,S>::dummy;
 
 template<class Pri, class... Sec> class MultiIndex {
 public:
@@ -2154,9 +2167,10 @@ public:
 
 // SPECIALIZED CONTAINERS =====================================================
 
-template<class Tag, class K, const typename KeyTraits<K>::SizeHint& Hint,
+template<class T, class K, const typename KeyTraits<K>::SizeHint& Hint,
          class S> class FlatIndex {
 public:
+    typedef T Tag;
     typedef K Key;
     typedef S Sub;
     class Iterator;
@@ -2377,20 +2391,22 @@ public:
     };
 };
 
-template<class Tag, class T, const typename KeyTraits<T>::SizeHint& Hint>
+template<class T, class K, const typename KeyTraits<T>::SizeHint& Hint>
 class BitSet {
 private:
     typedef unsigned short Store;
     static const Store top_bit = 1 << (sizeof(Store) * 8 - 1);
 public:
+    typedef T Tag;
+    typedef K Key;
     class Iterator;
     friend Iterator;
-    typedef NamedTuple<Tag,T,Nil> Tuple;
+    typedef NamedTuple<Tag,Key,Nil> Tuple;
 private:
     Store bits = 0;
 public:
     explicit BitSet() {
-        EXPECT(sizeof(Store) * 8 >= KeyTraits<T>::extract_size(Hint));
+        EXPECT(sizeof(Store) * 8 >= KeyTraits<Key>::extract_size(Hint));
     }
     BitSet(const BitSet&) = default;
     BitSet(BitSet&&) = default;
@@ -2399,8 +2415,8 @@ public:
         using std::swap;
         swap(a.bits, b.bits);
     }
-    bool insert(const T& val) {
-        unsigned int idx = KeyTraits<T>::extract_idx(val);
+    bool insert(const Key& val) {
+        unsigned int idx = KeyTraits<Key>::extract_idx(val);
         assert(idx < sizeof(Store) * 8);
         Store prev_bits = bits;
         bits |= (top_bit >> idx);
@@ -2426,8 +2442,8 @@ public:
     bool empty() const {
         return bits == 0;
     }
-    bool contains(const T& val) const {
-        unsigned int idx = KeyTraits<T>::extract_idx(val);
+    bool contains(const Key& val) const {
+        unsigned int idx = KeyTraits<Key>::extract_idx(val);
         return bits & (top_bit >> idx);
     }
     bool contains(const Tuple& tuple) const {
@@ -2447,7 +2463,7 @@ public:
     private:
         unsigned int curr;
         const unsigned int lim;
-        T& tgt_fld;
+        Key& tgt_fld;
         const typename BitSet::Store* bits;
         bool before_start = true;
     public:
@@ -2466,7 +2482,7 @@ public:
             }
             while (curr < lim) {
                 if (*bits & (top_bit >> curr)) {
-                    tgt_fld = KeyTraits<T>::from_idx(curr);
+                    tgt_fld = KeyTraits<Key>::from_idx(curr);
                     return true;
                 }
                 ++curr;
@@ -2476,9 +2492,10 @@ public:
     };
 };
 
-template<class Tag, class K, class S> class LightIndex {
+template<class T, class K, class S> class LightIndex {
     typedef std::forward_list<std::pair<const K,S> > List;
 public:
+    typedef T Tag;
     typedef K Key;
     typedef S Sub;
     class Iterator;
@@ -2638,12 +2655,13 @@ public:
     };
 };
 
-template<class Tag, class K, class S>
-const S LightIndex<Tag,K,S>::dummy;
+template<class T, class K, class S>
+const S LightIndex<T,K,S>::dummy;
 
-template<class Tag, class T, class S> class RefIndex {
+template<class T, class K, class S> class RefIndex {
 public:
-    typedef Ref<T> Key;
+    typedef T Tag;
+    typedef Ref<K> Key;
     typedef S Sub;
     class Iterator;
     friend Iterator;
@@ -2651,7 +2669,7 @@ public:
     friend TopIter;
     class ConstTopIter;
     friend ConstTopIter;
-    typedef NamedTuple<Tag,Ref<T>,typename Sub::Tuple> Tuple;
+    typedef NamedTuple<Tag,Ref<K>,typename Sub::Tuple> Tuple;
 private:
     static const Sub dummy;
 private:
@@ -2681,11 +2699,11 @@ public:
         return *this;
     }
     template<class... Rest>
-    auto& of(Ref<T> key, const Rest&... rest) {
+    auto& of(Ref<K> key, const Rest&... rest) {
         grow(key.value() + 1);
         return array_[key.value()].of(rest...);
     }
-    const Sub& operator[](Ref<T> key) const {
+    const Sub& operator[](Ref<K> key) const {
         if (key.value() >= array_.size()) {
             return dummy;
         }
@@ -2695,11 +2713,11 @@ public:
         return *this;
     }
     template<class... Rest>
-    const auto& find(Ref<T> key, const Rest&... rest) const {
+    const auto& find(Ref<K> key, const Rest&... rest) const {
         return (*this)[key].find(rest...);
     }
     template<class... Rest>
-    bool insert(Ref<T> key, const Rest&... rest) {
+    bool insert(Ref<K> key, const Rest&... rest) {
         return of(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
@@ -2727,7 +2745,7 @@ public:
         (TupleContains<Tuple_,Tag>::value &&
          TuplesAreDisjoint<Tuple_,typename Sub::Tuple>::value), bool>::type
     erase(const Tuple_& tuple) {
-        Ref<T> key = tuple.template get<Tag>();
+        Ref<K> key = tuple.template get<Tag>();
         if (key.value() >= array_.size()) {
             return false;
         }
@@ -2741,7 +2759,7 @@ public:
         (TupleContains<Tuple_,Tag>::value &&
          !TuplesAreDisjoint<Tuple_,typename Sub::Tuple>::value), bool>::type
     erase(const Tuple_& tuple) {
-        Ref<T> key = tuple.template get<Tag>();
+        Ref<K> key = tuple.template get<Tag>();
         if (key.value() >= array_.size()) {
             return false;
         }
@@ -2749,9 +2767,9 @@ public:
     }
     template<class Tag_>
     typename std::enable_if<std::is_same<Tag,Tag_>::value, bool>::type
-    subtract(const std::set<Ref<T> >& rhs) {
+    subtract(const std::set<Ref<K> >& rhs) {
         bool erased_any = false;
-        for (Ref<T> key : rhs) {
+        for (Ref<K> key : rhs) {
             if (key.value() >= array_.size()) {
                 break;
             }
@@ -2787,7 +2805,7 @@ public:
     }
     template<class Tag_>
     typename std::enable_if<std::is_same<Tag,Tag_>::value>::type
-    merge(Ref<T> tgt, Ref<T> src) {
+    merge(Ref<K> tgt, Ref<K> src) {
         if (src.value() >= array_.size()) {
             return;
         }
@@ -2833,7 +2851,7 @@ public:
         return true;
     }
     template<class... Rest>
-    bool contains(Ref<T> key, const Rest&... rest) const {
+    bool contains(Ref<K> key, const Rest&... rest) const {
         if (key.value() >= array_.size()) {
             return false;
         }
@@ -2856,7 +2874,7 @@ public:
         typename std::deque<Sub>::const_iterator start;
         typename std::deque<Sub>::const_iterator curr;
         typename std::deque<Sub>::const_iterator end;
-        Ref<T>& tgt_key;
+        Ref<K>& tgt_key;
         typename Sub::Iterator sub_iter;
         bool before_start = true;
     public:
@@ -2882,15 +2900,15 @@ public:
                 }
                 sub_iter.migrate(*curr);
             }
-            tgt_key = Ref<T>(curr-start);
+            tgt_key = Ref<K>(curr-start);
             return true;
         }
     };
 
     class TopIter : public std::iterator<std::forward_iterator_tag,
-                                         std::pair<const Ref<T>,Sub&> > {
+                                         std::pair<const Ref<K>,Sub&> > {
     public:
-        typedef std::pair<const Ref<T>,Sub&> Value;
+        typedef std::pair<const Ref<K>,Sub&> Value;
     private:
         ConstTopIter real_iter;
     public:
@@ -2916,9 +2934,9 @@ public:
 
     class ConstTopIter
         : public std::iterator<std::forward_iterator_tag,
-                               std::pair<const Ref<T>,const Sub&> > {
+                               std::pair<const Ref<K>,const Sub&> > {
     public:
-        typedef std::pair<const Ref<T>,const Sub&> Value;
+        typedef std::pair<const Ref<K>,const Sub&> Value;
     private:
         unsigned curr;
         const RefIndex& parent;
@@ -2937,7 +2955,7 @@ public:
         ConstTopIter(const ConstTopIter& rhs) = default;
         ConstTopIter& operator=(const ConstTopIter& rhs) = default;
         Value operator*() const {
-            return Value(Ref<T>(curr), parent.array_[curr]);
+            return Value(Ref<K>(curr), parent.array_[curr]);
         }
         ConstTopIter& operator++() {
             ++curr;
@@ -2954,8 +2972,8 @@ public:
     };
 };
 
-template<class Tag, class T, class S>
-const S RefIndex<Tag,T,S>::dummy;
+template<class T, class K, class S>
+const S RefIndex<T,K,S>::dummy;
 
 } // namespace mi
 

@@ -983,8 +983,7 @@ public:
             if (!fwd_reached.contains(v)) {
                 return;
             }
-            if (!bck_reached.contains(v)) {
-                bck_reached.insert(v);
+            if (bck_reached.insert(v)) {
                 bck_list.push_back(v);
             }
         };
@@ -1583,6 +1582,11 @@ int main(int argc, char* argv[]) {
         std::ofstream inl_out(inl_path.string());
         EXPECT((bool) inl_out);
         scc.to_tgf(inl_out, funs, flds);
+        timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
+        timer.done();
+
+        timer.start("Pre-merging epsilons");
+        scc.pre_merge_epsilons(funs);
         timer.log("Size: ", scc.num_vars(), " vars, ", scc.num_ops(), " ops");
         timer.done();
 
