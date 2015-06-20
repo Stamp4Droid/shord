@@ -99,6 +99,8 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
+		System.out.println("PRINTING PHANTOM OBJECT MODELS");
+		IOUtils.printRelation("PhantomObjectDyn");
 		if(!checkActiveFlowNew()) {
 			System.out.println("ERROR: No active flow edges found!");
 			return;

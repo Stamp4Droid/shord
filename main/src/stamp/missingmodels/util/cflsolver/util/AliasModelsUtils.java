@@ -9,11 +9,15 @@ import java.util.Set;
 
 import shord.analyses.AllocNode;
 import shord.analyses.DomH;
+import shord.analyses.DomI;
+import shord.analyses.DomM;
+import shord.analyses.LocalVarNode;
 import shord.analyses.SiteAllocNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import soot.Local;
+import soot.RefLikeType;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.AssignStmt;
@@ -45,12 +49,36 @@ public class AliasModelsUtils {
 			}
 		}
 		
-		private static Map<Statement,Stmt> stmtMap;
-		private static Map<Stmt,SootMethod> methodMap;
-		private static Map<Stmt,Pair<SiteAllocNode,Integer>> allocNodeMap;
+		private static Map<SootMethod,Integer> methodMap; // DomM
+		private static Set<SootMethod> stubs; // ProgramRel Stub
+		private static Map<Statement,Stmt> stmtMap; // Statement (above) -> Jimple statement
+		private static Map<Stmt,SootMethod> stmtToMethodMap; // Stmt -> containing SootMethod
+		private static Map<Stmt,SiteAllocNode> stmtToAllocNodeMap; // (alloc) Stmt -> alloc node (DomH)
+		private static Map<AllocNode,Integer> allocNodeMap; // DomH
+		private static Map<Unit,Integer> invokeStmtMap; // DomI
+		private static MultivalueMap<Unit,SootMethod> callgraph; // ProgramRel IM
+		private static boolean built = false;
 		private static void build() {
+			if(built) { return; }
+			built = true;
+			
+			// STEP 1: Build method relation
+			DomM domM = (DomM)ClassicProject.g().getTrgt("M");
+			methodMap = new HashMap<SootMethod,Integer>();
+			for(int i=0; i<domM.size(); i++) {
+				methodMap.put(domM.get(i), i);
+			}
+			ProgramRel relStub = (ProgramRel)ClassicProject.g().getTrgt("Stub");
+			relStub.load();
+			stubs = new HashSet<SootMethod>();
+			for(Object obj : relStub.getAry1ValTuples()) {
+				stubs.add((SootMethod)obj);
+			}
+			relStub.close();
+			
+			// STEP 2: Build relations of reachable methods and contained statements
 			stmtMap = new HashMap<Statement,Stmt>();
-			methodMap = new HashMap<Stmt,SootMethod>();
+			stmtToMethodMap = new HashMap<Stmt,SootMethod>();
 			ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
 			relReachableM.load();
 			for(Object obj : relReachableM.getAry1ValTuples()) {
@@ -60,31 +88,45 @@ public class AliasModelsUtils {
 				}
 				int offset = 0;
 				for(Unit unit : method.getActiveBody().getUnits()) {
-					if(methodMap.get((Stmt)unit) != null) {
+					if(stmtToMethodMap.get((Stmt)unit) != null) {
 						throw new RuntimeException("Error: duplicate statement: " + unit);
 					}
 					stmtMap.put(new Statement(method.toString(), offset), (Stmt)unit);
-					methodMap.put((Stmt)unit, method);					
+					stmtToMethodMap.put((Stmt)unit, method);					
 					offset++;
 				}
 			}
 			relReachableM.close();
 			
 			// STEP 2: Build alloc node map
-			allocNodeMap = new HashMap<Stmt,Pair<SiteAllocNode,Integer>>();
+			stmtToAllocNodeMap = new HashMap<Stmt,SiteAllocNode>();
+			allocNodeMap = new HashMap<AllocNode,Integer>();
 			DomH domH = (DomH)ClassicProject.g().getTrgt("H");
 			for(int i=0; i<domH.size(); i++) {
 				AllocNode node = domH.get(i);
+				allocNodeMap.put(node, i);
 				if(node instanceof SiteAllocNode) {
-					allocNodeMap.put((Stmt)((SiteAllocNode)node).getUnit(), new Pair<SiteAllocNode,Integer>(((SiteAllocNode)node), i));
+					stmtToAllocNodeMap.put((Stmt)((SiteAllocNode)node).getUnit(), (SiteAllocNode)node);
 				}
 			}
+			
+			// STEP 3: Build callgraph
+			invokeStmtMap = new HashMap<Unit,Integer>();
+			DomI domI = (DomI)ClassicProject.g().getTrgt("I");
+			for(int i=0; i<domI.size(); i++) {
+				invokeStmtMap.put(domI.get(i), i);
+			}
+			ProgramRel relIM = (ProgramRel)ClassicProject.g().getTrgt("chaIM");
+			relIM.load();
+			callgraph = new MultivalueMap<Unit,SootMethod>();
+			for(chord.util.tuple.object.Pair<Object,Object> pair : relIM.getAry2ValTuples()) {
+				callgraph.add((Unit)pair.val0, (SootMethod)pair.val1);
+			}
+			relIM.close();
 		}
 		
 		public static void printStatementMap() {
-			if(stmtMap == null) {
-				build();
-			}
+			build();
 			for(Statement stmt : stmtMap.keySet()) {
 				System.out.println("STATEMENT VAL: " + stmtMap.get(stmt));
 				System.out.println("STATEMENT REP: " + stmt.method + ":" + stmt.offset);
@@ -93,66 +135,112 @@ public class AliasModelsUtils {
 		}
 		
 		public static void printAllocationMap() {
-			if(allocNodeMap == null) {
-				build();
-			}
-			for(Stmt stmt : allocNodeMap.keySet()) {
-				System.out.println("ALLOC NODE: " + allocNodeMap.get(stmt));
-				System.out.println("ALLOC NODE STMT: " + allocNodeMap.get(stmt));
+			build();
+			for(Stmt stmt : stmtToAllocNodeMap.keySet()) {
+				System.out.println("ALLOC NODE: " + stmtToAllocNodeMap.get(stmt));
+				System.out.println("ALLOC NODE STMT: " + stmtToAllocNodeMap.get(stmt));
 				System.out.println();
 			}
 		}
 		
 		public static Stmt getStmtFor(Variable variable) {
-			if(stmtMap == null) {
-				build();
-			}
+			build();
 			return stmtMap.get(new Statement(variable.method, variable.offset));
 		}
 		
 		public static SootMethod getMethodFor(Stmt stmt) {
-			if(methodMap == null) {
-				build();
+			build();
+			return stmtToMethodMap.get(stmt);
+		}
+		
+		public static SiteAllocNode getAllocNodeFor(Stmt stmt) {
+			build();
+			return stmtToAllocNodeMap.get(stmt);
+		}
+		
+		public static LocalVarNode getVarNodeFor(Local local, SootMethod method) {
+			Map<Local,LocalVarNode> localToVarNodeMap = LocalsToVarNodeMap.getLocalToVarNodeMap(method);
+			return localToVarNodeMap == null ? null : localToVarNodeMap.get(local);
+		}
+		
+		// String is "V" or "U"
+		public static Pair<String,Integer> getIndexFor(VarNode varNode) {
+			return LocalsToVarNodeMap.getIndexFor(varNode);
+		}
+		
+		public static Iterable<SootMethod> getCallTargetFor(Stmt invokeStmt) {
+			build();
+			return callgraph.get(invokeStmt);
+		}
+		
+		public static boolean isStub(SootMethod method) {
+			build();
+			return stubs.contains(method);
+		}
+		
+		public static Stmt getInvokeStmtOrNullFor(Variable variable) {
+			Stmt stmtInvocation = getStmtFor(variable);
+			if(stmtInvocation == null) {
+				return null;
 			}
-			return methodMap.get(stmt);
-		}
-		
-		public static Pair<SiteAllocNode,Integer> getAllocNodeFor(Stmt stmt) {
-			if(allocNodeMap == null) {
-				build();
+			if(!stmtInvocation.containsInvokeExpr()) {
+				System.out.println("Expected invocation statement: " + stmtInvocation);
+				return null;
 			}
-			return allocNodeMap.get(stmt);
+			if(!(stmtInvocation instanceof AssignStmt)) {
+				return null;
+			}
+			return stmtInvocation;
 		}
 		
-		public static Pair<VarNode,Integer> getVarNodeFor(Local local, SootMethod method) {		
-			VarNode varNode = LocalsToVarNodeMap.getLocalToVarNodeMap(method).get(local);
-			return new Pair<VarNode,Integer>(varNode, LocalsToVarNodeMap.getIndexFor(varNode).getY());
-		}
-		
-		public static MultivalueMap<Pair<VarNode,Integer>,Pair<SiteAllocNode,Integer>> getPtDynRetApp(AliasModelsProcessor processor) {
-			MultivalueMap<Pair<VarNode,Integer>,Pair<SiteAllocNode,Integer>> ptDyn = new MultivalueMap<Pair<VarNode,Integer>,Pair<SiteAllocNode,Integer>>();
+		public static MultivalueMap<VarNode,SiteAllocNode> getPtDynRetApp(AliasModelsProcessor processor) {
+			MultivalueMap<VarNode,SiteAllocNode> ptDyn = new MultivalueMap<VarNode,SiteAllocNode>();
 			for(Variable variable : processor.retsToAbstractObjects.keySet()) {
 				for(int abstractObject : processor.retsToAbstractObjects.get(variable)) {
 					if(!processor.appAbstractObjectsToAllocations.containsKey(abstractObject)) {
 						continue;
 					}
-					Stmt stmtInvocation = getStmtFor(variable);
+					Stmt stmtInvocation = getInvokeStmtOrNullFor(variable);
 					if(stmtInvocation == null) {
 						continue;
 					}
-					if(!stmtInvocation.containsInvokeExpr()) {
-						System.out.println("Expected invocation statement: " + stmtInvocation);
+					VarNode varNode = getVarNodeFor((Local)((AssignStmt)stmtInvocation).getLeftOp(), getMethodFor(stmtInvocation));
+					SiteAllocNode allocNode = getAllocNodeFor(getStmtFor(processor.appAbstractObjectsToAllocations.get(abstractObject)));
+					if(varNode == null || allocNode == null) {
 						continue;
 					}
-					if(!(stmtInvocation instanceof AssignStmt)) {
-						continue;
-					}
-					Pair<VarNode,Integer> varNode = getVarNodeFor((Local)((AssignStmt)stmtInvocation).getLeftOp(), getMethodFor(stmtInvocation));
-					Pair<SiteAllocNode,Integer> allocNode = getAllocNodeFor(getStmtFor(processor.appAbstractObjectsToAllocations.get(abstractObject)));
 					ptDyn.add(varNode, allocNode);
 				}
 			}
 			return ptDyn;
+		}
+		
+		public static MultivalueMap<VarNode,SootMethod> getPhantomObjectDyn(AliasModelsProcessor processor) {
+			MultivalueMap<VarNode,SootMethod> phantomObjectDyn = new MultivalueMap<VarNode,SootMethod>();
+			for(Variable variable : processor.retsToAbstractObjects.keySet()) {
+				for(int abstractObject : processor.retsToAbstractObjects.get(variable)) {
+					if(!processor.frameworkAbstractObjects.contains(abstractObject)) {
+						continue;
+					}
+					Stmt stmtInvocation = getInvokeStmtOrNullFor(variable);
+					if(stmtInvocation == null) {
+						continue;
+					}
+					LocalVarNode varNode = getVarNodeFor((Local)((AssignStmt)stmtInvocation).getLeftOp(), getMethodFor(stmtInvocation));
+					if(varNode == null) {
+						continue;
+					}
+					if(!(varNode.local.getType() instanceof RefLikeType)) {
+						continue;
+					}
+					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
+						if(isStub(method)) {
+							phantomObjectDyn.add(varNode, method);
+						}
+					}
+				}
+			}
+			return phantomObjectDyn;
 		}
 	}
 	
