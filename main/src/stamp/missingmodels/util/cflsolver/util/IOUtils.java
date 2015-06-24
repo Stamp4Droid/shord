@@ -215,16 +215,20 @@ public class IOUtils {
 	private static void printRelation(String relationName, PrintWriter pw, boolean prependRelationName) {
 		ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(relationName);
 		rel.load();
-		for(Object[] tuple : rel.getAryNValTuples()) {
-			StringBuilder sb = new StringBuilder();
-			if(prependRelationName) {
-				sb.append(relationName).append(SEPARATOR);
+		try {
+			for(Object[] tuple : rel.getAryNValTuples()) {
+				StringBuilder sb = new StringBuilder();
+				if(prependRelationName) {
+					sb.append(relationName).append(SEPARATOR);
+				}
+				for(int i=0; i<tuple.length-1; i++) {
+					sb.append(tuple[i]).append(SEPARATOR);
+				}
+				sb.append(tuple[tuple.length-1]);
+				pw.println(sb.toString());
 			}
-			for(int i=0; i<tuple.length-1; i++) {
-				sb.append(tuple[i]).append(SEPARATOR);
-			}
-			sb.append(tuple[tuple.length-1]);
-			pw.println(sb.toString());
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		rel.close();
 	}

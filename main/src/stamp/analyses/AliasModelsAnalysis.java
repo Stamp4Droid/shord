@@ -99,6 +99,8 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
+		System.out.println("PRINTING ACTIVE FLOW DYN");
+		IOUtils.printRelation("ActiveFlowDynH");
 		System.out.println("PRINTING PHANTOM OBJECT MODELS");
 		IOUtils.printRelation("PhantomObjectDyn");
 		if(!checkActiveFlowNew()) {

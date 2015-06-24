@@ -181,6 +181,7 @@ public class AliasModelsUtils {
 		public static Stmt getInvokeStmtOrNullFor(Variable variable) {
 			Stmt stmtInvocation = getStmtFor(variable);
 			if(stmtInvocation == null) {
+				System.out.println("Expected statement: " + variable);
 				return null;
 			}
 			if(!stmtInvocation.containsInvokeExpr()) {
@@ -188,6 +189,7 @@ public class AliasModelsUtils {
 				return null;
 			}
 			if(!(stmtInvocation instanceof AssignStmt)) {
+				System.out.println("Expected assignment statement: " + stmtInvocation);
 				return null;
 			}
 			return stmtInvocation;
