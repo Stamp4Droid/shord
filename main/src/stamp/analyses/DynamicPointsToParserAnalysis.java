@@ -8,7 +8,7 @@ import shord.project.analyses.ProgramRel;
 import soot.SootMethod;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.util.AliasModelsUtils;
-import stamp.missingmodels.util.processor.AliasModelsProcessor;
+import stamp.missingmodels.util.processor.AliasModelsTraceReader;
 import chord.project.Chord;
 
 @Chord(name = "dynamic-points-to-parser-java",
@@ -23,7 +23,7 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 	public void run() {
 		String[] tokens = System.getProperty("stamp.out.dir").split("_");
 		String filename = "../../alias_models/alias_models_traces/" + tokens[tokens.length-1] + ".trace";
-		AliasModelsProcessor processor = new AliasModelsProcessor(filename);
+		AliasModelsTraceReader processor = new AliasModelsTraceReader(filename);
 		
 		// STEP 0: Fill in dynamic flow (ret -> app allocation)
 		MultivalueMap<VarNode,SiteAllocNode> ptDyn = AliasModelsUtils.ProcessorUtils.getPtDynRetApp(processor);		
