@@ -86,3 +86,9 @@ FrameworkSink(c,v) :- Framework(m), MmethRet(m,_,v), CM(c,m).
 FrameworkPrimSource(c,u) :- Framework(m), MmethPrimArg(m,_,u), CM(c,m).
 FrameworkPrimSource(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
 FrameworkPrimSink(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
+
+# # calls to stub methods (for alias models inference paper results)
+
+chaIM(i:I,m:M) input
+StubI(i:I) output
+StubI(i) :- Framework(m), chaIM(i,m).

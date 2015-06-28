@@ -1,158 +1,114 @@
 package stamp.missingmodels.util.processor;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
+import stamp.missingmodels.util.processor.LogReader.Processor;
 
-public class AliasModelsProcessor {
-	public static class Variable {
-		public final String method;
-		public final int offset;
-		public Variable(String method, int offset) {
-			this.method = method;
-			this.offset = offset;
+public class AliasModelsProcessor implements Processor {
+	private Map<String,Integer> appLinesOfCodeMap = new HashMap<String,Integer>();
+	private MultivalueMap<String,String> appAliasModels = new MultivalueMap<String,String>(); // just do this one manually for now
+	private MultivalueMap<String,String> appPhantomObjectModels = new MultivalueMap<String,String>();
+	private Set<String> allPhantomObjectModels = new HashSet<String>();
+
+	@Override
+	public void process(String appName, String line) {
+		if(line.startsWith("MODEL EDGE")) {
+			this.appAliasModels.add(appName, line.split("MODEL EDGE: ")[1]);
+		} else if(line.startsWith("PhantomObjectDyn")) {
+			String method = line.split("##")[1];
+			this.appPhantomObjectModels.add(appName, method);
+			this.allPhantomObjectModels.add(method);
 		}
-		@Override
-		public int hashCode() { return 31*this.method.hashCode() + this.offset; }
-		@Override
-		public boolean equals(Object obj) {
-			Variable other = (Variable)obj;
-			return this.method.equals(other.method) && this.offset == other.offset;
-		}
-		@Override
-		public String toString() { return this.method + "#" + this.offset; }
+	}
+
+	@Override
+	public void startProcessing(String appName) {
+	}
+
+	@Override
+	public void process(String appName, int appLinesOfCode, int frameworkLinesOfCode) {
+		this.appLinesOfCodeMap.put(appName, appLinesOfCode);
+	}
+
+	@Override
+	public void finishProcessing(String appName) {
 	}
 	
-	public static class Parameter {
-		public final String method;
-		public final int index;
-		public Parameter(String method, int index) {
-			this.method = method;
-			this.index = index;
-		}
-		@Override
-		public int hashCode() { return 31*this.method.hashCode() + this.index; }
-		@Override
-		public boolean equals(Object obj) {
-			Parameter other = (Parameter)obj;
-			return this.method.equals(other.method) && this.index == other.index;
-		}
-		@Override
-		public String toString() { return this.method + "[" + this.index + "]"; }
-	}
-	
-	// method:offset
-	private static Variable getVariable(String representation) {
-		String[] varTokens = representation.split(":");
-		// Get the variable name
+	public String getModelsHeader() {
 		StringBuilder sb = new StringBuilder();
-		for(int i=0; i<varTokens.length-1; i++) {
-			sb.append(varTokens[i]).append(":");
-		}
-		String method = sb.substring(0, sb.length()-1);
-		// Get the dalvik offset
-		int offset = Integer.parseInt(varTokens[varTokens.length-1]);
-		return new Variable(method, offset);
+		sb.append("App Name").append(" & ");
+		sb.append("# Alias Models").append(" & ");
+		sb.append("# Phantom Object Models").append(" & ");
+		sb.append("# Total Models");
+		return sb.toString();
 	}
 	
-	// x <- X() => x
-	public final MultivalueMap<Variable,Integer> variablesToAbstractObjects = new MultivalueMap<Variable,Integer>();
-	// y <- f(x) => x, y
-	public final MultivalueMap<Variable,Integer> argsToAbstractObjects = new MultivalueMap<Variable,Integer>();
-	public final Map<Variable,Integer> argsToIndex = new HashMap<Variable,Integer>();
-	public final MultivalueMap<Variable,Integer> retsToAbstractObjects = new MultivalueMap<Variable,Integer>();
-	// f(x) { ... } => x
-	public final MultivalueMap<Parameter,Integer> paramsToAbstractObjects = new MultivalueMap<Parameter,Integer>();
-	// abstract object sets (app allocated, method arg/ret/param observed, observed + not app)
-	public final Map<Integer,Variable> appAbstractObjectsToAllocations = new HashMap<Integer,Variable>();
-	public final Set<Integer> observedAbstractObjects = new HashSet<Integer>();
-	public final Set<Integer> frameworkAbstractObjects = new HashSet<Integer>();
+	public String getModelsAppLine(String appName) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(appName).append(" & ");
+		sb.append("TODO").append(" & ");
+		sb.append(this.appPhantomObjectModels.get(appName).size()).append(" & ");
+		sb.append("TODO");
+		return sb.toString();
+	}
 	
-	public AliasModelsProcessor(String filename) {
-		System.out.println("Reading file: " + new File(filename).getAbsolutePath());
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(filename));
-			String line;
-			while((line = br.readLine()) != null) {
-				String[] tokens = line.split("\t");
-				if(tokens.length == 4) {
-					this.appAbstractObjectsToAllocations.put(Integer.parseInt(tokens[3]), getVariable(tokens[2]));
-					this.variablesToAbstractObjects.add(getVariable(tokens[2]), Integer.parseInt(tokens[3]));
-				} else if(tokens.length == 5) {
-					if(tokens[1].equals("METHCALLARG")) {
-						int index = Integer.parseInt(tokens[3]);
-						int abstractObject = Integer.parseInt(tokens[4]);
-						this.observedAbstractObjects.add(abstractObject);
-						if(index == -1) {
-							this.retsToAbstractObjects.add(getVariable(tokens[2]), abstractObject);
-						} else {
-							this.argsToIndex.put(getVariable(tokens[2]), index);
-							this.argsToAbstractObjects.add(getVariable(tokens[2]), abstractObject);
-						}
-					} else if(tokens[1].equals("METHPARAM")) {
-						if(Integer.parseInt(tokens[3]) < 0) {
-							br.close();
-							throw new RuntimeException("Invalid METHPARAM parameter index: " + tokens[3]);
-						}
-						int abstractObject = Integer.parseInt(tokens[4]);
-						this.observedAbstractObjects.add(abstractObject);
-						this.paramsToAbstractObjects.add(new Parameter(tokens[2], Integer.parseInt(tokens[3])), abstractObject);
-					} else {
-						br.close();
-						throw new RuntimeException("Invalid identifier: " + tokens[1]);
-					}
-				} else if(!line.matches("\\s+")) {
-					br.close();
-					throw new RuntimeException("Invalid line: " + line);
-				}
-			}
-			br.close();
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+	public String getModelsTotal() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" -- ").append(" & ");
+		sb.append("0").append(" & ");
+		sb.append(this.allPhantomObjectModels.size()).append(" & ");
+		sb.append(this.allPhantomObjectModels.size());
+		return sb.toString();
+	}
+	
+	public Iterable<String> getAppNames() {
+		return this.appLinesOfCodeMap.keySet();
+	}
+	
+	public String getStatisticsHeader() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("App Name").append(" & ");
+		sb.append("# Jimple LOC").append(" & ");
+		sb.append("# Aliasing Statements").append(" & ");
+		sb.append("# Invocations of Stubs");
+		return sb.toString();
+	}
+	
+	public String getStatisticsAppLine(String appName) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(appName).append(" & ");
+		sb.append(appLinesOfCodeMap.get(appName)).append(" & ");
+		sb.append("???").append(" & ");
+		sb.append("???");
+		return sb.toString();
+	}
+	
+	public static void run(String directory, int type) {
+		AliasModelsProcessor ap = new AliasModelsProcessor();
+		new LogReader(directory, ap).run();
 		
-		// Abstract objects in framework vs. in app
-		for(int abstractObject : this.observedAbstractObjects) {
-			if(!this.appAbstractObjectsToAllocations.keySet().contains(abstractObject)) {
-				this.frameworkAbstractObjects.add(abstractObject);
+		switch(type) {
+		case 0:			
+			System.out.println(ap.getStatisticsHeader());
+			for(String appName : ap.getAppNames()) {
+				System.out.println(ap.getStatisticsAppLine(appName) + "\\\\");
 			}
+			break;
+		case 1:
+			System.out.println(ap.getModelsHeader());
+			for(String appName : ap.getAppNames()) {
+				System.out.println(ap.getModelsAppLine(appName) + "\\\\");
+			}
+			System.out.println(ap.getModelsTotal());
+			break;
 		}
-	}
-	
-	public void printStatistics() {
-		// Some basic statistics
-		System.out.println(this.appAbstractObjectsToAllocations.size());
-		System.out.println(this.frameworkAbstractObjects.size());
-		System.out.println(this.observedAbstractObjects.size());
 	}
 	
 	public static void main(String[] args) {
-		String filename = "../alias_models/alias_models_traces/SMSBot.trace";
-		System.out.println(new File(filename).getAbsolutePath());
-		AliasModelsProcessor processor = new AliasModelsProcessor(filename);
-		MultivalueMap<Variable,Variable> ptDynRetToApp = new MultivalueMap<Variable,Variable>();
-		for(Variable variable : processor.retsToAbstractObjects.keySet()) {
-			for(int abstractObjectId : processor.retsToAbstractObjects.get(variable)) {
-				if(processor.appAbstractObjectsToAllocations.containsKey(abstractObjectId)) {
-					Variable abstractObject = processor.appAbstractObjectsToAllocations.get(abstractObjectId);
-					ptDynRetToApp.add(variable, abstractObject);
-				}
-			}
-		}
-		int counter = 0;
-		for(Variable variable : ptDynRetToApp.keySet()) {
-			for(Variable abstractObject : ptDynRetToApp.get(variable)) {
-				System.out.println(variable + " -> " + abstractObject);
-				counter++;
-			}
-		}
-		System.out.println(counter);
+		run("../results/fifth", 0);
 	}
 }

@@ -28,8 +28,8 @@ import stamp.missingmodels.util.cflsolver.core.Graph;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
-import stamp.missingmodels.util.processor.AliasModelsProcessor;
-import stamp.missingmodels.util.processor.AliasModelsProcessor.Variable;
+import stamp.missingmodels.util.processor.AliasModelsTraceReader;
+import stamp.missingmodels.util.processor.AliasModelsTraceReader.Variable;
 
 public class AliasModelsUtils {
 	public static class ProcessorUtils {
@@ -195,7 +195,7 @@ public class AliasModelsUtils {
 			return stmtInvocation;
 		}
 		
-		public static MultivalueMap<VarNode,SiteAllocNode> getPtDynRetApp(AliasModelsProcessor processor) {
+		public static MultivalueMap<VarNode,SiteAllocNode> getPtDynRetApp(AliasModelsTraceReader processor) {
 			MultivalueMap<VarNode,SiteAllocNode> ptDyn = new MultivalueMap<VarNode,SiteAllocNode>();
 			for(Variable variable : processor.retsToAbstractObjects.keySet()) {
 				for(int abstractObject : processor.retsToAbstractObjects.get(variable)) {
@@ -217,7 +217,7 @@ public class AliasModelsUtils {
 			return ptDyn;
 		}
 		
-		public static MultivalueMap<VarNode,SootMethod> getPhantomObjectDyn(AliasModelsProcessor processor) {
+		public static MultivalueMap<VarNode,SootMethod> getPhantomObjectDyn(AliasModelsTraceReader processor) {
 			MultivalueMap<VarNode,SootMethod> phantomObjectDyn = new MultivalueMap<VarNode,SootMethod>();
 			for(Variable variable : processor.retsToAbstractObjects.keySet()) {
 				for(int abstractObject : processor.retsToAbstractObjects.get(variable)) {
