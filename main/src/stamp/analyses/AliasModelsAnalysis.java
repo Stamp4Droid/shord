@@ -99,10 +99,10 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		ProgramRel relStubI = (ProgramRel)ClassicProject.g().getTrgt("StubI");
-		relStubI.load();
-		System.out.println("StubI size: " + relStubI.size());
-		relStubI.close();
+		ProgramRel relFrameworkI = (ProgramRel)ClassicProject.g().getTrgt("FrameworkI");
+		relFrameworkI.load();
+		System.out.println("FrameworkI size: " + relFrameworkI.size());
+		relFrameworkI.close();
 		ProgramRel relLoad = (ProgramRel)ClassicProject.g().getTrgt("Load");
 		relLoad.load();
 		System.out.println("Load size: " + relLoad.size());

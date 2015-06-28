@@ -65,8 +65,10 @@ potentialCallbackDependent(m0,m1) :- potentialCallbackDependent(m0,m2), callgrap
 Stub(m:M) input
 MmethArg(m:M,z:Z,v:V) input
 MmethRet(m:M,z:Z,v:V) input
+
 StubParam(m:M,v:V) output
 StubReturn(m:M,v:V) output
+
 StubParam(m,v) :- Stub(m), MmethArg(m,_,v).
 StubReturn(m,v) :- Stub(m), MmethRet(m,_,v).
 
@@ -76,10 +78,18 @@ Framework(m:M) input
 MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 CM(c:C,m:M) input
+
+FrameworkParam(m:M,v:V) output
+FrameworkReturn(m:M,v:V) output
+
+FrameworkParam(m,v) :- Framework(m), MmethArg(m,_,v).
+FrameworkReturn(m,v) :- Framework(m), MmethRet(m,_,v).
+
 FrameworkSource(c:C,v:V) output
 FrameworkSink(c:C,v:V) output
 FrameworkPrimSource(c:C,u:U) output
 FrameworkPrimSink(c:C,u:U) output
+
 FrameworkSource(c,v) :- Framework(m), MmethArg(m,_,v), CM(c,m).
 FrameworkSource(c,v) :- Framework(m), MmethRet(m,_,v), CM(c,m).
 FrameworkSink(c,v) :- Framework(m), MmethRet(m,_,v), CM(c,m).
@@ -90,5 +100,5 @@ FrameworkPrimSink(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
 # # calls to stub methods (for alias models inference paper results)
 
 chaIM(i:I,m:M) input
-StubI(i:I) output
-StubI(i) :- Framework(m), chaIM(i,m).
+FrameworkI(i:I) output
+FrameworkI(i) :- Framework(m), chaIM(i,m).
