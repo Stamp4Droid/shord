@@ -48,10 +48,13 @@ def getLatestCoverageDatFile(apkFile):
     return os.path.join(ellaOutDir, latest)
 
 def postProcess(apkFile):
+    if not os.path.exists(outputDir):
+        os.makedirs(outputDir)
     outDir = outputDir + "/" + appId(apkFile)
-    if not os.path.exists(outDir):
+    print outDir
+    if os.path.exists(outDir):
         shutil.rmtree(outDir)
-        os.makedirs(outDir)
+    os.mkdir(outDir)
     instrInfoPath = stampHome + "/stamp_output/" + appId(apkFile) + "/inferaliasmodel/instrinfo.txt" 
     methodsPath = stampHome + "/stamp_output/" + appId(apkFile) + "/inferaliasmodel/methods.txt" 
     shutil.copy(instrInfoPath, outDir)
@@ -59,6 +62,7 @@ def postProcess(apkFile):
     shutil.copy(getLatestCoverageDatFile(apkFile), outDir)    
     ppprocessor = prettyprint_infer_alias_data.PrettyPrintInferAliasProcessor(outDir)
     ppprocessor.process(outDir + "/data.txt")
+    print "Coverage data stored in "+os.path.abspath(outDir + "/data.txt")
 
 if __name__ == "__main__":
     command = sys.argv[1]
@@ -68,3 +72,6 @@ if __name__ == "__main__":
         runElla(apkFile)
     elif command == "p":
         postProcess(apkFile)
+    else:
+        print "Expect one of [i,p]"
+     
