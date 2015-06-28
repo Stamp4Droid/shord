@@ -11,13 +11,13 @@
 	<property name="stamp.droidrecord.modelgen.use_models" value="none"/>
 
 	<target name="jar">
-	  <build-models apilevel="15" version="4.0.3_r1.1"/>
+	  <!--build-models apilevel="15" version="4.0.3_r1.1"/-->
 	  <!--build-models apilevel="16" version="4.1.1_r1"/-->
 	  <build-models apilevel="20" version="4.4_r1"/>
 	</target>
 	
 	<target name="clean">
-	  <clean-models apilevel="15"/>
+	  <!--clean-models apilevel="15"/-->
 	  <clean-models apilevel="20"/>
 	</target>
 
@@ -142,6 +142,7 @@
 			<jar jarfile="${stamp.dir}/bin/api-@{apilevel}/${jarname}">
 			  <fileset dir="api-@{apilevel}/classes">
 				<include name="**/*.class"/>
+				<exclude name="android/view/StampLayoutInflater.class"/>
 			  </fileset>
 			  <fileset dir="api-@{apilevel}">
 				<include name="stamp_stubs.txt"/>

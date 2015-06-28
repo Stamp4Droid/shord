@@ -11,9 +11,9 @@ import java.util.*;
 import java.util.jar.JarFile;
 
 /*
-* reads AndroidManifest.xml to find out several info about the app
-* @author Saswat Anand
-*/
+ * reads AndroidManifest.xml to find out several info about the app
+ * @author Saswat Anand
+ */
 public class ParseManifest
 {
 	private App app;
@@ -40,8 +40,11 @@ public class ParseManifest
 			//find package name and version
 			Node node = (Node)
 				xpath.evaluate("/manifest", document, XPathConstants.NODE);
+			
 			app.setPackageName(node.getAttributes().getNamedItem("package").getNodeValue());
-			app.setVersion(node.getAttributes().getNamedItem("android:versionName").getNodeValue());
+			
+			Node versionNode = node.getAttributes().getNamedItem("android:versionName");
+			app.setVersion(versionNode != null ? versionNode.getNodeValue() : "");
 
 			//find icon path
 			node = (Node)
@@ -53,10 +56,10 @@ public class ParseManifest
 
 			
 			readComponentInfo();
-			readPermissionInfo();			
+			readPermissionInfo();
 		}catch(Exception e){
 			throw new Error(e);
-		}		
+		}
 	}
 
 	private void readPermissionInfo() throws Exception
@@ -72,7 +75,7 @@ public class ParseManifest
 	}
 
 	private void readComponentInfo() throws Exception
-	{		
+	{
 		//find activities
 		findComponents(xpath, document, Component.Type.activity);
 		findComponents(xpath, document, Component.Type.service);
@@ -85,7 +88,7 @@ public class ParseManifest
 		Node backupAgent = node.getAttributes().getNamedItem("android:backupAgent");
 		if(backupAgent != null)
 			addComp(new Component(fixName(backupAgent.getNodeValue())));
-			
+		
 		//application class
 		Node application = node.getAttributes().getNamedItem("android:name");
 		if(application != null)
@@ -120,10 +123,12 @@ public class ParseManifest
 					break;
 				}
 				//System.out.println(n.getNodeName() + " " + );
-			}			
+			}
 			assert name != null : node.getNodeName();
 			
-			Component comp = addComp(new Component(fixName(name), componentType));			
+			Component comp = addComp(new Component(fixName(name), componentType));
+			if(comp == null)
+				continue;
 			setIntentFilters(comp, node);
 
 			boolean exported;
@@ -213,7 +218,10 @@ public class ParseManifest
 		List<Component> comps = app.components();
 		for(Component comp : comps){
 			if(comp.name.equals(c.name)){
-				assert c.type.equals(comp.type);
+				if(!c.type.equals(comp.type)){
+					System.out.println("ignoring invalid component: "+comp.name + " " + c.type + " "+comp.type);
+					return null;
+				}
 				return comp;
 			}
 		}

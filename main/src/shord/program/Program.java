@@ -1,36 +1,48 @@
 package shord.program;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import shord.analyses.ContainerTag;
-import soot.CompilationDeathException;
-import soot.PackManager;
-import soot.Scene;
-import soot.SootClass;
-import soot.SootMethod;
-import soot.Type;
-import soot.Unit;
-import soot.dexpler.DalvikThrowAnalysis;
+import soot.*;
+import soot.util.Chain;
+import soot.util.ArrayNumberer;
+import soot.jimple.NewExpr;
 import soot.jimple.Stmt;
-import soot.jimple.toolkits.callgraph.CallGraphBuilder;
+import soot.jimple.NewExpr;
+import soot.jimple.AssignStmt;
+import soot.jimple.InvokeStmt;
+import soot.jimple.ThrowStmt;
+import soot.jimple.IdentityStmt;
+import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
+import soot.jimple.toolkits.callgraph.CallGraphBuilder;
 import soot.options.Options;
 import soot.tagkit.Tag;
 import soot.toolkits.scalar.LocalSplitter;
-import soot.util.ArrayNumberer;
-import soot.util.Chain;
+import soot.dexpler.DalvikThrowAnalysis;
+import soot.util.NumberedSet;
+
+import java.util.jar.JarFile;
+import java.util.jar.JarEntry;
+import java.util.*;
+import java.io.*;
+
+import shord.analyses.ContainerTag;
+
 import stamp.app.App;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import stamp.missingmodels.util.cflsolver.util.PotentialCallbacksBuilder;
 
+/*
+ * @author Saswat Anand
+ */
 public class Program
 {
 	private static Program g;
 	private SootMethod mainMethod;
+	private NumberedSet frameworkClasses;
+	private NumberedSet stubMethods;
+	private ProgramScope scope;
 	private App app;
+	private Set<String> harnessClasses;
+	private List<SootMethod> defaultEntryPoints = new ArrayList();
 
 	public static Program g()
 	{
@@ -44,7 +56,7 @@ public class Program
 	{
 	}
 
-	public void build(List<String> harnesses)
+	public void build(Set<String> harnesses, String widgetsClassName)
 	{
         try {
 			StringBuilder options = new StringBuilder();
@@ -70,7 +82,17 @@ public class Program
 
             Scene.v().loadBasicClasses();
 
+			/*
 			for(String h : harnesses){
+				Scene.v().loadClassAndSupport(h);
+			}
+
+			Scene.v().loadClassAndSupport(widgetsClassName);
+			*/
+		
+			this.harnessClasses = harnesses;
+			for(String h : harnesses){
+				//System.out.println("Loading harness class "+h);
 				Scene.v().loadClassAndSupport(h);
 			}
 
@@ -106,32 +128,78 @@ public class Program
 		mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
 		Scene.v().setMainClass(mainClass);
 
-		List entryPoints = new ArrayList();
-		entryPoints.add(mainMethod);
+		defaultEntryPoints.add(mainMethod);
 
 		//workaround soot bug
 		if(mainClass.declaresMethodByName("<clinit>"))
-			entryPoints.add(mainClass.getMethodByName("<clinit>"));
+			defaultEntryPoints.add(mainClass.getMethodByName("<clinit>"));
 		
 		if(IOUtils.graphEdgesFileExists("param", "graph")) {
 			System.out.println("param file found -- adding potential callbacks");
 			for(SootMethod potentialCallback : PotentialCallbacksBuilder.getPotentialCallbacks()) {
 				System.out.println("adding potential callback to entry points: " + potentialCallback.toString());
-				entryPoints.add(potentialCallback);
+				defaultEntryPoints.add(potentialCallback);
 			}
 		} else {
 			System.out.println("param file not yet generated -- ignoring potential callbacks!");
 		}
-
-		Scene.v().setEntryPoints(entryPoints);
 	}
 
-	public void buildCallGraph()
+	public void runCHA()
 	{
-		//run CHA
 		Scene.v().releaseCallGraph();
-		CallGraphBuilder cg = new CallGraphBuilder(DumbPointerAnalysis.v());
-		cg.build();
+		Scene.v().releasePointsToAnalysis();
+		Scene.v().releaseFastHierarchy();
+		G.v().ClassHierarchy_classHierarchyMap.clear();
+		
+		List<SootMethod> entryPoints = new ArrayList(defaultEntryPoints);
+		for(String h : harnessClasses){
+			if(!h.startsWith("stamp.harness.LayoutInflater$"))
+				continue;
+			SootMethod init = Scene.v().getSootClass(h).getMethod("void <init>(android.content.Context)");
+			entryPoints.add(init);
+		}
+		Scene.v().setEntryPoints(entryPoints);
+
+		Transform chaTransform = PackManager.v().getTransform( "cg.cha" );
+		String defaultOptions = chaTransform.getDefaultOptions();
+		StringBuilder options = new StringBuilder();
+		options.append("enabled:true");
+		options.append(" verbose:true");
+		options.append(" "+defaultOptions);
+		System.out.println("CHA options: "+options.toString());
+		chaTransform.setDefaultOptions(options.toString());
+		chaTransform.apply();	
+	}
+
+	public void runSpark(){
+		runSpark("");
+	}
+
+	public void runSpark(String specialOptions)
+	{
+		Scene.v().releaseCallGraph();
+		Scene.v().releasePointsToAnalysis();
+		Scene.v().releaseFastHierarchy();
+		G.v().MethodPAG_methodToPag.clear();
+		G.v().ClassHierarchy_classHierarchyMap.clear();
+
+		Scene.v().setEntryPoints(defaultEntryPoints);
+
+		//run spark
+		Transform sparkTransform = PackManager.v().getTransform( "cg.spark" );
+		String defaultOptions = sparkTransform.getDefaultOptions();
+		StringBuilder options = new StringBuilder();
+		options.append("enabled:true");
+		options.append(" verbose:true");
+		options.append(" simulate-natives:false");//our models should take care of this
+		if(specialOptions.trim().length() > 0)
+			options.append(" "+specialOptions);
+		//options.append(" dump-answer:true");
+		options.append(" "+defaultOptions);
+		System.out.println("spark options: "+options.toString());
+		sparkTransform.setDefaultOptions(options.toString());
+		sparkTransform.apply();	
 	}
 	
 	public void printAllClasses()
@@ -198,8 +266,132 @@ public class Program
 			String apkPath = System.getProperty("stamp.apk.path");
 			app = App.readApp(apkPath, apktoolOutDir);
 			app.findLayouts();
-			System.out.println(app.toString());
+			//System.out.println(app.toString());
 		}
 		return app;
 	}
+
+	public NumberedSet frameworkClasses()
+	{
+		if(frameworkClasses != null)
+			return frameworkClasses;
+
+		Scene scene = Scene.v();
+		frameworkClasses = new NumberedSet(scene.getClassNumberer());
+		String androidJar = System.getProperty("stamp.android.jar");
+		JarFile archive;
+		try{
+			archive = new JarFile(androidJar);
+		}catch(IOException e){
+			throw new Error(e);
+		}
+		for (Enumeration entries = archive.entries(); entries.hasMoreElements();) {
+			JarEntry entry = (JarEntry) entries.nextElement();
+			String entryName = entry.getName();
+			int extensionIndex = entryName.lastIndexOf('.');
+			if (extensionIndex >= 0) {
+				String entryExtension = entryName.substring(extensionIndex);
+				if (".class".equals(entryExtension)) {
+					entryName = entryName.substring(0, extensionIndex);
+					entryName = entryName.replace('/', '.');
+					if(scene.containsClass(entryName))
+						frameworkClasses.add(scene.getSootClass(entryName));
+				}
+			}
+		}
+		return frameworkClasses;
+	}
+	
+	public boolean isFrameworkClass(SootClass k)
+	{
+		return frameworkClasses().contains(k);
+	}
+
+	public boolean exclude(SootMethod m)
+	{
+		if(scope != null)
+			return scope.exclude(m);
+		else
+			return false;
+	}
+
+	public boolean isStub(SootMethod m)
+	{
+		if(stubMethods == null)
+			identifyStubMethods();
+		return stubMethods.contains(m);
+	}
+	
+	public boolean ignoreStub()
+	{
+		return scope != null ? scope.ignoreStub() : false;
+	}
+
+	private void identifyStubMethods()
+	{
+		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
+		Iterator<SootMethod> mIt = getMethods();
+		while(mIt.hasNext()){
+			SootMethod m = mIt.next();
+			if(checkIfStub(m)){
+				System.out.println("Stub: "+m.getSignature());
+				stubMethods.add(m);
+			}
+		}		
+	}
+
+	private boolean checkIfStub(SootMethod method)
+	{
+		if(!method.isConcrete())
+			return false;
+		PatchingChain<Unit> units = method.retrieveActiveBody().getUnits();
+		Unit unit = units.getFirst();
+		while(unit instanceof IdentityStmt)
+			unit = units.getSuccOf(unit);
+
+		//if method is <init>, then next stmt could be a call to super.<init>
+		if(method.getName().equals("<init>")){
+			if(unit instanceof InvokeStmt){
+				if(((InvokeStmt) unit).getInvokeExpr().getMethod().getName().equals("<init>"))
+					unit = units.getSuccOf(unit);
+			}
+		}
+
+		if(!(unit instanceof AssignStmt))
+			return false;
+		Value rightOp = ((AssignStmt) unit).getRightOp();
+		if(!(rightOp instanceof NewExpr))
+			return false;
+		//System.out.println(method.retrieveActiveBody().toString());
+		if(!((NewExpr) rightOp).getType().toString().equals("java.lang.RuntimeException"))
+			return false;
+		Local e = (Local) ((AssignStmt) unit).getLeftOp();
+		
+		//may be there is an assignment (if soot did not optimized it away)
+		Local f = null;
+		unit = units.getSuccOf(unit);
+		if(unit instanceof AssignStmt){
+			f = (Local) ((AssignStmt) unit).getLeftOp();
+			if(!((AssignStmt) unit).getRightOp().equals(e))
+				return false;
+			unit = units.getSuccOf(unit);
+		}
+		//it should be the call to the constructor
+		Stmt s = (Stmt) unit;
+		if(!s.containsInvokeExpr())
+			return false;
+		if(!s.getInvokeExpr().getMethod().getSignature().equals("<java.lang.RuntimeException: void <init>(java.lang.String)>"))
+			return false;
+		unit = units.getSuccOf(unit);
+		if(!(unit instanceof ThrowStmt))
+			return false;
+		Immediate i = (Immediate) ((ThrowStmt) unit).getOp();
+		return i.equals(e) || i.equals(f);
+	}
+
+	public void setScope(ProgramScope ps)
+	{
+		this.scope = ps;
+	}
+	
 }

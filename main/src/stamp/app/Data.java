@@ -13,16 +13,37 @@ public class Data
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder
-			.append("{")
-			.append(scheme == null ? "" : "scheme: "+scheme)
-			.append(host == null ? "" : "host: "+host)
-			.append(port == null ? "" : "port: "+port)
-			.append(path == null ? "" : "path: "+path)
-			.append(pathPattern == null ? "" : "pathPattern: "+pathPattern)
-			.append(pathPrefix == null ? "" : "pathPrefix: "+pathPrefix)
-			.append(mimeType == null ? "" : "mimeType: "+mimeType)
-			.append("}");
+		builder.append("{");
+		boolean first = true;
+		if(scheme != null){
+			first = false;
+			builder.append("\"scheme\": \""+scheme+"\"");
+		}
+		if(host != null){
+			if(!first) builder.append(", "); first = false;
+			builder.append("\"host\": \""+host+"\"");
+		}
+		if(port != null){
+			if(!first) builder.append(", "); first = false;
+			builder.append("\"port\": \""+port+"\"");
+		}
+		if(path != null){
+			if(!first) builder.append(", "); first = false;
+			builder.append("\"path\": \""+path+"\"");
+		}
+		if(pathPattern != null){
+			if(!first) builder.append(", "); first = false;
+			builder.append("\"pathPattern\": \""+pathPattern+"\"");
+		}
+		if(pathPrefix != null){
+			if(!first) builder.append(", "); first = false;
+			builder.append("\"pathPrefix\": \""+pathPrefix+"\"");
+		}
+		if(mimeType != null){
+			if(!first) builder.append(", "); first = false;
+			builder.append("\"mimeType\": \""+mimeType+"\"");
+		}
+		builder.append("}");
 		return builder.toString();
 	}
 }

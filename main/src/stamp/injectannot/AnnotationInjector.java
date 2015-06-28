@@ -22,6 +22,7 @@ public class AnnotationInjector extends JavaAnalysis
 		ContentProviderAnnotation.class
 		,NativeMethodAnnotation.class
 		,NetSigAnnotation.class
+		,WidgetAnnotation.class
 	};
 
 	private PrintWriter writer;

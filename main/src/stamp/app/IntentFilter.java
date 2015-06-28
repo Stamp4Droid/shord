@@ -47,19 +47,19 @@ public class IntentFilter
 	
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("intent-filter: { ");
-		builder.append("actions: {");
+		StringBuilder builder = new StringBuilder("{");
+		builder.append("\"actions\": [");
 		int len = actions.size();
 		int i = 0;
 		for(String act : actions){
-			builder.append(act);
+			builder.append("\""+act+"\"");
 			if(i < (len-1))
 				builder.append(", ");
 			i++;
 		}
-		builder.append("} ");
+		builder.append("], ");
 
-		builder.append("data: {");
+		builder.append("\"data\": [");
 		len = data.size();
 		i = 0;
 		for(Data dt : data){
@@ -68,9 +68,9 @@ public class IntentFilter
 				builder.append(", ");
 			i++;
 		}
-		builder.append("} ");
+		builder.append("]");
 
-		builder.append("} ");
+		builder.append("}");
 		return builder.toString();
 	}
 }

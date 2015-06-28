@@ -37,7 +37,11 @@ import java.util.Collections;
 
 import stamp.app.Component;
 import stamp.app.Layout;
+import stamp.app.Widget;
 
+/*
+ * @author Saswat Anand
+ */
 public class Harness
 {
 	private final SootClass sClass;
@@ -65,6 +69,16 @@ public class Harness
         //addFields(components);
 	}
 
+	public SootClass getFinalSootClass()
+	{
+		//invoke callCallbacks method
+		//SootMethod callCallbacks = Scene.v().getMethod("<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>");
+		//units.add(Jimple.v().newInvokeStmt(Jimple.v().newStaticInvokeExpr(callCallbacks.makeRef())));
+
+		units.add(Jimple.v().newReturnVoidStmt());
+		return sClass;
+	}
+
 	public void addComponent(Component comp)
 	{		
 		List<Layout> layouts = comp.layouts;
@@ -72,6 +86,7 @@ public class Harness
 		
 		//call the constructor of the comp
 		Local c = init(compClass, Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+		if(c == null) return;
 
 		for(Layout layout : layouts) {
 			//call the callbacks defined in XML
@@ -84,63 +99,16 @@ public class Harness
                 }
 			}
 
-			//initialize the custom widgets used in this comp
-			for(String widgetClassName : layout.customWidgets){
-				SootClass wClass = Scene.v().getSootClass(widgetClassName);
-				
-				//one constructor
-				List<Type> paramTypes1 = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
-																  RefType.v("android.util.AttributeSet"), 
-																  IntType.v()});
-				
-				if(wClass.declaresMethod("<init>", paramTypes1)){
-					List<Value> args = Arrays.asList(new Value[]{NullConstant.v(),
-																 NullConstant.v(),
-																 IntConstant.v(0)});
-					init(wClass, paramTypes1, args);
-				}
-				
-				//another constructor
-				List<Type> paramTypes2 = Arrays.asList(new Type[]{RefType.v("android.content.Context"), 
-																  RefType.v("android.util.AttributeSet")});
-				if(wClass.declaresMethod("<init>", paramTypes2)){
-					List<Value> args = Arrays.asList(new Value[]{NullConstant.v(),
-																 NullConstant.v()});
-					init(wClass, paramTypes2, args);
-				}
-			}
 		}
-	}
-	
-	public void writeTo(File file) throws Exception
-	{
-		//invoke callCallbacks method
-		SootMethod callCallbacks = Scene.v().getMethod("<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>");
-		units.add(Jimple.v().newInvokeStmt(Jimple.v().newStaticInvokeExpr(callCallbacks.makeRef())));
-
-		units.add(Jimple.v().newReturnVoidStmt());
-
-		//write the class
-        OutputStream streamOut = new JasminOutputStream(new FileOutputStream(file));
-        PrintWriter writerOut = new PrintWriter(new OutputStreamWriter(streamOut));
-        JasminClass jasminClass = new soot.jimple.JasminClass(sClass);
-        jasminClass.print(writerOut);
-        writerOut.flush();
-        streamOut.close();
 	}
 
 	private Local init(SootClass klass, List<Type> paramTypes, List<Value> args)
 	{
-		//SootMethod init = new SootMethod("<init>", paramTypes, VoidType.v(), Modifier.PUBLIC);
-		//klass.addMethod(init);
-		/*
-		if(!klass.declaresMethod("<init>", paramTypes)){
-			System.out.println("hello "+klass.getMethods().size()+" "+klass+ " "+klass.getSuperclass());
-			for(SootMethod m : klass.getMethods())
-				//if(m.getName().equals("<init>"))
-					System.out.println("%% "+ m.getSignature());
-					}*/
-
+		if(!klass.declaresMethod("<init>", paramTypes)) {
+			// This should never happen for a well-
+			System.out.println("ERROR**********Init doesn't exist for <activity> node in AndroidManifest.xml");
+			return null;
+		}
 		SootMethod init = klass.getMethod("<init>", paramTypes);
 		Local c = Jimple.v().newLocal("c"+count++, klass.getType());
 		locals.add(c);
@@ -148,7 +116,6 @@ public class Harness
 		units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(c, init.makeRef(), args)));	
 		return c;
 	}
-
 	
 	/*
 	private void addFields(List<Component> comps)

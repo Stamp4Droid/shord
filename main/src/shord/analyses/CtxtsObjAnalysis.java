@@ -52,7 +52,7 @@ import chord.bddbddb.Rel.RelView;
  * @author Saswat Anand
  */
 @Chord(name = "ctxts-obj-java",
-       consumes = { "MI", "MH", "ci_pt", "StatIM", "Stub"},
+       consumes = { "MI", "MH", "ci_pt", "StatIM", "Stub", "ci_reachableM", "ci_IM"},
        produces = { "C", "CC", "CH", "CI", "CtxtInsMeth", "CM"},
        namesOfTypes = { "C" },
        types = { DomC.class }
@@ -95,7 +95,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
     private ProgramRel relCH;
     private ProgramRel relCI;
     private ProgramRel relIpt;
-    private ProgramRel relStatIM;
+    private ProgramRel relIM;
     private ProgramRel relCtxtInsMeth;
 
 	private NumberedSet stubs;
@@ -112,7 +112,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");
         relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
         relIpt = (ProgramRel) ClassicProject.g().getTrgt("ci_pt");
-        relStatIM = (ProgramRel) ClassicProject.g().getTrgt("StatIM");
+        relIM = (ProgramRel) ClassicProject.g().getTrgt("ci_IM");
 		relCtxtInsMeth = (ProgramRel) ClassicProject.g().getTrgt("CtxtInsMeth");
 
         mainMeth = Program.g().getMainMethod();
@@ -163,7 +163,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         }
         relMH.close();
         relIpt.load();
-        relStatIM.load();
+        relIM.load();
 
         Ctxt epsilon = domC.setCtxt(emptyElems);
         epsilonCtxtSet = new ArraySet<Ctxt>(1);
@@ -181,25 +181,26 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         doAnalysis();
 
         relIpt.close();
-        relStatIM.close();
+        relIM.close();
 		relCtxtInsMeth.save();
 
         // Populate domC
         for(int iIdx = 0; iIdx < ItoM.length; iIdx++){
             int mIdx = ItoM[iIdx];
             Unit invk = ItoQ[iIdx];
-
+			
 			if(!isQuasiStaticInvk(invk))
 				continue;
-
+			
             Set<Ctxt> ctxts = methToCtxts[mIdx];
-            for (Ctxt oldCtxt : ctxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, invk, oldElems);
-                domC.setCtxt(newElems);
-            }
-        }
-
+			if(ctxts != null){ //only if mIdx method is reachable in stamp's ci analysis
+				for (Ctxt oldCtxt : ctxts) {
+					Object[] oldElems = oldCtxt.getElems();
+					Object[] newElems = combine(K, invk, oldElems);
+					domC.setCtxt(newElems);
+				}
+			}
+		}
         for (int hIdx = 0; hIdx < numH; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
             if(alloc instanceof GlobalAllocNode/* || alloc instanceof StubAllocNode*/) {
@@ -208,11 +209,13 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 			} else {
 				int mIdx = HtoM[hIdx];
 				Set<Ctxt> ctxts = methToCtxts[mIdx];
-				assert(ctxts != null);
-				for (Ctxt oldCtxt : ctxts) {
-					Object[] oldElems = oldCtxt.getElems();
-					Object[] newElems = combine(K, alloc, oldElems);
-					domC.setCtxt(newElems);
+				if(ctxts != null){
+					assert(ctxts != null) : alloc.toString();
+					for (Ctxt oldCtxt : ctxts) {
+						Object[] oldElems = oldCtxt.getElems();
+						Object[] newElems = combine(K, alloc, oldElems);
+						domC.setCtxt(newElems);
+					}
 				}
 			}
         }
@@ -229,26 +232,27 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
 			if(isQuasiStaticInvk(invk)){
 				Set<Ctxt> ctxts = methToCtxts[mIdx];
-				assert(ctxts != null);
-				for (Ctxt oldCtxt : ctxts) {
-					Object[] oldElems = oldCtxt.getElems();
-					Object[] newElems = combine(K, invk, oldElems);
-					Ctxt newCtxt = domC.setCtxt(newElems);
-					relCC.add(oldCtxt, newCtxt);
-					relCI.add(newCtxt, invk);
+				if(ctxts != null){
+					for (Ctxt oldCtxt : ctxts) {
+						Object[] oldElems = oldCtxt.getElems();
+						Object[] newElems = combine(K, invk, oldElems);
+						Ctxt newCtxt = domC.setCtxt(newElems);
+						relCC.add(oldCtxt, newCtxt);
+						relCI.add(newCtxt, invk);
+					}
 				}
 			}
         }
-
+		
         relCI.save();
-
+		
         assert (domC.size() == numC);
         ////CH
         relCH.zero();
-
+		
         for (int hIdx = 0; hIdx < numH; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
-
+			
             if(alloc instanceof GlobalAllocNode) {
 				Object[] newElems = combine(K, alloc, emptyElems);
 				Ctxt newCtxt = domC.setCtxt(newElems);
@@ -256,24 +260,25 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 			} else {
 				int mIdx = HtoM[hIdx];
 				Set<Ctxt> ctxts = methToCtxts[mIdx];
-				assert(ctxts != null);
-				for (Ctxt oldCtxt : ctxts) {
-					Object[] oldElems = oldCtxt.getElems();
-					Object[] newElems = combine(K, alloc, oldElems);
-					Ctxt newCtxt = domC.setCtxt(newElems);
-					relCC.add(oldCtxt, newCtxt);
-					relCH.add(newCtxt, alloc);
+				if(ctxts != null){
+					for (Ctxt oldCtxt : ctxts) {
+						Object[] oldElems = oldCtxt.getElems();
+						Object[] newElems = combine(K, alloc, oldElems);
+						Ctxt newCtxt = domC.setCtxt(newElems);
+						relCC.add(oldCtxt, newCtxt);
+						relCH.add(newCtxt, alloc);
+					}
 				}
 			}
         }
         relCH.save();
 
         assert (domC.size() == numC);
-
+		
         relCC.save();
 		
 		CM();
-    }
+	}
 
 	private void CM()
 	{
@@ -299,10 +304,13 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         Set<SootMethod> roots = new HashSet<SootMethod>();
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
 		stubs = stubMethods();
-		Iterator mIt = Program.g().scene().getReachableMethods().listener();
+		ProgramRel relReachableM = (ProgramRel) ClassicProject.g().getTrgt("ci_reachableM");
+		relReachableM.load();
+		Iterable<SootMethod> reachableMethods = relReachableM.getAry1ValTuples();
+		Iterator mIt = reachableMethods.iterator();
 		while(mIt.hasNext()){
 			SootMethod meth = (SootMethod) mIt.next();
-
+			System.out.println("Reach: "+meth);
             int mIdx = domM.indexOf(meth);
 			if (meth == mainMeth || meth.getName().equals("<clinit>") || treatCI(meth)) {
                 roots.add(meth);
@@ -321,14 +329,14 @@ public class CtxtsObjAnalysis extends JavaAnalysis
                     }
                     methToPredsMap.put(meth, predMeths);
                     methToCtxts[mIdx] = emptyCtxtSet;
-                    methToClrMeths[mIdx] = predMeths;*/
+                    methToClrMeths[mIdx] = predxbMeths;*/
 
                     ///use callsite.
                     TIntArrayList clrSites = new TIntArrayList();
                     for (Unit invk : getStatIvk(meth)) {
                         int iIdx = domI.indexOf(invk);
                         predMeths.add(domM.get(ItoM[iIdx])); // Which method can point to this method...?
-                        clrSites.add(iIdx); // sites that can call me
+                        clrSites.add(iIdx); // sitexbcicgxbs that can call me
                     }
                     methToClrSites[mIdx] = clrSites;
                     methToPredsMap.put(meth, predMeths);
@@ -336,6 +344,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
                 } else {
                     TIntArrayList rcvSites = new TIntArrayList();
                     ThisVarNode thisVar = methToThis.get(meth);
+					assert thisVar != null : meth.getSignature();
                     Iterable<Object> pts = getPointsTo(thisVar);
 					Set<Ctxt> newCtxts = null;
                     for (Object alloc : pts) {
@@ -358,6 +367,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
             }
         }
         process(roots, methToPredsMap);
+		relReachableM.close();
     }
 
     // Compute all the contexts that each method can be called in
@@ -418,10 +428,10 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         return view.getAry1ValTuples();
     }
 
-    private Iterable<Unit> getStatIvk(SootMethod var) 
+    private Iterable<Unit> getStatIvk(SootMethod method) 
 	{
-        RelView view = relStatIM.getView();
-        view.selectAndDelete(1, var);
+        RelView view = relIM.getView();
+        view.selectAndDelete(1, method);
         return view.getAry1ValTuples();
     }
 
@@ -519,8 +529,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 		if(!stubs.contains(meth))
 			return false;
 		String sig = meth.getSignature();
-		if(sig.equals("<android.app.Activity: android.view.View findViewById(int)>"))
-			return false;
 		return true;
 	}
 }

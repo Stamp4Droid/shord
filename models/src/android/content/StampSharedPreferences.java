@@ -1,8 +1,5 @@
 package android.content;
 
-import edu.stanford.stamp.harness.ApplicationDriver;
-import edu.stanford.stamp.harness.Callback;
-
 public class StampSharedPreferences implements SharedPreferences
 {
 	public static final StampSharedPreferences INSTANCE = new StampSharedPreferences();
@@ -49,12 +46,7 @@ public class StampSharedPreferences implements SharedPreferences
 	}
 
 	public void registerOnSharedPreferenceChangeListener(final android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
-		ApplicationDriver.getInstance().
-			registerCallback(new Callback(){
-					public void run() {
-						listener.onSharedPreferenceChanged(StampSharedPreferences.this, null);
-					}
-				}); 
+		listener.onSharedPreferenceChanged(StampSharedPreferences.this, null);
 	}
 
 	public java.util.Map<java.lang.String, ?> getAll() {

@@ -4,11 +4,6 @@ import java.util.*;
 import java.util.jar.*;
 import java.io.*;
 
-import org.jf.dexlib.ClassDefItem;
-import org.jf.dexlib.ClassDataItem;
-import org.jf.dexlib.TypeIdItem;
-import org.jf.dexlib.DexFile; 
-
 import soot.Modifier;
 import soot.jimple.Stmt;
 import soot.jimple.Constant;
@@ -24,6 +19,12 @@ import soot.Body;
 import soot.Unit;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.scalar.SimpleLocalDefs;
+import soot.dexpler.Util;
+
+import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile;
+import org.jf.dexlib2.iface.ClassDef;
+
 
 import shord.program.Program;
 
@@ -35,27 +36,42 @@ public class App
 	private List<Component> comps = new ArrayList();
 	private Map<Integer,Layout> layouts = new HashMap();
 	private Set<String> permissions = new HashSet();
+	private List<String> classes = new ArrayList();
+	private Set<String> frameworkClasses = new HashSet();
+	private PublicXml publicXml;
+	private StringXml stringXml;
 
 	private String pkgName;
 	private String version;
 	private String iconPath;
+	private String apkPath;
 
 	public static App readApp(String apkPath, String apktoolOutDir)
 	{
-		App app = new App();
-	
-		File manifestFile = new File(apktoolOutDir, "AndroidManifest.xml");				
-		ParseManifest pmf = new ParseManifest(manifestFile, app);
-
-		File resDir = new File(apktoolOutDir, "res");
-		List<Layout> layouts = new ParseLayout().process(resDir);
-
-		app.process(apkPath, apktoolOutDir, layouts);
-		
+		App app = new App(apkPath, apktoolOutDir);
 		return app;
 	}
 
-	public void process(String apkPath, String apktoolOutDir, List<Layout> layouts)
+	public App(String apkPath, String apktoolOutDir)
+	{
+		assert apkPath.endsWith(".apk");
+		this.apkPath = apkPath;
+
+		File manifestFile = new File(apktoolOutDir, "AndroidManifest.xml");				
+		ParseManifest pmf = new ParseManifest(manifestFile, this);
+
+		File resDir = new File(apktoolOutDir, "res");
+		this.publicXml = new PublicXml(new File(resDir, "values/public.xml"));
+		this.stringXml = new StringXml(new File(resDir, "values/strings.xml"));
+
+		List<Layout> layouts = parseLayouts(resDir);
+		
+		collectClassNames();
+		computeFrameworkClasses();		
+		process(apktoolOutDir, layouts);
+	}
+
+	public void process(String apktoolOutDir, List<Layout> layouts)
 	{
 		if(iconPath != null){
 			if(iconPath.startsWith("@drawable/")){
@@ -76,7 +92,8 @@ public class App
 
 		Set<String> widgetNames = new HashSet();
 		for(Layout layout : layouts){
-			widgetNames.addAll(layout.customWidgets);
+			for(Widget widget : layout.widgets)
+				widgetNames.add(widget.getClassName());
 		}
 
 		List<Component> comps = this.comps;
@@ -88,7 +105,7 @@ public class App
 			compNames.add(c.name);
 		}
 
-		filterDead(apkPath, compNames, widgetNames);
+		filterDead(compNames, widgetNames);
 
 		System.out.println("^^ "+compNames.size());
 		
@@ -96,18 +113,38 @@ public class App
 			if(compNames.contains(c.name))
 				this.comps.add(c);
 		}
-
+		
 		for(Layout layout : layouts){
 			this.layouts.put(layout.id, layout);
 			
-			Set<String> widgets = layout.customWidgets;
-			for(Iterator<String> it = widgets.iterator(); it.hasNext();){
-				String widget = it.next();
-				if(!widgetNames.contains(widget))
-					it.remove();
+			List<Widget> widgets = layout.widgets;
+			for(Iterator<Widget> it = widgets.iterator(); it.hasNext();){
+				Widget widget = it.next();
+				String widgetClassName = widget.getClassName();
+				
+				//check if it is a custom widget
+				if(widgetNames.contains(widgetClassName)){
+					widget.setCustom();
+					continue;
+				}
+
+				//check if it is a framework widget
+				if(frameworkClasses.contains(widgetClassName))
+					continue;
+				boolean isFrameworkWidget = false;
+				widgetClassName = "."+widgetClassName;
+				for(String fClass : frameworkClasses){
+					if(fClass.endsWith(widgetClassName)){
+						isFrameworkWidget = true;
+						widget.setClassName(fClass);
+						break;
+					}
+				}
+
+				if(!isFrameworkWidget)
+					it.remove(); //remove it if it neither a custom or framework widget
 			}
 		}
-		
 	}
 
 	public List<Component> components()
@@ -155,42 +192,52 @@ public class App
 		return iconPath;
 	}
 
-	private void filterDead(String apkPath, Set<String> compNames, Set<String> widgetNames)
+	public String apkPath()
 	{
-		assert apkPath.endsWith(".apk");
+		return apkPath;
+	}
 
-		//Map<String,Integer> componentNameToLayoutId = new HashMap();
+	public List<String> allClassNames()
+	{
+		return classes;
+	}
 
-		Set<String> widgetNamesAvailable = new HashSet();
-		Set<String> compNamesAvailable = new HashSet();
+	public Set<String> allFrameworkClassNames()
+	{
+		return frameworkClasses;
+	}
 
+	public Collection<Layout> allLayouts()
+	{
+		return layouts.values();
+	}
+
+	private void collectClassNames()
+	{
 		try{
 			File f = new File(apkPath);
-			DexFile dexFile = new DexFile(f);
-			for (ClassDefItem defItem : dexFile.ClassDefsSection.getItems()) {
-				String className = defItem.getClassType().getTypeDescriptor();
-				if(className.charAt(0) == 'L'){
-					int len = className.length();
-					assert className.charAt(len-1) == ';';
-					className = className.substring(1, len-1);
-				}
-				className = className.replace('/','.');
-				String tmp = className;
-				//String tmp = className.replace('$', '.');
-				if(compNames.contains(tmp)) {
-					compNamesAvailable.add(tmp);
-					System.out.println("%% "+tmp);
-					//componentNameToCallbacks.put(className, findCallbackMethods(defItem));
-					//componentNameToLayoutId.put(className, findLayoutId(defItem));
-				}
-				//else if(otherComps.contains(tmp))
-				//	componentNameToCallbacks.put(className, Collections.EMPTY_LIST);
-				else if(widgetNames.contains(tmp))
-					widgetNamesAvailable.add(tmp);
-					//customWidgetToConstructors.put(className, findConstructors(defItem));
+			DexBackedDexFile d = DexFileFactory.loadDexFile(f, 1);
+			for (ClassDef c : d.getClasses()) {
+				String name = Util.dottedClassName(c.getType());
+				classes.add(name);
 			}
 		} catch(IOException e){
 			throw new Error(e);
+		}
+	}
+
+	private void filterDead(Set<String> compNames, Set<String> widgetNames)
+	{
+		Set<String> compNamesAvailable = new HashSet();
+		Set<String> widgetNamesAvailable = new HashSet();
+
+		for (String className : classes) {
+			if(compNames.contains(className)) {
+				compNamesAvailable.add(className);
+				//System.out.println("%% "+tmp);
+			}
+			else if(widgetNames.contains(className))
+				widgetNamesAvailable.add(className);
 		}
 
 		compNames.clear();
@@ -199,25 +246,35 @@ public class App
 		widgetNames.clear();
 		widgetNames.addAll(widgetNamesAvailable);
 	}
-	
+
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("App : {\n");
+		StringBuilder builder = new StringBuilder("{");
 
-		builder.append("package: "+pkgName+"\n");
-		builder.append("version: "+version+"\n");
+		builder.append("\"package\": \""+pkgName+"\", ");
+		builder.append("\"version\": \""+version+"\", ");
 
-		builder.append("comps : {\n");
+		int n = comps.size();
+		builder.append("\"comps\" : [");
+		int i = 0;
 		for(Component c : comps){
-			builder.append("\t"+c.toString()+"\n");
+			builder.append(c.toString());
+			if(i < (n-1))
+				builder.append(", ");
+			i++;
 		}
-		builder.append("}\n");
+		builder.append("], ");
 
-		builder.append("perms: {\n");
+		builder.append("\"perms\": [");
+		i = 0;
+		n = permissions.size();
 		for(String perm : permissions){
-			builder.append("\t"+perm+"\n");
+			builder.append("\""+perm+"\"");
+			if(i < (n-1))
+				builder.append(", ");
+			i++;
 		}
-		builder.append("}\n");
+		builder.append("]");
 
 		builder.append("}");
 		return builder.toString();
@@ -311,4 +368,91 @@ public class App
 			}
 		}
 	}
+
+	void computeFrameworkClasses()
+	{
+		String androidJar = System.getProperty("stamp.android.jar");
+		JarFile archive;
+		try{
+			archive = new JarFile(androidJar);
+		}catch(IOException e){
+			throw new Error(e);
+		}
+		for (Enumeration entries = archive.entries(); entries.hasMoreElements();) {
+			JarEntry entry = (JarEntry) entries.nextElement();
+			String entryName = entry.getName();
+			int extensionIndex = entryName.lastIndexOf('.');
+			if (extensionIndex >= 0) {
+				String entryExtension = entryName.substring(extensionIndex);
+				if (".class".equals(entryExtension)) {
+					entryName = entryName.substring(0, extensionIndex);
+					entryName = entryName.replace('/', '.');
+					frameworkClasses.add(entryName);
+				}
+			}
+		}
+	}
+
+	List<Layout> parseLayouts(File resDir)
+	{
+		File layoutDir = new File(resDir, "layout");
+		File[] layoutFiles = layoutDir.listFiles(new FilenameFilter(){
+				public boolean accept(File dir, String name){
+					return name.endsWith(".xml");
+				}
+			});
+		
+		List<Layout> layouts = new ArrayList();
+		Map<String,Layout> nameToLayout = new HashMap();
+		if(layoutFiles != null){
+			for(File lf : layoutFiles){
+				String layoutFileName = lf.getName();
+				layoutFileName = layoutFileName.substring(0, layoutFileName.length()-4); //drop ".xml"
+				//System.out.println("++ "+layoutFileName);
+				Integer id = publicXml.layoutIdFor(layoutFileName);
+				Layout layout = new Layout(id, lf, publicXml, stringXml);
+				layouts.add(layout);
+				nameToLayout.put(layoutFileName, layout);
+			}
+		}
+		
+		/*
+		for(Layout layout : layouts){
+			//System.out.println("main layout: "+layout.fileName);
+			for(String includedLayoutName : layout.includedLayouts){
+				Layout includedLayout = nameToLayout.get(includedLayoutName);
+				//System.out.println("included layout: "+includedLayout.fileName);
+				//System.out.println("adding "+includedLayout.widgets.size()+" widgets and "+includedLayout.callbacks+" callbacks.");
+				layout.widgets.addAll(includedLayout.widgets);
+				layout.callbacks.addAll(includedLayout.callbacks);
+			}
+		}
+		*/
+		for(Layout layout : layouts){
+			for(Widget widget : layout.widgets){
+				List<Widget> childrenWidgets = new ArrayList();
+				for(Object c : layout.widgetToChildren.get(widget)){
+					if(c instanceof String){
+						Layout includedLayout = nameToLayout.get((String) c);
+						Widget includedLayoutRootWidget = includedLayout.rootWidget;
+						//System.out.println(includedLayoutRootWidget+" "+includedLayout+" "+c);
+						if(includedLayoutRootWidget.getClassName().equals("merge")){
+							for(Object l : includedLayout.widgetToChildren.get(includedLayoutRootWidget))
+								childrenWidgets.add((Widget) l);
+						} else 
+							childrenWidgets.add(includedLayoutRootWidget);
+						layout.callbacks.addAll(includedLayout.callbacks); //TODO: multiple levels of include
+					} else{
+						Widget childWidget = (Widget) c;
+						childrenWidgets.add(childWidget);
+					}
+				}
+				widget.setChildren(childrenWidgets);
+			}
+		}
+
+		return layouts;
+	}
+
+
 }

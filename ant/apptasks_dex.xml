@@ -13,7 +13,15 @@
 
   <target name="-analyze-apk">
 	<!-- Run android-apktool to decompile the manifest and resource xml files -->
-	<run-apktool/>	
+	<if>
+	 <equals arg1="${stamp.apk.toolchain}" arg2="unapk" />
+	 <then>
+	   <run-unapk/>
+	 </then>
+	 <else>
+	   <run-apktool/>
+	 </else>
+	</if>
 
     <!-- Read required properties. -->
     <prop-default property="stamp.backend" default="chord"
@@ -91,13 +99,16 @@
 		<!--pathelement location="${stamp.dir}/lib/AXMLPrinter2.jar"/-->
 		<!--pathelement location="${stamp.dir}/lib/apktool-cli-1.5.3-SNAPSHOT.jar"/-->
 		<pathelement location="${stamp.dir}/lib/soot.jar"/>
+        <pathelement location="${stamp.dir}/lib/gson-2.3.1.jar"/>
       </classpath>
+      <sysproperty key="stamp.out.dir" value="${stamp.out.dir}"/>
       <sysproperty key="stamp.driver.dir" value="${driver.dir}"/>
 	  <sysproperty key="stamp.apk.path" value="${apk}"/>
 	  <sysproperty key="stamp.apktool.out.dir" value="${stamp.out.dir}/apktool-out"/>
 	  <sysproperty key="stamp.max.harness.size" value="${stamp.max.harness.size}"/>
 	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
 	  <sysproperty key="stamp.harnesslist.file" value="${stamp.out.dir}/harness.txt"/>
+	  <sysproperty key="stamp.widgets.file" value="${stamp.out.dir}/widgets.txt"/>
     </java>
 
     <!-- Run Chord. -->
@@ -109,6 +120,9 @@
       <jvmarg value="-ea"/>
       <!--sysproperty key="chord.work.dir" file="${stamp.out.dir}"/-->
       <!--sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/-->
+      <sysproperty key="stamp.driver.dir" value="${driver.dir}"/>
+	  <sysproperty key="stamp.scope.excludefile" value="${stamp.dir}/exclude.txt"/>
+	  <sysproperty key="stamp.widgets.file" value="${stamp.out.dir}/widgets.txt"/>
 	  <sysproperty key="stamp.harnesslist.file" value="${stamp.out.dir}/harness.txt"/>
       <sysproperty key="chord.class.path" value="${apk}:${driver.dir}"/>
       <sysproperty key="chord.java.analysis.path" value="${stamp.dir}/bin/stamp.main.jar:${stamp.dir}/scanner/stamp.scanner.jar"/>
@@ -148,9 +162,9 @@
 		<pathelement location="${stamp.dir}/lib/jdom.jar"/>
 
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
-		<pathelement location="${stamp.dir}/lib/stamp.chord.jar"/>
 		<pathelement location="${stamp.dir}/lib/lpsolve55j.jar"/>
         <pathelement location="${stamp.dir}/lib/automaton.jar"/>
+        <pathelement location="${stamp.dir}/lib/gson-2.3.1.jar"/>
     	<pathelement location="${stamp.dir}/lib/droidrecord_reader.jar"/>
       </classpath>
     </java>

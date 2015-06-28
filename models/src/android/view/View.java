@@ -1,91 +1,80 @@
 class View
 {
+	public android.view.StampLayoutInflater stamp_inflater;
+
 	public  View(android.content.Context context) 
 	{ 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-						View.this.onFinishInflate();
+	}
+	
+	public void callCallbacks()
+	{
+		onFinishInflate();
 
-						View.this.onMeasure(0,0);
-						View.this.onLayout(false, 0, 0, 0, 0);
-						View.this.onSizeChanged(0, 0, 0, 0);
+		onMeasure(0,0);
+		onLayout(false, 0, 0, 0, 0);
+		onSizeChanged(0, 0, 0, 0);
+		
+		onDraw(null);
+						
+		onTouchEvent(null);
+		onTrackballEvent(null);
 
-						View.this.onDraw(null);
-						
-						View.this.onTouchEvent(null);
-						View.this.onTrackballEvent(null);
-						View.this.onKeyUp(0, null);
-						View.this.onKeyDown(0, null);
-						
-						View.this.onFocusChanged(false, 0, null);
-						View.this.onWindowFocusChanged(false);
-						
-						View.this.onAttachedToWindow();
-						View.this.onDetachedFromWindow();
-						View.this.onWindowVisibilityChanged(0);
-					}
-				});
+		onKeyPreIme(0, null);
+		onKeyDown(0, null);
+		onKeyLongPress(0, null);
+		onKeyUp(0, null);
+		onKeyMultiple(0, 0, null);
+		onKeyShortcut(0, null);
+
+		onCheckIsTextEditor();
+		
+		onFocusChanged(false, 0, null);
+		onWindowFocusChanged(false);
+		
+		onAttachedToWindow();
+		onDetachedFromWindow();
+		onWindowVisibilityChanged(0);
 	}
 
     public  void setOnFocusChangeListener(final android.view.View.OnFocusChangeListener l) 
 	{ 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-						l.onFocusChange(View.this, false);
-					}
-				});
-		
+		l.onFocusChange(View.this, false);
 	}
 	
     // Callback classes and callback setter methods                                                                                                                            
     public  void setOnClickListener(final android.view.View.OnClickListener l) 
     { 
-        edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-						l.onClick(View.this);
-					}
-				});
+		l.onClick(View.this);
     }
 	
     public  void setOnLongClickListener(final android.view.View.OnLongClickListener l) 
     { 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-						l.onLongClick(View.this);
-					}
-				});
+		l.onLongClick(View.this);
     }
 	
     public  void setOnCreateContextMenuListener(final android.view.View.OnCreateContextMenuListener l) 
 	{ 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-						l.onCreateContextMenu(null, View.this, null);
-					}
-				});
+		l.onCreateContextMenu(null, View.this, null);
 	}
 
     public  void setOnKeyListener(final android.view.View.OnKeyListener l) 
 	{ 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-						l.onKey(View.this, 0, null);
-					}
-				});
+		l.onKey(View.this, 0, null);
 	}
+
     public  void setOnTouchListener(final android.view.View.OnTouchListener l) 
 	{ 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
-					public void run() {
-						l.onTouch(View.this, null);
-					}
-				});
+		l.onTouch(View.this, null);
+	}
+
+	public final  android.content.Context getContext() 
+	{
+		return this.stamp_inflater.context;
+	}
+
+	public  void setId(int id) 
+	{
+		//dont remove it. Othewise it would become a stub, but the
+		//analysis uses it
 	}
 }

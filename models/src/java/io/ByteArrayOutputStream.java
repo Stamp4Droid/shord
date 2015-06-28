@@ -1,6 +1,6 @@
 class ByteArrayOutputStream
 {
-    public ByteArrayOutputStream() {
+	public ByteArrayOutputStream() {
         this.buf = new byte[1];
     }
 
@@ -8,7 +8,7 @@ class ByteArrayOutputStream
         this.buf = new byte[size];
     }
 
-    @STAMP(flows = {@Flow(from="this",to="@return")})
+	@STAMP(flows = {@Flow(from="this",to="@return")})
 	public synchronized byte[] toByteArray() { 
 	    return new byte[1];
 	}
@@ -30,20 +30,20 @@ class ByteArrayOutputStream
 
     @STAMP(flows = {@Flow(from="buffer",to="this")})
 	public synchronized void write(byte[] buffer, int offset, int len) {
-	    this.buf[0] = buffer[0];
+		this.buf[0] = buffer[0];
 	}
 
     @STAMP(flows={@Flow(from="buffer",to="this")})
 	public  void write(byte[] buffer) throws java.io.IOException { 
-	this.buf[0] = buffer[0];
-    }
+		this.buf[0] = buffer[0];
+	}
 
     @STAMP(flows = {@Flow(from="oneByte",to="this")})
 	public synchronized void write(int oneByte) {
-	    this.buf[0] = (byte) oneByte;
+		this.buf[0] = (byte) oneByte;
 	}
 
-    public synchronized void writeTo(java.io.OutputStream out) throws java.io.IOException {
-	out.write(this.buf);
-    }
+	public synchronized void writeTo(java.io.OutputStream out) throws java.io.IOException {
+		out.write(this.buf);
+	}
 }

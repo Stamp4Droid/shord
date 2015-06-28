@@ -51,6 +51,7 @@ import soot.jimple.NegExpr;
 import soot.jimple.NewExpr;
 import soot.jimple.ParameterRef;
 import soot.jimple.ReturnStmt;
+import soot.jimple.VirtualInvokeExpr;
 import soot.jimple.SpecialInvokeExpr;
 import soot.jimple.Stmt;
 import soot.jimple.StringConstant;
@@ -69,73 +70,85 @@ import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import stamp.missingmodels.util.cflsolver.util.PotentialCallbacksAdder;
 import stamp.missingmodels.util.jimplesrcmapper.Printer;
 import chord.project.Chord;
+import chord.bddbddb.Rel.RelView;
 
 /*
  * @author Saswat Anand
  * @author Yu Feng
  */
 @Chord(name="base-java", 
-consumes={"SC"},
-produces={"M", "Z", "K", "I", "H", "V", "T", "F", "U",
-		"GlobalAlloc", "Alloc", "NewH",
-		"Assign", "Load", "Store", 
-		"LoadStat", "StoreStat", 
-		"MmethArg", "MmethRet", "MmethRet2", 
-		"IinvkRet", "IinvkArg", "IinvkArg2", 
-		"VT", "chaIM",
-		"HT", "HT2", "HTFilter", "NewH",
-		"MI", "MH",
-		"MV", "MU",
-		"AssignPrim", 
-		"LoadPrim", "StorePrim",
-		"LoadStatPrim", "StoreStatPrim",
-		"MmethPrimArg", "MmethPrimRet", 
-		"IinvkPrimRet", "IinvkPrimArg",
-		"Stub", "Framework",
-		"SpecIM", "StatIM", "VirtIM",
-		"SubSig", "Dispatch",
-		"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
+	   consumes={"SC"},
+       produces={"M", "Z", "K", "I", "H", "V", "T", "F", "U",
+				 "GlobalAlloc", "Alloc", "NewH",
+				 "Assign", "Load", "Store", 
+				 "LoadStat", "StoreStat", 
+				 "MmethArg", "MmethRet", 
+				 "IinvkRet", "IinvkArg", 
+				 "VT", "chaIM",
+				 "HT", "HTFilter", "NewH",
+				 "MI", "MH",
+				 "MV", "MU",
+				 "AssignPrim", 
+				 "LoadPrim", "StorePrim",
+				 "LoadStatPrim", "StoreStatPrim",
+				 "MmethPrimArg", "MmethPrimRet", 
+				 "IinvkPrimRet", "IinvkPrimArg",
+	             "Stub",
+				 "SpecIM", "StatIM", "VirtIM",
+				 "SubSig", "Dispatch",
+                 "ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
 	  "SCH", "potentialCallback", "reflect"},
-namesOfTypes = { "M", "Z", "K", "I", "H", "V", "T", "F", "U", "S", "SC"},
-types = { DomM.class, DomZ.class, DomK.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomSC.class},
-namesOfSigns = { "GlobalAlloc", "Alloc", "NewH",
-		"Assign", "Load", "Store", 
-		"LoadStat", "StoreStat", 
-		"MmethArg", "MmethRet",  "MmethRet2",
-		"IinvkRet", "IinvkArg", "IinvkArg2", 
-		"VT", "chaIM",
-		"HT", "HT2", "HTFilter", 
-		"MI", "MH",
-		"MV", "MU",
-		"AssignPrim", 
-		"LoadPrim", "StorePrim",
-		"LoadStatPrim", "StoreStatPrim",
-		"MmethPrimArg", "MmethPrimRet", 
-		"IinvkPrimRet", "IinvkPrimArg",
-		"Stub", "Framework",
-		"SpecIM", "StatIM", "VirtIM",
-		"SubSig", "Dispatch",
-		"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
-		 "SCH", "potentialCallback", "reflect"},
-signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
-		"V0,V1:V0xV1", "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
-		"V0,F0:F0_V0", "F0,V0:F0_V0",
-		"M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V1:M0_V1_Z0",
-		"I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V1:I0_V1_Z0",
-		"V0,T0:T0_V0", "I0,M0:I0_M0",
-		"H0,T0:H0_T0", "H0,T1:H0_T1", "H0,T0:H0_T0",
-		"M0,I0:M0_I0", "M0,H0:M0_H0",
-		"M0,V0:M0_V0", "M0,U0:M0_U0",
-		"U0,U1:U0xU1",
-		"U0,V0,F0:U0_V0_F0", "V0,F0,U0:U0_V0_F0",
-		"U0,F0:U0_F0", "F0,U0:U0_F0",
-		"M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
-		"I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
-		"M0:M0", "M0:M0",
-		"I0,M0:I0_M0", "I0,M0:I0_M0", "I0,M0:I0_M0",
-		"M0,S0:M0_S0", "T0,S0,M0:T0_M0_S0",
-		"T0:T0", "T0,T1:T0_T1", "T0,M0:T0_M0", "T0,F0:F0_T0", "T0,M0:T0_M0",
-	  "SC0,H0:SC0_H0", "M0:M0", "I0:I0"})
+       namesOfTypes = { "M", "Z", "K", "I", "H", "V", "T", "F", "U", "S", "SC"},
+       types = { DomM.class, DomZ.class, DomK.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomSC.class},
+	   namesOfSigns = { "GlobalAlloc", "Alloc", "NewH",
+						"Assign", "Load", "Store", 
+						"LoadStat", "StoreStat", 
+						"MmethArg", "MmethRet", 
+						"IinvkRet", "IinvkArg", 
+						"VT", "chaIM",
+						"HT", "HTFilter", 
+						"MI", "MH",
+						"MV", "MU",
+						"AssignPrim", 
+						"LoadPrim", "StorePrim",
+						"LoadStatPrim", "StoreStatPrim",
+						"MmethPrimArg", "MmethPrimRet", 
+						"IinvkPrimRet", "IinvkPrimArg",
+                        "Stub",
+						"SpecIM", "StatIM", "VirtIM",
+						"SubSig", "Dispatch",
+						"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
+			    "SCH", "potentialCallback", "reflect",
+						"ArgArgTransfer", "ArgRetTransfer", 
+						"ArgArgFlow",
+						"InLabelArg", "InLabelRet",
+						"OutLabelArg", "OutLabelRet"
+                        },
+	   signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
+				 "V0,V1:V0xV1", "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
+				 "V0,F0:F0_V0", "F0,V0:F0_V0",
+				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
+				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0",
+				 "V0,T0:T0_V0", "I0,M0:I0_M0",
+				 "H0,T0:H0_T0", "H0,T0:H0_T0",
+				 "M0,I0:M0_I0", "M0,H0:M0_H0",
+				 "M0,V0:M0_V0", "M0,U0:M0_U0",
+				 "U0,U1:U0xU1",
+				 "U0,V0,F0:U0_V0_F0", "V0,F0,U0:U0_V0_F0",
+				 "U0,F0:U0_F0", "F0,U0:U0_F0",
+				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
+				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
+                 "M0:M0",
+				 "I0,M0:I0_M0", "I0,M0:I0_M0", "I0,S0:I0_S0",
+				 "M0,S0:M0_S0", "T0,S0,M0:T0_M0_S0",
+	             "T0:T0", "T0,T1:T0_T1", "T0,M0:T0_M0", "T0,F0:F0_T0", "T0,M0:T0_M0",
+		     "SC0,H0:SC0_H0", "M0:M0", "I0:I0",
+				 "M0,Z0,Z1:M0_Z0_Z1", "M0,Z0:M0_Z0", 
+				 "M0,Z0,Z1:M0_Z0_Z1",
+				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0",
+				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0"
+                 }
+	   )
 public class PAGBuilder extends JavaAnalysis
 {
 	private ProgramRel relGlobalAlloc;//(l:V,h:H)
@@ -149,10 +162,8 @@ public class PAGBuilder extends JavaAnalysis
 
 	private ProgramRel relMmethArg;//(m:M,z:Z,v:V)
 	private ProgramRel relMmethRet;//(m:M,z:Z,v:V)
-	private ProgramRel relMmethRet2;//(m:M,z:Z,v:V)
 	private ProgramRel relIinvkRet;//(i:I,n:Z,v:V)
 	private ProgramRel relIinvkArg;//(i:I,n:Z,v:V)
-	private ProgramRel relIinvkArg2;//(i:I,n:Z,v:V)
 
 	private ProgramRel relAssignPrim;//(l:U,r:U)
 	private ProgramRel relLoadPrim;//(l:U,b:V,f:F)
@@ -171,7 +182,6 @@ public class PAGBuilder extends JavaAnalysis
 
 	private ProgramRel relVT;
 	private ProgramRel relHT;
-	private ProgramRel relHT2;
 	private ProgramRel relHTFilter;
 	private ProgramRel relMI;
 	private ProgramRel relMH;
@@ -191,6 +201,7 @@ public class PAGBuilder extends JavaAnalysis
 	private DomM domM;
 	private DomF domF;
 	private DomSC domSC;
+	private DomS domS;
 
 	private int maxArgs = -1;
 	private static FastHierarchy fh;
@@ -206,7 +217,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	static String gInstallAPK = "INSTALL_APK";
 
-	public static final boolean ignoreStubs = false;
+	private boolean ignoreStub;
 
 	void openRels()
 	{
@@ -231,14 +242,10 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethArg.zero();
 		relMmethRet = (ProgramRel) ClassicProject.g().getTrgt("MmethRet");
 		relMmethRet.zero();
-		relMmethRet2 = (ProgramRel) ClassicProject.g().getTrgt("MmethRet2");
-		relMmethRet2.zero();
 		relIinvkRet = (ProgramRel) ClassicProject.g().getTrgt("IinvkRet");
 		relIinvkRet.zero();
 		relIinvkArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkArg");
 		relIinvkArg.zero();
-		relIinvkArg2 = (ProgramRel) ClassicProject.g().getTrgt("IinvkArg2");
-		relIinvkArg2.zero();
 
 		relSpecIM = (ProgramRel) ClassicProject.g().getTrgt("SpecIM");
 		relSpecIM.zero();
@@ -251,8 +258,6 @@ public class PAGBuilder extends JavaAnalysis
 		relVT.zero();
 		relHT = (ProgramRel) ClassicProject.g().getTrgt("HT");
 		relHT.zero();
-		relHT2 = (ProgramRel) ClassicProject.g().getTrgt("HT2");
-		relHT2.zero();
 		relHTFilter = (ProgramRel) ClassicProject.g().getTrgt("HTFilter");
 		relHTFilter.zero();
 		relMI = (ProgramRel) ClassicProject.g().getTrgt("MI");
@@ -304,10 +309,8 @@ public class PAGBuilder extends JavaAnalysis
 
 		relMmethArg.save();
 		relMmethRet.save();
-		relMmethRet2.save();
 		relIinvkRet.save();
 		relIinvkArg.save();
-		relIinvkArg2.save();
 		
 		if(this.usePotentialCallbacksAdder) {
 			this.potentialCallbacksAdder.addRelIM(relSpecIM);
@@ -319,7 +322,6 @@ public class PAGBuilder extends JavaAnalysis
 
 		relVT.save();
 		relHT.save();
-		relHT2.save();
 		relHTFilter.save();
 
 		if(this.usePotentialCallbacksAdder) {
@@ -417,7 +419,6 @@ public class PAGBuilder extends JavaAnalysis
 		if(v == null)
 			return;
 		relMmethRet.add(m, new Integer(0), v);
-		relMmethRet2.add(m, new Integer(0), v);
 	}
 
 	void IinvkArg(Unit invkUnit, int index, VarNode v)
@@ -425,7 +426,6 @@ public class PAGBuilder extends JavaAnalysis
 		if(v == null)
 			return;
 		relIinvkArg.add(invkUnit, new Integer(index), v);
-		relIinvkArg2.add(invkUnit, new Integer(index), v);
 	}
 
 	void IinvkRet(Unit invkUnit, LocalVarNode v)
@@ -538,7 +538,6 @@ public class PAGBuilder extends JavaAnalysis
 		//private Map<String, Set<AllocNode>> action2Node = new HashMap();
 		//private Map<String, AllocNode> dataType2Node = new HashMap();
 
-
 		private final boolean isStub;
 
 		MethodPAGBuilder(SootMethod method, boolean isStub)
@@ -586,29 +585,31 @@ public class PAGBuilder extends JavaAnalysis
 			if(!method.isConcrete())
 				return;
 
-			if(isStub) {
-				if(retType instanceof RefType){
-					for(SootClass st: SootUtils.subTypesOf(((RefType) retType).getSootClass())){
-						//for each concrete subtype of method's return type, 
-						//we add a stub alloc node
-						if(!st.isConcrete())
-							continue;
-						assert !st.isInterface();
-						// StubAllocNode n = stubAllocNodeFor(st.getType());
-						StubAllocNode n = new StubAllocNode(st.getType(), method);
-						domH.add(n);
-						stubAllocNodes.add(n);
-						//System.out.println("OO "+method+" "+n);
+			if(isStub){
+				if(!ignoreStub) {
+					if(retType instanceof RefType){
+						for(SootClass st: SootUtils.subTypesOf(((RefType) retType).getSootClass())){
+							//for each concrete subtype of method's return type, 
+							//we add a stub alloc node
+							if(!st.isConcrete())
+								continue;
+							assert !st.isInterface();
+							// StubAllocNode n = stubAllocNodeFor(st.getType());
+							StubAllocNode n = new StubAllocNode(st.getType(), method);
+							domH.add(n);
+							stubAllocNodes.add(n);
+							//System.out.println("OO "+method+" "+n);
+						}
+					
+					} else if(retType instanceof ArrayType){
+						//TODO: introduce stub alloc node for arrays 
 					}
-
-				} else if(retType instanceof ArrayType){
-					//TODO: introduce stub alloc node for arrays 
 				}
 				//don't process bodies of stub methods
 				return;
 			} 
 
-			localToVarNode = new HashMap();
+		localToVarNode = new HashMap();
 			Body body = method.retrieveActiveBody();
 			LocalsClassifier lc = new LocalsClassifier(body);
 			primLocals = lc.primLocals();
@@ -727,11 +728,13 @@ public class PAGBuilder extends JavaAnalysis
 			if(!method.isConcrete())
 				return;
 
-			if(isStub) {
-				for(StubAllocNode an : stubAllocNodes){
-					populateHT_HTFilter(an);
-					Alloc(retVar, an);
-					relMH.add(method, an);
+			if(isStub){
+				if(!ignoreStub){
+					for(StubAllocNode an : stubAllocNodes){
+						populateHT_HTFilter(an);
+						Alloc(retVar, an);
+						relMH.add(method, an);
+					}
 				}
 				return;
 			} 
@@ -819,10 +822,12 @@ public class PAGBuilder extends JavaAnalysis
 					else if(isQuasiStaticInvk(s)){
 						relStatIM.add(s, callee);
 					}
-					else{
-						assert ie instanceof VirtualInvokeExpr || ie instanceof InterfaceInvokeExpr;
-						relVirtIM.add(s,callee);
-					}
+				}
+				if(ie instanceof VirtualInvokeExpr || ie instanceof InterfaceInvokeExpr){
+					String subsig = callee.getSubSignature();
+					if(domS.contains(subsig))
+						relVirtIM.add(s, subsig);
+					//relVirtIM.add(s,callee);
 				}
 
 				//handle receiver
@@ -988,8 +993,10 @@ public class PAGBuilder extends JavaAnalysis
 		}
 	}
 
-	void populateCallgraph() {
-		CallGraph cg = Program.g().scene().getCallGraph();
+	void populateCallgraph()
+	{
+		Program prog = Program.g();
+		CallGraph cg = prog.scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
 		relChaIM.zero();
 		ProgramRel relReflect = (ProgramRel) ClassicProject.g().getTrgt("reflect");
@@ -997,7 +1004,7 @@ public class PAGBuilder extends JavaAnalysis
 		Iterator<Edge> edgeIt = cg.listener();
 		while(edgeIt.hasNext()){
 			Edge edge = edgeIt.next();
-			if(!edge.isExplicit() && !edge.isThreadRunCall())
+			if(!edge.isExplicit())
 				continue;
 			Stmt stmt = edge.srcStmt();
 			//int stmtIdx = domI.getOrAdd(stmt);
@@ -1008,14 +1015,16 @@ public class PAGBuilder extends JavaAnalysis
 				assert false : "tgt = "+tgt +" "+tgt.isAbstract();
 			if(tgt.isPhantom())
 				continue;
-			if(stubMethods.contains(src))
+			if(prog.isStub(src))
+				continue;
+			if(prog.exclude(tgt) || (src != null && prog.exclude(src)))
 				continue;
 			//System.out.println("stmt: "+stmt+" tgt: "+tgt+ "abstract: "+ tgt.isAbstract());
 			if ("<java.lang.reflect.Method: java.lang.Object invoke(java.lang.Object,java.lang.Object[])>".equals(tgt.toString())) {
 				//System.out.println("REFLECTION: " + stmt.toString());
 				relReflect.add(stmt);
 			}
-			if(ignoreStubs) {
+			if(ignoreStub) {
 				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
 					continue;
 			}
@@ -1031,7 +1040,7 @@ public class PAGBuilder extends JavaAnalysis
 	void populateMethods()
 	{
 		domM = (DomM) ClassicProject.g().getTrgt("M");
-		DomS domS = (DomS) ClassicProject.g().getTrgt("S");
+		domS = (DomS) ClassicProject.g().getTrgt("S");
 		Program program = Program.g();
 		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
 		frameworkMethods = new NumberedSet(Scene.v().getMethodNumberer());
@@ -1040,6 +1049,8 @@ public class PAGBuilder extends JavaAnalysis
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
 			growZIfNeeded(m.getParameterCount());
+			if(program.exclude(m))
+				continue;
 			if(isStub(m)){
 				//System.out.println("stub: "+ m);
 				stubMethods.add(m);
@@ -1112,15 +1123,14 @@ public class PAGBuilder extends JavaAnalysis
 		domU = (DomU) ClassicProject.g().getTrgt("U");
 
 		domH.add(gscn);
-
-		Iterator mIt = Program.g().scene().getReachableMethods().listener();
+		
+		Program prog = Program.g();
+		Iterator mIt = prog.scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
-			if(ignoreStubs){
-				if(stubMethods.contains(m))
-					continue;
-			}
-			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m, stubMethods.contains(m));
+			if(prog.exclude(m))
+				continue;
+			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m, prog.isStub(m));
 			mpagBuilder.pass1();
 			mpagBuilders.add(mpagBuilder);
 		}
@@ -1242,6 +1252,7 @@ public class PAGBuilder extends JavaAnalysis
 				workList.add((SootClass) subClass);
 		}
 
+        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		//create dispatch tuple based on the map.
 		ReachableMethods reachableMethods = Program.g().scene().getReachableMethods();
 		for(Map.Entry<SootClass,Set<SootMethod>> entry : dispatchMap.entrySet()){
@@ -1250,7 +1261,8 @@ public class PAGBuilder extends JavaAnalysis
 			for(SootMethod m : cMeths){
 				if(!reachableMethods.contains(m))
 					continue;
-				relDispatch.add(clazz.getType(), m.getSubSignature(), m);
+				if(domM.contains(m))
+					relDispatch.add(clazz.getType(), m.getSubSignature(), m);
 			}
 		}
 
@@ -1282,7 +1294,6 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		Type type = an.getType();			
 		relHT.add(an, type);
-		relHT2.add(an, type);
 
 		Iterator<Type> typesIt = Program.g().getTypes().iterator();
 		while(typesIt.hasNext()){
@@ -1305,6 +1316,7 @@ public class PAGBuilder extends JavaAnalysis
 		ProgramRel relClinitTM = (ProgramRel) ClassicProject.g().getTrgt("ClinitTM");
 		relClinitTM.zero();
 
+        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Program program = Program.g();		
 		for(SootClass klass : program.getClasses()){
 			if(klass.isPhantom())
@@ -1318,11 +1330,18 @@ public class PAGBuilder extends JavaAnalysis
 					relStaticTF.add(type, field);
 
 			for(SootMethod meth : klass.getMethods())
-				if(meth.isStatic())
+			    if(meth.isStatic() && domM.contains(meth))
 					relStaticTM.add(type, meth);
 
-			if(klass.declaresMethodByName("<clinit>"))
-				relClinitTM.add(type, klass.getMethodByName("<clinit>"));
+            for(SootMethod meth : klass.getMethods())
+                if(meth.isStatic() && domM.contains(meth))
+                    relStaticTM.add(type, meth);
+			
+			if(klass.declaresMethodByName("<clinit>")){
+				SootMethod clinit = klass.getMethodByName("<clinit>");
+				if(domM.contains(clinit))
+					relClinitTM.add(type, clinit);
+			}
 
 			for(SootClass clazz : SootUtils.subTypesOf(klass))
 				relSubtype.add(clazz.getType(), type);//clazz is subtype of klass
@@ -1388,7 +1407,9 @@ public class PAGBuilder extends JavaAnalysis
 		
 		Program program = Program.g();		
 		//for(SootClass k : program.getClasses()) System.out.println("kk "+k + (k.hasSuperclass() ? k.getSuperclass() : ""));
-		program.buildCallGraph();
+		//program.buildCallGraph();
+		program.runSpark();
+		ignoreStub = program.ignoreStub();
 
 		fh = Program.g().scene().getOrMakeFastHierarchy();
 		List<MethodPAGBuilder> mpagBuilders = new ArrayList();

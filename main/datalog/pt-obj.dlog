@@ -15,7 +15,8 @@
 .include "Z.dom"
 
 #.bddvarorder C0xC1_V0xV1_H0_F0_I0_T0_T1_M0_S0_M1_Z0
-.bddvarorder F0_I0xM0xM1_S0_T0_V0xV1_T1_H0_C0xC1xC2_Z0
+.bddvarorder F0_I0xM0_S0_T0_V0xV1_T1_H0_C0xC1xC2_Z0
+#.bddvarorder S0_T0_V0xV1_T1_H0_C0xC1xC2_F0xI0xM0_Z0
 
 Assign(v:V,u:V)      input   # v = u
 Alloc(v:V,h:H)       input   # v is the lhs in the new stmt h
@@ -27,6 +28,7 @@ StoreStat(f:F,v:V)   input   # f = v
 param(u:V,v:V,i:I)   input   # u is the formal parameter, v is actual arg, i is invocation stmt
 return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
 typeFilter(v:V,o:C) input   # type wise, v can point-to o
+ipFilter(c:C,v:V,o:C) input  
 IinvkArg(i:I,n:Z,v:V) input
 
 MV(m:M,v:V) input         # v is a variable in method m
@@ -39,18 +41,18 @@ CI(c:C,i:I) input         # stmt i is on the top of c.
 
 StatIM(i:I,m:M) input     # i statically invokes m. 
 SpecIM(i:I,m:M) input     # i special invoke m. 
-VirtIM(i:I,m:M) input     # i virtually invokes m. 
+VirtIM(i:I,s:S) input     # i virtually invokes m. 
 ClassT(t:T) input         # t is concrete or abstract
 StaticTM(t:T,m:M) input   # m is a static method in t.
 StaticTF(t:T,f:F) input   # f is a static field in t.
 ClinitTM(t:T,m:M) input   # m is the class initializer in m.
 Subtype(t1:T,t2:T) input    # t1 is a subtype of t2.
-CtxtInsMeth(m:M) input
+#CtxtInsMeth(m:M) input
 
-SubSig(m:M,s:S) input     # s is subsignature of m.
+#SubSig(m:M,s:S) input     # s is subsignature of m.
 Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 
-CICMtmp(d:C,i:I,c:C,m:M)
+#CICMtmp(d:C,i:I,c:C,m:M) output
 
 ###################
 #    OUTPUT
@@ -78,16 +80,16 @@ reachableCI(c,i) :- MI(m,i), reachableCM(c,m).
 CIC(c,i,d) :- CC(c,d), CI(d,i).
 
 DIC(c,i,o) :- IinvkArg(i,0,v), pt(c,v,o).
-CICMtmp(c,i,o,m) :- reachableCI(c,i), DIC(c,i,o), ICM(i,o,m). 
-CICMtmp(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CIC(c,i,d).
-CICMtmp(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
-CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
-CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
+CICM(c,i,o,m) :- reachableCI(c,i), DIC(c,i,o), ICM(i,o,m). 
+CICM(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CIC(c,i,d).
+CICM(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
+#CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
+#CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
 
 DVDV(d,u,c,v) :- CICM(c,i,d,m), MV(m,u), param(u,v,i).
 DVDV(c,u,d,v) :- CICM(c,i,d,m), MV(m,v), return(u,v,i).
 
-pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), typeFilter(u,o).
+pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), ipFilter(c,u,o).
 
 pt(c,v,o) :- Alloc(v,h), MV(m,v), reachableCM(c,m), CC(c,o), CH(o,h).
 pt(c,v,o) :- GlobalAlloc(v,h), MV(m,v), reachableCM(c,m), CH(o,h).
@@ -108,4 +110,4 @@ reachableCM(0,0).
 reachableCM(0,m) :- ClinitTM(t,m), reachableT(t).
 reachableCM(c,m) :- CICM(_,_,c,m). 
 
-ICM(i,o,m2) :- VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2), HT(h,t), CH(o,h).
+ICM(i,o,m2) :- VirtIM(i,s), Dispatch(t,s,m2), HT(h,t), CH(o,h).

@@ -35,7 +35,7 @@ MI(m:M,i:I) input         # stmt i belongs to method m.
 
 StatIM(i:I,m:M) input     # i statically invokes m. 
 SpecIM(i:I,m:M) input     # i special invoke m. 
-VirtIM(i:I,m:M) input     # i virtually invokes m. 
+VirtIM(i:I,s:S) input     # i virtually invokes m. 
 ClassT(t:T) input         # t is concrete or abstract
 StaticTM(t:T,m:M) input   # m is a static method in t.
 StaticTF(t:T,f:F) input   # f is a static field in t.
@@ -72,12 +72,13 @@ ci_reachableM(m) :- ci_IM(_,m).
 
 ci_reachableI(i) :- MI(m,i), ci_reachableM(m).
 
-IHM(i,h,m2) :- VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2), HT(h,t).
+IHM(i,h,m2) :- VirtIM(i,s), Dispatch(t,s,m2), HT(h,t).
 
 ci_IM(i,m) :- ci_reachableI(i), IinvkArg(i,0,v), ci_pt(v,o), IHM(i,o,m). 
 ci_IM(i,m) :- ci_reachableI(i), StatIM(i,m).
 ci_IM(i,m) :- ci_reachableI(i), SpecIM(i,m).
-ci_IM(i,m) :- ci_reachableI(i), VirtIM(i,m).
+#ci_IM(i,m) :- ci_reachableI(i), IinvkArg(i,0,v), ci_pt(v,_), SpecIM(i,m).
+ci_IM(i,m) :- ci_reachableI(i), VirtIM(i,s), Dispatch(_,s,m).
 
 interprocAssign(u,v) :- ci_IM(i,m), IinvkArg(i,z,v), MmethArg(m,z,u).
 interprocAssign(u,v) :- ci_IM(i,m), IinvkRet(i,z,u), MmethRet(m,z,v).
