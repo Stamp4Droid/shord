@@ -6,10 +6,29 @@ import shutil
 
 import prettyprint_infer_alias_data
 
-ellaHome = "/home/saswat/ella"
-stampHome = "/home/saswat/shord-modular"
-outputDir = "output"
-buildToolDir = "/home/saswat/software/android-sdk-linux/build-tools/20.0.0/"
+
+def init():
+    settingsFile = os.path.dirname(os.path.abspath(__file__))+"/.settings"
+    if not os.path.exists(settingsFile):
+        print "Please copy wrench.settings.template into wrench.settings and " + \
+            "set the configuration parameters in that file."
+        exit(1)
+    else:
+        global stampHome, ellaHome, buildToolDir, outputDir
+        with open(settingsFile,'r') as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("#"): continue
+                parts = line.split("=")
+                assert len(parts) == 2
+                if parts[0].strip() == "stamp.dir":
+                    stampHome = parts[1].strip()
+                elif parts[0].strip() == "ella.dir":
+                    ellaHome = parts[1].strip()
+                elif parts[0].strip() == "output.dir":
+                    outputDir = parts[1].strip()
+                elif parts[0].strip() == "buildtool.dir":
+                    buildToolDir = parts[1].strip()
 
 def getPackageName(apkFile):
     command = buildToolDir + "/aapt dump badging " + apkFile
@@ -70,23 +89,20 @@ def getLatestCoverageDatFile(apkFile):
 def postProcess(apkFile):
     if not os.path.exists(outputDir):
         os.makedirs(outputDir)
-    outDir = outputDir + "/" + appId(apkFile)
-    print outDir
-    if os.path.exists(outDir):
-        shutil.rmtree(outDir)
-    os.mkdir(outDir)
     instrInfoPath = stampHome + "/stamp_output/" + appId(apkFile) + "/inferaliasmodel/instrinfo.txt" 
     methodsPath = stampHome + "/stamp_output/" + appId(apkFile) + "/inferaliasmodel/methods.txt" 
-    shutil.copy(instrInfoPath, outDir)
-    shutil.copy(methodsPath, outDir)
-    shutil.copy(getLatestCoverageDatFile(apkFile), outDir)    
-    ppprocessor = prettyprint_infer_alias_data.PrettyPrintInferAliasProcessor(outDir)
+    shutil.copy(instrInfoPath, outputDir)
+    shutil.copy(methodsPath, outputDir)
+    coverageDatFile = getLatestCoverageDatFile(apkFile)
+    shutil.copy(coverageDatFile, outputDir)    
+    ppprocessor = prettyprint_infer_alias_data.PrettyPrintInferAliasProcessor(outputDir)
     pkgName = getPackageName(apkFile)
-    ppprocessor.process(outDir + "/"+pkgName+".log")
-    shutil.copy(apkFile, outDir+ "/"+pkgName+".apk")
-    os.remove(outDir+"/instrinfo.txt")
-    os.remove(outDir+"/methods.txt")
-    print "Coverage data stored in "+os.path.abspath(outDir + "/"+pkgName+".log")
+    ppprocessor.process(outputDir + "/"+pkgName+".log")
+    shutil.copy(apkFile, outputDir+ "/"+pkgName+".apk")
+    os.remove(outputDir+"/instrinfo.txt")
+    os.remove(outputDir+"/methods.txt")
+    os.remove(outputDir+"/"+os.path.basename(coverageDatFile))
+    print "Coverage data stored in "+os.path.abspath(outputDir + "/"+pkgName+".log")
 
 def installCommand(apkFile):
     pkgName = getPackageName(apkFile)
@@ -115,6 +131,7 @@ def doneCommand(apkFile):
 if __name__ == "__main__":
     command = sys.argv[1]
     apkFile = sys.argv[2]
+    init()
 
     if command == "i":
         if runStamp(apkFile) != 0 :
