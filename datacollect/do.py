@@ -81,8 +81,36 @@ def postProcess(apkFile):
     shutil.copy(methodsPath, outDir)
     shutil.copy(getLatestCoverageDatFile(apkFile), outDir)    
     ppprocessor = prettyprint_infer_alias_data.PrettyPrintInferAliasProcessor(outDir)
-    ppprocessor.process(outDir + "/data.txt")
-    print "Coverage data stored in "+os.path.abspath(outDir + "/data.txt")
+    pkgName = getPackageName(apkFile)
+    ppprocessor.process(outDir + "/"+pkgName+".log")
+    shutil.copy(apkFile, outDir+ "/"+pkgName+".apk")
+    os.remove(outDir+"/instrinfo.txt")
+    os.remove(outDir+"/methods.txt")
+    print "Coverage data stored in "+os.path.abspath(outDir + "/"+pkgName+".log")
+
+def installCommand(apkFile):
+    pkgName = getPackageName(apkFile)
+    print "package: "+pkgName
+    
+    #uninstall
+    if uninstall(pkgName) != 0:
+        print "Error while uninstalling"
+
+    #install                                                           
+    if install(apkFile) != 0:
+        print "Error while installing"
+        sys.exit(1)
+
+def doneCommand(apkFile):
+    if runCommand("adb shell am broadcast -a com.apposcopy.ella.COVERAGE --es action \"e\"") != 0 :
+        print "Erro while broadcasting"
+        sys.exit(1)
+        
+    #uninstall                                                       
+    pkgName = getPackageName(apkFile)
+    if uninstall(pkgName) != 0:
+        print "Error while uninstalling"
+    
 
 if __name__ == "__main__":
     command = sys.argv[1]
@@ -95,27 +123,16 @@ if __name__ == "__main__":
 		sys.exit("Error running Ella")
 
     elif command == "s":
-        pkgName = getPackageName(apkFile)
-        print "package: "+pkgName
-
-        #uninstall
-        if uninstall(pkgName) != 0:
-            print "Error while uninstalling"
-
-        #install                                                                                                                                                                                                                             
-        if install(apkFile) != 0:
-            print "Error while installing"
-            sys.exit(1)
+        installCommand(apkFile)
 
     elif command == "d":
-        if runCommand("adb shell am broadcast -a com.apposcopy.ella.COVERAGE --es action \"e\"") != 0 :
-            print "Erro while broadcasting"
-            sys.exit(1)
-
-        #uninstall                                                                                                                                                                                                                           
-        pkgName = getPackageName(apkFile)
-        if uninstall(pkgName) != 0:
-            print "Error while uninstalling"
+        doneCommand(apkFile)
+    
+    elif command == "sd":
+        installCommand(apkFile)
+        print "Input anything when done testing the app."
+        sys.stdin.read(1); #wait
+        doneCommand(apkFile)
 
     elif command == "p":
         postProcess(apkFile)
