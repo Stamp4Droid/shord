@@ -66,7 +66,7 @@ public class DefaultProgramScope extends ProgramScope
 
 	public boolean ignoreStub()
 	{
-		return true;
+		return false;
 	}
 	
 	private void identifyMethodsWithAnnotations()

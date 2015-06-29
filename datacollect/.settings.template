@@ -1,0 +1,6 @@
+#copy this file to .settings and change the values
+
+ella.dir = /home/saswat/ella
+stamp.dir = /home/saswat/shord-modular
+output.dir = /home/saswat/inferaliasmodels
+buildtool.dir = /opt/android-sdk-linux/build-tools/22.0.1/
