@@ -18,6 +18,7 @@ def init():
         with open(settingsFile,'r') as f:
             for line in f:
                 line = line.strip()
+                if len(line) == 0 : continue
                 if line.startswith("#"): continue
                 parts = line.split("=")
                 assert len(parts) == 2
