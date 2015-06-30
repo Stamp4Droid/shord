@@ -97,13 +97,32 @@ FrameworkPrimSource(c,u) :- Framework(m), MmethPrimArg(m,_,u), CM(c,m).
 FrameworkPrimSource(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
 FrameworkPrimSink(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
 
-# Objects that escape to the framework
+# load, store, assign, alloc not in framework
+
+Load(v:V,u:V,f:F) input
+Store(v:V,f:F,u:V) input
+Assign(v:V,u:V) input
+Alloc(v:V,h:H) input
+MV(m:M,v:V) input
+
+LoadNF(v:V,u:V,f:F) output
+StoreNF(v:V,f:F,u:V) output
+AssignNF(v:V,u:V) output
+AllocNF(v:V,h:H) output
+
+LoadNF(v,u,f) :- Load(v,u,f), MV(m,v), !Framework(m).
+StoreNF(v,f,u) :- Store(v,f,u), MV(m,v), !Framework(m).
+AssignNF(v,u) :- Assign(v,u), MV(m,v), !Framework(m).
+AllocNF(v,h) :- Alloc(v,h), MV(m,v), !Framework(m).
+
+# objects that escape to the framework
 
 Escape(o:C) output
 EscapeH(h:H) output
+
 Escape(o) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
 Escape(o) :- Escape(op), fpt(op,_,o).
-EscapeH(h) :- Escape(o), CH(o,h).
+EscapeH(h) :- Escape(o), CH(o,h),AllocNF(_,h).
 
 # calls to stub methods (for alias models inference paper results)
 

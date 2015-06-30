@@ -83,19 +83,23 @@ public class AliasModelsShortAnalysis extends JavaAnalysis {
 		relFrameworkI.load();
 		System.out.println("FrameworkI size: " + relFrameworkI.size());
 		relFrameworkI.close();
-		ProgramRel relLoad = (ProgramRel)ClassicProject.g().getTrgt("Load");
+		ProgramRel relEscapeH = (ProgramRel)ClassicProject.g().getTrgt("EscapeH");
+		relEscapeH.load();
+		System.out.println("EscapeH size: " + relEscapeH.size());
+		relEscapeH.close();
+		ProgramRel relLoad = (ProgramRel)ClassicProject.g().getTrgt("LoadNF");
 		relLoad.load();
 		System.out.println("Load size: " + relLoad.size());
 		relLoad.close();
-		ProgramRel relStore = (ProgramRel)ClassicProject.g().getTrgt("Store");
+		ProgramRel relStore = (ProgramRel)ClassicProject.g().getTrgt("StoreNF");
 		relStore.load();
 		System.out.println("Store size: " + relStore.size());
 		relStore.close();
-		ProgramRel relAlloc = (ProgramRel)ClassicProject.g().getTrgt("Alloc");
+		ProgramRel relAlloc = (ProgramRel)ClassicProject.g().getTrgt("AllocNF");
 		relAlloc.load();
 		System.out.println("Alloc size: " + relAlloc.size());
 		relAlloc.close();
-		ProgramRel relAssign = (ProgramRel)ClassicProject.g().getTrgt("Assign");
+		ProgramRel relAssign = (ProgramRel)ClassicProject.g().getTrgt("AssignNF");
 		relAssign.load();
 		System.out.println("Assign size: " + relAssign.size());
 		relAssign.close();
@@ -103,6 +107,8 @@ public class AliasModelsShortAnalysis extends JavaAnalysis {
 		IOUtils.printRelation("ActiveFlowDynH");
 		System.out.println("PRINTING PHANTOM OBJECT MODELS");
 		IOUtils.printRelation("PhantomObjectDyn");
+		
+		IOUtils.printRelation("AllocNF");
 		
 		if(!checkActiveFlowNew()) {
 			System.out.println("ERROR: No active flow edges found!");

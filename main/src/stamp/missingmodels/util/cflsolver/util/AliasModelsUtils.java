@@ -274,7 +274,7 @@ public class AliasModelsUtils {
 				if(flowEdge.weight == (short)0) {
 					continue;
 				}
-				System.out.println("Getting models for edge: " + flowEdge);
+				System.out.println("Getting models for edge: " + flowEdge.toString(true));
 				// STEP 1: Get edge path
 				List<Pair<EdgeStruct,Boolean>> path = new ArrayList<Pair<EdgeStruct,Boolean>>();
 				for(Pair<Edge,Boolean> pair : flowEdge.getPath()) {
@@ -288,7 +288,7 @@ public class AliasModelsUtils {
 				}
 				System.out.println("Done!");
 				for(EdgeStruct edge : modelPath) {
-					System.out.println("MODEL PATH: " + edge);
+					System.out.println("MODEL PATH: " + edge.toString(true));
 				}
 				// STEP 3: Synthesize models
 				models.addAll(getModels(modelPath));
