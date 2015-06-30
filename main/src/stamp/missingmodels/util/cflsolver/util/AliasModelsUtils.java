@@ -268,20 +268,27 @@ public class AliasModelsUtils {
 		
 		// Returns models for transitive closure graphBar by running AliasModelSynthesis.synthesize
 		public static List<List<EdgeStruct>> getModelsFromGraph(Graph graphBar) {
+			System.out.println("Getting models from graph...");
 			List<List<EdgeStruct>> models = new ArrayList<List<EdgeStruct>>();
 			for(Edge flowEdge : graphBar.getEdges(new Filter<Edge>() { public boolean filter(Edge edge) { return edge.symbol.symbol.equals("FlowNew"); }})) {
 				if(flowEdge.weight == (short)0) {
 					continue;
 				}
+				System.out.println("Getting models for edge: " + flowEdge);
 				// STEP 1: Get edge path
 				List<Pair<EdgeStruct,Boolean>> path = new ArrayList<Pair<EdgeStruct,Boolean>>();
 				for(Pair<Edge,Boolean> pair : flowEdge.getPath()) {
 					path.add(new Pair<EdgeStruct,Boolean>(pair.getX().getStruct(), pair.getY()));
 				}
 				// STEP 2: Synthesize flow path
+				System.out.println("Synthesizing model...");
 				List<EdgeStruct> modelPath = new ArrayList<EdgeStruct>();
 				for(Pair<EdgeStruct,Boolean> pair : AliasModelsSynthesis.synthesize(path)) {
 					modelPath.add(pair.getX());
+				}
+				System.out.println("Done!");
+				for(EdgeStruct edge : modelPath) {
+					System.out.println("MODEL PATH: " + edge);
 				}
 				// STEP 3: Synthesize models
 				models.addAll(getModels(modelPath));

@@ -48,9 +48,15 @@ public class AliasModelsShortAnalysis extends JavaAnalysis {
 	}
 	
 	public static Graph run(RelationReader reader, ContextFreeGrammarOpt grammar, RelationManager relations, RelationManager filterRelations, Set<String> vertexFilter) {
+		System.out.println("Reading graph...");
 		Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
+		System.out.println("Done!");
+		System.out.println("Reading filter...");
 		Filter<Edge> filter = new AndFilter(new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols())), new GraphVertexFilter(graph.getVertices(), vertexFilter));
+		System.out.println("Done!");
+		System.out.println("Computing transitive closure...");
 		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
+		System.out.println("Done!");
 		//IOUtils.printGraphStatistics(graphBar);
 		return graphBar;
 	}
