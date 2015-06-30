@@ -549,7 +549,6 @@ public class PAGBuilder extends JavaAnalysis
 		void pass1()
 		{
 			growZIfNeeded(method.getParameterCount());
-
 			if(!method.isStatic()) {
 				thisVar = new ThisVarNode(method);
 				domV.add(thisVar);
@@ -1048,6 +1047,8 @@ public class PAGBuilder extends JavaAnalysis
 		domM.add(program.getMainMethod()); //important to add main before any other method
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
+			if(!Scene.v().getReachableMethods().contains(m))
+			    continue;
 			growZIfNeeded(m.getParameterCount());
 			if(program.exclude(m))
 				continue;

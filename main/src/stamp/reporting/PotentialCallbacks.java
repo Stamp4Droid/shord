@@ -36,11 +36,15 @@ public class PotentialCallbacks extends XMLReport
 			for(SootMethod cb : entry.getValue()){
 				boolean flag = true;
 				//if(inScopeMethods.contains(cb))
+				try {
 				flag = !relReachableM.contains(cb);
 				if(flag){
 					if(cat == null)
 						cat = makeOrGetPkgCat(fmeth);
 					cat.newTuple().addValue(cb, true, "method");
+				}
+				} catch(Exception e) {
+				    e.printStackTrace();
 				}
 			}
 		}

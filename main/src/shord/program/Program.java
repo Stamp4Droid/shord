@@ -221,7 +221,7 @@ public class Program
 	
 	public Iterator<SootMethod> getMethods()
 	{
-		return Scene.v().getMethodNumberer().iterator();
+	    return Scene.v().getMethodNumberer().iterator();
 	}
 
 	public ArrayNumberer<Type> getTypes()
