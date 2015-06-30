@@ -51,7 +51,7 @@ public class AliasModelsShortAnalysis extends JavaAnalysis {
 		Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
 		Filter<Edge> filter = new AndFilter(new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols())), new GraphVertexFilter(graph.getVertices(), vertexFilter));
 		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
-		IOUtils.printGraphStatistics(graphBar);
+		//IOUtils.printGraphStatistics(graphBar);
 		return graphBar;
 	}
 	
@@ -72,6 +72,32 @@ public class AliasModelsShortAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
+
+		ProgramRel relFrameworkI = (ProgramRel)ClassicProject.g().getTrgt("FrameworkI");
+		relFrameworkI.load();
+		System.out.println("FrameworkI size: " + relFrameworkI.size());
+		relFrameworkI.close();
+		ProgramRel relLoad = (ProgramRel)ClassicProject.g().getTrgt("Load");
+		relLoad.load();
+		System.out.println("Load size: " + relLoad.size());
+		relLoad.close();
+		ProgramRel relStore = (ProgramRel)ClassicProject.g().getTrgt("Store");
+		relStore.load();
+		System.out.println("Store size: " + relStore.size());
+		relStore.close();
+		ProgramRel relAlloc = (ProgramRel)ClassicProject.g().getTrgt("Alloc");
+		relAlloc.load();
+		System.out.println("Alloc size: " + relAlloc.size());
+		relAlloc.close();
+		ProgramRel relAssign = (ProgramRel)ClassicProject.g().getTrgt("Assign");
+		relAssign.load();
+		System.out.println("Assign size: " + relAssign.size());
+		relAssign.close();
+		System.out.println("PRINTING ACTIVE FLOW DYN");
+		IOUtils.printRelation("ActiveFlowDynH");
+		System.out.println("PRINTING PHANTOM OBJECT MODELS");
+		IOUtils.printRelation("PhantomObjectDyn");
+		
 		if(!checkActiveFlowNew()) {
 			System.out.println("ERROR: No active flow edges found!");
 			return;

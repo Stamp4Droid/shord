@@ -1,5 +1,6 @@
 package stamp.analyses;
 
+import shord.analyses.DomV;
 import shord.analyses.SiteAllocNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
@@ -32,7 +33,11 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		for(VarNode varNode : ptDyn.keySet()) {
 			for(SiteAllocNode allocNode : ptDyn.get(varNode)) {
 				System.out.println("DYNAMIC POINTS TO: " + varNode + " -> " + allocNode);
-				relFlowDyn.add(allocNode, varNode);
+				try {
+					relFlowDyn.add(allocNode, varNode);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		relFlowDyn.save();

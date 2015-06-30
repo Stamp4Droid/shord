@@ -37,3 +37,7 @@
 ./stamp analyze ~/Documents/Files/stamp/stamptest/DarpaApps/2B_NetPhone
 ./stamp analyze ~/Documents/Files/stamp/stamptest/DarpaApps/2B_RunningApp
 ./stamp analyze ~/Documents/Files/stamp/stamptest/DarpaApps/2B_fillinfun
+
+#./stamp analyze ~/Documents/Files/stamp/stamptest/FDroidApps/com.pjuu.droidotter_3.apk
+#./stamp analyze ~/Documents/Files/stamp/stamptest/FDroidApps/nl.asymmetrics.droidshows_50.apk
+#./stamp analyze ~/Documents/Files/stamp/stamptest/FDroidApps/org.freshrss.easyrss_606.apk

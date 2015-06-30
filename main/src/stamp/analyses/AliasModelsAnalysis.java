@@ -99,33 +99,6 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		ProgramRel relStubI = (ProgramRel)ClassicProject.g().getTrgt("StubI");
-		relStubI.load();
-		System.out.println("StubI size: " + relStubI.size());
-		relStubI.close();
-		ProgramRel relLoad = (ProgramRel)ClassicProject.g().getTrgt("Load");
-		relLoad.load();
-		System.out.println("Load size: " + relLoad.size());
-		relLoad.close();
-		ProgramRel relStore = (ProgramRel)ClassicProject.g().getTrgt("Store");
-		relStore.load();
-		System.out.println("Store size: " + relStore.size());
-		relStore.close();
-		ProgramRel relAlloc = (ProgramRel)ClassicProject.g().getTrgt("Alloc");
-		relAlloc.load();
-		System.out.println("Alloc size: " + relAlloc.size());
-		relAlloc.close();
-		ProgramRel relAssign = (ProgramRel)ClassicProject.g().getTrgt("Assign");
-		relAssign.load();
-		System.out.println("Assign size: " + relAssign.size());
-		relAssign.close();
-		
-		
-		
-		System.out.println("PRINTING ACTIVE FLOW DYN");
-		IOUtils.printRelation("ActiveFlowDynH");
-		System.out.println("PRINTING PHANTOM OBJECT MODELS");
-		IOUtils.printRelation("PhantomObjectDyn");
 		if(!checkActiveFlowNew()) {
 			System.out.println("ERROR: No active flow edges found!");
 			return;
