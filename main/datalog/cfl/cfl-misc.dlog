@@ -97,8 +97,17 @@ FrameworkPrimSource(c,u) :- Framework(m), MmethPrimArg(m,_,u), CM(c,m).
 FrameworkPrimSource(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
 FrameworkPrimSink(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
 
-# # calls to stub methods (for alias models inference paper results)
+# Objects that escape to the framework
+
+Escape(o:C) output
+EscapeH(h:H) output
+Escape(o) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
+Escape(o) :- Escape(op), fpt(op,_,o).
+EscapeH(h) :- Escape(o), CH(o,h).
+
+# calls to stub methods (for alias models inference paper results)
 
 chaIM(i:I,m:M) input
 FrameworkI(i:I) output
 FrameworkI(i) :- Framework(m), chaIM(i,m).
+

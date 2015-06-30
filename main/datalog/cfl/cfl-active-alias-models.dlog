@@ -58,6 +58,9 @@ FlowFieldPost(c:C0,m:M0,f:F0,o:C2) input
 FlowPreFull(o:C2,c:C0,m:M0) input
 FlowNew(o:C2,c:C0,v:V0) input
 
+# object escape
+EscapeH(h:H) input
+
 ###########
 # OUTPUTS #
 ###########
@@ -77,7 +80,7 @@ ActiveFlowNew(o:C2,c:C0,v:V0) output
 # seed relation
 
 #ActiveFlowNew(o,c,v) :- !Flow(o,c,v), FlowNew(o,c,v).
-ActiveFlowNew(o,c,v) :- !Flow(o,c,v), FlowNew(o,c,v), FlowDyn(op,v), CH(o,op).
+ActiveFlowNew(o,c,v) :- !Flow(o,c,v), FlowNew(o,c,v), FlowDyn(op,v), EscapeH(op), CH(o,op).
 
 # A_v rules
 
