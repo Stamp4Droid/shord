@@ -122,7 +122,7 @@ EscapeH(h:H) output
 
 Escape(o) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
 Escape(o) :- Escape(op), fpt(op,_,o).
-EscapeH(h) :- Escape(o), CH(o,h),AllocNF(_,h).
+EscapeH(h) :- Escape(o), CH(o,h), AllocNF(_,h).
 
 # calls to stub methods (for alias models inference paper results)
 
@@ -130,3 +130,16 @@ chaIM(i:I,m:M) input
 FrameworkI(i:I) output
 FrameworkI(i) :- Framework(m), chaIM(i,m).
 
+# objects to instrument
+
+EscapeCount(o:C) output
+EscapeCountH(h:H) output
+
+EscapeCount(o) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
+EscapeCount(o) :- Escape(op), fpt(op,_,o).
+EscapeCountH(h) :- Escape(o), CH(o,h), AllocNF(_,h).
+
+# stubs to instrument
+
+StubI(i:I) output
+StubI(i) :- Stub(m), chaIM(i,m), MI(mp,i), !Framework(mp).
