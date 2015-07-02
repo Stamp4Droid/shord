@@ -115,7 +115,7 @@ public class AliasModelsShortAnalysis extends JavaAnalysis {
 			return;
 		}
 		for(List<EdgeStruct> model : AliasModelsUtils.SynthesisUtils.getModelsFromGraph(getAliasModels())) {
-			System.out.println("PRINING MODEL");
+			System.out.println("PRINTING MODEL");
 			for(EdgeStruct edge : model) {
 				System.out.println("MODEL EDGE: " + edge.toString(true));
 			}
