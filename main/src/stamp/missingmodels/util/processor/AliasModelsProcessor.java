@@ -56,13 +56,25 @@ public class AliasModelsProcessor implements Processor {
 	private final Map<String,Integer> appFrameworkMethodCalls = new HashMap<String,Integer>();
 	private final Map<String,Integer> appEscapedObjects = new HashMap<String,Integer>();
 	private final Map<String,Integer> appAliasingStatements = new HashMap<String,Integer>();
+	private final Map<String,Double> appRunningTimes = new HashMap<String,Double>();
+	
+	private static final String[] runningTimeAnalyses = new String[]{"cfl-alias-models-dlog", "cfl-active-alias-models-dlog", "alias-models-short-java"};
+	private static boolean isRunningTimeAnalysis(String line) {
+		for(String runningTimeAnalysis : runningTimeAnalyses) {
+			if(line.equals("LEAVE: " + runningTimeAnalysis)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	// 0 : after PRINTING MODEL statement
 	// 1 : after entry (param/return)
 	// 2 : after first interal edge of model (load/store)
 	// 3 : invalid model, ignore
-	int state = 3;
-	StringBuilder curModel;
+	private int state = 3;
+	private StringBuilder curModel;
+	private boolean runningTimeFlag = false;
 	@Override
 	public void process(String appName, String line) {
 		if(line.startsWith("PhantomObjectDyn")) {
@@ -78,14 +90,12 @@ public class AliasModelsProcessor implements Processor {
 					this.allCorrectPhantomObjectModels.add(method);
 				}
 			}
-		} else if(line.startsWith("StubI size:") || line.startsWith("FrameworkI size:")) { // backwards compatibility
-			this.appFrameworkMethodCalls.put(appName, Integer.parseInt(line.split(" ")[2]));
-		} else if(line.startsWith("Load size:") || line.startsWith("Store size:") || line.startsWith("Alloc size:") || line.startsWith("Assign size:")) {
-			this.appAliasingStatements.put(appName, Integer.parseInt(line.split(" ")[2]) + this.appAliasingStatements.get(appName));
-		} else if(line.startsWith("SAVING dom I size:")) {
-			this.appAliasingStatements.put(appName, Integer.parseInt(line.split("size: ")[1]) + this.appAliasingStatements.get(appName));			
-		} else if(line.startsWith("EscapeH size:")) {
-			this.appEscapedObjects.put(appName,  Integer.parseInt(line.split(" ")[2]));
+		} else if(line.startsWith("Relation StubInvokeMonitorRet:")) {
+			this.appFrameworkMethodCalls.put(appName, (int)Float.parseFloat(line.split(" ")[4]));
+		} else if(line.startsWith("Relation LoadNF:") || line.startsWith("Relation StoreNF:") || line.startsWith("Relation AllocNF:") || line.startsWith("Relation AssignNF:") || line.startsWith("Relation InvokeMonitorArg") || line.startsWith("Relation InvokeMonitorReg")) {
+			this.appAliasingStatements.put(appName, (int)Float.parseFloat(line.split(" ")[4]) + this.appAliasingStatements.get(appName));
+		} else if(line.startsWith("Relation EscapeCountH:")) {
+			this.appEscapedObjects.put(appName,  (int)Float.parseFloat(line.split(" ")[4]));
 		} else if(line.startsWith("MODEL EDGE")) {
 			// STEP 1: If the model is invalid, continue
 			if(state != 3) {
@@ -145,6 +155,13 @@ public class AliasModelsProcessor implements Processor {
 		} else if(line.startsWith("PRINING MODEL") || line.startsWith("PRINTING MODEL")) { // backwards compatibility
 			state = 0;
 			curModel = new StringBuilder();
+		} else if(isRunningTimeAnalysis(line)) {
+			runningTimeFlag = true;
+		} else if(runningTimeFlag) {
+			String[] tokens = line.split(" ")[2].split(":");
+			double runningTime = 60.0*Integer.parseInt(tokens[0]) + Integer.parseInt(tokens[1]) + 1.0/60*Integer.parseInt(tokens[2]) + 1.0/60/1000*Integer.parseInt(tokens[3]);
+			this.appRunningTimes.put(appName, runningTime + this.appRunningTimes.get(appName));
+			runningTimeFlag = false;
 		}
 	}
 	
@@ -166,6 +183,7 @@ public class AliasModelsProcessor implements Processor {
 	@Override
 	public void startProcessing(String appName) {
 		this.appAliasingStatements.put(appName, 0);
+		this.appRunningTimes.put(appName, 0.0);
 	}
 
 	@Override
@@ -177,37 +195,49 @@ public class AliasModelsProcessor implements Processor {
 	public void finishProcessing(String appName) {
 	}
 	
-	public String getPhantomObjectModelsHeader() {
+	public String getAliasModelsHeader() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("App Name").append(" & ");
+		sb.append("Running Time (min)").append(" & ");
+		sb.append("# $1$-Shallow Alias Models Inferred").append(" & ");
+		sb.append("# Correct").append(" & ");
+		sb.append("Accuracy").append(" & ");
 		sb.append("# Phantom Object Models Inferred").append(" & ");
 		sb.append("# Correct").append(" & ");
 		sb.append("Accuracy");
 		return sb.toString();
 	}
 	
-	public String getPhantomObjectModelsAppLine(String appName) {
+	public String getAliasModelsAppLine(String appName) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(appName).append(" & ");
+		sb.append(this.appRunningTimes.get(appName)).append(" & ");
+		sb.append(this.appAliasModels.get(appName).size()).append(" & ");
+		sb.append(this.appCorrectAliasModels.get(appName).size()).append(" & ");
+		sb.append((float)this.appCorrectAliasModels.get(appName).size()/this.appAliasModels.get(appName).size()).append(" & ");
 		sb.append(this.appPhantomObjectModels.get(appName).size()).append(" & ");
 		sb.append(this.appCorrectPhantomObjectModels.get(appName).size()).append(" & ");
 		sb.append((float)this.appCorrectPhantomObjectModels.get(appName).size()/this.appPhantomObjectModels.get(appName).size());
 		return sb.toString();
 	}
 	
-	public String getPhantomObjectModelsTotal() {
+	public String getAliasModelsTotal() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" -- ").append(" & ");
+		sb.append("Total").append(" & ");
+		sb.append("--").append(" & ");
+		sb.append(this.allAliasModels.size()).append(" & ");
+		sb.append(this.allCorrectAliasModels.size()).append(" & ");
+		sb.append((float)this.allCorrectAliasModels.size()/this.allAliasModels.size()).append(" & ");
 		sb.append(this.allPhantomObjectModels.size()).append(" & ");
 		sb.append(this.allCorrectPhantomObjectModels.size()).append(" & ");
 		sb.append((float)this.allCorrectPhantomObjectModels.size()/this.allPhantomObjectModels.size());
 		return sb.toString();
 	}
 	
-	public String getAliasModelsHeader() {
+	public String getAliasModelsComparisonHeader() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("App Name").append(" & ");
 		/*
+		sb.append("App Name").append(" & ");
 		sb.append("# Alias Models Inferred").append(" & ");
 		sb.append("# Correct").append(" & ");
 		sb.append("Accuracy");
@@ -218,7 +248,7 @@ public class AliasModelsProcessor implements Processor {
 		return sb.toString();
 	}
 	
-	public String getAliasModelsAppLine(String appName) {
+	public String getAliasModelsComparisonAppLine(String appName) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(appName).append(" & ");
 		/*
@@ -232,7 +262,7 @@ public class AliasModelsProcessor implements Processor {
 		return sb.toString();
 	}
 	
-	public String getAliasModelsTotal() {
+	public String getAliasModelsComparisonTotal() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(" -- ").append(" & ");
 		sb.append(this.allAliasModels.size()).append(" & ");
@@ -258,28 +288,11 @@ public class AliasModelsProcessor implements Processor {
 		return appNamesSorted;
 	}
 	
-	public String getStatisticsHeader() {
+	public String getMonitorHeader() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("App Name").append(" & ");
 		sb.append("# Jimple LOC").append(" & ");
-		sb.append("# Framework Methods").append(" & ");
-		sb.append("Running Time").append(" & ");
-		return sb.toString();
-	}
-	
-	public String getStatisticsAppLine(String appName) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(appName).append(" & ");
-		sb.append(this.appLinesOfCodeMap.get(appName)).append(" & ");
-		sb.append("TODO").append(" & ");
-		sb.append("TODO");
-		return sb.toString();
-	}
-	
-	public String getMonitorHeader() {
-		StringBuilder sb = new StringBuilder();
 		sb.append("\\# Alias Statements").append(" & ");
-		sb.append("App Name").append(" & ");
 		sb.append("$|M_{\\text{pt}}|$").append(" & ");
 		sb.append("$|M_o|$").append(" & ");
 		sb.append("$|M|$").append(" & ");
@@ -290,6 +303,7 @@ public class AliasModelsProcessor implements Processor {
 	public String getMonitorAppLine(String appName) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(appName).append(" & ");
+		sb.append(this.appLinesOfCodeMap.get(appName)).append(" & ");
 		sb.append(this.appAliasingStatements.get(appName)).append(" & ");
 		sb.append(this.appFrameworkMethodCalls.get(appName)).append(" & ");
 		sb.append(this.appEscapedObjects.get(appName)).append(" & ");
@@ -304,32 +318,26 @@ public class AliasModelsProcessor implements Processor {
 		
 		switch(type) {
 		case 0:
-			System.out.println(ap.getStatisticsHeader());
-			for(String appName : ap.getAppNames()) {
-				System.out.println(ap.getStatisticsAppLine(appName) + "\\\\");
-			}
-			break;
-		case 1:
-			System.out.println(ap.getPhantomObjectModelsHeader());
-			for(String appName : ap.getAppNames()) {
-				System.out.println(ap.getPhantomObjectModelsAppLine(appName) + "\\\\");
-			}
-			System.out.println(ap.getPhantomObjectModelsTotal());
-			break;
-		case 2:
 			System.out.println(ap.getAliasModelsHeader());
 			for(String appName : ap.getAppNames()) {
 				System.out.println(ap.getAliasModelsAppLine(appName) + "\\\\");
 			}
 			System.out.println(ap.getAliasModelsTotal());
 			break;
-		case 3:
+		case 1:
+			System.out.println(ap.getAliasModelsComparisonHeader());
+			for(String appName : ap.getAppNames()) {
+				System.out.println(ap.getAliasModelsComparisonAppLine(appName) + "\\\\");
+			}
+			System.out.println(ap.getAliasModelsComparisonTotal());
+			break;
+		case 2:
 			System.out.println(ap.getMonitorHeader());
 			for(String appName : ap.getAppNames()) {
 				System.out.println(ap.getMonitorAppLine(appName) + "\\\\");
 			}
 			break;
-		case 4: // print phantom object models
+		case 3: // print phantom object models
 			Map<String,Integer> phantomObjectModels = ModelReader.readMap("../results/models/phantom_object_models.txt");
 			for(String model : ap.allPhantomObjectModels) {
 				if(!phantomObjectModels.containsKey(model)) {
@@ -337,7 +345,7 @@ public class AliasModelsProcessor implements Processor {
 				}
 			}
 			break;
-		case 5: // print alias models
+		case 4: // print alias models
 			Map<String,Integer> aliasModels = ModelReader.readMap("../results/models/alias_models.txt");
 			for(String model : ap.allAliasModels) {
 				if(!aliasModels.containsKey(model)) {
@@ -348,7 +356,7 @@ public class AliasModelsProcessor implements Processor {
 		}
 	}
 	
-	public static void main(String[] args) {
-		run("../results/all_server", 3);
+	public static void main(String[] args) throws Exception {
+		run("../results/third_server/", 2);
 	}
 }
