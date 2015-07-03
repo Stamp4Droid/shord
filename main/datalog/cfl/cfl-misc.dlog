@@ -130,6 +130,11 @@ chaIM(i:I,m:M) input
 FrameworkI(i:I) output
 FrameworkI(i) :- Framework(m), chaIM(i,m).
 
+# invocation statements not in framework
+
+NotInFrameworkI(i:I) output
+NotInFrameworkI(i) :- chaIM(i,_), MI(mp,i), !Framework(mp).
+
 # objects to instrument
 
 EscapeCount(o:C) output
