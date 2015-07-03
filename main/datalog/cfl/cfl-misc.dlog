@@ -132,8 +132,11 @@ FrameworkI(i) :- Framework(m), chaIM(i,m).
 
 # invocation statements not in framework
 
-NotInFrameworkI(i:I) output
-NotInFrameworkI(i) :- chaIM(i,_), MI(mp,i), !Framework(mp).
+InvokeMonitorArg(i:I,v:V) output
+InvokeMonitorRet(i:I) output
+
+InvokeMonitorArg(i,v) :- chaIM(i,m), MmethArg(m,_,v), MI(mp,i), !Framework(mp).
+InvokeMonitorRet(i) :- chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
 
 # objects to instrument
 
@@ -141,10 +144,11 @@ EscapeCount(o:C) output
 EscapeCountH(h:H) output
 
 EscapeCount(o) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
-EscapeCount(o) :- Escape(op), fpt(op,_,o).
-EscapeCountH(h) :- Escape(o), CH(o,h), AllocNF(_,h).
+EscapeCount(o) :- EscapeCount(op), fpt(op,_,o).
+EscapeCountH(h) :- EscapeCount(o), CH(o,h), AllocNF(_,h).
 
 # stubs to instrument
 
-StubI(i:I) output
-StubI(i) :- Stub(m), chaIM(i,m), MI(mp,i), !Framework(mp).
+StubInvokeMonitorRet(i:I) output
+StubInvokeMonitorRet(i) :- Stub(m), chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
+
