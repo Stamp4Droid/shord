@@ -67,30 +67,6 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 		return run(new ShordRelationReader(), new AliasModelsGrammar().getOpt(), new AliasModelsRelationManager(true), new AliasModelsFilterRelationManager(true), vertexFilterFull);
 	}
 	
-	public static List<List<EdgeStruct>> getAliasModelsForThreshold(int threshold, int maxIters) {
-		Set<String> vertexFilter = new HashSet<String>();
-		for(int i=0; i<maxIters; i++) {
-			Graph graphBar = getAliasModels(vertexFilter);
-			List<List<EdgeStruct>> models = AliasModelsUtils.SynthesisUtils.getModelsFromGraph(graphBar);
-			Set<String> methodRejects = AliasModelsUtils.SynthesisUtils.getMethodRejects(models, threshold);
-			if(threshold < 0 || methodRejects.isEmpty()) {
-				return models;
-			}
-			vertexFilter = Util.union(vertexFilter, methodRejects);
-		}
-		System.out.println("ERROR: Exceeded max iters!");
-		return new ArrayList<List<EdgeStruct>>();
-	}
-	
-	public static Map<Integer,List<List<EdgeStruct>>> getIterativeRun(int maxThreshold, int maxIters) {
-		Map<Integer,List<List<EdgeStruct>>> modelsForThreshold = new HashMap<Integer,List<List<EdgeStruct>>>();
-		modelsForThreshold.put(-1, getAliasModelsForThreshold(-1, maxIters));
-		for(int threshold=0; threshold<=maxThreshold; threshold++) {
-			modelsForThreshold.put(threshold, getAliasModelsForThreshold(threshold, maxIters));
-		}
-		return modelsForThreshold;
-	}
-	
 	public static boolean checkActiveFlowNew() {
 		ProgramRel relActiveFlowNew = (ProgramRel)ClassicProject.g().getTrgt("ActiveFlowNew");
 		relActiveFlowNew.load();
@@ -103,14 +79,11 @@ public class AliasModelsAnalysis extends JavaAnalysis {
 			System.out.println("ERROR: No active flow edges found!");
 			return;
 		}
-		Map<Integer,List<List<EdgeStruct>>> modelsForThreshold = getIterativeRun(2, 10);
-		for(int threshold : modelsForThreshold.keySet()) {
-			System.out.println("MODELS FOR THRESHOLD: " + threshold);
-			for(List<EdgeStruct> model : modelsForThreshold.get(threshold)) {
-				System.out.println("PRINING MODEL");
-				for(EdgeStruct edge : model) {
-					System.out.println("MODEL EDGE: " + edge.toString(true));
-				}
+		List<List<EdgeStruct>> models = AliasModelsUtils.SynthesisUtils.getModelsFromGraph(getAliasModels(new HashSet<String>()));
+		for(List<EdgeStruct> model : models) {
+			System.out.println("PRINING LONG MODEL");
+			for(EdgeStruct edge : model) {
+				System.out.println("LONG MODEL EDGE: " + edge.toString(true));
 			}
 		}
 	}
