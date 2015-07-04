@@ -152,3 +152,6 @@ EscapeCountH(h) :- EscapeCount(o), CH(o,h), AllocNF(_,h).
 StubInvokeMonitorRet(i:I) output
 StubInvokeMonitorRet(i) :- Stub(m), chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
 
+# framework to instrument
+FrameworkInvokeMonitorRet(i:I) output
+FrameworkInvokeMonitorRet(i) :- Framework(m), chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
