@@ -1,10 +1,7 @@
 package stamp.analyses;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import shord.project.ClassicProject;
@@ -30,7 +27,6 @@ import stamp.missingmodels.util.cflsolver.relation.AliasModelsLimRelationManager
 import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.AliasModelsFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.AliasModelsLimFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.util.AliasModelsUtils;
-import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
 /**
