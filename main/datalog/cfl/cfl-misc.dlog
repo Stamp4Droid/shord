@@ -20,7 +20,7 @@
 .include "Z.dom"
 .include "F.dom"
 
-.bddvarorder L0_Z0_M0xM1_CL0_T0_I0_F0_C0xC1_V0xV1_U0xU1_H0xH1
+.bddvarorder L0_L1_Z0_M0xM1_CL0_CL1_T0_I0_F0_C0xC1_V0xV1_U0xU1_H0xH1
 
 ###################
 # RELATIONS
@@ -155,3 +155,8 @@ StubInvokeMonitorRet(i) :- Stub(m), chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Fram
 # framework to instrument
 FrameworkInvokeMonitorRet(i:I) output
 FrameworkInvokeMonitorRet(i) :- Framework(m), chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
+
+# flows without contexts
+flowL(l1:L,l2:L) output
+flow(cl1:CL,cl2:CL) input
+flowL(l1,l2) :- flow(cl1,cl2), LCL(l1,cl1), LCL(l2,cl2).
