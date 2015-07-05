@@ -24,7 +24,7 @@ public class StampURLConnection extends HttpURLConnection
 	{
 		return false;
 	}
-
+    /*
 	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="this",to="!this")})
 	public  java.io.OutputStream getOutputStream() throws java.io.IOException 
 	{ 
@@ -36,4 +36,5 @@ public class StampURLConnection extends HttpURLConnection
 	{ 
 		return new java.io.StampInputStream();
 	}
+    */
 }

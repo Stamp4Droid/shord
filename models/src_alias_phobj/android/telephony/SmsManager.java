@@ -23,9 +23,9 @@ class SmsManager
 	}
 
 	private static SmsManager smsManager = new SmsManager();
-
+    /*
 	public static  android.telephony.SmsManager getDefault() 
 	{ 
 		return smsManager;
-	}
+		}*/
 }
