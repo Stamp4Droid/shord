@@ -326,7 +326,7 @@ class Intent
 		extras.unknown = value;
 		return this;
 	}
-*/
+    /*v
 	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, android.os.Parcelable[] value) 
 	{ 

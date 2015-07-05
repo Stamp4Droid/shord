@@ -8,18 +8,16 @@ class AccountManager
     { 
 	return accountManager;
     }
-
+    */
     @STAMP(flows={@Flow(from="$ACCOUNTS",to="@return")})		
     private android.accounts.Account getAccount() {
     	return new Account(getAccountName(), new String());
     }
-
     @STAMP(flows={@Flow(from="$ACCOUNTS.Name",to="@return")})
 	private java.lang.String getAccountName()
 	{
 		return new String();
 	}
-    */
     // private static class StampAccountManagerFuture implements AccountManagerFuture<android.accounts.Account[]>
     // {
 
