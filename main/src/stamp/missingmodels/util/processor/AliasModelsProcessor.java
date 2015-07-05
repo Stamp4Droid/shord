@@ -3,6 +3,7 @@ package stamp.missingmodels.util.processor;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,11 +62,16 @@ public class AliasModelsProcessor implements Processor {
 	private final Set<String> allCorrectPhantomObjectModels = new HashSet<String>();
 	private final Map<String,Integer> appFrameworkMethodCalls = new HashMap<String,Integer>();
 	private final Map<String,Integer> appEscapedObjects = new HashMap<String,Integer>();
+	private final Map<String,Integer> appAllFrameworkMethodCalls = new HashMap<String,Integer>();
+	private final Map<String,Integer> appAllEscapedObjects = new HashMap<String,Integer>();
 	private final Map<String,Integer> appAliasingStatements = new HashMap<String,Integer>();
 	private final Map<String,Double> appRunningTimes = new HashMap<String,Double>();
 	private final HashSet<String> allMissingSingleAliasModels = new HashSet<String>();
+	private final MultivalueMap<String,String> appMissingSingleAliasModels = new MultivalueMap<String,String>();
 	private final HashSet<String> allMissingPairAliasModels = new HashSet<String>();
 	private final HashSet<String> allMissingPhantomObjectModels = new HashSet<String>();
+	private final HashSet<String> allLongAliasModels = new HashSet<String>();
+	private final MultivalueMap<String,String> appLongAliasModels = new MultivalueMap<String,String>();
 	
 	private static final String[] runningTimeAnalyses = new String[]{"cfl-alias-models-dlog", "cfl-active-alias-models-dlog", "alias-models-short-java"};
 	private static boolean isRunningTimeAnalysis(String line) {
@@ -83,6 +89,7 @@ public class AliasModelsProcessor implements Processor {
 	// 3 : invalid model, ignore
 	private int state = 3;
 	private StringBuilder curModel;
+	// keep track of whether to add the running time on the next line
 	private boolean runningTimeFlag = false;
 	// header: the header of the model
 	// model: the concatenated elements of the model
@@ -90,6 +97,14 @@ public class AliasModelsProcessor implements Processor {
 	private String header = null;
 	private String model = null;
 	boolean flag = false;
+	// states for long alias model
+	// 0 : after PRINTING MODEL statement
+	// 1 : after entry (param/return)
+	// 2 : invalid state
+	private int longState = 2;
+	private StringBuilder curLongModel;
+	// separate the short and long analyses
+	private boolean isShort = false;
 	@Override
 	public void process(String appName, String line) {
 		if(line.startsWith("PhantomObjectDyn")) {
@@ -110,6 +125,10 @@ public class AliasModelsProcessor implements Processor {
 			this.appAliasingStatements.put(appName, (int)Float.parseFloat(line.split(" ")[4]) + this.appAliasingStatements.get(appName));
 		} else if(line.startsWith("Relation EscapeCountH:")) {
 			this.appEscapedObjects.put(appName,  (int)Float.parseFloat(line.split(" ")[4]));
+		} else if(line.startsWith("Relation FrameworkInvokeMonitorRet:")) {
+			this.appAllFrameworkMethodCalls.put(appName, (int)Float.parseFloat(line.split(" ")[4]));
+		} else if(line.startsWith("Relation EscapeH:")) {
+			this.appAllEscapedObjects.put(appName,  (int)Float.parseFloat(line.split(" ")[4]));
 		} else if(line.startsWith("MODEL EDGE")) {
 			// STEP 1: If the model is invalid, continue
 			if(state != 3) {
@@ -176,7 +195,7 @@ public class AliasModelsProcessor implements Processor {
 			double runningTime = 60.0*Integer.parseInt(tokens[0]) + Integer.parseInt(tokens[1]) + 1.0/60*Integer.parseInt(tokens[2]) + 1.0/60/1000*Integer.parseInt(tokens[3]);
 			this.appRunningTimes.put(appName, runningTime + this.appRunningTimes.get(appName));
 			runningTimeFlag = false;
-		} else if(line.startsWith("MODEL PATH")) {
+		} else if(line.startsWith("MODEL PATH") && isShort) {
 			if(line.contains("store[-1]") || line.contains("load[-1]")) {
 				if(header == null) {
 					header = line.split(" ")[2];
@@ -206,9 +225,42 @@ public class AliasModelsProcessor implements Processor {
 			header = null;
 			model = null;
 			flag = false;
+		} else if(line.startsWith("LONG MODEL EDGE:")) {
+			String lineTrimTemp = line.split("EDGE: ")[1];
+			String lineTrim = lineTrimTemp.substring(0, lineTrimTemp.length()-2);
+			if(lineTrim.contains("param[-1]") || lineTrim.contains("return[-1]")) {
+				String str;
+				if(lineTrim.contains("param[-1]")) {
+					str = "-param[-1]-" + lineTrim.split("-param\\[-1\\]-")[1];
+				} else {
+					str = lineTrim.split("-return\\[-1\\]-")[0] + "-return\\[-1\\]-";
+				}
+				curLongModel.append(str);
+				if(longState == 0) {
+					longState = 1;
+					curLongModel.append("#");
+				} else {
+					String curLongModelStr = curLongModel.toString();
+					longState = 2;
+					if(!this.allMissingSingleAliasModels.contains(curLongModelStr) && !this.allSingleAliasModels.contains(curLongModelStr)) {
+						this.allLongAliasModels.add(curLongModelStr);
+					}
+					if(!this.appMissingSingleAliasModels.get(appName).contains(curLongModelStr) && !this.appSingleAliasModels.get(appName).contains(curLongModelStr)) {
+						this.appLongAliasModels.add(appName, curLongModelStr);
+					}
+					curLongModel = null;
+				}
+			} else if(lineTrim.contains("load[-1]") || lineTrim.contains("store[-1]")) {
+				curLongModel.append(lineTrim.toString()).append("#");
+			}
+		} else if(line.startsWith("PRINING LONG MODEL")) {
+			curLongModel = new StringBuilder();
+			longState = 0;
+		} else if(line.startsWith("ENTER: alias-models-short-java")) {
+			isShort = true;
 		}
 	}
-
+	
 	private static String extract(String line) {
 		String tail = line.split("PATH: ")[1];
 		return tail.substring(0, tail.length()-2) + ";;";
@@ -221,6 +273,7 @@ public class AliasModelsProcessor implements Processor {
 	private void updateModel(String appName, String model) {
 		if(!this.singleAliasModels.containsKey(model)) {
 			this.allMissingSingleAliasModels.add(model);
+			this.appMissingSingleAliasModels.add(appName, model);
 			return;
 		}
 		if(this.singleAliasModels.get(model) == 0) {
@@ -305,14 +358,12 @@ public class AliasModelsProcessor implements Processor {
 	public String getAliasModelsComparisonAppLine(String appName) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(appName).append(" & ");
-		/*
-		sb.append("TODO").append(" & ");
-		sb.append("TODO").append(" & ");
-		sb.append("0.0").append(" & ");
-		*/
 		sb.append(this.appSingleAliasModels.get(appName).size() + 2*this.appPairAliasModels.get(appName).size()).append(" & ");
 		sb.append(this.appSingleCorrectAliasModels.get(appName).size() + 2*this.appPairCorrectAliasModels.get(appName).size()).append(" & ");
-		sb.append((float)(this.appSingleCorrectAliasModels.get(appName).size() + 2*this.appPairCorrectAliasModels.get(appName).size())/(this.appSingleAliasModels.get(appName).size() +  + 2*this.appPairAliasModels.get(appName).size()));
+		sb.append((float)(this.appSingleCorrectAliasModels.get(appName).size() + 2*this.appPairCorrectAliasModels.get(appName).size())/(this.appSingleAliasModels.get(appName).size() +  + 2*this.appPairAliasModels.get(appName).size())).append(" & ");
+		sb.append(this.appLongAliasModels.get(appName).size()).append(" & ");
+		sb.append("0").append(" & ");
+		sb.append("0.0");
 		return sb.toString();
 	}
 	
@@ -321,7 +372,10 @@ public class AliasModelsProcessor implements Processor {
 		sb.append(" -- ").append(" & ");
 		sb.append(this.allSingleAliasModels.size() + 2*this.allPairAliasModels.size()).append(" & ");
 		sb.append(this.allSingleCorrectAliasModels.size() + 2*this.allPairCorrectAliasModels.size()).append(" & ");
-		sb.append((float)(this.allSingleCorrectAliasModels.size() + 2*this.allPairAliasModels.size())/(this.allSingleAliasModels.size() + 2*this.allPairAliasModels.size()));
+		sb.append((float)(this.allSingleCorrectAliasModels.size() + 2*this.allPairAliasModels.size())/(this.allSingleAliasModels.size() + 2*this.allPairAliasModels.size())).append(" & ");
+		sb.append(this.allLongAliasModels.size()).append(" & ");
+		sb.append("0").append(" & ");
+		sb.append("0.0");
 		return sb.toString();
 	}
 	
@@ -347,10 +401,14 @@ public class AliasModelsProcessor implements Processor {
 		sb.append("App Name").append(" & ");
 		sb.append("# Jimple LOC").append(" & ");
 		sb.append("\\# Alias Statements").append(" & ");
+		sb.append("$|M_{\\text{pt}}^{\text{init}}|$").append(" & ");
+		sb.append("$|M_o^{\text{init}}|$").append(" & ");
+		sb.append("$|M^{\text{init}}|$").append(" & ");
 		sb.append("$|M_{\\text{pt}}|$").append(" & ");
 		sb.append("$|M_o|$").append(" & ");
 		sb.append("$|M|$").append(" & ");
 		sb.append("$\\frac{|M|}{\\#\\text{Alias Statements}}$");
+		sb.append("$\\frac{|M|}{M^{\\text{init}}}$");
 		return sb.toString();
 	}
 	
@@ -359,14 +417,18 @@ public class AliasModelsProcessor implements Processor {
 		sb.append(appName).append(" & ");
 		sb.append(this.appLinesOfCodeMap.get(appName)).append(" & ");
 		sb.append(this.appAliasingStatements.get(appName)).append(" & ");
+		sb.append(this.appAllFrameworkMethodCalls.get(appName)).append(" & ");
+		sb.append(this.appAllEscapedObjects.get(appName)).append(" & ");
+		sb.append((this.appAllFrameworkMethodCalls.get(appName) + this.appAllEscapedObjects.get(appName))).append(" & ");
 		sb.append(this.appFrameworkMethodCalls.get(appName)).append(" & ");
 		sb.append(this.appEscapedObjects.get(appName)).append(" & ");
 		sb.append((this.appFrameworkMethodCalls.get(appName) + this.appEscapedObjects.get(appName))).append(" & ");
-		sb.append((float)(this.appFrameworkMethodCalls.get(appName) + this.appEscapedObjects.get(appName))/this.appAliasingStatements.get(appName));
+		sb.append((float)(this.appFrameworkMethodCalls.get(appName) + this.appEscapedObjects.get(appName))/this.appAliasingStatements.get(appName)).append(" & ");
+		sb.append((float)(this.appFrameworkMethodCalls.get(appName) + this.appEscapedObjects.get(appName))/(this.appAllFrameworkMethodCalls.get(appName) + this.appAllEscapedObjects.get(appName))).append(" & ");
 		return sb.toString();
 	}
 	
-	public static void run(String directory, int type) {
+	public static void run(String directory, int type) throws Exception {
 		AliasModelsProcessor ap = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"));		
 		new LogReader(directory, ap).run();
 		
@@ -405,6 +467,23 @@ public class AliasModelsProcessor implements Processor {
 			for(String model : ap.allMissingPairAliasModels) {
 				System.out.println(model);
 			}
+			break;
+		case 6: // print long models
+			PrintWriter pw = new PrintWriter("output.txt");
+			int counter = 0;
+			for(String appName : ap.appLongAliasModels.keySet()) {
+				pw.println("APP: " + appName);
+				pw.println();
+				for(String model : ap.appLongAliasModels.get(appName)) {
+					for(String token : model.split("#")) {
+						pw.println(token);
+					}
+					pw.println();
+					counter++;
+				}
+			}
+			System.out.println(counter);
+			pw.close();
 			break;
 		}
 	}
