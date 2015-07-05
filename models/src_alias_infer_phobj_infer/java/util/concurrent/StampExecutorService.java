@@ -45,11 +45,9 @@ class StampExecutorService extends java.util.concurrent.AbstractExecutorService 
 
     public void shutdown() {}
 
-    /*
     public java.util.List<java.lang.Runnable> shutdownNow() {
 	return new java.util.ArrayList<java.lang.Runnable>();
     }
-    */
 
     public void execute(java.lang.Runnable command) {
 	command.run();

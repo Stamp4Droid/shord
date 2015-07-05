@@ -11,7 +11,7 @@ public class FakeProcess extends Process
 
 	@STAMP(flows = {@Flow(from="$PROCESS.ExitValue",to="@return")})
 	public int exitValue() { return 0; }
-    /*
+
 	@STAMP(flows = {@Flow(from="$PROCESS.ErrorStream",to="@return")})
 	public java.io.InputStream getErrorStream() 
 	{ 
@@ -29,6 +29,6 @@ public class FakeProcess extends Process
 	{ 
 		return new java.io.StampOutputStream(); 
 	}
-    */
+
 	public int waitFor() throws java.lang.InterruptedException { return 0; }
 }
