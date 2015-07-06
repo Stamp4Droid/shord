@@ -8,7 +8,7 @@ class AccountManager
     { 
 	return accountManager;
     }
-
+    */
     @STAMP(flows={@Flow(from="$ACCOUNTS",to="@return")})		
     private android.accounts.Account getAccount() {
     	return new Account(getAccountName(), new String());
@@ -19,7 +19,7 @@ class AccountManager
 	{
 		return new String();
 	}
-    */
+
     // private static class StampAccountManagerFuture implements AccountManagerFuture<android.accounts.Account[]>
     // {
 

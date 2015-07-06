@@ -433,11 +433,11 @@ class Bundle
     public void putBundle(java.lang.String key, android.os.Bundle value) {
 		this.unknown = value;
 	}
+*/
 
 	@STAMP(flows={@Flow(from="$SMS",to="@return")})
 	private byte[] smsByteArray() {
 		byte[] bytes = new byte[1];
 		return bytes;
 	}
-*/
 }
