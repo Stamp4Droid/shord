@@ -65,13 +65,13 @@ class TelephonyManager
         public  java.lang.String getVoiceMailAlphaTag() { 
 	    return new String(); 
 	}
-
+    */
 	@STAMP(flows = {@Flow(from="$incomingCallNumber",to="@return")})
 	private String incomingCallNumber()
 	{
 		return new String();
 	}
-
+    /*
 	@STAMP(flows = {@Flow(from="$NetworkOperatorName",to="@return")})
 	public  java.lang.String getNetworkOperatorName() 
 	{ 

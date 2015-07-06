@@ -3,12 +3,10 @@ import edu.stanford.stamp.harness.Callback;
 
 public class Camera
 {
-    /*
     @STAMP(flows = {@Flow(from="$CAMERA.picture",to="@return")})
     public byte[] getPicture() {
 		return new byte[1];
     }
-    */
 
     private Camera() {
     }

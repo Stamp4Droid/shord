@@ -1,9 +1,9 @@
 class BasicNameValuePair
 {
-    /*
 	private String name;
 	private String value;
 
+    /*
 	@STAMP(flows = {@Flow(from="value",to="this")})
 	public  BasicNameValuePair(java.lang.String name, java.lang.String value) 
 	{ 
