@@ -34,11 +34,11 @@ class JSONObject
 
 	@STAMP(flows={@Flow(from="this",to="@return")})
     public java.lang.String getString(java.lang.String name) throws org.json.JSONException {
-	    //return new String();
+	    return new String();
     }
 
 	@STAMP(flows={@Flow(from="this",to="@return")})
 	public java.lang.String toString() {
-	    //return new String();
+	    return new String();
     }
 }
