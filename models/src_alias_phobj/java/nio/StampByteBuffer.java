@@ -5,10 +5,10 @@ import edu.stanford.stamp.annotation.Flow;
 
 public class StampByteBuffer extends ByteBuffer 
 {
-    /*
+
 	@STAMP(flows = {@Flow(from="this",to="@return")})
     public java.nio.CharBuffer asCharBuffer(){ return new StampCharBuffer(); }
-    */
+
 
     public java.nio.DoubleBuffer asDoubleBuffer() {
         throw new RuntimeException("Stub!");
