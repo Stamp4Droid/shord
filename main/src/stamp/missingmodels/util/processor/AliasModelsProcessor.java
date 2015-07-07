@@ -428,6 +428,40 @@ public class AliasModelsProcessor implements Processor {
 		return sb.toString();
 	}
 	
+	public String getSpreadSheetHeaderModels() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("App Name").append(",");
+		sb.append("Jimple LOC").append(",");
+		sb.append("# Alias Models").append(",");
+		sb.append("# Phantom Object Models").append(",");
+		sb.append("Running Time");
+		return sb.toString();
+	}
+	
+	public String getSpreadSheetAppLineModels(String appName) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(appName).append(",");
+		sb.append(appLinesOfCodeMap.get(appName)).append(",");
+		sb.append(appSingleCorrectAliasModels.get(appName).size() + 2*appPairCorrectAliasModels.get(appName).size()).append(",");
+		sb.append(appCorrectPhantomObjectModels.get(appName).size()).append(",");
+		sb.append(appRunningTimes.get(appName));
+		return sb.toString();
+	}
+	
+	public String getSpreadSheetAppLineMonitors(String appName) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(appEscapedObjects.get(appName) + appFrameworkMethodCalls.get(appName)).append(",");
+		sb.append(appAliasingStatements.get(appName));
+		return sb.toString();
+	}
+	
+	public String getSpreadSheetHeaderMonitors() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("# Optimized Monitors").append(",");
+		sb.append("# Naive Monitors");
+		return sb.toString();
+	}
+	
 	public static void run(String directory, int type) throws Exception {
 		AliasModelsProcessor ap = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"));		
 		new LogReader(directory, ap).run();
@@ -488,7 +522,25 @@ public class AliasModelsProcessor implements Processor {
 		}
 	}
 	
+	public static void runSpreadSheet() throws Exception {
+		AliasModelsProcessor ap1 = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"));
+		new LogReader("../results/first_server/", ap1).run();
+		AliasModelsProcessor ap2 = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"));
+		new LogReader("../results/fifth_server/", ap2).run();
+		
+		Map<String,Map<Integer,Integer>> flows = AliasModelsFlowReader.getFlows();
+		System.out.println(ap1.getSpreadSheetHeaderModels() + "," + ap2.getSpreadSheetHeaderMonitors() + ",Base Flows,Infer Flows,All Flows");
+		for(String appName : ap1.getAppNames()) {
+			if(!flows.containsKey(appName)) {
+				continue;
+			}
+			String line = ap1.getSpreadSheetAppLineModels(appName) + "," + ap2.getSpreadSheetAppLineMonitors(appName) + "," + flows.get(appName).get(1) + "," + flows.get(appName).get(2) + "," + flows.get(appName).get(5);
+			System.out.println(line);
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
-		run("../results/first_server/", 0);
+		//run("../results/first_server/", 7);
+		runSpreadSheet();
 	}
 }
