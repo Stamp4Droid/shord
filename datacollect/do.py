@@ -105,6 +105,16 @@ def postProcess(apkFile):
     os.remove(outputDir+"/"+os.path.basename(coverageDatFile))
     print "Coverage data stored in "+os.path.abspath(outputDir + "/"+pkgName+".log")
 
+def pullTraces(apkFile):
+    command = "adb pull /sdcard/debug.traces "+outputDir+"/"+appId(apkFile)
+    runCommand(command)
+    command = "adb shell rm -rf /sdcard/debug.traces"
+    runCommand(command)
+    gzipFileName = appId(apkFile)+".tgz"
+    command = "tar cvfz "+ gzipFileName+" "+outputDir+"/"+appId(apkFile)
+    runCommand(command)
+    print "Traces stored in "+gzipFileName
+
 def installCommand(apkFile):
     pkgName = getPackageName(apkFile)
     print "package: "+pkgName
@@ -151,6 +161,17 @@ if __name__ == "__main__":
         print "Input anything when done testing the app."
         sys.stdin.read(1); #wait
         doneCommand(apkFile)
+
+    elif command == "x":
+        if runStamp(apkFile) != 0 :
+            sys.exit("Error running Stamp")
+        if runElla(apkFile) != 0 :
+            sys.exit("Error running Ella")
+        installCommand(apkFile)
+        print "Input anything when done testing the app."
+        sys.stdin.read(1); #wait
+        doneCommand(apkFile)
+        pullTraces(apkFile)
 
     elif command == "p":
         postProcess(apkFile)
