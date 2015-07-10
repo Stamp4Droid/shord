@@ -106,14 +106,17 @@ def postProcess(apkFile):
     print "Coverage data stored in "+os.path.abspath(outputDir + "/"+pkgName+".log")
 
 def pullTraces(apkFile):
-    command = "adb pull /sdcard/debug.traces "+outputDir+"/"+appId(apkFile)
-    runCommand(command)
-    command = "adb shell rm -rf /sdcard/debug.traces"
+    if not os.path.exists(outputDir):
+        os.makedirs(outputDir)
+    localTraceDir = outputDir+"/"+"traces"
+    command = "adb pull /sdcard/debug.traces "+localTraceDir
     runCommand(command)
     gzipFileName = appId(apkFile)+".tgz"
-    command = "tar cvfz "+ gzipFileName+" "+outputDir+"/"+appId(apkFile)
+    command = "tar cvfz "+ outputDir+"/"+gzipFileName+" "+outputDir+"/traces"
     runCommand(command)
-    print "Traces stored in "+gzipFileName
+    command = "rm -rf "+localTraceDir
+    runCommand(command)
+    print "Traces stored in "+ outputDir+"/"+gzipFileName
 
 def installCommand(apkFile):
     pkgName = getPackageName(apkFile)
@@ -123,8 +126,9 @@ def installCommand(apkFile):
     if uninstall(pkgName) != 0:
         print "Error while uninstalling"
 
-    #install                                                           
-    if install(apkFile) != 0:
+    #install                            
+    instrumentedApk = ellaHome + "/ella-out/" + appId(apkFile) + "/instrumented.apk"
+    if install(instrumentedApk) != 0:
         print "Error while installing"
         sys.exit(1)
 
@@ -167,6 +171,8 @@ if __name__ == "__main__":
             sys.exit("Error running Stamp")
         if runElla(apkFile) != 0 :
             sys.exit("Error running Ella")
+        command = "adb shell rm /sdcard/debug.traces/*"
+        runCommand(command)
         installCommand(apkFile)
         print "Input anything when done testing the app."
         sys.stdin.read(1); #wait
