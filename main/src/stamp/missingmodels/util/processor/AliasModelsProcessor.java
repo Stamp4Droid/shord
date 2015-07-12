@@ -38,15 +38,17 @@ public class AliasModelsProcessor implements Processor {
 		}
 	}
 	
-	public AliasModelsProcessor(Map<String,Integer> pairAliasModels, Map<String,Integer> singleAliasModels, Map<String,Integer> phantomObjectModels) {
+	public AliasModelsProcessor(Map<String,Integer> pairAliasModels, Map<String,Integer> singleAliasModels, Map<String,Integer> phantomObjectModels, Map<String,Integer> longModels) {
 		this.pairAliasModels = pairAliasModels;
 		this.singleAliasModels = singleAliasModels;
 		this.phantomObjectModels = phantomObjectModels;
+		this.longModels = longModels;
 	}
 	
 	private final Map<String,Integer> pairAliasModels;
 	private final Map<String,Integer> singleAliasModels;
 	private final Map<String,Integer> phantomObjectModels;
+	private final Map<String,Integer> longModels;
 	private final Map<String,Integer> appLinesOfCodeMap = new HashMap<String,Integer>();
 	private final MultivalueMap<String,String> appSingleAliasModels = new MultivalueMap<String,String>();
 	private final MultivalueMap<String,String> appSingleCorrectAliasModels = new MultivalueMap<String,String>();
@@ -70,6 +72,10 @@ public class AliasModelsProcessor implements Processor {
 	private final MultivalueMap<String,String> appMissingSingleAliasModels = new MultivalueMap<String,String>();
 	private final HashSet<String> allMissingPairAliasModels = new HashSet<String>();
 	private final HashSet<String> allMissingPhantomObjectModels = new HashSet<String>();
+	private final HashSet<String> allAdditionalLongAliasModels = new HashSet<String>();
+	private final MultivalueMap<String,String> appAdditionalLongAliasModels = new MultivalueMap<String,String>();
+	private final HashSet<String> allCorrectLongAliasModels = new HashSet<String>();
+	private final MultivalueMap<String,String> appCorrectLongAliasModels = new MultivalueMap<String,String>();
 	private final HashSet<String> allLongAliasModels = new HashSet<String>();
 	private final MultivalueMap<String,String> appLongAliasModels = new MultivalueMap<String,String>();
 	
@@ -221,6 +227,7 @@ public class AliasModelsProcessor implements Processor {
 						appPairCorrectAliasModels.add(appName, finalModel);
 					}
 				}
+				model = null;
 			}
 			header = null;
 			model = null;
@@ -243,10 +250,20 @@ public class AliasModelsProcessor implements Processor {
 					String curLongModelStr = curLongModel.toString();
 					longState = 2;
 					if(!this.allMissingSingleAliasModels.contains(curLongModelStr) && !this.allSingleAliasModels.contains(curLongModelStr)) {
-						this.allLongAliasModels.add(curLongModelStr);
+						this.allAdditionalLongAliasModels.add(curLongModelStr);
 					}
 					if(!this.appMissingSingleAliasModels.get(appName).contains(curLongModelStr) && !this.appSingleAliasModels.get(appName).contains(curLongModelStr)) {
-						this.appLongAliasModels.add(appName, curLongModelStr);
+						this.appAdditionalLongAliasModels.add(appName, curLongModelStr);
+					}
+					this.appLongAliasModels.add(appName, curLongModelStr);
+					this.allLongAliasModels.add(curLongModelStr);
+					if(this.allSingleCorrectAliasModels.contains(curLongModelStr)) {
+						this.appCorrectLongAliasModels.add(appName, curLongModelStr);
+						this.allCorrectLongAliasModels.add(curLongModelStr);
+					}
+					if(this.longModels.containsKey(curLongModelStr) && this.longModels.get(curLongModelStr) == 1) {
+						this.appCorrectLongAliasModels.add(appName, curLongModelStr);
+						this.allCorrectLongAliasModels.add(curLongModelStr);
 					}
 					curLongModel = null;
 				}
@@ -362,8 +379,11 @@ public class AliasModelsProcessor implements Processor {
 		sb.append(this.appSingleCorrectAliasModels.get(appName).size() + 2*this.appPairCorrectAliasModels.get(appName).size()).append(" & ");
 		sb.append((float)(this.appSingleCorrectAliasModels.get(appName).size() + 2*this.appPairCorrectAliasModels.get(appName).size())/(this.appSingleAliasModels.get(appName).size() +  + 2*this.appPairAliasModels.get(appName).size())).append(" & ");
 		sb.append(this.appLongAliasModels.get(appName).size()).append(" & ");
+		sb.append(this.appCorrectLongAliasModels.get(appName).size()).append(" & ");
+		sb.append((float)this.appCorrectLongAliasModels.get(appName).size()/this.appLongAliasModels.get(appName).size()).append(" & ");
+		//sb.append(this.appAdditionalLongAliasModels.get(appName).size()).append(" & ");
 		sb.append("0").append(" & ");
-		sb.append("0.0");
+		//sb.append("0.0");
 		return sb.toString();
 	}
 	
@@ -374,8 +394,11 @@ public class AliasModelsProcessor implements Processor {
 		sb.append(this.allSingleCorrectAliasModels.size() + 2*this.allPairCorrectAliasModels.size()).append(" & ");
 		sb.append((float)(this.allSingleCorrectAliasModels.size() + 2*this.allPairAliasModels.size())/(this.allSingleAliasModels.size() + 2*this.allPairAliasModels.size())).append(" & ");
 		sb.append(this.allLongAliasModels.size()).append(" & ");
+		sb.append(this.allCorrectLongAliasModels.size()).append(" & ");
+		sb.append((float)this.allCorrectLongAliasModels.size()/this.allLongAliasModels.size()).append(" & ");
+		//sb.append(this.allAdditionalLongAliasModels.size()).append(" & ");
 		sb.append("0").append(" & ");
-		sb.append("0.0");
+		//sb.append("0.0");
 		return sb.toString();
 	}
 	
@@ -428,6 +451,30 @@ public class AliasModelsProcessor implements Processor {
 		return sb.toString();
 	}
 	
+	public String getMonitorTotal() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Total").append(" & ");
+		int count[] = new int[6];
+		float numApps = this.appAliasingStatements.values().size();
+		for(int i : this.appLinesOfCodeMap.values()) count[5]+=i;
+		sb.append(count[5]/numApps).append(" & ");
+		for(int i : this.appAliasingStatements.values()) count[0]+=i;
+		sb.append(count[0]/numApps).append(" & ");
+		for(int i : this.appAllFrameworkMethodCalls.values()) count[1]+=i;
+		sb.append(count[1]/numApps).append(" & ");
+		for(int i : this.appAllEscapedObjects.values()) count[2]+=i;
+		sb.append(count[2]/numApps).append(" & ");
+		sb.append((count[1] + count[2])/numApps).append(" & ");
+		for(int i : this.appFrameworkMethodCalls.values()) count[3]+=i;
+		sb.append(count[3]/numApps).append(" & ");
+		for(int i : this.appEscapedObjects.values()) count[4]+=i;
+		sb.append(count[4]/numApps).append(" & ");
+		sb.append((count[3] + count[4])/numApps).append(" & ");
+		sb.append((float)(count[3] + count[4])/count[0]).append(" & ");
+		sb.append((float)(count[3] + count[4])/(count[1] + count[2])).append(" & ");
+		return sb.toString();
+	}
+	
 	public String getSpreadSheetHeaderModels() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("App Name").append(",");
@@ -463,7 +510,7 @@ public class AliasModelsProcessor implements Processor {
 	}
 	
 	public static void run(String directory, int type) throws Exception {
-		AliasModelsProcessor ap = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"));		
+		AliasModelsProcessor ap = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"), ModelReader.readMap("../results/models/alias_models_long.txt"));
 		new LogReader(directory, ap).run();
 		
 		switch(type) {
@@ -486,6 +533,7 @@ public class AliasModelsProcessor implements Processor {
 			for(String appName : ap.getAppNames()) {
 				System.out.println(ap.getMonitorAppLine(appName) + "\\\\");
 			}
+			System.out.println(ap.getMonitorTotal());
 			break;
 		case 3: // print missing phantom object models
 			for(String model : ap.allMissingPhantomObjectModels) {
@@ -505,10 +553,10 @@ public class AliasModelsProcessor implements Processor {
 		case 6: // print long models
 			PrintWriter pw = new PrintWriter("output.txt");
 			int counter = 0;
-			for(String appName : ap.appLongAliasModels.keySet()) {
+			for(String appName : ap.appAdditionalLongAliasModels.keySet()) {
 				pw.println("APP: " + appName);
 				pw.println();
-				for(String model : ap.appLongAliasModels.get(appName)) {
+				for(String model : ap.appAdditionalLongAliasModels.get(appName)) {
 					for(String token : model.split("#")) {
 						pw.println(token);
 					}
@@ -523,9 +571,9 @@ public class AliasModelsProcessor implements Processor {
 	}
 	
 	public static void runSpreadSheet() throws Exception {
-		AliasModelsProcessor ap1 = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"));
+		AliasModelsProcessor ap1 = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"), ModelReader.readMap("../results/models/alias_models_long.txt"));
 		new LogReader("../results/first_server/", ap1).run();
-		AliasModelsProcessor ap2 = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"));
+		AliasModelsProcessor ap2 = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"), ModelReader.readMap("../results/models/alias_models_long.txt"));
 		new LogReader("../results/fifth_server/", ap2).run();
 		
 		Map<String,Map<Integer,Integer>> flows = AliasModelsFlowReader.getFlows();
@@ -537,10 +585,16 @@ public class AliasModelsProcessor implements Processor {
 			String line = ap1.getSpreadSheetAppLineModels(appName) + "," + ap2.getSpreadSheetAppLineMonitors(appName) + "," + flows.get(appName).get(1) + "," + flows.get(appName).get(2) + "," + flows.get(appName).get(5);
 			System.out.println(line);
 		}
+		for(String appName : ap1.getAppNames()) {
+			if(!flows.containsKey(appName)) {
+				continue;
+			}
+			System.out.println((ap2.appAllEscapedObjects.get(appName) + ap2.appAllFrameworkMethodCalls.get(appName)));
+		}
 	}
 	
 	public static void main(String[] args) throws Exception {
-		//run("../results/first_server/", 7);
+		//run("../results/fifth_server/", 2);
 		runSpreadSheet();
 	}
 }

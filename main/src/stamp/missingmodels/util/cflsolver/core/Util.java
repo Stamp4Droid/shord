@@ -75,7 +75,7 @@ public class Util {
 		@Override
 		public Set<V> get(Object k) {
 			Set<V> vSet = super.get(k);
-			return vSet == null ? new HashSet<V>() : vSet;
+			return Collections.unmodifiableSet(vSet == null ? new HashSet<V>() : vSet);
 		}
 	}
 
