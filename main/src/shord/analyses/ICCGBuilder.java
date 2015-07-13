@@ -45,11 +45,14 @@ import java.io.*;
   **/
 
 @Chord(name="base-java-iccg",
-       produces={ "MC", "IntentTgtField", "ActionField", "DataTypeField" },
+       produces={ "MC", "IntentTgtField", "ActionField", "DataTypeField",
+                  "abortBroadcast", "RuntimeExec", "sendTextMsg"},
        namesOfTypes = {"M", "T", "I"},
        types = { DomM.class, DomT.class, DomI.class},
-       namesOfSigns = { "MC", "IntentTgtField", "ActionField", "DataTypeField", "SpecM" },
-       signs = { "M0,COMP0:M0_COMP0", "F0:F0", "F0:F0", "F0:F0",  "M0:M0" }
+       namesOfSigns = { "MC", "IntentTgtField", "ActionField", "DataTypeField", "SpecM",
+                        "abortBroadcast", "RuntimeExec", "sendTextMsg"},
+       signs = { "M0,COMP0:M0_COMP0", "F0:F0", "F0:F0", "F0:F0",  "M0:M0",
+                 "M0:M0", "M0:M0", "M0:M0"}
        )
 public class ICCGBuilder extends JavaAnalysis
 {
@@ -57,6 +60,9 @@ public class ICCGBuilder extends JavaAnalysis
     private	DomM domM;
 	private ProgramRel relMC;
 	private ProgramRel relSpecM;
+    private ProgramRel relAbort;
+    private ProgramRel relExec; 
+	private ProgramRel relSendMsg;
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
@@ -143,12 +149,21 @@ public class ICCGBuilder extends JavaAnalysis
         relSpecM = (ProgramRel) ClassicProject.g().getTrgt("SpecM");
         relSpecM.zero();
 
+		relAbort = (ProgramRel) ClassicProject.g().getTrgt("abortBroadcast");
+		relExec = (ProgramRel) ClassicProject.g().getTrgt("RuntimeExec");
+		relSendMsg = (ProgramRel) ClassicProject.g().getTrgt("sendTextMsg");
+	    relAbort.zero();
+	    relExec.zero();
+	    relSendMsg.zero();
     }
 
     void saveRels() 
     {
         relMC.save();
         relSpecM.save();
+		relAbort.save();
+		relExec.save();
+		relSendMsg.save();
     }
 
     public ICCGBuilder()
@@ -177,7 +192,6 @@ public class ICCGBuilder extends JavaAnalysis
         if(!method.isConcrete())
             return;
 
-            
         String[] callerComp = {
             "<android.content.BroadcastReceiver: void abortBroadcast()>",
             "<java.lang.Runtime: java.lang.Process exec(java.lang.String)>",
@@ -220,10 +234,22 @@ public class ICCGBuilder extends JavaAnalysis
             "<javax.crypto.Cipher: int update(java.nio.ByteBuffer,java.nio.ByteBuffer)>"
 
         };
+        String abortSig = "<android.content.BroadcastReceiver: void abortBroadcast()>";
+        String execSig = "<java.lang.Runtime: java.lang.Process exec(java.lang.String)>";
+        String sendMsgSig = "<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>";
         List<String> cList = Arrays.asList(callerComp);
         //record special invocation.
         if(cList.contains(method.getSignature()) )
             relSpecM.add(method);
+
+        ///////////
+        if(abortSig.equals(method.getSignature()))
+            relAbort.add(method);
+        if(execSig.equals(method.getSignature()))
+            relExec.add(method);
+        if(sendMsgSig.equals(method.getSignature()))
+            relSendMsg.add(method);
+        ////////////
 
         if(components.get(this.klass.getName()) != null) {
             String[] str = { "void onPostResume()",

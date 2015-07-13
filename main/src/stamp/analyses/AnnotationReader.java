@@ -32,19 +32,25 @@ import chord.project.Chord;
 					"ArgArgFlow",
 					"SrcLabel", "SinkLabel",
 					"InLabelArg", "InLabelRet",
-					"OutLabelArg", "OutLabelRet" },
+					"OutLabelArg", "OutLabelRet", "DeviceId", "SubId", "Internet", "EncSrc", "EncSink",
+                    "MODEL", "BRAND", "SDK", "Manufact", "Product", "LineNumber", "SmsContent", 
+                    "SimSerial", "FileSrc", "FileSink", "WebView", "Exec", "InstallPackage"},
 	   namesOfTypes = { "L" },
 	   types = { DomL.class },
 	   namesOfSigns = { "ArgArgTransfer", "ArgRetTransfer", 
 						"ArgArgFlow",
 						"SrcLabel", "SinkLabel",
 						"InLabelArg", "InLabelRet",
-						"OutLabelArg", "OutLabelRet" },
+						"OutLabelArg", "OutLabelRet", "DeviceId" , "SubId", "Internet", "EncSrc", "EncSink",
+                        "MODEL", "BRAND", "SDK", "Manufact", "Product", "LineNumber", "SmsContent", 
+                        "SimSerial", "FileSrc", "FileSink", "WebView", "Exec", "InstallPackage"},
 	   signs = { "M0,Z0,Z1:M0_Z0_Z1", "M0,Z0:M0_Z0", 
 				 "M0,Z0,Z1:M0_Z0_Z1",
 				 "L0:L0", "L0:L0",
 				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0",
-				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0" }
+				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0", "L0:L0", "L0:L0","L0:L0","L0:L0","L0:L0",
+                 "L0:L0","L0:L0","L0:L0","L0:L0","L0:L0","L0:L0","L0:L0", 
+                 "L0:L0","L0:L0","L0:L0","L0:L0","L0:L0", "L0:L0"}
 	   )
 public class AnnotationReader extends JavaAnalysis
 {
@@ -72,6 +78,8 @@ public class AnnotationReader extends JavaAnalysis
 		for(String l : sinkLabels)
 			domL.add(l);
 		domL.save();
+        //by yufeng.
+        sigLabels(srcLabels, sinkLabels);
 
 		//fille SrcLabel
 		ProgramRel relSrcLabel = (ProgramRel) ClassicProject.g().getTrgt("SrcLabel");
@@ -107,6 +115,107 @@ public class AnnotationReader extends JavaAnalysis
 		relOutLabelArg.save();
 		relOutLabelRet.save();
 	}
+
+    private void sigLabels(List<String> srcLabels, List<String> sinkLabels) {
+		ProgramRel relDeviceId = (ProgramRel) ClassicProject.g().getTrgt("DeviceId");
+		ProgramRel relSubId = (ProgramRel) ClassicProject.g().getTrgt("SubId");
+		ProgramRel relInternet = (ProgramRel) ClassicProject.g().getTrgt("Internet");
+		ProgramRel relEncSrc = (ProgramRel) ClassicProject.g().getTrgt("EncSrc");
+		ProgramRel relEncSink = (ProgramRel) ClassicProject.g().getTrgt("EncSink");
+		ProgramRel relModel = (ProgramRel) ClassicProject.g().getTrgt("MODEL");
+		ProgramRel relBrand = (ProgramRel) ClassicProject.g().getTrgt("BRAND");
+		ProgramRel relSdk = (ProgramRel) ClassicProject.g().getTrgt("SDK");
+		ProgramRel relManufact = (ProgramRel) ClassicProject.g().getTrgt("Manufact");
+		ProgramRel relProduct = (ProgramRel) ClassicProject.g().getTrgt("Product");
+		ProgramRel relLineNumber = (ProgramRel) ClassicProject.g().getTrgt("LineNumber");
+		ProgramRel relSmsContent = (ProgramRel) ClassicProject.g().getTrgt("SmsContent");
+		ProgramRel relSimSerial = (ProgramRel) ClassicProject.g().getTrgt("SimSerial");
+		ProgramRel relFileSrc = (ProgramRel) ClassicProject.g().getTrgt("FileSrc");
+		ProgramRel relFileSink = (ProgramRel) ClassicProject.g().getTrgt("FileSink");
+		ProgramRel relWebView = (ProgramRel) ClassicProject.g().getTrgt("WebView");
+		ProgramRel relExec = (ProgramRel) ClassicProject.g().getTrgt("Exec");
+		ProgramRel relInstallPkg = (ProgramRel) ClassicProject.g().getTrgt("InstallPackage");
+
+		relDeviceId.zero();
+		relSubId.zero();
+		relInternet.zero();
+		relEncSrc.zero();
+		relEncSink.zero();
+        relModel.zero();
+        relBrand.zero();
+        relSdk.zero();
+        relManufact.zero();
+        relProduct.zero();
+        relLineNumber.zero();
+        relSmsContent.zero();
+        relSimSerial.zero();
+        relFileSrc.zero();
+        relFileSink.zero();
+        relWebView.zero();
+        relExec.zero();
+        relInstallPkg.zero();
+
+		for(String l : srcLabels) {
+            if(l.equals("$getDeviceId"))
+			    relDeviceId.add(l);
+            if(l.equals("$getSubscriberId"))
+			    relSubId.add(l);
+            if(l.equals("$ENC/DEC"))
+			    relEncSrc.add(l);
+            if(l.equals("$MODEL"))
+			    relModel.add(l);
+            if(l.equals("$BRAND"))
+			    relBrand.add(l);
+            if(l.equals("$SDK"))
+                relSdk.add(l);
+            if(l.equals("$MANUFACTURER"))
+                relManufact.add(l);
+            if(l.equals("$PRODUCT"))
+                relProduct.add(l);
+            if(l.equals("$getLine1Number"))
+                relLineNumber.add(l);
+            if(l.equals("$content://sms"))
+                relSmsContent.add(l);
+            if(l.equals("$getSimSerialNumber"))
+                relSimSerial.add(l);
+            if(l.equals("$File"))
+                relFileSrc.add(l);
+            if(l.equals("$InstalledPackages"))
+                relInstallPkg.add(l);
+        }
+		for(String l : sinkLabels) {
+            if(l.equals("!INTERNET"))
+                relInternet.add(l);
+            if(l.equals("!ENC/DEC"))
+                relEncSink.add(l);
+            if(l.equals("!FILE"))
+                relFileSink.add(l);
+            if(l.equals("!WebView"))
+                relWebView.add(l);
+            if(l.equals("!PROCESS.OutputStream"))
+                relExec.add(l);
+
+        }
+
+		relDeviceId.save();
+		relSubId.save();
+		relInternet.save();
+		relEncSrc.save();
+		relEncSink.save();
+        relModel.save();
+        relBrand.save();
+        relSdk.save();
+        relProduct.save();
+        relManufact.save();
+        relLineNumber.save();
+        relSmsContent.save();
+        relSimSerial.save();
+        relFileSrc.save();
+        relFileSink.save();
+        relWebView.save();
+        relExec.save();
+        relInstallPkg.save();
+    }
 
 	private void process(List<String> srcLabels, List<String> sinkLabels, List worklist)
 	{
