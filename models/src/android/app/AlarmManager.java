@@ -1,6 +1,5 @@
 class AlarmManager
 {
-
     public  void set(int type, long triggerAtMillis, android.app.PendingIntent operation) 
     {
 		android.app.StampPendingIntent t = operation.pi;

@@ -71,9 +71,13 @@ public class Main
 			String rootWidgetClassName = layout.rootWidget.getClassName();
 			if(rootWidgetClassName.equals("merge"))
 				continue;
-			SootClass rootWidgetClass = Scene.v().getSootClass(rootWidgetClassName);
-			if(rootWidgetClass.isPhantom())
+			if(rootWidgetClassName.equals("PreferenceScreen"))
 				continue;
+			SootClass rootWidgetClass = Scene.v().getSootClass(rootWidgetClassName);
+			if(rootWidgetClass.isPhantom()){
+				System.out.println("Phantom RootWidgetClass "+rootWidgetClassName);
+				continue;
+			}
 			writeClass(new GenerateInflaterClass(layout).getFinalSootClass(), driverDir);
 		}
 

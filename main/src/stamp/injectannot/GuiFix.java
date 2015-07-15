@@ -275,7 +275,8 @@ public class GuiFix extends JavaAnalysis
 
 				for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt)){
 					SootClass inflaterSubclass = Scene.v().getSootClass("stamp.harness.LayoutInflater$"+layoutId);
-			
+					assert !inflaterSubclass.isPhantom() : inflaterSubclass.getName();
+
 					Local inflaterLocal = Jimple.v().newLocal("stamp$inflater$"+layoutId, inflaterSubclass.getType());
 					locals.add(inflaterLocal);
 			
@@ -313,6 +314,8 @@ public class GuiFix extends JavaAnalysis
 
 				Value oldRoot = ie.getArg(1);
 				for(Integer layoutId : reachingDefsFor(ie.getArg(0), stmt)){
+					if(!Scene.v().containsClass("stamp.harness.LayoutInflater$"+layoutId))
+						continue;
 					SootClass inflaterSubclass = Scene.v().getSootClass("stamp.harness.LayoutInflater$"+layoutId);
 			
 					Local inflaterLocal = Jimple.v().newLocal("stamp$inflater$"+layoutId, inflaterSubclass.getType());
