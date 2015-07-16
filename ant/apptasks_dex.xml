@@ -153,7 +153,7 @@
     </java>
 
 	<!-- run the postprocessing python script-->
-	<exec executable="python" failonerror="true">
+	<!--exec executable="python" failonerror="true">
 	  <arg value="${stamp.dir}/scripts/buildReportDB.py"/>
 	  <arg value="-c"/>
 	  <arg value="${stamp.dir}/assets/srcClass.xml"/>
@@ -177,7 +177,7 @@
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
 		<pathelement location="${stamp.dir}/lib/sqlite-jdbc-3.7.2.jar"/>
 	  </classpath>
-	</java>
+	</java-->
   </target>
 
 </project>
