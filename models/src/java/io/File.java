@@ -1,16 +1,16 @@
 class File
 {
-	@STAMP(flows={@Flow(from="!File",to="this"), @Flow(from="dir",to="this"), @Flow(from="name",to="this")})
+	@STAMP(flows={@Flow(from="!FILE",to="this"), @Flow(from="dir",to="this"), @Flow(from="name",to="this")})
 	public  File(java.io.File dir, java.lang.String name) 
 	{ 
 	}
 
-	@STAMP(flows={@Flow(from="$File",to="this"), @Flow(from="!File",to="this"), @Flow(from="path",to="this")})
+	@STAMP(flows={@Flow(from="$FILE",to="this"), @Flow(from="!FILE",to="this"), @Flow(from="path",to="this")})
 	public  File(java.lang.String path) 
 	{ 
 	}
 
-	@STAMP(flows={@Flow(from="$File",to="this"), @Flow(from="!File",to="this"), @Flow(from="dirPath",to="this"),@Flow(from="name",to="this")})
+	@STAMP(flows={@Flow(from="$FILE",to="this"), @Flow(from="!FILE",to="this"), @Flow(from="dirPath",to="this"),@Flow(from="name",to="this")})
 	public  File(java.lang.String dirPath, java.lang.String name) 
 	{ 
 	}

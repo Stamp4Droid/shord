@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.FileReader;
-import java.io.BufferedReader;
 
-import stamp.util.FileCopy;
 import stamp.srcmap.sourceinfo.SourceInfo;
 
 /*
@@ -53,25 +50,7 @@ public abstract class XMLReport extends Category {
 
 	public void write() {
 		try{
-			File resultFile = new File(getCanonicalReportFilePath());
-			if(resultFile.exists()){
-				//need to merge
-				File tmpFile = File.createTempFile("stamp_result", null, null);
-				tmpFile.deleteOnExit();
-				FileCopy.copy(resultFile, tmpFile);
-				
-				BufferedReader reader = new BufferedReader(new FileReader(tmpFile));
-				PrintWriter writer = new PrintWriter(new FileWriter(resultFile));
-				String line = null;
-				while((line = reader.readLine()) != null){
-					if(line.equals("</root>"))
-						break;
-					writer.println(line);
-				}
-				reader.close();
-				writer.close();
-			}
-			PrintWriter writer = new PrintWriter(new FileWriter(resultFile));
+			PrintWriter writer = new PrintWriter(new FileWriter(new File(getCanonicalReportFilePath())));
 			//System.out.println("DEBUG: Generating XMLReport " + this.getTitle());
 			generate();
 			write(writer);
@@ -81,7 +60,7 @@ public abstract class XMLReport extends Category {
 		}
 	}
 
-	protected void write(PrintWriter writer) {
+	public void write(PrintWriter writer) {
 		writer.println("<root>");
 		writer.println("<title>"+title+"</title>");
 		for(Tuple t : tuples)

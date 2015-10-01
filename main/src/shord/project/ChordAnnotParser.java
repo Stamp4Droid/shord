@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import shord.project.Messages;
 import chord.project.Chord;
+import chord.project.Messages;
 import chord.bddbddb.RelSign;
 import chord.util.Utils;
 

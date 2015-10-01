@@ -12,37 +12,17 @@ class Thread
 		this.r = runnable;
     }
 
-	public  Thread(java.lang.Runnable runnable, java.lang.String threadName)
-	{ 
-		this.r = runnable;
-	}
-
-	public  Thread(java.lang.String threadName) 
-	{
-		this.r = this;
-	}
-
-	public  Thread(java.lang.ThreadGroup group, java.lang.Runnable runnable)
-	{ 
-		this.r = runnable;
-	}
-
-	public  Thread(java.lang.ThreadGroup group, java.lang.Runnable runnable, java.lang.String threadName) 
-	{ 
-		this.r = runnable;
-	}
-
-	public  Thread(java.lang.ThreadGroup group, java.lang.String threadName) { 
-		this.r = this;
-	}
-
-	public  Thread(java.lang.ThreadGroup group, java.lang.Runnable runnable, java.lang.String threadName, long stackSize) 
-	{ 
-		this.r = runnable;
-	}
-
     public synchronized  void start() 
     { 
 		r.run();
+    }
+
+    public static void setDefaultUncaughtExceptionHandler(final java.lang.Thread.UncaughtExceptionHandler handler) {
+	edu.stanford.stamp.harness.ApplicationDriver.getInstance().
+	    registerCallback(new edu.stanford.stamp.harness.Callback(){
+		    public void run() {
+			handler.uncaughtException(null, null);
+                    }
+		});
     }
 }

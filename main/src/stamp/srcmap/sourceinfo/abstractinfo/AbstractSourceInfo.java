@@ -42,7 +42,7 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 	private Map<String,ClassInfo> classInfos = new HashMap<String,ClassInfo>();
 	private AnonymousClassMap anonymousClassMap;
 	
-	private static Set<String> frameworkClassNames;
+	private static Set<String> frameworkClassNames = new HashSet();
 
 	public AbstractSourceInfo() {		
 		this.anonymousClassMap = new AnonymousClassMap(this);
@@ -194,7 +194,7 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 				marker = m;
 			else{
 				//at least two matching markers
-				System.out.println("Multiple markers");
+				//System.out.println("Multiple markers");
 				return null;
 			}
 		}
@@ -204,7 +204,7 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 	}
 
 	public static boolean isFrameworkClass(SootClass klass) {
-		if(frameworkClassNames == null){
+		if(frameworkClassNames.isEmpty()){
 			computeFrameworkClassNames();
 		}
 		return frameworkClassNames.contains(klass.getName());
@@ -212,7 +212,6 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 	
 	private static void computeFrameworkClassNames()
 	{
-		frameworkClassNames = new HashSet();
 		try{
 			JarFile androidJar = new JarFile(System.getProperty("stamp.android.jar"));
 			for(Enumeration<JarEntry> e = androidJar.entries(); e.hasMoreElements();){
@@ -220,6 +219,7 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 				if(!name.endsWith(".class"))
 					continue;
 				name = name.replace('/', '.').substring(0, name.length()-6);
+				//System.out.println("fclass: "+name);
 				frameworkClassNames.add(name);
 			}
 		}catch(Exception e){

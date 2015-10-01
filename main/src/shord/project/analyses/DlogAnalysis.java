@@ -15,14 +15,23 @@ import java.util.regex.Pattern;
 import java.util.Set;
 import java.util.HashSet;
 
-import shord.project.Messages;
-import shord.project.Config;
-import shord.project.OutDirUtils;
+import CnCHJ.api.ItemCollection;
+
+import chord.project.Messages;
+import chord.bddbddb.RelSign;
+import chord.bddbddb.Solver;
+import chord.project.ICtrlCollection;
+import chord.project.IDataCollection;
+import chord.project.IStepCollection;
+import chord.util.Utils;
+//import chord.util.ProcessExecutor;
+import chord.project.Config;
+import chord.project.OutDirUtils;
+
 import shord.project.Main;
+import shord.project.ModernProject;
 import shord.project.ProcessExecutor;
 
-import chord.bddbddb.RelSign;
-import chord.util.Utils;
 import gnu.trove.list.array.TIntArrayList;
 
 /**
@@ -283,13 +292,13 @@ public class DlogAnalysis extends JavaAnalysis {
 		String[] cmdArray = new String[] {
             "java",
             "-ea",
-            "-Xmx" + Config.v().bddbddbMaxHeap,
+            "-Xmx" + Config.bddbddbMaxHeap,
             "-cp",
-            //Config.v().mainDirName + File.separator + "shord.jar",
+            //Config.mainDirName + File.separator + "shord.jar",
 			System.getProperty("java.class.path"),
-            "-Dverbose=" + Config.v().verbose,
-            Config.v().useBuddy ? ("-Djava.library.path=" + Config.v().mainDirName) : "-Dbdd=j",
-            "-Dbasedir=" + Config.v().bddbddbWorkDirName,
+            "-Dverbose=" + Config.verbose,
+            Config.useBuddy ? ("-Djava.library.path=" + Config.mainDirName) : "-Dbdd=j",
+            "-Dbasedir=" + Config.bddbddbWorkDirName,
             "net.sf.bddbddb.Solver",
 			fileName.toString()
         };
@@ -306,7 +315,7 @@ public class DlogAnalysis extends JavaAnalysis {
         String cmd = "";
         for (String s : cmdarray)
             cmd += s + " ";
-        if (Config.v().verbose >= 1) Messages.log(PROCESS_STARTING, cmd);
+        if (Config.verbose >= 1) Messages.log(PROCESS_STARTING, cmd);
         try {
             int result = ProcessExecutor.execute(cmdarray, null, null, timeout);
             if (result != 0)
@@ -314,9 +323,42 @@ public class DlogAnalysis extends JavaAnalysis {
         } catch (Throwable ex) {
             Messages.fatal(PROCESS_FAILED, cmd, ex.getMessage());
         }
-        if (Config.v().verbose >= 1) Messages.log(PROCESS_FINISHED, cmd);
+        if (Config.verbose >= 1) Messages.log(PROCESS_FINISHED, cmd);
     }
 
+    public void run(Object ctrl, IStepCollection sc) {
+        ModernProject p = ModernProject.g();
+        Object[] consumes = p.runPrologue(ctrl, sc);
+        List<ProgramDom> allDoms = new ArrayList<ProgramDom>();
+        for (Object o : consumes) {
+            if (o instanceof ProgramDom)
+                allDoms.add((ProgramDom) o);
+        }
+        run();
+        List<IDataCollection> pdcList = sc.getProducedDataCollections();
+        for (IDataCollection pdc : pdcList) {
+            ItemCollection pic = pdc.getItemCollection();
+            String relName = pdc.getName();
+            RelSign sign = p.getSign(relName);
+            String[] domNames = sign.getDomNames();
+            ProgramDom[] doms = new ProgramDom[domNames.length];
+            for (int i = 0; i < domNames.length; i++) {
+                String domName = Utils.trimNumSuffix(domNames[i]);
+                for (ProgramDom dom : allDoms) {
+                    if (dom.getName().equals(domName)) {
+                        doms[i] = dom;
+                        break;
+                    }
+                }
+                assert (doms[i] != null);
+            }
+            ProgramRel rel = new ProgramRel();
+            rel.setName(relName);
+            rel.setSign(sign);
+            rel.setDoms(doms);
+            pic.Put(ctrl, rel);
+        }
+    }
     /**
      * Provides the names of all domains of relations consumed/produced by this Datalog analysis.
      * 

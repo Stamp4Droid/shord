@@ -68,10 +68,12 @@
       <http url="http://localhost:8080"/>
     </waitfor>
 
-    <!-- Launch browser. -->
-    <exec executable="${stamp.browser}"
-	  spawn="true">
-      <arg value="localhost:8080/doc/stamp.html"/>
+	<!-- Launch browser. -->
+	<exec executable="${stamp.browser}" spawn="true" os="Linux">
+	  <arg value="http://localhost:8080/doc/stamp.html"/>
+    </exec>
+    <exec executable="open" spawn="true" os="Mac OS X">
+	  <arg line="http://localhost:8080/doc/stamp.html"/>
     </exec>
   </target>
 

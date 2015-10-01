@@ -5,8 +5,12 @@ import soot.SootMethod;
 import soot.Type;
 import soot.AbstractJasminClass;
 
-public class NativeMethodAnnotation extends Visitor
+public class NativeMethodAnnotation extends AnnotationInjector.Visitor
 {
+	protected void postVisit()
+	{
+	}
+
 	protected void visit(SootClass klass)
     {
 		for(SootMethod method : klass.getMethods()){

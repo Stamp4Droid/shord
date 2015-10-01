@@ -2,8 +2,15 @@ package shord.project.analyses;
 
 import java.util.List;
 
-import shord.project.Messages;
-import shord.project.ITask;
+import CnCHJ.api.ItemCollection;
+
+import chord.project.ICtrlCollection;
+import chord.project.IDataCollection;
+import chord.project.IStepCollection;
+import chord.project.Messages;
+import chord.project.ITask;
+
+import shord.project.ModernProject;
 
 /**
  * Generic implementation of a Java task (a program analysis
@@ -30,6 +37,13 @@ public class JavaAnalysis implements ITask {
     @Override
     public void run() {
         Messages.fatal(UNDEFINED_RUN, name);
+    }
+    @Override
+    public void run(Object ctrl, IStepCollection sc) {
+        ModernProject p = ModernProject.g();
+        consumes = p.runPrologue(ctrl, sc);
+        run();
+        p.runEpilogue(ctrl, sc, produces, controls);
     }
     @Override
     public String toString() {

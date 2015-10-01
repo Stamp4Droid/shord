@@ -1,45 +1,42 @@
+import edu.stanford.stamp.harness.ApplicationDriver;
+import edu.stanford.stamp.harness.Callback;
+
 class Fragment
 {
-	public android.view.View view;
-	public android.view.StampLayoutInflater stamp_inflater;
-
 	public  Fragment()
 	{
+		ApplicationDriver.getInstance().
+			registerCallback(new Callback(){
+					public void run() {
+						Fragment.this.onHiddenChanged(false);
+						Fragment.this.onActivityResult(0, 0, null);
+						Fragment.this.onInflate(null, null);
+						Fragment.this.onInflate(null, null, null);
+						Fragment.this.onAttach(null);
+						Fragment.this.onCreate(null);
+						Fragment.this.onViewCreated(null, null);
+						Fragment.this.onCreateView(null, null, null);
+						Fragment.this.onActivityCreated(null);
+						Fragment.this.onStart();
+						Fragment.this.onResume();
+						Fragment.this.onSaveInstanceState(null);
+						Fragment.this.onConfigurationChanged(null);
+						Fragment.this.onPause();
+						Fragment.this.onStop();
+						Fragment.this.onLowMemory();
+						Fragment.this.onTrimMemory(0);
+						Fragment.this.onDestroyView();
+						Fragment.this.onDestroy();
+						Fragment.this.onDetach();
+						Fragment.this.onCreateOptionsMenu(null, null);
+						Fragment.this.onPrepareOptionsMenu(null);
+						Fragment.this.onDestroyOptionsMenu();
+						Fragment.this.onOptionsItemSelected(null);
+						Fragment.this.onOptionsMenuClosed(null);
+						Fragment.this.onCreateContextMenu(null, null, null);
+						Fragment.this.onContextItemSelected(null);
+					}
+				}); 
+
 	}
-	
-	public void callCallbacks()
-	{
-		this.onHiddenChanged(false);
-		this.onActivityResult(0, 0, null);
-		this.onInflate(null, null);
-		this.onInflate(null, null, null);
-		this.onAttach(null);
-		this.onCreate(null);
-		this.view = this.onCreateView(null, null, null);
-		this.onViewCreated(this.view, null);
-		this.onActivityCreated(null);
-		this.onStart();
-		this.onResume();
-		this.onSaveInstanceState(null);
-		this.onConfigurationChanged(null);
-		this.onPause();
-		this.onStop();
-		this.onLowMemory();
-		this.onTrimMemory(0);
-		this.onDestroyView();
-		this.onDestroy();
-		this.onDetach();
-		this.onCreateOptionsMenu(null, null);
-		this.onPrepareOptionsMenu(null);
-		this.onDestroyOptionsMenu();
-		this.onOptionsItemSelected(null);
-		this.onOptionsMenuClosed(null);
-		this.onCreateContextMenu(null, null, null);
-		this.onContextItemSelected(null);
-	}
-	
-	public  android.view.View getView() { 
-		return this.view;
-	}
-	
 }

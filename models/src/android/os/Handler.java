@@ -1,67 +1,129 @@
+import edu.stanford.stamp.harness.ApplicationDriver;
+
 class Handler
 {
 	public final  boolean sendEmptyMessageAtTime(int what, long uptimeMillis) {
-		this.handleMessage(null);
+	    ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						Handler.this.handleMessage(null);
+					}
+				});
 	    return true;
 	}
 
 	public final  boolean sendEmptyMessageDelayed(int what, long delayMillis) {
-		this.handleMessage(null);
+	    ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						Handler.this.handleMessage(null);
+					}
+				});
 	    return true;
 	}
 
 	public final boolean sendEmptyMessage(int what) {
-		this.handleMessage(null);
+	    ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						Handler.this.handleMessage(null);
+					}
+				});
 	    return true;
 	}
 
 	public final boolean sendMessage(final android.os.Message msg) {
-		this.handleMessage(msg);
+	    ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						Handler.this.handleMessage(msg);
+					}
+				});
 	    return true;
 	}
 	
 	public final boolean sendMessageDelayed(final android.os.Message msg, final long delayMillis) {
-		try {
-			Thread.sleep(delayMillis);
-		} catch(InterruptedException e) { }
-		this.handleMessage(msg);
-		return true;
+	    ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+					    try {
+					        Thread.sleep(delayMillis);
+					    } catch(InterruptedException e) { }
+						Handler.this.handleMessage(msg);
+					}
+				});
+	    return true;
 	}
 
 	public  boolean sendMessageAtTime(final android.os.Message msg, long uptimeMillis) {
-		this.handleMessage(msg);
+		ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						Handler.this.handleMessage(msg);
+					}
+				});
 	    return true;
 	}
 
 	public final  boolean sendMessageAtFrontOfQueue(final android.os.Message msg) {
-		this.handleMessage(msg);
+		ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						Handler.this.handleMessage(msg);
+					}
+				});
 	    return true;
 	}
 
 	public final  boolean post(final java.lang.Runnable r) {
-		r.run();
+		ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						r.run();
+					}
+				});
 	    return true;
 	}
 	
 	public final  boolean postAtTime(final java.lang.Runnable r, long uptimeMillis) {
-		r.run();
+		ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						r.run();
+					}
+				});
 	    return true;
 	}
 
 
 	public final  boolean postAtTime(final java.lang.Runnable r, java.lang.Object token, long uptimeMillis) {
-		r.run();
+		ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						r.run();
+					}
+				});
 	    return true;
 	}
 
 
 	public final  boolean postDelayed(final java.lang.Runnable r, long delayMillis) {
-		r.run();
+		ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						r.run();
+					}
+				});
 	    return true;
 	}
 
 	public final  boolean postAtFrontOfQueue(final java.lang.Runnable r) {
-		r.run();
+		ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						r.run();
+					}
+				});
 	    return true;
 	}
 

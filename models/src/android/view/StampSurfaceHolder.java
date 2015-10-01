@@ -3,9 +3,15 @@ public class StampSurfaceHolder implements SurfaceHolder
 {
 	public   void addCallback(final android.view.SurfaceHolder.Callback callback)
 	{
-		callback.surfaceCreated(StampSurfaceHolder.this);
-		callback.surfaceChanged(StampSurfaceHolder.this, 0, 0, 0);
-		callback.surfaceDestroyed(StampSurfaceHolder.this);
+    	edu.stanford.stamp.harness.ApplicationDriver.getInstance().
+    	    registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						callback.surfaceCreated(StampSurfaceHolder.this);
+						callback.surfaceChanged(StampSurfaceHolder.this, 0, 0, 0);
+						callback.surfaceDestroyed(StampSurfaceHolder.this);
+					}
+    		});
+
 	}
 
 	public   void removeCallback(android.view.SurfaceHolder.Callback callback){ throw new RuntimeException("Stub!"); }

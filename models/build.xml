@@ -8,6 +8,7 @@
 
 	<!-- stamp.maxheap can be changed in ${stamp.dir}/local.config -->
 	<property name="stamp.maxheap" value="2048m"/>
+	<property name="stamp.droidrecord.modelgen.use_models" value="none"/>
 
 	<target name="jar">
 	  <!--build-models apilevel="15" version="4.0.3_r1.1"/-->
@@ -89,6 +90,7 @@
 			  <arg value="gen"/>
 			  <arg value="../src"/>
 			  <arg value="bak"/>
+			  <sysproperty key="stamp.dir" value="${stamp.dir}"/>
 			</java>
 			
 			<!-- generate the list of stubs -->
@@ -124,6 +126,7 @@
 			  <arg value="gen"/>
 			  <arg value="${stamp.dir}/bin/stamp.annotations.jar"/>
 			  <arg value="srcmap"/>
+			  <sysproperty key="stamp.droidrecord.modelgen.use_models" value="${stamp.droidrecord.modelgen.use_models}"/>
 			</java>
 			
 			<!-- compile the generated models -->
@@ -139,7 +142,6 @@
 			<jar jarfile="${stamp.dir}/bin/api-@{apilevel}/${jarname}">
 			  <fileset dir="api-@{apilevel}/classes">
 				<include name="**/*.class"/>
-				<exclude name="android/view/StampLayoutInflater.class"/>
 			  </fileset>
 			  <fileset dir="api-@{apilevel}">
 				<include name="stamp_stubs.txt"/>

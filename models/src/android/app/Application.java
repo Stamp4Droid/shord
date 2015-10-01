@@ -1,15 +1,19 @@
+import edu.stanford.stamp.harness.ApplicationDriver;
+import edu.stanford.stamp.harness.Callback;
+
 class Application
 {
 	public Application()
 	{
 		super(null);
-	}
-	
-	public void callCallbacks()
-	{
-		this.onCreate();
-		this.onLowMemory();
-		this.onTerminate();
-		this.onTrimMemory(0);
+		ApplicationDriver.getInstance().
+			registerCallback(new Callback(){
+					public void run() {
+						Application.this.onCreate();
+						Application.this.onLowMemory();
+						Application.this.onTerminate();
+						Application.this.onTrimMemory(0);
+					}
+				});
 	}
 }

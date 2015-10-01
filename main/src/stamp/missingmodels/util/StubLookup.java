@@ -4,9 +4,11 @@ import java.util.HashMap;
 
 import shord.analyses.DomM;
 import shord.project.ClassicProject;
+import soot.Scene;
 import soot.SootMethod;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
+import stamp.missingmodels.util.StubModelSet.StubModel;
 
 /*
  * This class stores stub information for edges in the JCFLSolver graph.
@@ -70,7 +72,6 @@ public class StubLookup extends HashMap<StubLookupKey,StubLookupValue> {
 			this.relationName = relationName;
 			this.methodId = methodId;
 
-
 			DomM dom = (DomM)ClassicProject.g().getTrgt("M");
 			this.method = dom.get(methodId);
 			
@@ -93,6 +94,23 @@ public class StubLookup extends HashMap<StubLookupKey,StubLookupValue> {
 		
 		public String toStringShort() {
 			return this.relationName + "[" + this.firstArg + "][" + this.secondArg + "]";
+		}
+		
+		private String argToString(boolean isFirstArg) {
+			Integer arg = isFirstArg ? this.firstArg : this.secondArg;
+			if(arg == null) {
+				return "return";
+			} else if(this.method.isStatic()) {
+				return "arg" + arg.toString();
+			} else if(arg == 0) {
+				return "this";
+			} else {
+				return "arg" + Integer.toString(arg-1);
+			}
+		}
+		
+		public String prettyPrint() {
+			return this.argToString(true) + " -> " + this.argToString(false);
 		}
 	}
 }

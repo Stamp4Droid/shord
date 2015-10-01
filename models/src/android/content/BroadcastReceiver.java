@@ -1,8 +1,15 @@
+import edu.stanford.stamp.harness.ApplicationDriver;
+import edu.stanford.stamp.harness.Callback;
+
 class BroadcastReceiver
 {
 	public  BroadcastReceiver() 
 	{ 
-		android.content.Context context = new android.test.mock.MockContext();
-		BroadcastReceiver.this.onReceive(context, new android.content.Intent());
+		ApplicationDriver.getInstance().
+			registerCallback(new Callback(){
+					public void run() {
+						BroadcastReceiver.this.onReceive(null, new android.content.Intent());
+					}
+				}); 
 	}
 }

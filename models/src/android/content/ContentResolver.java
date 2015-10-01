@@ -1,3 +1,6 @@
+import edu.stanford.stamp.harness.ApplicationDriver;
+import edu.stanford.stamp.harness.Callback;
+
 class ContentResolver
 {
     private android.content.ContentProvider provider = new android.test.mock.MockContentProvider(null);
@@ -8,7 +11,12 @@ class ContentResolver
     }
 
 	public final  void registerContentObserver(android.net.Uri uri, boolean notifyForDescendents, final android.database.ContentObserver observer) { 
-		observer.onChange(true);
+		ApplicationDriver.getInstance().
+			registerCallback(new Callback(){
+					public void run() {
+						observer.onChange(true);
+					}
+				}); 		
 	}
 	
 	@STAMP(flows={@Flow(from="uri",to="@return")})

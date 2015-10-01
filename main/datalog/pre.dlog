@@ -14,7 +14,7 @@
 
 .bddvarorder L0_Z0_I0xM0_CL0_V0xV1_U0xU1
 
-ci_IM(i:I,m:M) input
+chaIM(i:I,m:M) input
 IinvkRet(i:I,n:Z,v:V) input
 IinvkArg(i:I,n:Z,v:V) input
 IinvkPrimRet(i:I,n:Z,v:U) input
@@ -36,12 +36,11 @@ returnPrim(u:U,v:U,i:I)  output   # u is the lhs at callsite, v is the return va
 srcCtxtLabel(l:CL) output
 sinkCtxtLabel(l:CL) output
 
-param(u,v,i) :- ci_IM(i,m), MmethArg(m,z,u), IinvkArg(i,z,v).
-return(u,v,i) :- ci_IM(i,m), MmethRet(m,z,v), IinvkRet(i,z,u).
+param(u,v,i) :- chaIM(i,m), MmethArg(m,z,u), IinvkArg(i,z,v).
+return(u,v,i) :- chaIM(i,m), MmethRet(m,z,v), IinvkRet(i,z,u).
 
-paramPrim(u,v,i) :- ci_IM(i,m), MmethPrimArg(m,z,u), IinvkPrimArg(i,z,v).
-returnPrim(u,v,i) :- ci_IM(i,m), MmethPrimRet(m,z,v), IinvkPrimRet(i,z,u).
+paramPrim(u,v,i) :- chaIM(i,m), MmethPrimArg(m,z,u), IinvkPrimArg(i,z,v).
+returnPrim(u,v,i) :- chaIM(i,m), MmethPrimRet(m,z,v), IinvkPrimRet(i,z,u).
 
 srcCtxtLabel(cl) :- LCL(l,cl), SrcLabel(l).
 sinkCtxtLabel(cl) :- LCL(l,cl), SinkLabel(l).
-

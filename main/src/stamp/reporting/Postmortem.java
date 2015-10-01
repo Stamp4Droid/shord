@@ -52,7 +52,7 @@ public class Postmortem extends JavaAnalysis {
 			SrcFlow.class
 			,ArgSinkFlow.class
 			,SrcSinkFlow.class
-			//,SrcSinkFlowViz.class
+			,SrcSinkFlowViz.class
 			//,ReachableStub.class,
 			,TaintedStub.class
 			//,InvkNone.class,
@@ -62,17 +62,19 @@ public class Postmortem extends JavaAnalysis {
 			,AllReachable.class
 			,FileNames.class
 			,MissingModels.class
-			,AllMissingModels.class
 		};
 
 		Class[] finalReport = new Class[]{
-				SrcSinkFlow.class
+			PotentialCallbacks.class
+			,SrcSinkFlow.class
 		};
 
 		Class[] dontShowReports = new Class[]{
 			IM.class
 			,AllReachable.class
+			,SrcSinkFlowViz.class
 			,FileNames.class
+			//,MissingModels.class
 		};
 
 		try{

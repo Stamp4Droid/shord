@@ -8,7 +8,7 @@ class CharBuffer
 		return new StampCharBuffer();
 	}
 
-	@STAMP(flows = {@Flow(from="array",to="@return")})
+	@STAMP(flows = {@Flow(from="array",to="@return"), @Flow(from="start",to="@return"), @Flow(from="charCount",to="@return")})
 	public static  java.nio.CharBuffer wrap(char[] array, int start, int charCount) 
 	{ 
 		return new StampCharBuffer();
@@ -20,7 +20,7 @@ class CharBuffer
 		return new StampCharBuffer();
 	}
 
-    @STAMP(flows = {@Flow(from="cs",to="@return")})
+    @STAMP(flows = {@Flow(from="cs",to="@return"), @Flow(from="start",to="@return"), @Flow(from="end",to="@return")})
 	public static  java.nio.CharBuffer wrap(java.lang.CharSequence cs, int start, int end) 
 	{ 
 		return new StampCharBuffer();
@@ -104,7 +104,7 @@ class CharBuffer
 		return this;
     }
 
-    @STAMP(flows = {@Flow(from="this",to="target")})
+    @STAMP(flows = {@Flow(from="this",to="target"), @Flow(from="this",to="@return"), @Flow(from="target",to="@return")})
     public  int read(java.nio.CharBuffer target) throws java.io.IOException 
     {  
     	return 0;
