@@ -10,7 +10,7 @@ class FileInputStream
 	{
 	}
 
-    @STAMP(flows = {@Flow(from="path",to="this"), @Flow(from="$FILE",to="this")})
+    @STAMP(flows = {@Flow(from="path",to="this"), @Flow(from="$File",to="this")})
     public FileInputStream(java.lang.String path) throws java.io.FileNotFoundException 
 	{
 	}

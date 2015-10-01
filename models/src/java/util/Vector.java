@@ -22,7 +22,7 @@ class Vector<E>
 			return this;
 	}
 	
-    @STAMP(flows = {@Flow(from="this",to="elements")})
+    @STAMP(flows = {@Flow(from="elements",to="this")})
     public synchronized  void copyInto(java.lang.Object[] elements) {
     	    elements[0] = this.f;
     	}
@@ -63,7 +63,7 @@ class Vector<E>
     	    this.f = object;
     	}
 	
-    @STAMP(flows = {@Flow(from="this",to="@return"),@Flow(from="start",to="@return"),@Flow(from="end",to="@return")})
+    @STAMP(flows = {@Flow(from="this",to="@return")})
 	public synchronized  java.util.List<E> subList(int start, int end) {
      	    List<E> l = new ArrayList<E>();
      	    l.add(this.f);

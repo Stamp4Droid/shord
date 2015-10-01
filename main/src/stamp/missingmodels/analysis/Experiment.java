@@ -21,9 +21,6 @@ public class Experiment implements StampOutputFile {
 	private Class<? extends Graph> c;
 	private String appDirectory;
 	
-	private int appLOC;
-	private int frameworkLOC;
-	private List<Double> runningTimes = new ArrayList<Double>();
 	private List<ProposedStubModelSet> proposed = new ArrayList<ProposedStubModelSet>();
 
 	/*
@@ -56,8 +53,6 @@ public class Experiment implements StampOutputFile {
 		sb.append("Number of rounds: ").append(this.getNumRounds()).append("\n");
 		sb.append("Accuracy: ").append(this.getAccuracy()).append("\n");
 		sb.append("Number of flows [before,after]: ").append(this.getNumFlows()).append("\n");
-		sb.append("Maximum running time: ").append(this.getMaxRunningTime()).append("\n");
-		sb.append("Lines of code [app,framework]: [").append(this.getAppLOC()).append(",").append(this.getFrameworkLOC()).append("]\n");
 		return sb.toString();
 	}
 	
@@ -110,7 +105,7 @@ public class Experiment implements StampOutputFile {
 	}
 	
 	/*
-	 * Statistic 4: The number of flows before and after.
+	 * Statistic 3: The number of flows before and after.
 	 */
 	public Pair<Integer,Integer> getNumFlows() {
 		// STEP 0: Get the graph edges.
@@ -126,30 +121,6 @@ public class Experiment implements StampOutputFile {
 		
 		// STEP 2: Return the result.
 		return new Pair<Integer,Integer>(numZeroWeightEdges, edges.size()); 
-	}
-	
-	/*
-	 * Statistic 5: The maximum CFL solver running time.
-	 */
-	public double getMaxRunningTime() {
-		double max = -1.0;
-		for(double runningTime : this.runningTimes) {
-			if(max < runningTime) {
-				max = runningTime;
-			}
-		}
-		return max;
-	}
-	
-	/*
-	 * Statistic 6: Lines of code.
-	 */
-	public int getAppLOC() {
-		return this.appLOC;
-	}
-	
-	public int getFrameworkLOC() {
-		return this.frameworkLOC;
 	}
 
 	/*
@@ -168,10 +139,7 @@ public class Experiment implements StampOutputFile {
 		int round = 0;
 		do {
 			// STEP 1a: Run the analysis.
-			long startTime = System.currentTimeMillis();
 			this.j.run(this.c, total, relationLookup);
-			long endTime = System.currentTimeMillis();
-			this.runningTimes.add((endTime-startTime)/1000.0);
 			
 			// STEP 1b: Get the proposed models.
 			curProposed = this.j.getProposedModels(round++);
@@ -220,7 +188,7 @@ public class Experiment implements StampOutputFile {
 	 * @param cj The class of the runner to use to propose models.
 	 * @param cg The class of graph to use.
 	 */
-	public Experiment(Class<? extends JCFLSolverRunner> cj, Class<? extends Graph> c, String appDirectory, int appLOC, int frameworkLOC) {
+	public Experiment(Class<? extends JCFLSolverRunner> cj, Class<? extends Graph> c, String appDirectory) {
 		try {
 			this.j = cj.newInstance();
 			this.c = c;
@@ -232,8 +200,6 @@ public class Experiment implements StampOutputFile {
 			throw new RuntimeException("Error initializing jcfl runner: " + c.toString());
 		}
 		this.appDirectory = appDirectory;
-		this.appLOC = appLOC;
-		this.frameworkLOC = frameworkLOC;
 	}
 	
 	/*

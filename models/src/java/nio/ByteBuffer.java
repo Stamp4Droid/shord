@@ -16,7 +16,7 @@ class ByteBuffer
 		return new StampByteBuffer();
 	}
 
-    @STAMP(flows = {@Flow(from="array",to="@return"), @Flow(from="start",to="@return"), @Flow(from="byteCount",to="@return")})
+    @STAMP(flows = {@Flow(from="array",to="@return")})
     public static  java.nio.ByteBuffer wrap(byte[] array, int start, int byteCount) 
     {  
 		return new StampByteBuffer();

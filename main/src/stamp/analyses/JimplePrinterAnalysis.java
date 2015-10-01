@@ -9,6 +9,7 @@ import shord.project.analyses.JavaAnalysis;
 import stamp.util.PropertyHelper;
 import soot.Scene;
 import soot.SootClass;
+import soot.SootMethod;
 import stamp.missingmodels.jimplesrcmapper.ChordJimpleAdapter;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
 import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
@@ -26,7 +27,7 @@ import com.google.common.io.NullOutputStream;
 @Chord(name = "jimpleprinter")
 public class JimplePrinterAnalysis extends JavaAnalysis {
 
-	@Override public void run() {
+	@Override public void run() {		
 		try {
 
 			boolean printClasses =
@@ -40,15 +41,11 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 
 			// PRINT JIMPLE
 			JimpleStructureExtractor jse = new JimpleStructureExtractor();
-			Printer printer = new Printer(jse);
-			printer.printAll(outDir + "/jimple/");
-
-			PrintWriter pw = new PrintWriter(outDir + "/loc.txt");
-			pw.println(printer.getAppLOC() + "\n" + printer.getFrameworkLOC());
-			pw.close();
+			new Printer(jse).printAll(outDir + "/jimple/");
 
 			// GET STRUCTURE AND PRINT
 			CodeStructureInfo codeInfo = jse.getCodeStructureInfo();
+
 			JimpleSourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 
 			for(SootClass cl : Scene.v().getClasses()) {
@@ -64,7 +61,7 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 
 				// CREATE THE OBJECT
 				ChordJimpleAdapter cja = new ChordJimpleAdapter(sourceInfo);
-				printer = new Printer(cja.toJimpleVisitor(codeInfo));
+				Printer printer = new Printer(cja.toJimpleVisitor(codeInfo));
 				printer.printTo(cl, new NullOutputStream());
 				XMLObject object = cja.getResults().get(cl);
 
@@ -72,11 +69,10 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 				File objectOutputFile = new File(xmlOutputPath);
 				objectOutputFile.getParentFile().mkdirs();
 				//System.out.println("PRINTING TO: " + objectOutputFile.getCanonicalPath());
-				pw = new PrintWriter(new FileOutputStream(objectOutputFile));
+				PrintWriter pw = new PrintWriter(new FileOutputStream(objectOutputFile));
 				pw.println(object.toString());
 				pw.close();
 			}
-			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

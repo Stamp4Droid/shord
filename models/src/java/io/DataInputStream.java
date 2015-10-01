@@ -12,7 +12,7 @@ class DataInputStream
 	return 0;
     }
 
-    @STAMP(flows = {@Flow(from="this",to="buffer"), @Flow(from="length",to="this")})
+    @STAMP(flows = {@Flow(from="this",to="buffer")})
 	public final  int read(byte[] buffer, int offset, int length) throws java.io.IOException {
 	buffer[0] = taintByte(); 
 	return 0;

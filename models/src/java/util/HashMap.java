@@ -15,6 +15,12 @@ class HashMap<K, V>
 		return this.value;
     }
 
+	public  java.util.Set<K> keySet() { 
+		java.util.HashSet set = new HashSet<K>();
+		set.add(key);
+		return set;
+	}
+
 	public java.util.Collection<V> values() {
 		java.util.ArrayList list = new java.util.ArrayList<V>();
 		list.add(value);

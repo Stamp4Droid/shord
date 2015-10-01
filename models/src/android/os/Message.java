@@ -18,7 +18,7 @@ class Message
 		return m;
 	}
 
-	@STAMP(flows={@Flow(from="h",to="@return"),@Flow(from="what",to="@return")})
+	@STAMP(flows={@Flow(from="what",to="@return")})
 	public static  android.os.Message obtain(android.os.Handler h, int what) { 
 		Message m = new Message(); 
 		m.handler = h;
@@ -26,7 +26,7 @@ class Message
 		return m;
 	}
 
-	@STAMP(flows={@Flow(from="h",to="@return"),@Flow(from="what",to="@return"),@Flow(from="obj",to="@return")})
+	@STAMP(flows={@Flow(from="what",to="@return"),@Flow(from="obj",to="@return")})
 	public static  android.os.Message obtain(android.os.Handler h, int what, java.lang.Object obj) {  
 		Message m = new Message(); 
 		m.handler = h;
@@ -35,7 +35,7 @@ class Message
 		return m;
 	}
 
-	@STAMP(flows={@Flow(from="h",to="@return"),@Flow(from="what",to="@return"),@Flow(from="arg1",to="@return"),@Flow(from="arg2",to="@return")})
+	@STAMP(flows={@Flow(from="what",to="@return"),@Flow(from="arg1",to="@return"),@Flow(from="arg2",to="@return")})
 	public static  android.os.Message obtain(android.os.Handler h, int what, int arg1, int arg2) {
 		Message m = new Message(); 
 		m.handler = h;
@@ -45,7 +45,7 @@ class Message
 		return m;
 	}
 
-	@STAMP(flows={@Flow(from="h",to="@return"),@Flow(from="what",to="@return"),@Flow(from="arg1",to="@return"),@Flow(from="arg2",to="@return"),@Flow(from="obj",to="@return")})
+	@STAMP(flows={@Flow(from="what",to="@return"),@Flow(from="arg1",to="@return"),@Flow(from="arg2",to="@return"),@Flow(from="obj",to="@return")})
 	public static  android.os.Message obtain(android.os.Handler h, int what, int arg1, int arg2, java.lang.Object obj) {  
 		Message m = new Message(); 
 		m.handler = h;

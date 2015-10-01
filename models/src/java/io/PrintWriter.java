@@ -3,13 +3,13 @@ class PrintWriter
 	@STAMP(flows = {@Flow(from="out",to="this")})
 	public  PrintWriter(java.io.OutputStream out) {  }
 
-	@STAMP(flows = {@Flow(from="out",to="this"), @Flow(from="autoFlush",to="this")})
+	@STAMP(flows = {@Flow(from="out",to="this")})
 	public  PrintWriter(java.io.OutputStream out, boolean autoFlush) {  }
 
 	@STAMP(flows = {@Flow(from="wr",to="this")})
 	public  PrintWriter(java.io.Writer wr) {  }
 
-	@STAMP(flows = {@Flow(from="wr",to="this"), @Flow(from="autoFlush",to="this")})
+	@STAMP(flows = {@Flow(from="wr",to="this")})
 	public  PrintWriter(java.io.Writer wr, boolean autoFlush) {  }
 
 	@STAMP(flows = {@Flow(from="file",to="this")})

@@ -24,13 +24,13 @@ import org.scannotation.AnnotationDB;
 import shord.project.analyses.DlogAnalysis;
 import shord.project.analyses.ProgramDom;
 import shord.project.analyses.ProgramRel;
+import shord.project.OutDirUtils;
+import shord.project.Config;
+import shord.project.Messages;
+import shord.project.ITask;
+import shord.project.TrgtInfo;
 
 import chord.project.Chord;
-import chord.project.OutDirUtils;
-import chord.project.Config;
-import chord.project.Messages;
-import chord.project.ITask;
-import chord.project.TrgtInfo;
 import chord.util.Utils;
 import chord.bddbddb.RelSign;
 
@@ -108,7 +108,7 @@ public class TaskParser {
     }
 
     private void buildJavaAnalysisMap() {
-        String javaAnalysisPathName = Config.javaAnalysisPathName;
+        String javaAnalysisPathName = Config.v().javaAnalysisPathName;
         if (javaAnalysisPathName.equals(""))
             return;
         ArrayList<URL> list = new ArrayList<URL>();
@@ -146,7 +146,7 @@ public class TaskParser {
     }
 
     private void buildDlogAnalysisMap() {
-        String dlogAnalysisPathName = Config.dlogAnalysisPathName;
+        String dlogAnalysisPathName = Config.v().dlogAnalysisPathName;
         if (dlogAnalysisPathName.equals(""))
             return;
         String[] fileNames = dlogAnalysisPathName.split(Utils.PATH_SEPARATOR);
@@ -175,7 +175,7 @@ public class TaskParser {
         }
         String name = info.getName();
         if (name.equals("")) {
-            if (Config.verbose >= 2) Messages.log(ANON_JAVA_TASK, className);
+            if (Config.v().verbose >= 2) Messages.log(ANON_JAVA_TASK, className);
             name = className;
         }
         DlogAnalysis dlogTask = nameToDlogTaskMap.get(name);
@@ -283,7 +283,7 @@ public class TaskParser {
         }
         String name = task.getDlogName();
         if (name == null) {
-            if (Config.verbose >= 2) Messages.log(ANON_DLOG_TASK, fileName);
+            if (Config.v().verbose >= 2) Messages.log(ANON_DLOG_TASK, fileName);
             name = fileName;
         }
         DlogAnalysis dlogTask = nameToDlogTaskMap.get(name);
@@ -371,10 +371,10 @@ public class TaskParser {
     }
 
     private void malformedPathElem(String elem, String path, String msg) {
-        if (Config.verbose >= 2) Messages.log(MALFORMED_PATH_ELEM, elem, path, msg);
+        if (Config.v().verbose >= 2) Messages.log(MALFORMED_PATH_ELEM, elem, path, msg);
     }
 
     private void nonexistentPathElem(String elem, String path) {
-        if (Config.verbose >= 2) Messages.log(NON_EXISTENT_PATH_ELEM, elem, path);
+        if (Config.v().verbose >= 2) Messages.log(NON_EXISTENT_PATH_ELEM, elem, path);
     }
 }

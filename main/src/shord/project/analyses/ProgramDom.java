@@ -6,18 +6,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import CnCHJ.api.ItemCollection;
-
 import shord.project.ClassicProject;
-import shord.project.ModernProject;
+import shord.project.Config;
+import shord.project.ITask;
 
 import chord.bddbddb.Dom;
-import chord.project.ICtrlCollection;
-import chord.project.IDataCollection;
-import chord.project.IStepCollection;
-import chord.project.Config;
-import chord.project.ITask;
-
 
 /**
  * Generic implementation of a program domain (a specialized kind
@@ -42,24 +35,16 @@ public class ProgramDom<T> extends Dom<T> implements ITask {
         fill();
         save();
     }
-    @Override
-    public void run(Object ctrl, IStepCollection sc) {
-        ModernProject p = ModernProject.g();
-        consumes = p.runPrologue(ctrl, sc);
-        run();
-        p.runEpilogue(ctrl, sc, new Object[] { this }, null);
-    }
     public void init() { }
     public void save() {
-        if (Config.verbose >= 1)
+        if (Config.v().verbose >= 1)
             System.out.println("SAVING dom " + name + " size: " + size());
         try {
-            super.save(Config.bddbddbWorkDirName, Config.saveDomMaps);
+            super.save(Config.v().bddbddbWorkDirName, Config.v().saveDomMaps);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        if (Config.classic)
-            ClassicProject.g().setTrgtDone(this);
+		ClassicProject.g().setTrgtDone(this);
     }
     public void fill() {
 		throw new RuntimeException("implement");
@@ -98,7 +83,7 @@ public class ProgramDom<T> extends Dom<T> implements ITask {
         String fileName = tag + ".xml";
         PrintWriter out;
         try {
-            File file = new File(Config.outDirName, fileName);
+            File file = new File(Config.v().outDirName, fileName);
             out = new PrintWriter(new FileWriter(file));
         } catch (IOException ex) {
             throw new RuntimeException(ex);

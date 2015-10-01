@@ -12,13 +12,13 @@ public class PrintStream
 	@STAMP(flows = {@Flow(from="file",to="this")})
 	public  PrintStream(java.io.File file) throws java.io.FileNotFoundException {  super(new java.io.FileOutputStream(file)); }
 
-	@STAMP(flows = {@Flow(from="file",to="this"), @Flow(from="csn",to="this")})
+	@STAMP(flows = {@Flow(from="file",to="this")})
 	public  PrintStream(java.io.File file, java.lang.String csn) throws java.io.FileNotFoundException, java.io.UnsupportedEncodingException {  super(new java.io.FileOutputStream(file)); }
 
 	@STAMP(flows = {@Flow(from="fileName",to="this")})
 	public  PrintStream(java.lang.String fileName) throws java.io.FileNotFoundException { super(new java.io.FileOutputStream(fileName)); }
 
-	@STAMP(flows = {@Flow(from="fileName",to="this"), @Flow(from="csn",to="this")})
+	@STAMP(flows = {@Flow(from="fileName",to="this")})
 	public  PrintStream(java.lang.String fileName, java.lang.String csn) throws java.io.FileNotFoundException, java.io.UnsupportedEncodingException { super(new java.io.FileOutputStream(fileName)); }
 	
 	

@@ -16,37 +16,28 @@ import java.io.*;
 @Chord(name="inject-annot")
 public class AnnotationInjector extends JavaAnalysis
 {
-	static abstract class Visitor
-	{
-		private PrintWriter writer;
-		protected abstract void visit(SootClass klass);
-		
-		protected void writeAnnotation(String methSig, String from, String to)
-		{
-			writer.println(methSig + " " + from + " " + to);
-		}
-	}
+	private static boolean alreadyRun = false;
 	
 	private Class[] visitorClasses = new Class[]{
 		ContentProviderAnnotation.class
 		,NativeMethodAnnotation.class
+		,NetSigAnnotation.class
+		,WidgetAnnotation.class
 	};
 
 	private PrintWriter writer;
 
 	public void run()
 	{
+		if(alreadyRun)
+			return;
+		alreadyRun = true;
 		try{			
 			String stampOutDir = System.getProperty("stamp.out.dir");
 			File annotFile = new File(stampOutDir, "stamp_annotations.txt");
 			String icdfFlag = System.getProperty("stamp.icdf");
 			
 			writer = new PrintWriter(new FileWriter(annotFile, true));
-			
-			if ("true".equals(icdfFlag)) {
-				visitorClasses = Arrays.copyOf(visitorClasses, visitorClasses.length + 1);
-			    visitorClasses[visitorClasses.length-1] = InterComponentInstrument.class;
-			}
 			Visitor[] visitors = new Visitor[visitorClasses.length];
 			int i = 0;
 			for(Class visitorClass : visitorClasses){
@@ -64,11 +55,6 @@ public class AnnotationInjector extends JavaAnalysis
 				}
 			}
 			
-			if ("true".equals(icdfFlag)) {
-                //at the very end we need to add load/store stmt to put/getUnknown to reason unknown src
-			    InterComponentInstrument.injectUnknownSrc();
-			}
-
 			writer.close();
 		}catch(Exception e){
 			throw new Error(e);

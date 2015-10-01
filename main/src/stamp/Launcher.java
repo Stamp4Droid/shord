@@ -26,6 +26,17 @@ public class Launcher
 		int maxStamp = Integer.parseInt(args[1]);
 		String apkDir = args[2];
 
+		/*String[] apks = new File(apkDir).list(new FilenameFilter(){
+				public boolean accept(File dir, String name){
+					return name.endsWith("apk");
+				}
+			});
+		
+		for(String apk : apks){
+			apkNames.add(apkDir + '/' +apk);
+		}*/	
+		
+
 		displayDirectoryContents(new File(apkDir));
 		
 		for(int i = 0; i < maxStamp; i++){
@@ -38,8 +49,10 @@ public class Launcher
 			File[] files = dir.listFiles();
 			for (File file : files) {
 				if (file.isDirectory()) {
+					//System.out.println("directory:" + file.getCanonicalPath());
 					displayDirectoryContents(file);
 				} else {
+					//System.out.println("     file:" + file.getCanonicalPath());
 					apkNames.add(file.getCanonicalPath());
 				}
 			}
@@ -56,6 +69,7 @@ public class Launcher
 		{
 			String apkName = null;
 			while((apkName = apkNames.poll()) != null){
+				System.out.println("Worker thread: to begin analyzing "+apkName);
 				String[] cmdArray = new String[]{stampScript, "analyze", apkName};
 				try{
 					Process proc = Runtime.getRuntime().exec(cmdArray, null, null); 
@@ -70,8 +84,9 @@ public class Launcher
 					System.out.println(e.getMessage());
 					e.printStackTrace();
 				}
+				System.out.println("Worker thread: finished analyzing "+apkName);
 			}
+			System.out.println("Worker thread: done");
 		}
-
     }
 }

@@ -25,4 +25,7 @@ class WebView
 	{ 
 	}
 
+	public  android.webkit.WebSettings getSettings() { 
+		return new StampWebSettings();
+	}
 }

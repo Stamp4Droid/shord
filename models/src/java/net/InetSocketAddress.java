@@ -1,11 +1,11 @@
 class InetSocketAddress
 {
-	@STAMP(flows={@Flow(from="address",to="this"),@Flow(from="port",to="this")})
+	@STAMP(flows={@Flow(from="address",to="this")})
 	public  InetSocketAddress(java.net.InetAddress address, int port) 
 	{ 
 	}
 
-	@STAMP(flows={@Flow(from="host",to="this"),@Flow(from="port",to="this")})
+	@STAMP(flows={@Flow(from="host",to="this")})
 	public  InetSocketAddress(java.lang.String host, int port) 
 	{ 
 	}

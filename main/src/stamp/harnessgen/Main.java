@@ -1,178 +1,203 @@
 package stamp.harnessgen;
 
 import java.io.*;
-import java.util.jar.*;
 import java.util.*;
 
-import soot.SootClass;
-import soot.SootMethod;
+import stamp.app.App;
+import stamp.app.Component;
+import stamp.app.Layout;
+import stamp.app.Widget;
+
 import soot.Scene;
-import soot.Modifier;
-import soot.VoidType;
-import soot.IntType;
-import soot.ArrayType;
-import soot.RefType;
-import soot.Type;
-import soot.Unit;
-import soot.Local;
-import soot.Value;
-import soot.jimple.Jimple;
-import soot.jimple.JasminClass;
-import soot.jimple.JimpleBody;
-import soot.jimple.NullConstant;
-import soot.jimple.IntConstant;
-import soot.util.Chain;
-import soot.util.JasminOutputStream;
+import soot.CompilationDeathException;
 import soot.options.Options;
+import soot.Modifier;
+import soot.SootClass;
+import soot.jimple.JasminClass;
+import soot.util.JasminOutputStream;
+
+import com.google.gson.stream.JsonWriter;
 
 /*
 * @author Saswat Anand
 */
 public class Main
 {
-	/*
-	  args[0] - driver dir where generated driver class to be stored
-	  args[1] - class path
-	*/
+	private static App app;
+
 	public static void main(String[] args) throws Exception
 	{
-		String driverDirName = args[0];
-		String classPath = args[1];
-		String androidJar = args[2];
-		String outDir = args[3];
-		App app;
-		//if(args.length > 3){
-		//	File androidManifestFile = new File(args[3]);
-		//	app = new App(androidManifestFile, classPath, androidJar);
-		//} else {
-		app = new App(classPath, androidJar, outDir);
-			//}
+		String apktoolOutDir = System.getProperty("stamp.apktool.out.dir");
+		String apkPath = System.getProperty("stamp.apk.path");
+		String driverDirName = System.getProperty("stamp.driver.dir");
+		String androidJar = System.getProperty("stamp.android.jar");
+		String harnessListFile = System.getProperty("stamp.harnesslist.file");
+		int numCompsPerHarness = Integer.parseInt(System.getProperty("stamp.max.harness.size"));
 
-		File driverDir = new File(driverDirName, "edu/stanford/stamp/harness");
-		driverDir.mkdirs();
+		app = App.readApp(apkPath, apktoolOutDir);
+		List<Component> comps = app.components();
+		initSoot(apkPath, androidJar, comps, app.allLayouts());
+		app.findLayouts();
 
-		Main main = new Main(androidJar);
-		main.generateCode(app);
-		main.finish(new File(driverDir, "Main.class"));
+		//dump the app description
+		dumpApp(app.toString());
+		dumpClassHierarchy(app);
+		
+		File driverDir = new File(driverDirName);//, "stamp/harness");
+		//driverDir.mkdirs();
+		
+		PrintWriter writer = new PrintWriter(new FileWriter(new File(harnessListFile)));
+
+		int numComps = comps.size();
+		System.out.println("number of components = "+numComps);
+		int harnessCount = 0;
+		int i = 0;
+		while(i < numComps){
+			harnessCount++;
+			String harnessClassName = "stamp.harness.Main"+harnessCount;
+			writer.println(harnessClassName);
+			Harness h = new Harness(harnessClassName, comps);
+			for(int j = 0; j < numCompsPerHarness && i < numComps; j++, i++){
+				Component comp = comps.get(i);
+				h.addComponent(comp);
+			}
+			writeClass(h.getFinalSootClass(), driverDir);
+		}
+		writer.close();
+
+		writeClass(new GenerateAbstractInflaterClass(app).getFinalSootClass(), driverDir);
+
+		for(Layout layout : app.allLayouts()){
+			String rootWidgetClassName = layout.rootWidget.getClassName();
+			if(rootWidgetClassName.equals("merge"))
+				continue;
+			if(rootWidgetClassName.equals("PreferenceScreen"))
+				continue;
+			SootClass rootWidgetClass = Scene.v().getSootClass(rootWidgetClassName);
+			if(rootWidgetClass.isPhantom()){
+				System.out.println("Phantom RootWidgetClass "+rootWidgetClassName);
+				continue;
+			}
+			writeClass(new GenerateInflaterClass(layout).getFinalSootClass(), driverDir);
+		}
+
+		//SootClass viewClass = new GenerateInflaterClass(app).getFinalSootClass();
+		//writeClass(viewClass, driverDirName);
+
+		//SootClass gClass = new GClass(app).getFinalSootClass();
+		//writeClass(gClass, driverDirName);
+
+		//GuiFix gfix = new GuiFix(app, gClass);
+		//gfix.perform();
 	}
 
-	private final SootClass sClass;
-	private final Chain units;
-	private final Chain<Local> locals;
-	private int count = 0;
 
-	private Main(String androidJar)
+	private static void dumpApp(String appDesc) throws IOException
 	{
-		StringBuilder options = new StringBuilder();
-		options.append("-allow-phantom-refs");
-		options.append(" -dynamic-class edu.stanford.stamp.harness.ApplicationDriver");
-		options.append(" -soot-classpath "+androidJar);
-		if(!Options.v().parse(options.toString().split(" ")))
-			throw new RuntimeException("Option parse error");
-		Scene.v().loadNecessaryClasses();
-
-		sClass = new SootClass("edu.stanford.stamp.harness.Main", Modifier.PUBLIC);
-		sClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
-		Scene.v().addClass(sClass);
-		SootMethod method = new SootMethod("main",
-								Arrays.asList(new Type[] {ArrayType.v(RefType.v("java.lang.String"), 1)}),
-								VoidType.v(), Modifier.PUBLIC | Modifier.STATIC);
-		sClass.addMethod(method);
-
-		method.setActiveBody(Jimple.v().newBody(method));
-		units = method.getActiveBody().getUnits();
-		locals = method.getActiveBody().getLocals();
-
-		Local arg = Jimple.v().newLocal("l0", ArrayType.v(RefType.v("java.lang.String"), 1));
-		locals.add(arg);
-		units.add(Jimple.v().newIdentityStmt(arg, Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
+		String stampOutDir = System.getProperty("stamp.out.dir");
+		PrintWriter writer = new PrintWriter(new FileWriter(new File(stampOutDir, "app.json")));
+		writer.println(appDesc);
+		writer.close();
 	}
 
-	private void finish(File file) throws Exception
+	private static void dumpClassHierarchy(App app) throws IOException
 	{
-		units.add(Jimple.v().newReturnVoidStmt());
+		String stampOutDir = System.getProperty("stamp.out.dir");
+		JsonWriter writer = new JsonWriter(new BufferedWriter(new FileWriter(new File(stampOutDir, "hierarchy.json"))));
+		writer.setIndent("  ");
+		Scene scene = Scene.v();		
 
-		//write the class
+		writer.beginObject();
+
+		//write app classes
+		writer.name("app");
+		writer.beginArray();
+		Set<String> frameworkClasses = app.allFrameworkClassNames();
+		List<SootClass> workList = new ArrayList();
+		for(String className : app.allClassNames()){
+			if(!scene.containsClass(className))
+				continue;
+
+			SootClass klass = scene.getSootClass(className);
+			SootClass superClass = klass.getSuperclass();
+			String superClassName = superClass.getName();
+			if(frameworkClasses.contains(superClassName))
+				workList.add(superClass);
+		
+			writer.beginObject();
+			writer.name("class").value(className);
+			writer.name("super").value(superClassName);
+			writer.endObject();
+		}
+		writer.endArray();
+
+		//write framework classes
+		writer.name("framework");
+		writer.beginArray();
+		Set<SootClass> visited = new HashSet();
+		while(!workList.isEmpty()){
+			SootClass klass = workList.remove(0);
+			if(visited.contains(klass))
+				continue;
+			visited.add(klass);
+			if(!klass.hasSuperclass())
+				continue;
+			SootClass superClass = klass.getSuperclass();
+			writer.beginObject();
+			writer.name("class").value(klass.getName());
+			writer.name("super").value(superClass.getName());
+			writer.endObject();
+		}
+		writer.endArray();
+
+		writer.endObject();
+		writer.close();
+	}
+
+	private static void writeClass(SootClass klass, File driverDir) throws IOException
+	{
+		File file = new File(driverDir, klass.getName().replace('.','/').concat(".class"));
+		file.getParentFile().mkdirs();
         OutputStream streamOut = new JasminOutputStream(new FileOutputStream(file));
         PrintWriter writerOut = new PrintWriter(new OutputStreamWriter(streamOut));
-        JasminClass jasminClass = new soot.jimple.JasminClass(sClass);
+        JasminClass jasminClass = new soot.jimple.JasminClass(klass);
         jasminClass.print(writerOut);
         writerOut.flush();
         streamOut.close();
 	}
 
-	private SootClass getSootClass(String className)
+	private static void initSoot(String apkPath, String androidJar, List<Component> comps, Collection<Layout> layouts)
 	{
-		//SootClass klass = new SootClass("android.view.View", Modifier.PUBLIC);
-		//klass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
-		//Scene.v().addClass(klass);           
-		//return klass;
-		return Scene.v().getSootClass(className);
-	}
+        try {
+			StringBuilder options = new StringBuilder();
+			options.append("-allow-phantom-refs");
+			options.append(" -src-prec apk");
+			//options.append(" -p jb.tr use-older-type-assigner:true"); 
+			//options.append(" -p cg implicit-entry:false");
+			options.append(" -force-android-jar "+System.getProperty("user.dir"));
+			options.append(" -soot-classpath "+androidJar+File.pathSeparator+apkPath);
+			//options.append(" -f jimple");
+			options.append(" -f none");
 
-	private void generateCode(App app)
-	{
-		//SootClass viewClass = new SootClass("android.view.View", Modifier.PUBLIC);
-		//viewClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
-		//Scene.v().addClass(viewClass);           
+			if (!Options.v().parse(options.toString().split(" ")))
+				throw new CompilationDeathException(
+													CompilationDeathException.COMPILATION_ABORTED,
+													"Option parse error");
+            Scene.v().loadBasicClasses();
 
-		//new each component
-		count = 0;
-		for(Map.Entry<String,List<String>> entry : app.components.entrySet()){
-			String comp = entry.getKey();
-			System.out.println("Component: "+comp);
-
-			Local c = init(comp, Collections.EMPTY_LIST, Collections.EMPTY_LIST);
-
-			//call callbacks declared in xml layout files
-			List<String> callbacks = entry.getValue();
-			for(String cbName : callbacks){
-				SootMethod cb = new SootMethod(cbName, Arrays.asList(new Type[]{getSootClass("android.view.View").getType()}), VoidType.v(), Modifier.PUBLIC);
-				getSootClass(comp).addMethod(cb);
-				units.add(Jimple.v().newInvokeStmt(Jimple.v().newVirtualInvokeExpr(c, cb.makeRef(), NullConstant.v())));
+			for(Component c : comps){
+				Scene.v().loadClassAndSupport(c.name);
 			}
-		}
-        
-		//invoke callCallbacks method
-		SootMethod callCallbacks = Scene.v().getMethod("<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>");
-		units.add(Jimple.v().newInvokeStmt(Jimple.v().newStaticInvokeExpr(callCallbacks.makeRef())));
-
-		//initialize custom guis
-		for(Map.Entry<String,List<String>> entry : app.customGUIs.entrySet()){
-			String guiClassName = entry.getKey();
-			System.out.println("Custom GUI: "+guiClassName);
-			List<String> inits = entry.getValue();
 			
-			for(String init : inits){
-				//System.out.println(init);
-				if(init.equals("<init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V")){
-					List<Type> paramTypes = Arrays.asList(new Type[]{getSootClass("android.content.Context").getType(), 
-																	 getSootClass("android.util.AttributeSet").getType(), 
-																	 IntType.v()});
-					List<Value> argTypes = Arrays.asList(new Value[]{NullConstant.v(),
-																	 NullConstant.v(),
-																	 IntConstant.v(0)});
-					init(guiClassName, paramTypes, argTypes);
-				} else if(init.equals("<init>(Landroid/content/Context;Landroid/util/AttributeSet;)V")){
-					List<Type> paramTypes = Arrays.asList(new Type[]{getSootClass("android.content.Context").getType(), 
-																	 getSootClass("android.util.AttributeSet").getType()});
-					List<Value> argTypes = Arrays.asList(new Value[]{NullConstant.v(),
-																	 NullConstant.v()});
-					init(guiClassName, paramTypes, argTypes);
-				}
+			for(Layout layout : layouts){
+				for(Widget widget : layout.allWidgets())
+					Scene.v().loadClassAndSupport(widget.getClassName());
 			}
-		}
-	}
+			
 
-	private Local init(String className, List<Type> paramTypes, List<Value> args)
-	{
-		SootClass klass = Scene.v().getSootClass(className);
-		SootMethod init = new SootMethod("<init>", paramTypes, VoidType.v(), Modifier.PUBLIC);
-		klass.addMethod(init);
-		Local c = Jimple.v().newLocal("c"+count++, klass.getType());
-		locals.add(c);
-		units.add(Jimple.v().newAssignStmt(c, Jimple.v().newNewExpr(klass.getType())));
-		units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(c, init.makeRef(), args)));	
-		return c;
+			Scene.v().loadDynamicClasses();
+        } catch (Exception e) {
+			throw new Error(e);
+        }
 	}
 }

@@ -11,26 +11,11 @@ import org.eclipse.jdt.core.dom.*;
 */
 public class AnnotationReader extends ASTVisitor
 {
-	
-	public static enum DRModelgenLevel {
-		NONE, SAFE, ALL
-	}
-	private DRModelgenLevel modelgenLevel;
-	
 	private String file;
 
 	public AnnotationReader(String file)
 	{
 		this.file = file;
-		String modelgenLevelStr = System.getProperty("stamp.droidrecord.modelgen.use_models","none");
-		if(modelgenLevelStr.equals("all")) { 
-			modelgenLevel = DRModelgenLevel.ALL; 
-		} else if(modelgenLevelStr.equals("safe")) {
-			modelgenLevel = DRModelgenLevel.SAFE;
-		} else {
-			modelgenLevel = DRModelgenLevel.NONE;
-		}
-		//System.out.println("Droidrecord Modelgen Annotations level set to: " + modelgenLevelStr);
 	}
 
 	public boolean visit(MethodDeclaration node) 
@@ -44,34 +29,10 @@ public class AnnotationReader extends ASTVisitor
 			if(!(annotation.getTypeName().getFullyQualifiedName().equals("STAMP")))
 				continue;
 			Map<String,Integer> nameToIndex = new HashMap();
-			String chordSig = process(node, nameToIndex);
-			
-			MemberValuePair mvp = null, origin = null, flows = null;
-			for(Object o : ((NormalAnnotation) annotation).values()) {
-			    mvp = (MemberValuePair) o;
-			    if(mvp.getName().getIdentifier().equals("flows")) flows = mvp;
-			    else if(mvp.getName().getIdentifier().equals("origin")) origin = mvp;
-			}
-			
-			if(origin != null) {
-			    String originVal = ((StringLiteral) origin.getValue()).getLiteralValue();
-			    //System.out.println("origin found as: " + originVal);
-			    DRModelgenLevel annotationLevel = DRModelgenLevel.NONE;
-				if(originVal.equals("dr-modelgen-safe")) {
-				    annotationLevel = DRModelgenLevel.SAFE;
-				} else if(originVal.equals("dr-modelgen")) {
-				    annotationLevel = DRModelgenLevel.ALL;
-				} else if(originVal.equals("manual")) {
-				    /*ok, this is a manual annotation*/
-				} else if(originVal.equals("none")) {
-				    /*ok, this is a manual annotation*/
-				} else {
-				    throw new Error("Unrecognized STAMP annotation origin: " + originVal);
-				}
-				if(annotationLevel.ordinal() > modelgenLevel.ordinal()) continue;
-			}
-			
-			ArrayInitializer arrayInitializer = (ArrayInitializer) flows.getValue();
+			String chordSig = process(node, nameToIndex);				
+			MemberValuePair mvp = (MemberValuePair) ((NormalAnnotation) annotation).values().get(0);
+			assert mvp.getName().getIdentifier().equals("flows");
+			ArrayInitializer arrayInitializer = (ArrayInitializer) mvp.getValue();
 			
 			List<Expression> expressions = arrayInitializer.expressions();
 			for(Expression expression : expressions) {
