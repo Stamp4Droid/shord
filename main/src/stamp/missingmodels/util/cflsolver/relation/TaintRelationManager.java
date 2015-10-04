@@ -1,9 +1,29 @@
 package stamp.missingmodels.util.cflsolver.relation;
 
-public class TaintRelationManager extends PointsToRelationManager {
+import stamp.missingmodels.util.cflsolver.core.RelationManager;
+import stamp.missingmodels.util.cflsolver.core.RelationManager.IndexWithContextRelation;
+
+public class TaintRelationManager extends RelationManager {
 	public static class TaintPointsToRelationManager extends UnionRelationManager {	
 		public TaintPointsToRelationManager() {
 			super(new PointsToRelationManager(), new TaintRelationManager());
+		}
+	}
+	
+	public static class TaintPrecomputedPointsToRelationManager extends TaintRelationManager {
+		public TaintPrecomputedPointsToRelationManager() {
+			this.add(new IndexRelation("ptd", "H", 1, "V", 0, "Flow"));
+			this.add(new IndexRelation("fptd", "H", 2, "H", 0, "FlowField", 1, (short)0));
+			this.add(new IndexRelation("fptArrd", "H", 1, "H", 0, "FlowFieldArr"));
+			
+			this.add(new IndexRelation("FrameworkSource", "V", 1, "V", 1, "src2Label"));
+			this.add(new IndexRelation("FrameworkSource", "V", 1, "V", 1, "Label2RefT"));
+			this.add(new IndexRelation("FrameworkPrimSource", "U", 1, "U", 1, "src2Label"));
+			this.add(new IndexRelation("FrameworkPrimSource", "U", 1, "U", 1, "Label2PrimT"));
+			this.add(new IndexRelation("FrameworkSink", "V", 1, "V", 1, "sink2Label"));
+			this.add(new IndexRelation("FrameworkSink", "V", 1, "V", 1, "SinkF2RefF"));
+			this.add(new IndexRelation("FrameworkPrimSink", "V", 1, "V", 1, "sink2Label"));
+			this.add(new IndexRelation("FrameworkPrimSink", "V", 1, "V", 1, "SinkF2PrimF"));
 		}
 	}
 	

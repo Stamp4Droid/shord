@@ -37,6 +37,10 @@ fpt(o1:C,f:F,o2:C) input
 fptd(h1:H,f:F,h2:H) output
 fptd(h1,f,h2) :- fpt(o1,f,o2), CH(o1,h1), CH(o2,h2).
 
+fptArr(o1:C,o2:C) input
+fptArrd(h1:H,h2:H) output
+fptArrd(h1,h2) :- fptArr(o1,o2), CH(o1,h1), CH(o2,h2).
+
 Label2Primd(l:L,u:U) output
 LCL(l:L,cl:CL) input
 labelPrim(c:C,u:U,cl:CL) input

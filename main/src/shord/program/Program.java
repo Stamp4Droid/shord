@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import shord.analyses.ContainerTag;
+import shord.analyses.ContextsAnalysis;
 import soot.CompilationDeathException;
 import soot.PackManager;
 import soot.Scene;
@@ -121,6 +122,14 @@ public class Program
 			}
 		} else {
 			System.out.println("param file not yet generated -- ignoring potential callbacks!");
+		}
+		
+		if(IOUtils.graphEdgesFileExists("Flow", "graph")) {
+			ContextsAnalysis.K = 2;
+			System.out.println("graph file found, using k=" + ContextsAnalysis.K);
+		} else {
+			ContextsAnalysis.K = 1;
+			System.out.println("graph file not found, using k=" + ContextsAnalysis.K);
 		}
 
 		Scene.v().setEntryPoints(entryPoints);

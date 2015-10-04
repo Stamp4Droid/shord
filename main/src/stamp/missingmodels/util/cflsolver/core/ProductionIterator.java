@@ -196,6 +196,7 @@ public abstract class ProductionIterator<Result> {
 		
 		// STEP 4: Cut edges
 		for(Edge edge : this.initialEdges) {
+			System.out.println("Initial edge: " + edge.toString());
 			this.addEdge(edge);
 		}
 		while(!this.worklist.isEmpty()) {

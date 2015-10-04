@@ -164,8 +164,8 @@ public class IOUtils {
 		Set<String> edgeStrings = new HashSet<String>();
 		for(Edge edge : g.getEdges(new Filter<Edge>() { public boolean filter(Edge edge) { return edge.symbol.symbol.equals(symbol); }})) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(shord ? ConversionUtils.toStringShord(edge.source.name) : edge.source.name.substring(1)).append(SEPARATOR);
-			sb.append(shord ? ConversionUtils.toStringShord(edge.sink.name) : edge.sink.name.substring(1)).append(SEPARATOR);
+			sb.append(shord ? ConversionUtils.toStringShord(edge.source.name) : edge.source.name).append(SEPARATOR);
+			sb.append(shord ? ConversionUtils.toStringShord(edge.sink.name) : edge.sink.name).append(SEPARATOR);
 			sb.append(edge.field.field).append(SEPARATOR);
 			sb.append(edge.weight);
 			edgeStrings.add(sb.toString());
@@ -178,7 +178,6 @@ public class IOUtils {
 	}
 	
 	public static void printGraphEdgesToFile(Graph g, String symbol, boolean shord, String extension) {
-		int x = 0; if(x == 0) { throw new RuntimeException("This code has not been tested!"); }
 		try {
 			PrintWriter pw = new PrintWriter(new File(getAppOutputDirectory(), symbol + "." + extension));
 			printGraphEdgesFormatted(g, symbol, shord, pw);
@@ -194,7 +193,6 @@ public class IOUtils {
 	}
 	
 	public static Iterable<EdgeStruct> readGraphEdgesFromFile(String symbol, String extension) {
-		int x = 0; if(x == 0) { throw new RuntimeException("This code has not been tested!"); }
 		try {
 			List<EdgeStruct> edges = new ArrayList<EdgeStruct>();
 			BufferedReader br = new BufferedReader(new FileReader(new File(getAppOutputDirectory(), symbol + "." + extension)));
