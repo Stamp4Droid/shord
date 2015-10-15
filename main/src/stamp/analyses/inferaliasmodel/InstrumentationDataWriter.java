@@ -16,6 +16,7 @@ import soot.Unit;
 import soot.Value;
 import soot.jimple.AnyNewExpr;
 import soot.jimple.DefinitionStmt;
+import soot.jimple.IdentityStmt;
 import soot.jimple.NewExpr;
 import soot.jimple.Stmt;
 import soot.tagkit.BytecodeOffsetTag;
@@ -31,11 +32,14 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		private EventWriter(PrintWriter writer) {
 			this.writer = writer;
 		}
-		private void writeMethodCallRet(String methodSignature, int bytecodeOffset) {
+		private void writeCallRet(String methodSignature, int bytecodeOffset) {
 			this.writer.println("METHCALLARG " + methodSignature + " " + bytecodeOffset + " " + -1 + " " + this.eventId++);
 		}
 		private void writeNewInstance(String methodSignature, int bytecodeOffset) {
 			this.writer.println("METHCALLARG " + methodSignature + " " + bytecodeOffset + " " + 0 + " " + this.eventId++);
+		}
+		private void writeDefinition(String methodSignature, int bytecodeOffset, Stmt stmt) {
+			this.writer.println("DEFINITION " + methodSignature + " " + bytecodeOffset + " " + this.eventId++);
 		}
 		private void writeMethodParam(String methodSignature, int argIndex) {
 			this.writer.println("METHPARAM " + methodSignature + " " + argIndex + " " + this.eventId++);
@@ -87,7 +91,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		for(Unit unit : method.retrieveActiveBody().getUnits()) {
 			Stmt stmt = (Stmt)unit;
 			
-			// Handle allocation statement
+			// new instances
 			if(stmt instanceof DefinitionStmt) {
 				Value leftOp = ((DefinitionStmt)stmt).getLeftOp();
 				Value rightOp = ((DefinitionStmt)stmt).getRightOp();
@@ -105,11 +109,35 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 				}
 			}
 			
-			// Handle invocation statement
+			// call rets
 			if(stmt.containsInvokeExpr() && (stmt instanceof DefinitionStmt)) {
 				int bytecodeOffset = bytecodeOffset(stmt);
 				if(bytecodeOffset >= 0) {
-					writer.writeMethodCallRet(methodSignature, bytecodeOffset);
+					writer.writeCallRet(methodSignature, bytecodeOffset);
+				} else {
+					System.out.println("bytecode offset unavailable: "+method.getSignature());
+				}
+			}
+			
+			// definition other than invocation
+			if(stmt instanceof DefinitionStmt) {
+				DefinitionStmt defStmt = (DefinitionStmt)stmt;
+				if(defStmt instanceof IdentityStmt) {
+					continue;
+				}
+				if(defStmt.containsInvokeExpr()) {
+					continue;
+				}
+				if(!(defStmt.getLeftOp() instanceof Local)) {
+					continue;
+				}
+				if(defStmt.getRightOp() instanceof AnyNewExpr) {
+					continue;
+				}
+				
+				int bytecodeOffset = bytecodeOffset(stmt);
+				if(bytecodeOffset >= 0) {
+					writer.writeDefinition(methodSignature, bytecodeOffset, stmt);
 				} else {
 					System.out.println("bytecode offset unavailable: "+method.getSignature());
 				}
