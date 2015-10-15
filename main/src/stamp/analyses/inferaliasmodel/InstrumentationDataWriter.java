@@ -31,8 +31,11 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		private EventWriter(PrintWriter writer) {
 			this.writer = writer;
 		}
-		private void writeMethodCallArg(String methodSignature, int bytecodeOffset, int argIndex) {
-			this.writer.println("METHCALLARG " + methodSignature + " " + bytecodeOffset + " " + argIndex + " " + this.eventId++);
+		private void writeMethodCallRet(String methodSignature, int bytecodeOffset) {
+			this.writer.println("METHCALLARG " + methodSignature + " " + bytecodeOffset + " " + -1 + " " + this.eventId++);
+		}
+		private void writeNewInstance(String methodSignature, int bytecodeOffset) {
+			this.writer.println("METHCALLARG " + methodSignature + " " + bytecodeOffset + " " + 0 + " " + this.eventId++);
 		}
 		private void writeMethodParam(String methodSignature, int argIndex) {
 			this.writer.println("METHPARAM " + methodSignature + " " + argIndex + " " + this.eventId++);
@@ -92,7 +95,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 					for(Stmt initInvkStmt : matchAllocToInit.get(stmt)) {
 						int bytecodeOffset = bytecodeOffset(initInvkStmt);
 						if(bytecodeOffset >= 0) {
-							writer.writeMethodCallArg(methodSignature, bytecodeOffset, 0);
+							writer.writeNewInstance(methodSignature, bytecodeOffset);
 						} else {
 							System.out.println("bytecode offset unavailable: " + method.getSignature());
 						}
@@ -106,7 +109,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 			if(stmt.containsInvokeExpr() && (stmt instanceof DefinitionStmt)) {
 				int bytecodeOffset = bytecodeOffset(stmt);
 				if(bytecodeOffset >= 0) {
-					writer.writeMethodCallArg(methodSignature, bytecodeOffset, -1);
+					writer.writeMethodCallRet(methodSignature, bytecodeOffset);
 				} else {
 					System.out.println("bytecode offset unavailable: "+method.getSignature());
 				}
