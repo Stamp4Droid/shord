@@ -128,7 +128,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		List<Monitor> monitors = new ArrayList<Monitor>();
 		
 		// Handle params
-		if(method.isStatic()) {
+		if(!method.isStatic()) {
 			monitors.add(getMonitorForMethodParam(method, 0));
 		}
 		for(int i=0; i<method.getParameterCount(); i++) {
