@@ -15,7 +15,7 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.AnyNewExpr;
-import soot.jimple.DefinitionStmt;
+import soot.jimple.AssignStmt;
 import soot.jimple.IdentityStmt;
 import soot.jimple.NewExpr;
 import soot.jimple.Stmt;
@@ -33,7 +33,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	public static class CallRetMonitor implements Monitor {
 		private final String methodSignature;
 		private final int bytecodeOffset;
-		public CallRetMonitor(String methodSignature, int bytecodeOffset) {
+		private CallRetMonitor(String methodSignature, int bytecodeOffset) {
 			this.methodSignature = methodSignature;
 			this.bytecodeOffset = bytecodeOffset;
 		}
@@ -46,7 +46,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	public static class NewInstanceMonitor implements Monitor {
 		private final String methodSignature;
 		private final int bytecodeOffset;
-		public NewInstanceMonitor(String methodSignature, int bytecodeOffset) {
+		private NewInstanceMonitor(String methodSignature, int bytecodeOffset) {
 			this.methodSignature = methodSignature;
 			this.bytecodeOffset = bytecodeOffset;
 		}
@@ -59,7 +59,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	public static class DefinitionMonitor implements Monitor {
 		private final String methodSignature;
 		private final int bytecodeOffset;
-		public DefinitionMonitor(String methodSignature, int bytecodeOffset) {
+		private DefinitionMonitor(String methodSignature, int bytecodeOffset) {
 			this.methodSignature = methodSignature;
 			this.bytecodeOffset = bytecodeOffset;
 		}
@@ -72,7 +72,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	public static class MethodParamMonitor implements Monitor {
 		private final String methodSignature;
 		private final int argIndex;
-		public MethodParamMonitor(String methodSignature, int argIndex) {
+		private MethodParamMonitor(String methodSignature, int argIndex) {
 			this.methodSignature = methodSignature;
 			this.argIndex = argIndex;
 		}
@@ -125,81 +125,23 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	}
 	
 	private static void processMethod(SootMethod method, MonitorWriter writer) {
-		String methodSignature = bytecodeSignature(method);
-		MultivalueMap<Stmt,Stmt> matchAllocToInit = MatchAllocToInitAnalysis2.getMatchAllocToInit(method.retrieveActiveBody());
 		List<Monitor> monitors = new ArrayList<Monitor>();
 		
 		// Handle params
 		if(method.isStatic()) {
-			monitors.add(new MethodParamMonitor(methodSignature, 0));
+			monitors.add(getMonitorForMethodParam(method, 0));
 		}
-		int offset = method.isStatic() ? 0 : 1;
 		for(int i=0; i<method.getParameterCount(); i++) {
 			if(method.getParameterType(i) instanceof RefLikeType) {
-				monitors.add(new MethodParamMonitor(methodSignature, i + offset));
+				monitors.add(getMonitorForMethodParam(method, i));
 			}
 		}
 		
 		// Handle units
 		for(Unit unit : method.retrieveActiveBody().getUnits()) {
-			Stmt stmt = (Stmt)unit;
-			
-			// new instances
-			if(stmt instanceof DefinitionStmt) {
-				Value leftOp = ((DefinitionStmt)stmt).getLeftOp();
-				Value rightOp = ((DefinitionStmt)stmt).getRightOp();
-				if(leftOp instanceof Local && rightOp instanceof NewExpr) {
-					for(Stmt initInvkStmt : matchAllocToInit.get(stmt)) {
-						int bytecodeOffset = bytecodeOffset(initInvkStmt);
-						if(bytecodeOffset >= 0) {
-							monitors.add(new NewInstanceMonitor(methodSignature, bytecodeOffset));
-						} else {
-							System.out.println("bytecode offset unavailable: " + method.getSignature());
-						}
-					}
-				} else if(leftOp instanceof Local && rightOp instanceof AnyNewExpr) {
-					// TODO: handle array allocation sites
-				}
-			}
-			
-			// call rets
-			if(stmt.containsInvokeExpr() && (stmt instanceof DefinitionStmt)) {
-				if(!(((DefinitionStmt)stmt).getLeftOp().getType() instanceof RefLikeType)) {
-					continue;
-				}
-				int bytecodeOffset = bytecodeOffset(stmt);
-				if(bytecodeOffset >= 0) {
-					monitors.add(new CallRetMonitor(methodSignature, bytecodeOffset));
-				} else {
-					System.out.println("bytecode offset unavailable: "+method.getSignature());
-				}
-			}
-			
-			// definition other than invocation
-			if(stmt instanceof DefinitionStmt) {
-				DefinitionStmt defStmt = (DefinitionStmt)stmt;
-				if(defStmt instanceof IdentityStmt) {
-					continue;
-				}
-				if(defStmt.containsInvokeExpr()) {
-					continue;
-				}
-				if(!(defStmt.getLeftOp() instanceof Local)) {
-					continue;
-				}
-				if(defStmt.getRightOp() instanceof AnyNewExpr) {
-					continue;
-				}
-				if(!(defStmt.getLeftOp().getType() instanceof RefLikeType)) {
-					continue;
-				}
-				
-				int bytecodeOffset = bytecodeOffset(stmt);
-				if(bytecodeOffset >= 0) {
-					monitors.add(new DefinitionMonitor(methodSignature, bytecodeOffset));
-				} else {
-					System.out.println("bytecode offset unavailable: "+method.getSignature());
-				}
+			Monitor monitor = getMonitorForDefinition(method, (Stmt)unit);
+			if(monitor != null) {
+				monitors.add(monitor);
 			}
 		}
 		
@@ -210,6 +152,75 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	@Override
 	public void run() {
 		write();
+	}
+	
+	public static Monitor getMonitorForMethodThis(SootMethod method) {
+		return new MethodParamMonitor(bytecodeSignature(method), 0);
+	}
+	
+	public static Monitor getMonitorForMethodParam(SootMethod method, int paramIndex) {
+		return new MethodParamMonitor(bytecodeSignature(method), paramIndex + (method.isStatic() ? 0 : 1));
+	}
+	
+	public static Monitor getMonitorForDefinition(SootMethod method, Stmt stmt) {
+		if(!(stmt instanceof AssignStmt)) {
+			return null;
+		}
+		
+		// setup
+		String methodSignature = bytecodeSignature(method);
+		MultivalueMap<Stmt,Stmt> matchAllocToInit = MatchAllocToInitAnalysis2.getMatchAllocToInit(method.retrieveActiveBody());
+		AssignStmt assignStmt = (AssignStmt)stmt;
+		Value leftOp = assignStmt.getLeftOp();
+		Value rightOp = assignStmt.getRightOp();
+		
+		// checks
+		if(!(leftOp instanceof Local)) {
+			return null;
+		}
+		if(!(leftOp.getType() instanceof RefLikeType)) {
+			return null;
+		}
+		
+		// new instances
+		if(rightOp instanceof NewExpr) {
+			for(Stmt initInvkStmt : matchAllocToInit.get(stmt)) {
+				int bytecodeOffset = bytecodeOffset(initInvkStmt);
+				if(bytecodeOffset >= 0) {
+					return new NewInstanceMonitor(methodSignature, bytecodeOffset);
+				} else {
+					System.out.println("bytecode offset unavailable: " + method.getSignature());
+					return null;
+				}
+			}
+		} else if(rightOp instanceof AnyNewExpr) {
+			System.out.println("UNHANDLED: array allocation sites");
+			return null;
+		}
+		
+		// call rets
+		if(stmt.containsInvokeExpr()) {
+			int bytecodeOffset = bytecodeOffset(stmt);
+			if(bytecodeOffset >= 0) {
+				return new CallRetMonitor(methodSignature, bytecodeOffset);
+			} else {
+				System.out.println("bytecode offset unavailable: " + method.getSignature());
+				return null;
+			}
+		}
+		
+		// definition other than invocation
+		if(!(assignStmt instanceof IdentityStmt) && leftOp instanceof Local && leftOp.getType() instanceof RefLikeType) {
+			int bytecodeOffset = bytecodeOffset(stmt);
+			if(bytecodeOffset >= 0) {
+				return new DefinitionMonitor(methodSignature, bytecodeOffset);
+			} else {
+				System.out.println("bytecode offset unavailable: " + method.getSignature());
+				return null;
+			}
+		}
+		
+		return null;
 	}
 	
 	private static int bytecodeOffset(Stmt stmt) {

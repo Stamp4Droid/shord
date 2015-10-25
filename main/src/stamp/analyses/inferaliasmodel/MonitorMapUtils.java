@@ -27,6 +27,8 @@ import soot.jimple.AssignStmt;
 import soot.jimple.CastExpr;
 import soot.jimple.Stmt;
 import soot.jimple.StringConstant;
+import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.DefinitionMonitor;
+import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.MethodParamMonitor;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.Monitor;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
@@ -64,7 +66,7 @@ public class MonitorMapUtils {
 			return this.strToStmt.get(new Pair<SootMethod,String>(method, str));
 		}
 		
-		public VariableMap() {
+		private VariableMap() {
 			Iterator<SootMethod> methods = ((DomM)ClassicProject.g().getTrgt("M")).iterator();
 			while(methods.hasNext()) {
 				process(methods.next());
@@ -130,9 +132,16 @@ public class MonitorMapUtils {
 		}
 	}
 	
+	private static VariableMap varMap = null;
+	public static VariableMap g() {
+		if(varMap == null) {
+			varMap = new VariableMap();
+		}
+		return varMap;
+	}
+	
 	public static class MonitorMap {
 		private final MultivalueMap<VarNode,Monitor> varToMonitor = new MultivalueMap<VarNode,Monitor>();
-		private final MultivalueMap<AllocNode,Monitor> allocToMonitor = new MultivalueMap<AllocNode,Monitor>();
 		
 		public MonitorMap() {
 			Iterator<VarNode> varIter = ((DomV)ClassicProject.g().getTrgt("V")).iterator();
@@ -144,44 +153,51 @@ public class MonitorMapUtils {
 		}
 		
 		private void processVars(Iterable<VarNode> vars) {
-			VariableMap varMap = new VariableMap();
 			for(VarNode var : vars) {
 				//System.out.println("VAR: " + var);
 				if(var instanceof CastVarNode) {
-					this.processDefinition(varMap.getStmt(((CastVarNode)var).castExpr));
+					this.processDefinition((CastVarNode)var, varMap.getStmt(((CastVarNode)var).castExpr));
 				} else if(var instanceof LocalVarNode) {
 					for(Stmt stmt : varMap.getDefs(((LocalVarNode)var).local)) {
-						this.processDefinition(stmt);
+						this.processDefinition((LocalVarNode)var, stmt);
 					}
 				} else if(var instanceof ParamVarNode) {
 					ParamVarNode paramVar = (ParamVarNode)var;
-					this.processMethodParam(paramVar.method, paramVar.index);
+					this.processMethodParam((ParamVarNode)var, paramVar.method, paramVar.index);
 				} else if(var instanceof RetVarNode) {
-					this.processMethodReturn(((RetVarNode)var).method);
+					this.processMethodReturn((RetVarNode)var, ((RetVarNode)var).method);
 				} else if(var instanceof StringConstantVarNode) {
 					StringConstantVarNode constVar = (StringConstantVarNode)var;
 					for(Stmt stmt : varMap.getStmts(constVar.method, constVar.sc)) {
-						this.processDefinition(stmt);
+						this.processDefinition((StringConstantVarNode)var, stmt);
 					}
 				} else if(var instanceof ThisVarNode) {
-					this.processMethodThis(((ThisVarNode)var).method);
+					this.processMethodThis((ThisVarNode)var, ((ThisVarNode)var).method);
 				}
 			}
 		}
 		
-		private void processDefinition(Stmt stmt) {
+		private void processDefinition(CastVarNode var, Stmt stmt) {
 			
 		}
 		
-		private void processMethodParam(SootMethod method, int index) {
+		private void processDefinition(StringConstantVarNode var, Stmt stmt) {
 			
 		}
 		
-		private void processMethodThis(SootMethod method) {
+		private void processDefinition(LocalVarNode var, Stmt stmt) {
 			
 		}
 		
-		private void processMethodReturn(SootMethod method) {
+		private void processMethodParam(ParamVarNode var, SootMethod method, int index) {
+			
+		}
+		
+		private void processMethodThis(ThisVarNode var, SootMethod method) {
+			
+		}
+		
+		private void processMethodReturn(RetVarNode var, SootMethod method) {
 			
 		}		
 	}	

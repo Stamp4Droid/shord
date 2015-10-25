@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import soot.Body;
@@ -44,7 +45,8 @@ public class MatchAllocToInitAnalysis2 {
 		}
 	}
 	
-	public static MultivalueMap<Stmt,Stmt> getMatchAllocToInit(Body body) {
+	private static Map<Body,MultivalueMap<Stmt,Stmt>> matchAllocToInits = new HashMap<Body,MultivalueMap<Stmt,Stmt>>();
+	private static void initMatchAllocToInits(Body body) {
 		MultivalueMap<Stmt,Stmt> newStmtToInvokeInitStmts = new MultivalueMap<Stmt,Stmt>();
 		SimpleLocalDefs ld = new SimpleLocalDefs(new ExceptionalUnitGraph(body));
 		for(Unit unit : body.getUnits()) {
@@ -85,7 +87,14 @@ public class MatchAllocToInitAnalysis2 {
 				}
 			}
 		}
-		return newStmtToInvokeInitStmts;
+		matchAllocToInits.put(body, newStmtToInvokeInitStmts);
+	}
+	
+	public static MultivalueMap<Stmt,Stmt> getMatchAllocToInit(Body body) {
+		if(!matchAllocToInits.containsKey(body)) {
+			initMatchAllocToInits(body);
+		}
+		return matchAllocToInits.get(body);
 	}
 	
 }
