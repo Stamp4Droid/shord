@@ -139,10 +139,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		
 		// Handle units
 		for(Unit unit : method.retrieveActiveBody().getUnits()) {
-			Monitor monitor = getMonitorForDefinition(method, (Stmt)unit);
-			if(monitor != null) {
-				monitors.add(monitor);
-			}
+			monitors.addAll(getMonitorForDefinition(method, (Stmt)unit));
 		}
 		
 		writer.writeAll(monitors);
@@ -162,9 +159,11 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		return new MethodParamMonitor(bytecodeSignature(method), paramIndex + (method.isStatic() ? 0 : 1));
 	}
 	
-	public static Monitor getMonitorForDefinition(SootMethod method, Stmt stmt) {
+	public static List<Monitor> getMonitorForDefinition(SootMethod method, Stmt stmt) {
+		List<Monitor> monitors = new ArrayList<Monitor>();
+		
 		if(!(stmt instanceof AssignStmt)) {
-			return null;
+			return monitors;
 		}
 		
 		// setup
@@ -176,10 +175,10 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		
 		// checks
 		if(!(leftOp instanceof Local)) {
-			return null;
+			return monitors;
 		}
 		if(!(leftOp.getType() instanceof RefLikeType)) {
-			return null;
+			return monitors;
 		}
 		
 		// new instances
@@ -187,40 +186,38 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 			for(Stmt initInvkStmt : matchAllocToInit.get(stmt)) {
 				int bytecodeOffset = bytecodeOffset(initInvkStmt);
 				if(bytecodeOffset >= 0) {
-					return new NewInstanceMonitor(methodSignature, bytecodeOffset);
+					monitors.add(new NewInstanceMonitor(methodSignature, bytecodeOffset));
 				} else {
 					System.out.println("bytecode offset unavailable: " + method.getSignature());
-					return null;
 				}
 			}
-		} else if(rightOp instanceof AnyNewExpr) {
+		}
+		
+		if(rightOp instanceof AnyNewExpr) {
 			System.out.println("UNHANDLED: array allocation sites");
-			return null;
 		}
 		
 		// call rets
 		if(stmt.containsInvokeExpr()) {
 			int bytecodeOffset = bytecodeOffset(stmt);
 			if(bytecodeOffset >= 0) {
-				return new CallRetMonitor(methodSignature, bytecodeOffset);
+				monitors.add(new CallRetMonitor(methodSignature, bytecodeOffset));
 			} else {
 				System.out.println("bytecode offset unavailable: " + method.getSignature());
-				return null;
 			}
 		}
 		
 		// definition other than invocation
-		if(!(assignStmt instanceof IdentityStmt) && leftOp instanceof Local && leftOp.getType() instanceof RefLikeType) {
+		if(!(rightOp instanceof AnyNewExpr) && !(rightOp instanceof NewExpr) && !stmt.containsInvokeExpr()) {
 			int bytecodeOffset = bytecodeOffset(stmt);
 			if(bytecodeOffset >= 0) {
-				return new DefinitionMonitor(methodSignature, bytecodeOffset);
+				monitors.add(new DefinitionMonitor(methodSignature, bytecodeOffset));
 			} else {
 				System.out.println("bytecode offset unavailable: " + method.getSignature());
-				return null;
 			}
 		}
 		
-		return null;
+		return monitors;
 	}
 	
 	private static int bytecodeOffset(Stmt stmt) {
