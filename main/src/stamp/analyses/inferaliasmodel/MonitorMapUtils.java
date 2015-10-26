@@ -143,7 +143,7 @@ public class MonitorMapUtils {
 	}
 	
 	private static VariableMap varMap = null;
-	public static VariableMap g() {
+	public static VariableMap getVarMap() {
 		if(varMap == null) {
 			varMap = new VariableMap();
 		}
@@ -163,8 +163,9 @@ public class MonitorMapUtils {
 		}
 		
 		private void processVars(Iterable<VarNode> vars) {
+			VariableMap varMap = getVarMap();
 			for(VarNode var : vars) {
-				//System.out.println("VAR: " + var);
+				System.out.println("VAR: " + var);
 				if(var instanceof CastVarNode) {
 					Stmt stmt = varMap.getStmt(((CastVarNode)var).castExpr);
 					this.processDefinition((CastVarNode)var, varMap.getMethod(stmt), stmt);
@@ -187,6 +188,7 @@ public class MonitorMapUtils {
 				} else if(var instanceof ThisVarNode) {
 					this.processMethodThis((ThisVarNode)var, ((ThisVarNode)var).method);
 				}
+				System.out.println();
 			}
 		}
 		

@@ -21,6 +21,7 @@ import soot.jimple.Stmt;
 import soot.tagkit.BytecodeOffsetTag;
 import soot.tagkit.Tag;
 import stamp.analyses.inferaliasmodel.MatchAllocToInitAnalysis2.MultivalueMap;
+import stamp.analyses.inferaliasmodel.MonitorMapUtils.MonitorMap;
 import chord.project.Chord;
 
 @Chord(name = "instrument")
@@ -147,6 +148,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	
 	@Override
 	public void run() {
+		new MonitorMap();
 		write();
 	}
 	
@@ -160,6 +162,16 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	
 	public static List<Monitor> getMonitorForDefinition(SootMethod method, Stmt stmt) {
 		List<Monitor> monitors = new ArrayList<Monitor>();
+		
+		if(method == null) {
+			System.out.println("NULL METHOD: " + method + " ## " + stmt);
+			return monitors;
+		}
+		
+		if(stmt == null) {
+			System.out.println("NULL STMT: " + method + " ## " + stmt);
+			return monitors;
+		}
 		
 		if(!(stmt instanceof AssignStmt)) {
 			return monitors;
@@ -185,6 +197,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 			for(Stmt initInvkStmt : matchAllocToInit.get(stmt)) {
 				int bytecodeOffset = bytecodeOffset(initInvkStmt);
 				if(bytecodeOffset >= 0) {
+					System.out.println("INST NEW: " + initInvkStmt);
 					monitors.add(new NewInstanceMonitor(methodSignature, bytecodeOffset));
 				} else {
 					System.out.println("bytecode offset unavailable: " + method.getSignature());
@@ -200,6 +213,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		if(stmt.containsInvokeExpr()) {
 			int bytecodeOffset = bytecodeOffset(stmt);
 			if(bytecodeOffset >= 0) {
+				System.out.println("INST RET: " + stmt);
 				monitors.add(new CallRetMonitor(methodSignature, bytecodeOffset));
 			} else {
 				System.out.println("bytecode offset unavailable: " + method.getSignature());
@@ -210,6 +224,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		if(!(rightOp instanceof AnyNewExpr) && !(rightOp instanceof NewExpr) && !stmt.containsInvokeExpr()) {
 			int bytecodeOffset = bytecodeOffset(stmt);
 			if(bytecodeOffset >= 0) {
+				System.out.println("INST DEF: " + stmt);
 				monitors.add(new DefinitionMonitor(methodSignature, bytecodeOffset));
 			} else {
 				System.out.println("bytecode offset unavailable: " + method.getSignature());
