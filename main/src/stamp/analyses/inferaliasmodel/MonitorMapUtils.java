@@ -7,13 +7,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import shord.analyses.AllocNode;
 import shord.analyses.CastVarNode;
+import shord.analyses.DomH;
 import shord.analyses.DomM;
 import shord.analyses.DomV;
 import shord.analyses.LocalVarNode;
 import shord.analyses.ParamVarNode;
 import shord.analyses.RetVarNode;
+import shord.analyses.SiteAllocNode;
+import shord.analyses.StringConstNode;
 import shord.analyses.StringConstantVarNode;
+import shord.analyses.StubAllocNode;
 import shord.analyses.ThisVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
@@ -29,8 +34,8 @@ import soot.jimple.Stmt;
 import soot.jimple.StringConstant;
 import soot.jimple.toolkits.callgraph.Edge;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.Monitor;
-import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 
 public class MonitorMapUtils {
 	public static class VariableMap {
@@ -152,6 +157,7 @@ public class MonitorMapUtils {
 	
 	public static class MonitorMap {
 		private final MultivalueMap<VarNode,Monitor> varToMonitor = new MultivalueMap<VarNode,Monitor>();
+		private final MultivalueMap<AllocNode,Monitor> allocToMonitor = new MultivalueMap<AllocNode,Monitor>();
 		
 		public MonitorMap() {
 			Iterator<VarNode> varIter = ((DomV)ClassicProject.g().getTrgt("V")).iterator();
@@ -160,6 +166,13 @@ public class MonitorMapUtils {
 				vars.add(varIter.next());
 			}
 			processVars(vars);
+			
+			Iterator<AllocNode> allocIter = ((DomH)ClassicProject.g().getTrgt("H")).iterator();
+			List<AllocNode> allocs = new ArrayList<AllocNode>();
+			while(allocIter.hasNext()) {
+				allocs.add(allocIter.next());
+			}
+			processAllocs(allocs);
 		}
 		
 		private void processVars(Iterable<VarNode> vars) {
@@ -189,6 +202,28 @@ public class MonitorMapUtils {
 					this.processMethodThis((ThisVarNode)var, ((ThisVarNode)var).method);
 				}
 				System.out.println();
+			}
+		}
+		
+		private void processAllocs(Iterable<AllocNode> allocs) {
+			VariableMap varMap = getVarMap();
+			for(AllocNode alloc : allocs) {
+				System.out.println("ALLOC: " + alloc);
+				if(alloc instanceof StringConstNode) {
+					StringConstNode strAlloc = (StringConstNode)alloc;
+					if(strAlloc.method != null) {
+						for(Stmt stmt : varMap.getStmts(strAlloc.method, strAlloc.value)) {
+							this.processDefinition(strAlloc, strAlloc.method, stmt);
+						}
+					} else {
+						System.out.println("Global alloc");
+					}
+				} else if(alloc instanceof StubAllocNode) {
+					System.out.println("Stub alloc");
+				} else if(alloc instanceof SiteAllocNode) {
+					SiteAllocNode siteAlloc = (SiteAllocNode)alloc;
+					this.processDefinition(siteAlloc, varMap.getMethod((Stmt)siteAlloc.getUnit()), (Stmt)siteAlloc.getUnit());
+				}
 			}
 		}
 		
@@ -222,6 +257,18 @@ public class MonitorMapUtils {
 		
 		private void processMethodThis(ThisVarNode var, SootMethod method) {
 			this.varToMonitor.add(var, InstrumentationDataWriter.getMonitorForMethodThis(method));
-		}	
+		}
+		
+		private void processDefinition(SiteAllocNode alloc, SootMethod method, Stmt stmt) {
+			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
+				this.allocToMonitor.add(alloc, monitor);
+			}
+		}
+		
+		public void processDefinition(StringConstNode alloc, SootMethod method, Stmt stmt) {
+			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
+				this.allocToMonitor.add(alloc, monitor);
+			}
+		}
 	}	
 }

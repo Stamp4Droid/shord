@@ -6,17 +6,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import shord.project.analyses.JavaAnalysis;
-import stamp.util.PropertyHelper;
 import soot.Scene;
 import soot.SootClass;
-import soot.SootMethod;
-import stamp.missingmodels.jimplesrcmapper.ChordJimpleAdapter;
-import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
-import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
-import stamp.missingmodels.jimplesrcmapper.Printer;
-import stamp.missingmodels.util.xml.XMLObject;
+import stamp.missingmodels.util.jimplesrcmapper.ChordJimpleAdapter;
+import stamp.missingmodels.util.jimplesrcmapper.CodeStructureInfo;
+import stamp.missingmodels.util.jimplesrcmapper.JimpleStructureExtractor;
+import stamp.missingmodels.util.jimplesrcmapper.Printer;
 import stamp.srcmap.SourceInfoSingleton;
+import stamp.srcmap.XMLObject;
 import stamp.srcmap.sourceinfo.jimpleinfo.JimpleSourceInfo;
+import stamp.util.PropertyHelper;
 import chord.project.Chord;
 
 import com.google.common.io.NullOutputStream;

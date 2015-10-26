@@ -6,6 +6,6 @@ public class GlobalStringConstantNode extends StringConstNode
 {
 	public GlobalStringConstantNode()
 	{
-		super("GStringAlloc$GSTRING");
+		super(null, "GStringAlloc$GSTRING");
 	}	
 }

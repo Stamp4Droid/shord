@@ -1,0 +1,14 @@
+# name=cfl-int-dlog
+
+.include "K.dom"
+
+.bddvarorder K0_K1
+
+KIncrement(k:K,h:K) output
+KFilter(k:K,h:K) output
+
+KIncrement(0,1).
+KFilter(0,0).
+KFilter(0,1).
+KFilter(1,0).
+

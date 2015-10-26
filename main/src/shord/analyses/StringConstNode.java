@@ -10,11 +10,13 @@ import soot.SootMethod;
 public class StringConstNode extends GlobalAllocNode
 {
 	public final String value;
+	public final SootMethod method;
 
-	public StringConstNode(String value)
+	public StringConstNode(SootMethod method, String value)
 	{
 		super(RefType.v("java.lang.String"));
 		this.value = value;
+		this.method = method;
 	}
 
 	public String getValue()

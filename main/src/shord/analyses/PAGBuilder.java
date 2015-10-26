@@ -87,7 +87,7 @@ import java.util.*;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
-	             "Stub",
+	             "Stub", "Framework",
 				 "SpecIM", "StatIM", "VirtIM",
 				 "SubSig", "Dispatch",
                  "ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
@@ -109,7 +109,7 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
-                        "Stub",
+                        "Stub", "Framework",
 						"SpecIM", "StatIM", "VirtIM",
 						"SubSig", "Dispatch",
 						"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
@@ -133,7 +133,7 @@ import java.util.*;
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
-                 "M0:M0",
+                 "M0:M0", "M0:M0",
 				 "I0,M0:I0_M0", "I0,M0:I0_M0", "I0,S0:I0_S0",
 				 "M0,S0:M0_S0", "T0,S0,M0:T0_M0_S0",
 	             "T0:T0", "T0,T1:T0_T1", "T0,M0:T0_M0", "T0,F0:F0_T0", "T0,M0:T0_M0",
@@ -639,7 +639,7 @@ public class PAGBuilder extends JavaAnalysis
 					domV.add(vn);
 					stringConstantToVarNode.put(str, vn);
 					
-					an = new StringConstNode(str);
+					an = new StringConstNode(method, str);
 					domH.add(an);
 				} else {
 					//general string constants
@@ -1008,13 +1008,46 @@ public class PAGBuilder extends JavaAnalysis
 		domS.save();
 
 		ProgramRel relStub = (ProgramRel) ClassicProject.g().getTrgt("Stub");
+		ProgramRel relFramework = (ProgramRel) ClassicProject.g().getTrgt("Framework");
         relStub.zero();
+        relFramework.zero();
 		for(Iterator it = program.getMethods(); it.hasNext();){
 			SootMethod m = (SootMethod) it.next();
 			if(program.isStub(m) && !program.exclude(m))
 				relStub.add(m);
+			if(isFramework(m) && !program.exclude(m))
+				relFramework.add(m);
 		}
 		relStub.save();
+		relFramework.save();
+	}
+
+	private static final Set<String> packagePrefices = new HashSet<String>();
+	static {
+		packagePrefices.add("android");
+		packagePrefices.add("java");
+		packagePrefices.add("javax");
+		packagePrefices.add("org.apache");
+		packagePrefices.add("org.json");
+		packagePrefices.add("org.w3c");
+		packagePrefices.add("org.xml");
+		packagePrefices.add("org.xmlpull");
+		packagePrefices.add("edu.stanford.stamp.harness");
+		packagePrefices.add("com.android");
+		packagePrefices.add("com.google.android.maps");		
+	}
+	
+	public static boolean isFramework(SootMethod method) {
+		if(!method.isConcrete())
+			return false;
+		SootClass cl = method.getDeclaringClass();
+		String packageName = cl.getPackageName();
+		for(String packagePrefix : packagePrefices) {
+			if(packageName.startsWith(packagePrefix)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void populateFields()

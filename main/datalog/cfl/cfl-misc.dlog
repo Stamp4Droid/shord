@@ -1,0 +1,161 @@
+##################
+# Misc. CFL Initialization
+##################
+
+###################
+# CONFIGURATION
+###################
+
+# name=cfl-misc-dlog
+
+.include "V.dom"
+.include "U.dom"
+.include "H.dom"
+.include "C.dom"
+.include "I.dom"
+.include "M.dom"
+.include "T.dom"
+.include "L.dom"
+.include "CL.dom"
+.include "Z.dom"
+.include "F.dom"
+
+.bddvarorder L0_L1_Z0_M0xM1_CL0_CL1_T0_I0_F0_C0xC1_V0xV1_U0xU1_H0xH1
+
+###################
+# RELATIONS
+###################
+
+# points-to and taint-prim filters
+
+pt(c:C,v:V,o:C) input
+CH(c:C,h:H) input
+ptd(v:V,h:H) output
+ptd(v,h) :- pt(_,v,o), CH(o,h).
+
+fpt(o1:C,f:F,o2:C) input
+fptd(h1:H,f:F,h2:H) output
+fptd(h1,f,h2) :- fpt(o1,f,o2), CH(o1,h1), CH(o2,h2).
+
+fptArr(o1:C,o2:C) input
+fptArrd(h1:H,h2:H) output
+fptArrd(h1,h2) :- fptArr(o1,o2), CH(o1,h1), CH(o2,h2).
+
+Label2Primd(l:L,u:U) output
+LCL(l:L,cl:CL) input
+labelPrim(c:C,u:U,cl:CL) input
+Label2Primd(l,u) :- labelPrim(_,u,cl), LCL(l,cl).
+
+# callgraph, reachable base, and potential callback dependent
+
+MI(m:M,i:I) input
+ci_IM(i:I,m:M) input
+callgraph(m0:M0,m1:M1) output
+callgraph(m0,m1) :- MI(m0,i), ci_IM(i,m1).
+
+ci_reachableM(m:M) input
+ClinitTM(t:T,m:M) input
+reachableBase(m:M) output
+reachableBase(0).
+reachableBase(m) :- ClinitTM(_,m), ci_reachableM(m).
+
+# worst-case alias stubs
+
+Stub(m:M) input
+MmethArg(m:M,z:Z,v:V) input
+MmethRet(m:M,z:Z,v:V) input
+
+StubParam(m:M,v:V) output
+StubReturn(m:M,v:V) output
+
+StubParam(m,v) :- Stub(m), MmethArg(m,_,v).
+StubReturn(m,v) :- Stub(m), MmethRet(m,_,v).
+
+# worst-case sources/sinks
+
+Framework(m:M) input
+MmethPrimArg(m:M,z:Z,u:U) input
+MmethPrimRet(m:M,z:Z,u:U) input
+CM(c:C,m:M) input
+
+FrameworkParam(m:M,v:V) output
+FrameworkReturn(m:M,v:V) output
+
+FrameworkParam(m,v) :- Framework(m), MmethArg(m,_,v).
+FrameworkReturn(m,v) :- Framework(m), MmethRet(m,_,v).
+
+FrameworkSource(c:C,v:V) output
+FrameworkSink(c:C,v:V) output
+FrameworkPrimSource(c:C,u:U) output
+FrameworkPrimSink(c:C,u:U) output
+
+FrameworkSource(c,v) :- Framework(m), MmethArg(m,_,v), CM(c,m).
+FrameworkSource(c,v) :- Framework(m), MmethRet(m,_,v), CM(c,m).
+FrameworkSink(c,v) :- Framework(m), MmethRet(m,_,v), CM(c,m).
+FrameworkPrimSource(c,u) :- Framework(m), MmethPrimArg(m,_,u), CM(c,m).
+FrameworkPrimSource(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
+FrameworkPrimSink(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
+
+# load, store, assign, alloc not in framework
+
+Load(v:V,u:V,f:F) input
+Store(v:V,f:F,u:V) input
+Assign(v:V,u:V) input
+Alloc(v:V,h:H) input
+MV(m:M,v:V) input
+
+LoadNF(v:V,u:V,f:F) output
+StoreNF(v:V,f:F,u:V) output
+AssignNF(v:V,u:V) output
+AllocNF(v:V,h:H) output
+
+LoadNF(v,u,f) :- Load(v,u,f), MV(m,v), !Framework(m).
+StoreNF(v,f,u) :- Store(v,f,u), MV(m,v), !Framework(m).
+AssignNF(v,u) :- Assign(v,u), MV(m,v), !Framework(m).
+AllocNF(v,h) :- Alloc(v,h), MV(m,v), !Framework(m).
+
+# objects that escape to the framework
+
+Escape(o:C) output
+EscapeH(h:H) output
+
+Escape(o) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
+Escape(o) :- Escape(op), fpt(op,_,o).
+EscapeH(h) :- Escape(o), CH(o,h), AllocNF(_,h).
+
+# calls to stub methods (for alias models inference paper results)
+
+chaIM(i:I,m:M) input
+FrameworkI(i:I) output
+FrameworkI(i) :- Framework(m), chaIM(i,m).
+
+# invocation statements not in framework
+
+InvokeMonitorArg(i:I,v:V) output
+InvokeMonitorRet(i:I) output
+
+InvokeMonitorArg(i,v) :- chaIM(i,m), MmethArg(m,_,v), MI(mp,i), !Framework(mp).
+InvokeMonitorRet(i) :- chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
+
+# objects to instrument
+
+EscapeCount(o:C) output
+EscapeCountH(h:H) output
+
+EscapeCount(o) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
+EscapeCount(o) :- EscapeCount(op), fpt(op,_,o).
+EscapeCountH(h) :- EscapeCount(o), CH(o,h), AllocNF(_,h).
+
+# stubs to instrument
+
+StubInvokeMonitorRet(i:I) output
+StubInvokeMonitorRet(i) :- Stub(m), chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
+
+# framework to instrument
+FrameworkInvokeMonitorRet(i:I) output
+FrameworkInvokeMonitorRet(i) :- Framework(m), chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
+
+# flows without contexts
+flowL(l1:L,l2:L) output
+flow(cl1:CL,cl2:CL) input
+flowL(l1,l2) :- flow(cl1,cl2), LCL(l1,cl1), LCL(l2,cl2).

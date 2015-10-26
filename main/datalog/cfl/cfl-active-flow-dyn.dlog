@@ -1,0 +1,44 @@
+##################
+# CFL Initialization
+##################
+
+###################
+# CONFIGURATION
+###################
+
+# name=cfl-active-flow-dyn-dlog
+
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+
+.bddvarorder C0_C1_C2_V0_H0
+
+##########
+# INPUTS #
+##########
+
+# seed relation
+FlowDyn(o:H,v:V) input
+
+# basic relations
+CH(o1:C,o2:H) input
+
+# translated points-to facts
+Flow(o:C2,c:C0,v:V0) input
+
+###########
+# OUTPUTS #
+###########
+
+ActiveFlowDyn(o:C2,c:C0,v:V0) output
+ActiveFlowDynH(h:H,v:V) output
+
+#########
+# RULES #
+#########
+
+# seed relation
+
+ActiveFlowDyn(o,c,v) :- !Flow(o,c,v), FlowDyn(op,v), CH(o,op).
+ActiveFlowDynH(h,v) :- ActiveFlowDyn(o,_,v), CH(o,h).

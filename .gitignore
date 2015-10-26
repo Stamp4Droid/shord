@@ -43,3 +43,5 @@ tomcat/work/Catalina/localhost/*
 tomcat/webapps/*
 
 web/web.xml
+
+*.DS_Store

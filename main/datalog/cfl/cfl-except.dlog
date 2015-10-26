@@ -1,0 +1,79 @@
+##################
+# Exception Analysis
+##################
+
+# name=cfl-except-dlog
+
+# Variables
+
+.include "C.dom"
+.include "T.dom"
+.include "M.dom"
+.include "V.dom"
+.include "U.dom"
+.include "I.dom"
+.include "H.dom"
+
+.bddvarorder I0_M0xM1_T0_V0xV1_U0_C0xC1_H0
+
+# Shord input relations
+
+ci_IM(i:I,m:M) input
+MI(m:M,i:I) input
+CM(c:C,m:M) input
+pt(c:C,v:V,o:C) input
+CH(c:C,h:H) input
+HTFilter(h:H,t:T) input
+CICM(c:C,i:I,d:C,m:M) input
+
+# Exception input relations
+
+# variable v in method m implicitly leaks due to exception of type t being thrown
+MethodExceptionDependeeBase(m:M,t:T,v:V) input
+MethodExceptionDependeeBaseVar(m:M,e:V) input
+MethodExceptionDependeePrimBase(m:M,t:T,v:U) input
+
+# invocation site i is in a trap (try block) catching exception of type t with variable v as the handler
+CaughtException(i:I,t:T,v:V) input
+
+# Intermediate relations
+
+# method m in context c catches throws exception t, with dependent variable v in context d
+MethodExceptionDependee(c:C,m:M,t:T,d:C,v:V) output
+MethodExceptionDependeePrim(c:C,m:M,t:T,d:C,v:U)
+
+# variable v in context d is implicitly leaked due to exception of type t being thrown, and the exception is caught (used as a filter)
+ActiveException(t:T,d:C,v:V)
+ActiveExceptionPrim(t:T,d:C,v:U)
+
+# Output relations
+
+# invocation site i in context c calls a method which throws exception which causes variable v in context d to be implicitly leaked, either to exit node or to block with handler e
+SuperExitDependee(c:C,i:I,d:C,v:V) output
+HandlerDependee(c:C,i:I,d:C,v:V,e:V) output
+
+SuperExitDependeePrim(c:C,i:I,d:C,v:U) output
+HandlerDependeePrim(c:C,i:I,d:C,v:U,e:V) output
+
+# Rules
+
+# these handle initialization of MethodExceptionDependee from the implicitly thrown exception
+MethodExceptionDependee(c,m,t,d,v) :- MethodExceptionDependeeBase(m,t,v), CM(c,m), c=d.
+# handle initialization of MethodExceptionDependee from explicitly thrown exception
+MethodExceptionDependee(c,m,t,d,v) :- MethodExceptionDependeeBaseVar(m,v), CM(c,m), pt(c,v,o), CH(o,h), HTFilter(h,t), c=d.
+# propagates MethodExceptionDependee across invocation sites
+MethodExceptionDependee(c,m,t,d,v) :- MI(m,i), ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_).
+# exception is caught
+ActiveException(t,d,v) :- ci_IM(i,mp), CICM(_,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), CaughtException(i,t,_).
+
+# same as above for primitive variables
+MethodExceptionDependeePrim(c,m,t,d,v) :- MethodExceptionDependeePrimBase(m,t,v), CM(c,m), c=d.
+MethodExceptionDependeePrim(c,m,t,d,v) :- MI(m,i), ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), !CaughtException(i,t,_).
+ActiveExceptionPrim(t,d,v) :- ci_IM(i,mp), CICM(_,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), CaughtException(i,t,_).
+
+# output relations
+SuperExitDependee(c,i,d,v) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), !CaughtException(i,t,_), ActiveException(t,d,v).
+HandlerDependee(c,i,d,v,e) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependee(cp,mp,t,d,v), CaughtException(i,t,e).
+
+SuperExitDependeePrim(c,i,d,v) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), !CaughtException(i,t,_), ActiveExceptionPrim(t,d,v).
+HandlerDependeePrim(c,i,d,v,e) :- ci_IM(i,mp), CICM(c,i,cp,mp), MethodExceptionDependeePrim(cp,mp,t,d,v), CaughtException(i,t,e).
