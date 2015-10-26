@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import shord.analyses.AllocNode;
 import shord.analyses.CastVarNode;
 import shord.analyses.DomM;
 import shord.analyses.DomV;
@@ -19,6 +18,7 @@ import shord.analyses.ThisVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import soot.Local;
+import soot.Scene;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -27,8 +27,7 @@ import soot.jimple.AssignStmt;
 import soot.jimple.CastExpr;
 import soot.jimple.Stmt;
 import soot.jimple.StringConstant;
-import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.DefinitionMonitor;
-import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.MethodParamMonitor;
+import soot.jimple.toolkits.callgraph.Edge;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.Monitor;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
@@ -41,6 +40,7 @@ public class MonitorMapUtils {
 		private final Map<Local,SootMethod> localToMethod = new HashMap<Local,SootMethod>();
 		private final Map<CastExpr,Stmt> castToStmt = new HashMap<CastExpr,Stmt>();
 		private final MultivalueMap<Pair<SootMethod,String>,Stmt> strToStmt = new MultivalueMap<Pair<SootMethod,String>,Stmt>();
+		private final MultivalueMap<SootMethod,Stmt> callers = new MultivalueMap<SootMethod,Stmt>();
 		
 		public Set<Stmt> getDefs(Local local) {
 			return this.localToDef.get(local);
@@ -64,6 +64,10 @@ public class MonitorMapUtils {
 		
 		public Set<Stmt> getStmts(SootMethod method, String str) {
 			return this.strToStmt.get(new Pair<SootMethod,String>(method, str));
+		}
+		
+		public Set<Stmt> getCallers(SootMethod method) {
+			return this.callers.get(method);
 		}
 		
 		private VariableMap() {
@@ -119,6 +123,12 @@ public class MonitorMapUtils {
 						this.strToStmt.add(new Pair<SootMethod,String>(method, ((StringConstant)use.getValue()).value), stmt);
 					}
 				}
+				
+				// Callees
+				Iterator<Edge> edges = Scene.v().getCallGraph().edgesOutOf(stmt);
+				while(edges.hasNext()) {
+					this.callers.add(edges.next().getTgt().method(), stmt);
+				}
 			}
 		}
 	
@@ -156,20 +166,23 @@ public class MonitorMapUtils {
 			for(VarNode var : vars) {
 				//System.out.println("VAR: " + var);
 				if(var instanceof CastVarNode) {
-					this.processDefinition((CastVarNode)var, varMap.getStmt(((CastVarNode)var).castExpr));
+					Stmt stmt = varMap.getStmt(((CastVarNode)var).castExpr);
+					this.processDefinition((CastVarNode)var, varMap.getMethod(stmt), stmt);
 				} else if(var instanceof LocalVarNode) {
 					for(Stmt stmt : varMap.getDefs(((LocalVarNode)var).local)) {
-						this.processDefinition((LocalVarNode)var, stmt);
+						this.processDefinition((LocalVarNode)var, varMap.getMethod(stmt), stmt);
 					}
 				} else if(var instanceof ParamVarNode) {
 					ParamVarNode paramVar = (ParamVarNode)var;
 					this.processMethodParam((ParamVarNode)var, paramVar.method, paramVar.index);
 				} else if(var instanceof RetVarNode) {
-					this.processMethodReturn((RetVarNode)var, ((RetVarNode)var).method);
+					for(Stmt stmt : varMap.getCallers(((RetVarNode)var).method)) {
+						this.processDefinition((RetVarNode)var, varMap.getMethod(stmt), stmt);
+					}
 				} else if(var instanceof StringConstantVarNode) {
 					StringConstantVarNode constVar = (StringConstantVarNode)var;
 					for(Stmt stmt : varMap.getStmts(constVar.method, constVar.sc)) {
-						this.processDefinition((StringConstantVarNode)var, stmt);
+						this.processDefinition((StringConstantVarNode)var, varMap.getMethod(stmt), stmt);
 					}
 				} else if(var instanceof ThisVarNode) {
 					this.processMethodThis((ThisVarNode)var, ((ThisVarNode)var).method);
@@ -177,28 +190,36 @@ public class MonitorMapUtils {
 			}
 		}
 		
-		private void processDefinition(CastVarNode var, Stmt stmt) {
-			
+		private void processDefinition(CastVarNode var, SootMethod method, Stmt stmt) {
+			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
+				this.varToMonitor.add(var, monitor);
+			}
 		}
 		
-		private void processDefinition(StringConstantVarNode var, Stmt stmt) {
-			
+		private void processDefinition(StringConstantVarNode var, SootMethod method, Stmt stmt) {
+			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
+				this.varToMonitor.add(var, monitor);
+			}
 		}
 		
-		private void processDefinition(LocalVarNode var, Stmt stmt) {
-			
+		private void processDefinition(LocalVarNode var, SootMethod method, Stmt stmt) {
+			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
+				this.varToMonitor.add(var, monitor);
+			}
+		}
+		
+		private void processDefinition(RetVarNode var, SootMethod method, Stmt stmt) {
+			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
+				this.varToMonitor.add(var, monitor);
+			}
 		}
 		
 		private void processMethodParam(ParamVarNode var, SootMethod method, int index) {
-			
+			this.varToMonitor.add(var, InstrumentationDataWriter.getMonitorForMethodParam(method, index));
 		}
 		
 		private void processMethodThis(ThisVarNode var, SootMethod method) {
-			
-		}
-		
-		private void processMethodReturn(RetVarNode var, SootMethod method) {
-			
-		}		
+			this.varToMonitor.add(var, InstrumentationDataWriter.getMonitorForMethodThis(method));
+		}	
 	}	
 }

@@ -16,7 +16,6 @@ import soot.Unit;
 import soot.Value;
 import soot.jimple.AnyNewExpr;
 import soot.jimple.AssignStmt;
-import soot.jimple.IdentityStmt;
 import soot.jimple.NewExpr;
 import soot.jimple.Stmt;
 import soot.tagkit.BytecodeOffsetTag;
