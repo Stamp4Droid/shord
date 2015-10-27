@@ -2,6 +2,7 @@ package stamp.analyses.inferaliasmodel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import soot.jimple.CastExpr;
 import soot.jimple.Stmt;
 import soot.jimple.StringConstant;
 import soot.jimple.toolkits.callgraph.Edge;
+import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.ErrorMonitor;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.Monitor;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
@@ -156,6 +158,34 @@ public class MonitorMapUtils {
 		return varMap;
 	}
 	
+	private static Set<AllocNode> libraryAlloc = null;
+	private static Set<AllocNode> getLibraryAlloc() {
+		if(libraryAlloc == null) {
+			libraryAlloc = new HashSet<AllocNode>();
+			ProgramRel relFrameworkObj = (ProgramRel)ClassicProject.g().getTrgt("FrameworkObj");
+			relFrameworkObj.load();
+			for(Object obj : relFrameworkObj.getAry1ValTuples()) {
+				libraryAlloc.add((AllocNode)obj);
+			}
+			relFrameworkObj.close();
+		}
+		return libraryAlloc;
+	}
+	
+	private static Set<VarNode> libraryVar = null;
+	private static Set<VarNode> getLibraryVar() {
+		if(libraryVar == null) {
+			libraryVar = new HashSet<VarNode>();
+			ProgramRel relFrameworkVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkVar");
+			relFrameworkVar.load();
+			for(Object obj : relFrameworkVar.getAry1ValTuples()) {
+				libraryVar.add((VarNode)obj);
+			}
+			relFrameworkVar.close();
+		}
+		return libraryVar;
+	}
+	
 	private static MultivalueMap<AllocNode,VarNode> libraryAllocNodeMap = null;
 	private static MultivalueMap<AllocNode,VarNode> getLibraryAllocNodeMap() {
 		if(libraryAllocNodeMap == null) {
@@ -191,126 +221,156 @@ public class MonitorMapUtils {
 		public MonitorMap() {
 			MultivalueMap<VarNode,VarNode> libraryVarNodeMap = getLibraryVarNodeMap();
 			MultivalueMap<AllocNode,VarNode> libraryAllocNodeMap = getLibraryAllocNodeMap();
+			Set<VarNode> libraryVar = getLibraryVar();
+			Set<AllocNode> libraryAlloc = getLibraryAlloc();
 			
 			Iterator<VarNode> varIter = ((DomV)ClassicProject.g().getTrgt("V")).iterator();
-			List<VarNode> vars = new ArrayList<VarNode>();
 			while(varIter.hasNext()) {
 				VarNode var = varIter.next();
-				if(libraryVarNodeMap.containsKey(var)) {
-					vars.addAll(libraryVarNodeMap.get(var));
+				if(libraryVar.contains(var)) {
+					if(libraryVarNodeMap.containsKey(var)) {
+						for(VarNode varMonitor : libraryVarNodeMap.get(var)) {
+							for(Monitor monitor : processVar(varMonitor)) {
+								this.varToMonitor.add(var, monitor);
+							}
+						}
+					} else {
+						this.varToMonitor.add(var, new ErrorMonitor("Library var without a map!"));
+					}
 				} else {
-					vars.add(var);
+					for(Monitor monitor : processVar(var)) {
+						this.varToMonitor.add(var, monitor);
+					}
 				}
 			}
 			
 			Iterator<AllocNode> allocIter = ((DomH)ClassicProject.g().getTrgt("H")).iterator();
-			List<AllocNode> allocs = new ArrayList<AllocNode>();
 			while(allocIter.hasNext()) {
 				AllocNode alloc = allocIter.next();
-				if(libraryAllocNodeMap.containsKey(alloc)) {
-					vars.addAll(libraryAllocNodeMap.get(alloc));
+				if(libraryAlloc.contains(alloc)) {
+					if(libraryAllocNodeMap.containsKey(alloc)) {
+						for(VarNode varMonitor : libraryAllocNodeMap.get(alloc)) {
+							for(Monitor monitor : processVar(varMonitor)) {
+								this.allocToMonitor.add(alloc, monitor);
+							}
+						}
+					} else {
+						this.allocToMonitor.add(alloc, new ErrorMonitor("Framework alloc without a map!"));
+					}
 				} else {
-					allocs.add(alloc);
+					for(Monitor monitor : processAlloc(alloc)) {
+						this.allocToMonitor.add(alloc, monitor);
+					}
 				}
 			}
-
-			processVars(vars);
-			processAllocs(allocs);
-		}
-		
-		private void processVars(Iterable<VarNode> vars) {
-			VariableMap varMap = getVarMap();
-			for(VarNode var : vars) {
+			
+			for(VarNode var : this.varToMonitor.keySet()) {
 				System.out.println("VAR: " + var);
-				if(var instanceof CastVarNode) {
-					Stmt stmt = varMap.getStmt(((CastVarNode)var).castExpr);
-					this.processDefinition((CastVarNode)var, varMap.getMethod(stmt), stmt);
-				} else if(var instanceof LocalVarNode) {
-					for(Stmt stmt : varMap.getDefs(((LocalVarNode)var).local)) {
-						this.processDefinition((LocalVarNode)var, varMap.getMethod(stmt), stmt);
-					}
-				} else if(var instanceof ParamVarNode) {
-					ParamVarNode paramVar = (ParamVarNode)var;
-					this.processMethodParam((ParamVarNode)var, paramVar.method, paramVar.index);
-				} else if(var instanceof RetVarNode) {
-					for(Stmt stmt : varMap.getCallers(((RetVarNode)var).method)) {
-						this.processDefinition((RetVarNode)var, varMap.getMethod(stmt), stmt);
-					}
-				} else if(var instanceof StringConstantVarNode) {
-					StringConstantVarNode constVar = (StringConstantVarNode)var;
-					for(Stmt stmt : varMap.getStmts(constVar.method, constVar.sc)) {
-						this.processDefinition((StringConstantVarNode)var, varMap.getMethod(stmt), stmt);
-					}
-				} else if(var instanceof ThisVarNode) {
-					this.processMethodThis((ThisVarNode)var, ((ThisVarNode)var).method);
+				for(Monitor monitor : this.varToMonitor.get(var)) {
+					System.out.println(monitor.getRecord(3192));
+				}
+				System.out.println();
+			}
+			
+			for(AllocNode alloc : this.allocToMonitor.keySet()) {
+				System.out.println("ALLOC: " + alloc);
+				for(Monitor monitor : this.allocToMonitor.get(alloc)) {
+					System.out.println(monitor.getRecord(3192));
 				}
 				System.out.println();
 			}
 		}
 		
-		private void processAllocs(Iterable<AllocNode> allocs) {
+		private static Iterable<Monitor> processVar(VarNode var) {
 			VariableMap varMap = getVarMap();
-			for(AllocNode alloc : allocs) {
-				System.out.println("ALLOC: " + alloc);
-				if(alloc instanceof StringConstNode) {
-					StringConstNode strAlloc = (StringConstNode)alloc;
-					if(strAlloc.method != null) {
-						for(Stmt stmt : varMap.getStmts(strAlloc.method, strAlloc.value)) {
-							this.processDefinition(strAlloc, strAlloc.method, stmt);
-						}
-					} else {
-						System.out.println("Global alloc");
-					}
-				} else if(alloc instanceof StubAllocNode) {
-					System.out.println("Stub alloc");
-				} else if(alloc instanceof SiteAllocNode) {
-					SiteAllocNode siteAlloc = (SiteAllocNode)alloc;
-					this.processDefinition(siteAlloc, varMap.getMethod((Stmt)siteAlloc.getUnit()), (Stmt)siteAlloc.getUnit());
+			List<Monitor> monitors = new ArrayList<Monitor>();
+			if(var instanceof CastVarNode) {
+				Stmt stmt = varMap.getStmt(((CastVarNode)var).castExpr);
+				processDefinition(monitors, (CastVarNode)var, varMap.getMethod(stmt), stmt);
+			} else if(var instanceof LocalVarNode) {
+				for(Stmt stmt : varMap.getDefs(((LocalVarNode)var).local)) {
+					processDefinition(monitors, (LocalVarNode)var, varMap.getMethod(stmt), stmt);
 				}
+			} else if(var instanceof ParamVarNode) {
+				ParamVarNode paramVar = (ParamVarNode)var;
+				processMethodParam(monitors, (ParamVarNode)var, paramVar.method, paramVar.index);
+			} else if(var instanceof RetVarNode) {
+				for(Stmt stmt : varMap.getCallers(((RetVarNode)var).method)) {
+					processDefinition(monitors, (RetVarNode)var, varMap.getMethod(stmt), stmt);
+				}
+			} else if(var instanceof StringConstantVarNode) {
+				StringConstantVarNode constVar = (StringConstantVarNode)var;
+				for(Stmt stmt : varMap.getStmts(constVar.method, constVar.sc)) {
+					processDefinition(monitors, (StringConstantVarNode)var, varMap.getMethod(stmt), stmt);
+				}
+			} else if(var instanceof ThisVarNode) {
+				processMethodThis(monitors, (ThisVarNode)var, ((ThisVarNode)var).method);
+			}
+			return monitors;
+		}
+		
+		private static Iterable<Monitor> processAlloc(AllocNode alloc) {
+			VariableMap varMap = getVarMap();
+			List<Monitor> monitors = new ArrayList<Monitor>();
+			if(alloc instanceof StringConstNode) {
+				StringConstNode strAlloc = (StringConstNode)alloc;
+				if(strAlloc.method != null) {
+					for(Stmt stmt : varMap.getStmts(strAlloc.method, strAlloc.value)) {
+						processDefinition(monitors, strAlloc, strAlloc.method, stmt);
+					}
+				} else {
+					monitors.add(new ErrorMonitor("Global alloc not handled!"));
+				}
+			} else if(alloc instanceof StubAllocNode) {
+				monitors.add(new ErrorMonitor("StubAllocs not handled!"));
+			} else if(alloc instanceof SiteAllocNode) {
+				SiteAllocNode siteAlloc = (SiteAllocNode)alloc;
+				processDefinition(monitors, siteAlloc, varMap.getMethod((Stmt)siteAlloc.getUnit()), (Stmt)siteAlloc.getUnit());
+			}
+			return monitors;
+		}
+		
+		private static void processDefinition(List<Monitor> monitors, CastVarNode var, SootMethod method, Stmt stmt) {
+			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
+				monitors.add(monitor);
 			}
 		}
 		
-		private void processDefinition(CastVarNode var, SootMethod method, Stmt stmt) {
+		private static void processDefinition(List<Monitor> monitors, StringConstantVarNode var, SootMethod method, Stmt stmt) {
 			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
-				this.varToMonitor.add(var, monitor);
+				monitors.add(monitor);
 			}
 		}
 		
-		private void processDefinition(StringConstantVarNode var, SootMethod method, Stmt stmt) {
+		private static void processDefinition(List<Monitor> monitors, LocalVarNode var, SootMethod method, Stmt stmt) {
 			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
-				this.varToMonitor.add(var, monitor);
+				monitors.add(monitor);
 			}
 		}
 		
-		private void processDefinition(LocalVarNode var, SootMethod method, Stmt stmt) {
+		private static void processDefinition(List<Monitor> monitors, RetVarNode var, SootMethod method, Stmt stmt) {
 			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
-				this.varToMonitor.add(var, monitor);
+				monitors.add(monitor);
 			}
 		}
 		
-		private void processDefinition(RetVarNode var, SootMethod method, Stmt stmt) {
+		private static void processMethodParam(List<Monitor> monitors, ParamVarNode var, SootMethod method, int index) {
+			monitors.add(InstrumentationDataWriter.getMonitorForMethodParam(method, index));
+		}
+		
+		private static void processMethodThis(List<Monitor> monitors, ThisVarNode var, SootMethod method) {
+			monitors.add(InstrumentationDataWriter.getMonitorForMethodThis(method));
+		}
+		
+		private static void processDefinition(List<Monitor> monitors, SiteAllocNode alloc, SootMethod method, Stmt stmt) {
 			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
-				this.varToMonitor.add(var, monitor);
+				monitors.add(monitor);
 			}
 		}
 		
-		private void processMethodParam(ParamVarNode var, SootMethod method, int index) {
-			this.varToMonitor.add(var, InstrumentationDataWriter.getMonitorForMethodParam(method, index));
-		}
-		
-		private void processMethodThis(ThisVarNode var, SootMethod method) {
-			this.varToMonitor.add(var, InstrumentationDataWriter.getMonitorForMethodThis(method));
-		}
-		
-		private void processDefinition(SiteAllocNode alloc, SootMethod method, Stmt stmt) {
+		public static void processDefinition(List<Monitor> monitors, StringConstNode alloc, SootMethod method, Stmt stmt) {
 			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
-				this.allocToMonitor.add(alloc, monitor);
-			}
-		}
-		
-		public void processDefinition(StringConstNode alloc, SootMethod method, Stmt stmt) {
-			for(Monitor monitor : InstrumentationDataWriter.getMonitorForDefinition(method, stmt)) {
-				this.allocToMonitor.add(alloc, monitor);
+				monitors.add(monitor);
 			}
 		}
 	}	

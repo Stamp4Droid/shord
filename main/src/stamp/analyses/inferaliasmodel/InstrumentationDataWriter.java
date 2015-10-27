@@ -28,6 +28,22 @@ import chord.project.Chord;
 public class InstrumentationDataWriter extends JavaAnalysis {
 	public static interface Monitor {
 		public abstract String getRecord(int eventId);
+		public abstract boolean isValid();
+	}
+	
+	public static class ErrorMonitor implements Monitor {
+		private final String error;
+		public ErrorMonitor(String error) {
+			this.error = error;
+		}
+		@Override
+		public String getRecord(int eventId) {
+			return this.error;
+		}
+		@Override
+		public boolean isValid() {
+			return false;
+		}
 	}
 	
 	public static class CallRetMonitor implements Monitor {
@@ -40,6 +56,10 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		@Override
 		public String getRecord(int eventId) {
 			return "METHCALLARG " + this.methodSignature + " " + this.bytecodeOffset + " " + -1 + " " + eventId;
+		}
+		@Override
+		public boolean isValid() {
+			return true;
 		}
 	}
 	
@@ -54,6 +74,10 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		public String getRecord(int eventId) {
 			return "METHCALLARG " + this.methodSignature + " " + this.bytecodeOffset + " " + 0 + " " + eventId;
 		}
+		@Override
+		public boolean isValid() {
+			return true;
+		}
 	}
 	
 	public static class DefinitionMonitor implements Monitor {
@@ -66,6 +90,10 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		@Override
 		public String getRecord(int eventId) {
 			return "DEFINITION " + this.methodSignature + " " + this.bytecodeOffset + " " + eventId;
+		}
+		@Override
+		public boolean isValid() {
+			return true;
 		}
 	}
 	
@@ -80,6 +108,10 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		public String getRecord(int eventId) {
 			return "METHPARAM " + this.methodSignature + " " + this.argIndex + " " + eventId;
 		}
+		@Override
+		public boolean isValid() {
+			return true;
+		}
 	}
 	
 	public static class MonitorWriter {
@@ -93,7 +125,9 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		}
 		public void writeAll(Iterable<Monitor> monitors) {
 			for(Monitor monitor : monitors) {
-				this.write(monitor);
+				if(monitor.isValid()) {
+					this.write(monitor);
+				}
 			}
 		}
 		public void close() {
@@ -197,10 +231,9 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 			for(Stmt initInvkStmt : matchAllocToInit.get(stmt)) {
 				int bytecodeOffset = bytecodeOffset(initInvkStmt);
 				if(bytecodeOffset >= 0) {
-					System.out.println("INST NEW: " + initInvkStmt);
 					monitors.add(new NewInstanceMonitor(methodSignature, bytecodeOffset));
 				} else {
-					System.out.println("bytecode offset unavailable: " + method.getSignature());
+					monitors.add(new ErrorMonitor("bytecode offset unavailable: " + method.getSignature()));
 				}
 			}
 		}
