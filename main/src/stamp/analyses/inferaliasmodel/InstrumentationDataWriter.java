@@ -239,17 +239,16 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		}
 		
 		if(rightOp instanceof AnyNewExpr) {
-			System.out.println("UNHANDLED: array allocation sites");
+			monitors.add(new ErrorMonitor("UNHANDLED: array allocation sites"));
 		}
 		
 		// call rets
 		if(stmt.containsInvokeExpr()) {
 			int bytecodeOffset = bytecodeOffset(stmt);
 			if(bytecodeOffset >= 0) {
-				System.out.println("INST RET: " + stmt);
 				monitors.add(new CallRetMonitor(methodSignature, bytecodeOffset));
 			} else {
-				System.out.println("bytecode offset unavailable: " + method.getSignature());
+				monitors.add(new ErrorMonitor("bytecode offset unavailable: " + method.getSignature()));
 			}
 		}
 		
@@ -257,10 +256,9 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		if(!(rightOp instanceof AnyNewExpr) && !(rightOp instanceof NewExpr) && !stmt.containsInvokeExpr()) {
 			int bytecodeOffset = bytecodeOffset(stmt);
 			if(bytecodeOffset >= 0) {
-				System.out.println("INST DEF: " + stmt);
 				monitors.add(new DefinitionMonitor(methodSignature, bytecodeOffset));
 			} else {
-				System.out.println("bytecode offset unavailable: " + method.getSignature());
+				monitors.add(new ErrorMonitor("bytecode offset unavailable: " + method.getSignature()));
 			}
 		}
 		
