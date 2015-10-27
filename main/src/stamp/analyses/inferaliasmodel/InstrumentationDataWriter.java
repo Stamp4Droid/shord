@@ -21,7 +21,6 @@ import soot.jimple.Stmt;
 import soot.tagkit.BytecodeOffsetTag;
 import soot.tagkit.Tag;
 import stamp.analyses.inferaliasmodel.MatchAllocToInitAnalysis2.MultivalueMap;
-import stamp.analyses.inferaliasmodel.MonitorMapUtils.MonitorMap;
 import chord.project.Chord;
 
 @Chord(name = "instrument")
@@ -182,7 +181,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		new MonitorMap();
+		MonitorMapUtils.printMonitorMap();
 		write();
 	}
 	

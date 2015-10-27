@@ -218,7 +218,7 @@ public class MonitorMapUtils {
 		private final MultivalueMap<VarNode,Monitor> varToMonitor = new MultivalueMap<VarNode,Monitor>();
 		private final MultivalueMap<AllocNode,Monitor> allocToMonitor = new MultivalueMap<AllocNode,Monitor>();
 		
-		public MonitorMap() {
+		private MonitorMap() {
 			MultivalueMap<VarNode,VarNode> libraryVarNodeMap = getLibraryVarNodeMap();
 			MultivalueMap<AllocNode,VarNode> libraryAllocNodeMap = getLibraryAllocNodeMap();
 			Set<VarNode> libraryVar = getLibraryVar();
@@ -262,22 +262,6 @@ public class MonitorMapUtils {
 						this.allocToMonitor.add(alloc, monitor);
 					}
 				}
-			}
-			
-			for(VarNode var : this.varToMonitor.keySet()) {
-				System.out.println("VAR: " + var);
-				for(Monitor monitor : this.varToMonitor.get(var)) {
-					System.out.println(monitor.getRecord(3192));
-				}
-				System.out.println();
-			}
-			
-			for(AllocNode alloc : this.allocToMonitor.keySet()) {
-				System.out.println("ALLOC: " + alloc);
-				for(Monitor monitor : this.allocToMonitor.get(alloc)) {
-					System.out.println(monitor.getRecord(3192));
-				}
-				System.out.println();
 			}
 		}
 		
@@ -373,5 +357,54 @@ public class MonitorMapUtils {
 				monitors.add(monitor);
 			}
 		}
-	}	
+	}
+	
+	private static MonitorMap monitorMap = null;
+	public static MonitorMap getMonitorMap() {
+		if(monitorMap == null) {
+			monitorMap = new MonitorMap();
+		}
+		return monitorMap;
+	}
+	
+	public static void printMonitorMap() {
+		MonitorMap monitorMap = getMonitorMap();
+		printMonitorMap(monitorMap.varToMonitor.keySet(), monitorMap.allocToMonitor.keySet());
+	}
+	
+	public static void printMonitorMap(Iterable<String> vertices) {
+		DomV domV = (DomV)ClassicProject.g().getTrgt("V");
+		DomH domH = (DomH)ClassicProject.g().getTrgt("H");
+		List<VarNode> vars = new ArrayList<VarNode>();
+		List<AllocNode> allocs = new ArrayList<AllocNode>();
+		for(String vertex : vertices) {
+			if(vertex.startsWith("V")) {
+				vars.add(domV.get(Integer.parseInt(vertex.substring(1))));
+			} else if(vertex.startsWith("H")) {
+				allocs.add(domH.get(Integer.parseInt(vertex.substring(1))));
+			} else {
+				throw new RuntimeException("Unrecognized vertex: " + vertex);
+			}
+		}
+		printMonitorMap(vars, allocs);
+	}
+	
+	public static void printMonitorMap(Iterable<VarNode> vars, Iterable<AllocNode> allocs) {
+		MonitorMap monitorMap = getMonitorMap();
+		for(VarNode var : vars) {
+			System.out.println("VAR: " + var);
+			for(Monitor monitor : monitorMap.varToMonitor.get(var)) {
+				System.out.println(monitor.getRecord(3192));
+			}
+			System.out.println();
+		}
+		
+		for(AllocNode alloc : allocs) {
+			System.out.println("ALLOC: " + alloc);
+			for(Monitor monitor : monitorMap.allocToMonitor.get(alloc)) {
+				System.out.println(monitor.getRecord(3192));
+			}
+			System.out.println();
+		}
+	}
 }
