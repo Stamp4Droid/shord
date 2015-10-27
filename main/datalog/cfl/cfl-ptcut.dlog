@@ -43,7 +43,7 @@ FrameworkObj(h:H) output
 
 ActiveSource(v:V,o:C) output
 ActiveSink(v:V,u:V) output
-MonitorSource(v:V,o:C) output
+MonitorSource(v:V,h:H) output
 MonitorSink(v:V,u:V) output
 
 ###################
@@ -61,9 +61,9 @@ ActiveSource(v,o) :- ActiveSource(u,o), Load(v,u,_).
 
 # monitor if loaded/returned from an active source
 # v = u.f, u active, u app, v -> o, u -f-> o
-MonitorSource(v,o) :- ActiveSource(u,o), !FrameworkVar(u), Load(v,u,_), pt(_,v,o).
+MonitorSource(v,h) :- ActiveSource(u,o), !FrameworkVar(u), Load(v,u,_), pt(_,v,o), CH(o,h).
 # v = return u, u active, u framework, v app, v -> o, u -> o
-MonitorSource(v,o) :- ActiveSource(u,o), FrameworkVar(u), return(v,u,_), !FrameworkVar(v), pt(_,v,o).
+MonitorSource(v,h) :- ActiveSource(u,o), FrameworkVar(u), return(v,u,_), !FrameworkVar(v), pt(_,v,o), CH(o,h).
 
 # activate anything stored into framework variables
 ActiveSink(v,s) :- FrameworkVar(v), v=s.

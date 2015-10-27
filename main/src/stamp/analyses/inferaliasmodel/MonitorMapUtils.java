@@ -22,6 +22,7 @@ import shord.analyses.StubAllocNode;
 import shord.analyses.ThisVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
+import shord.project.analyses.ProgramRel;
 import soot.Local;
 import soot.Scene;
 import soot.SootMethod;
@@ -155,23 +156,65 @@ public class MonitorMapUtils {
 		return varMap;
 	}
 	
+	private static MultivalueMap<AllocNode,VarNode> libraryAllocNodeMap = null;
+	private static MultivalueMap<AllocNode,VarNode> getLibraryAllocNodeMap() {
+		if(libraryAllocNodeMap == null) {
+			libraryAllocNodeMap = new MultivalueMap<AllocNode,VarNode>();
+			ProgramRel relMonitorSource = (ProgramRel)ClassicProject.g().getTrgt("MonitorSource");
+			relMonitorSource.load();
+			for(chord.util.tuple.object.Pair<Object,Object> pair : relMonitorSource.getAry2ValTuples()) {
+				libraryAllocNodeMap.add((AllocNode)pair.val1, (VarNode)pair.val0);
+			}
+			relMonitorSource.close();
+		}
+		return libraryAllocNodeMap;
+	}
+	
+	private static MultivalueMap<VarNode,VarNode> libraryVarNodeMap = null;
+	private static MultivalueMap<VarNode,VarNode> getLibraryVarNodeMap() {
+		if(libraryVarNodeMap == null) {
+			libraryVarNodeMap = new MultivalueMap<VarNode,VarNode>();
+			ProgramRel relMonitorSink = (ProgramRel)ClassicProject.g().getTrgt("MonitorSink");
+			relMonitorSink.load();
+			for(chord.util.tuple.object.Pair<Object,Object> pair : relMonitorSink.getAry2ValTuples()) {
+				libraryVarNodeMap.add((VarNode)pair.val1, (VarNode)pair.val0);
+			}
+			relMonitorSink.close();
+		}
+		return libraryVarNodeMap;
+	}
+	
 	public static class MonitorMap {
 		private final MultivalueMap<VarNode,Monitor> varToMonitor = new MultivalueMap<VarNode,Monitor>();
 		private final MultivalueMap<AllocNode,Monitor> allocToMonitor = new MultivalueMap<AllocNode,Monitor>();
 		
 		public MonitorMap() {
+			MultivalueMap<VarNode,VarNode> libraryVarNodeMap = getLibraryVarNodeMap();
+			MultivalueMap<AllocNode,VarNode> libraryAllocNodeMap = getLibraryAllocNodeMap();
+			
 			Iterator<VarNode> varIter = ((DomV)ClassicProject.g().getTrgt("V")).iterator();
 			List<VarNode> vars = new ArrayList<VarNode>();
 			while(varIter.hasNext()) {
-				vars.add(varIter.next());
+				VarNode var = varIter.next();
+				if(libraryVarNodeMap.containsKey(var)) {
+					vars.addAll(libraryVarNodeMap.get(var));
+				} else {
+					vars.add(var);
+				}
 			}
-			processVars(vars);
 			
 			Iterator<AllocNode> allocIter = ((DomH)ClassicProject.g().getTrgt("H")).iterator();
 			List<AllocNode> allocs = new ArrayList<AllocNode>();
 			while(allocIter.hasNext()) {
-				allocs.add(allocIter.next());
+				AllocNode alloc = allocIter.next();
+				if(libraryAllocNodeMap.containsKey(alloc)) {
+					vars.addAll(libraryAllocNodeMap.get(alloc));
+				} else {
+					allocs.add(alloc);
+				}
 			}
+
+			processVars(vars);
 			processAllocs(allocs);
 		}
 		
