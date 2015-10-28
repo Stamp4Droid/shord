@@ -57,6 +57,7 @@ FrameworkObj(h) :- Alloc(v,h), FrameworkVar(v).
 # activate anything loaded out of framework variables
 ActiveSource(v,o) :- FrameworkObj(h), Alloc(v,h), CH(o,h).
 ActiveSource(v,o) :- ActiveSource(u,o), Assign(v,u).
+ActiveSource(v,o) :- ActiveSource(u,o), return(v,u,_).
 ActiveSource(v,o) :- ActiveSource(u,o), Load(v,u,_).
 
 # monitor if loaded/returned from an active source
@@ -68,6 +69,7 @@ MonitorSource(v,h) :- ActiveSource(u,o), FrameworkVar(u), return(v,u,_), !Framew
 # activate anything stored into framework variables
 ActiveSink(v,s) :- FrameworkVar(v), v=s.
 ActiveSink(v,s) :- ActiveSink(u,s), Assign(u,v).
+ActiveSink(v,s) :- ActiveSink(u,s), param(u,v,_).
 ActiveSink(v,s) :- ActiveSink(u,s), Store(u,_,v).
 
 # monitor if stored/passed to an active sink
