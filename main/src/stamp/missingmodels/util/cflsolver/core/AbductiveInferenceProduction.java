@@ -15,16 +15,18 @@ import stamp.missingmodels.util.cflsolver.core.LinearProgram.ObjectiveType;
 import stamp.missingmodels.util.cflsolver.core.Util.AndFilter;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 
-public class AbductiveInference extends ProductionIterator<Map<EdgeStruct,Boolean>> {
-	private LinearProgram<Edge> lp;
+public class AbductiveInferenceProduction extends ProductionIterator<Map<EdgeStruct,Boolean>> {
+	private LinearProgram<Pair<Edge,Boolean>> lp; // false - removed, true - cut
+	private Set<Edge> baseEdges;
 
-	public AbductiveInference(ContextFreeGrammarOpt contextFreeGrammar) {
+	public AbductiveInferenceProduction(ContextFreeGrammarOpt contextFreeGrammar) {
 		super(contextFreeGrammar);
 	}
 
 	private void setObjective(Set<Edge> baseEdges, Set<Edge> edges) {
-		Collection<Coefficient<Edge>> coefficients = new HashSet<Coefficient<Edge>>();
+		Collection<Coefficient<Pair<Edge,Boolean>>> coefficients = new HashSet<Coefficient<Pair<Edge,Boolean>>>();
 		for(Edge edge : baseEdges) {
 			if(!edges.contains(edge)) {
 				continue;
@@ -32,31 +34,40 @@ public class AbductiveInference extends ProductionIterator<Map<EdgeStruct,Boolea
 			if(edge.weight == (short)0) {
 				continue;
 			}
-			coefficients.add(new Coefficient<Edge>(edge, edge.weight));
+			coefficients.add(new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(edge, true), edge.weight));
 		}
 		this.lp.setObjective(ObjectiveType.MINIMIZE, coefficients);
 	}
 
 	private void setInitialEdges(Set<Edge> initialEdges) {
 		for(Edge edge : initialEdges) {
-			this.lp.addConstraint(ConstraintType.GEQ, 1.0, new Coefficient<Edge>(edge, 1.0));
+			this.lp.addConstraint(ConstraintType.GEQ, 1.0, new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(edge, false), 1.0));
 		}
 	}
 
 	@Override
 	protected void addProduction(Edge target, Edge input) {
-		this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Edge>(target, 1.0), new Coefficient<Edge>(input, -1.0));
+		if(this.baseEdges.contains(target)) {
+			this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(target, false), 1.0), new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(input, false), -1.0), new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(target, true), -1.0));
+		} else {
+			this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(target, false), 1.0), new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(input, false), -1.0));
+		}
 	}
 
 	@Override
 	protected void addProduction(Edge target, Edge firstInput, Edge secondInput) {
-		this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Edge>(target, 1.0), new Coefficient<Edge>(firstInput, -1.0), new Coefficient<Edge>(secondInput, -1.0));
+		if(this.baseEdges.contains(target)) {
+			this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(target, false), 1.0), new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(firstInput, false), -1.0), new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(secondInput, false), -1.0), new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(target, true), -1.0));
+		} else {
+			this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(target, false), 1.0), new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(firstInput, false), -1.0), new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(secondInput, false), -1.0));
+		}
 	}
 	
 	@Override
 	protected void preprocess(Set<Edge> baseEdges, Set<Edge> initialEdges) {
 		// STEP 0: Setup
-		this.lp = new SCIPLinearProgram<Edge>();
+		this.lp = new SCIPLinearProgram<Pair<Edge,Boolean>>();
+		this.baseEdges = baseEdges;
 		
 		// STEP 1: Break initial edges
 		this.setInitialEdges(initialEdges);
@@ -68,17 +79,24 @@ public class AbductiveInference extends ProductionIterator<Map<EdgeStruct,Boolea
 		this.setObjective(baseEdges, edges);
 
 		// STEP 2: Solve the linear program
-		LinearProgramResult<Edge> solution = this.lp.solve();
+		LinearProgramResult<Pair<Edge,Boolean>> solution = this.lp.solve();
 		
 		// STEP 3: Set up the result
 		// returns 1 if the edge is in the cut, 0 if the edge is not in the cut
 		Map<EdgeStruct,Boolean> result = new HashMap<EdgeStruct,Boolean>();
-		for(Edge edge : solution.keySet()) {
-			if(baseEdges.contains(edge)) {
-				result.put(edge.getStruct(), solution.get(edge) > 0.5);
+		for(Pair<Edge,Boolean> pair : solution.keySet()) {
+			if(pair.getY()) {
+				Edge edge = pair.getX();
+				if(baseEdges.contains(edge)) {
+					result.put(edge.getStruct(), solution.get(pair) > 0.5);
+				}
 			}
 		}
-
+		
+		// STEP 4: Clean up
+		this.lp = null;
+		this.baseEdges = null;
+		
 		return result;
 	}
 

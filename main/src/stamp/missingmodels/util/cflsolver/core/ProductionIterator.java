@@ -156,6 +156,10 @@ public abstract class ProductionIterator<Result> {
 	}
 	
 	public Result process(final Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, Filter<Edge> filter) {
+		return process(baseEdgeFilter, baseEdgeFilter, initialEdgeFilter, graph, filter);
+	}
+	
+	public Result process(final Filter<EdgeStruct> weightedEdgeFilter, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, Filter<Edge> filter) {
 		// STEP 0: Setup
 		this.edges = new HashSet<Edge>();
 		this.worklist = new LinkedList<Edge>();
@@ -164,7 +168,7 @@ public abstract class ProductionIterator<Result> {
 		Graph weightedGraph = graph.transform(new EdgeTransformer(graph.getVertices(), graph.getSymbols()) {
 			@Override
 			public void process(GraphBuilder gb, EdgeStruct edge) {
-				gb.addOrUpdateEdge(new EdgeStruct(edge.sourceName, edge.sinkName, edge.symbol, edge.field, baseEdgeFilter.filter(edge) ? (short)1 : (short)0));
+				gb.addOrUpdateEdge(new EdgeStruct(edge.sourceName, edge.sinkName, edge.symbol, edge.field, weightedEdgeFilter.filter(edge) ? (short)1 : (short)0));
 			}});
 		Graph graphBar = weightedGraph.transform(new ReachabilitySolver(weightedGraph.getVertices(), this.contextFreeGrammar, filter));
 		
