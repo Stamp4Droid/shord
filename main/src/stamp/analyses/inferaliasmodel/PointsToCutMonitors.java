@@ -6,12 +6,9 @@ import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import stamp.missingmodels.util.cflsolver.core.AbductiveInference;
+import stamp.missingmodels.util.cflsolver.core.AbductiveInferenceProduction;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.AuxProduction;
-import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
-import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Graph;
@@ -80,7 +77,7 @@ public class PointsToCutMonitors {
 		}
 	}
 	
-	private static MultivalueMap<EdgeStruct,Integer> getFrameworkPointsToCuts(Iterable<EdgeStruct> ptEdges) {
+	private static MultivalueMap<EdgeStruct,Integer> getFrameworkPointsToCuts(final Set<EdgeStruct> ptEdges) {
 		// STEP 1: Configuration
 		RelationReader reader = new LimLabelShordRelationReader();
 		RelationManager relations = new PointsToRelationManager();
@@ -92,23 +89,40 @@ public class PointsToCutMonitors {
 		Graph graphBar = new ReachabilitySolver(graph.getVertices(), grammar, filter).transform(graph.getEdgeStructs());
 		
 		// STEP 3: Set up abduction inference
-		final Set<EdgeStruct> ptEdgeSet = new HashSet<EdgeStruct>();
-		for(EdgeStruct ptEdge : ptEdges) {
-			System.out.println("INITIAL EDGE: " + ptEdge);
-			ptEdgeSet.add(ptEdge);
-		}
 		Filter<EdgeStruct> baseEdgeFilter = getBaseEdgeFilter(graphBar.getEdgeStructs(new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Flow"); }}));
 		Filter<EdgeStruct> weightedEdgeFilter = new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return false; }};
-		Filter<EdgeStruct> initialEdgeFilter = new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return ptEdgeSet.contains(edge); }};
+		Filter<EdgeStruct> initialEdgeFilter = new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return ptEdges.contains(edge); }};
 		
 		// STEP 4: Perform abduction
-		return new AbductiveInference(grammar).process(weightedEdgeFilter, baseEdgeFilter, initialEdgeFilter, graph, filter, 1);
+		return new AbductiveInferenceProduction(grammar).process(weightedEdgeFilter, baseEdgeFilter, initialEdgeFilter, graph, filter, 1);
 	}
 	
 	public static void printMonitors(Iterable<EdgeStruct> ptEdges) {
-		MultivalueMap<EdgeStruct,Integer> cutPtEdges = getFrameworkPointsToCuts(ptEdges);
+		// STEP 1: Get cut
+		final Set<EdgeStruct> ptEdgeSet = new HashSet<EdgeStruct>();
+		for(EdgeStruct ptEdge : ptEdges) {
+			System.out.println("INITIAL EDGE: " + ptEdge.toString(true));
+			ptEdgeSet.add(ptEdge);
+		}
+		final MultivalueMap<EdgeStruct,Integer> cutPtEdges = getFrameworkPointsToCuts(ptEdgeSet);
+		System.out.println("CUT SIZE: " + cutPtEdges.keySet().size());
 		for(EdgeStruct cutPtEdge : cutPtEdges.keySet()) {
-			System.out.println("CUT PT EDGE: " + cutPtEdge.toString(true));
+			System.out.println("CUT EDGE: " + cutPtEdge.toString(true));
+		}
+		
+		// STEP 2: Configuration
+		RelationReader reader = new LimLabelShordRelationReader();
+		RelationManager relations = new PointsToRelationManager();
+		ContextFreeGrammarOpt grammar = new PointsToWeightedGrammar().getOpt();
+		
+		// STEP 3: Compute transitive closure
+		Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
+		Filter<Edge> filter = new Filter<Edge>() { public boolean filter(Edge edge) { return !cutPtEdges.keySet().contains(edge.getStruct()); }};
+		Graph graphBar = new ReachabilitySolver(graph.getVertices(), grammar, filter).transform(graph.getEdgeStructs());
+		
+		// STEP 4: Get un-cut edges
+		for(EdgeStruct edge : graphBar.getEdgeStructs(new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return ptEdgeSet.contains(edge); }})) {
+			System.out.println("UNCUT EDGE: " + edge.toString(true));
 		}
 	}
 }

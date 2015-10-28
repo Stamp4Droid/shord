@@ -22,7 +22,7 @@ public class AbductiveInferenceProduction extends ProductionIterator<Map<EdgeStr
 	private Set<Edge> baseEdges;
 
 	public AbductiveInferenceProduction(ContextFreeGrammarOpt contextFreeGrammar) {
-		super(contextFreeGrammar);
+		super(contextFreeGrammar, true);
 	}
 
 	private void setObjective(Set<Edge> baseEdges, Set<Edge> edges) {
@@ -42,6 +42,15 @@ public class AbductiveInferenceProduction extends ProductionIterator<Map<EdgeStr
 	private void setInitialEdges(Set<Edge> initialEdges) {
 		for(Edge edge : initialEdges) {
 			this.lp.addConstraint(ConstraintType.GEQ, 1.0, new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(edge, false), 1.0));
+		}
+	}
+	
+	@Override
+	protected void addProduction(Edge target) {
+		if(this.baseEdges.contains(target)) {
+			this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(target, false), 1.0), new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(target, true), -1.0));
+		} else {
+			this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Pair<Edge,Boolean>>(new Pair<Edge,Boolean>(target, false), 1.0));
 		}
 	}
 

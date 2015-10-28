@@ -18,26 +18,33 @@ import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 
 public abstract class ProductionIterator<Result> {
 	private final ContextFreeGrammarOpt contextFreeGrammar;
-
+	private final boolean processBase;
+	
 	private Set<Edge> baseEdges;
 	private Set<Edge> initialEdges;
 	private HashSet<Edge> edges;
 	private LinkedList<Edge> worklist;
 
-	protected ProductionIterator(ContextFreeGrammarOpt contextFreeGrammar) {
+	protected ProductionIterator(ContextFreeGrammarOpt contextFreeGrammar, boolean processBase) {
 		this.contextFreeGrammar = contextFreeGrammar;
+		this.processBase = processBase;
 	}
 	
+	protected abstract void addProduction(Edge target);
 	protected abstract void addProduction(Edge target, Edge input);
 	protected abstract void addProduction(Edge target, Edge firstIput, Edge secondInput);
 	protected abstract void preprocess(Set<Edge> baseEdges, Set<Edge> initialEdges);
 	protected abstract Result postprocess(Set<Edge> baseEdges, Set<Edge> initialEdges, Set<Edge> edges);
-
+	
 	private void addEdge(Edge edge) {
 		if(!this.edges.contains(edge)) {
 			this.edges.add(edge);
 			this.worklist.add(edge);
 		}
+	}
+	
+	private void addProductionHelper(Edge target) {
+		this.addProduction(target);
 	}
 
 	private void addProductionHelper(Edge target, Edge input) {
@@ -61,16 +68,16 @@ public abstract class ProductionIterator<Result> {
 			if(!target.sink.equals(toCheck)) {
 				continue;
 			}
-			// only add production if input weight is positive
-			if(input.weight == (short)0) {
-				continue;
-			}
 			// only add production if edge data are equal
 			if(Field.produce(unaryProduction.ignoreFields, input.field).field != target.field.field) {
 				continue;
 			}
-			// add edge
-			this.addProductionHelper(target, input);
+			// add production
+			if(input.weight == (short)0) {
+				this.addProductionHelper(target);
+			} else {
+				this.addProductionHelper(target, input);
+			}
 		}
 	}
 
@@ -102,6 +109,8 @@ public abstract class ProductionIterator<Result> {
 					this.addProductionHelper(target, firstInput);
 				} else if(includeSecondInput) {
 					this.addProductionHelper(target, secondInput);
+				} else {
+					this.addProductionHelper(target);
 				}
 			}
 		}
@@ -134,24 +143,34 @@ public abstract class ProductionIterator<Result> {
 					this.addProductionHelper(target, input);
 				} else if(includeAuxInput) {
 					this.addProductionHelper(target, auxInput);
+				} else {
+					this.addProductionHelper(target);
 				}
 			}
 		}
 	}
 
 	private void processEdge(Edge edge) {
-		if(this.baseEdges.contains(edge)) {
+		if(!this.processBase && this.baseEdges.contains(edge)) {
 			return;
 		}
-
+		
+		boolean hasProduction = false;
 		for(UnaryProduction unaryProduction : this.contextFreeGrammar.unaryProductionsByTarget[edge.symbol.id]) {
+			hasProduction = true;
 			this.processProduction(unaryProduction, edge);
 		}
 		for(BinaryProduction binaryProduction : this.contextFreeGrammar.binaryProductionsByTarget[edge.symbol.id]) {
+			hasProduction = true;
 			this.processProduction(binaryProduction, edge);
 		}
 		for(AuxProduction auxProduction : this.contextFreeGrammar.auxProductionsByTarget[edge.symbol.id]) {
+			hasProduction = true;
 			this.processProduction(auxProduction, edge);
+		}
+		
+		if(!hasProduction) {
+			this.addProduction(edge);
 		}
 	}
 	

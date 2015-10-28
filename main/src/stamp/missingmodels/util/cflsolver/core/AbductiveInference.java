@@ -20,7 +20,7 @@ public class AbductiveInference extends ProductionIterator<Map<EdgeStruct,Boolea
 	private LinearProgram<Edge> lp;
 
 	public AbductiveInference(ContextFreeGrammarOpt contextFreeGrammar) {
-		super(contextFreeGrammar);
+		super(contextFreeGrammar, false);
 	}
 
 	private void setObjective(Set<Edge> baseEdges, Set<Edge> edges) {
@@ -42,6 +42,9 @@ public class AbductiveInference extends ProductionIterator<Map<EdgeStruct,Boolea
 			this.lp.addConstraint(ConstraintType.GEQ, 1.0, new Coefficient<Edge>(edge, 1.0));
 		}
 	}
+	
+	@Override
+	protected void addProduction(Edge target) {}
 
 	@Override
 	protected void addProduction(Edge target, Edge input) {
