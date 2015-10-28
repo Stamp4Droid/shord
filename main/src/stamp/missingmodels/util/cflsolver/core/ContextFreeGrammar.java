@@ -53,8 +53,9 @@ public class ContextFreeGrammar {
 		public final boolean isSecondInputBackwards;
 		public final boolean ignoreFields;
 		public final boolean ignoreContexts;
+		public final short weight;
 
-		public BinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+		public BinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
 			this.target = target;
 			this.firstInput = firstInput;
 			this.secondInput = secondInput;
@@ -62,8 +63,13 @@ public class ContextFreeGrammar {
 			this.isSecondInputBackwards = isSecondInputBackwards;
 			this.ignoreFields = ignoreFields;
 			this.ignoreContexts = ignoreContexts;
+			this.weight = weight;
 		}
 
+		public BinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+			this(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts, (short)0);
+		}
+		
 		public BinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards) {
 			this(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, false, false);
 		}
@@ -87,8 +93,9 @@ public class ContextFreeGrammar {
 		public final boolean isAuxInputBackwards;
 		public final boolean ignoreFields;
 		public final boolean ignoreContexts;
+		public final short weight;
 
-		public AuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+		public AuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
 			this.target = target;
 			this.input = input;
 			this.auxInput = auxInput;
@@ -97,8 +104,13 @@ public class ContextFreeGrammar {
 			this.isAuxInputBackwards = isAuxInputBackwards;
 			this.ignoreFields = ignoreFields;
 			this.ignoreContexts = ignoreContexts;
+			this.weight = weight;
 		}
 
+		public AuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+			this(target, input, auxInput, isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts, (short)0);
+		}
+		
 		public AuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards) {
 			this(target, input, auxInput, isAuxInputFirst, isInputBackwards, isAuxInputBackwards, false, false);
 		}
@@ -124,15 +136,21 @@ public class ContextFreeGrammar {
 		public final boolean isInputBackwards;
 		public final boolean ignoreFields;
 		public final boolean ignoreContexts;
+		public final short weight;
 
-		public UnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+		public UnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
 			this.target = target;
 			this.input = input;
 			this.isInputBackwards = isInputBackwards;
 			this.ignoreFields = ignoreFields;
 			this.ignoreContexts = ignoreContexts;
+			this.weight = weight;
 		}
 
+		public UnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+			this(target, input, isInputBackwards, ignoreFields, ignoreContexts, (short)0);
+		}
+		
 		public UnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields) {
 			this(target, input, isInputBackwards, ignoreFields, false);
 		}

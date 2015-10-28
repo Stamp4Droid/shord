@@ -54,7 +54,7 @@ public class ReachabilitySolver implements GraphTransformer {
 		Vertex sink = unaryProduction.isInputBackwards ? input.source : input.sink;
 		Symbol symbol = unaryProduction.target;
 		Field field = Field.produce(unaryProduction.ignoreFields, input.field);
-		this.addEdgeHelper(source, sink, symbol, field, input.weight, input, null);
+		this.addEdgeHelper(source, sink, symbol, field, (short)(input.weight + unaryProduction.weight), input, null);
 	}
 
 	private void addEdge(BinaryProduction binaryProduction, Edge firstInput, Edge secondInput) {
@@ -62,7 +62,7 @@ public class ReachabilitySolver implements GraphTransformer {
 		Vertex sink = binaryProduction.isSecondInputBackwards ? secondInput.source : secondInput.sink;
 		Symbol symbol = binaryProduction.target;
 		Field field = Field.produce(binaryProduction.ignoreFields, firstInput.field, secondInput.field);
-		this.addEdgeHelper(source, sink, symbol, field, (short)(firstInput.weight + secondInput.weight), firstInput, secondInput);						
+		this.addEdgeHelper(source, sink, symbol, field, (short)(firstInput.weight + secondInput.weight + binaryProduction.weight), firstInput, secondInput);						
 	}
 
 	private void addEdge(AuxProduction auxProduction, Edge input, Edge auxInput) {
@@ -70,7 +70,7 @@ public class ReachabilitySolver implements GraphTransformer {
 		Vertex sink = auxProduction.isInputBackwards ? input.source : input.sink;
 		Symbol symbol = auxProduction.target;
 		Field field = Field.produce(auxProduction.ignoreFields, input.field, auxInput.field);
-		this.addEdgeHelper(source, sink, symbol, field, (short)(input.weight + auxInput.weight), input, auxInput);
+		this.addEdgeHelper(source, sink, symbol, field, (short)(input.weight + auxInput.weight + auxProduction.weight), input, auxInput);
 	}
 	
 	@Override
