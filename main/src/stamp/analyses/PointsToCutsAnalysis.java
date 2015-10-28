@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
-import stamp.analyses.inferaliasmodel.MonitorMapUtils;
+import stamp.analyses.inferaliasmodel.PointsToCutMonitors;
 import stamp.missingmodels.util.cflsolver.core.AbductiveInference;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.core.Edge;
@@ -137,15 +137,8 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 				break;
 			}
 			
-			// Print the monitors
-			Set<String> vertices = new HashSet<String>();
-			for(EdgeStruct ptEdge : results.keySet()) {
-				System.out.println("CUT EDGE: " + ptEdge.toString(true));
-				vertices.add(ptEdge.sourceName);
-				vertices.add(ptEdge.sinkName);
-			}
-			System.out.println();
-			MonitorMapUtils.printMonitorMap(vertices);
+			// STEP 4d: Get monitors
+			PointsToCutMonitors.printMonitors(results.keySet());
 		}
 	}
 	

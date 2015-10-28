@@ -317,62 +317,70 @@ public class ContextFreeGrammar {
 	}
 
 	public void addUnaryProduction(String target, String input) {
-		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), false, false, false);
+		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), false, false, false, (short)0);
 	}
 
 	public void addUnaryProduction(String target, String input, boolean isInputBackwards) {
-		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, false, false);
+		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, false, false, (short)0);
 	}
 
 	public void addUnaryProduction(String target, String input, boolean isInputBackwards, boolean ignoreFields) {
-		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, ignoreFields, false);
+		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, ignoreFields, false, (short)0);
 	}
 
 	public void addUnaryProduction(String target, String input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, ignoreFields, ignoreContexts);
+		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, ignoreFields, ignoreContexts, (short)0);
+	}
+
+	public void addUnaryProduction(String target, String input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
+		this.addUnaryProduction(this.getSymbol(target), this.getSymbol(input), isInputBackwards, ignoreFields, ignoreContexts, weight);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput) {
-		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), false, false, false, false);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), false, false, false, false, (short)0);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean ignoreFields) {
-		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), false, false, ignoreFields, false);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), false, false, ignoreFields, false, (short)0);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards) {
-		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, false, false);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, false, false, (short)0);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields) {
-		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, ignoreFields, false);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, ignoreFields, false, (short)0);
 	}
 
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts);
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts, (short)0);
+	}
+
+	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
+		this.addBinaryProduction(this.getSymbol(target), this.getSymbol(firstInput), this.getSymbol(secondInput), isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts, weight);
 	}
 
 	public void addProduction(String target, String[] inputs) {
-		this.addProduction(target, inputs, new boolean[inputs.length], false, false);
+		this.addProduction(target, inputs, new boolean[inputs.length], false, false, (short)0);
 	}
 
 	public void addProduction(String target, String[] inputs, boolean ignoreFields) {
-		this.addProduction(target, inputs, new boolean[inputs.length], ignoreFields, false);
+		this.addProduction(target, inputs, new boolean[inputs.length], ignoreFields, false, (short)0);
 	}
 
 	public void addProduction(String target, String[] inputs, boolean[] isInputBackwards) {
-		this.addProduction(target, inputs, isInputBackwards, false, false);
+		this.addProduction(target, inputs, isInputBackwards, false, false, (short)0);
 	}
 
 	public void addProduction(String target, String[] inputs, boolean ignoreFields, boolean ignoreContexts) {
-		this.addProduction(target, inputs, new boolean[inputs.length], ignoreFields, ignoreContexts);
+		this.addProduction(target, inputs, new boolean[inputs.length], ignoreFields, ignoreContexts, (short)0);
 	}
 
 	public void addProduction(String target, String[] inputs, boolean[] isInputBackwards, boolean ignoreFields) {
-		this.addProduction(target, inputs, isInputBackwards, ignoreFields, false);
+		this.addProduction(target, inputs, isInputBackwards, ignoreFields, false, (short)0);
 	}
 
-	public void addProduction(String target, String[] inputs, boolean[] isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+	public void addProduction(String target, String[] inputs, boolean[] isInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
 		if(inputs.length <= 2 || inputs.length != isInputBackwards.length) {
 			throw new RuntimeException("Invalid production");
 		}
@@ -389,49 +397,53 @@ public class ContextFreeGrammar {
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst) {
-		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, false, false, false, false);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, false, false, false, false, (short)0);
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst, boolean ignoreFields) {
-		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, false, false, ignoreFields, false);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, false, false, ignoreFields, false, (short)0);
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards) {
-		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, false, false);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, false, false, (short)0);
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields) {
-		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, false);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, false, (short)0);
 	}
 
 	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
-		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts);
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts, (short)0);
 	}
 
-	public void addUnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+	public void addAuxProduction(String target, String input, String auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
+		this.addAuxProduction(this.getSymbol(target), this.getSymbol(input), this.getSymbol(auxInput), isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts, weight);
+	}
+
+	public void addUnaryProduction(Symbol target, Symbol input, boolean isInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
 		if(target.id >= this.symbols.getNumSymbols() || input.id >= this.symbols.getNumSymbols()) {
 			throw new RuntimeException("symbol out of range");
 		}
-		UnaryProduction unaryProduction = new UnaryProduction(target, input, isInputBackwards, ignoreFields);
+		UnaryProduction unaryProduction = new UnaryProduction(target, input, isInputBackwards, ignoreFields, ignoreContexts, weight);
 		this.unaryProductionsByInput.get(input.id).add(unaryProduction);
 		this.unaryProductionsByTarget.get(target.id).add(unaryProduction);
 	}
 
-	public void addBinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+	public void addBinaryProduction(Symbol target, Symbol firstInput, Symbol secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
 		if(target.id >= this.symbols.getNumSymbols() || firstInput.id >= this.symbols.getNumSymbols() || secondInput.id >= this.symbols.getNumSymbols()) {
 			throw new RuntimeException("symbol out of range");
 		}
-		BinaryProduction binaryProduction = new BinaryProduction(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts);
+		BinaryProduction binaryProduction = new BinaryProduction(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, ignoreFields, ignoreContexts, weight);
 		this.binaryProductionsByFirstInput.get(firstInput.id).add(binaryProduction);
 		this.binaryProductionsBySecondInput.get(secondInput.id).add(binaryProduction);
 		this.binaryProductionsByTarget.get(target.id).add(binaryProduction);
 	}
 
-	public void addAuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts) {
+	public void addAuxProduction(Symbol target, Symbol input, Symbol auxInput, boolean isAuxInputFirst, boolean isInputBackwards, boolean isAuxInputBackwards, boolean ignoreFields, boolean ignoreContexts, short weight) {
 		if(target.id >= this.symbols.getNumSymbols() || input.id >= this.symbols.getNumSymbols() || auxInput.id >= this.symbols.getNumSymbols()) {
 			throw new RuntimeException("symbol out of range");
 		}
-		AuxProduction auxProduction = new AuxProduction(target, input, auxInput, isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts);
+		AuxProduction auxProduction = new AuxProduction(target, input, auxInput, isAuxInputFirst, isInputBackwards, isAuxInputBackwards, ignoreFields, ignoreContexts, weight);
 		this.auxProductionsByInput.get(input.id).add(auxProduction);
 		this.auxProductionsByAuxInput.get(auxInput.id).add(auxProduction);
 		this.auxProductionsByTarget.get(target.id).add(auxProduction);
