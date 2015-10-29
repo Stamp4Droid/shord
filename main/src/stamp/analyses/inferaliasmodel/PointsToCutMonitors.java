@@ -90,11 +90,10 @@ public class PointsToCutMonitors {
 		
 		// STEP 3: Set up abduction inference
 		Filter<EdgeStruct> baseEdgeFilter = getBaseEdgeFilter(graphBar.getEdgeStructs(new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Flow"); }}));
-		Filter<EdgeStruct> weightedEdgeFilter = new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return false; }};
 		Filter<EdgeStruct> initialEdgeFilter = new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return ptEdges.contains(edge); }};
 		
 		// STEP 4: Perform abduction
-		return new AbductiveInferenceProduction(grammar).process(weightedEdgeFilter, baseEdgeFilter, initialEdgeFilter, graph, filter, 1);
+		return new AbductiveInferenceProduction(grammar).process(baseEdgeFilter, initialEdgeFilter, graph, filter, 1);
 	}
 	
 	public static void printMonitors(Iterable<EdgeStruct> ptEdges) {

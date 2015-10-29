@@ -22,7 +22,7 @@ public class AbductiveInferenceProduction extends ProductionIterator<Map<EdgeStr
 	private Set<Edge> baseEdges;
 
 	public AbductiveInferenceProduction(ContextFreeGrammarOpt contextFreeGrammar) {
-		super(contextFreeGrammar, true);
+		super(contextFreeGrammar);
 	}
 
 	private void setObjective(Set<Edge> baseEdges, Set<Edge> edges) {
@@ -108,17 +108,13 @@ public class AbductiveInferenceProduction extends ProductionIterator<Map<EdgeStr
 		
 		return result;
 	}
-
-	public MultivalueMap<EdgeStruct,Integer> process(Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, Filter<Edge> filter, int numCuts) {
-		return this.process(baseEdgeFilter, baseEdgeFilter, initialEdgeFilter, graph, filter, numCuts);
-	}
 	
-	public MultivalueMap<EdgeStruct,Integer> process(Filter<EdgeStruct> weightedEdgeFilter, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, Filter<Edge> filter, int numCuts) {
+	public MultivalueMap<EdgeStruct,Integer> process(Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, Filter<Edge> filter, int numCuts) {
 		Filter<EdgeStruct> baseEdgeFilterCur = baseEdgeFilter;
 		MultivalueMap<EdgeStruct,Integer> allResults = new MultivalueMap<EdgeStruct,Integer>();
 		for(int i=0; i<numCuts; i++) {
 			// STEP 1: Run the abductive inference algorithm
-			final Map<EdgeStruct,Boolean> result = this.process(weightedEdgeFilter, baseEdgeFilterCur, initialEdgeFilter, graph, filter);
+			final Map<EdgeStruct,Boolean> result = this.process(baseEdgeFilterCur, initialEdgeFilter, graph, filter);
 			for(EdgeStruct edge : result.keySet()) {
 				if(result.get(edge)) {
 					allResults.add(edge, i);

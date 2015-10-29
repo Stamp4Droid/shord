@@ -10,24 +10,18 @@ import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGra
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Edge.Field;
-import stamp.missingmodels.util.cflsolver.core.Graph.EdgeTransformer;
-import stamp.missingmodels.util.cflsolver.core.Graph.GraphBuilder;
-import stamp.missingmodels.util.cflsolver.core.Graph.TransformFilter;
-import stamp.missingmodels.util.cflsolver.core.Util.AndFilter;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 
 public abstract class ProductionIterator<Result> {
 	private final ContextFreeGrammarOpt contextFreeGrammar;
-	private final boolean processBase;
 	
 	private Set<Edge> baseEdges;
 	private Set<Edge> initialEdges;
 	private HashSet<Edge> edges;
 	private LinkedList<Edge> worklist;
 
-	protected ProductionIterator(ContextFreeGrammarOpt contextFreeGrammar, boolean processBase) {
+	protected ProductionIterator(ContextFreeGrammarOpt contextFreeGrammar) {
 		this.contextFreeGrammar = contextFreeGrammar;
-		this.processBase = processBase;
 	}
 	
 	protected abstract void addProduction(Edge target);
@@ -46,7 +40,7 @@ public abstract class ProductionIterator<Result> {
 	private void addProductionHelper(Edge target) {
 		this.addProduction(target);
 	}
-
+	
 	private void addProductionHelper(Edge target, Edge input) {
 		this.addProduction(target, input);
 		this.addEdge(input);
@@ -68,15 +62,17 @@ public abstract class ProductionIterator<Result> {
 			if(!target.sink.equals(toCheck)) {
 				continue;
 			}
+			// only add production for inputs with positive weight
+			boolean includeInput = input.weight > (short)0;
 			// only add production if edge data are equal
 			if(Field.produce(unaryProduction.ignoreFields, input.field).field != target.field.field) {
 				continue;
 			}
-			// add production
-			if(input.weight == (short)0) {
-				this.addProductionHelper(target);
-			} else {
+			// add edge
+			if(includeInput) {
 				this.addProductionHelper(target, input);
+			} else {
+				this.addProductionHelper(target);
 			}
 		}
 	}
@@ -151,67 +147,50 @@ public abstract class ProductionIterator<Result> {
 	}
 
 	private void processEdge(Edge edge) {
-		if(!this.processBase && this.baseEdges.contains(edge)) {
-			return;
-		}
-		
-		boolean hasProduction = false;
 		for(UnaryProduction unaryProduction : this.contextFreeGrammar.unaryProductionsByTarget[edge.symbol.id]) {
-			hasProduction = true;
 			this.processProduction(unaryProduction, edge);
 		}
 		for(BinaryProduction binaryProduction : this.contextFreeGrammar.binaryProductionsByTarget[edge.symbol.id]) {
-			hasProduction = true;
 			this.processProduction(binaryProduction, edge);
 		}
 		for(AuxProduction auxProduction : this.contextFreeGrammar.auxProductionsByTarget[edge.symbol.id]) {
-			hasProduction = true;
 			this.processProduction(auxProduction, edge);
 		}
-		
-		if(!hasProduction) {
-			this.addProduction(edge);
-		}
 	}
 	
-	public Result process(final Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, Filter<Edge> filter) {
-		return process(baseEdgeFilter, baseEdgeFilter, initialEdgeFilter, graph, filter);
-	}
-	
-	public Result process(final Filter<EdgeStruct> weightedEdgeFilter, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, Filter<Edge> filter) {
+	public Result process(final Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Graph graph, final Filter<Edge> filter) {
 		// STEP 0: Setup
 		this.edges = new HashSet<Edge>();
 		this.worklist = new LinkedList<Edge>();
-
-		// STEP 1: Compute transitive closure
-		Graph weightedGraph = graph.transform(new EdgeTransformer(graph.getVertices(), graph.getSymbols()) {
-			@Override
-			public void process(GraphBuilder gb, EdgeStruct edge) {
-				gb.addOrUpdateEdge(new EdgeStruct(edge.sourceName, edge.sinkName, edge.symbol, edge.field, weightedEdgeFilter.filter(edge) ? (short)1 : (short)0));
-			}});
-		Graph graphBar = weightedGraph.transform(new ReachabilitySolver(weightedGraph.getVertices(), this.contextFreeGrammar, filter));
 		
-		// STEP 2: Get base and initial edges
+		// STEP 1: Compute filtered transitive closure
+		Graph graphBarFiltered = graph.transform(new ReachabilitySolver(graph.getVertices(), this.contextFreeGrammar, new Filter<Edge>() { public boolean filter(Edge edge) { return filter.filter(edge) && !baseEdgeFilter.filter(edge.getStruct()); }}));
+		
+		// STEP 2: Compute transitive closure
+		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), this.contextFreeGrammar, filter));
+		
+		// STEP 3: Add weights to unfiltered edges
+		Set<EdgeStruct> filteredEdges = new HashSet<EdgeStruct>();
+		for(EdgeStruct edge : graphBarFiltered.getEdgeStructs()) {
+			filteredEdges.add(edge);
+		}
+		for(Edge edge : graph.getEdges()) {
+			edge.weight = (short)(filteredEdges.contains(edge.getStruct()) ? 0 : 1);
+		}
+		
+		// STEP 3: Get base and initial edges
+		this.initialEdges = new HashSet<Edge>();
 		this.baseEdges = new HashSet<Edge>();
-		for(Edge edge : graphBar.getEdges(new TransformFilter<Edge,EdgeStruct>(baseEdgeFilter) {
-			@Override
-			public EdgeStruct transform(Edge x) {
-				return x.getStruct(); }})) {
-			this.baseEdges.add(edge);
+		for(Edge edge : graphBar.getEdges()) {
+			EdgeStruct edgeStruct = edge.getStruct();
+			if(edgeStruct.weight > (short)0 && initialEdgeFilter.filter(edgeStruct)) {
+				this.initialEdges.add(edge);
+			}
+			if(baseEdgeFilter.filter(edgeStruct)) {
+				this.baseEdges.add(edge);
+			}
 		}
 		System.out.println("Num base edges: " + this.baseEdges.size());
-		Filter<EdgeStruct> initialEdgeFilterWeighted = new AndFilter<EdgeStruct>(initialEdgeFilter, new Filter<EdgeStruct>() {
-			@Override
-			public boolean filter(EdgeStruct edge) {
-				return edge.weight > (short)0;
-			}});
-		this.initialEdges = new HashSet<Edge>();
-		for(Edge edge : graphBar.getEdges(new TransformFilter<Edge,EdgeStruct>(initialEdgeFilterWeighted) {
-			@Override
-			public EdgeStruct transform(Edge x) {
-				return x.getStruct(); }})) {
-			this.initialEdges.add(edge);
-		}
 		System.out.println("Num initial edges: " + this.initialEdges.size());
 		
 		// STEP 3: Perform any preprocessing needed (base edges and initial edges are finalized here)
