@@ -174,7 +174,7 @@ public abstract class ProductionIterator<Result> {
 		for(EdgeStruct edge : graphBarFiltered.getEdgeStructs()) {
 			filteredEdges.add(edge);
 		}
-		for(Edge edge : graph.getEdges()) {
+		for(Edge edge : graphBar.getEdges()) {
 			edge.weight = (short)(filteredEdges.contains(edge.getStruct()) ? 0 : 1);
 		}
 		

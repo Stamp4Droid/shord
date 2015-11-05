@@ -1,32 +1,45 @@
 package shord.program;
 
-import soot.*;
-import soot.options.Options;
-import soot.util.Chain;
-import soot.util.ArrayNumberer;
-import soot.jimple.NewExpr;
-import soot.jimple.Stmt;
-import soot.jimple.NewExpr;
-import soot.jimple.AssignStmt;
-import soot.jimple.InvokeStmt;
-import soot.jimple.ThrowStmt;
-import soot.jimple.IdentityStmt;
-import soot.jimple.toolkits.callgraph.ReachableMethods;
-import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
-import soot.jimple.toolkits.callgraph.CallGraphBuilder;
-import soot.tagkit.Tag;
-import soot.toolkits.scalar.LocalSplitter;
-import soot.dexpler.DalvikThrowAnalysis;
-import soot.util.NumberedSet;
-
-import java.util.jar.JarFile;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.jar.JarEntry;
-import java.util.*;
-import java.io.*;
+import java.util.jar.JarFile;
 
 import shord.analyses.ContainerTag;
-
+import shord.analyses.CtxtsObjAnalysis;
+import soot.CompilationDeathException;
+import soot.G;
+import soot.Immediate;
+import soot.Local;
+import soot.PackManager;
+import soot.PatchingChain;
+import soot.Scene;
+import soot.SootClass;
+import soot.SootMethod;
+import soot.Transform;
+import soot.Type;
+import soot.Unit;
+import soot.Value;
+import soot.dexpler.DalvikThrowAnalysis;
+import soot.jimple.AssignStmt;
+import soot.jimple.IdentityStmt;
+import soot.jimple.InvokeStmt;
+import soot.jimple.NewExpr;
+import soot.jimple.Stmt;
+import soot.jimple.ThrowStmt;
+import soot.options.Options;
+import soot.tagkit.Tag;
+import soot.toolkits.scalar.LocalSplitter;
+import soot.util.ArrayNumberer;
+import soot.util.Chain;
+import soot.util.NumberedSet;
 import stamp.app.App;
+import stamp.missingmodels.util.cflsolver.util.IOUtils;
 
 /*
  * @author Saswat Anand
@@ -114,6 +127,18 @@ public class Program
 					localSplitter.transform(meth.retrieveActiveBody());
 				}
 			}
+			
+			
+			
+
+			if(!IOUtils.relationFileExists("Flow", "graph")) {
+				CtxtsObjAnalysis.K = 2;				
+			} else {
+				CtxtsObjAnalysis.K = 1;
+			}
+			
+			
+			
 
         } catch (Exception e) {
 			throw new Error(e);
