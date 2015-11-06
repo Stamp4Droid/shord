@@ -119,8 +119,9 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		public MonitorWriter(PrintWriter writer) {
 			this.writer = writer;
 		}
-		public void write(Monitor monitor) {
-			this.writer.println(monitor.getRecord(this.eventId++));
+		public int write(Monitor monitor) {
+			this.writer.println(monitor.getRecord(this.eventId));
+			return this.eventId++;
 		}
 		public void writeAll(Iterable<Monitor> monitors) {
 			for(Monitor monitor : monitors) {
@@ -181,7 +182,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-		MonitorMapUtils.printMonitorMap();
+		//MonitorMapUtils.printMonitors(MonitorMapUtils.getMonitors());
 		write();
 	}
 	
@@ -197,16 +198,17 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 		List<Monitor> monitors = new ArrayList<Monitor>();
 		
 		if(method == null) {
-			System.out.println("NULL METHOD: " + method + " ## " + stmt);
+			monitors.add(new ErrorMonitor("NULL METHOD: " + method + " ## " + stmt));
 			return monitors;
 		}
 		
 		if(stmt == null) {
-			System.out.println("NULL STMT: " + method + " ## " + stmt);
+			monitors.add(new ErrorMonitor("NULL STMT: " + method + " ## " + stmt));
 			return monitors;
 		}
 		
 		if(!(stmt instanceof AssignStmt)) {
+			monitors.add(new ErrorMonitor("NOT ASSIGN: " + stmt));
 			return monitors;
 		}
 		
@@ -235,9 +237,7 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 					monitors.add(new ErrorMonitor("bytecode offset unavailable: " + method.getSignature()));
 				}
 			}
-		}
-		
-		if(rightOp instanceof AnyNewExpr) {
+		} else if(rightOp instanceof AnyNewExpr) {
 			monitors.add(new ErrorMonitor("UNHANDLED: array allocation sites"));
 		}
 		

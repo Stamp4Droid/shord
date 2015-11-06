@@ -360,19 +360,52 @@ public class MonitorMapUtils {
 	}
 	
 	private static MonitorMap monitorMap = null;
-	public static MonitorMap getMonitorMap() {
+	private static MonitorMap getMonitorMap() {
 		if(monitorMap == null) {
 			monitorMap = new MonitorMap();
 		}
 		return monitorMap;
 	}
 	
-	public static void printMonitorMap() {
-		MonitorMap monitorMap = getMonitorMap();
-		printMonitorMap(monitorMap.varToMonitor.keySet(), monitorMap.allocToMonitor.keySet());
+	public static MultivalueMap<String,Monitor> getMonitorMapForVertices(Iterable<String> vertices) {
+		DomV domV = (DomV)ClassicProject.g().getTrgt("V");
+		DomH domH = (DomH)ClassicProject.g().getTrgt("H");
+		MonitorMap map = getMonitorMap();
+		MultivalueMap<String,Monitor> monitors = new MultivalueMap<String,Monitor>();
+		for(String vertex : vertices) {
+			if(vertex.startsWith("V")) {
+				VarNode var = domV.get(Integer.parseInt(vertex.substring(1)));
+				for(Monitor monitor : map.varToMonitor.get(var)) {
+					monitors.add(vertex, monitor);
+				}
+			} else if(vertex.startsWith("H")) {
+				AllocNode alloc = domH.get(Integer.parseInt(vertex.substring(1)));
+				for(Monitor monitor : map.allocToMonitor.get(alloc)) {
+					monitors.add(vertex, monitor);
+				}
+			} else {
+				throw new RuntimeException("Unrecognized vertex: " + vertex);
+			}
+		}
+		return monitors;
 	}
 	
-	public static void printMonitorMap(Iterable<String> vertices) {
+	//
+	// METHODS BELOW THIS LINE ARE NO LONGER USED
+	//
+	
+	private static Iterable<Monitor> getMonitors() {
+		MonitorMap monitorMap = getMonitorMap();
+		return getMonitors(monitorMap.varToMonitor.keySet(), monitorMap.allocToMonitor.keySet());
+	}
+	
+	private static void printMonitors(Iterable<Monitor> monitors) {
+		for(Monitor monitor : monitors) {
+			System.out.println(monitor.getRecord(3192));
+		}
+	}
+	
+	private static Iterable<Monitor> getMonitors(Iterable<String> vertices) {
 		DomV domV = (DomV)ClassicProject.g().getTrgt("V");
 		DomH domH = (DomH)ClassicProject.g().getTrgt("H");
 		List<VarNode> vars = new ArrayList<VarNode>();
@@ -386,25 +419,34 @@ public class MonitorMapUtils {
 				throw new RuntimeException("Unrecognized vertex: " + vertex);
 			}
 		}
-		printMonitorMap(vars, allocs);
+		return getMonitors(vars, allocs);
 	}
 	
-	public static void printMonitorMap(Iterable<VarNode> vars, Iterable<AllocNode> allocs) {
+	private static Iterable<Monitor> getMonitors(Iterable<VarNode> vars, Iterable<AllocNode> allocs) {
 		MonitorMap monitorMap = getMonitorMap();
+		List<Monitor> monitors = new ArrayList<Monitor>();
 		for(VarNode var : vars) {
+			/*
 			System.out.println("VAR: " + var);
 			for(Monitor monitor : monitorMap.varToMonitor.get(var)) {
 				System.out.println(monitor.getRecord(3192));
 			}
 			System.out.println();
+			*/
+			monitors.addAll(monitorMap.varToMonitor.get(var));
 		}
 		
 		for(AllocNode alloc : allocs) {
+			/*
 			System.out.println("ALLOC: " + alloc);
 			for(Monitor monitor : monitorMap.allocToMonitor.get(alloc)) {
 				System.out.println(monitor.getRecord(3192));
 			}
 			System.out.println();
+			*/
+			monitors.addAll(monitorMap.allocToMonitor.get(alloc));
 		}
+		
+		return monitors;
 	}
 }

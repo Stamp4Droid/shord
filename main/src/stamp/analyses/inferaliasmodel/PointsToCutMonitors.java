@@ -45,7 +45,7 @@ public class PointsToCutMonitors {
 		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Flow") && !libraryVertices.contains(edge.sourceName) && !libraryVertices.contains(edge.sinkName); }};
 	}
 	
-	private static MultivalueMap<EdgeStruct,Integer> getFrameworkPointsToCuts(final Set<EdgeStruct> ptEdges) {
+	private static MultivalueMap<EdgeStruct,Integer> getFrameworkPointsToCutHelper(final Set<EdgeStruct> ptEdges) {
 		// STEP 1: Configuration
 		RelationReader reader = new LimLabelShordRelationReader();
 		RelationManager relations = new PointsToRelationManager();
@@ -86,17 +86,19 @@ public class PointsToCutMonitors {
 		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return !edge.symbol.equals("Flow") || edges.contains(edge); }};
 	}
 	
-	public static void printMonitors(Iterable<EdgeStruct> ptEdges) {
+	public static Set<EdgeStruct> getFrameworkPointsToCut(Iterable<EdgeStruct> ptEdges) {
 		// STEP 1: Get cut
 		final Set<EdgeStruct> ptEdgeSet = new HashSet<EdgeStruct>();
 		for(EdgeStruct ptEdge : ptEdges) {
 			System.out.println("INITIAL EDGE: " + ptEdge.toString(true));
 			ptEdgeSet.add(ptEdge);
 		}
-		final MultivalueMap<EdgeStruct,Integer> cutPtEdges = getFrameworkPointsToCuts(ptEdgeSet);
+		final MultivalueMap<EdgeStruct,Integer> cutPtEdges = getFrameworkPointsToCutHelper(ptEdgeSet);
 		System.out.println("CUT SIZE: " + cutPtEdges.keySet().size());
+		Set<EdgeStruct> cutPtEdgeSet = new HashSet<EdgeStruct>();
 		for(EdgeStruct cutPtEdge : cutPtEdges.keySet()) {
 			System.out.println("CUT EDGE: " + cutPtEdge.toString(true));
+			cutPtEdgeSet.add(cutPtEdge);
 		}
 		
 		// STEP 2: Configuration
@@ -111,7 +113,9 @@ public class PointsToCutMonitors {
 		
 		// STEP 4: Get un-cut edges
 		for(EdgeStruct edge : graphBar.getEdgeStructs(new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return ptEdgeSet.contains(edge); }})) {
-			System.out.println("UNCUT EDGE: " + edge.toString(true));
+			throw new RuntimeException("UNCUT EDGE: " + edge.toString(true));
 		}
+		
+		return cutPtEdgeSet;
 	}
 }

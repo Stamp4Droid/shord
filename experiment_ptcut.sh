@@ -1,0 +1,19 @@
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/a1d58b52b3f4b87116f346010d56214f.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/54975175131d44e08fc08811a318c440.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/iNJ-CwWkvI.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/ca7b267e7898662ca5b74e55660413af.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/kQm-LOfpwpJ.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/game-androng-andmj.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/72.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/a924b2d70619bc3812072fe54d249546.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/84df50142e9adacbbd66f8ecea8429d68d6eb39e9f70ed1767074320d21d4104.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/05ed925905586ae6f51adee19a16ee7a.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/fhvm-vnnej.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/com-noisysounds.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/bfd6ed165aea1e2088ac55fe6c2e7a9774a44f28885b9555897f5325b30b4ebc.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/com-gp-tiltmazes.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/gingermaster.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/4140ab0395fafad2b8642154e02615b08b1abea53a5e378784ed9d6775278c7b.apk
+
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/mycalendarmobile_1d147f9e3e8dab05ddf1ed85b9939c13b62d1a007f58a5a2ff8cc7e73754bf27.apk
+./stamp analyze ~/Documents/Files/stamp/stamptest/SymcApks/pmsz_android_zol.apk

@@ -1,9 +1,15 @@
 package stamp.analyses;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
+import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.Monitor;
+import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.MonitorWriter;
+import stamp.analyses.inferaliasmodel.MonitorMapUtils;
 import stamp.analyses.inferaliasmodel.PointsToCutMonitors;
 import stamp.missingmodels.util.cflsolver.core.AbductiveInference;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
@@ -138,8 +144,38 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 				break;
 			}
 			
-			// STEP 4d: Get monitors
-			PointsToCutMonitors.printMonitors(results.keySet());
+			// STEP 4d: Get full points-to cut
+			Set<EdgeStruct> cutEdges = PointsToCutMonitors.getFrameworkPointsToCut(results.keySet());
+			
+			// STEP 4e: Get monitors
+			Set<String> cutVertices = new HashSet<String>();
+			for(EdgeStruct edge : cutEdges) {
+				cutVertices.add(edge.sourceName);
+				cutVertices.add(edge.sinkName);
+			}
+			MultivalueMap<String,Monitor> monitors = MonitorMapUtils.getMonitorMapForVertices(cutVertices);
+			
+			// STEP 4f: Print monitors
+			try {
+				File outDir = new File(System.getProperty("stamp.out.dir"), "inferaliasmodel");
+				outDir.mkdirs();
+				MonitorWriter monitorWriter = new MonitorWriter(new PrintWriter(new File(outDir, "instrinfo.txt")));
+				PrintWriter eventWriter = new PrintWriter(new File(outDir, "event.txt"));
+				for(String vertex : monitors.keySet()) {
+					for(Monitor monitor : monitors.get(vertex)) {
+						int id = monitorWriter.write(monitor);
+						eventWriter.println(vertex + " " + id);
+					}
+				}
+				monitorWriter.close();
+				eventWriter.close();
+			} catch(IOException e) {
+				throw new RuntimeException(e);
+			}
+			
+			if(i == -1) {
+				break;
+			}
 		}
 	}
 	
