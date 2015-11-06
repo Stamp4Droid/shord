@@ -71,7 +71,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		// statistics
 		Graph gbar = new ReachabilitySolver(g.getVertices(), grammar, f).transform(g.getEdgeStructs());
 		IOUtils.printGraphStatistics(gbar);
-		IOUtils.printGraphEdges(gbar, "Src2Sink", true);
+		//IOUtils.printGraphEdges(gbar, "Src2Sink", true);
 		
 		// STEP 3: Abductive inference
 		return new AbductiveInference(grammar).process(baseEdgeFilter, initialEdgeFilter, g, f, 2);
@@ -101,7 +101,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		Filter<EdgeStruct> seedInitialEdgeFilter = getInitialEdgeFilter();
 		Set<EdgeStruct> srcSinkEdges = new HashSet<EdgeStruct>();
 		for(EdgeStruct srcSinkEdge : IOUtils.readGraphEdgesFromFile("Src2Sink", "graph")) {
-			System.out.println("Ignoring source-sink edge: " + srcSinkEdge.toString());
+			//System.out.println("Ignoring source-sink edge: " + srcSinkEdge.toString());
 			srcSinkEdges.add(srcSinkEdge);
 		}
 		Filter<EdgeStruct> initialEdgeFilter = new AndFilter<EdgeStruct>(seedInitialEdgeFilter, new NotFilter<EdgeStruct>(getSetEdgeStructFilter(srcSinkEdges)));
@@ -111,7 +111,8 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 			System.out.println("Iteration: " + i);
 			
 			// STEP 4a: Construct base edge filter
-			Filter<EdgeStruct> baseEdgeFilter = new AndFilter<EdgeStruct>(seedBaseEdgeFilter, new NotFilter<EdgeStruct>(getSetEdgeStructFilter(i == -1 ? ptEdges : baseEdges)));
+			Filter<EdgeStruct> baseEdgeFilter = new AndFilter<EdgeStruct>(seedBaseEdgeFilter, new NotFilter<EdgeStruct>(PointsToCutMonitors.getUncuttablePointsToEdgeFilter()), new NotFilter<EdgeStruct>(getSetEdgeStructFilter(i == -1 ? ptEdges : baseEdges)));
+			
 			// STEP 4b: Run abduction
 			MultivalueMap<EdgeStruct,Integer> results = runCutIteration(baseEdgeFilter, initialEdgeFilter);
 			IOUtils.printAbductionResult(results, true, false);

@@ -1,13 +1,11 @@
 package stamp.analyses.inferaliasmodel;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.cflsolver.core.AbductiveInferenceProduction;
-import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
@@ -42,58 +40,50 @@ public class PointsToCutMonitors {
 		return libraryVertices;
 	}
 	
-	private static Filter<EdgeStruct> getBaseEdgeFilter(Iterable<EdgeStruct> ptEdges) {
-		Set<String> libraryVertices = getLibraryVertices();
-		final Set<EdgeStruct> basePtEdges = new HashSet<EdgeStruct>();
-		for(EdgeStruct ptEdge : ptEdges) {
-			if(!ptEdge.symbol.equals("Flow")) {
-				throw new RuntimeException("Invalid points-to edge!");
-			}
-			if(!libraryVertices.contains(ptEdge.sourceName) && !libraryVertices.contains(ptEdge.sinkName)) {
-				basePtEdges.add(ptEdge);
-			}
-		}
-		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return basePtEdges.contains(edge); }};
-	}
-	
-	private static class PointsToWeightedGrammar extends ContextFreeGrammar {
-		private PointsToWeightedGrammar() {
-			PointsToGrammar grammar = new PointsToGrammar();
-			for(List<UnaryProduction> unaryProductions : grammar.unaryProductionsByTarget) {
-				for(UnaryProduction unaryProduction : unaryProductions) {
-					this.addUnaryProduction(unaryProduction.target.symbol, unaryProduction.input.symbol, unaryProduction.isInputBackwards, unaryProduction.ignoreFields, unaryProduction.ignoreContexts, (short)1);
-				}
-			}
-			for(List<BinaryProduction> binaryProductions : grammar.binaryProductionsByTarget) {
-				for(BinaryProduction binaryProduction : binaryProductions) {
-					this.addBinaryProduction(binaryProduction.target.symbol, binaryProduction.firstInput.symbol, binaryProduction.secondInput.symbol, binaryProduction.isFirstInputBackwards, binaryProduction.isSecondInputBackwards, binaryProduction.ignoreFields, binaryProduction.ignoreContexts, (short)1);
-				}
-			}
-			for(List<AuxProduction> auxProductions : grammar.auxProductionsByTarget) {
-				for(AuxProduction auxProduction : auxProductions) {
-					this.addAuxProduction(auxProduction.target.symbol, auxProduction.input.symbol, auxProduction.auxInput.symbol, auxProduction.isAuxInputFirst, auxProduction.isInputBackwards, auxProduction.isAuxInputBackwards, auxProduction.ignoreFields, auxProduction.ignoreContexts, (short)1);
-				}
-			}
-		}
+	private static Filter<EdgeStruct> getBaseEdgeFilter() {
+		final Set<String> libraryVertices = getLibraryVertices();
+		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Flow") && !libraryVertices.contains(edge.sourceName) && !libraryVertices.contains(edge.sinkName); }};
 	}
 	
 	private static MultivalueMap<EdgeStruct,Integer> getFrameworkPointsToCuts(final Set<EdgeStruct> ptEdges) {
 		// STEP 1: Configuration
 		RelationReader reader = new LimLabelShordRelationReader();
 		RelationManager relations = new PointsToRelationManager();
-		ContextFreeGrammarOpt grammar = new PointsToWeightedGrammar().getOpt();
+		ContextFreeGrammarOpt grammar = new PointsToGrammar().getOpt();
 		
-		// STEP 2: Compute transitive closure
+		// STEP 2: Set up abduction inference
+		Filter<EdgeStruct> baseEdgeFilter = getBaseEdgeFilter();
+		Filter<EdgeStruct> initialEdgeFilter = new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return ptEdges.contains(edge); }};
 		Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
 		Filter<Edge> filter = new Filter<Edge>() { public boolean filter(Edge edge) { return true; }};
-		Graph graphBar = new ReachabilitySolver(graph.getVertices(), grammar, filter).transform(graph.getEdgeStructs());
 		
-		// STEP 3: Set up abduction inference
-		Filter<EdgeStruct> baseEdgeFilter = getBaseEdgeFilter(graphBar.getEdgeStructs(new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Flow"); }}));
-		Filter<EdgeStruct> initialEdgeFilter = new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return ptEdges.contains(edge); }};
-		
-		// STEP 4: Perform abduction
+		// STEP 3: Perform abduction
 		return new AbductiveInferenceProduction(grammar).process(baseEdgeFilter, initialEdgeFilter, graph, filter, 1);
+	}
+	
+	private static Set<EdgeStruct> getUncuttablePointsToEdges() {
+		// STEP 1: Configuration
+		RelationReader reader = new LimLabelShordRelationReader();
+		RelationManager relations = new PointsToRelationManager();
+		ContextFreeGrammarOpt grammar = new PointsToGrammar().getOpt();
+		
+		// STEP 2: Set up graph
+		final Filter<EdgeStruct> baseEdgeFilter = getBaseEdgeFilter();
+		Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
+		Filter<Edge> filter = new Filter<Edge>() { public boolean filter(Edge edge) { return !baseEdgeFilter.filter(edge.getStruct()); }};
+		
+		// STEP 3: Compute transitive closure
+		Graph graphBar = new ReachabilitySolver(graph.getVertices(), grammar, filter).transform(graph.getEdgeStructs());
+		Set<EdgeStruct> ptEdges = new HashSet<EdgeStruct>();
+		for(EdgeStruct edge : graphBar.getEdgeStructs(new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Flow"); }})) {
+			ptEdges.add(edge);
+		}
+		return ptEdges;
+	}
+	
+	public static Filter<EdgeStruct> getUncuttablePointsToEdgeFilter() {
+		final Set<EdgeStruct> edges = getUncuttablePointsToEdges();
+		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return !edge.symbol.equals("Flow") || edges.contains(edge); }};
 	}
 	
 	public static void printMonitors(Iterable<EdgeStruct> ptEdges) {
@@ -112,7 +102,7 @@ public class PointsToCutMonitors {
 		// STEP 2: Configuration
 		RelationReader reader = new LimLabelShordRelationReader();
 		RelationManager relations = new PointsToRelationManager();
-		ContextFreeGrammarOpt grammar = new PointsToWeightedGrammar().getOpt();
+		ContextFreeGrammarOpt grammar = new PointsToGrammar().getOpt();
 		
 		// STEP 3: Compute transitive closure
 		Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
