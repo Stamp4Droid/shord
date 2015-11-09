@@ -48,22 +48,22 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		return new Filter<T>() { public boolean filter(T t) { return true; }};
 	}
 	
-	public static Set<EdgeStruct> getUncuttableInitialEdges(Graph graph, ContextFreeGrammarOpt grammar, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter) {
+	public static Set<EdgeStruct> getUncuttableInitialEdges(Graph graph, ContextFreeGrammarOpt grammar, final Filter<Edge> filter, final Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter) {
 		// STEP 1: Compute transitive closure
-		Graph graphBar = new ReachabilitySolver(graph.getVertices(), grammar, new NotFilter<Edge>(getEdgeFilter(baseEdgeFilter))).transform(graph.getEdgeStructs());
+		Graph graphBar = new ReachabilitySolver(graph.getVertices(), grammar, new AndFilter<Edge>(filter, getEdgeFilter(new NotFilter<EdgeStruct>(baseEdgeFilter)))).transform(graph.getEdgeStructs());
 		
 		// STEP 2: Get edges
 		final Set<EdgeStruct> uncuttableInitialEdges = new HashSet<EdgeStruct>();
 		for(EdgeStruct edge : graphBar.getEdgeStructs(initialEdgeFilter)) {
-			//System.out.println("UNCUTTABLE EDGE: " + edge.toString(true));
+			System.out.println("UNCUTTABLE EDGE: " + edge.toString(true));
 			uncuttableInitialEdges.add(edge);
 		}
 		
 		return uncuttableInitialEdges;
 	}
 	
-	public static Filter<EdgeStruct> getNewInitialEdgeFilter(Graph graph, ContextFreeGrammarOpt grammar, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter) {
-		return new AndFilter<EdgeStruct>(initialEdgeFilter, new NotFilter<EdgeStruct>(getSetFilter(getUncuttableInitialEdges(graph, grammar, baseEdgeFilter, initialEdgeFilter))));
+	public static Filter<EdgeStruct> getNewInitialEdgeFilter(Graph graph, ContextFreeGrammarOpt grammar, Filter<Edge> filter, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter) {
+		return new AndFilter<EdgeStruct>(initialEdgeFilter, new NotFilter<EdgeStruct>(getSetFilter(getUncuttableInitialEdges(graph, grammar, filter, baseEdgeFilter, initialEdgeFilter))));
 	}
 	
 	public static Set<EdgeStruct> getUncutInitialEdges(Graph graph, ContextFreeGrammarOpt grammar, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> cut) {
@@ -80,7 +80,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		return uncutInitialEdges;
 	}
 	
-	public static void checkCut(Graph graph, ContextFreeGrammarOpt grammar, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> cut) {
+	public static void checkCut(Graph graph, ContextFreeGrammarOpt grammar, Filter<Edge> filter, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> cut) {
 		Set<EdgeStruct> uncutInitialEdges = getUncutInitialEdges(graph, grammar, baseEdgeFilter, initialEdgeFilter, cut);
 		if(!uncutInitialEdges.isEmpty()) {
 			throw new RuntimeException("UNCUT INITIAL EDGE: " + uncutInitialEdges.iterator().next().toString(true));
@@ -89,26 +89,26 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	
 	public static Set<EdgeStruct> getCompositionalCut(Graph graph1, Graph graph2, Filter<Edge> filter1, Filter<Edge> filter2, ContextFreeGrammarOpt grammar1, ContextFreeGrammarOpt grammar2, Filter<EdgeStruct> baseEdgeFilter1, Filter<EdgeStruct> baseEdgeFilter2, Filter<EdgeStruct> initialEdgeFilter) {
 		// STEP 1: Get new base edge filter
-		Filter<EdgeStruct> newBaseEdgeFilter2 = getNewInitialEdgeFilter(graph1, grammar1, baseEdgeFilter1, baseEdgeFilter2);
-		Filter<EdgeStruct> newInitialEdgeFilter = getNewInitialEdgeFilter(graph2, grammar2, newBaseEdgeFilter2, initialEdgeFilter);
+		Filter<EdgeStruct> newBaseEdgeFilter2 = getNewInitialEdgeFilter(graph1, grammar1, filter1, baseEdgeFilter1, baseEdgeFilter2);
+		Filter<EdgeStruct> newInitialEdgeFilter = getNewInitialEdgeFilter(graph2, grammar2, filter2, newBaseEdgeFilter2, initialEdgeFilter);
 		
 		// STEP 2: First cut
 		MultivalueMap<EdgeStruct,Integer> first = new AbductiveInference(grammar2).process(newBaseEdgeFilter2, newInitialEdgeFilter, graph2, filter2, 1);
 		IOUtils.printAbductionResult(first, true, false);
-		checkCut(graph2, grammar2, newBaseEdgeFilter2, newInitialEdgeFilter, first.keySet());
+		checkCut(graph2, grammar2, filter2, newBaseEdgeFilter2, newInitialEdgeFilter, first.keySet());
 		
 		// STEP 3: Second cut
 		MultivalueMap<EdgeStruct,Integer> second = new AbductiveInference(grammar1).process(baseEdgeFilter1, getSetFilter(first.keySet()), graph1, filter1, 1);
 		IOUtils.printAbductionResult(second, true, false);
-		checkCut(graph1, grammar1, baseEdgeFilter1, getSetFilter(first.keySet()), second.keySet());
+		checkCut(graph1, grammar1, filter1, baseEdgeFilter1, getSetFilter(first.keySet()), second.keySet());
 		
 		return second.keySet();
 	}
 	
 	public static Set<EdgeStruct> getIterativeCut(Graph graph1, Graph graph2, Filter<Edge> filter1, Filter<Edge> filter2, ContextFreeGrammarOpt grammar1, ContextFreeGrammarOpt grammar2, Filter<EdgeStruct> baseEdgeFilter1, Filter<EdgeStruct> baseEdgeFilter2, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> initUncuttableBaseEdges, Set<EdgeStruct> allUncuttableBaseEdges, int maxIters) {
 		// Get uncuttable initial edges
-		Filter<EdgeStruct> newBaseEdgeFilter2 = getNewInitialEdgeFilter(graph1, grammar1, new AndFilter<EdgeStruct>(baseEdgeFilter1, new NotFilter<EdgeStruct>(getSetFilter(allUncuttableBaseEdges))), baseEdgeFilter2);
-		Filter<EdgeStruct> newInitialEdgeFilter = getNewInitialEdgeFilter(graph2, grammar2, newBaseEdgeFilter2, initialEdgeFilter);
+		Filter<EdgeStruct> newBaseEdgeFilter2 = getNewInitialEdgeFilter(graph1, grammar1, filter1, new AndFilter<EdgeStruct>(baseEdgeFilter1, new NotFilter<EdgeStruct>(getSetFilter(allUncuttableBaseEdges))), baseEdgeFilter2);
+		Filter<EdgeStruct> newInitialEdgeFilter = getNewInitialEdgeFilter(graph2, grammar2, filter2, newBaseEdgeFilter2, initialEdgeFilter);
 		
 		// Iteratively compute cuts
 		System.out.println("NUM INIT UNCUTTABLE BASE EDGES: " + initUncuttableBaseEdges.size());
@@ -148,6 +148,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	private static Set<String> libraryVertices = null;
+	private static Set<String> libraryRetVertices = null;
 	private static Filter<EdgeStruct> getLibraryVertexFilter() {
 		if(libraryVertices == null) {
 			libraryVertices = new HashSet<String>();
@@ -162,10 +163,18 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 			for(int[] alloc : relFrameworkAlloc.getAryNIntTuples()) {
 				libraryVertices.add("H" + alloc[0]);
 			}
+			libraryRetVertices = new HashSet<String>();
+			ProgramRel relFrameworkRetVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkRetVar");
+			relFrameworkRetVar.load();
+			for(int[] var : relFrameworkRetVar.getAryNIntTuples()) {
+				libraryRetVertices.add("V" + var[0]);
+			}
 			relFrameworkAlloc.close();
 		}
 		final Set<String> curLibraryVertices = libraryVertices;
-		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return !curLibraryVertices.contains(edge.sourceName) && !curLibraryVertices.contains(edge.sinkName); }};
+		final Set<String> curLibraryRetVertices = libraryRetVertices;
+		//return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return (curLibraryRetVertices.contains(edge.sinkName) && curLibraryVertices.contains(edge.sourceName)) || (!curLibraryVertices.contains(edge.sourceName) && !curLibraryVertices.contains(edge.sinkName)); }};
+		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return !curLibraryVertices.contains(edge.sinkName); }};
 	}
 	
 	private static Set<EdgeStruct> uncuttablePointsToEdges = null;
@@ -269,7 +278,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		
 		// STEP 2: Get graph and closure
 		Graph g = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
-		Filter<Edge> f = new Filter<Edge>() { public boolean filter(Edge edge) { return true; }};
+		Filter<Edge> f = getTrueFilter();
 		Graph gbar = new ReachabilitySolver(g.getVertices(), grammar, f).transform(g.getEdgeStructs());
 		
 		// STEP 3: Print points-to and source-sink edges
