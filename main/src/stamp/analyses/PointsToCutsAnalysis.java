@@ -259,7 +259,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	private static void runCut() {
-		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), 10)), false);
+		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), 10)), true);
 	}
 	
 	private static void runDumpEdges() {
