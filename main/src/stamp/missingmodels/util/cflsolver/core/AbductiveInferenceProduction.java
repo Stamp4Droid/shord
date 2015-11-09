@@ -24,7 +24,7 @@ public class AbductiveInferenceProduction extends ProductionIterator<Map<EdgeStr
 	public AbductiveInferenceProduction(ContextFreeGrammarOpt contextFreeGrammar) {
 		super(contextFreeGrammar);
 	}
-
+	
 	private void setObjective(Set<Edge> baseEdges, Set<Edge> edges) {
 		Collection<Coefficient<Pair<Edge,Boolean>>> coefficients = new HashSet<Coefficient<Pair<Edge,Boolean>>>();
 		for(Edge edge : baseEdges) {

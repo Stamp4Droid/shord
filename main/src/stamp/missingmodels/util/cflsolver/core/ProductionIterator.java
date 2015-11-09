@@ -52,6 +52,10 @@ public abstract class ProductionIterator<Result> {
 		this.addEdge(firstInput);
 		this.addEdge(secondInput);
 	}
+	
+	private void processInput(Edge target) {
+		this.addProductionHelper(target);
+	}
 
 	private void processProduction(UnaryProduction unaryProduction, Edge target) {
 		// iterate over potential inputs
@@ -147,14 +151,21 @@ public abstract class ProductionIterator<Result> {
 	}
 
 	private void processEdge(Edge edge) {
+		boolean hasProduction = false;
 		for(UnaryProduction unaryProduction : this.contextFreeGrammar.unaryProductionsByTarget[edge.symbol.id]) {
+			hasProduction = true;
 			this.processProduction(unaryProduction, edge);
 		}
 		for(BinaryProduction binaryProduction : this.contextFreeGrammar.binaryProductionsByTarget[edge.symbol.id]) {
+			hasProduction = true;
 			this.processProduction(binaryProduction, edge);
 		}
 		for(AuxProduction auxProduction : this.contextFreeGrammar.auxProductionsByTarget[edge.symbol.id]) {
+			hasProduction = true;
 			this.processProduction(auxProduction, edge);
+		}
+		if(!hasProduction) {
+			this.processInput(edge);
 		}
 	}
 	

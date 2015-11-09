@@ -12,7 +12,7 @@ import shord.project.analyses.ProgramRel;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.Monitor;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.MonitorWriter;
 import stamp.analyses.inferaliasmodel.MonitorMapUtils;
-import stamp.missingmodels.util.cflsolver.core.AbductiveInference;
+import stamp.missingmodels.util.cflsolver.core.AbductiveInferenceProduction;
 import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGrammarOpt;
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
@@ -25,6 +25,7 @@ import stamp.missingmodels.util.cflsolver.core.Util.AndFilter;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.NotFilter;
+import stamp.missingmodels.util.cflsolver.core.Util.OrFilter;
 import stamp.missingmodels.util.cflsolver.grammars.PointsToGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.reader.LimLabelShordRelationReader;
@@ -55,7 +56,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		// STEP 2: Get edges
 		final Set<EdgeStruct> uncuttableInitialEdges = new HashSet<EdgeStruct>();
 		for(EdgeStruct edge : graphBar.getEdgeStructs(initialEdgeFilter)) {
-			System.out.println("UNCUTTABLE EDGE: " + edge.toString(true));
+			//System.out.println("UNCUTTABLE EDGE: " + edge.toString(true));
 			uncuttableInitialEdges.add(edge);
 		}
 		
@@ -93,12 +94,12 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		Filter<EdgeStruct> newInitialEdgeFilter = getNewInitialEdgeFilter(graph2, grammar2, filter2, newBaseEdgeFilter2, initialEdgeFilter);
 		
 		// STEP 2: First cut
-		MultivalueMap<EdgeStruct,Integer> first = new AbductiveInference(grammar2).process(newBaseEdgeFilter2, newInitialEdgeFilter, graph2, filter2, 1);
+		MultivalueMap<EdgeStruct,Integer> first = new AbductiveInferenceProduction(grammar2).process(newBaseEdgeFilter2, newInitialEdgeFilter, graph2, filter2, 1);
 		IOUtils.printAbductionResult(first, true, false);
 		checkCut(graph2, grammar2, filter2, newBaseEdgeFilter2, newInitialEdgeFilter, first.keySet());
 		
 		// STEP 3: Second cut
-		MultivalueMap<EdgeStruct,Integer> second = new AbductiveInference(grammar1).process(baseEdgeFilter1, getSetFilter(first.keySet()), graph1, filter1, 1);
+		MultivalueMap<EdgeStruct,Integer> second = new AbductiveInferenceProduction(grammar1).process(baseEdgeFilter1, getSetFilter(first.keySet()), graph1, filter1, 1);
 		IOUtils.printAbductionResult(second, true, false);
 		checkCut(graph1, grammar1, filter1, baseEdgeFilter1, getSetFilter(first.keySet()), second.keySet());
 		
@@ -148,9 +149,24 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	private static Set<String> libraryVertices = null;
+	private static Set<String> libraryParamVertices = null;
 	private static Set<String> libraryRetVertices = null;
 	private static Filter<EdgeStruct> getLibraryVertexFilter() {
 		if(libraryVertices == null) {
+			libraryParamVertices = new HashSet<String>();
+			ProgramRel relFrameworkParamVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkParamVar");
+			relFrameworkParamVar.load();
+			for(int[] var : relFrameworkParamVar.getAryNIntTuples()) {
+				libraryParamVertices.add("V" + var[0]);
+			}
+			relFrameworkParamVar.close();
+			libraryRetVertices = new HashSet<String>();
+			ProgramRel relFrameworkRetVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkRetVar");
+			relFrameworkRetVar.load();
+			for(int[] var : relFrameworkRetVar.getAryNIntTuples()) {
+				libraryRetVertices.add("V" + var[0]);
+			}
+			relFrameworkRetVar.close();
 			libraryVertices = new HashSet<String>();
 			ProgramRel relFrameworkVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkVar");
 			relFrameworkVar.load();
@@ -163,18 +179,22 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 			for(int[] alloc : relFrameworkAlloc.getAryNIntTuples()) {
 				libraryVertices.add("H" + alloc[0]);
 			}
-			libraryRetVertices = new HashSet<String>();
-			ProgramRel relFrameworkRetVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkRetVar");
-			relFrameworkRetVar.load();
-			for(int[] var : relFrameworkRetVar.getAryNIntTuples()) {
-				libraryRetVertices.add("V" + var[0]);
-			}
-			relFrameworkAlloc.close();
 		}
 		final Set<String> curLibraryVertices = libraryVertices;
 		final Set<String> curLibraryRetVertices = libraryRetVertices;
-		//return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return (curLibraryRetVertices.contains(edge.sinkName) && curLibraryVertices.contains(edge.sourceName)) || (!curLibraryVertices.contains(edge.sourceName) && !curLibraryVertices.contains(edge.sinkName)); }};
-		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return !curLibraryVertices.contains(edge.sinkName); }};
+		final Set<String> curLibraryParamVertices = libraryParamVertices;
+		Filter<EdgeStruct> visibleFilter = new Filter<EdgeStruct>() {
+			public boolean filter(EdgeStruct edge) {
+				return (!curLibraryVertices.contains(edge.sourceName) || curLibraryParamVertices.contains(edge.sourceName) || curLibraryRetVertices.contains(edge.sourceName))
+						&& (!curLibraryVertices.contains(edge.sinkName) || curLibraryParamVertices.contains(edge.sinkName) || curLibraryRetVertices.contains(edge.sinkName));
+			}
+		};
+		Filter<EdgeStruct> allocFilter = new Filter<EdgeStruct>() {
+			public boolean filter(EdgeStruct edge) {
+				return curLibraryVertices.contains(edge.sourceName) && curLibraryRetVertices.contains(edge.sinkName);
+			}
+		};
+		return new OrFilter<EdgeStruct>(visibleFilter, allocFilter);
 	}
 	
 	private static Set<EdgeStruct> uncuttablePointsToEdges = null;
@@ -267,7 +287,8 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	private static void runCut() {
-		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), 10)), true);
+		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), 0)), true);
+		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), 10)), false);
 	}
 	
 	private static void runDumpEdges() {

@@ -40,8 +40,10 @@ ptd(v:V,h:H) input
 ###################
 
 FrameworkVar(v:V) output
-FrameworkRetVar(v:V) output
 FrameworkObj(h:H) output
+
+FrameworkParamVar(v:V) output
+FrameworkRetVar(v:V) output
 
 ActiveSource(v:V,o:C) output
 ActiveSink(v:V,u:V) output
@@ -56,7 +58,8 @@ MonitorSink(v:V,u:V) output
 FrameworkVar(v) :- MV(m,v), Framework(m).
 FrameworkObj(h) :- Alloc(v,h), FrameworkVar(v).
 
-FrameworkRetVar(v) :- return(v,u,_), !FrameworkVar(v), FrameworkVar(u).
+FrameworkParamVar(v) :- param(v,u,_), !FrameworkVar(u), FrameworkVar(v).
+FrameworkRetVar(u) :- return(v,u,_), !FrameworkVar(v), FrameworkVar(u).
 
 # activate anything loaded out of framework variables
 ActiveSource(v,o) :- FrameworkObj(h), Alloc(v,h), CH(o,h).

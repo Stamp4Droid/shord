@@ -141,7 +141,7 @@ public class Util {
 	
 	public static class OrFilter<T> implements Filter<T> {
 		private final List<Filter<T>> filters = new ArrayList<Filter<T>>();
-		@SuppressWarnings("unchecked")
+		@SafeVarargs
 		public OrFilter(Filter<T> ... filters) {
 			for(Filter<T> filter : filters) {
 				this.filters.add(filter);
@@ -186,6 +186,7 @@ public class Util {
 		}
 	}
 	
+	@SafeVarargs
 	public static <T> Set<T> union(Set<T> ... sets) {
 		Set<T> union = new HashSet<T>();
 		for(Set<T> set : sets) {
