@@ -16,5 +16,7 @@ public class PointsToRelationManager extends RelationManager {
 
 		this.add(new IndexRelation("StoreStat", "V", 1, "F", 0, "storeStat"));
 		this.add(new IndexRelation("LoadStat", "F", 1, "V", 0, "loadStat"));
+		
+		this.add(new IndexRelation("StoreArr", "V", 1, "V", 0, "storeArr"));
 	}
 }

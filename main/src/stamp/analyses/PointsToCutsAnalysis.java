@@ -29,7 +29,6 @@ import stamp.missingmodels.util.cflsolver.grammars.PointsToGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.reader.LimLabelShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.PointsToFilterRelationManager;
-import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.TypeFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.PointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPrecomputedPointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
@@ -94,14 +93,14 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		Filter<EdgeStruct> newInitialEdgeFilter = getNewInitialEdgeFilter(graph2, grammar2, newBaseEdgeFilter2, initialEdgeFilter);
 		
 		// STEP 2: First cut
-		MultivalueMap<EdgeStruct,Integer> first = new AbductiveInference(grammar2).process(newBaseEdgeFilter2, newInitialEdgeFilter, graph2, PointsToCutsAnalysis.<Edge>getTrueFilter(), 1);
+		MultivalueMap<EdgeStruct,Integer> first = new AbductiveInference(grammar2).process(newBaseEdgeFilter2, newInitialEdgeFilter, graph2, filter2, 1);
 		IOUtils.printAbductionResult(first, true, false);
 		checkCut(graph2, grammar2, newBaseEdgeFilter2, newInitialEdgeFilter, first.keySet());
 		
 		// STEP 3: Second cut
-		MultivalueMap<EdgeStruct,Integer> second = new AbductiveInference(grammar1).process(baseEdgeFilter1, getSetFilter(first.keySet()), graph1, PointsToCutsAnalysis.<Edge>getTrueFilter(), 1);
+		MultivalueMap<EdgeStruct,Integer> second = new AbductiveInference(grammar1).process(baseEdgeFilter1, getSetFilter(first.keySet()), graph1, filter1, 1);
 		IOUtils.printAbductionResult(second, true, false);
-		checkCut(graph1, grammar1, baseEdgeFilter1, getSetFilter(first.keySet()), first.keySet());
+		checkCut(graph1, grammar1, baseEdgeFilter1, getSetFilter(first.keySet()), second.keySet());
 		
 		return second.keySet();
 	}
