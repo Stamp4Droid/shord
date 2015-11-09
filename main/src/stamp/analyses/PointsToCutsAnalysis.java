@@ -17,6 +17,7 @@ import stamp.missingmodels.util.cflsolver.core.ContextFreeGrammar.ContextFreeGra
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.Graph.GraphEdgeFilter;
 import stamp.missingmodels.util.cflsolver.core.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
@@ -27,6 +28,8 @@ import stamp.missingmodels.util.cflsolver.core.Util.NotFilter;
 import stamp.missingmodels.util.cflsolver.grammars.PointsToGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.reader.LimLabelShordRelationReader;
+import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.PointsToFilterRelationManager;
+import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.TypeFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.PointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPrecomputedPointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
@@ -75,11 +78,10 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	public static Set<EdgeStruct> getCompositionalCut(Graph graph1, Graph graph2, ContextFreeGrammarOpt grammar1, ContextFreeGrammarOpt grammar2, Filter<EdgeStruct> baseEdgeFilter1, Filter<EdgeStruct> baseEdgeFilter2, Filter<EdgeStruct> initialEdgeFilter) {
+	public static Set<EdgeStruct> getCompositionalCut(Graph graph1, Graph graph2, Filter<Edge> filter1, Filter<Edge> filter2, ContextFreeGrammarOpt grammar1, ContextFreeGrammarOpt grammar2, Filter<EdgeStruct> baseEdgeFilter1, Filter<EdgeStruct> baseEdgeFilter2, Filter<EdgeStruct> initialEdgeFilter) {
 		// STEP 1: Get new base edge filter
 		Filter<EdgeStruct> newBaseEdgeFilter2 = getNewInitialEdgeFilter(graph1, grammar1, baseEdgeFilter1, baseEdgeFilter2);
 		Filter<EdgeStruct> newInitialEdgeFilter = getNewInitialEdgeFilter(graph2, grammar2, newBaseEdgeFilter2, initialEdgeFilter);
-		//Filter<EdgeStruct> newInitialEdgeFilter = initialEdgeFilter;
 		
 		// STEP 2: First cut
 		MultivalueMap<EdgeStruct,Integer> first = new AbductiveInference(grammar2).process(newBaseEdgeFilter2, newInitialEdgeFilter, graph2, getTrueFilter(), 1);
@@ -94,7 +96,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		return second.keySet();
 	}
 	
-	public static Set<EdgeStruct> getIterativeCut(Graph graph1, Graph graph2, ContextFreeGrammarOpt grammar1, ContextFreeGrammarOpt grammar2, Filter<EdgeStruct> baseEdgeFilter1, Filter<EdgeStruct> baseEdgeFilter2, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> uncuttableBaseEdges, int maxIters) {
+	public static Set<EdgeStruct> getIterativeCut(Graph graph1, Graph graph2, Filter<Edge> filter1, Filter<Edge> filter2, ContextFreeGrammarOpt grammar1, ContextFreeGrammarOpt grammar2, Filter<EdgeStruct> baseEdgeFilter1, Filter<EdgeStruct> baseEdgeFilter2, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> uncuttableBaseEdges, int maxIters) {
 		// Iteratively compute cuts
 		Set<EdgeStruct> curUncuttableBaseEdges = new HashSet<EdgeStruct>();
 		System.out.println("NUM FINAL UNCUTTABLE BASE EDGES: " + uncuttableBaseEdges.size());
@@ -102,7 +104,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 			System.out.println("ITERATION: " + i);
 			
 			// STEP 1: Run abduction
-			Set<EdgeStruct> cut = getCompositionalCut(graph1, graph2, grammar1, grammar2, new AndFilter<EdgeStruct>(baseEdgeFilter1, new NotFilter<EdgeStruct>(getSetFilter(curUncuttableBaseEdges))), baseEdgeFilter2, initialEdgeFilter);
+			Set<EdgeStruct> cut = getCompositionalCut(graph1, graph2, filter1, filter2, grammar1, grammar2, new AndFilter<EdgeStruct>(baseEdgeFilter1, new NotFilter<EdgeStruct>(getSetFilter(curUncuttableBaseEdges))), baseEdgeFilter2, initialEdgeFilter);
 			
 			// STEP 2: Return if no cut
 			if(cut.isEmpty()) {
@@ -208,12 +210,14 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		// STEP 2: Get graphs and filters
 		Graph graph1 = Graph.getGraph(grammar1.getSymbols(), reader.readGraph(relations1, grammar1.getSymbols()));
 		Graph graph2 = Graph.getGraph(grammar2.getSymbols(), reader.readGraph(relations2, grammar2.getSymbols()));
+		Filter<Edge> filter1 = new GraphEdgeFilter(graph1.getVertices(), grammar1.getSymbols(), reader.readGraph(new TypeFilterRelationManager(), grammar1.getSymbols()));
+		Filter<Edge> filter2 = getTrueFilter();
 		Filter<EdgeStruct> baseEdgeFilter1 = new AndFilter<EdgeStruct>(getBaseEdgeNameFilter1(), getLibraryVertexFilter(), new NotFilter<EdgeStruct>(getSetFilter(uncuttablePointsToEdges)));
 		Filter<EdgeStruct> baseEdgeFilter2 = new AndFilter<EdgeStruct>(getBaseEdgeNameFilter2(), new NotFilter<EdgeStruct>(getSetFilter(uncuttablePointsToEdges)));
 		Filter<EdgeStruct> initialEdgeFilter = new AndFilter<EdgeStruct>(getInitialEdgeNameFilter(), new NotFilter<EdgeStruct>(getSetFilter(uncuttableSourceSinkEdges)));
 		
 		// STEP 3: Perform cuts
-		Set<EdgeStruct> cut = getCompositionalCut(graph1, graph2, grammar1, grammar2, baseEdgeFilter1, baseEdgeFilter2, initialEdgeFilter);
+		Set<EdgeStruct> cut = getCompositionalCut(graph1, graph2, filter1, filter2, grammar1, grammar2, baseEdgeFilter1, baseEdgeFilter2, initialEdgeFilter);
 		
 		// STEP 4: Get monitors
 		Set<String> cutVertices = new HashSet<String>();
@@ -235,12 +239,14 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		// STEP 2: Get graphs and filters
 		Graph graph1 = Graph.getGraph(grammar1.getSymbols(), reader.readGraph(relations1, grammar1.getSymbols()));
 		Graph graph2 = Graph.getGraph(grammar2.getSymbols(), reader.readGraph(relations2, grammar2.getSymbols()));
+		Filter<Edge> filter1 = new GraphEdgeFilter(graph1.getVertices(), grammar1.getSymbols(), reader.readGraph(new PointsToFilterRelationManager(), grammar1.getSymbols()));
+		Filter<Edge> filter2 = getTrueFilter();
 		Filter<EdgeStruct> baseEdgeFilter1 = new AndFilter<EdgeStruct>(getBaseEdgeNameFilter1(), getLibraryVertexFilter());
 		Filter<EdgeStruct> baseEdgeFilter2 = new AndFilter<EdgeStruct>(getBaseEdgeNameFilter2());
 		Filter<EdgeStruct> initialEdgeFilter = new AndFilter<EdgeStruct>(getInitialEdgeNameFilter(), new NotFilter<EdgeStruct>(getSetFilter(uncuttableSourceSinkEdges)));
 		
 		// STEP 3: Perform cuts
-		Set<EdgeStruct> cut = getIterativeCut(graph1, graph2, grammar1, grammar2, baseEdgeFilter1, baseEdgeFilter2, initialEdgeFilter, uncuttablePointsToEdges, maxIters);
+		Set<EdgeStruct> cut = getIterativeCut(graph1, graph2, filter1, filter2, grammar1, grammar2, baseEdgeFilter1, baseEdgeFilter2, initialEdgeFilter, uncuttablePointsToEdges, maxIters);
 		
 		// STEP 4: Get monitors
 		Set<String> cutVertices = new HashSet<String>();
@@ -279,8 +285,8 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	private static void runCut() {
-		printMonitors(getPointsToCut(getUncuttablePointsToEdges(), getUncuttableSrc2SinkEdges()), false);
-		printMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), getUncuttableSrc2SinkEdges(), 10), false);
+		//printMonitors(getPointsToCut(getUncuttablePointsToEdges(), getUncuttableSrc2SinkEdges()), false);
+		printMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), getUncuttableSrc2SinkEdges(), 10), true);
 	}
 	
 	private static void runDumpEdges() {

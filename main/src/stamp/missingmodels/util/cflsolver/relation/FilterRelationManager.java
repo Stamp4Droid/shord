@@ -6,6 +6,8 @@ public class FilterRelationManager {
 	public static class PointsToFilterRelationManager extends RelationManager {
 		public PointsToFilterRelationManager() {
 			this.add(new IndexRelation("ptd", "H", 1, "V", 0, "Flow", null, (short)0));
+			this.add(new IndexWithContextRelation("fptd", "H", 2, null, "H", 0, null, "FlowField", 1));
+			this.add(new IndexWithContextRelation("fptArrd", "H", 1, null, "H", 0, null, "FlowFieldArr"));
 			this.add(new IndexRelation("Label2Primd", "L", 0, "U", 1, "Label2Prim", null, (short)0));
 		}
 	}
