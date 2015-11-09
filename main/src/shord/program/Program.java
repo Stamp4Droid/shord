@@ -11,6 +11,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import shord.analyses.ContainerTag;
+import shord.analyses.ContextsAnalysis;
 import shord.analyses.CtxtsObjAnalysis;
 import soot.CompilationDeathException;
 import soot.G;
@@ -132,8 +133,10 @@ public class Program
 			
 
 			if(!IOUtils.relationFileExists("Flow", "graph")) {
+				ContextsAnalysis.K = 2;
 				CtxtsObjAnalysis.K = 2;				
 			} else {
+				ContextsAnalysis.K = 1;
 				CtxtsObjAnalysis.K = 1;
 			}
 			
