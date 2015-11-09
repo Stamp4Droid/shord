@@ -67,14 +67,24 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		return new AndFilter<EdgeStruct>(initialEdgeFilter, new NotFilter<EdgeStruct>(getSetFilter(getUncuttableInitialEdges(graph, grammar, baseEdgeFilter, initialEdgeFilter))));
 	}
 	
-	public static void checkCut(Graph graph, ContextFreeGrammarOpt grammar, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> cut) {
+	public static Set<EdgeStruct> getUncutInitialEdges(Graph graph, ContextFreeGrammarOpt grammar, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> cut) {
 		// STEP 1: Compute transitive closure
 		Filter<Edge> filter = new NotFilter<Edge>(getEdgeFilter(getSetFilter(cut)));
 		Graph graphBar = new ReachabilitySolver(graph.getVertices(), grammar, filter).transform(graph.getEdgeStructs());
 		
 		// STEP 2: Make sure all edges are cut
+		Set<EdgeStruct> uncutInitialEdges = new HashSet<EdgeStruct>();
 		for(EdgeStruct edge : graphBar.getEdgeStructs(initialEdgeFilter)) {
-			throw new RuntimeException("UNCUT EDGE: " + edge.toString(true));
+			uncutInitialEdges.add(edge);
+		}
+		
+		return uncutInitialEdges;
+	}
+	
+	public static void checkCut(Graph graph, ContextFreeGrammarOpt grammar, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> cut) {
+		Set<EdgeStruct> uncutInitialEdges = getUncutInitialEdges(graph, grammar, baseEdgeFilter, initialEdgeFilter, cut);
+		if(!uncutInitialEdges.isEmpty()) {
+			throw new RuntimeException("UNCUT INITIAL EDGE: " + uncutInitialEdges.iterator().next().toString(true));
 		}
 	}
 	
@@ -97,6 +107,10 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	public static Set<EdgeStruct> getIterativeCut(Graph graph1, Graph graph2, Filter<Edge> filter1, Filter<Edge> filter2, ContextFreeGrammarOpt grammar1, ContextFreeGrammarOpt grammar2, Filter<EdgeStruct> baseEdgeFilter1, Filter<EdgeStruct> baseEdgeFilter2, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> initUncuttableBaseEdges, Set<EdgeStruct> allUncuttableBaseEdges, int maxIters) {
+		// Get uncuttable initial edges
+		Filter<EdgeStruct> newBaseEdgeFilter2 = getNewInitialEdgeFilter(graph1, grammar1, new AndFilter<EdgeStruct>(baseEdgeFilter1, new NotFilter<EdgeStruct>(getSetFilter(allUncuttableBaseEdges))), baseEdgeFilter2);
+		Filter<EdgeStruct> newInitialEdgeFilter = getNewInitialEdgeFilter(graph2, grammar2, newBaseEdgeFilter2, initialEdgeFilter);
+		
 		// Iteratively compute cuts
 		System.out.println("NUM INIT UNCUTTABLE BASE EDGES: " + initUncuttableBaseEdges.size());
 		System.out.println("NUM FINAL UNCUTTABLE BASE EDGES: " + allUncuttableBaseEdges.size());
@@ -105,7 +119,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 			System.out.println("ITERATION: " + i);
 			
 			// STEP 1: Run abduction
-			Set<EdgeStruct> cut = getCompositionalCut(graph1, graph2, filter1, filter2, grammar1, grammar2, new AndFilter<EdgeStruct>(baseEdgeFilter1, new NotFilter<EdgeStruct>(getSetFilter(curUncuttableBaseEdges))), baseEdgeFilter2, initialEdgeFilter);
+			Set<EdgeStruct> cut = getCompositionalCut(graph1, graph2, filter1, filter2, grammar1, grammar2, new AndFilter<EdgeStruct>(baseEdgeFilter1, new NotFilter<EdgeStruct>(getSetFilter(curUncuttableBaseEdges))), baseEdgeFilter2, newInitialEdgeFilter);
 			
 			// STEP 2: Return if no cut
 			if(cut.isEmpty()) {
@@ -172,21 +186,6 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		}
 		return uncuttablePointsToEdges;
 	}
-	
-	private static Set<EdgeStruct> uncuttableSrc2SinkEdges = null;
-	private static Set<EdgeStruct> getUncuttableSrc2SinkEdges() {
-		if(uncuttableSrc2SinkEdges == null) {
-			RelationReader reader = new LimLabelShordRelationReader();
-			RelationManager relations = new TaintPrecomputedPointsToRelationManager();
-			ContextFreeGrammarOpt grammar = new TaintGrammar().getOpt();
-			Graph graph = Graph.getGraph(grammar.getSymbols(), reader.readGraph(relations, grammar.getSymbols()));
-			Filter<EdgeStruct> baseEdgeFilter = new AndFilter<EdgeStruct>(getBaseEdgeNameFilter2(), new NotFilter<EdgeStruct>(getSetFilter(getUncuttablePointsToEdges())));
-			Filter<EdgeStruct> initialEdgeFilter = getInitialEdgeNameFilter();
-			uncuttableSrc2SinkEdges = getUncuttableInitialEdges(graph, grammar, baseEdgeFilter, initialEdgeFilter);
-			System.out.println("NUM UNCUTTABLE SRC2SINK EDGES: " + uncuttableSrc2SinkEdges.size());
-		}
-		return uncuttableSrc2SinkEdges;
-	}
 
 	private static Filter<EdgeStruct> getBaseEdgeNameFilter1() {
 		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Flow"); }};
@@ -200,7 +199,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Src2Sink"); }};
 	}
 	
-	public static Set<EdgeStruct> getIterativePointsToCut(Set<EdgeStruct> uncuttablePointsToEdges, Set<EdgeStruct> uncuttableSourceSinkEdges, int maxIters) {
+	public static Set<EdgeStruct> getIterativePointsToCut(Set<EdgeStruct> uncuttablePointsToEdges, int maxIters) {
 		// STEP 1: Configuration
 		RelationReader reader = new LimLabelShordRelationReader();
 		RelationManager relations1 = new PointsToRelationManager();
@@ -215,7 +214,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		Filter<Edge> filter2 = getTrueFilter();
 		Filter<EdgeStruct> baseEdgeFilter1 = new AndFilter<EdgeStruct>(getBaseEdgeNameFilter1(), getLibraryVertexFilter());
 		Filter<EdgeStruct> baseEdgeFilter2 = new AndFilter<EdgeStruct>(getBaseEdgeNameFilter2());
-		Filter<EdgeStruct> initialEdgeFilter = new AndFilter<EdgeStruct>(getInitialEdgeNameFilter(), new NotFilter<EdgeStruct>(getSetFilter(uncuttableSourceSinkEdges)));
+		Filter<EdgeStruct> initialEdgeFilter = getInitialEdgeNameFilter();
 		
 		// STEP 3: Perform cuts
 		int newMaxIters = maxIters == 0 ? 1 : maxIters;
@@ -260,7 +259,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	private static void runCut() {
-		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), getUncuttableSrc2SinkEdges(), 10)), false);
+		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), 10)), false);
 	}
 	
 	private static void runDumpEdges() {
