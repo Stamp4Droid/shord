@@ -256,7 +256,7 @@ public class IOUtils {
 				System.out.println("ERROR: Multiple cuts for edge " + edgeStruct);
 			}
 			for(int cut : result.get(edgeStruct)) {
-				System.out.println("in cut " + cut + ": " + edgeStruct);
+				System.out.println("in cut " + cut + ": " + edgeStruct.toString(shord));
 				if(shord) {
 					System.out.println("caller: " + ConversionUtils.getMethodSig(edgeStruct.sourceName));
 					System.out.println("callee: " + ConversionUtils.getMethodSig(edgeStruct.sinkName));
