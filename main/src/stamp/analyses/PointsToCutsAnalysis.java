@@ -200,7 +200,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Src2Sink"); }};
 	}
 	
-	public static MultivalueMap<String,Monitor> getIterativePointsToCut(Set<EdgeStruct> uncuttablePointsToEdges, Set<EdgeStruct> uncuttableSourceSinkEdges, int maxIters) {
+	public static Set<EdgeStruct> getIterativePointsToCut(Set<EdgeStruct> uncuttablePointsToEdges, Set<EdgeStruct> uncuttableSourceSinkEdges, int maxIters) {
 		// STEP 1: Configuration
 		RelationReader reader = new LimLabelShordRelationReader();
 		RelationManager relations1 = new PointsToRelationManager();
@@ -220,9 +220,10 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		// STEP 3: Perform cuts
 		int newMaxIters = maxIters == 0 ? 1 : maxIters;
 		Set<EdgeStruct> initUncuttableEdges = maxIters == 0 ? uncuttablePointsToEdges : new HashSet<EdgeStruct>();
-		Set<EdgeStruct> cut = getIterativeCut(graph1, graph2, filter1, filter2, grammar1, grammar2, baseEdgeFilter1, baseEdgeFilter2, initialEdgeFilter, initUncuttableEdges, uncuttablePointsToEdges, newMaxIters);
-		
-		// STEP 4: Get monitors
+		return getIterativeCut(graph1, graph2, filter1, filter2, grammar1, grammar2, baseEdgeFilter1, baseEdgeFilter2, initialEdgeFilter, initUncuttableEdges, uncuttablePointsToEdges, newMaxIters);
+	}
+	
+	public static MultivalueMap<String,Monitor> getMonitors(Set<EdgeStruct> cut) {
 		Set<String> cutVertices = new HashSet<String>();
 		for(EdgeStruct edge : cut) {
 			cutVertices.add(edge.sourceName);
@@ -259,7 +260,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	private static void runCut() {
-		printMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), getUncuttableSrc2SinkEdges(), 10), false);
+		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), getUncuttableSrc2SinkEdges(), 10)), false);
 	}
 	
 	private static void runDumpEdges() {
