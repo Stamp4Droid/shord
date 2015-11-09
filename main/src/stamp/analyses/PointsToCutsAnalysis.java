@@ -25,7 +25,6 @@ import stamp.missingmodels.util.cflsolver.core.Util.AndFilter;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.NotFilter;
-import stamp.missingmodels.util.cflsolver.core.Util.OrFilter;
 import stamp.missingmodels.util.cflsolver.grammars.PointsToGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.reader.LimLabelShordRelationReader;
@@ -149,24 +148,10 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	private static Set<String> libraryVertices = null;
-	private static Set<String> libraryParamVertices = null;
-	private static Set<String> libraryRetVertices = null;
+	private static Set<String> libraryVisibleVertices = null;
 	private static Filter<EdgeStruct> getLibraryVertexFilter() {
 		if(libraryVertices == null) {
-			libraryParamVertices = new HashSet<String>();
-			ProgramRel relFrameworkParamVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkParamVar");
-			relFrameworkParamVar.load();
-			for(int[] var : relFrameworkParamVar.getAryNIntTuples()) {
-				libraryParamVertices.add("V" + var[0]);
-			}
-			relFrameworkParamVar.close();
-			libraryRetVertices = new HashSet<String>();
-			ProgramRel relFrameworkRetVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkRetVar");
-			relFrameworkRetVar.load();
-			for(int[] var : relFrameworkRetVar.getAryNIntTuples()) {
-				libraryRetVertices.add("V" + var[0]);
-			}
-			relFrameworkRetVar.close();
+			// STEP 1: Library vertices
 			libraryVertices = new HashSet<String>();
 			ProgramRel relFrameworkVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkVar");
 			relFrameworkVar.load();
@@ -179,22 +164,36 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 			for(int[] alloc : relFrameworkAlloc.getAryNIntTuples()) {
 				libraryVertices.add("H" + alloc[0]);
 			}
+			
+			// STEP 2: Visible variables
+			libraryVisibleVertices = new HashSet<String>();
+			ProgramRel relFrameworkParamVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkParamVar");
+			relFrameworkParamVar.load();
+			for(int[] var : relFrameworkParamVar.getAryNIntTuples()) {
+				libraryVisibleVertices.add("V" + var[0]);
+			}
+			relFrameworkParamVar.close();
+			ProgramRel relFrameworkRetVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkRetVar");
+			relFrameworkRetVar.load();
+			for(int[] var : relFrameworkRetVar.getAryNIntTuples()) {
+				libraryVisibleVertices.add("V" + var[0]);
+			}
+			relFrameworkRetVar.close();
+			ProgramRel relFrameworkRetObj = (ProgramRel)ClassicProject.g().getTrgt("FrameworkRetObj");
+			relFrameworkRetObj.load();
+			for(int[] alloc : relFrameworkRetObj.getAryNIntTuples()) {
+				libraryVisibleVertices.add("H" + alloc[0]);
+			}
+			relFrameworkRetObj.close();
 		}
 		final Set<String> curLibraryVertices = libraryVertices;
-		final Set<String> curLibraryRetVertices = libraryRetVertices;
-		final Set<String> curLibraryParamVertices = libraryParamVertices;
-		Filter<EdgeStruct> visibleFilter = new Filter<EdgeStruct>() {
+		final Set<String> curLibraryVisibleVertices = libraryVisibleVertices;
+		return new Filter<EdgeStruct>() {
 			public boolean filter(EdgeStruct edge) {
-				return (!curLibraryVertices.contains(edge.sourceName) || curLibraryParamVertices.contains(edge.sourceName) || curLibraryRetVertices.contains(edge.sourceName))
-						&& (!curLibraryVertices.contains(edge.sinkName) || curLibraryParamVertices.contains(edge.sinkName) || curLibraryRetVertices.contains(edge.sinkName));
+				return (!curLibraryVertices.contains(edge.sourceName) || curLibraryVisibleVertices.contains(edge.sourceName))
+						&& (!curLibraryVertices.contains(edge.sinkName) || curLibraryVisibleVertices.contains(edge.sinkName));
 			}
 		};
-		Filter<EdgeStruct> allocFilter = new Filter<EdgeStruct>() {
-			public boolean filter(EdgeStruct edge) {
-				return curLibraryVertices.contains(edge.sourceName) && curLibraryRetVertices.contains(edge.sinkName);
-			}
-		};
-		return new OrFilter<EdgeStruct>(visibleFilter, allocFilter);
 	}
 	
 	private static Set<EdgeStruct> uncuttablePointsToEdges = null;

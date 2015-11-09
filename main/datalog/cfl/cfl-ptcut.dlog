@@ -44,6 +44,7 @@ FrameworkObj(h:H) output
 
 FrameworkParamVar(v:V) output
 FrameworkRetVar(v:V) output
+FrameworkRetObj(h:H) output
 
 ActiveSource(v:V,o:C) output
 ActiveSink(v:V,u:V) output
@@ -60,6 +61,7 @@ FrameworkObj(h) :- Alloc(v,h), FrameworkVar(v).
 
 FrameworkParamVar(v) :- param(v,u,_), !FrameworkVar(u), FrameworkVar(v).
 FrameworkRetVar(u) :- return(v,u,_), !FrameworkVar(v), FrameworkVar(u).
+FrameworkRetObj(h) :- Alloc(v,h), FrameworkRetVar(v).
 
 # activate anything loaded out of framework variables
 ActiveSource(v,o) :- FrameworkObj(h), Alloc(v,h), CH(o,h).
