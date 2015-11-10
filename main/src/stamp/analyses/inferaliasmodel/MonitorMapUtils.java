@@ -186,32 +186,53 @@ public class MonitorMapUtils {
 		return libraryVar;
 	}
 	
-	private static MultivalueMap<AllocNode,VarNode> libraryAllocNodeMap = null;
-	private static MultivalueMap<AllocNode,VarNode> getLibraryAllocNodeMap() {
-		if(libraryAllocNodeMap == null) {
-			libraryAllocNodeMap = new MultivalueMap<AllocNode,VarNode>();
-			ProgramRel relMonitorSource = (ProgramRel)ClassicProject.g().getTrgt("MonitorSource");
-			relMonitorSource.load();
-			for(chord.util.tuple.object.Pair<Object,Object> pair : relMonitorSource.getAry2ValTuples()) {
-				libraryAllocNodeMap.add((AllocNode)pair.val1, (VarNode)pair.val0);
+	private static Set<AllocNode> libraryVisibleAlloc = null;
+	private static Set<AllocNode> getLibraryVisibleAlloc() {
+		if(libraryVisibleAlloc == null) {
+			libraryVisibleAlloc = new HashSet<AllocNode>();
+			ProgramRel relFrameworkRetObj = (ProgramRel)ClassicProject.g().getTrgt("FrameworkRetObj");
+			relFrameworkRetObj.load();
+			for(Object obj : relFrameworkRetObj.getAry1ValTuples()) {
+				libraryVisibleAlloc.add((AllocNode)obj);
 			}
-			relMonitorSource.close();
+			relFrameworkRetObj.close();
 		}
-		return libraryAllocNodeMap;
+		return libraryVisibleAlloc;
 	}
 	
-	private static MultivalueMap<VarNode,VarNode> libraryVarNodeMap = null;
-	private static MultivalueMap<VarNode,VarNode> getLibraryVarNodeMap() {
-		if(libraryVarNodeMap == null) {
-			libraryVarNodeMap = new MultivalueMap<VarNode,VarNode>();
-			ProgramRel relMonitorSink = (ProgramRel)ClassicProject.g().getTrgt("MonitorSink");
-			relMonitorSink.load();
-			for(chord.util.tuple.object.Pair<Object,Object> pair : relMonitorSink.getAry2ValTuples()) {
-				libraryVarNodeMap.add((VarNode)pair.val1, (VarNode)pair.val0);
+	private static Set<VarNode> libraryVisibleVar = null;
+	private static Set<VarNode> getLibraryVisibleVar() {
+		if(libraryVisibleVar == null) {
+			libraryVisibleVar = new HashSet<VarNode>();
+			ProgramRel relFrameworkParamVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkParamVar");
+			relFrameworkParamVar.load();
+			for(Object obj : relFrameworkParamVar.getAry1ValTuples()) {
+				libraryVisibleVar.add((VarNode)obj);
 			}
-			relMonitorSink.close();
+			relFrameworkParamVar.close();
+			libraryVisibleVar = new HashSet<VarNode>();
+			ProgramRel relFrameworkRetVar = (ProgramRel)ClassicProject.g().getTrgt("FrameworkRetVar");
+			relFrameworkRetVar.load();
+			for(Object obj : relFrameworkRetVar.getAry1ValTuples()) {
+				libraryVisibleVar.add((VarNode)obj);
+			}
+			relFrameworkRetVar.close();
 		}
-		return libraryVarNodeMap;
+		return libraryVisibleVar;
+	}
+	
+	private static MultivalueMap<AllocNode,VarNode> libraryVisibleAllocMap = null;
+	private static MultivalueMap<AllocNode,VarNode> getLibraryVisibleAllocMap() {
+		if(libraryVisibleAllocMap == null) {
+			libraryVisibleAllocMap = new MultivalueMap<AllocNode,VarNode>();
+			ProgramRel relFrameworkRetObjMap = (ProgramRel)ClassicProject.g().getTrgt("FrameworkRetObjMap");
+			relFrameworkRetObjMap.load();
+			for(chord.util.tuple.object.Pair<Object, Object> pair : relFrameworkRetObjMap.getAry2ValTuples()) {
+				libraryVisibleAllocMap.add((AllocNode)pair.val0, (VarNode)pair.val1);
+			}
+			relFrameworkRetObjMap.close();
+		}
+		return libraryVisibleAllocMap;
 	}
 	
 	public static class MonitorMap {
@@ -219,48 +240,22 @@ public class MonitorMapUtils {
 		private final MultivalueMap<AllocNode,Monitor> allocToMonitor = new MultivalueMap<AllocNode,Monitor>();
 		
 		private MonitorMap() {
-			MultivalueMap<VarNode,VarNode> libraryVarNodeMap = getLibraryVarNodeMap();
-			MultivalueMap<AllocNode,VarNode> libraryAllocNodeMap = getLibraryAllocNodeMap();
-			Set<VarNode> libraryVar = getLibraryVar();
 			Set<AllocNode> libraryAlloc = getLibraryAlloc();
+			Set<VarNode> libraryVar = getLibraryVar();
 			
 			Iterator<VarNode> varIter = ((DomV)ClassicProject.g().getTrgt("V")).iterator();
 			while(varIter.hasNext()) {
 				VarNode var = varIter.next();
-				if(libraryVar.contains(var)) {
-					if(libraryVarNodeMap.containsKey(var)) {
-						for(VarNode varMonitor : libraryVarNodeMap.get(var)) {
-							for(Monitor monitor : processVar(varMonitor)) {
-								this.varToMonitor.add(var, monitor);
-							}
-						}
-					} else {
-						this.varToMonitor.add(var, new ErrorMonitor("Library var without a map!"));
-					}
-				} else {
-					for(Monitor monitor : processVar(var)) {
-						this.varToMonitor.add(var, monitor);
-					}
+				for(Monitor monitor : libraryVar.contains(var) ? processLibraryVar(var) : processVar(var)) {
+					this.varToMonitor.add(var, monitor);
 				}
 			}
 			
 			Iterator<AllocNode> allocIter = ((DomH)ClassicProject.g().getTrgt("H")).iterator();
 			while(allocIter.hasNext()) {
 				AllocNode alloc = allocIter.next();
-				if(libraryAlloc.contains(alloc)) {
-					if(libraryAllocNodeMap.containsKey(alloc)) {
-						for(VarNode varMonitor : libraryAllocNodeMap.get(alloc)) {
-							for(Monitor monitor : processVar(varMonitor)) {
-								this.allocToMonitor.add(alloc, monitor);
-							}
-						}
-					} else {
-						this.allocToMonitor.add(alloc, new ErrorMonitor("Framework alloc without a map!"));
-					}
-				} else {
-					for(Monitor monitor : processAlloc(alloc)) {
-						this.allocToMonitor.add(alloc, monitor);
-					}
+				for(Monitor monitor : libraryAlloc.contains(alloc) ? processLibraryAlloc(alloc) : processAlloc(alloc)) {
+					this.allocToMonitor.add(alloc, monitor);
 				}
 			}
 		}
@@ -310,6 +305,52 @@ public class MonitorMapUtils {
 			} else if(alloc instanceof SiteAllocNode) {
 				SiteAllocNode siteAlloc = (SiteAllocNode)alloc;
 				processDefinition(monitors, siteAlloc, varMap.getMethod((Stmt)siteAlloc.getUnit()), (Stmt)siteAlloc.getUnit());
+			}
+			return monitors;
+		}
+		
+		private static Iterable<Monitor> processLibraryVar(VarNode var) {
+			VariableMap varMap = getVarMap();
+			Set<VarNode> libraryVisibleVar = getLibraryVisibleVar();
+			List<Monitor> monitors = new ArrayList<Monitor>();
+			if(libraryVisibleVar.contains(var)) {
+				if(var instanceof RetVarNode) {
+					for(Stmt stmt : varMap.getCallers(((RetVarNode)var).method)) {
+						processDefinition(monitors, (RetVarNode)var, varMap.getMethod(stmt), stmt);
+					}
+				} else if(var instanceof ParamVarNode) {
+					monitors.add(new ErrorMonitor("UNHANDLED: framework method parameters"));
+				} else if(var instanceof ThisVarNode) {
+					monitors.add(new ErrorMonitor("UNHANDLED: framework method receivers"));
+				}
+			 } else if(libraryVar.contains(var) && libraryVisibleVar.contains(var)) {
+				monitors.add(new ErrorMonitor("Invisible library var!"));
+			 }
+			return monitors;
+		}
+		
+		private static Iterable<Monitor> processLibraryAlloc(AllocNode alloc) {
+			VariableMap varMap = getVarMap();
+			Set<VarNode> libraryVisibleVar = getLibraryVisibleVar();
+			Set<AllocNode> libraryVisibleAlloc = getLibraryVisibleAlloc();
+			MultivalueMap<AllocNode,VarNode> libraryVisibleAllocMap = getLibraryVisibleAllocMap();
+			List<Monitor> monitors = new ArrayList<Monitor>();
+			if(libraryVisibleAlloc.contains(alloc)) {
+				if(libraryVisibleAllocMap.containsKey(alloc)) {
+					for(VarNode var : libraryVisibleAllocMap.get(alloc)) {
+						if(libraryVisibleVar.contains(var) && var instanceof RetVarNode) {
+							for(Stmt stmt : varMap.getCallers(((RetVarNode)var).method)) {
+								processDefinition(monitors, (RetVarNode)var, varMap.getMethod(stmt), stmt);
+							}
+						} else {
+							monitors.add(new ErrorMonitor("Invalid var node!"));
+						}
+					}
+				} else {
+					monitors.add(new ErrorMonitor("No returns in map!"));
+				}
+			} else {
+				monitors.add(new ErrorMonitor("Invisible library alloc!"));
 			}
 			return monitors;
 		}
