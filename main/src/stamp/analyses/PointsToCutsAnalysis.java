@@ -66,10 +66,10 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		return new AndFilter<EdgeStruct>(initialEdgeFilter, new NotFilter<EdgeStruct>(getSetFilter(getUncuttableInitialEdges(graph, grammar, filter, baseEdgeFilter, initialEdgeFilter))));
 	}
 	
-	public static Set<EdgeStruct> getUncutInitialEdges(Graph graph, ContextFreeGrammarOpt grammar, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> cut) {
+	public static Set<EdgeStruct> getUncutInitialEdges(Graph graph, ContextFreeGrammarOpt grammar, Filter<Edge> filter, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> cut) {
 		// STEP 1: Compute transitive closure
-		Filter<Edge> filter = new NotFilter<Edge>(getEdgeFilter(getSetFilter(cut)));
-		Graph graphBar = new ReachabilitySolver(graph.getVertices(), grammar, filter).transform(graph.getEdgeStructs());
+		Filter<Edge> newFilter = new AndFilter<Edge>(filter, new NotFilter<Edge>(getEdgeFilter(getSetFilter(cut))));
+		Graph graphBar = new ReachabilitySolver(graph.getVertices(), grammar, newFilter).transform(graph.getEdgeStructs());
 		
 		// STEP 2: Make sure all edges are cut
 		Set<EdgeStruct> uncutInitialEdges = new HashSet<EdgeStruct>();
@@ -81,7 +81,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	public static void checkCut(Graph graph, ContextFreeGrammarOpt grammar, Filter<Edge> filter, Filter<EdgeStruct> baseEdgeFilter, Filter<EdgeStruct> initialEdgeFilter, Set<EdgeStruct> cut) {
-		Set<EdgeStruct> uncutInitialEdges = getUncutInitialEdges(graph, grammar, baseEdgeFilter, initialEdgeFilter, cut);
+		Set<EdgeStruct> uncutInitialEdges = getUncutInitialEdges(graph, grammar, filter, baseEdgeFilter, initialEdgeFilter, cut);
 		if(!uncutInitialEdges.isEmpty()) {
 			throw new RuntimeException("UNCUT INITIAL EDGE: " + uncutInitialEdges.iterator().next().toString(true));
 		}
