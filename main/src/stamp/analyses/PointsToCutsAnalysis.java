@@ -27,7 +27,7 @@ import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.NotFilter;
 import stamp.missingmodels.util.cflsolver.grammars.PointsToGrammar;
 import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
-import stamp.missingmodels.util.cflsolver.reader.LimLabelShordRelationReader;
+import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
 import stamp.missingmodels.util.cflsolver.relation.FilterRelationManager.PointsToFilterRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.PointsToRelationManager;
 import stamp.missingmodels.util.cflsolver.relation.TaintRelationManager.TaintPrecomputedPointsToRelationManager;
@@ -228,7 +228,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	
 	public static Set<EdgeStruct> getIterativePointsToCut(Set<EdgeStruct> uncuttablePointsToEdges, int maxIters) {
 		// STEP 1: Configuration
-		RelationReader reader = new LimLabelShordRelationReader();
+		RelationReader reader = new ShordRelationReader();
 		RelationManager relations1 = new PointsToRelationManager();
 		RelationManager relations2 = new TaintPrecomputedPointsToRelationManager();
 		ContextFreeGrammarOpt grammar1 = new PointsToGrammar().getOpt();
@@ -292,7 +292,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	
 	private static void runDumpEdges() {
 		// STEP 1: Setup
-		RelationReader reader = new LimLabelShordRelationReader();
+		RelationReader reader = new ShordRelationReader();
 		RelationManager relations = new TaintPrecomputedPointsToRelationManager();
 		ContextFreeGrammarOpt grammar = new TaintGrammar().getOpt();
 		
