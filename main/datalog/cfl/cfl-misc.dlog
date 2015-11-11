@@ -89,12 +89,12 @@ FrameworkSink(c:C,v:V) output
 FrameworkPrimSource(c:C,u:U) output
 FrameworkPrimSink(c:C,u:U) output
 
-FrameworkSource(c,v) :- Framework(m), MmethArg(m,_,v), CM(c,m).
+#FrameworkSource(c,v) :- Framework(m), MmethArg(m,_,v), CM(c,m).
 FrameworkSource(c,v) :- Framework(m), MmethRet(m,_,v), CM(c,m).
-FrameworkSink(c,v) :- Framework(m), MmethRet(m,_,v), CM(c,m).
-FrameworkPrimSource(c,u) :- Framework(m), MmethPrimArg(m,_,u), CM(c,m).
+FrameworkSink(c,v) :- Framework(m), MmethArg(m,_,v), CM(c,m).
+#FrameworkPrimSource(c,u) :- Framework(m), MmethPrimArg(m,_,u), CM(c,m).
 FrameworkPrimSource(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
-FrameworkPrimSink(c,u) :- Framework(m), MmethPrimRet(m,_,u), CM(c,m).
+FrameworkPrimSink(c,u) :- Framework(m), MmethPrimArg(m,_,u), CM(c,m).
 
 # load, store, assign, alloc not in framework
 
