@@ -1035,6 +1035,7 @@ public class PAGBuilder extends JavaAnalysis
 		packagePrefices.add("edu.stanford.stamp.harness");
 		packagePrefices.add("com.android");
 		packagePrefices.add("com.google.android.maps");		
+		packagePrefices.add("stamp");
 	}
 	
 	public static boolean isFramework(SootMethod method) {

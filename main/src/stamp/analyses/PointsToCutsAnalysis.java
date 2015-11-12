@@ -209,6 +209,9 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 			for(EdgeStruct fptArrEdge : IOUtils.readGraphEdgesFromFile("FlowFieldArr", "graph")) {
 				uncuttablePointsToEdges.add(fptArrEdge);
 			}
+			for(EdgeStruct fptStatEdge : IOUtils.readGraphEdgesFromFile("FlowStatField", "graph")) {
+				uncuttablePointsToEdges.add(fptStatEdge);
+			}
 			System.out.println("NUM UNCUTTABLE PT EDGES: " + uncuttablePointsToEdges.size());
 		}
 		return uncuttablePointsToEdges;
@@ -219,7 +222,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	}
 	
 	private static Filter<EdgeStruct> getBaseEdgeNameFilter2() {
-		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Flow") || edge.symbol.equals("FlowField") || edge.symbol.equals("FlowFieldArr"); }};
+		return new Filter<EdgeStruct>() { public boolean filter(EdgeStruct edge) { return edge.symbol.equals("Flow") || edge.symbol.equals("FlowField") || edge.symbol.equals("FlowFieldArr") || edge.symbol.equals("FlowStatField"); }};
 	}
 	
 	private static Filter<EdgeStruct> getInitialEdgeNameFilter() {
@@ -287,7 +290,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 	
 	private static void runCut() {
 		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), 0)), true);
-		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), 10)), false);
+		printMonitors(getMonitors(getIterativePointsToCut(getUncuttablePointsToEdges(), 20)), false);
 	}
 	
 	private static void runDumpEdges() {
@@ -305,6 +308,7 @@ public class PointsToCutsAnalysis extends JavaAnalysis {
 		IOUtils.printGraphEdgesToFile(gbar, "Flow", false, "graph");
 		IOUtils.printGraphEdgesToFile(gbar, "FlowField", false, "graph");
 		IOUtils.printGraphEdgesToFile(gbar, "FlowFieldArr", false, "graph");
+		IOUtils.printGraphEdgesToFile(gbar, "FlowStatField", false, "graph");
 	}
 	
 	@Override
