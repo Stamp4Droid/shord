@@ -183,7 +183,8 @@ public class InstrumentationDataWriter extends JavaAnalysis {
 	@Override
 	public void run() {
 		//MonitorMapUtils.printMonitors(MonitorMapUtils.getMonitors());
-		write();
+		//write();
+		AliasModelsStubOnly.run();
 	}
 	
 	public static Monitor getMonitorForMethodThis(SootMethod method) {
