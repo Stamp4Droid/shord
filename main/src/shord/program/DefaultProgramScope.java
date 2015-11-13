@@ -54,9 +54,9 @@ public class DefaultProgramScope extends ProgramScope
 	public boolean exclude(SootMethod method)
 	{
 		boolean excluded = false;
-		/*if(prog.isStub(method))
+		if(prog.isStub(method))
 			excluded = !annotatedMethods.contains(method);
-		else */if(excludePattern != null)
+		else if(excludePattern != null)
 			excluded = excludePattern.matcher(method.getDeclaringClass().getName()).matches();
 		if(excluded)
 			System.out.println("Excluding "+method+" from analysis.");
@@ -65,8 +65,7 @@ public class DefaultProgramScope extends ProgramScope
 
 	public boolean ignoreStub()
 	{
-		//return true;
-		return false;
+		return true;
 	}
 	
 	private void identifyMethodsWithAnnotations()
