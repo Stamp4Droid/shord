@@ -43,8 +43,13 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 	private int eventId = 0;
 
 	public enum EventType { METHCALLARG, METHPARAM };
-
-	public void run()
+	
+	public void run() {
+		run(false, false, "instrinfo.txt");
+		run(false, true, "instrinfo_filtered.txt");
+	}
+	
+	public void run(boolean instCallbacks, boolean useFilter, String name)
 	{
 		try{
 			String stampOutDir = System.getProperty("stamp.out.dir");
@@ -52,7 +57,7 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 			File outDir = new File(stampOutDir, "inferaliasmodel");
 			outDir.mkdirs();
 			
-			File instrInfoFile = new File(outDir, "instrinfo.txt");
+			File instrInfoFile = new File(outDir, name);
 			instrInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(instrInfoFile)));
 
 			Program prog = Program.g();
@@ -84,9 +89,9 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 
 					methodInfoWriter.println(methIndex +" "+method.getSignature());
 					System.out.println("preinst: "+method.getSignature());
-					process(methIndex);
-
-					if(callbacks.contains(method)){
+					process(methIndex, useFilter);
+					
+					if(instCallbacks && callbacks.contains(method)){
 						assert !method.isStatic();
 						instrInfoWriter.println(EventType.METHPARAM+" "+methSig+" "+"0"+" "+eventId+" "+methIndex);
 						eventId++;
@@ -109,7 +114,7 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 		}
 	}
 	
-	private void process(int methIndex)
+	private void process(int methIndex, boolean useFilter)
 	{
 
 
@@ -117,14 +122,17 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 		int stmtIndex = 0;
 		while(uit.hasNext()){
 			Stmt stmt = (Stmt) uit.next();
-			processNewStmt(stmt, stmtIndex);
-			processInvkStmt(stmt, stmtIndex);
+			processNewStmt(stmt, stmtIndex, useFilter);
+			processInvkStmt(stmt, stmtIndex, useFilter);
 			stmtIndex++;
 		}
 	}
 
-	private void processNewStmt(Stmt stmt, int stmtIndex)
+	private void processNewStmt(Stmt stmt, int stmtIndex, boolean useFilter)
 	{
+		if(useFilter && !AliasModelsStubOnly.getFilteredAllocs().contains(stmt)) {
+			return;
+		}
 		if(!(stmt instanceof DefinitionStmt))
 			return;
 		Value leftOp = ((DefinitionStmt) stmt).getLeftOp();
@@ -151,8 +159,11 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 		}
 	}
 
-	private void processInvkStmt(Stmt stmt, int stmtIndex)
+	private void processInvkStmt(Stmt stmt, int stmtIndex, boolean useFilter)
 	{
+		if(useFilter && !AliasModelsStubOnly.getFilteredInvokes().contains(stmt)) {
+			return;
+		}
 		if(!stmt.containsInvokeExpr())
 			return;
 

@@ -30,30 +30,51 @@ public class AliasModelsStubOnly {
 		return monitors;
 	}
 	
+	private static List<Stmt> allocs = null;
+	public static List<Stmt> getFilteredAllocs() {
+		if(allocs == null) {
+			allocs = new ArrayList<Stmt>();
+			ProgramRel relEscapeCountH = (ProgramRel)ClassicProject.g().getTrgt("EscapeCountH");
+			relEscapeCountH.load();
+			for(Object obj : relEscapeCountH.getAry1ValTuples()) {
+				if(!(obj instanceof SiteAllocNode)) {
+					System.out.println("INVALID ALLOC: " + obj);
+					continue;
+				}
+				SiteAllocNode alloc = (SiteAllocNode)obj;
+				Stmt stmt = (Stmt)alloc.getUnit();
+				allocs.add(stmt);
+			}
+			relEscapeCountH.close();
+		}
+		return allocs;
+	}
+	
+	private static List<Stmt> invokes = null;
+	public static List<Stmt> getFilteredInvokes() {
+		if(invokes == null) {
+			invokes = new ArrayList<Stmt>();
+			ProgramRel relStubInvokeMonitorRet = (ProgramRel)ClassicProject.g().getTrgt("StubInvokeMonitorRet");
+			relStubInvokeMonitorRet.load();
+			for(Object obj : relStubInvokeMonitorRet.getAry1ValTuples()) {
+				if(!(obj instanceof InvokeStmt)) {
+					System.out.println("INVALID INVOKE: " + obj);
+					continue;
+				}
+				InvokeStmt stmt = (InvokeStmt)obj;
+				invokes.add(stmt);
+			}
+			relStubInvokeMonitorRet.close();
+		}
+		return invokes;
+	}
+	
 	public static void run() {
 		List<Monitor> monitors = new ArrayList<Monitor>();
-		
-		ProgramRel relEscapeCountH = (ProgramRel)ClassicProject.g().getTrgt("EscapeCountH");
-		relEscapeCountH.load();
-		for(Object obj : relEscapeCountH.getAry1ValTuples()) {
-			if(!(obj instanceof SiteAllocNode)) {
-				System.out.println("INVALID ALLOC: " + obj);
-				continue;
-			}
-			SiteAllocNode alloc = (SiteAllocNode)obj;
-			Stmt stmt = (Stmt)alloc.getUnit();
+		for(Stmt stmt : getFilteredAllocs()) {
 			monitors.addAll(getMonitorsForAliasModels(stmt));
 		}
-		relEscapeCountH.close();
-		
-		ProgramRel relStubInvokeMonitorRet = (ProgramRel)ClassicProject.g().getTrgt("StubInvokeMonitorRet");
-		relStubInvokeMonitorRet.load();
-		for(Object obj : relStubInvokeMonitorRet.getAry1ValTuples()) {
-			if(!(obj instanceof InvokeStmt)) {
-				System.out.println("INVALID INVOKE: " + obj);
-				continue;
-			}
-			InvokeStmt stmt = (InvokeStmt)obj;
+		for(Stmt stmt : getFilteredInvokes()) {
 			monitors.addAll(getMonitorsForAliasModels(stmt));
 		}
 		
