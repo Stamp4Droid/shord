@@ -437,5 +437,5 @@ class Bundle
 	private byte[] smsByteArray() {
 		byte[] bytes = new byte[1];
 		return bytes;
-x	}
+	}
 }
