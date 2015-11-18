@@ -1,0 +1,96 @@
+# added (callback)
+src/android/content/Intent.java
+src/android/os/Bundle.java
+
+# added (invalid)
+src/android/test/mock/MockContentProvider.java
+src/java/util/zip/DeflaterOutputStream.java
+src/java/util/zip/GZIPOutputStream.java
+
+# not added (very important)
+src/android/telephony/TelephonyManager.java
+
+# not added (important, phobj)
+src/android/accounts/AccountManager.java
+src/android/app/Activity.java
+src/android/content/ContextWrapper.java
+src/android/location/Location.java
+src/android/location/LocationManager.java
+src/android/net/Uri.java
+src/java/lang/String.java
+
+# not added (important, alias, may be able to add some)
+src/android/os/Message.java
+src/java/util/ArrayList.java
+src/java/util/HashMap.java
+src/java/util/HashSet.java
+src/java/util/Hashtable.java
+src/java/util/LinkedList.java
+src/java/util/Stack.java
+src/java/util/Vector.java
+src/org/apache/http/message/BasicNameValuePair.java
+src/org/json/JSONArray.java
+src/org/json/JSONObject.java
+
+# not added (intermediate, phobj)
+src/android/telephony/SmsMessage.java
+src/android/preference/PreferenceManager.java
+src/android/content/ContentResolver.java
+src/android/util/Base64.java
+src/android/util/Xml.java
+src/java/io/BufferedReader.java
+src/java/util/concurrent/Executors.java
+
+# not added (not important, source/sink phobj)
+src/android/provider/CallLog.java
+src/android/os/Environment.java
+src/android/content/Context.java
+src/android/media/ExifInterface.java
+src/android/net/sip/SipProfile.java
+src/android/net/wifi/WifiManager.java
+src/javax/crypto/Cipher.java
+src/java/net/Socket.java
+
+# not added (not important, phobj)
+src/android/content/pm/PackageInfo.java
+src/android/hardware/Camera.java
+src/android/nfc/NdefRecord.java
+src/android/text/Html.java
+src/android/location/Address.java
+src/android/text/SpannableStringBuilder.java
+src/android/text/format/Formatter.java
+src/android/view/SurfaceView.java
+src/android/webkit/WebView.java
+src/java/io/ByteArrayOutputStream.java
+src/java/io/CharArrayWriter.java
+src/java/io/DataInputStream.java
+src/java/io/File.java
+src/java/io/FileInputStream.java
+src/java/io/FileOutputStream.java
+src/java/io/ObjectInputStream.java
+src/java/util/Formatter.java
+src/java/net/InetAddress.java
+src/java/net/InetSocketAddress.java
+
+# not added (not important, alias)
+src/java/io/PrintStream.java
+src/java/io/PrintWriter.java
+src/java/io/RandomAccessFile.java
+src/java/io/StringWriter.java
+src/java/io/Writer.java
+src/java/lang/ref/PhantomReference.java
+src/java/lang/ref/Reference.java
+src/java/lang/ref/SoftReference.java
+src/java/lang/ref/WeakReference.java
+src/java/nio/ByteBuffer.java
+src/java/nio/CharBuffer.java
+src/java/nio/channels/SocketChannel.java
+
+# not added (multiple)
+src/java/lang/ProcessBuilder.java
+src/java/lang/Runtime.java
+src/java/lang/StringBuffer.java
+src/java/lang/StringBuilder.java
+src/java/net/URI.java
+src/java/net/URL.java
+src/java/net/URLEncoder.java

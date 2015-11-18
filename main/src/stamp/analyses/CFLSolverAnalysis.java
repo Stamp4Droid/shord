@@ -9,7 +9,10 @@ import stamp.missingmodels.util.cflsolver.core.ReachabilitySolver;
 import stamp.missingmodels.util.cflsolver.core.RelationManager;
 import stamp.missingmodels.util.cflsolver.core.RelationManager.RelationReader;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
+import stamp.missingmodels.util.cflsolver.grammars.TaintGrammar;
 import stamp.missingmodels.util.cflsolver.reader.LimLabelShordRelationReader;
+import stamp.missingmodels.util.cflsolver.reader.ShordRelationReader;
+import stamp.missingmodels.util.cflsolver.relation.TaintWithContextRelationManager;
 import stamp.missingmodels.util.cflsolver.util.IOUtils;
 import chord.project.Chord;
 
@@ -33,7 +36,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
 		// Basic taint analysis
-		//run(new ShordRelationReader(), new TaintGrammar().getOpt(), new TaintWithContextRelationManager());
+		run(new ShordRelationReader(), new TaintGrammar().getOpt(), new TaintWithContextRelationManager());
 		
 		// Implicit flows and missing refref
 		/*

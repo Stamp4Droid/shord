@@ -30,7 +30,7 @@ public class LimLabelShordRelationReader implements RelationReader {
 		labels.add("$CONTACTS");
 		//labels.add("$AUDIO");
 		//labels.add("$ACCOUNTS");
-		//labels.add("$CALENDAR");
+		labels.add("$CALENDAR");
 		//labels.add("$CONTENT_PROVIDER");
 		
 		// Sink labels
