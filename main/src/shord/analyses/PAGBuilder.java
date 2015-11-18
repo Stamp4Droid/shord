@@ -1,5 +1,9 @@
 package shord.analyses;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1380,9 +1384,47 @@ public class PAGBuilder extends JavaAnalysis
 	
 	private PotentialCallbacksAdder potentialCallbacksAdder;
 	private boolean usePotentialCallbacksAdder = false;
-
+	
+	private void runAddAllClasses() {
+		try {
+			System.out.println("READING: " + new File("../..").getAbsolutePath());
+			BufferedReader br = new BufferedReader(new FileReader("../../framework.txt"));
+			String line;
+			while((line = br.readLine()) != null) {
+				System.out.println("READING: " + line);
+				SootClass klass = Scene.v().tryLoadClass(line, SootClass.BODIES);
+				System.out.println("STATUS: " + (klass != null));
+			}
+			br.close();
+		} catch(IOException e) {
+			throw new RuntimeException(e);
+		}
+		
+		int framework = 0;
+		int stub = 0;
+		for(SootClass klass : Scene.v().getClasses()) {
+			for(SootMethod method : klass.getMethods()) {
+				if(isStub(method)) {
+					System.out.println("HERE STUB: " + method);
+					stub++;
+				}
+				if(isFramework(method)) {
+					System.out.println("HERE FRAMEWORK: " + method);
+					framework++;
+				}
+				if(isStub(method) && !isFramework(method)) {
+					System.out.println("ERROR: " + method);
+				}
+			}
+		}
+		System.out.println("TOTAL STUB: " + stub);
+		System.out.println("TOTAL FRAMEWORK: " + framework);
+	}
+	
 	public void run()
 	{
+		//runAddAllClasses();
+		
 		this.potentialCallbacksAdder = new PotentialCallbacksAdder();
 		this.usePotentialCallbacksAdder = IOUtils.graphEdgesFileExists("param", "graph");
 		

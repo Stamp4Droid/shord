@@ -510,7 +510,7 @@ public class AliasModelsProcessor implements Processor {
 	}
 	
 	public static void run(String directory, int type) throws Exception {
-		AliasModelsProcessor ap = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"), ModelReader.readMap("../results/models/alias_models_long.txt"));
+		final AliasModelsProcessor ap = new AliasModelsProcessor(ModelReader.readMap("../../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../../results/models/alias_models_assign.txt"), ModelReader.readMap("../../results/models/phantom_object_models.txt"), ModelReader.readMap("../../results/models/alias_models_long.txt"));
 		new LogReader(directory, ap).run();
 		
 		switch(type) {
@@ -567,14 +567,25 @@ public class AliasModelsProcessor implements Processor {
 			System.out.println(counter);
 			pw.close();
 			break;
+		case 7: // loc
+			List<String> apps = new ArrayList<String>(ap.appLinesOfCodeMap.keySet());
+			Collections.sort(apps, new Comparator<String>() {
+				@Override
+				public int compare(String o1, String o2) {
+					return Integer.compare(ap.appLinesOfCodeMap.get(o2), ap.appLinesOfCodeMap.get(o1));
+				}
+			});
+			for(String appName : apps) {
+				System.out.println(appName + " & " + ap.appLinesOfCodeMap.get(appName));
+			}
 		}
 	}
 	
 	public static void runSpreadSheet() throws Exception {
-		AliasModelsProcessor ap1 = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"), ModelReader.readMap("../results/models/alias_models_long.txt"));
-		new LogReader("../results/first_server/", ap1).run();
-		AliasModelsProcessor ap2 = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"), ModelReader.readMap("../results/models/alias_models_long.txt"));
-		new LogReader("../results/fifth_server/", ap2).run();
+		AliasModelsProcessor ap1 = new AliasModelsProcessor(ModelReader.readMap("../../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../../results/models/alias_models_assign.txt"), ModelReader.readMap("../../results/models/phantom_object_models.txt"), ModelReader.readMap("../../results/models/alias_models_long.txt"));
+		new LogReader("../../results/first_server/", ap1).run();
+		AliasModelsProcessor ap2 = new AliasModelsProcessor(ModelReader.readMap("../../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../../results/models/alias_models_assign.txt"), ModelReader.readMap("../../results/models/phantom_object_models.txt"), ModelReader.readMap("../../results/models/alias_models_long.txt"));
+		new LogReader("../../results/fifth_server/", ap2).run();
 		
 		Map<String,Map<Integer,Integer>> flows = AliasModelsFlowReader.getFlows();
 		System.out.println(ap1.getSpreadSheetHeaderModels() + "," + ap2.getSpreadSheetHeaderMonitors() + ",Base Flows,Infer Flows,All Flows");
@@ -594,7 +605,8 @@ public class AliasModelsProcessor implements Processor {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		//run("../results/fifth_server/", 2);
-		runSpreadSheet();
+		run("../../results/fourth_server/", 7);
+		//run("../../results/fifth_server/", 2);
+		//runSpreadSheet();
 	}
 }

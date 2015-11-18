@@ -12,7 +12,7 @@ import stamp.missingmodels.util.processor.AliasModelsProcessor.ModelReader;
 
 public class AliasModelsFlowReader {
 	public static Map<String,Map<Integer,Integer>> getFlows() throws Exception {
-		String dirPath = new String("../results/compare");
+		String dirPath = new String("../../results/compare");
 		
 		File dir = new File(dirPath);
 		Map<String,Map<Integer,Integer>> map = new HashMap<String,Map<Integer,Integer>>();
@@ -43,8 +43,8 @@ public class AliasModelsFlowReader {
 	public static void run() throws Exception {
 		Map<String,Map<Integer,Integer>> map = getFlows();
 		
-		AliasModelsProcessor ap = new AliasModelsProcessor(ModelReader.readMap("../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../results/models/alias_models_assign.txt"), ModelReader.readMap("../results/models/phantom_object_models.txt"), ModelReader.readMap("../results/models/alias_models_long.txt"));		
-		new LogReader("../results/first_server/", ap).run();		
+		AliasModelsProcessor ap = new AliasModelsProcessor(ModelReader.readMap("../../results/models/alias_models_loadstore.txt"), ModelReader.readMap("../../results/models/alias_models_assign.txt"), ModelReader.readMap("../../results/models/phantom_object_models.txt"), ModelReader.readMap("../../results/models/alias_models_long.txt"));		
+		new LogReader("../../results/first_server/", ap).run();		
 		
 		System.out.println("No Models & Inferred Models & No Alias Models & Inferred Alias Models & All Models\\");
 		float infDnone = 0.0f;
