@@ -578,6 +578,10 @@ public class AliasModelsProcessor implements Processor {
 			for(String appName : apps) {
 				System.out.println(appName + " & " + ap.appLinesOfCodeMap.get(appName));
 			}
+		case 8: // lim loc
+			for(String appName : AliasModelsLOCProcessor.appsFlows) {
+				System.out.println(ap.appLinesOfCodeMap.get(appName));
+			}
 		}
 	}
 	
@@ -605,7 +609,7 @@ public class AliasModelsProcessor implements Processor {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		run("../../results/fourth_server/", 7);
+		run("../../results/fourth_server/", 8);
 		//run("../../results/fifth_server/", 2);
 		//runSpreadSheet();
 	}
