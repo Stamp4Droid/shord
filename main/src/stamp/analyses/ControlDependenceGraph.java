@@ -1,40 +1,42 @@
 package stamp.analyses;
 
-import soot.Unit;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import soot.SootMethod;
+import soot.Unit;
 import soot.toolkits.graph.Block;
 import soot.toolkits.graph.BlockGraph;
-import soot.toolkits.graph.DirectedGraph;
-import soot.toolkits.graph.ExceptionalBlockGraph;
-import soot.toolkits.graph.BriefBlockGraph;
-import soot.toolkits.graph.UnitGraph;
-import soot.toolkits.graph.DominatorTree;
 import soot.toolkits.graph.DominatorNode;
+import soot.toolkits.graph.DominatorTree;
 import soot.toolkits.graph.DominatorsFinder;
-import soot.toolkits.graph.SimpleDominatorsFinder;
+import soot.toolkits.graph.ExceptionalBlockGraph;
 import soot.toolkits.graph.HashReversibleGraph;
-import soot.toolkits.scalar.FlowSet;
-import soot.toolkits.scalar.Pair;
-import java.util.*;
+import soot.toolkits.graph.SimpleDominatorsFinder;
 
 /** 
     Intra-procedural Control Dependence Graph
+
+	Based on the algorithm given Section 6 in
+    Representation and Analysis of Software, Mary Jean Harrold, Greg Rothermel, Alex Orso
+
 	@author Saswat Ananad
  */
 public class ControlDependenceGraph
 {
-    private Map<Object,Set<Pair<Unit,Unit>>> nodeToDependees = new HashMap();
-    
-    public ControlDependenceGraph(SootMethod method)
-    {
-		BlockGraph cfg = new BriefBlockGraph(method.retrieveActiveBody());
-		
-		for(Block block : cfg.getBlocks())
-			nodeToDependees.put(block, new HashSet());
-		
+	private Map<Object,Set<Block>> nodeToDependees = new HashMap();
+
+	public ControlDependenceGraph(SootMethod method)
+	{
+		BlockGraph cfg = new ExceptionalBlockGraph(method.retrieveActiveBody());
+
 		//Add a super exit node to the cfg
 		HashReversibleGraph reversibleCFG = new HashReversibleGraph(cfg);
-		
+
 		List tails = reversibleCFG.getTails();
 		if(tails.size() > 1){
 			Object superExitNode = new Object();
@@ -46,9 +48,12 @@ public class ControlDependenceGraph
 			}
 		}
 
-		
+		for(Object block : reversibleCFG.getNodes())
+			nodeToDependees.put(block, new HashSet());
+
 		DominatorsFinder domfinder = new SimpleDominatorsFinder(reversibleCFG.reverse());
 		DominatorTree domlysis = new DominatorTree(domfinder);
+		
 		/*
 		  System.out.println("**** Postdominator Tree of " + method);
 		  for(Iterator it = cfg.iterator(); it.hasNext();){
@@ -59,9 +64,8 @@ public class ControlDependenceGraph
 		  else
 		  System.out.print("Exit");
 		  System.out.println("  --->  " + a.getIndexInMethod());
-		  }
-		*/
-		
+		  }*/
+
 		for(Block a : cfg.getBlocks()){
 			// Step 1
 			// if node a had more than one successors then 
@@ -69,19 +73,18 @@ public class ControlDependenceGraph
 			// So S is the set succs
 			List<Block> succs = cfg.getSuccsOf(a);
 			if(succs.size() > 1){
-				
+
 				// Step 2
 				// for each b in S (i.e., succs) find the
 				// least common ancestor of a and b
-				
+
 				Set ancestorsA = new HashSet();
 				Object parent = a;
 				while(parent != null){
 					ancestorsA.add(parent);
 					parent = getImmediateDominator(domlysis, parent);
-					//System.out.println("!! " + parent);
 				}
-				
+
 				for(Block b : succs){
 					Set marked = new HashSet();
 					Object l = b;
@@ -95,83 +98,59 @@ public class ControlDependenceGraph
 							marked.add(l);
 							//System.out.print("Immediate dominator of " + l + " is ");
 							l = getImmediateDominator(domlysis, l);
-							assert l != null;
 							//System.out.println(l);
 						}
-					}while(true);
+					} while(true);
 					if(l == a)
 						marked.add(l);
 
-					Unit dependee = a.getTail();
-					for(Object node : marked){
-						if(!(node instanceof Block))
-							continue;
-						if(!dependee.branches()) 
-							assert false: dependee+"@"+method.getSignature() + " does not branch!";
-						nodeToDependees.get(node).add(new Pair(dependee, b.getHead()));
-					}
+					for(Object node : marked)
+						nodeToDependees.get(node).add(a);
 				}
 			}
 		}
-    }
-
-	/*
-	private int label(Block dependee, Block successor)
-	{
-		if(t instanceof SwitchStmt){
-			for(Unit target : ((SwitchStmt) t).getTargets()){
-				if(target.equals(
-			}
-		} else if(t instanceof IfStmt){
-			Stmt target = ((IfStmt) t).getTarget();
-			return target.equals(successor.getHead()) ? 1 : 0;
-		} 
-		throw new RuntimeException("unexpected "+t);
 	}
-	*/
-	public Map<Pair<Unit,Unit>,Set<Unit>> dependeeToDependentsSetMap()
+
+	public Map<Unit,Set<Unit>> dependeeToDependentsSetMap()
 	{
-		Map<Pair<Unit,Unit>,Set<Unit>> result = new HashMap();
-		for(Map.Entry<Object,Set<Pair<Unit,Unit>>> e : nodeToDependees.entrySet()){
+		Map<Unit,Set<Unit>> result = new HashMap();
+		for(Map.Entry<Object,Set<Block>> e : nodeToDependees.entrySet()){
 			Object block = e.getKey();
 			if(!(block instanceof Block))
 				continue; //block is the super-exit node
-			Set<Pair<Unit,Unit>> dependees = e.getValue();
-			for(Pair<Unit,Unit> dependee : dependees){
-				Set<Unit> dependents = result.get(dependee);
+			Set<Block> dependees = e.getValue();
+			for(Block dependee : dependees){
+				Unit t = dependee.getTail();
+				//note t is not necessarily a branching statement
+				//a block that can throw some exception will have
+				//multiple successors.
+				Set<Unit> dependents = result.get(t);
 				if(dependents == null){
 					dependents = new HashSet();
-					result.put(dependee, dependents);
+					result.put(t, dependents);
 				}
 				for(Iterator<Unit> uit = ((Block) block).iterator(); uit.hasNext();){
 					dependents.add(uit.next());
 				}
 			}
 		}
-		return result;
-	}
-
-	public Map<Unit,Set<Pair<Unit,Unit>>> dependentToDependeesSetMap()
-	{
-		Map<Unit,Set<Pair<Unit,Unit>>> result = new HashMap();
-		for(Map.Entry<Object,Set<Pair<Unit,Unit>>> e : nodeToDependees.entrySet()){
-			Object block = e.getKey();
-			if(!(block instanceof Block))
-				continue; //block is the super-exit node
-			Set<Pair<Unit,Unit>> dependees = e.getValue();
-			
-			for(Iterator<Unit> uit = ((Block) block).iterator(); uit.hasNext();){
-				Unit dependent = uit.next();
-				result.put(dependent, new HashSet(dependees));
+		/*
+		//debug
+		System.out.println(">> CDG");
+		for(Map.Entry<Unit,Set<Unit>> e : result.entrySet()){
+			Unit branchStmt = e.getKey();
+			System.out.println(branchStmt+":");
+			for(Unit s : e.getValue()){
+				System.out.println("\t"+s);
 			}
 		}
+		*/
 		return result;
 	}
 
-    
-    private Object getImmediateDominator(DominatorTree domlysis, Object node)
-    {
+	private Object getImmediateDominator(DominatorTree domlysis, Object node)
+	{
 		DominatorNode n = domlysis.getParentOf(domlysis.getDode(node));
 		if(n == null) return null; else return n.getGode();
-    }    
+	}    
 }

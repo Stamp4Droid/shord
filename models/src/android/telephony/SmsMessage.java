@@ -24,7 +24,7 @@ class SmsMessage
 		return new String();
 	}
 
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="$SMS_DEP",to="@return")})
 	public  java.lang.String getMessageBody() 
 	{ 
 		return new String();
