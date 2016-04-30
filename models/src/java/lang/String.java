@@ -124,7 +124,7 @@ class String
 	public static  java.lang.String valueOf(boolean value) { return new String(); }
 
     @STAMP(flows = {@Flow(from="this",to="@return"), @Flow(from="param",to="@return")})
-	public boolean match(java.lang.String param) { return false; }
+	public boolean matches(java.lang.String param) { return false; }
 
 	@STAMP(flows = {@Flow(from="this",to="@return"), @Flow(from="replacement",to="@return")})
 	public  java.lang.String replaceAll(java.lang.String regularExpression, java.lang.String replacement) { return new String(); }
