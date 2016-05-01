@@ -64,6 +64,9 @@ MmethPrimRet(m:M,z:Z,u:U) input
 reachableCM(c:C,m:M) input
 
 Ref2RefImp(v:V,u:V) input
+Ref2PrimImp(v:V,u:U) input
+Prim2RefImp(v:U,u:V) input
+Prim2PrimImp(v:U,u:U)  input
 # OUTPUT RELATIONS ============================================================
 
 labelRef(c:C,v:V,l:CL)  output # (c,v) is labeled with l
@@ -132,6 +135,9 @@ flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z
 
 # integrate Osbert's implict flow
 transferRefRef(u,v)   :- Ref2RefImp(v,u). 
+transferRefPrim(u,v)   :- Ref2PrimImp(u,v).
+transferPrimRef(u,v) :- Prim2RefImp(u,v).
+transferPrimPrim(u,v)   :- Prim2PrimImp(v,u). 
 
 # (backward) escape flow
 
