@@ -36,3 +36,11 @@ Action
 -------
 
 Run `<shord-dir>/stamp [dyn]analyze <app-dir> [-Dstamp.backend=solvergen]`
+
+
+
+
+Trouble shooting:
+* Cannot run program "/usr/local/android-sdk-linux/build-tools/19.0.3/aapt": error=2, No such file or directory
+To get aapt working (this fixed my issues with the avd as well) just install these two packages:
+sudo apt-get install lib32stdc++6 lib32z1
