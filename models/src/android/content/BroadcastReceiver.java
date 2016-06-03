@@ -14,4 +14,10 @@ class BroadcastReceiver
 					}
 				}); */
 	}
+
+	@STAMP(flows={@Flow(from="this",to="!AbortBroadcast")})
+    public final void abortBroadcast() {
+
+    }
+
 }
