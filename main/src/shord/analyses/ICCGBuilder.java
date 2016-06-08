@@ -74,38 +74,6 @@ public class ICCGBuilder extends JavaAnalysis
 
 	public static Map<String, XmlNode> components = new HashMap<String, XmlNode>();
 
-
-	/*private static String[] launchArray = {
-	"<android.app.Activity: void startActivity(android.content.Intent)>",
-	"<android.content.ContextWrapper: void sendBroadcast(android.content.Intent)>",
-	//shall we mark bindservice?|| methSig.equals("<android.content.ContextWrapper: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>") 
-	"<android.content.ContextWrapper: android.content.ComponentName startService(android.content.Intent)>",
-	"<android.content.ContextWrapper: void sendBroadcast(android.content.Intent,java.lang.String)>",
-	"<android.content.ContextWrapper: void sendStickyBroadcast(android.content.Intent)>",
-	"<android.content.ContextWrapper: void sendOrderedBroadcast(android.content.Intent,java.lang.String)>",
-	"<android.content.ContextWrapper: void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>",
-	"<android.content.ContextWrapper: void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>",
-	"<android.content.Context: void sendBroadcast(android.content.Intent)>",
-	"<android.content.Context: android.content.ComponentName startService(android.content.Intent)>",
-	"<android.content.Context: void sendBroadcast(android.content.Intent,java.lang.String)>",
-	"<android.content.Context: void sendStickyBroadcast(android.content.Intent)>",
-	"<android.content.Context: void sendOrderedBroadcast(android.content.Intent,java.lang.String)>",
-	"<android.content.Context: void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>",
-	"<android.content.Context: void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>",
-	"<android.app.Activity: void startActivities(android.content.Intent[])>",
-	"<android.app.Activity: void startIntentSender(android.content.IntentSender,android.content.Intent,int,int,int)>",
-	"<android.app.Activity: void startActivityForResult(android.content.Intent,int)>",
-	"<android.app.Activity: boolean startActivityIfNeeded(android.content.Intent,int)>",
-	"<android.app.Activity: boolean startNextMatchingActivity(android.content.Intent)>",
-	"<android.content.Context: void startActivity(android.content.Intent)>",
-	"<android.app.Activity: void startActivityFromChild(android.app.Activity,android.content.Intent,int)>",
-	"<android.app.Activity: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)>",
-	"<android.app.Activity: void startIntentSenderForResult(android.content.IntentSender,int,android.content.Intent,int,int,int)>",
-	"<android.app.Activity: void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)>",
-        "<android.widget.TabHost$TabSpec: android.widget.TabHost$TabSpec setContent(android.content.Intent)>"
-	};*/
-
-
 	private static String[] subLaunchArray = {
 	"void startActivity(android.content.Intent)",
 	"void sendBroadcast(android.content.Intent)",
@@ -134,7 +102,8 @@ public class ICCGBuilder extends JavaAnalysis
 	"void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)",
 	"void startIntentSenderForResult(android.content.IntentSender,int,android.content.Intent,int,int,int)",
 	"void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)",
-    "android.widget.TabHost$TabSpec setContent(android.content.Intent)"
+    "android.widget.TabHost$TabSpec setContent(android.content.Intent)",
+    "<android.content.Context: android.content.Intent registerReceiver(android.content.BroadcastReceiver,android.content.IntentFilter)>"
 	};
 
 
@@ -231,7 +200,9 @@ public class ICCGBuilder extends JavaAnalysis
             "<javax.crypto.Cipher: byte[] update(byte[],int,int)>",
             "<javax.crypto.Cipher: int update(byte[],int,int,byte[])>",
             "<javax.crypto.Cipher: int update(byte[],int,int,byte[],int)>",
-            "<javax.crypto.Cipher: int update(java.nio.ByteBuffer,java.nio.ByteBuffer)>"
+            "<javax.crypto.Cipher: int update(java.nio.ByteBuffer,java.nio.ByteBuffer)>",
+            "<android.content.IntentFilter: void setPriority(int)>",
+            "<android.content.Context: android.content.Intent registerReceiver(android.content.BroadcastReceiver,android.content.IntentFilter)>"
 
         };
         String abortSig = "<android.content.BroadcastReceiver: void abortBroadcast()>";
