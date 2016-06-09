@@ -89,7 +89,7 @@ public class LocalsClassifier
 			} else
 				unclassified++;
 		}
-		if(unclassified != 0){
+		/*if(unclassified != 0){
 			System.out.println("LC: "+method + " t = "+total+" p = "+primCount+" n = "+nonPrimCount+" b = "+both+" u = "+unclassified);
 			System.out.println("Unclassified: ");
 			for(Local l : body.getLocals()){
@@ -100,7 +100,7 @@ public class LocalsClassifier
 			}
 			System.out.println("");
 			System.out.println(body.toString());
-			}
+		}*/
 	}
 
 	public Set<Local> primLocals()

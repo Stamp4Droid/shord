@@ -202,7 +202,8 @@ public class ICCGBuilder extends JavaAnalysis
             "<javax.crypto.Cipher: int update(byte[],int,int,byte[],int)>",
             "<javax.crypto.Cipher: int update(java.nio.ByteBuffer,java.nio.ByteBuffer)>",
             "<android.content.IntentFilter: void setPriority(int)>",
-            "<android.content.Context: android.content.Intent registerReceiver(android.content.BroadcastReceiver,android.content.IntentFilter)>"
+            "<android.content.Context: android.content.Intent registerReceiver(android.content.BroadcastReceiver,android.content.IntentFilter)>",
+            "<android.telephony.gsm.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>"
 
         };
         String abortSig = "<android.content.BroadcastReceiver: void abortBroadcast()>";
