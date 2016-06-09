@@ -80,7 +80,7 @@ public class ControlDependenceGraph
 
 				Set ancestorsA = new HashSet();
 				Object parent = a;
-				while(parent != null){
+				while(parent != null && !ancestorsA.contains(parent)){
 					ancestorsA.add(parent);
 					parent = getImmediateDominator(domlysis, parent);
 				}
@@ -109,6 +109,7 @@ public class ControlDependenceGraph
 				}
 			}
 		}
+
 	}
 
 	public Map<Unit,Set<Unit>> dependeeToDependentsSetMap()
