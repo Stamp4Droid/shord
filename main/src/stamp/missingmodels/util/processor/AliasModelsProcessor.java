@@ -609,7 +609,7 @@ public class AliasModelsProcessor implements Processor {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		run("../../results/fourth_server/", 8);
+		run("../../results/fourth_server/", 1);
 		//run("../../results/fifth_server/", 2);
 		//runSpreadSheet();
 	}

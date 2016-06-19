@@ -1,6 +1,5 @@
 package stamp.analyses;
 
-import shord.analyses.DomV;
 import shord.analyses.SiteAllocNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
