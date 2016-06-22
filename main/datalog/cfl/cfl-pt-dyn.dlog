@@ -15,7 +15,7 @@
 # CONFIGURATION
 ###################
 
-# name=cfl-pt-dyn-sound-dlog
+# name=cfl-pt-dyn-dlog
 
 ##########
 # INPUTS #
@@ -46,7 +46,7 @@ fptStat(f:F,o:C) input
 
 # dynamic points-to edges
 
-FlowDyn(h:H,v:V) input
+ptdDynOnly(v:V,h:H) input
 
 ###########
 # OUTPUTS #
@@ -70,7 +70,7 @@ fptStatDyn(f,o) :- fptStat(f,o).
 
 # dynamic seed
 
-ptDyn(c,v,o) :- FlowDyn(h,v), CH(o,h), MV(m,v), CM(c,m).
+ptDyn(c,v,o) :- ptdDynOnly(v,h), CH(o,h), MV(m,v), CM(c,m).
 
 # closure
 

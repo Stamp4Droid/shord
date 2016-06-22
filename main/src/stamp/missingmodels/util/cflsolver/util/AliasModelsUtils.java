@@ -195,8 +195,8 @@ public class AliasModelsUtils {
 			return stmtInvocation;
 		}
 		
-		public static MultivalueMap<VarNode,SiteAllocNode> getPtDynRetApp(AliasModelsTraceReader processor) {
-			MultivalueMap<VarNode,SiteAllocNode> ptDyn = new MultivalueMap<VarNode,SiteAllocNode>();
+		public static MultivalueMap<VarNode,Pair<SiteAllocNode,Integer>> getPtDynRetApp(AliasModelsTraceReader processor) {
+			MultivalueMap<VarNode,Pair<SiteAllocNode,Integer>> ptDyn = new MultivalueMap<VarNode,Pair<SiteAllocNode,Integer>>();
 			for(Variable variable : processor.retsToAbstractObjects.keySet()) {
 				for(int abstractObject : processor.retsToAbstractObjects.get(variable)) {
 					if(!processor.appAbstractObjectsToAllocations.containsKey(abstractObject)) {
@@ -211,7 +211,8 @@ public class AliasModelsUtils {
 					if(varNode == null || allocNode == null) {
 						continue;
 					}
-					ptDyn.add(varNode, allocNode);
+					int count = processor.retAbstractObjectPairsToCounts.get(new Pair<Variable,Integer>(variable, abstractObject));
+					ptDyn.add(varNode, new Pair<SiteAllocNode,Integer>(allocNode, count));
 				}
 			}
 			return ptDyn;

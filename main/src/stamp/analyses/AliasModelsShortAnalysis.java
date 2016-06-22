@@ -102,8 +102,8 @@ public class AliasModelsShortAnalysis extends JavaAnalysis {
 		relAssign.load();
 		System.out.println("Assign size: " + relAssign.size());
 		relAssign.close();
-		System.out.println("PRINTING ACTIVE FLOW DYN");
-		IOUtils.printRelation("ActiveFlowDynH");
+		System.out.println("PRINTING ACTIVE PT DYN");
+		IOUtils.printRelation("ptdDynActive");
 		System.out.println("PRINTING PHANTOM OBJECT MODELS");
 		IOUtils.printRelation("PhantomObjectDyn");
 		

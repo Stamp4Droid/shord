@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
+import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 
 public class AliasModelsTraceReader {
 	public static class Variable {
@@ -74,13 +75,16 @@ public class AliasModelsTraceReader {
 	public final Map<Integer,Variable> appAbstractObjectsToAllocations = new HashMap<Integer,Variable>();
 	public final Set<Integer> observedAbstractObjects = new HashSet<Integer>();
 	public final Set<Integer> frameworkAbstractObjects = new HashSet<Integer>();
+	public final Map<Pair<Variable,Integer>,Integer> retAbstractObjectPairsToCounts = new HashMap<Pair<Variable,Integer>,Integer>();
 	
 	public AliasModelsTraceReader(String filename) {
 		System.out.println("Reading file: " + new File(filename).getAbsolutePath());
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			String line;
+			int count = -1;
 			while((line = br.readLine()) != null) {
+				count++;
 				String[] tokens = line.split("\t");
 				if(tokens.length == 4) {
 					this.appAbstractObjectsToAllocations.put(Integer.parseInt(tokens[3]), getVariable(tokens[2]));
@@ -91,7 +95,12 @@ public class AliasModelsTraceReader {
 						int abstractObject = Integer.parseInt(tokens[4]);
 						this.observedAbstractObjects.add(abstractObject);
 						if(index == -1) {
-							this.retsToAbstractObjects.add(getVariable(tokens[2]), abstractObject);
+							Variable variable = getVariable(tokens[2]);
+							this.retsToAbstractObjects.add(variable, abstractObject);
+							Pair<Variable,Integer> pair = new Pair<Variable,Integer>(variable, abstractObject);
+							if(!this.retAbstractObjectPairsToCounts.containsKey(pair)) {
+								this.retAbstractObjectPairsToCounts.put(pair, count);
+							}
 						} else {
 							this.argsToIndex.put(getVariable(tokens[2]), index);
 							this.argsToAbstractObjects.add(getVariable(tokens[2]), abstractObject);
