@@ -122,6 +122,7 @@ public class AliasModelsTraceReader {
 					throw new RuntimeException("Invalid line: " + line);
 				}
 			}
+			System.out.println("ALIAS MODELS TRACE TOTAL COUNT: " + (count + 1));
 			br.close();
 		} catch(IOException e) {
 			e.printStackTrace();

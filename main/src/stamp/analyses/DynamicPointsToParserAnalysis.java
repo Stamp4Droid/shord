@@ -1,6 +1,8 @@
 package stamp.analyses;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import shord.analyses.SiteAllocNode;
@@ -46,6 +48,7 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		ProgramRel relPtdDynActive = (ProgramRel)ClassicProject.g().getTrgt("ptdDynActive");
 		relPtdDynOnly.zero();
 		relPtdDynActive.zero();
+		Map<Pair<VarNode,SiteAllocNode>,Integer> counts = new HashMap<Pair<VarNode,SiteAllocNode>,Integer>();
 		for(VarNode var : ptDyn.keySet()) {
 			for(Pair<SiteAllocNode,Integer> pair : ptDyn.get(var)) {
 				SiteAllocNode alloc = pair.getX();
@@ -53,8 +56,13 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 				System.out.println("DYNAMIC POINTS TO: " + var + " -> " + alloc + " (COUNT: " + count + ")");
 				try {
 					relPtdDynOnly.add(var, alloc);
-					if(!pt.contains(new Pair<VarNode,SiteAllocNode>(var, alloc))) {
+					Pair<VarNode,SiteAllocNode> ptDynEdge = new Pair<VarNode,SiteAllocNode>(var, alloc);
+					if(!pt.contains(ptDynEdge)) {
+						System.out.println("ACTIVE");
 						relPtdDynActive.add(var, alloc);
+						if(!counts.containsKey(ptDynEdge) || counts.get(ptDynEdge) > count) {
+							counts.put(ptDynEdge, count);
+						}
 					}
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -74,5 +82,12 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 			}
 		}
 		relPhantomObjectDyn.save();
+		
+		// STEP 3: Print active edge first counts
+		System.out.println("START PRINTING ACTIVE EDGE COUNTS");
+		for(Pair<VarNode,SiteAllocNode> pair : counts.keySet()) {
+			System.out.println("ACTIVE POINTS TO: " + pair.getX() + " -> " + pair.getY() + " (COUNT: " + counts.get(pair) + ")");
+		}
+		System.out.println("END PRINTING ACTIVE EDGE COUNTS");
 	}
 }
