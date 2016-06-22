@@ -8,6 +8,7 @@
 
 # name=cfl-pt-dyn-active-dlog
 
+.include "M.dom"
 .include "C.dom"
 .include "V.dom"
 .include "H.dom"
@@ -22,8 +23,8 @@
 FlowDyn(h:H,v:V) input
 
 # basic relations
-MV(m:M,v:V)
-CM(c:C,m:M)
+MV(m:M,v:V) input
+CM(c:C,m:M) input
 CH(o:C,h:H) input
 
 # translated points-to facts

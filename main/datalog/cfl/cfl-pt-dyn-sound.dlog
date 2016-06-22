@@ -9,7 +9,7 @@
 .include "F.dom"
 .include "I.dom"
 
-.bddvarorder M0_C0xC1xC2_V0xV1_I0xF0
+.bddvarorder M0_C0xC1xC2_V0xV1_H0_I0xF0
 
 ###################
 # CONFIGURATION
@@ -43,6 +43,10 @@ CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 pt(c:C,v:V,o:C) input
 fpt(o1:C,f:F,o2:C) input
 fptStat(f:F,o:C) input
+
+# dynamic points-to edges
+
+FlowDyn(h:H,v:V) input
 
 ###########
 # OUTPUTS #
