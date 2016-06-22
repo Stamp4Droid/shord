@@ -2,7 +2,7 @@
 # Virtual call graph resolution #
 #################################
 
-# name=cfl-virtcall
+# name=cfl-virtcall-dlog
 
 .include "M.dom"
 .include "C.dom"
