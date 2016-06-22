@@ -1,0 +1,37 @@
+#################################
+# Virtual call graph resolution #
+#################################
+
+# name=cfl-virtcall
+
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+.include "I.dom"
+.include "S.dom"
+.include "T.dom"
+.include "Z.dom"
+
+.bddvarorder I0xM0xM1_S0_T0_V0xV1_T1_H0_C0xC1xC2_Z0
+
+IinvkArg(i:I,n:Z,v:V) input	# invocation i has argument v passed to as the zth parameter
+reachableCM(c:C,m:M) input  	# method m is reachable in context c
+MI(m:M,i:I) input    		# invocation i is in method m
+VirtIM(i:I,m:M) input		# virtual invocation i targets method m
+SubSig(m:M,s:S) input		# m has subsignature s
+Dispatch(t:T,s:S,m:M) input	# method t.m has subsignature s
+HT(h:H,t:T) input     		# heap allocation h has type t
+CH(o:C,h:H) input		# abstract object o has heap allocation h on top
+pt(c:C,v:V,o:C) input		# v points to abstract object o in context c
+
+reachableCI(c:C,i:I) output	# invocation i is reachable in context c
+ICM(i:I,o:C,m:M) output		# virtual invocation i can call method m when its 0th argument v points to abstract object o
+CICM(c:C,i:I,o:C,m:M) output	# virtual invocation i in context c can call method m (with abstract object o as the receiver)
+ptIM(i:I,m:M) output            # virtual invocation i can call method m
+
+reachableCIV(c,i,v) :- MI(m,i), reachableCM(c,m), IinvkArg(i,0,v).   	      	    # invocation i is reachable, and has receiver v
+
+ICM(i,o,m2) :- VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2), HT(h,t), CH(o,h).	    # virtual invocation i calls method m2 when the receiver points to o
+CICM(c,i,o,m) :- reachableCIV(c,i,v), pt(c,v,o), ICM(i,o,m).
+ptIM(i,m) :- CICM(_,i,_,m).
