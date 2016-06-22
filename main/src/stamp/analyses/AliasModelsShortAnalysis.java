@@ -78,7 +78,6 @@ public class AliasModelsShortAnalysis extends JavaAnalysis {
 	
 	@Override
 	public void run() {
-
 		ProgramRel relFrameworkI = (ProgramRel)ClassicProject.g().getTrgt("FrameworkI");
 		relFrameworkI.load();
 		System.out.println("FrameworkI size: " + relFrameworkI.size());
