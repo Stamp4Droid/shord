@@ -6,7 +6,7 @@
 # CONFIGURATION
 ###################
 
-# name=cfl-active-flow-dyn-dlog
+# name=cfl-pt-dyn-dlog
 
 .include "C.dom"
 .include "V.dom"
@@ -19,7 +19,7 @@
 ##########
 
 # seed relation
-FlowDyn(o:H,v:V) input
+FlowDyn(h:H,v:V) input
 
 # basic relations
 CH(o1:C,o2:H) input
@@ -31,14 +31,25 @@ Flow(o:C2,c:C0,v:V0) input
 # OUTPUTS #
 ###########
 
+# dynamic points-to edges that are *not* (optimistcally) static
+
 ActiveFlowDyn(o:C2,c:C0,v:V0) output
 ActiveFlowDynH(h:H,v:V) output
+
+# static + dynamic points-to edges
+
+ptDyn(c:C,v:V,o:C) output
 
 #########
 # RULES #
 #########
 
-# seed relation
+# active points-to edges
 
-ActiveFlowDyn(o,c,v) :- !Flow(o,c,v), FlowDyn(op,v), CH(o,op).
+ActiveFlowDyn(o,c,v) :- !Flow(o,c,v), FlowDyn(h,v), CH(o,h).
 ActiveFlowDynH(h,v) :- ActiveFlowDyn(o,_,v), CH(o,h).
+
+# sound points-to edges
+
+ptDyn(c,v,o) :- Flow(o,c,v).
+ptDyn(c,v,o) :- MV(m,v), CM(c,m), Flow(o,c,v).
