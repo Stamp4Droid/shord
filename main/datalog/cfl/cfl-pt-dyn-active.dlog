@@ -1,5 +1,5 @@
 ##################
-# CFL Initialization
+# New Dynamic Points-To Edges
 ##################
 
 ###################
@@ -12,7 +12,7 @@
 .include "V.dom"
 .include "H.dom"
 
-.bddvarorder C0_C1_C2_V0_H0
+.bddvarorder M0_C0_C1_C2_V0_H0
 
 ##########
 # INPUTS #
@@ -22,7 +22,9 @@
 FlowDyn(h:H,v:V) input
 
 # basic relations
-CH(o1:C,o2:H) input
+MV(m:M,v:V)
+CM(c:C,m:M)
+CH(o:C,h:H) input
 
 # translated points-to facts
 Flow(o:C2,c:C0,v:V0) input
@@ -31,16 +33,22 @@ Flow(o:C2,c:C0,v:V0) input
 # OUTPUTS #
 ###########
 
+FlowH(h:H,v:V) # intermediate
+
 # dynamic points-to edges that are *not* (optimistcally) static
 
-ActiveFlowDyn(o:C2,c:C0,v:V0) output
 ActiveFlowDynH(h:H,v:V) output
+ActiveFlowDyn(o:C2,c:C0,v:V0) output
 
 #########
 # RULES #
 #########
 
+# intermediate
+
+FlowH(h,v) :- Flow(o,_,v), CH(o,h).
+
 # active points-to edges
 
-ActiveFlowDyn(o,c,v) :- !Flow(o,c,v), FlowDyn(h,v), CH(o,h).
-ActiveFlowDynH(h,v) :- ActiveFlowDyn(o,_,v), CH(o,h).
+ActiveFlowDynH(h,v) :- FlowDyn(h,v), !FlowH(h,v).
+ActiveFlowDyn(o,c,v) :- MV(m,v), CM(c,m), CH(o,h), FlowDyn(h,v), !Flow(o,c,v).
