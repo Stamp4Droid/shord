@@ -245,6 +245,38 @@ public class AliasModelsUtils {
 			}
 			return phantomObjectDyn;
 		}
+		
+		public static List<Set<SootMethod>> getAliasedPhantomObjectDyn(AliasModelsTraceReader processor) {
+			List<Set<SootMethod>> aliasedPhantomObjectDyn = new ArrayList<Set<SootMethod>>();
+			for(int abstractObject : processor.abstractObjectsToRets.keySet()) {
+				Set<SootMethod> methods = new HashSet<SootMethod>();
+				for(Variable variable : processor.abstractObjectsToRets.get(abstractObject)) {
+					if(!processor.frameworkAbstractObjects.contains(abstractObject)) {
+						continue;
+					}
+					Stmt stmtInvocation = getInvokeStmtOrNullFor(variable);
+					if(stmtInvocation == null) {
+						continue;
+					}
+					LocalVarNode varNode = getVarNodeFor((Local)((AssignStmt)stmtInvocation).getLeftOp(), getMethodFor(stmtInvocation));
+					if(varNode == null) {
+						continue;
+					}
+					if(!(varNode.local.getType() instanceof RefLikeType)) {
+						continue;
+					}
+					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
+						if(isStub(method)) {
+							methods.add(method);
+						}
+					}
+				}
+				if(methods.size() > 1) {
+					aliasedPhantomObjectDyn.add(methods);
+				}
+			}
+			return aliasedPhantomObjectDyn;
+		}
 	}
 	
 	public static class SynthesisUtils {

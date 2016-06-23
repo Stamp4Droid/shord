@@ -76,6 +76,7 @@ public class AliasModelsTraceReader {
 	public final Set<Integer> observedAbstractObjects = new HashSet<Integer>();
 	public final Set<Integer> frameworkAbstractObjects = new HashSet<Integer>();
 	public final Map<Pair<Variable,Integer>,Integer> retAbstractObjectPairsToCounts = new HashMap<Pair<Variable,Integer>,Integer>();
+	public final MultivalueMap<Integer,Variable> abstractObjectsToRets = new MultivalueMap<Integer,Variable>();
 	
 	public AliasModelsTraceReader(String filename) {
 		System.out.println("Reading file: " + new File(filename).getAbsolutePath());
@@ -97,6 +98,7 @@ public class AliasModelsTraceReader {
 						if(index == -1) {
 							Variable variable = getVariable(tokens[2]);
 							this.retsToAbstractObjects.add(variable, abstractObject);
+							this.abstractObjectsToRets.add(abstractObject, variable);
 							Pair<Variable,Integer> pair = new Pair<Variable,Integer>(variable, abstractObject);
 							if(!this.retAbstractObjectPairsToCounts.containsKey(pair)) {
 								this.retAbstractObjectPairsToCounts.put(pair, count);
