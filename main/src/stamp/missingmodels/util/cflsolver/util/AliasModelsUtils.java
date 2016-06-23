@@ -218,6 +218,35 @@ public class AliasModelsUtils {
 			return ptDyn;
 		}
 		
+		public static MultivalueMap<VarNode,Pair<SootMethod,Integer>> getPtPhDynRet(AliasModelsTraceReader processor) {
+			MultivalueMap<VarNode,Pair<SootMethod,Integer>> ptDyn = new MultivalueMap<VarNode,Pair<SootMethod,Integer>>();
+			for(Variable variable : processor.retsToAbstractObjects.keySet()) {
+				for(int abstractObject : processor.retsToAbstractObjects.get(variable)) {
+					if(!processor.frameworkAbstractObjects.contains(abstractObject)) {
+						continue;
+					}
+					Stmt stmtInvocation = getInvokeStmtOrNullFor(variable);
+					if(stmtInvocation == null) {
+						continue;
+					}
+					LocalVarNode varNode = getVarNodeFor((Local)((AssignStmt)stmtInvocation).getLeftOp(), getMethodFor(stmtInvocation));
+					if(varNode == null) {
+						continue;
+					}
+					if(!(varNode.local.getType() instanceof RefLikeType)) {
+						continue;
+					}
+					int count = processor.retAbstractObjectPairsToCounts.get(new Pair<Variable,Integer>(variable, abstractObject));
+					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
+						if(isStub(method)) {
+							ptDyn.add(varNode, new Pair<SootMethod,Integer>(method, count));
+						}
+					}
+				}
+			}
+			return ptDyn;
+		}
+		
 		public static MultivalueMap<VarNode,SootMethod> getPhantomObjectDyn(AliasModelsTraceReader processor) {
 			MultivalueMap<VarNode,SootMethod> phantomObjectDyn = new MultivalueMap<VarNode,SootMethod>();
 			for(Variable variable : processor.retsToAbstractObjects.keySet()) {

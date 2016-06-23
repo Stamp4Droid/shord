@@ -23,8 +23,8 @@ consumes = { "H", "V", "M", "ptd", },
 produces = { "ptdDynOnly", "ptdDynActive", "PhantomObjectDyn", },
 namesOfTypes = {},
 types = {},
-namesOfSigns = { "ptdDynOnly", "ptdDynActive", "PhantomObjectDyn", },
-signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "M0:M0" })
+namesOfSigns = { "ptdDynOnly", "ptdDynActive", "ptphdDynOnly", "PhantomObjectDyn", },
+signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "V0,M0:V0_M0", "M0:M0" })
 public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
@@ -55,26 +55,27 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		relVT.close();
 		
 		// STEP 1: Fill in dynamic flow (ret -> app allocation)
-		MultivalueMap<VarNode,Pair<SiteAllocNode,Integer>> ptDyn = AliasModelsUtils.ProcessorUtils.getPtDynRetApp(processor);
+		MultivalueMap<VarNode,Pair<SiteAllocNode,Integer>> ptdDyn = AliasModelsUtils.ProcessorUtils.getPtDynRetApp(processor);
 		ProgramRel relPtdDynOnly = (ProgramRel)ClassicProject.g().getTrgt("ptdDynOnly");
 		ProgramRel relPtdDynActive = (ProgramRel)ClassicProject.g().getTrgt("ptdDynActive");
 		relPtdDynOnly.zero();
 		relPtdDynActive.zero();
 		Map<Pair<VarNode,SiteAllocNode>,Integer> counts = new HashMap<Pair<VarNode,SiteAllocNode>,Integer>();
-		for(VarNode var : ptDyn.keySet()) {
-			for(Pair<SiteAllocNode,Integer> pair : ptDyn.get(var)) {
+		for(VarNode var : ptdDyn.keySet()) {
+			for(Pair<SiteAllocNode,Integer> pair : ptdDyn.get(var)) {
 				SiteAllocNode alloc = pair.getX();
 				int count = pair.getY();
-				System.out.println("DYNAMIC POINTS TO: " + var + " -> " + alloc + " (COUNT: " + count + ")");
 				try {
 					relPtdDynOnly.add(var, alloc);
 					Pair<VarNode,SiteAllocNode> ptDynEdge = new Pair<VarNode,SiteAllocNode>(var, alloc);
+					if(!counts.containsKey(ptDynEdge) || counts.get(ptDynEdge) > count) {
+						counts.put(ptDynEdge, count);
+					}
 					if(!pt.contains(ptDynEdge)) {
-						System.out.println("ACTIVE");
+						System.out.println("ACTIVE DYNAMIC POINTS TO: " + var + " -> " + alloc + " (COUNT: " + count + ")");
 						relPtdDynActive.add(var, alloc);
-						if(!counts.containsKey(ptDynEdge) || counts.get(ptDynEdge) > count) {
-							counts.put(ptDynEdge, count);
-						}
+					} else {
+						System.out.println("INACTIVE DYNAMIC POINTS TO: " + var + " -> " + alloc + " (COUNT: " + count + ")");
 					}
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -84,7 +85,30 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		relPtdDynOnly.save();
 		relPtdDynActive.save();
 		
-		// STEP 2: Fill in dynamic phantom objects (ret -> framework allocation)
+		// STEP 2: Fill in ph dynamic flow (ret -> ph allocation)
+		MultivalueMap<VarNode,Pair<SootMethod,Integer>> ptphdDyn = AliasModelsUtils.ProcessorUtils.getPtPhDynRet(processor);
+		ProgramRel relPtphdDynOnly = (ProgramRel)ClassicProject.g().getTrgt("ptphdDynOnly");
+		relPtphdDynOnly.zero();
+		Map<Pair<VarNode,SootMethod>,Integer> phcounts = new HashMap<Pair<VarNode,SootMethod>,Integer>();
+		for(VarNode var : ptphdDyn.keySet()) {
+			for(Pair<SootMethod,Integer> pair : ptphdDyn.get(var)) {
+				SootMethod alloc = pair.getX();
+				int count = pair.getY();
+				System.out.println("DYNAMIC POINTS TO: " + var + " -> " + alloc + " (COUNT: " + count + ")");
+				try {
+					relPtphdDynOnly.add(var, alloc);
+					Pair<VarNode,SootMethod> ptphdDynEdge = new Pair<VarNode,SootMethod>(var, alloc);
+					if(!phcounts.containsKey(ptphdDynEdge) || phcounts.get(ptphdDynEdge) > count) {
+						phcounts.put(ptphdDynEdge, count);
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		relPtphdDynOnly.save();
+		
+		// STEP 3: Fill in dynamic phantom objects (ret -> framework allocation)
 		MultivalueMap<VarNode,SootMethod> phantomObjectDyn = AliasModelsUtils.ProcessorUtils.getPhantomObjectDyn(processor);
 		ProgramRel relPhantomObjectDyn = (ProgramRel)ClassicProject.g().getTrgt("PhantomObjectDyn");
 		relPhantomObjectDyn.zero();
@@ -105,14 +129,21 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		relPhantomObjectDyn.save();
 		System.out.println("END PRINTING DYNAMIC PHANTOM OBJECTS");
 		
-		// STEP 3: Print active edge first counts
-		System.out.println("START PRINTING ACTIVE EDGE COUNTS");
+		// STEP 4: Print edge first counts
+		System.out.println("START PRINTING EDGE FIRST COUNTS");
 		for(Pair<VarNode,SiteAllocNode> pair : counts.keySet()) {
-			System.out.println("ACTIVE DYNAMIC POINTS TO EDGE FOUND: " + pair.getX() + " -> " + pair.getY() + " (COUNT: " + counts.get(pair) + ")");
+			System.out.println("DYNAMIC POINTS TO EDGE FOUND FIRST COUNT: " + pair.getX() + " -> " + pair.getY() + " (COUNT: " + counts.get(pair) + ")");
 		}
-		System.out.println("END PRINTING ACTIVE EDGE COUNTS");
+		System.out.println("END PRINTING EDGE FIRST COUNTS");
 		
-		// STEP 4: Check for aliased phantom objects
+		// STEP 5: Print ph edge first counts
+		System.out.println("START PRINTING PH EDGE FIRST COUNTS");
+		for(Pair<VarNode,SootMethod> pair : phcounts.keySet()) {
+			System.out.println("DYNAMIC PH POINTS TO EDGE FOUND FIRST COUNT: " + pair.getX() + " -> " + pair.getY() + " (COUNT: " + counts.get(pair) + ")");
+		}
+		System.out.println("END PRINTING PH EDGE FIRST COUNTS");
+		
+		// STEP 6: Check for aliased phantom objects
 		System.out.println("START PRINTING ALIASED PHANTOM OBJECTS");
 		int counter = 0;
 		for(Set<SootMethod> methods : AliasModelsUtils.ProcessorUtils.getAliasedPhantomObjectDyn(processor)) {
