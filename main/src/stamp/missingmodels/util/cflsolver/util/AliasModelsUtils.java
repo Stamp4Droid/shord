@@ -25,10 +25,12 @@ import soot.jimple.Stmt;
 import stamp.missingmodels.util.cflsolver.core.Edge;
 import stamp.missingmodels.util.cflsolver.core.Edge.EdgeStruct;
 import stamp.missingmodels.util.cflsolver.core.Graph;
+import stamp.missingmodels.util.cflsolver.core.Util.Counter;
 import stamp.missingmodels.util.cflsolver.core.Util.Filter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 import stamp.missingmodels.util.processor.AliasModelsTraceReader;
+import stamp.missingmodels.util.processor.AliasModelsTraceReader.Parameter;
 import stamp.missingmodels.util.processor.AliasModelsTraceReader.Variable;
 
 public class AliasModelsUtils {
@@ -52,6 +54,7 @@ public class AliasModelsUtils {
 		private static Map<SootMethod,Integer> methodMap; // DomM
 		private static Set<SootMethod> stubs; // ProgramRel Stub
 		private static Set<SootMethod> frameworks; // ProgramRel Framework
+		private static Map<String,SootMethod> nameToMethodMap;
 		private static Map<Statement,Stmt> stmtMap; // Statement (above) -> Jimple statement
 		private static Map<Stmt,SootMethod> stmtToMethodMap; // Stmt -> containing SootMethod
 		private static Map<Stmt,SiteAllocNode> stmtToAllocNodeMap; // (alloc) Stmt -> alloc node (DomH)
@@ -86,6 +89,7 @@ public class AliasModelsUtils {
 			
 			// STEP 2: Build relations of reachable methods and contained statements
 			stmtMap = new HashMap<Statement,Stmt>();
+			nameToMethodMap = new HashMap<String,SootMethod>();
 			stmtToMethodMap = new HashMap<Stmt,SootMethod>();
 			ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
 			relReachableM.load();
@@ -94,6 +98,7 @@ public class AliasModelsUtils {
 				if(!method.hasActiveBody()) {
 					continue;
 				}
+				nameToMethodMap.put(method.toString(), method);
 				int offset = 0;
 				for(Unit unit : method.getActiveBody().getUnits()) {
 					if(stmtToMethodMap.get((Stmt)unit) != null) {
@@ -159,6 +164,11 @@ public class AliasModelsUtils {
 		public static SootMethod getMethodFor(Stmt stmt) {
 			build();
 			return stmtToMethodMap.get(stmt);
+		}
+		
+		public static SootMethod getMethodFor(Parameter parameter) {
+			build();
+			return nameToMethodMap.get(parameter.method);
 		}
 		
 		public static SiteAllocNode getAllocNodeFor(Stmt stmt) {
@@ -231,6 +241,38 @@ public class AliasModelsUtils {
 			return ptDyn;
 		}
 		
+		public static Counter<Pair<Variable,Stmt>> getReturnCounts(AliasModelsTraceReader processor) {
+			Counter<Pair<Variable,Stmt>> counts = new Counter<Pair<Variable,Stmt>>();
+			for(Variable variable : processor.returnCounts.keySet()) {
+				counts.setCount(new Pair<Variable,Stmt>(variable, getInvokeStmtOrNullFor(variable)), processor.returnCounts.getCount(variable));
+			}
+			return counts;
+		}
+		
+		public static Counter<Pair<Variable,Stmt>> getAllocationCounts(AliasModelsTraceReader processor) {
+			Counter<Pair<Variable,Stmt>> counts = new Counter<Pair<Variable,Stmt>>();
+			for(Variable variable : processor.allocationCounts.keySet()) {
+				counts.setCount(new Pair<Variable,Stmt>(variable, getStmtFor(variable)), processor.allocationCounts.getCount(variable));
+			}
+			return counts;
+		}
+		
+		public static Counter<Pair<Variable,Stmt>> getArgumentCounts(AliasModelsTraceReader processor) {
+			Counter<Pair<Variable,Stmt>> counts = new Counter<Pair<Variable,Stmt>>();
+			for(Variable variable : processor.argumentCounts.keySet()) {
+				counts.setCount(new Pair<Variable,Stmt>(variable, getStmtFor(variable)), processor.argumentCounts.getCount(variable));
+			}
+			return counts;
+		}
+		
+		public static Counter<SootMethod> getParameterCounts(AliasModelsTraceReader processor) {
+			Counter<SootMethod> counts = new Counter<SootMethod>();
+			for(Parameter parameter : processor.parameterCounts.keySet()) {
+				counts.setCount(getMethodFor(parameter), processor.parameterCounts.getCount(parameter));
+			}
+			return counts;
+		}
+
 		public static MultivalueMap<VarNode,Pair<SootMethod,Integer>> getPtPhDynRet(AliasModelsTraceReader processor) {
 			MultivalueMap<VarNode,Pair<SootMethod,Integer>> ptDyn = new MultivalueMap<VarNode,Pair<SootMethod,Integer>>();
 			for(Variable variable : processor.retsToAbstractObjects.keySet()) {
