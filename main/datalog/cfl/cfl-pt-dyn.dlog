@@ -47,6 +47,7 @@ fptStat(f:F,o:C) input
 # dynamic points-to edges
 
 ptdDynOnly(v:V,h:H) input
+ptphdDynOnly(v:V,m:M) input
 
 ###########
 # OUTPUTS #
@@ -71,6 +72,7 @@ fptStatDyn(f,o) :- fptStat(f,o).
 # dynamic seed
 
 ptDyn(c,v,o) :- ptdDynOnly(v,h), CH(o,h), MV(m,v), CM(c,m).
+ptDyn(c,v,o) :- ptphdDynOnly(v,p), CM(o,p), MV(m,v), CM(c,m).
 
 # closure
 
