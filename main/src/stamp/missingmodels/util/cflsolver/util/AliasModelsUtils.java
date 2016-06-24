@@ -275,8 +275,8 @@ public class AliasModelsUtils {
 			return phantomObjectDyn;
 		}
 		
-		public static List<Set<SootMethod>> getAliasedPhantomObjectDyn(AliasModelsTraceReader processor) {
-			List<Set<SootMethod>> aliasedPhantomObjectDyn = new ArrayList<Set<SootMethod>>();
+		public static Set<Set<SootMethod>> getAliasedPhantomObjectDyn(AliasModelsTraceReader processor) {
+			Set<Set<SootMethod>> aliasedPhantomObjectDyn = new HashSet<Set<SootMethod>>();
 			for(int abstractObject : processor.abstractObjectsToRets.keySet()) {
 				Set<SootMethod> methods = new HashSet<SootMethod>();
 				for(Variable variable : processor.abstractObjectsToRets.get(abstractObject)) {

@@ -139,7 +139,7 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		// STEP 5: Print ph edge first counts
 		System.out.println("START PRINTING PH EDGE FIRST COUNTS");
 		for(Pair<VarNode,SootMethod> pair : phcounts.keySet()) {
-			System.out.println("DYNAMIC PH POINTS TO EDGE FOUND FIRST COUNT: " + pair.getX() + " -> " + pair.getY() + " (COUNT: " + counts.get(pair) + ")");
+			System.out.println("DYNAMIC PH POINTS TO EDGE FOUND FIRST COUNT: " + pair.getX() + " -> " + pair.getY() + " (COUNT: " + phcounts.get(pair) + ")");
 		}
 		System.out.println("END PRINTING PH EDGE FIRST COUNTS");
 		
