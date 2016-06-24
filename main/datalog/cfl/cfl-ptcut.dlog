@@ -33,7 +33,6 @@ param(v:V,u:V,i:I) input
 return(v:V,u:V,i:I) input
 
 pt(c:C,v:V,o:C) input
-ptd(v:V,h:H) input
 
 ###################
 # OUTPUTS
@@ -42,11 +41,10 @@ ptd(v:V,h:H) input
 FrameworkVar(v:V) output
 FrameworkObj(h:H) output
 
-FrameworkParamVar(v:V) output
-FrameworkRetVar(v:V) output
-FrameworkRetObj(h:H) output
-
-FrameworkRetObjMap(h:H,v:V) output
+ActiveSource(v:V,o:C) output
+ActiveSink(v:V,u:V) output
+MonitorSource(v:V,o:C) output
+MonitorSink(v:V,u:V) output
 
 ###################
 # RULES
@@ -56,8 +54,24 @@ FrameworkRetObjMap(h:H,v:V) output
 FrameworkVar(v) :- MV(m,v), Framework(m).
 FrameworkObj(h) :- Alloc(v,h), FrameworkVar(v).
 
-FrameworkParamVar(v) :- param(v,u,_), !FrameworkVar(u), FrameworkVar(v).
-FrameworkRetVar(u) :- return(v,u,_), !FrameworkVar(v), FrameworkVar(u).
-FrameworkRetObj(h) :- Alloc(v,h), FrameworkRetVar(v).
+# activate anything loaded out of framework variables
+ActiveSource(v,o) :- FrameworkObj(h), Alloc(v,h), CH(o,h).
+ActiveSource(v,o) :- ActiveSource(u,o), Assign(v,u).
+ActiveSource(v,o) :- ActiveSource(u,o), Load(v,u,_).
 
-FrameworkRetObjMap(h,v) :- Alloc(v,h), FrameworkRetVar(v).
+# monitor if loaded/returned from an active source
+# v = u.f, u active, u app, v -> o, u -f-> o
+MonitorSource(v,o) :- ActiveSource(u,o), !FrameworkVar(u), Load(v,u,_), pt(_,v,o).
+# v = return u, u active, u framework, v app, v -> o, u -> o
+MonitorSource(v,o) :- ActiveSource(u,o), FrameworkVar(u), return(v,u,_), !FrameworkVar(v), pt(_,v,o).
+
+# activate anything stored into framework variables
+ActiveSink(v,s) :- FrameworkVar(v), v=s.
+ActiveSink(v,s) :- ActiveSink(u,s), Assign(u,v).
+ActiveSink(v,s) :- ActiveSink(u,s), Store(u,_,v).
+
+# monitor if stored/passed to an active sink
+# u.f = v, u active, u app, v -> o, u -f-> o
+MonitorSink(v,s) :- ActiveSink(u,s), !FrameworkVar(u), Store(u,_,v), pt(_,v,o), pt(_,s,o).
+# u = param v, u active, u framework, v app, v -> o, u -> o
+MonitorSink(v,s) :- ActiveSink(u,s), FrameworkVar(u), param(u,v,_), !FrameworkVar(v), pt(_,v,o), pt(_,s,o).

@@ -32,7 +32,6 @@ LoadPrim(y:U,x:V,f:F) input
 ###################
 
 Alloc(v:V,h:H) input
-GlobalAlloc(v:V,h:H) input
 CH(o:C,h:H) input
 
 ###################
@@ -79,7 +78,6 @@ LoadPrimArr(v,u) :- LoadPrim(v,u,0).
 ###################
 
 AllocNew(v,h) :- Alloc(v,h), CH(_,h).
-AllocNew(v,h) :- GlobalAlloc(v,h), CH(_,h).
 
 ###################
 # RULES: TYPEFILTER

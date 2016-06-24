@@ -244,12 +244,6 @@ public class IOUtils {
 	}
 	
 	public static void printAbductionResult(MultivalueMap<EdgeStruct,Integer> result, boolean shord, boolean useCallbacks) {
-		ProgramRel relPotentialCallbackDependent = null;
-		if(useCallbacks) {
-			relPotentialCallbackDependent = (ProgramRel)ClassicProject.g().getTrgt("potentialCallbackDependent");
-			relPotentialCallbackDependent.load();
-		}
-		
 		Counter<Integer> totalCut = new Counter<Integer>();
 		for(EdgeStruct edgeStruct : result.keySet()) {
 			if(result.get(edgeStruct).size() > 1) {
@@ -261,23 +255,12 @@ public class IOUtils {
 				if(shord) {
 					System.out.println("caller: " + ConversionUtils.getMethodSig(edgeStruct.sourceName));
 					System.out.println("callee: " + ConversionUtils.getMethodSig(edgeStruct.sinkName));
-					if(useCallbacks) {
-						for(chord.util.tuple.object.Pair<Object, Object> pair : relPotentialCallbackDependent.getAry2ValTuples()) {
-							if(ConversionUtils.getMethodSig(edgeStruct.sourceName).equals(pair.val1.toString())) {
-								System.out.println("potential callback dependent: " + pair.val0);
-							}
-						}
-					}
 				}
 				totalCut.increment(cut);
 			}
 		}
 		for(int i : totalCut.keySet()) {
 			System.out.println("total cut " + i + ": " + totalCut.getCount(i));
-		}
-		
-		if(useCallbacks) {
-			relPotentialCallbackDependent.close();
 		}
 	}
 	

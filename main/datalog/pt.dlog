@@ -44,7 +44,7 @@ pt1(c:C,v:V,o:C)
 pt(c:C,v:V,o:C)    output # (c,v) points-to o
 fpt(o1:C,f:F,o2:C) output
 
-fptStat(f:F,o:C)
+fptStat(f:F,o:C) output
 
 ###################
 #    RULES
