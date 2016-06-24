@@ -256,19 +256,20 @@ public class AliasModelsUtils {
 					}
 					Stmt stmtInvocation = getInvokeStmtOrNullFor(variable);
 					if(stmtInvocation == null) {
+						System.out.println("HERE1");
 						continue;
 					}
 					LocalVarNode varNode = getVarNodeFor((Local)((AssignStmt)stmtInvocation).getLeftOp(), getMethodFor(stmtInvocation));
 					if(varNode == null) {
+						System.out.println("HERE2");
 						continue;
 					}
 					if(!(varNode.local.getType() instanceof RefLikeType)) {
+						System.out.println("HERE3");
 						continue;
 					}
 					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
-						if(isStub(method)) {
-							phantomObjectDyn.add(varNode, method);
-						}
+						phantomObjectDyn.add(varNode, method);
 					}
 				}
 			}
