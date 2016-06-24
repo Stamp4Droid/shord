@@ -12,6 +12,7 @@ import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import soot.SootMethod;
 import soot.Type;
+import soot.jimple.Stmt;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 import stamp.missingmodels.util.cflsolver.util.AliasModelsUtils;
@@ -146,11 +147,11 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		// STEP 6: Check for aliased phantom objects
 		System.out.println("START PRINTING ALIASED PHANTOM OBJECTS");
 		int counter = 0;
-		for(Set<SootMethod> methods : AliasModelsUtils.ProcessorUtils.getAliasedPhantomObjectDyn(processor)) {
+		for(Set<Stmt> statements : AliasModelsUtils.ProcessorUtils.getAliasedPhantomObjectDyn(processor)) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("[");
-			for(SootMethod method : methods) {
-				sb.append(method.toString()).append(", ");
+			for(Stmt statement : statements) {
+				sb.append(statement.toString()).append(", ");
 			}
 			sb.substring(0, sb.length() - 2);
 			System.out.println("ALIASED PHANTOM OBJECT FOUND: " + sb.toString());

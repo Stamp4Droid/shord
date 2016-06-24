@@ -256,16 +256,13 @@ public class AliasModelsUtils {
 					}
 					Stmt stmtInvocation = getInvokeStmtOrNullFor(variable);
 					if(stmtInvocation == null) {
-						System.out.println("HERE1");
 						continue;
 					}
 					LocalVarNode varNode = getVarNodeFor((Local)((AssignStmt)stmtInvocation).getLeftOp(), getMethodFor(stmtInvocation));
 					if(varNode == null) {
-						System.out.println("HERE2");
 						continue;
 					}
 					if(!(varNode.local.getType() instanceof RefLikeType)) {
-						System.out.println("HERE3");
 						continue;
 					}
 					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
@@ -276,10 +273,10 @@ public class AliasModelsUtils {
 			return phantomObjectDyn;
 		}
 		
-		public static Set<Set<SootMethod>> getAliasedPhantomObjectDyn(AliasModelsTraceReader processor) {
-			Set<Set<SootMethod>> aliasedPhantomObjectDyn = new HashSet<Set<SootMethod>>();
+		public static Set<Set<Stmt>> getAliasedPhantomObjectDyn(AliasModelsTraceReader processor) {
+			Set<Set<Stmt>> aliasedPhantomObjectDyn = new HashSet<Set<Stmt>>();
 			for(int abstractObject : processor.abstractObjectsToRets.keySet()) {
-				Set<SootMethod> methods = new HashSet<SootMethod>();
+				Set<Stmt> statements = new HashSet<Stmt>();
 				for(Variable variable : processor.abstractObjectsToRets.get(abstractObject)) {
 					if(!processor.frameworkAbstractObjects.contains(abstractObject)) {
 						continue;
@@ -295,14 +292,10 @@ public class AliasModelsUtils {
 					if(!(varNode.local.getType() instanceof RefLikeType)) {
 						continue;
 					}
-					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
-						if(isStub(method)) {
-							methods.add(method);
-						}
-					}
+					statements.add(stmtInvocation);
 				}
-				if(methods.size() > 1) {
-					aliasedPhantomObjectDyn.add(methods);
+				if(statements.size() > 1) {
+					aliasedPhantomObjectDyn.add(statements);
 				}
 			}
 			return aliasedPhantomObjectDyn;
