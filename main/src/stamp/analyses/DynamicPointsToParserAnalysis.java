@@ -186,7 +186,7 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		System.out.println("START PRINTING PARAMETER COUNTS");
 		Counter<SootMethod> parameterCounts = AliasModelsUtils.ProcessorUtils.getParameterCounts(processor);
 		for(SootMethod method : parameterCounts.sortedKeySet()) {
-			System.out.println(parameterCounts.getCount(method) + ": " + method.toString());
+			System.out.println(parameterCounts.getCount(method) + ": " + method);
 		}
 		System.out.println("END PRINTING PARAMTER COUNTS");
 		
