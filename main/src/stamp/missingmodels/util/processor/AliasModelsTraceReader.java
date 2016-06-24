@@ -136,13 +136,10 @@ public class AliasModelsTraceReader {
 				this.frameworkAbstractObjects.add(abstractObject);
 			}
 		}
-	}
-	
-	public void printStatistics() {
-		// Some basic statistics
-		System.out.println(this.appAbstractObjectsToAllocations.size());
-		System.out.println(this.frameworkAbstractObjects.size());
-		System.out.println(this.observedAbstractObjects.size());
+
+		System.out.println("APP ABSTRACT OBJECTS TO ALLOCATIONS: " + this.appAbstractObjectsToAllocations.size());
+		System.out.println("FRAMEWORK ABSTRACT OBJECTS: " + this.frameworkAbstractObjects.size());
+		System.out.println("OBSERVED ABSTRACT OBJECTS: " + this.observedAbstractObjects.size());
 	}
 	
 	public static void main(String[] args) {
