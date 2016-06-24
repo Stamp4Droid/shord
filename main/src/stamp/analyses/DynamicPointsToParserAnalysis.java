@@ -13,10 +13,12 @@ import shord.project.analyses.ProgramRel;
 import soot.SootMethod;
 import soot.Type;
 import soot.jimple.Stmt;
+import stamp.missingmodels.util.cflsolver.core.Util.Counter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 import stamp.missingmodels.util.cflsolver.util.AliasModelsUtils;
 import stamp.missingmodels.util.processor.AliasModelsTraceReader;
+import stamp.missingmodels.util.processor.AliasModelsTraceReader.Variable;
 import chord.project.Chord;
 
 @Chord(name = "dynamic-points-to-parser-java",
@@ -161,5 +163,32 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		if(counter > 1) {
 			System.out.println("NUM ALIASED PHANTOM OBJECTS FOUND: " + counter);
 		}
+		
+		// STEP 7: Print counts
+		System.out.println("START PRINTING RETURN COUNTS");
+		Counter<Pair<Variable,Stmt>> returnCounts = AliasModelsUtils.ProcessorUtils.getReturnCounts(processor);
+		for(Pair<Variable,Stmt> pair : returnCounts.sortedKeySet()) {
+			System.out.println(returnCounts.getCount(pair) + ": " + pair.toString());
+		}
+		System.out.println("END PRINTING RETURN COUNTS");
+		System.out.println("START PRINTING ALLOCATION COUNTS");
+		Counter<Pair<Variable,Stmt>> allocationCounts = AliasModelsUtils.ProcessorUtils.getAllocationCounts(processor);
+		for(Pair<Variable,Stmt> pair : allocationCounts.sortedKeySet()) {
+			System.out.println(allocationCounts.getCount(pair) + ": " + pair.toString());
+		}
+		System.out.println("END PRINTING ALLOCATION COUNTS");
+		System.out.println("START PRINTING ARGUMENT COUNTS");
+		Counter<Pair<Variable,Stmt>> argumentCounts = AliasModelsUtils.ProcessorUtils.getArgumentCounts(processor);
+		for(Pair<Variable,Stmt> pair : argumentCounts.sortedKeySet()) {
+			System.out.println(argumentCounts.getCount(pair) + ": " + pair.toString());
+		}
+		System.out.println("END PRINTING ARGUMENT COUNTS");
+		System.out.println("START PRINTING PARAMETER COUNTS");
+		Counter<SootMethod> parameterCounts = AliasModelsUtils.ProcessorUtils.getParameterCounts(processor);
+		for(SootMethod method : parameterCounts.sortedKeySet()) {
+			System.out.println(parameterCounts.getCount(method) + ": " + method.toString());
+		}
+		System.out.println("END PRINTING PARAMTER COUNTS");
+		
 	}
 }

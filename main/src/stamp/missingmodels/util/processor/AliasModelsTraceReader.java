@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import stamp.missingmodels.util.cflsolver.core.Util.Counter;
 import stamp.missingmodels.util.cflsolver.core.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.core.Util.Pair;
 
@@ -77,6 +78,10 @@ public class AliasModelsTraceReader {
 	public final Set<Integer> frameworkAbstractObjects = new HashSet<Integer>();
 	public final Map<Pair<Variable,Integer>,Integer> retAbstractObjectPairsToCounts = new HashMap<Pair<Variable,Integer>,Integer>();
 	public final MultivalueMap<Integer,Variable> abstractObjectsToRets = new MultivalueMap<Integer,Variable>();
+	public final Counter<Variable> returnCounts = new Counter<Variable>();
+	public final Counter<Variable> argumentCounts = new Counter<Variable>();
+	public final Counter<Parameter> parameterCounts = new Counter<Parameter>();
+	public final Counter<Variable> allocationCounts = new Counter<Variable>();
 	
 	public AliasModelsTraceReader(String filename) {
 		System.out.println("Reading file: " + new File(filename).getAbsolutePath());
@@ -90,6 +95,7 @@ public class AliasModelsTraceReader {
 				if(tokens.length == 4) {
 					this.appAbstractObjectsToAllocations.put(Integer.parseInt(tokens[3]), getVariable(tokens[2]));
 					this.variablesToAbstractObjects.add(getVariable(tokens[2]), Integer.parseInt(tokens[3]));
+					this.allocationCounts.increment(getVariable(tokens[2]));
 				} else if(tokens.length == 5) {
 					if(tokens[1].equals("METHCALLARG")) {
 						int index = Integer.parseInt(tokens[3]);
@@ -97,6 +103,7 @@ public class AliasModelsTraceReader {
 						this.observedAbstractObjects.add(abstractObject);
 						if(index == -1) {
 							Variable variable = getVariable(tokens[2]);
+							this.returnCounts.increment(getVariable(tokens[2]));
 							this.retsToAbstractObjects.add(variable, abstractObject);
 							this.abstractObjectsToRets.add(abstractObject, variable);
 							Pair<Variable,Integer> pair = new Pair<Variable,Integer>(variable, abstractObject);
@@ -104,6 +111,7 @@ public class AliasModelsTraceReader {
 								this.retAbstractObjectPairsToCounts.put(pair, count);
 							}
 						} else {
+							this.argumentCounts.increment(getVariable(tokens[2]));
 							this.argsToIndex.put(getVariable(tokens[2]), index);
 							this.argsToAbstractObjects.add(getVariable(tokens[2]), abstractObject);
 						}
@@ -112,6 +120,7 @@ public class AliasModelsTraceReader {
 							br.close();
 							throw new RuntimeException("Invalid METHPARAM parameter index: " + tokens[3]);
 						}
+						this.parameterCounts.increment(new Parameter(tokens[2], Integer.parseInt(tokens[3])));
 						int abstractObject = Integer.parseInt(tokens[4]);
 						this.observedAbstractObjects.add(abstractObject);
 						this.paramsToAbstractObjects.add(new Parameter(tokens[2], Integer.parseInt(tokens[3])), abstractObject);
