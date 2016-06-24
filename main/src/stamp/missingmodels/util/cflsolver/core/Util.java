@@ -98,7 +98,9 @@ public class Util {
 
 		@Override
 		public String toString() {
-			return "[" + this.x.toString() + "," + this.y.toString() + "]";
+			String xString = this.x != null ? this.x.toString() : "null";
+			String yString = this.y != null ? this.y.toString() : "null";
+			return "[" + xString + "," + yString + "]";
 		}
 
 		@Override
