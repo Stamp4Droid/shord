@@ -244,7 +244,7 @@ public class AliasModelsUtils {
 		public static Counter<Pair<Variable,Stmt>> getReturnCounts(AliasModelsTraceReader processor) {
 			Counter<Pair<Variable,Stmt>> counts = new Counter<Pair<Variable,Stmt>>();
 			for(Variable variable : processor.returnCounts.keySet()) {
-				counts.setCount(new Pair<Variable,Stmt>(variable, getInvokeStmtOrNullFor(variable)), processor.returnCounts.getCount(variable));
+				counts.setCount(new Pair<Variable,Stmt>(variable, getStmtFor(variable)), processor.returnCounts.getCount(variable));
 			}
 			return counts;
 		}
