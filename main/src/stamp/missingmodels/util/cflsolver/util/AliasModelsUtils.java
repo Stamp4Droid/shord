@@ -51,6 +51,7 @@ public class AliasModelsUtils {
 		
 		private static Map<SootMethod,Integer> methodMap; // DomM
 		private static Set<SootMethod> stubs; // ProgramRel Stub
+		private static Set<SootMethod> frameworks; // ProgramRel Framework
 		private static Map<Statement,Stmt> stmtMap; // Statement (above) -> Jimple statement
 		private static Map<Stmt,SootMethod> stmtToMethodMap; // Stmt -> containing SootMethod
 		private static Map<Stmt,SiteAllocNode> stmtToAllocNodeMap; // (alloc) Stmt -> alloc node (DomH)
@@ -75,6 +76,13 @@ public class AliasModelsUtils {
 				stubs.add((SootMethod)obj);
 			}
 			relStub.close();
+			ProgramRel relFramework = (ProgramRel)ClassicProject.g().getTrgt("Framework");
+			relFramework.load();
+			frameworks = new HashSet<SootMethod>();
+			for(Object obj : relFramework.getAry1ValTuples()) {
+				frameworks.add((SootMethod)obj);
+			}
+			relFramework.close();
 			
 			// STEP 2: Build relations of reachable methods and contained statements
 			stmtMap = new HashMap<Statement,Stmt>();
@@ -178,6 +186,11 @@ public class AliasModelsUtils {
 			return stubs.contains(method);
 		}
 		
+		public static boolean isFramework(SootMethod method) {
+			build();
+			return frameworks.contains(method);
+		}
+		
 		public static Stmt getInvokeStmtOrNullFor(Variable variable) {
 			Stmt stmtInvocation = getStmtFor(variable);
 			if(stmtInvocation == null) {
@@ -238,7 +251,7 @@ public class AliasModelsUtils {
 					}
 					int count = processor.retAbstractObjectPairsToCounts.get(new Pair<Variable,Integer>(variable, abstractObject));
 					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
-						if(isStub(method)) {
+						if(isFramework(method)) {
 							ptDyn.add(varNode, new Pair<SootMethod,Integer>(method, count));
 						}
 					}
@@ -266,7 +279,9 @@ public class AliasModelsUtils {
 						continue;
 					}
 					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
-						phantomObjectDyn.add(varNode, method);
+						if(isFramework(method)) {
+							phantomObjectDyn.add(varNode, method);
+						}
 					}
 				}
 			}
@@ -292,7 +307,12 @@ public class AliasModelsUtils {
 					if(!(varNode.local.getType() instanceof RefLikeType)) {
 						continue;
 					}
-					statements.add(stmtInvocation);
+					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
+						if(isFramework(method)) {
+							statements.add(stmtInvocation);
+							break;
+						}
+					}
 				}
 				if(statements.size() > 1) {
 					aliasedPhantomObjectDyn.add(statements);
