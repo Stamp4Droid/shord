@@ -190,5 +190,8 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		}
 		System.out.println("END PRINTING PARAMTER COUNTS");
 		
+		// STEP 8: Print objects and stubs into which they escape
+		
+		
 	}
 }
