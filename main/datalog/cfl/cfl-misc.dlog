@@ -146,6 +146,15 @@ EscapeCount(o) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
 EscapeCount(o) :- EscapeCount(op), fpt(op,_,o).
 EscapeCountH(h) :- EscapeCount(o), CH(o,h), AllocNF(_,h).
 
+# details on objects to instrument to determine which stubs need models
+
+EscapeInto(o:C,m:M) output
+EscapeIntoH(h:H,m:M) output
+
+EscapeInto(o,m) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
+EscapeInto(o,m) :- EscapeInto(op,m), fpt(op,_,o).
+EscapeIntoH(h,m) :- EscapeInto(o,m), CH(o,h), AllocNF(_,h).
+
 # stubs to instrument
 
 StubInvokeMonitorRet(i:I) output
