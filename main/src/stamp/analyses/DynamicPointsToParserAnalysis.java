@@ -191,7 +191,19 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		System.out.println("END PRINTING PARAMTER COUNTS");
 		
 		// STEP 8: Print objects and stubs into which they escape
-		
-		
+		System.out.println("START PRINTING ESCAPED OBJECT MAP");
+		ProgramRel relEscapeIntoH = (ProgramRel)ClassicProject.g().getTrgt("EscapeIntoH");
+		for(chord.util.tuple.object.Pair<Object,Object> pair : relEscapeIntoH.getAry2ValTuples()) {
+			Object obj = pair.val0;
+			if(!(obj instanceof SiteAllocNode)) {
+				System.out.println("INVALID ALLOC: " + obj);
+				continue;
+			}
+			SootMethod method = (SootMethod)pair.val1;
+			SiteAllocNode alloc = (SiteAllocNode)obj;
+			Stmt stmt = (Stmt)alloc.getUnit();
+			System.out.println("ESCAPE INTO: " + stmt + " -> " + method);
+		}
+		System.out.println("END PRINTING ESCAPED OBJECT MAP");
 	}
 }
