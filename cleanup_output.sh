@@ -1,6 +1,12 @@
+rm -rf stamp_output/*/app.json
+rm -rf stamp_output/*/apktool-out
+rm -rf stamp_output/*/cfl
+rm -rf stamp_output/*/chord_output
+rm -rf stamp_output/*/harness.txt
 rm -rf stamp_output/*/hierarchy.json
 rm -rf stamp_output/*/jimple
 rm -rf stamp_output/*/reports.txt
+rm -rf stamp_output/*/results
 rm -rf stamp_output/*/srcmap
 rm -rf stamp_output/*/stamp_annotations.txt
 rm -rf stamp_output/*/stamp-driver
