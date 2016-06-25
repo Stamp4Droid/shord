@@ -3,6 +3,7 @@ package stamp.missingmodels.util.cflsolver.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,10 +15,12 @@ import shord.analyses.DomM;
 import shord.analyses.LocalVarNode;
 import shord.analyses.SiteAllocNode;
 import shord.analyses.VarNode;
+import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import soot.Local;
 import soot.RefLikeType;
+import soot.Scene;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.AssignStmt;
@@ -62,7 +65,7 @@ public class AliasModelsUtils {
 		private static Map<Unit,Integer> invokeStmtMap; // DomI
 		private static MultivalueMap<Unit,SootMethod> callgraph; // ProgramRel IM
 		private static boolean built = false;
-		private static void build() {
+		public static void build() {
 			if(built) { return; }
 			built = true;
 			
@@ -91,16 +94,17 @@ public class AliasModelsUtils {
 			stmtMap = new HashMap<Statement,Stmt>();
 			nameToMethodMap = new HashMap<String,SootMethod>();
 			stmtToMethodMap = new HashMap<Stmt,SootMethod>();
-			ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
-			relReachableM.load();
-			for(Object obj : relReachableM.getAry1ValTuples()) {
-				SootMethod method = (SootMethod)obj;
+			Iterator<SootMethod> methods = Program.g().getMethods();
+			while(methods.hasNext()) {
+				SootMethod method = methods.next();
 				if(!method.hasActiveBody()) {
 					continue;
 				}
+				//System.out.println("METHOD: " + method);
 				nameToMethodMap.put(method.toString(), method);
 				int offset = 0;
 				for(Unit unit : method.getActiveBody().getUnits()) {
+					//System.out.println("STMT" + offset + ": " + unit);
 					if(stmtToMethodMap.get((Stmt)unit) != null) {
 						throw new RuntimeException("Error: duplicate statement: " + unit);
 					}
@@ -109,7 +113,6 @@ public class AliasModelsUtils {
 					offset++;
 				}
 			}
-			relReachableM.close();
 			
 			// STEP 2: Build alloc node map
 			stmtToAllocNodeMap = new HashMap<Stmt,SiteAllocNode>();
