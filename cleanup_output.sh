@@ -1,4 +1,6 @@
+rm -rf stamp_output/*/app.json
 rm -rf stamp_output/*/apktool-out
+rm -rf stamp_output/*/cfl
 rm -rf stamp_output/*/chord_output
 rm -rf stamp_output/*/harness.txt
 rm -rf stamp_output/*/hierarchy.json
