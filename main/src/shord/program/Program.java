@@ -136,8 +136,8 @@ public class Program
 				ContextsAnalysis.K = 2;
 				CtxtsObjAnalysis.K = 2;				
 			} else {
-				ContextsAnalysis.K = 1;
-				CtxtsObjAnalysis.K = 1;
+				ContextsAnalysis.K = 2;
+				CtxtsObjAnalysis.K = 2;
 			}
 			
 			

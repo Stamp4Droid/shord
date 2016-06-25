@@ -55,7 +55,8 @@ public class DefaultProgramScope extends ProgramScope
 	{
 		boolean excluded = false;
 		if(prog.isStub(method))
-			excluded = !annotatedMethods.contains(method);
+			//excluded = !annotatedMethods.contains(method);
+			excluded = false;
 		else if(excludePattern != null)
 			excluded = excludePattern.matcher(method.getDeclaringClass().getName()).matches();
 		if(excluded)

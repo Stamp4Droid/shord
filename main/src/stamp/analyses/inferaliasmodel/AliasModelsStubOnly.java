@@ -9,6 +9,7 @@ import java.util.List;
 import shord.analyses.SiteAllocNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.Stmt;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.CallRetMonitor;
@@ -57,11 +58,11 @@ public class AliasModelsStubOnly {
 			ProgramRel relStubInvokeMonitorRet = (ProgramRel)ClassicProject.g().getTrgt("StubInvokeMonitorRet");
 			relStubInvokeMonitorRet.load();
 			for(Object obj : relStubInvokeMonitorRet.getAry1ValTuples()) {
-				if(!(obj instanceof InvokeStmt)) {
+				if(!(obj instanceof Stmt)) {
 					System.out.println("INVALID INVOKE: " + obj);
 					continue;
 				}
-				InvokeStmt stmt = (InvokeStmt)obj;
+				Stmt stmt = (Stmt)obj;
 				invokes.add(stmt);
 			}
 			relStubInvokeMonitorRet.close();
