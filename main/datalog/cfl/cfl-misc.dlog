@@ -114,15 +114,6 @@ StoreNF(v,f,u) :- Store(v,f,u), MV(m,v), !Framework(m).
 AssignNF(v,u) :- Assign(v,u), MV(m,v), !Framework(m).
 AllocNF(v,h) :- Alloc(v,h), MV(m,v), !Framework(m).
 
-# objects that escape to the framework
-
-Escape(o:C) output
-EscapeH(h:H) output
-
-Escape(o) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
-#Escape(o) :- Escape(op), fpt(op,_,o).
-EscapeH(h) :- Escape(o), CH(o,h), AllocNF(_,h).
-
 # calls to stub methods (for alias models inference paper results)
 
 chaIM(i:I,m:M) input
@@ -137,30 +128,60 @@ InvokeMonitorRet(i:I) output
 InvokeMonitorArg(i,v) :- chaIM(i,m), MmethArg(m,_,v), MI(mp,i), !Framework(mp).
 InvokeMonitorRet(i) :- chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
 
-# objects to instrument
+# objects that escape to framework methods
+# lim denotes direct pt, no fpt
+
+Escape(o:C) output
+EscapeH(h:H) output
+
+Escape(o) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
+Escape(o) :- Escape(op), fpt(op,_,o).
+EscapeH(h) :- Escape(o), CH(o,h), AllocNF(_,h).
+
+EscapeLim(o:C) output
+EscapeLimH(h:H) output
+
+EscapeLim(o) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
+EscapeLimH(h) :- EscapeLim(o), CH(o,h), AllocNF(_,h).
+
+# objects that escape to stub methods
+# lim denotes direct pt, no fpt
 
 EscapeCount(o:C) output
 EscapeCountH(h:H) output
 
 EscapeCount(o) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
-#EscapeCount(o) :- EscapeCount(op), fpt(op,_,o).
+EscapeCount(o) :- EscapeCount(op), fpt(op,_,o).
 EscapeCountH(h) :- EscapeCount(o), CH(o,h), AllocNF(_,h).
 
-# details on objects to instrument to determine which stubs need models
+EscapeCountLim(o:C) output
+EscapeCountLimH(h:H) output
+
+EscapeCountLim(o) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
+EscapeCountLimH(h) :- EscapeCountLim(o), CH(o,h), AllocNF(_,h).
+
+# objects that escape to framework methods, with the method into which they escape (for the purpose of reducing overhead)
+# lim denotes direct pt, no fpt
 
 EscapeInto(o:C,m:M) output
 EscapeIntoH(h:H,m:M) output
 
-EscapeInto(o,m) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
-#EscapeInto(o,m) :- EscapeInto(op,m), fpt(op,_,o).
+EscapeInto(o,m) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
+EscapeInto(o,m) :- EscapeInto(op,m), fpt(op,_,o).
 EscapeIntoH(h,m) :- EscapeInto(o,m), CH(o,h), AllocNF(_,h).
 
-# stubs to instrument
+EscapeIntoLim(o:C,m:M) output
+EscapeIntoLimH(h:H,m:M) output
+
+EscapeIntoLim(o,m) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
+EscapeIntoLimH(h,m) :- EscapeIntoLim(o,m), CH(o,h), AllocNF(_,h).
+
+# stubs return values to instrument
 
 StubInvokeMonitorRet(i:I) output
 StubInvokeMonitorRet(i) :- Stub(m), chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
 
-# framework to instrument
+# framework return values to instrument
 FrameworkInvokeMonitorRet(i:I) output
 FrameworkInvokeMonitorRet(i) :- Framework(m), chaIM(i,m), MmethRet(m,_,_), MI(mp,i), !Framework(mp).
 

@@ -42,14 +42,19 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 	private PrintWriter instrInfoWriter;
 	private int eventId = 0;
 
-	public enum EventType { METHCALLARG, METHPARAM };
+	public static enum EventType { METHCALLARG, METHPARAM };
+	
+	public static enum FilterType { STUB_INIT, STUB_WORST, FRAMEWORK_INIT, FRAMEWORK_WORST, NONE }
 	
 	public void run() {
-		run(false, false, "instrinfo.txt");
-		run(false, true, "instrinfo_filtered.txt");
+		run(false, FilterType.NONE, "instrinfo.txt");
+		run(false, FilterType.FRAMEWORK_WORST, "instrinfo_framework_worst.txt");
+		run(false, FilterType.FRAMEWORK_INIT, "instrinfo_framework_init.txt");
+		run(false, FilterType.STUB_WORST, "instrinfo_stub_worst.txt");
+		run(false, FilterType.STUB_INIT, "instrinfo_stub_init.txt");
 	}
 	
-	public void run(boolean instCallbacks, boolean useFilter, String name)
+	public void run(boolean instCallbacks, FilterType filterType, String name)
 	{
 		try{
 			String stampOutDir = System.getProperty("stamp.out.dir");
@@ -89,7 +94,7 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 
 					methodInfoWriter.println(methIndex +" "+method.getSignature());
 					System.out.println("preinst: "+method.getSignature());
-					process(methIndex, useFilter);
+					process(methIndex, filterType);
 					
 					if(instCallbacks && callbacks.contains(method)){
 						assert !method.isStatic();
@@ -114,23 +119,38 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 		}
 	}
 	
-	private void process(int methIndex, boolean useFilter)
+	private void process(int methIndex, FilterType filterType)
 	{
-
-
 		Iterator<Unit> uit = units.snapshotIterator();
 		int stmtIndex = 0;
 		while(uit.hasNext()){
 			Stmt stmt = (Stmt) uit.next();
-			processNewStmt(stmt, stmtIndex, useFilter);
-			processInvkStmt(stmt, stmtIndex, useFilter);
+			processNewStmt(stmt, stmtIndex, filterType);
+			processInvkStmt(stmt, stmtIndex, filterType);
 			stmtIndex++;
 		}
 	}
+	
+	private static boolean isFilteredAlloc(Stmt stmt, FilterType filterType) {
+		switch(filterType) {
+		case NONE:
+			return true;
+		case FRAMEWORK_WORST:
+			return AliasModelsStubOnly.getFrameworkAllocs().contains(stmt);
+		case FRAMEWORK_INIT:
+			return AliasModelsStubOnly.getFrameworkLimAllocs().contains(stmt);
+		case STUB_WORST:
+			return AliasModelsStubOnly.getStubAllocs().contains(stmt);
+		case STUB_INIT:
+			return AliasModelsStubOnly.getStubLimAllocs().contains(stmt);
+		default:
+			throw new RuntimeException();
+		}
+	}
 
-	private void processNewStmt(Stmt stmt, int stmtIndex, boolean useFilter)
+	private void processNewStmt(Stmt stmt, int stmtIndex, FilterType filterType)
 	{
-		if(useFilter && !AliasModelsStubOnly.getFilteredAllocs().contains(stmt)) {
+		if(!isFilteredAlloc(stmt, filterType)) {
 			return;
 		}
 		if(!(stmt instanceof DefinitionStmt))
@@ -158,10 +178,27 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 			//TODO: handle array allocation sites
 		}
 	}
+	
+	private static boolean isFilteredInvoke(Stmt stmt, FilterType filterType) {
+		switch(filterType) {
+		case NONE:
+			return true;
+		case FRAMEWORK_WORST:
+			return AliasModelsStubOnly.getFrameworkInvokes().contains(stmt);
+		case FRAMEWORK_INIT:
+			return AliasModelsStubOnly.getFrameworkInvokes().contains(stmt);
+		case STUB_WORST:
+			return AliasModelsStubOnly.getStubInvokes().contains(stmt);
+		case STUB_INIT:
+			return AliasModelsStubOnly.getStubInvokes().contains(stmt);
+		default:
+			throw new RuntimeException();
+		}
+	}
 
-	private void processInvkStmt(Stmt stmt, int stmtIndex, boolean useFilter)
+	private void processInvkStmt(Stmt stmt, int stmtIndex, FilterType filterType)
 	{
-		if(useFilter && !AliasModelsStubOnly.getFilteredInvokes().contains(stmt)) {
+		if(isFilteredInvoke(stmt, filterType)) {
 			return;
 		}
 		if(!stmt.containsInvokeExpr())

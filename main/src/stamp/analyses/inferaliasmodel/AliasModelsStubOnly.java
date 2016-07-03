@@ -9,8 +9,6 @@ import java.util.List;
 import shord.analyses.SiteAllocNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import soot.jimple.InvokeExpr;
-import soot.jimple.InvokeStmt;
 import soot.jimple.Stmt;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.CallRetMonitor;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.Monitor;
@@ -31,51 +29,130 @@ public class AliasModelsStubOnly {
 		return monitors;
 	}
 	
-	private static List<Stmt> allocs = null;
-	public static List<Stmt> getFilteredAllocs() {
-		if(allocs == null) {
-			allocs = new ArrayList<Stmt>();
-			ProgramRel relEscapeCountH = (ProgramRel)ClassicProject.g().getTrgt("EscapeCountH");
+	private static List<Stmt> frameworkAllocs = null;
+	public static List<Stmt> getFrameworkAllocs() {
+		if(frameworkAllocs == null) {
+			frameworkAllocs = new ArrayList<Stmt>();
+			ProgramRel relEscapeCountH = (ProgramRel)ClassicProject.g().getTrgt("EscapeH");
 			relEscapeCountH.load();
 			for(Object obj : relEscapeCountH.getAry1ValTuples()) {
 				if(!(obj instanceof SiteAllocNode)) {
-					System.out.println("INVALID ALLOC: " + obj);
+					System.out.println("INVALID FRAMEWORK ALLOC: " + obj);
 					continue;
 				}
 				SiteAllocNode alloc = (SiteAllocNode)obj;
 				Stmt stmt = (Stmt)alloc.getUnit();
-				allocs.add(stmt);
+				frameworkAllocs.add(stmt);
 			}
 			relEscapeCountH.close();
 		}
-		return allocs;
+		return frameworkAllocs;
 	}
 	
-	private static List<Stmt> invokes = null;
-	public static List<Stmt> getFilteredInvokes() {
-		if(invokes == null) {
-			invokes = new ArrayList<Stmt>();
+	private static List<Stmt> frameworkLimAllocs = null;
+	public static List<Stmt> getFrameworkLimAllocs() {
+		if(frameworkLimAllocs == null) {
+			frameworkLimAllocs = new ArrayList<Stmt>();
+			ProgramRel relEscapeCountH = (ProgramRel)ClassicProject.g().getTrgt("EscapeLimH");
+			relEscapeCountH.load();
+			for(Object obj : relEscapeCountH.getAry1ValTuples()) {
+				if(!(obj instanceof SiteAllocNode)) {
+					System.out.println("INVALID FRAMEWORK LIM ALLOC: " + obj);
+					continue;
+				}
+				SiteAllocNode alloc = (SiteAllocNode)obj;
+				Stmt stmt = (Stmt)alloc.getUnit();
+				frameworkLimAllocs.add(stmt);
+			}
+			relEscapeCountH.close();
+		}
+		return frameworkLimAllocs;
+	}
+	
+	private static List<Stmt> stubAllocs = null;
+	public static List<Stmt> getStubAllocs() {
+		if(stubAllocs == null) {
+			stubAllocs = new ArrayList<Stmt>();
+			ProgramRel relEscapeCountH = (ProgramRel)ClassicProject.g().getTrgt("EscapeCountH");
+			relEscapeCountH.load();
+			for(Object obj : relEscapeCountH.getAry1ValTuples()) {
+				if(!(obj instanceof SiteAllocNode)) {
+					System.out.println("INVALID STUB ALLOC: " + obj);
+					continue;
+				}
+				SiteAllocNode alloc = (SiteAllocNode)obj;
+				Stmt stmt = (Stmt)alloc.getUnit();
+				stubAllocs.add(stmt);
+			}
+			relEscapeCountH.close();
+		}
+		return stubAllocs;
+	}
+	
+	private static List<Stmt> stubLimAllocs = null;
+	public static List<Stmt> getStubLimAllocs() {
+		if(stubLimAllocs == null) {
+			stubLimAllocs = new ArrayList<Stmt>();
+			ProgramRel relEscapeCountH = (ProgramRel)ClassicProject.g().getTrgt("EscapeCountLimH");
+			relEscapeCountH.load();
+			for(Object obj : relEscapeCountH.getAry1ValTuples()) {
+				if(!(obj instanceof SiteAllocNode)) {
+					System.out.println("INVALID STUB LIM ALLOC: " + obj);
+					continue;
+				}
+				SiteAllocNode alloc = (SiteAllocNode)obj;
+				Stmt stmt = (Stmt)alloc.getUnit();
+				stubLimAllocs.add(stmt);
+			}
+			relEscapeCountH.close();
+		}
+		return stubLimAllocs;
+	}
+	
+	private static List<Stmt> frameworkInvokes = null;
+	public static List<Stmt> getFrameworkInvokes() {
+		if(frameworkInvokes == null) {
+			frameworkInvokes = new ArrayList<Stmt>();
+			ProgramRel relStubInvokeMonitorRet = (ProgramRel)ClassicProject.g().getTrgt("FrameworkInvokeMonitorRet");
+			relStubInvokeMonitorRet.load();
+			for(Object obj : relStubInvokeMonitorRet.getAry1ValTuples()) {
+				if(!(obj instanceof Stmt)) {
+					System.out.println("INVALID FRAMEWORK INVOKE: " + obj);
+					continue;
+				}
+				Stmt stmt = (Stmt)obj;
+				frameworkInvokes.add(stmt);
+			}
+			relStubInvokeMonitorRet.close();
+		}
+		return frameworkInvokes;
+	}
+	
+	private static List<Stmt> stubInvokes = null;
+	public static List<Stmt> getStubInvokes() {
+		if(stubInvokes == null) {
+			stubInvokes = new ArrayList<Stmt>();
 			ProgramRel relStubInvokeMonitorRet = (ProgramRel)ClassicProject.g().getTrgt("StubInvokeMonitorRet");
 			relStubInvokeMonitorRet.load();
 			for(Object obj : relStubInvokeMonitorRet.getAry1ValTuples()) {
 				if(!(obj instanceof Stmt)) {
-					System.out.println("INVALID INVOKE: " + obj);
+					System.out.println("INVALID STUB INVOKE: " + obj);
 					continue;
 				}
 				Stmt stmt = (Stmt)obj;
-				invokes.add(stmt);
+				stubInvokes.add(stmt);
 			}
 			relStubInvokeMonitorRet.close();
 		}
-		return invokes;
+		return stubInvokes;
 	}
 	
 	public static void run() {
 		List<Monitor> monitors = new ArrayList<Monitor>();
-		for(Stmt stmt : getFilteredAllocs()) {
+		for(Stmt stmt : getStubAllocs()) {
 			monitors.addAll(getMonitorsForAliasModels(stmt));
 		}
-		for(Stmt stmt : getFilteredInvokes()) {
+		for(Stmt stmt : getStubInvokes()) {
 			monitors.addAll(getMonitorsForAliasModels(stmt));
 		}
 		
