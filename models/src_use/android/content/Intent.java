@@ -138,12 +138,12 @@ class Intent
     public java.lang.CharSequence getCharSequenceExtra(java.lang.String name) {
 		return (java.lang.CharSequence)extras.unknown;
 	}
-    */
+
 	@STAMP(flows={@Flow(from="$getExtras",to="@return")})
     public <T extends android.os.Parcelable> T getParcelableExtra(java.lang.String name) {
 		return (T)extras.unknown;
 	}
-    /*
+
 	@STAMP(flows={@Flow(from="$getExtras",to="@return")})
     public android.os.Parcelable[] getParcelableArrayExtra(java.lang.String name) {
 		return (android.os.Parcelable[])extras.unknown;
@@ -318,14 +318,14 @@ class Intent
 		extras.unknown = value;
 		return this;
 	}
-    */
+
 	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, android.os.Parcelable value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
-    /*v
+
 	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, android.os.Parcelable[] value) 
 	{ 

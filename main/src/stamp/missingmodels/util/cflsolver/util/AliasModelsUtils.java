@@ -195,8 +195,8 @@ public class AliasModelsUtils {
 			return stmtInvocation;
 		}
 		
-		public static MultivalueMap<VarNode,SiteAllocNode> getPtDynRetApp(AliasModelsTraceReader processor) {
-			MultivalueMap<VarNode,SiteAllocNode> ptDyn = new MultivalueMap<VarNode,SiteAllocNode>();
+		public static MultivalueMap<VarNode,Pair<SiteAllocNode,Integer>> getPtDynRetApp(AliasModelsTraceReader processor) {
+			MultivalueMap<VarNode,Pair<SiteAllocNode,Integer>> ptDyn = new MultivalueMap<VarNode,Pair<SiteAllocNode,Integer>>();
 			for(Variable variable : processor.retsToAbstractObjects.keySet()) {
 				for(int abstractObject : processor.retsToAbstractObjects.get(variable)) {
 					if(!processor.appAbstractObjectsToAllocations.containsKey(abstractObject)) {
@@ -211,7 +211,37 @@ public class AliasModelsUtils {
 					if(varNode == null || allocNode == null) {
 						continue;
 					}
-					ptDyn.add(varNode, allocNode);
+					int count = processor.retAbstractObjectPairsToCounts.get(new Pair<Variable,Integer>(variable, abstractObject));
+					ptDyn.add(varNode, new Pair<SiteAllocNode,Integer>(allocNode, count));
+				}
+			}
+			return ptDyn;
+		}
+		
+		public static MultivalueMap<VarNode,Pair<SootMethod,Integer>> getPtPhDynRet(AliasModelsTraceReader processor) {
+			MultivalueMap<VarNode,Pair<SootMethod,Integer>> ptDyn = new MultivalueMap<VarNode,Pair<SootMethod,Integer>>();
+			for(Variable variable : processor.retsToAbstractObjects.keySet()) {
+				for(int abstractObject : processor.retsToAbstractObjects.get(variable)) {
+					if(!processor.frameworkAbstractObjects.contains(abstractObject)) {
+						continue;
+					}
+					Stmt stmtInvocation = getInvokeStmtOrNullFor(variable);
+					if(stmtInvocation == null) {
+						continue;
+					}
+					LocalVarNode varNode = getVarNodeFor((Local)((AssignStmt)stmtInvocation).getLeftOp(), getMethodFor(stmtInvocation));
+					if(varNode == null) {
+						continue;
+					}
+					if(!(varNode.local.getType() instanceof RefLikeType)) {
+						continue;
+					}
+					int count = processor.retAbstractObjectPairsToCounts.get(new Pair<Variable,Integer>(variable, abstractObject));
+					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
+						if(isStub(method)) {
+							ptDyn.add(varNode, new Pair<SootMethod,Integer>(method, count));
+						}
+					}
 				}
 			}
 			return ptDyn;
@@ -243,6 +273,38 @@ public class AliasModelsUtils {
 				}
 			}
 			return phantomObjectDyn;
+		}
+		
+		public static List<Set<SootMethod>> getAliasedPhantomObjectDyn(AliasModelsTraceReader processor) {
+			List<Set<SootMethod>> aliasedPhantomObjectDyn = new ArrayList<Set<SootMethod>>();
+			for(int abstractObject : processor.abstractObjectsToRets.keySet()) {
+				Set<SootMethod> methods = new HashSet<SootMethod>();
+				for(Variable variable : processor.abstractObjectsToRets.get(abstractObject)) {
+					if(!processor.frameworkAbstractObjects.contains(abstractObject)) {
+						continue;
+					}
+					Stmt stmtInvocation = getInvokeStmtOrNullFor(variable);
+					if(stmtInvocation == null) {
+						continue;
+					}
+					LocalVarNode varNode = getVarNodeFor((Local)((AssignStmt)stmtInvocation).getLeftOp(), getMethodFor(stmtInvocation));
+					if(varNode == null) {
+						continue;
+					}
+					if(!(varNode.local.getType() instanceof RefLikeType)) {
+						continue;
+					}
+					for(SootMethod method : getCallTargetFor(stmtInvocation)) {
+						if(isStub(method)) {
+							methods.add(method);
+						}
+					}
+				}
+				if(methods.size() > 1) {
+					aliasedPhantomObjectDyn.add(methods);
+				}
+			}
+			return aliasedPhantomObjectDyn;
 		}
 	}
 	
