@@ -7,6 +7,12 @@ src/android/test/mock/MockContentProvider.java
 src/java/util/zip/DeflaterOutputStream.java
 src/java/util/zip/GZIPOutputStream.java
 
+# added (should have been added, partial)
+src/java/util/Hashtable.java
+
+# added (partial)
+src/java/util/Vector.java
+
 # not added (very important)
 src/android/telephony/TelephonyManager.java
 
@@ -24,10 +30,8 @@ src/android/os/Message.java
 src/java/util/ArrayList.java
 src/java/util/HashMap.java
 src/java/util/HashSet.java
-src/java/util/Hashtable.java
 src/java/util/LinkedList.java
 src/java/util/Stack.java
-src/java/util/Vector.java
 src/org/apache/http/message/BasicNameValuePair.java
 src/org/json/JSONArray.java
 src/org/json/JSONObject.java

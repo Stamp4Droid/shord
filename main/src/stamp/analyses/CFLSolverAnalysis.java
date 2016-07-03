@@ -27,6 +27,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		Filter<Edge> filter = new GraphEdgeFilter(graph.getVertices(), grammar.getSymbols(), reader.readGraph(filterRelations, grammar.getSymbols()));
 		Graph graphBar = graph.transform(new ReachabilitySolver(graph.getVertices(), grammar, filter));
 		IOUtils.printGraphStatistics(graphBar);
+		IOUtils.printGraphEdges(graphBar, "Src2Sink", true);
 	}
 	
 	public static void run(RelationReader reader, ContextFreeGrammarOpt grammar, RelationManager relations) {
