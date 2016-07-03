@@ -12,12 +12,10 @@ class ContextWrapper
 
     private android.content.ContentResolver contentResolver = new android.test.mock.MockContentResolver();
 
-    /*
     public  android.content.ContentResolver getContentResolver() 
     { 
 		return contentResolver;
     }
-    */
 	
 	public  android.content.Intent registerReceiver(android.content.BroadcastReceiver receiver, android.content.IntentFilter filter) { 
 		final BroadcastReceiver r = receiver;
@@ -58,7 +56,7 @@ class ContextWrapper
 
 	public  android.content.Context getApplicationContext() 
 	{ 
-	    return this;
+		return this;
 	}
 
 	@STAMP(flows = {@Flow(from="!Activity",to="intent"),@Flow(from="!Activity",to="options")})
@@ -108,6 +106,7 @@ class ContextWrapper
     public android.content.pm.PackageManager getPackageManager() {
 		return new android.test.mock.MockPackageManager();
     }        
+
 	public  android.content.SharedPreferences getSharedPreferences(java.lang.String name, int mode) { 
 		return android.content.StampSharedPreferences.INSTANCE;
 	}

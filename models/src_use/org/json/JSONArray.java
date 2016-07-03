@@ -1,6 +1,6 @@
 class JSONArray
 {
-    /*
+
 	@STAMP(flows={@Flow(from="value",to="this")})
 	public  org.json.JSONArray put(boolean value) { return this; }
 
@@ -30,5 +30,5 @@ class JSONArray
 	
 	@STAMP(flows={@Flow(from="value",to="this")})
 	public  org.json.JSONArray put(int index, java.lang.Object value) throws org.json.JSONException { return this; }
-    */
+
 }

@@ -33,7 +33,7 @@ class ArrayList<E>
     {
 		return f;
     }
-	/*
+
     public  java.util.Iterator<E> iterator()
     {
 		return new ArrayListIterator();
@@ -61,5 +61,4 @@ class ArrayList<E>
 			throw new RuntimeException("Stub!");
 		}
     }
-    */
 }

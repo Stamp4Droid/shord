@@ -58,20 +58,16 @@ class LocationManager
 	public  void requestSingleUpdate(android.location.Criteria criteria, android.app.PendingIntent intent) {
 	}
 
-    /*
 	public  android.location.Location getLastKnownLocation(java.lang.String provider) 
 	{ 
 		return getLocation();
 	}
-    */
 
-    /*
 	private static LocationManager locationManager = new LocationManager();
 	public static LocationManager getInstance()
 	{
 		return locationManager;
 	}
-    */
 
         @STAMP(flows={@Flow(from="$FINE_LOCATION",to="!INTENT")})
         public  void addProximityAlert(double latitude, double longitude, float radius, long expiration, android.app.PendingIntent intent) {
