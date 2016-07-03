@@ -6,13 +6,13 @@ class TelephonyManager
 	{ 
 		return new String();
 	}
-    */
+
     @STAMP(flows = {@Flow(from="$getDeviceId",to="@return")})    
     public  java.lang.String getDeviceId()
     { 
 		return new String();
     }
-    /*	
+	
 	@STAMP(flows = {@Flow(from="$getNetworkCountryIso",to="@return")})
 	public  java.lang.String getNetworkCountryIso() 
 	{ 
@@ -96,7 +96,7 @@ class TelephonyManager
 				});
 
 	}
-
+    /*
 	private static TelephonyManager telephonyManager = new TelephonyManager();
 	public static TelephonyManager getInstance()
 	{
@@ -111,7 +111,7 @@ class TelephonyManager
 	    return new android.telephony.gsm.GsmCellLocation();
 	}
     }
-
+    */
 
 
 }

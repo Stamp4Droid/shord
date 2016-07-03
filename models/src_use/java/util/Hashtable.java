@@ -1,5 +1,6 @@
 class Hashtable<K, V>
 {
+    /*
     private K key;
     private V value;
 
@@ -20,4 +21,5 @@ class Hashtable<K, V>
 		list.add(value);
 		return list;
 	}
+    */
 }

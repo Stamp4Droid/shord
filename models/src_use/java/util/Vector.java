@@ -62,13 +62,13 @@ class Vector<E>
     	    this.f = object;
     	    return this.f;
     	}
-
+    */
 	
     @STAMP(flows = {@Flow(from="object",to="this")})    
     public synchronized  void setElementAt(E object, int location) {
     	    this.f = object;
     	}
-    */
+    /*	
     @STAMP(flows = {@Flow(from="this",to="@return"),@Flow(from="start",to="@return"),@Flow(from="end",to="@return")})
 	public synchronized  java.util.List<E> subList(int start, int end) {
      	    List<E> l = new ArrayList<E>();
@@ -81,16 +81,16 @@ class Vector<E>
     	    java.lang.Object[] o = {this.f};
     	    return o;
 		}
+    */
 
-    /*
     @STAMP(flows = {@Flow(from="this",to="@return")})
     public synchronized  java.lang.String toString() {
 			return new String();
     	}
-    */
+    /*
     @STAMP(flows = {@Flow(from="this",to="@return")})
 	public  java.util.Enumeration<E> elements() { 
 		return new StampEnumeration<E>(this.f);
 	}
-
+    */
 }

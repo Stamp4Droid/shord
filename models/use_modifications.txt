@@ -13,28 +13,15 @@ src/java/util/Hashtable.java
 # added (partial)
 src/java/util/Vector.java
 
-# new added (very important)
+# not added (very important)
 src/android/telephony/TelephonyManager.java
 
-# new added (important)
+# not added (important, phobj)
 src/android/accounts/AccountManager.java
 src/android/app/Activity.java
 src/android/content/ContextWrapper.java
-src/android/location/LocationManager.java
-
-# new added (2-shallow)
-src/java/util/ArrayList.java
-src/java/util/HashMap.java
-src/java/util/HashTable.java
-src/java/util/Vector.java
-
-# new added (serialization)
-src/org/apache/http/message/BasicNameValuePair.java
-src/org/json/JSONArray.java
-src/org/json/JSONObject.java
-
-# not added (important, phobj)
 src/android/location/Location.java
+src/android/location/LocationManager.java
 src/android/net/Uri.java
 src/java/lang/String.java
 
@@ -45,6 +32,9 @@ src/java/util/HashMap.java
 src/java/util/HashSet.java
 src/java/util/LinkedList.java
 src/java/util/Stack.java
+src/org/apache/http/message/BasicNameValuePair.java
+src/org/json/JSONArray.java
+src/org/json/JSONObject.java
 
 # not added (intermediate, phobj)
 src/android/telephony/SmsMessage.java

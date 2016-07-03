@@ -3,22 +3,21 @@ class AccountManager
 {
     private static AccountManager accountManager = new AccountManager();
 
+    /*
     public static  android.accounts.AccountManager get(android.content.Context context) 
     { 
 	return accountManager;
     }
-
+    */
     @STAMP(flows={@Flow(from="$ACCOUNTS",to="@return")})		
     private android.accounts.Account getAccount() {
     	return new Account(getAccountName(), new String());
     }
-
     @STAMP(flows={@Flow(from="$ACCOUNTS.Name",to="@return")})
 	private java.lang.String getAccountName()
 	{
 		return new String();
 	}
-
     // private static class StampAccountManagerFuture implements AccountManagerFuture<android.accounts.Account[]>
     // {
 

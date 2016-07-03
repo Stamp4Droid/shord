@@ -7,8 +7,6 @@
   **/
 class Bundle
 {
-	
-	/* primitive type */
 	public short unknown_short;
 	
 	public int unknown_int;
@@ -25,12 +23,8 @@ class Bundle
 	
 	public double unknown_double;
 	
-	/* general unknown object. For all reference type. */
 	public java.lang.Object unknown;
 
-	/* specific to system events */
-
-	/* SMS */
 	public byte[][] pdus;
 
 	//called only from the model

@@ -74,6 +74,7 @@ public class Activity
 		return getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
     }
 
+    /*
 	public  java.lang.Object getSystemService(java.lang.String name) 
 	{ 
 		if(name.equals(TELEPHONY_SERVICE))
@@ -83,6 +84,7 @@ public class Activity
 		else
 			return null;//TODO
 	}
+    */
 	
 	@STAMP(flows = {@Flow(from="!Activity",to="intent")})
 	public  void startActivityForResult(android.content.Intent intent, int requestCode) 

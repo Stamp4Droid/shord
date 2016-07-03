@@ -14,11 +14,11 @@ class HashMap<K, V>
 		this.value = v;
 		return this.value;
     }
-
+    /*
 	public java.util.Collection<V> values() {
 		java.util.ArrayList list = new java.util.ArrayList<V>();
 		list.add(value);
 		return list;
 	}
-
+    */
 }

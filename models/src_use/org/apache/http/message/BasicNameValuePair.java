@@ -3,6 +3,7 @@ class BasicNameValuePair
 	private String name;
 	private String value;
 
+    /*
 	@STAMP(flows = {@Flow(from="value",to="this")})
 	public  BasicNameValuePair(java.lang.String name, java.lang.String value) 
 	{ 
@@ -20,6 +21,7 @@ class BasicNameValuePair
 		return value;
 	}
 
+    */
 	public  java.lang.String toString() 
 	{  
 		return name+value;
