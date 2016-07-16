@@ -20,7 +20,6 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import soot.Local;
 import soot.RefLikeType;
-import soot.Scene;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.AssignStmt;
@@ -274,6 +273,42 @@ public class AliasModelsUtils {
 				counts.setCount(getMethodFor(parameter), processor.parameterCounts.getCount(parameter));
 			}
 			return counts;
+		}
+		
+		public static Map<Integer,Pair<Variable,Stmt>> getReturnMonitors(AliasModelsTraceReader processor) {
+			Map<Integer,Pair<Variable,Stmt>> monitors = new HashMap<Integer,Pair<Variable,Stmt>>();
+			for(int monitor : processor.returnMonitorToVariable.keySet()) {
+				Variable variable = processor.returnMonitorToVariable.get(monitor);
+				monitors.put(monitor, new Pair<Variable,Stmt>(variable, getStmtFor(variable)));
+			}
+			return monitors;
+		}
+		
+		public static Map<Integer,Pair<Variable,Stmt>> getAllocationMonitors(AliasModelsTraceReader processor) {
+			Map<Integer,Pair<Variable,Stmt>> monitors = new HashMap<Integer,Pair<Variable,Stmt>>();
+			for(int monitor : processor.allocMonitorToVariable.keySet()) {
+				Variable variable = processor.allocMonitorToVariable.get(monitor);
+				monitors.put(monitor, new Pair<Variable,Stmt>(variable, getStmtFor(variable)));
+			}
+			return monitors;
+		}
+		
+		public static Map<Integer,Pair<Variable,Stmt>> getArgumentMonitors(AliasModelsTraceReader processor) {
+			Map<Integer,Pair<Variable,Stmt>> monitors = new HashMap<Integer,Pair<Variable,Stmt>>();
+			for(int monitor : processor.argumentMonitorToVariable.keySet()) {
+				Variable variable = processor.argumentMonitorToVariable.get(monitor);
+				monitors.put(monitor, new Pair<Variable,Stmt>(variable, getStmtFor(variable)));
+			}
+			return monitors;
+		}
+		
+		public static Map<Integer,Pair<Parameter,SootMethod>> getParameterMonitors(AliasModelsTraceReader processor) {
+			Map<Integer,Pair<Parameter,SootMethod>> monitors = new HashMap<Integer,Pair<Parameter,SootMethod>>();
+			for(int monitor : processor.parameterMonitorToVariable.keySet()) {
+				Parameter parameter = processor.parameterMonitorToVariable.get(monitor);
+				monitors.put(monitor, new Pair<Parameter,SootMethod>(parameter, getMethodFor(parameter)));
+			}
+			return monitors;
 		}
 
 		public static MultivalueMap<VarNode,Pair<SootMethod,Integer>> getPtPhDynRet(AliasModelsTraceReader processor) {

@@ -83,6 +83,11 @@ public class AliasModelsTraceReader {
 	public final Counter<Parameter> parameterCounts = new Counter<Parameter>();
 	public final Counter<Variable> allocationCounts = new Counter<Variable>();
 	
+	public final Map<Integer,Variable> allocMonitorToVariable = new HashMap<Integer,Variable>();
+	public final Map<Integer,Variable> returnMonitorToVariable = new HashMap<Integer,Variable>();
+	public final Map<Integer,Variable> argumentMonitorToVariable = new HashMap<Integer,Variable>();
+	public final Map<Integer,Parameter> parameterMonitorToVariable = new HashMap<Integer,Parameter>();
+	
 	public AliasModelsTraceReader(String filename) {
 		System.out.println("Reading file: " + new File(filename).getAbsolutePath());
 		try {
@@ -96,6 +101,7 @@ public class AliasModelsTraceReader {
 					this.appAbstractObjectsToAllocations.put(Integer.parseInt(tokens[3]), getVariable(tokens[2]));
 					this.variablesToAbstractObjects.add(getVariable(tokens[2]), Integer.parseInt(tokens[3]));
 					this.allocationCounts.increment(getVariable(tokens[2]));
+					this.allocMonitorToVariable.put(Integer.parseInt(tokens[0]), getVariable(tokens[2]));
 				} else if(tokens.length == 5) {
 					if(tokens[1].equals("METHCALLARG")) {
 						int index = Integer.parseInt(tokens[3]);
@@ -110,10 +116,12 @@ public class AliasModelsTraceReader {
 							if(!this.retAbstractObjectPairsToCounts.containsKey(pair)) {
 								this.retAbstractObjectPairsToCounts.put(pair, count);
 							}
+							this.returnMonitorToVariable.put(Integer.parseInt(tokens[0]), variable);
 						} else {
 							this.argumentCounts.increment(getVariable(tokens[2]));
 							this.argsToIndex.put(getVariable(tokens[2]), index);
 							this.argsToAbstractObjects.add(getVariable(tokens[2]), abstractObject);
+							this.argumentMonitorToVariable.put(Integer.parseInt(tokens[0]), getVariable(tokens[2]));
 						}
 					} else if(tokens[1].equals("METHPARAM")) {
 						if(Integer.parseInt(tokens[3]) < 0) {
@@ -124,6 +132,7 @@ public class AliasModelsTraceReader {
 						int abstractObject = Integer.parseInt(tokens[4]);
 						this.observedAbstractObjects.add(abstractObject);
 						this.paramsToAbstractObjects.add(new Parameter(tokens[2], Integer.parseInt(tokens[3])), abstractObject);
+						this.parameterMonitorToVariable.put(Integer.parseInt(tokens[0]), new Parameter(tokens[2], Integer.parseInt(tokens[3])));
 					} else {
 						br.close();
 						throw new RuntimeException("Invalid identifier: " + tokens[1]);

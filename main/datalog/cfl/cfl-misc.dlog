@@ -166,14 +166,14 @@ EscapeCountLimH(h) :- EscapeCountLim(o), CH(o,h), AllocNF(_,h).
 EscapeInto(o:C,m:M) output
 EscapeIntoH(h:H,m:M) output
 
-EscapeInto(o,m) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
+EscapeInto(o,m) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
 EscapeInto(o,m) :- EscapeInto(op,m), fpt(op,_,o).
 EscapeIntoH(h,m) :- EscapeInto(o,m), CH(o,h), AllocNF(_,h).
 
 EscapeIntoLim(o:C,m:M) output
 EscapeIntoLimH(h:H,m:M) output
 
-EscapeIntoLim(o,m) :- Framework(m), MmethArg(m,_,v), pt(_,v,o).
+EscapeIntoLim(o,m) :- Stub(m), MmethArg(m,_,v), pt(_,v,o).
 EscapeIntoLimH(h,m) :- EscapeIntoLim(o,m), CH(o,h), AllocNF(_,h).
 
 # stubs return values to instrument

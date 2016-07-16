@@ -194,6 +194,7 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 		System.out.println("START PRINTING ESCAPED OBJECT MAP");
 		ProgramRel relEscapeIntoLimH = (ProgramRel)ClassicProject.g().getTrgt("EscapeIntoLimH");
 		relEscapeIntoLimH.load();
+		Counter<Stmt> allocLeakCounts = new Counter<Stmt>();
 		for(chord.util.tuple.object.Pair<Object,Object> pair : relEscapeIntoLimH.getAry2ValTuples()) {
 			Object obj = pair.val0;
 			if(!(obj instanceof SiteAllocNode)) {
@@ -204,8 +205,15 @@ public class DynamicPointsToParserAnalysis extends JavaAnalysis {
 			SiteAllocNode alloc = (SiteAllocNode)obj;
 			Stmt stmt = (Stmt)alloc.getUnit();
 			System.out.println("ESCAPE INTO: " + stmt + " -> " + method);
+			allocLeakCounts.increment(stmt);
 		}
 		System.out.println("END PRINTING ESCAPED OBJECT MAP");
+		
+		// STEP 9: Print mapping from allocation monitors to counts
+		for(Map.Entry<Integer,Pair<Variable,Stmt>> monitor : AliasModelsUtils.ProcessorUtils.getAllocationMonitors(processor).entrySet()) {
+			System.out.println(monitor + ": " + allocLeakCounts.getCount(monitor.getValue().getY()));
+		}
+		
 		relEscapeIntoLimH.close();
 	}
 }
