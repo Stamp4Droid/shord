@@ -19,6 +19,7 @@ public class Program
 {
 	private static Program g;
 	private SootMethod mainMethod;
+	private ProgramScope scope;
 
 	public static Program g()
 	{
@@ -142,4 +143,18 @@ public class Program
 		SootMethod m = (u instanceof Stmt) ? containerMethod((Stmt) u) : null;
 		return (m == null) ? u.toString() : u + "@" + m;
 	}
+
+	public void setScope(ProgramScope ps)
+	{
+		this.scope = ps;
+	}
+
+	public boolean exclude(SootMethod m)
+	{
+		if(scope != null)
+			return scope.exclude(m);
+		else
+			return false;
+	}
+
 }

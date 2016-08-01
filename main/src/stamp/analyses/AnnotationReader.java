@@ -24,6 +24,7 @@ import chord.project.Chord;
 
 /**
  * @author Saswat Anand
+ * @author Yu Feng
 **/
 @Chord(name = "annot-java",
 	   consumes = { "M", "Z" },
@@ -228,7 +229,9 @@ public class AnnotationReader extends JavaAnalysis
 		relArgArgFlow.zero();
 
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
-		Scene scene = Program.g().scene();
+        Program prog = Program.g();
+		Scene scene = prog.scene();
+
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(new File("stamp_annotations.txt")));
 			String line = reader.readLine();
@@ -237,12 +240,12 @@ public class AnnotationReader extends JavaAnalysis
 				String chordMethodSig = tokens[0];
 				int atSymbolIndex = chordMethodSig.indexOf('@');
 				String className = chordMethodSig.substring(atSymbolIndex+1);
-				if(scene.containsClass(className)){
+				if(scene.containsClass(className)) {
 					SootClass klass = scene.getSootClass(className);
 					String subsig = SootUtils.getSootSubsigFor(chordMethodSig.substring(0,atSymbolIndex));
 					SootMethod meth = klass.getMethod(subsig);
 					
-					if(domM.indexOf(meth) >= 0){
+					if((domM.indexOf(meth) >= 0) && !prog.exclude(meth)){
 						String from = tokens[1];
 						String to = tokens[2];
 			

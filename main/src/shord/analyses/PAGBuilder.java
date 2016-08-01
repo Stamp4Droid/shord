@@ -1005,6 +1005,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	void populateCallgraph()
 	{
+		Program prog = Program.g();
 		CallGraph cg = Program.g().scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
         relChaIM.zero();
@@ -1023,6 +1024,10 @@ public class PAGBuilder extends JavaAnalysis
 				assert false : "tgt = "+tgt +" "+tgt.isAbstract();
 			if(tgt.isPhantom())
 				continue;
+
+			if(prog.exclude(tgt) || (src != null && prog.exclude(src)))
+				continue;
+
 			//System.out.println("stmt: "+stmt+" tgt: "+tgt+ "abstract: "+ tgt.isAbstract());
 			if(ignoreStubs){
 				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
@@ -1048,6 +1053,11 @@ public class PAGBuilder extends JavaAnalysis
 				stubMethods.add(m);
 				//System.out.println("stubZZ: "+ m + " "+stubMethods.contains(m));
 			}
+
+			if(program.exclude(m))
+				continue;
+
+            //System.out.println("adding valid method: " + m);
 			domM.add(m);
 		}
 		domM.save();
@@ -1056,6 +1066,9 @@ public class PAGBuilder extends JavaAnalysis
         relStub.zero();
 		for(Iterator it = stubMethods.iterator(); it.hasNext();){
 			SootMethod stub = (SootMethod) it.next();
+			if(program.exclude(stub))
+                continue;
+
 			relStub.add(stub);
 		}
 		relStub.save();
@@ -1063,6 +1076,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	void populateMethodSigs()
 	{
+		Program program = Program.g();
 		DomS domS = (DomS) ClassicProject.g().getTrgt("S");
 		for(Iterator it = Scene.v().getSubSigNumberer().iterator(); it.hasNext();){
 			NumberedString s = (NumberedString)it.next();
@@ -1111,6 +1125,7 @@ public class PAGBuilder extends JavaAnalysis
 		
 	void populateDomains(List<MethodPAGBuilder> mpagBuilders)
 	{
+		Program prog = Program.g();
 		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
 
 		populateMethodSigs();
@@ -1136,6 +1151,10 @@ public class PAGBuilder extends JavaAnalysis
 				if(stubMethods.contains(m))
 					continue;
 			}
+
+			if(prog.exclude(m))
+				continue;
+
 			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m, stubMethods.contains(m));
 			mpagBuilder.pass1();
 			mpagBuilders.add(mpagBuilder);
@@ -1361,12 +1380,14 @@ public class PAGBuilder extends JavaAnalysis
                     relStaticTF.add(type, field);
 
             for(SootMethod meth : klass.getMethods())
-                if(meth.isStatic())//m is a static method defined in t.
+                if(meth.isStatic() && !program.exclude(meth))//m is a static method defined in t.
                     relStaticTM.add(type, meth);
 
-            if(klass.declaresMethodByName("<clinit>"))
-                relClinitTM.add(type, klass.getMethodByName("<clinit>"));
-
+            if(klass.declaresMethodByName("<clinit>")) {
+                SootMethod clinitM = klass.getMethodByName("<clinit>");
+                if(!program.exclude(clinitM))
+                    relClinitTM.add(type, clinitM);
+            }
 
             for(SootClass clazz : SootUtils.subTypesOf(klass))
                 relSub.add(clazz.getType(), type);//clazz is subtype of klass

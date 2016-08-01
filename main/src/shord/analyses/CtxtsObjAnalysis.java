@@ -69,7 +69,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
 
     private Set<Ctxt> epsilonCtxtSet;
 
-	public static int K = 2;
+	public static int K = 1;
 
     private int[] ItoM;
     private int[] HtoM;
@@ -265,10 +265,12 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
 		boolean ignoreStubs = PAGBuilder.ignoreStubs;
 		NumberedSet stubs = PAGBuilder.stubMethods;
-		Iterator mIt = Program.g().scene().getReachableMethods().listener();
+        Program prog = Program.g();
+		Iterator mIt = prog.scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod meth = (SootMethod) mIt.next();
 			if(ignoreStubs && stubs.contains(meth)) continue;
+            if(prog.exclude(meth)) continue;
 
             int mIdx = domM.indexOf(meth);
 			if (meth == mainMeth || meth.getName().equals("<clinit>")){

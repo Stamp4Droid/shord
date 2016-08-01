@@ -27,9 +27,12 @@ public class SootUtils
 		List<SootClass> subTypes = subTypesOf(originalMethod.getDeclaringClass());
 		List<SootMethod> overridingMeths = new ArrayList();
 		NumberedString subsig = originalMethod.getNumberedSubSignature();
+        Program prog = Program.g();
 		for(SootClass st : subTypes){
 			if(st.declaresMethod(subsig)){
-				overridingMeths.add(st.getMethod(subsig));
+                SootMethod meth = st.getMethod(subsig);
+                if(!prog.exclude(meth))
+				    overridingMeths.add(meth);
 			}
 		}
 		return overridingMeths;

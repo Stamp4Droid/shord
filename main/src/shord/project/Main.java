@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.PrintStream;
 
 import shord.program.Program;
+import shord.program.ProgramScope;
+import shord.program.DefaultProgramScope;
 
 import chord.project.Config;
 import chord.util.Timer;
@@ -69,6 +71,8 @@ public class Main {
         if (Config.verbose >= 2)
             Config.print();
         Program program = Program.g();
+		ProgramScope ps = new DefaultProgramScope(program);
+		program.setScope(ps);
         Project project = Project.g();
         if (Config.printAllClasses)
             program.printAllClasses();

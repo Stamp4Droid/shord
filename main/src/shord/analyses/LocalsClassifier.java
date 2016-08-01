@@ -61,7 +61,7 @@ public class LocalsClassifier
 			else if(type instanceof NullType)
 				;
 			else 
-				System.out.println("untyped " + l + ": " + l.getType()+" in " +method);
+				;//System.out.println("untyped " + l + ": " + l.getType()+" in " +method);
 		}
 
 		for(Unit unit : body.getUnits()){

@@ -4,6 +4,7 @@ import soot.SootClass;
 import soot.SootMethod;
 import soot.Type;
 import soot.AbstractJasminClass;
+import shord.program.Program;
 
 public class NativeMethodAnnotation extends AnnotationInjector.Visitor
 {
@@ -13,8 +14,9 @@ public class NativeMethodAnnotation extends AnnotationInjector.Visitor
 
 	protected void visit(SootClass klass)
     {
+        Program prog = Program.g();
 		for(SootMethod method : klass.getMethods()){
-			if(!method.isNative())
+			if(!method.isNative() || prog.exclude(method))
 				continue;
 			String methSig = getChordMethodSigFor(method);
 

@@ -6,6 +6,7 @@ import soot.util.*;
 
 import java.util.*;
 
+import shord.program.Program;
 /**
  * Intrumenting the static fields in android.os.Build.
  * x = Build.Os;
@@ -30,8 +31,10 @@ public class StaticFieldAnnotation extends AnnotationInjector.Visitor
 		this.srcLabelToLabelMethod.clear();
 		this.newLocalCount = 0;
 		Collection<SootMethod> methodsCopy = new ArrayList(klass.getMethods());
+        Program prog = Program.g();
 		for(SootMethod method : methodsCopy)
-			visitMethod(method);
+            if(!prog.exclude(method))
+			    visitMethod(method);
     }
 	
     private void visitMethod(SootMethod method)
@@ -107,7 +110,7 @@ public class StaticFieldAnnotation extends AnnotationInjector.Visitor
 			
 			units.add(Jimple.v().newReturnStmt(ret));
 			
-			System.out.println("%%% "+meth.getSignature());
+			System.out.println("%%%Static "+meth.getSignature());
 			writeAnnotation(methName+":(Ljava/lang/String;)Ljava/lang/String;@"+klass.getName(), "$"+label, "-1");
 		}
 		
