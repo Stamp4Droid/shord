@@ -99,8 +99,8 @@
       <sysproperty key="chord.std.dlog.analysis.path" path="${stamp.dir}/bin/stamp.main.jar"/>
       <sysproperty key="chord.run.analyses" value="${stamp.analyses}"/>
 	  <sysproperty key="stamp.scope.excludefile" value="${stamp.dir}/exclude.txt"/>
-      <sysproperty key="chord.std.scope.exclude" value="com.,java.,javax."/>
-      <sysproperty key="chord.ext.scope.exclude" value="com.,java.,javax."/>
+      <sysproperty key="chord.std.scope.exclude" value=""/>
+      <sysproperty key="chord.ext.scope.exclude" value=""/>
       <sysproperty key="chord.std.check.exclude" value=""/>
       <sysproperty key="chord.ext.check.exclude" value=""/>
       <sysproperty key="chord.verbose" value="${chord.verbose}"/>
