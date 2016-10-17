@@ -9,6 +9,7 @@ import java.util.List;
 import shord.analyses.SiteAllocNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import soot.SootMethod;
 import soot.jimple.Stmt;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.CallRetMonitor;
 import stamp.analyses.inferaliasmodel.InstrumentationDataWriter.Monitor;
@@ -145,6 +146,32 @@ public class AliasModelsStubOnly {
 			relStubInvokeMonitorRet.close();
 		}
 		return stubInvokes;
+	}
+	
+	private static List<SootMethod> frameworks = null;
+	public static List<SootMethod> getFrameworks() {
+		if(frameworks == null) {
+			frameworks = new ArrayList<SootMethod>();
+			ProgramRel relFramework = (ProgramRel)ClassicProject.g().getTrgt("Framework");
+			relFramework.load();
+			for(Object obj : relFramework.getAry1ValTuples()) {
+				frameworks.add((SootMethod)obj);
+			}
+		}
+		return frameworks;
+	}
+	
+	private static List<SootMethod> stubs = null;
+	public static List<SootMethod> getStubs() {
+		if(stubs == null) {
+			stubs = new ArrayList<SootMethod>();
+			ProgramRel relStub = (ProgramRel)ClassicProject.g().getTrgt("Stub");
+			relStub.load();
+			for(Object obj : relStub.getAry1ValTuples()) {
+				stubs.add((SootMethod)obj);
+			}
+		}
+		return stubs;
 	}
 	
 	public static void run() {

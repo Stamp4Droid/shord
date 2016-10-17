@@ -18,8 +18,8 @@ import soot.tagkit.Tag;
 import soot.tagkit.BytecodeOffsetTag;
 import soot.util.ArrayNumberer;
 import soot.util.Chain;
-
 import stamp.analyses.IdentifyCallbackMethods;
+import stamp.missingmodels.util.cflsolver.util.PotentialCallbacksBuilder;
 import shord.project.analyses.JavaAnalysis;
 import shord.program.Program;
 
@@ -42,16 +42,17 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 	private PrintWriter instrInfoWriter;
 	private int eventId = 0;
 
-	public static enum EventType { METHCALLARG, METHPARAM };
+	public static enum EventType { METHCALLBACK, METHCALLARG, METHPARAM };
 	
 	public static enum FilterType { STUB_INIT, STUB_WORST, FRAMEWORK_INIT, FRAMEWORK_WORST, NONE }
 	
 	public void run() {
-		run(false, FilterType.NONE, "instrinfo.txt");
-		run(false, FilterType.FRAMEWORK_WORST, "instrinfo_framework_worst.txt");
-		run(false, FilterType.FRAMEWORK_INIT, "instrinfo_framework_init.txt");
-		run(false, FilterType.STUB_WORST, "instrinfo_stub_worst.txt");
-		run(false, FilterType.STUB_INIT, "instrinfo_stub_init.txt");
+		boolean instCallbacks = true;
+		run(instCallbacks, FilterType.NONE, "instrinfo.txt");
+		run(instCallbacks, FilterType.FRAMEWORK_WORST, "instrinfo_framework_worst.txt");
+		run(instCallbacks, FilterType.FRAMEWORK_INIT, "instrinfo_framework_init.txt");
+		run(instCallbacks, FilterType.STUB_WORST, "instrinfo_stub_worst.txt");
+		run(instCallbacks, FilterType.STUB_INIT, "instrinfo_stub_init.txt");
 	}
 	
 	public void run(boolean instCallbacks, FilterType filterType, String name)
@@ -68,9 +69,7 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 			Program prog = Program.g();
 			prog.runCHA();
 
-			IdentifyCallbackMethods cbAnalysis = new IdentifyCallbackMethods();
-			cbAnalysis.analyze();
-			Set<SootMethod> callbacks = cbAnalysis.allCallbacks();
+			Set<SootMethod> callbacks = PotentialCallbacksBuilder.getPotentialCallbacks();
 			
 			File methodsInfoFile = new File(outDir, "methods.txt");
 			PrintWriter methodInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(methodsInfoFile)));
@@ -96,8 +95,9 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 					System.out.println("preinst: "+method.getSignature());
 					process(methIndex, filterType);
 					
-					if(instCallbacks && callbacks.contains(method)){
+					if(instCallbacks && callbacks.contains(method) && isFilteredCallback(method, filterType)) {
 						assert !method.isStatic();
+						instrInfoWriter.println(EventType.METHCALLBACK+" "+methSig);
 						instrInfoWriter.println(EventType.METHPARAM+" "+methSig+" "+"0"+" "+eventId+" "+methIndex);
 						eventId++;
 						int paramIndex = 1;
@@ -239,7 +239,24 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 		} else
 			System.out.println("bco unavailable: "+meth.getSignature());
 	}
-		
+	
+	private static boolean isFilteredCallback(SootMethod method, FilterType filterType) {
+		switch(filterType) {
+		case NONE:
+			return true;
+		case FRAMEWORK_WORST:
+			return AliasModelsStubOnly.getFrameworks().contains(method);
+		case FRAMEWORK_INIT:
+			return AliasModelsStubOnly.getFrameworks().contains(method);
+		case STUB_WORST:
+			return AliasModelsStubOnly.getStubs().contains(method);
+		case STUB_INIT:
+			return AliasModelsStubOnly.getStubs().contains(method);
+		default:
+			throw new RuntimeException();
+		}
+	}
+	
 	int bco(Stmt stmt)
 	{
 		int bytecodeOffset = -1;
