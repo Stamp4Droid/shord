@@ -70,6 +70,7 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 			prog.runCHA();
 
 			Set<SootMethod> callbacks = PotentialCallbacksBuilder.getPotentialCallbacks();
+			Set<SootMethod> stubCallbacks = PotentialCallbacksBuilder.getPotentialCallbacksStub();
 			
 			File methodsInfoFile = new File(outDir, "methods.txt");
 			PrintWriter methodInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(methodsInfoFile)));
@@ -95,7 +96,7 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 					System.out.println("preinst: "+method.getSignature());
 					process(methIndex, filterType);
 					
-					if(instCallbacks && callbacks.contains(method) && isFilteredCallback(method, filterType)) {
+					if(instCallbacks && callbacks.contains(method) && isFilteredCallback(method, filterType, stubCallbacks)) {
 						assert !method.isStatic();
 						instrInfoWriter.println(EventType.METHCALLBACK+" "+methSig);
 						instrInfoWriter.println(EventType.METHPARAM+" "+methSig+" "+"0"+" "+eventId+" "+methIndex);
@@ -240,18 +241,18 @@ public class PreInstrumentationAnalysis extends JavaAnalysis
 			System.out.println("bco unavailable: "+meth.getSignature());
 	}
 	
-	private static boolean isFilteredCallback(SootMethod method, FilterType filterType) {
+	private static boolean isFilteredCallback(SootMethod method, FilterType filterType, Set<SootMethod> stubCallbacks) {
 		switch(filterType) {
 		case NONE:
 			return true;
 		case FRAMEWORK_WORST:
-			return AliasModelsStubOnly.getFrameworks().contains(method);
+			return true;
 		case FRAMEWORK_INIT:
-			return AliasModelsStubOnly.getFrameworks().contains(method);
+			return true;
 		case STUB_WORST:
-			return AliasModelsStubOnly.getStubs().contains(method);
+			return stubCallbacks.contains(method);
 		case STUB_INIT:
-			return AliasModelsStubOnly.getStubs().contains(method);
+			return stubCallbacks.contains(method);
 		default:
 			throw new RuntimeException();
 		}

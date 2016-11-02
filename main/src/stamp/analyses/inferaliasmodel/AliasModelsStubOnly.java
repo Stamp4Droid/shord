@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import shord.analyses.SiteAllocNode;
 import shord.project.ClassicProject;
@@ -172,6 +174,14 @@ public class AliasModelsStubOnly {
 			}
 		}
 		return stubs;
+	}
+	
+	private static Set<SootMethod> stubSet = null;
+	public static Set<SootMethod> getStubSet() {
+		if(stubSet == null) {
+			stubSet = new HashSet<SootMethod>(getStubs());
+		}
+		return stubSet;
 	}
 	
 	public static void run() {
