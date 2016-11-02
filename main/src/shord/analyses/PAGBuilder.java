@@ -1,59 +1,56 @@
 package shord.analyses;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import chord.project.Chord;
+import shord.program.Program;
+import shord.project.ClassicProject;
+import shord.project.analyses.JavaAnalysis;
+import shord.project.analyses.ProgramRel;
+import soot.AnySubType;
+import soot.Body;
+import soot.FastHierarchy;
+import soot.Immediate;
+import soot.Local;
+import soot.NullType;
+import soot.PrimType;
+import soot.RefLikeType;
 import soot.Scene;
 import soot.SootClass;
-import soot.SootMethod;
 import soot.SootField;
-import soot.Local;
-import soot.Immediate;
-import soot.Value;
-import soot.Unit;
-import soot.Body;
+import soot.SootMethod;
 import soot.Type;
-import soot.RefLikeType;
-import soot.PrimType;
-import soot.VoidType;
-import soot.NullType;
-import soot.AnySubType;
+import soot.Unit;
 import soot.UnknownType;
-import soot.FastHierarchy;
-import soot.PatchingChain;
-import soot.jimple.Constant;
-import soot.jimple.Stmt;
-import soot.jimple.AssignStmt;
-import soot.jimple.IdentityStmt;
-import soot.jimple.InvokeStmt;
-import soot.jimple.ReturnStmt;
+import soot.Value;
+import soot.VoidType;
 import soot.jimple.AnyNewExpr;
-import soot.jimple.ThrowStmt;
-import soot.jimple.InvokeExpr;
-import soot.jimple.InstanceInvokeExpr;
-import soot.jimple.CastExpr;
-import soot.jimple.FieldRef;
-import soot.jimple.InstanceFieldRef;
-import soot.jimple.ParameterRef;
-import soot.jimple.ThisRef;
 import soot.jimple.ArrayRef;
+import soot.jimple.AssignStmt;
 import soot.jimple.BinopExpr;
+import soot.jimple.CastExpr;
+import soot.jimple.Constant;
+import soot.jimple.FieldRef;
+import soot.jimple.IdentityStmt;
+import soot.jimple.InstanceFieldRef;
+import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.InvokeExpr;
 import soot.jimple.NegExpr;
-import soot.jimple.NewExpr;
-import soot.jimple.spark.pag.SparkField;
+import soot.jimple.ParameterRef;
+import soot.jimple.ReturnStmt;
+import soot.jimple.Stmt;
+import soot.jimple.ThisRef;
 import soot.jimple.spark.pag.ArrayElement;
+import soot.jimple.spark.pag.SparkField;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
-import stamp.missingmodels.jimplesrcmapper.Printer;
-
-import shord.project.analyses.JavaAnalysis;
-import shord.project.analyses.ProgramRel;
-import shord.project.analyses.ProgramDom;
-import shord.project.ClassicProject;
-import shord.program.Program;
-
-import chord.project.Chord;
-
-import java.util.*;
 
 @Chord(name="base-java", 
 	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
@@ -71,7 +68,7 @@ import java.util.*;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
-	             "Stub", "Framework"},
+	             "Library"},
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class},
 	   namesOfSigns = { "Alloc", "Assign", 
@@ -88,7 +85,7 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
-                        "Stub", "Framework"},
+                        "Library"},
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -105,8 +102,7 @@ import java.util.*;
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
                  "M0:M0", "M0:M0" }
 	   )
-public class PAGBuilder extends JavaAnalysis
-{
+public class PAGBuilder extends JavaAnalysis {
 	private ProgramRel relAlloc;//(l:V,h:H)
 	private ProgramRel relAssign;//(l:V,r:V)
 	private ProgramRel relLoad;//(l:V,b:V,f:F)
@@ -147,7 +143,7 @@ public class PAGBuilder extends JavaAnalysis
 	private int maxArgs = -1;
 	private FastHierarchy fh;
 	public static NumberedSet stubMethods;
-	public static NumberedSet frameworkMethods;
+	public static NumberedSet libraryMethods;
 
 	public static final boolean ignoreStubs = false;
 
@@ -241,6 +237,10 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethPrimRet.save();
 		relIinvkPrimRet.save();
 		relIinvkPrimArg.save();
+	}
+	
+	boolean isLibrary(SootMethod method) {
+		return method.getDeclaringClass().getName().startsWith("java.util.");
 	}
 
 	void Alloc(LocalVarNode l, Stmt h)
@@ -781,37 +781,25 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Program program = Program.g();
-		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
-		frameworkMethods = new NumberedSet(Scene.v().getMethodNumberer());
+		libraryMethods = new NumberedSet(Scene.v().getMethodNumberer());
 		Iterator<SootMethod> mIt = program.getMethods();
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
 			growZIfNeeded(m.getParameterCount());
-			if(isStub(m)){
-				stubMethods.add(m);
-			}
-			if(isFramework(m)) {
-				frameworkMethods.add(m);
+			if(isLibrary(m)) {
+				libraryMethods.add(m);
 			}
 			domM.add(m);
 		}
 		domM.save();
-
-		ProgramRel relStub = (ProgramRel) ClassicProject.g().getTrgt("Stub");
-        relStub.zero();
-		for(Iterator it = stubMethods.iterator(); it.hasNext();){
-			SootMethod stub = (SootMethod) it.next();
-			relStub.add(stub);
+		
+		ProgramRel relLibrary = (ProgramRel) ClassicProject.g().getTrgt("Library");
+        relLibrary.zero();
+		for(Iterator it = libraryMethods.iterator(); it.hasNext();){
+			SootMethod library = (SootMethod) it.next();
+			relLibrary.add(library);
 		}
-		relStub.save();
-
-		ProgramRel relFramework = (ProgramRel) ClassicProject.g().getTrgt("Framework");
-        relFramework.zero();
-		for(Iterator it = frameworkMethods.iterator(); it.hasNext();){
-			SootMethod framework = (SootMethod) it.next();
-			relFramework.add(framework);
-		}
-		relFramework.save();
+		relLibrary.save();
 	}
 	
 	void populateFields()
@@ -867,62 +855,6 @@ public class PAGBuilder extends JavaAnalysis
 		domV.save();
 		domI.save();
 		domU.save();
-	}
-	
-	boolean isFramework(SootMethod method) {
-		if(!method.isConcrete())
-			return false;
-		return Printer.isFrameworkClass(method.getDeclaringClass());		
-	}
-
-	boolean isStub(SootMethod method)
-	{
-		if(!method.isConcrete())
-			return false;
-		PatchingChain<Unit> units = method.retrieveActiveBody().getUnits();
-		Unit unit = units.getFirst();
-		while(unit instanceof IdentityStmt)
-			unit = units.getSuccOf(unit);
-
-		//if method is <init>, then next stmt could be a call to super.<init>
-		if(method.getName().equals("<init>")){
-		    if(unit instanceof InvokeStmt){
-			if(((InvokeStmt) unit).getInvokeExpr().getMethod().getName().equals("<init>"))
-			    unit = units.getSuccOf(unit);
-		    }
-		}
-
-
-		if(!(unit instanceof AssignStmt))
-			return false;
-		Value rightOp = ((AssignStmt) unit).getRightOp();
-		if(!(rightOp instanceof NewExpr))
-			return false;
-		//System.out.println(method.retrieveActiveBody().toString());
-		if(!((NewExpr) rightOp).getType().toString().equals("java.lang.RuntimeException"))
-			return false;
-		Local e = (Local) ((AssignStmt) unit).getLeftOp();
-		
-		//may be there is an assignment (if soot did not optimized it away)
-		Local f = null;
-		unit = units.getSuccOf(unit);
-		if(unit instanceof AssignStmt){
-			f = (Local) ((AssignStmt) unit).getLeftOp();
-			if(!((AssignStmt) unit).getRightOp().equals(e))
-				return false;
-			unit = units.getSuccOf(unit);
-		}
-		//it should be the call to the constructor
-		Stmt s = (Stmt) unit;
-		if(!s.containsInvokeExpr())
-			return false;
-		if(!s.getInvokeExpr().getMethod().getSignature().equals("<java.lang.RuntimeException: void <init>(java.lang.String)>"))
-			return false;
-		unit = units.getSuccOf(unit);
-		if(!(unit instanceof ThrowStmt))
-			return false;
-		Immediate i = (Immediate) ((ThrowStmt) unit).getOp();
-		return i.equals(e) || i.equals(f);
 	}
 	
 	void populateRelations(List<MethodPAGBuilder> mpagBuilders)
