@@ -184,6 +184,19 @@ public class AliasModelsStubOnly {
 		return stubSet;
 	}
 	
+	private static Set<SootMethod> reachableM = null;
+	public static Set<SootMethod> getReachableM() {
+		if(reachableM == null) {
+			reachableM = new HashSet<SootMethod>();
+			ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("Stub");
+			relReachableM.load();
+			for(Object m : relReachableM.getAry1ValTuples()) {
+				reachableM.add((SootMethod)m);
+			}
+		}
+		return reachableM;
+	}
+	
 	public static void run() {
 		List<Monitor> monitors = new ArrayList<Monitor>();
 		for(Stmt stmt : getStubAllocs()) {

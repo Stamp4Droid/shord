@@ -83,20 +83,6 @@ public class PotentialCallbacksBuilder extends JavaAnalysis {
 		return potentialCallbacks;
 	}
 	
-	public static Set<SootMethod> getPotentialCallbacksStub() {
-		PotentialCallbacksBuilder potentialCallbacksBuilder = new PotentialCallbacksBuilder();
-		for(SootClass klass : Program.g().getClasses()) {
-			potentialCallbacksBuilder.processClass(klass);
-		}
-		Set<SootMethod> potentialCallbacks = new HashSet<SootMethod>();
-		for(SootMethod superMethod : potentialCallbacksBuilder.stubMethodsToCallbacks.keySet()) {
-			for(SootMethod potentialCallback : potentialCallbacksBuilder.stubMethodsToCallbacks.get(superMethod)) {
-				potentialCallbacks.add(potentialCallback);
-			}
-		}
-		return potentialCallbacks;
-	}
-	
 	private static boolean isInteresting(SootMethod method) {
 		return method.isConcrete() && !method.isPrivate() && !method.isStatic() && !method.getName().equals("<init>");
 	}
@@ -106,7 +92,6 @@ public class PotentialCallbacksBuilder extends JavaAnalysis {
 	}
 
 	private MultivalueMap<SootMethod,SootMethod> frameworkMethodsToCallbacks = new MultivalueMap<SootMethod,SootMethod>();
-	private MultivalueMap<SootMethod,SootMethod> stubMethodsToCallbacks = new MultivalueMap<SootMethod,SootMethod>();
 	
 	private void findCallbacksHelper(SootClass klass, Map<NumberedString,SootMethod> signaturesToMethods) {
 		if(AbstractSourceInfo.isFrameworkClass(klass)) {
@@ -117,9 +102,6 @@ public class PotentialCallbacksBuilder extends JavaAnalysis {
 						SootMethod method = signaturesToMethods.get(superMethodSignature);
 						if(method != null) {
 							this.frameworkMethodsToCallbacks.add(superMethod, method);
-							if(AliasModelsStubOnly.getStubSet().contains(superMethod)) {
-								this.stubMethodsToCallbacks.add(superMethod, method);
-							}
 						}
 					}
 				}
