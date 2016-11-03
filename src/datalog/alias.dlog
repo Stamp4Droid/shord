@@ -1,0 +1,15 @@
+##################
+# Alias analysis
+##################
+
+# name=alias-dlog
+
+.include "C.dom"
+.include "V.dom"
+
+.bddvarorder V0xV1_C0xC1xC2
+
+pt(c:C,v:V,o:C) input
+alias(v:V,u:V) output
+
+alias(v,u) :- pt(_,v,o), pt(_,u,o).

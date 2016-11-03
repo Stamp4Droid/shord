@@ -36,7 +36,7 @@ public class Config {
     
     // properties concerning BDDs
     public final boolean saveDomMaps = Utils.buildBoolProperty("chord.save.maps", true);
-    public final int verbose = Integer.getInteger("chord.verbose", 2);
+    public final int verbose = Integer.getInteger("chord.verbose", 1);
     public final boolean useBuddy = Utils.buildBoolProperty("chord.use.buddy", false);
     public final String bddbddbMaxHeap = System.getProperty("chord.bddbddb.max.heap", "4096m");
     
