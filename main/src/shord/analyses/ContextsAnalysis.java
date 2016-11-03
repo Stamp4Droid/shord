@@ -14,20 +14,18 @@ import soot.Scene;
 import soot.Unit;
 import soot.SootMethod;
 import soot.util.NumberedSet;
-
-import shord.program.Program;
-import shord.project.ClassicProject;
+import shord.project.Chord;
+import shord.project.Project;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
+import shord.project.bddbddb.Rel.RelView;
+import shord.util.ArraySet;
+import shord.util.graph.IGraph;
+import shord.util.graph.MutableGraph;
+import shord.util.tuple.object.Pair;
 import shord.project.Config;
 import shord.project.Messages;
-
-import chord.project.Chord;
-import chord.util.ArraySet;
-import chord.util.graph.IGraph;
-import chord.util.graph.MutableGraph;
-import chord.util.tuple.object.Pair;
-import chord.bddbddb.Rel.RelView;
+import shord.project.Program;
 
 @Chord(name = "contexts-java",
 	   consumes = { "ci_reachableM", "ci_IM", "I", "M", "H", "MH", "MI", "Stub" },
@@ -66,11 +64,11 @@ public class ContextsAnalysis extends JavaAnalysis
 
 	public void run()
 	{
-		domI = (DomI) ClassicProject.g().getTrgt("I");
-        domM = (DomM) ClassicProject.g().getTrgt("M");
-        domC = (DomC) ClassicProject.g().getTrgt("C");
+		domI = (DomI) Project.g().getTrgt("I");
+        domM = (DomM) Project.g().getTrgt("M");
+        domC = (DomC) Project.g().getTrgt("C");
 
-		relCtxtInsMeth = (ProgramRel) ClassicProject.g().getTrgt("CtxtInsMeth");
+		relCtxtInsMeth = (ProgramRel) Project.g().getTrgt("CtxtInsMeth");
 
         int numM = domM.size();
 		int numI = domI.size();
@@ -82,7 +80,7 @@ public class ContextsAnalysis extends JavaAnalysis
 
         ItoM = new int[numI];
         ItoQ = new Unit[numI];
-		final ProgramRel relMI = (ProgramRel) ClassicProject.g().getTrgt("MI");		
+		final ProgramRel relMI = (ProgramRel) Project.g().getTrgt("MI");		
 		relMI.load();
 		Iterable<Pair<SootMethod,Unit>> res = relMI.getAry2ValTuples();
 		for(Pair<SootMethod,Unit> pair : res) {
@@ -95,7 +93,7 @@ public class ContextsAnalysis extends JavaAnalysis
 		}
 		relMI.close();
 
-        DomH domH = (DomH) ClassicProject.g().getTrgt("H");
+        DomH domH = (DomH) Project.g().getTrgt("H");
 		int numH = domH.size();
         HtoQ = new AllocNode[numH];
 		for (int hIdx = 0; hIdx < numH; hIdx++) {
@@ -103,7 +101,7 @@ public class ContextsAnalysis extends JavaAnalysis
 		}
 
         HtoM = new int[numH];
-		final ProgramRel relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");		
+		final ProgramRel relMH = (ProgramRel) Project.g().getTrgt("MH");		
 		relMH.load();
 		Iterable<Pair<SootMethod,AllocNode>> res1 = relMH.getAry2ValTuples();
 		for(Pair<SootMethod,AllocNode> pair : res1) {
@@ -119,7 +117,7 @@ public class ContextsAnalysis extends JavaAnalysis
         epsilonCtxtSet = new ArraySet<Ctxt>(1);
         epsilonCtxtSet.add(epsilon);
 
-        relIM = (ProgramRel) ClassicProject.g().getTrgt("ci_IM");
+        relIM = (ProgramRel) Project.g().getTrgt("ci_IM");
 		relIM.load();
 		relCtxtInsMeth.zero();
 
@@ -139,7 +137,7 @@ public class ContextsAnalysis extends JavaAnalysis
 
 	private void CM()
 	{
-		ProgramRel relCM = (ProgramRel) ClassicProject.g().getTrgt("CM");
+		ProgramRel relCM = (ProgramRel) Project.g().getTrgt("CM");
 		relCM.zero();
         for (int mIdx = 0; mIdx < methToCtxts.length; mIdx++) {
             SootMethod meth = (SootMethod) domM.get(mIdx);
@@ -156,7 +154,7 @@ public class ContextsAnalysis extends JavaAnalysis
 
 	private void CH()
 	{
-		ProgramRel relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");
+		ProgramRel relCH = (ProgramRel) Project.g().getTrgt("CH");
 		relCH.zero();
 
 		for(int hIdx = 0; hIdx < HtoM.length; hIdx++){
@@ -189,8 +187,8 @@ public class ContextsAnalysis extends JavaAnalysis
 
 	private void CC_CI()
 	{
-        ProgramRel relCC = (ProgramRel) ClassicProject.g().getTrgt("CC");
-        ProgramRel relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
+        ProgramRel relCC = (ProgramRel) Project.g().getTrgt("CC");
+        ProgramRel relCI = (ProgramRel) Project.g().getTrgt("CI");
 		relCC.zero();
         relCI.zero();
 
@@ -277,7 +275,7 @@ public class ContextsAnalysis extends JavaAnalysis
 		//Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		//while(mIt.hasNext()){
 
-		final ProgramRel relReachableM = (ProgramRel) ClassicProject.g().getTrgt("ci_reachableM");		
+		final ProgramRel relReachableM = (ProgramRel) Project.g().getTrgt("ci_reachableM");		
 		relReachableM.load();
 		Iterable<SootMethod> mIt = relReachableM.getAry1ValTuples();
 		for(SootMethod meth : mIt){
@@ -416,7 +414,7 @@ public class ContextsAnalysis extends JavaAnalysis
 	private NumberedSet stubMethods()
 	{
 		NumberedSet stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
-		final ProgramRel relStub = (ProgramRel) ClassicProject.g().getTrgt("Stub");		
+		final ProgramRel relStub = (ProgramRel) Project.g().getTrgt("Stub");		
 		relStub.load();
         RelView view = relStub.getView();
         Iterable<SootMethod> it = view.getAry1ValTuples();

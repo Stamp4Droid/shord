@@ -1,18 +1,16 @@
 package shord.project;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.util.List;
 
-import chord.util.IndexMap;
-import chord.util.Utils;
-import chord.util.ProcessExecutor;
+import shord.util.ProcessExecutor;
+import shord.util.Utils;
 
 /**
  * Common operations on files in the directory specified by system property
@@ -91,23 +89,6 @@ public class OutDirUtils {
             Messages.fatal(ex);
         }
         return dstFile.getAbsolutePath();
-    }
-
-    public static void writeMapToFile(IndexMap<String> map, String fileName) {
-        Utils.writeMapToFile(map, new File(Config.v().outDirName, fileName));
-    }
-
-    public static void runSaxon(String xmlFileName, String xslFileName) {
-        String dummyFileName = (new File(Config.v().outDirName, "dummy")).getAbsolutePath();
-        xmlFileName = (new File(Config.v().outDirName, xmlFileName)).getAbsolutePath();
-        xslFileName = (new File(Config.v().outDirName, xslFileName)).getAbsolutePath();
-        try {
-            net.sf.saxon.Transform.main(new String[] {
-                "-o", dummyFileName, xmlFileName, xslFileName
-            });
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     public static final void executeWithFailOnError(List<String> cmdlist) {

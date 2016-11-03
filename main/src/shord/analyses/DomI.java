@@ -1,8 +1,8 @@
 package shord.analyses;
 
 import soot.Unit;
+import shord.project.Program;
 import shord.project.analyses.ProgramDom;
-import shord.program.Program;
 
 /**
  * Domain of method invocation stmts

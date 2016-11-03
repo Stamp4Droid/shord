@@ -27,24 +27,22 @@ import soot.util.NumberedSet;
 import soot.jimple.AnyNewExpr;
 import soot.jimple.AssignStmt;
 import soot.jimple.StaticInvokeExpr;
-
-import shord.program.Program;
-import shord.project.ClassicProject;
+import shord.project.Chord;
+import shord.project.Project;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
+import shord.project.bddbddb.Rel.RelView;
+import shord.util.ArraySet;
+import shord.util.Utils;
+import shord.util.graph.IGraph;
+import shord.util.graph.MutableGraph;
+import shord.util.tuple.object.Pair;
 import shord.project.Config;
 import shord.project.Messages;
+import shord.project.Program;
 
 import static shord.analyses.PAGBuilder.isQuasiStaticInvk;
 import static shord.analyses.PAGBuilder.isQuasiStaticMeth;
-
-import chord.util.Utils;
-import chord.project.Chord;
-import chord.util.ArraySet;
-import chord.util.graph.IGraph;
-import chord.util.graph.MutableGraph;
-import chord.util.tuple.object.Pair;
-import chord.bddbddb.Rel.RelView;
 
 /**
  * Analysis for pre-computing abstract contexts.
@@ -102,18 +100,18 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
     public void run() 
 	{
-        domV = (DomV) ClassicProject.g().getTrgt("V");
-        domI = (DomI) ClassicProject.g().getTrgt("I");
-        domM = (DomM) ClassicProject.g().getTrgt("M");
-        domH = (DomH) ClassicProject.g().getTrgt("H");
-        domC = (DomC) ClassicProject.g().getTrgt("C");
+        domV = (DomV) Project.g().getTrgt("V");
+        domI = (DomI) Project.g().getTrgt("I");
+        domM = (DomM) Project.g().getTrgt("M");
+        domH = (DomH) Project.g().getTrgt("H");
+        domC = (DomC) Project.g().getTrgt("C");
 
-        relCC = (ProgramRel) ClassicProject.g().getTrgt("CC");
-        relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");
-        relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
-        relIpt = (ProgramRel) ClassicProject.g().getTrgt("ci_pt");
-        relIM = (ProgramRel) ClassicProject.g().getTrgt("ci_IM");
-		relCtxtInsMeth = (ProgramRel) ClassicProject.g().getTrgt("CtxtInsMeth");
+        relCC = (ProgramRel) Project.g().getTrgt("CC");
+        relCH = (ProgramRel) Project.g().getTrgt("CH");
+        relCI = (ProgramRel) Project.g().getTrgt("CI");
+        relIpt = (ProgramRel) Project.g().getTrgt("ci_pt");
+        relIM = (ProgramRel) Project.g().getTrgt("ci_IM");
+		relCtxtInsMeth = (ProgramRel) Project.g().getTrgt("CtxtInsMeth");
 
         mainMeth = Program.g().getMainMethod();
 
@@ -131,7 +129,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
         ItoM = new int[numI];
         ItoQ = new Unit[numI];
-        final ProgramRel relMI = (ProgramRel) ClassicProject.g().getTrgt("MI");		
+        final ProgramRel relMI = (ProgramRel) Project.g().getTrgt("MI");		
         relMI.load();
         Iterable<Pair<SootMethod,Unit>> res = relMI.getAry2ValTuples();
         for(Pair<SootMethod,Unit> pair : res) {
@@ -151,7 +149,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 		}
 
         HtoM = new int[numH];
-        final ProgramRel relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");		
+        final ProgramRel relMH = (ProgramRel) Project.g().getTrgt("MH");		
         relMH.load();
         Iterable<Pair<SootMethod,AllocNode>> res1 = relMH.getAry2ValTuples();
         for(Pair<SootMethod,AllocNode> pair : res1) {
@@ -282,7 +280,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
 	private void CM()
 	{
-		ProgramRel relCM = (ProgramRel) ClassicProject.g().getTrgt("CM");
+		ProgramRel relCM = (ProgramRel) Project.g().getTrgt("CM");
 		relCM.zero();
         for (int mIdx = 0; mIdx < methToCtxts.length; mIdx++) {
             SootMethod meth = (SootMethod) domM.get(mIdx);
@@ -304,7 +302,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         Set<SootMethod> roots = new HashSet<SootMethod>();
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
 		stubs = stubMethods();
-		ProgramRel relReachableM = (ProgramRel) ClassicProject.g().getTrgt("ci_reachableM");
+		ProgramRel relReachableM = (ProgramRel) Project.g().getTrgt("ci_reachableM");
 		relReachableM.load();
 		Iterable<SootMethod> reachableMethods = relReachableM.getAry1ValTuples();
 		Iterator mIt = reachableMethods.iterator();
@@ -514,7 +512,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 	private NumberedSet stubMethods()
 	{
 		NumberedSet stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
-		final ProgramRel relStub = (ProgramRel) ClassicProject.g().getTrgt("Stub");		
+		final ProgramRel relStub = (ProgramRel) Project.g().getTrgt("Stub");		
 		relStub.load();
         RelView view = relStub.getView();
         Iterable<SootMethod> it = view.getAry1ValTuples();

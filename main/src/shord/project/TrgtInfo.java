@@ -1,6 +1,6 @@
 package shord.project;
 
-import chord.bddbddb.RelSign;
+import shord.project.bddbddb.RelSign;
 
 public class TrgtInfo {
     public Class type;

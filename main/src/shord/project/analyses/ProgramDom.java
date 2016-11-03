@@ -6,11 +6,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import shord.project.ClassicProject;
+import shord.project.Project;
 import shord.project.Config;
 import shord.project.ITask;
-
-import chord.bddbddb.Dom;
+import shord.project.bddbddb.Dom;
 
 /**
  * Generic implementation of a program domain (a specialized kind
@@ -44,7 +43,7 @@ public class ProgramDom<T> extends Dom<T> implements ITask {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-		ClassicProject.g().setTrgtDone(this);
+		Project.g().setTrgtDone(this);
     }
     public void fill() {
 		throw new RuntimeException("implement");

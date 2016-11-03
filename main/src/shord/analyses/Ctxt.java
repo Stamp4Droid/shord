@@ -3,7 +3,8 @@ package shord.analyses;
 import soot.Unit;
 import soot.SootMethod;
 import java.io.Serializable;
-import shord.program.Program;
+
+import shord.project.Program;
 
 /**
  * Representation of an abstract context of a method.

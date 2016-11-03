@@ -1,17 +1,10 @@
 package shord.project.analyses;
 
-import java.util.List;
-import java.io.File;
-
-import shord.project.ClassicProject;
-
+import shord.project.Project;
 import shord.project.Config;
-import shord.project.Messages;
 import shord.project.ITask;
-
-import chord.bddbddb.Rel;
-import chord.bddbddb.RelSign;
-import chord.util.Utils;
+import shord.project.Messages;
+import shord.project.bddbddb.Rel;
 
 
 /**
@@ -38,7 +31,7 @@ public class ProgramRel extends Rel implements ITask {
         if (Config.v().verbose >= 1)
             System.out.println("SAVING rel " + name + " size: " + size());
         super.save(Config.v().bddbddbWorkDirName);
-		ClassicProject.g().setTrgtDone(this);
+		Project.g().setTrgtDone(this);
     }
     public void load() {
         super.load(Config.v().bddbddbWorkDirName);

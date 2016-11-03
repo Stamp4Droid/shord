@@ -20,9 +20,8 @@ import shord.project.Config;
 import shord.project.OutDirUtils;
 import shord.project.Main;
 import shord.project.ProcessExecutor;
-
-import chord.bddbddb.RelSign;
-import chord.util.Utils;
+import shord.project.bddbddb.RelSign;
+import shord.util.Utils;
 import gnu.trove.list.array.TIntArrayList;
 
 /**
@@ -288,7 +287,7 @@ public class DlogAnalysis extends JavaAnalysis {
             //Config.v().mainDirName + File.separator + "shord.jar",
 			System.getProperty("java.class.path"),
             "-Dverbose=" + Config.v().verbose,
-            Config.v().useBuddy ? ("-Djava.library.path=" + Config.v().mainDirName) : "-Dbdd=j",
+            "-Dbdd=j",
             "-Dbasedir=" + Config.v().bddbddbWorkDirName,
             "net.sf.bddbddb.Solver",
 			fileName.toString()

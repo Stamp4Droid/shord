@@ -25,11 +25,6 @@
 	  <fileset dir="datalog">
         <include name="**/*.dlog"/>
       </fileset>
-	  <!--zipfileset src="lib/stamp.chord.jar">
-		<include name="**/*.class"/>
-		<exclude name="chord/analyses/**/*.class"/>
-		<exclude name="joeq/**/*.class"/>
-	  </zipfileset-->
     </jar>
   </target>
 

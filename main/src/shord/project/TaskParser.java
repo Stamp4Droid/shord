@@ -24,15 +24,13 @@ import org.scannotation.AnnotationDB;
 import shord.project.analyses.DlogAnalysis;
 import shord.project.analyses.ProgramDom;
 import shord.project.analyses.ProgramRel;
+import shord.project.bddbddb.RelSign;
+import shord.util.Utils;
 import shord.project.OutDirUtils;
 import shord.project.Config;
 import shord.project.Messages;
 import shord.project.ITask;
 import shord.project.TrgtInfo;
-
-import chord.project.Chord;
-import chord.util.Utils;
-import chord.bddbddb.RelSign;
 
 
 /**

@@ -1,6 +1,6 @@
 package shord.analyses;
 
-import shord.program.Program;
+import shord.project.Program;
 import shord.project.analyses.ProgramDom;
 import soot.jimple.AssignStmt;
 import soot.Unit;

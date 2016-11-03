@@ -6,12 +6,10 @@ import java.util.Map;
 import java.util.HashMap;
 
 import shord.project.Messages;
-import chord.project.Chord;
-import chord.bddbddb.RelSign;
-import chord.util.Utils;
-
 import shord.project.analyses.ProgramDom;
 import shord.project.analyses.ProgramRel;
+import shord.project.bddbddb.RelSign;
+import shord.util.Utils;
 
 
 /**

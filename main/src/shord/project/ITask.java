@@ -24,8 +24,8 @@ public interface ITask {
      * 
      * This method must usually not be called directly.
      * The correct way to call it is to call
-     * {@link chord.project.ClassicProject#runTask(String)} or
-     * {@link chord.project.ClassicProject#runTask(ITask)}, providing
+     * {@link Project.project.ClassicProject#runTask(String)} or
+     * {@link Project.project.ClassicProject#runTask(ITask)}, providing
      * this analysis either by its name or its object.
      */
     public void run();

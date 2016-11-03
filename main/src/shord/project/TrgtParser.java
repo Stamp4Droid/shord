@@ -10,9 +10,8 @@ import shord.project.Messages;
 import shord.project.Config;
 import shord.project.TrgtInfo;
 import shord.project.analyses.ProgramRel;
-
-import chord.bddbddb.RelSign;
-import chord.util.Utils;
+import shord.project.bddbddb.RelSign;
+import shord.util.Utils;
 
 public class TrgtParser {
     private static final String DOM_NAMES_INCONSISTENT = 
