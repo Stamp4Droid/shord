@@ -1,11 +1,10 @@
 package shord.project;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
-import shord.project.Messages;
 import shord.project.analyses.ProgramDom;
 import shord.project.analyses.ProgramRel;
 import shord.project.bddbddb.RelSign;

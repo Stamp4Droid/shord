@@ -3,9 +3,6 @@ package shord.project;
 import java.io.File;
 import java.io.PrintStream;
 
-import shord.project.Program;
-import shord.project.Config;
-import shord.project.Project;
 import shord.util.Timer;
 import shord.util.Utils;
 

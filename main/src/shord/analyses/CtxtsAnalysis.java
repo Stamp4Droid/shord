@@ -1,61 +1,45 @@
 package shord.analyses;
 
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import static shord.analyses.PAGBuilder.isQuasiStaticInvk;
+import static shord.analyses.PAGBuilder.isQuasiStaticMeth;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
-import java.util.Iterator;
 
 import gnu.trove.list.array.TIntArrayList;
-
-import soot.Scene;
-import soot.Unit;
-import soot.Type;
-import soot.RefType;
-import soot.jimple.Stmt;
-import soot.SootMethod;
-import soot.util.NumberedSet;
-import soot.jimple.AnyNewExpr;
-import soot.jimple.AssignStmt;
-import soot.jimple.StaticInvokeExpr;
 import shord.project.Chord;
+import shord.project.Config;
+import shord.project.Program;
 import shord.project.Project;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import shord.project.bddbddb.Rel.RelView;
 import shord.util.ArraySet;
-import shord.util.Utils;
 import shord.util.graph.IGraph;
 import shord.util.graph.MutableGraph;
 import shord.util.tuple.object.Pair;
-import shord.project.Config;
-import shord.project.Messages;
-import shord.project.Program;
-
-import static shord.analyses.PAGBuilder.isQuasiStaticInvk;
-import static shord.analyses.PAGBuilder.isQuasiStaticMeth;
+import soot.SootMethod;
+import soot.Unit;
 
 /**
  * Analysis for pre-computing abstract contexts.
  * @author Yu Feng (yufeng@cs.stanford.edu)
  * @author Saswat Anand
  */
-@Chord(name = "ctxts-obj-java",
+@Chord(name = "ctxts-java",
        consumes = { "MI", "MH", "ci_pt", "StatIM", "ci_reachableM", "ci_IM"},
-       produces = { "C", "CC", "CH", "CI", "CtxtInsMeth", "CM"},
+       produces = { "C", "CC", "CI", "CM", "CH", "CtxtInsMeth"},
        namesOfTypes = { "C" },
-       types = { DomC.class }
+       types = { DomC.class },
+       namesOfSigns = { "CC", "CI", "CM", "CH", "CtxtInsMeth" },
+       signs = { "C0,C1:C0xC1", "C0,I0:C0_I0", "C0,M0:C0_M0", "C0,H0:C0_H0", "M0:M0"}
 )
-public class CtxtsObjAnalysis extends JavaAnalysis 
+public class CtxtsAnalysis extends JavaAnalysis 
 {
     private static final Set<Ctxt> emptyCtxtSet = Collections.emptySet();
     private static final Set<SootMethod> emptyMethSet = Collections.emptySet();

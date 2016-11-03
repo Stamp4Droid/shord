@@ -2,7 +2,7 @@
 # Context-insensitive Points-to analysis with on-the-fly callgraph construction
 ##################
 
-# name=cipt-cg-dlog
+# name=cicg-dlog
 
 .include "M.dom"
 .include "V.dom"

@@ -1,5 +1,5 @@
 ##################
-# Points-to analysis
+# K-obj Points-to analysis
 ##################
 
 # name=pt-dlog
@@ -10,58 +10,109 @@
 .include "H.dom"
 .include "F.dom"
 .include "I.dom"
+.include "S.dom"
+.include "T.dom"
+.include "Z.dom"
 
-.bddvarorder M0_C0xC1xC2_V0xV1_I0xF0
+.bddvarorder F0_I0xM0_S0_T0_V0xV1_T1_H0_C0xC1xC2_Z0
 
-#.bddvarorder M0_C0xC1xC2_V0xV1_I0xH0xF0 #best so far
+ci_IM(i:I,m:M) input
+IinvkRet(i:I,n:Z,v:V) input
+IinvkArg(i:I,n:Z,v:V) input
+MmethArg(m:M,z:Z,v:V) input
+MmethRet(m:M,z:Z,v:V) input
 
-#.bddvarorder M0_H0xF0_I0_C0xC1xC2_V0xV1 infinite
-#.bddvarorder V0xV1_C0xC1xC2_I0_M0_H0xF0 6:34
-#.bddvarorder C0xC1xC2_V0xV1_I0_M0_H0xF0 5:38
-#.bddvarorder I0_C0xC1xC2_V0xV1_M0_H0xF0 infinite
-#.bddvarorder M0_C0xC1xC2_V0xV1_I0_H0xF0 5:28
-
-Assign(v:V,u:V)     input   # v = u
-#Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
-#GlobalAlloc(v:V,h:H) input   # v is the lhs in the new stmt h
-Load(y:V,x:V,f:F)   input   # y = x.f
-Store(u:V,f:F,v:V)  input   # u.f = v
-LoadStat(y:V,f:F)   input   # y = f
-StoreStat(f:F,v:V)  input   # f = v
-param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
-return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
-typeFilter(v:V,o:C) input   # type wise, v can point-to o
+Assign(v:V,u:V)       input   # v = u
+Alloc(v:V,h:H)        input   # v is the lhs in the new stmt h
+GlobalAlloc(v:V,h:H)  input   # v is the lhs in the new stmt h
+Load(y:V,x:V,f:F)     input   # y = x.f
+Store(u:V,f:F,v:V)    input   # u.f = v
+LoadStat(y:V,f:F)     input   # y = f
+StoreStat(f:F,v:V)    input   # f = v
+typeFilter(v:V,o:C)   input   # type wise, v can point-to o
+ipFilter(c:C,v:V,o:C) input  
 
 MV(m:M,v:V) input         # v is a variable in method m
-CM(c:C,m:M) input         # c is a context of method m
-#CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
-CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack c
+CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
+HT(h:H,t:T) input         # heap h point to Type t.
+MI(m:M,i:I) input         # stmt i belongs to method m.
+CI(c:C,i:I) input         # stmt i is on the top of c.
 
-ptAlloc(c:C,v:V,o:C) input
+StatIM(i:I,m:M) input     # i statically invokes m. 
+SpecIM(i:I,m:M) input     # i special invoke m. 
+VirtIM(i:I,s:S) input     # i virtually invokes m. 
+ClassT(t:T) input         # t is concrete or abstract
+StaticTM(t:T,m:M) input   # m is a static method in t.
+StaticTF(t:T,f:F) input   # f is a static field in t.
+ClinitTM(t:T,m:M) input   # m is the class initializer in m.
+Subtype(t1:T,t2:T) input    # t1 is a subtype of t2.
 
-pt1(c:C,v:V,o:C)
-pt(c:C,v:V,o:C)    output # (c,v) points-to o
-fpt(o1:C,f:F,o2:C) output
-
-fptStat(f:F,o:C) output
+Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 
 ###################
-#    RULES
+# INTERMEDIATE
 ###################
 
-#pt(c,v,o) :- GlobalAlloc(v,h), MV(m,v), CM(c,m), CH(o,h). 
-#pt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+param(u:V,v:V,i:I)
+return(u:V,v:V,i:I)
+CIC(c:C,i:I,d:C) # d = [i, c]
+reachableT(t:T) 
+DIC(c:C,i:I,c:C) 
+DVDV(c:C,u:V,d:C,v:V) 
+reachableCI(c:C,i:I) 
+fptStat(f:F,o:C) 
+ICM(i:I,c:C,m:M) 
 
-pt(c,v,o) :- ptAlloc(c,v,o).
-pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o). #pri=3
-pt(c,v,o) :- pt1(c,v,o).
+###################
+# OUTPUT
+###################
 
-pt1(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i). #pri=1
-pt1(c,u,o) :- pt(d,v,o), return(u,v,i), typeFilter(u,o), CI(d,i), CC(c,d). #pri=1
+reachableCM(c:C,m:M)   output
+CICM(d:C,i:I,c:C,m:M)  output # i in cotext d calls method m in context c.
+pt(c:C,v:V,o:C)        output # (c,v) points-to o
+fpt(o1:C,f:F,o2:C)     output
 
-fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1). #pri=1
-pt1(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).  #pri=1
+###################
+# RULES
+###################
 
-fptStat(f,o) :- pt(_,v,o), StoreStat(f,v). #pri=1
-pt1(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m). #pri=1
+param(u,v,i) :- ci_IM(i,m), MmethArg(m,z,u), IinvkArg(i,z,v).
+return(u,v,i) :- ci_IM(i,m), MmethRet(m,z,v), IinvkRet(i,z,u).
+
+pt(c,v,o) :- Assign(v,u), pt(c,u,o), typeFilter(v,o).
+
+reachableCI(c,i) :- MI(m,i), reachableCM(c,m).
+
+CIC(c,i,d) :- CC(c,d), CI(d,i).
+
+DIC(c,i,o) :- IinvkArg(i,0,v), pt(c,v,o).
+CICM(c,i,o,m) :- reachableCI(c,i), DIC(c,i,o), ICM(i,o,m). 
+CICM(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CIC(c,i,d).
+CICM(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
+
+DVDV(d,u,c,v) :- CICM(c,i,d,m), MV(m,u), param(u,v,i).
+DVDV(c,u,d,v) :- CICM(c,i,d,m), MV(m,v), return(u,v,i).
+
+pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), ipFilter(c,u,o).
+
+pt(c,v,o) :- Alloc(v,h), MV(m,v), reachableCM(c,m), CC(c,o), CH(o,h).
+pt(c,v,o) :- GlobalAlloc(v,h), MV(m,v), reachableCM(c,m), CH(o,h).
+
+fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
+pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2). 
+
+fptStat(f,o) :- pt(_,v,o), StoreStat(f,v).
+pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), reachableCM(c,m).
+
+reachableT(t) :- reachableCM(_,m), MV(m,v), Alloc(v,h), HT(h,t).
+reachableT(t) :- reachableCM(_,m), StaticTM(t,m).
+reachableT(t) :- reachableCM(_,m), MV(m,v), StoreStat(f,v), StaticTF(t,f).
+reachableT(t) :- reachableCM(_,m), MV(m,v), LoadStat(v,f), StaticTF(t,f).
+reachableT(t) :- ClassT(t), reachableT(s), Subtype(s,t).
+
+reachableCM(0,0).
+reachableCM(0,m) :- ClinitTM(t,m), reachableT(t).
+reachableCM(c,m) :- CICM(_,_,c,m). 
+
+ICM(i,o,m2) :- VirtIM(i,s), Dispatch(t,s,m2), HT(h,t), CH(o,h).

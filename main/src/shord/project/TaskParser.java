@@ -1,23 +1,22 @@
 package shord.project;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Enumeration;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipEntry;
-import java.util.jar.JarFile;
 import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.scannotation.AnnotationDB;
 
@@ -26,11 +25,6 @@ import shord.project.analyses.ProgramDom;
 import shord.project.analyses.ProgramRel;
 import shord.project.bddbddb.RelSign;
 import shord.util.Utils;
-import shord.project.OutDirUtils;
-import shord.project.Config;
-import shord.project.Messages;
-import shord.project.ITask;
-import shord.project.TrgtInfo;
 
 
 /**

@@ -6,9 +6,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import shord.project.Messages;
-import shord.project.Config;
-import shord.project.TrgtInfo;
 import shord.project.analyses.ProgramRel;
 import shord.project.bddbddb.RelSign;
 import shord.util.Utils;

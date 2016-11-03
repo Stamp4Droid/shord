@@ -39,11 +39,6 @@
       </manifest>
     </jar>
   </target>
-
-  <target name="run">
-    <java classname="shord.project.Boot" failonerror="true" classpath="shord.jar"/>
-  </target>
-
   <target name="clean">
     <delete dir="classes"/>
     <delete file="shord.jar"/>
