@@ -4,12 +4,19 @@
 
 # name=alias-dlog
 
+.include "M.dom"
 .include "C.dom"
 .include "V.dom"
 
-.bddvarorder V0xV1_C0xC1xC2
+.bddvarorder M0_V0xV1_C0xC1xC2
 
+Library(m:M) input
+MV(m:M,v:V) input
 pt(c:C,v:V,o:C) input
+
+LibraryV(v:V)
+
 alias(v:V,u:V) output
 
-alias(v,u) :- pt(_,v,o), pt(_,u,o).
+LibraryV(v) :- MV(m,v), Library(m).
+alias(v,u) :- pt(_,v,o), !LibraryV(v), pt(_,u,o), !LibraryV(u).
