@@ -141,6 +141,7 @@ public class Program {
 	}
 
 	public void printAllClasses() {
+		new File(Config.v().outDirName + File.separator + "jimple").mkdir();
 		for(SootClass klass : Scene.v().getClasses()) {
 			try {
 				PrintWriter pw = new PrintWriter(new FileWriter(Config.v().outDirName + File.separator + "jimple" + File.separator + klass.getName()));
