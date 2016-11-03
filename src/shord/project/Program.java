@@ -50,11 +50,11 @@ public class Program {
 			options.append(" -soot-classpath " + Config.v().chordModelPath + File.pathSeparator + Config.v().chordClassPath);
 			options.append(" -f none");
 			options.append(" -d "+ Config.v().outDirName + File.separator + "soot_out");
-
+			
 			if (!Options.v().parse(options.toString().split(" "))) {
 				throw new CompilationDeathException(CompilationDeathException.COMPILATION_ABORTED, "Option parse error");
 			}
-
+			
 			Scene.v().loadBasicClasses();
 			SootClass mainClass = Scene.v().loadClassAndSupport(Config.v().mainClassName);
 			Scene.v().setMainClass(mainClass);
