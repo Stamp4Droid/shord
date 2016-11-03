@@ -50,7 +50,7 @@ import static shord.analyses.PAGBuilder.isQuasiStaticMeth;
  * @author Saswat Anand
  */
 @Chord(name = "ctxts-obj-java",
-       consumes = { "MI", "MH", "ci_pt", "StatIM", "Stub", "ci_reachableM", "ci_IM"},
+       consumes = { "MI", "MH", "ci_pt", "StatIM", "ci_reachableM", "ci_IM"},
        produces = { "C", "CC", "CH", "CI", "CtxtInsMeth", "CM"},
        namesOfTypes = { "C" },
        types = { DomC.class }
@@ -95,8 +95,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis
     private ProgramRel relIpt;
     private ProgramRel relIM;
     private ProgramRel relCtxtInsMeth;
-
-	private NumberedSet stubs;
 
     public void run() 
 	{
@@ -301,7 +299,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         SootMethod mainMeth = Program.g().getMainMethod();
         Set<SootMethod> roots = new HashSet<SootMethod>();
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
-		stubs = stubMethods();
 		ProgramRel relReachableM = (ProgramRel) Project.g().getTrgt("ci_reachableM");
 		relReachableM.load();
 		Iterable<SootMethod> reachableMethods = relReachableM.getAry1ValTuples();
@@ -310,7 +307,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 			SootMethod meth = (SootMethod) mIt.next();
 			System.out.println("Reach: "+meth);
             int mIdx = domM.indexOf(meth);
-			if (meth == mainMeth || meth.getName().equals("<clinit>") || treatCI(meth)) {
+			if (meth == mainMeth || meth.getName().equals("<clinit>")) {
                 roots.add(meth);
                 methToPredsMap.put(meth, emptyMethSet);
                 methToCtxts[mIdx] = epsilonCtxtSet;
@@ -508,25 +505,4 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         }
         return newCtxts;
     }
-
-	private NumberedSet stubMethods()
-	{
-		NumberedSet stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
-		final ProgramRel relStub = (ProgramRel) Project.g().getTrgt("Stub");		
-		relStub.load();
-        RelView view = relStub.getView();
-        Iterable<SootMethod> it = view.getAry1ValTuples();
-		for(SootMethod m : it)
-			stubMethods.add(m);		
-		relStub.close();
-		return stubMethods;
-    }
-
-	private boolean treatCI(SootMethod meth)
-	{
-		if(!stubs.contains(meth))
-			return false;
-		String sig = meth.getSignature();
-		return true;
-	}
 }

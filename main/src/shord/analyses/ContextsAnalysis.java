@@ -6,15 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Iterator;
 
 import gnu.trove.list.array.TIntArrayList;
-
-import soot.Scene;
-import soot.Unit;
-import soot.SootMethod;
-import soot.util.NumberedSet;
 import shord.project.Chord;
+import shord.project.Config;
+import shord.project.Program;
 import shord.project.Project;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -23,12 +19,11 @@ import shord.util.ArraySet;
 import shord.util.graph.IGraph;
 import shord.util.graph.MutableGraph;
 import shord.util.tuple.object.Pair;
-import shord.project.Config;
-import shord.project.Messages;
-import shord.project.Program;
+import soot.SootMethod;
+import soot.Unit;
 
 @Chord(name = "contexts-java",
-	   consumes = { "ci_reachableM", "ci_IM", "I", "M", "H", "MH", "MI", "Stub" },
+	   consumes = { "ci_reachableM", "ci_IM", "I", "M", "H", "MH", "MI"},
 	   produces = { "C", "CC", "CI", "CM", "CH", "CtxtInsMeth" },
 	   namesOfTypes = { "C" },
 	   types = { DomC.class },
@@ -59,9 +54,7 @@ public class ContextsAnalysis extends JavaAnalysis
 
     private ProgramRel relIM;
 	private ProgramRel relCtxtInsMeth;
-
-	private NumberedSet stubs;
-
+	
 	public void run()
 	{
 		domI = (DomI) Project.g().getTrgt("I");
@@ -271,7 +264,6 @@ public class ContextsAnalysis extends JavaAnalysis
         Set<SootMethod> roots = new HashSet<SootMethod>();
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
 		
-		stubs = stubMethods();
 		//Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		//while(mIt.hasNext()){
 
@@ -279,19 +271,11 @@ public class ContextsAnalysis extends JavaAnalysis
 		relReachableM.load();
 		Iterable<SootMethod> mIt = relReachableM.getAry1ValTuples();
 		for(SootMethod meth : mIt){
-			//SootMethod meth = (SootMethod) mIt.next();
-			if(stubs.contains(meth)){
-				//System.out.println("reachstub "+meth);
-				continue;
-			}
 			int mIdx = domM.indexOf(meth);
-			boolean treatCI = treatCI(meth);
-			if (meth == mainMeth || meth.getName().equals("<clinit>") || treatCI){
+			if (meth == mainMeth || meth.getName().equals("<clinit>")){
                 roots.add(meth);
                 methToPredsMap.put(meth, emptyMethSet);
                 methToCtxts[mIdx] = epsilonCtxtSet;
-				if(treatCI)
-					relCtxtInsMeth.add(meth);
 			} else {
 				Set<SootMethod> predMeths = new HashSet<SootMethod>();
 				TIntArrayList clrSites = new TIntArrayList();
@@ -410,27 +394,4 @@ public class ContextsAnalysis extends JavaAnalysis
 		}
 		return newCtxts;
     }
-
-	private NumberedSet stubMethods()
-	{
-		NumberedSet stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
-		final ProgramRel relStub = (ProgramRel) Project.g().getTrgt("Stub");		
-		relStub.load();
-        RelView view = relStub.getView();
-        Iterable<SootMethod> it = view.getAry1ValTuples();
-		for(SootMethod m : it)
-			stubMethods.add(m);		
-		relStub.close();
-		return stubMethods;
-    }
-
-	private boolean treatCI(SootMethod meth)
-	{
-		if(!stubs.contains(meth))
-			return false;
-		String sig = meth.getSignature();
-		if(sig.equals("<android.app.Activity: android.view.View findViewById(int)>"))
-			return false;
-		return true;
-	}
 }

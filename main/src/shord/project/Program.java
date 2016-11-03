@@ -43,16 +43,10 @@ public class Program {
 			StringBuilder options = new StringBuilder();
 			options.append("-full-resolver");
 			options.append(" -allow-phantom-refs");
-			options.append(" -soot-classpath " + File.pathSeparator + System.getProperty("chord.class.path"));
+			options.append(" -soot-classpath " + Config.v().chordModelPath + File.pathSeparator + Config.v().chordClassPath);
 			options.append(" -f none");
 			options.append(" -d "+ System.getProperty("stamp.out.dir") + File.separator + "jimple");
 			
-			//options.append(" -src-prec apk");
-			//options.append(" -p jb.tr use-older-type-assigner:true"); 
-			//options.append(" -p cg implicit-entry:false");
-			//options.append(" -force-android-jar "+System.getProperty("user.dir"));
-			//options.append(" -f jimple");
-
 			if (!Options.v().parse(options.toString().split(" "))) {
 				throw new CompilationDeathException(CompilationDeathException.COMPILATION_ABORTED, "Option parse error");
 			}

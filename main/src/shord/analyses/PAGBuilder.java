@@ -67,7 +67,6 @@ import soot.util.NumberedString;
  * @author Yu Feng
  */
 @Chord(name="base-java",
-consumes={"SC"},
 produces={"M", "Z", "I", "H", "V", "T", "F", "U",
 		"GlobalAlloc", "Alloc", "NewH",
 		"Assign", "Load", "Store", 

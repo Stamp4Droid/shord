@@ -1,36 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="Shord" default="jar">
-  <property name="stamp.dir" location=".."/>
-  <property name="jarname" value="${stamp.dir}/bin/stamp.main.jar"/>
-
+<project name="shord" default="compile">
   <target name="compile">
     <mkdir dir="classes"/>
-    <javac debug="true" debuglevel="source,lines,vars" includeAntRuntime="false"
-           destdir="classes">
-      <src path="src"/>
-      <src path="gen"/>
+    <javac debug="true" debuglevel="source,lines,vars" includeAntRuntime="false" source="1.5" target="1.5" destdir="classes" srcdir="src">
       <classpath>
-        <fileset dir="${stamp.dir}/lib">
-          <include name="**/*.jar"/>
-        </fileset>
+	<pathelement location="lib/soot.jar"/>
+	<pathelement location="lib/jwutil.jar"/>
+	<pathelement location="lib/jdom.jar"/>
+	<pathelement location="lib/bddbddb.jar"/>
+	<pathelement location="lib/javabdd-1.0b2.jar"/>
+	<pathelement location="lib/javassist.jar"/>
+	<pathelement location="lib/hj.jar"/>
+	<pathelement location="lib/CnCHj.jar"/>
+	<pathelement location="lib/trove-3.0.2.jar"/>
+	<pathelement location="lib/scannotation-1.0.2.jar"/>
+	<pathelement location="lib/j2h.jar"/>
+	<pathelement location="lib/saxon9.jar"/>
       </classpath>
     </javac>
+    <jar destfile="shord.jar" basedir="classes" includes="**/*.class" duplicate="fail">
+      <zipfileset includes="**/*.class" src="lib/soot.jar"/>
+      <zipfileset includes="**/*.class" src="lib/jwutil.jar"/>
+      <zipfileset includes="**/*.class" src="lib/jdom.jar"/>
+      <zipfileset includes="**/*.class" src="lib/bddbddb.jar"/>
+      <zipfileset includes="**/*.class" src="lib/javabdd-1.0b2.jar"/>
+      <zipfileset includes="**/*.class" src="lib/javassist.jar"/>
+      <zipfileset includes="**/*.class" src="lib/hj.jar"/>
+      <zipfileset includes="**/*.class" src="lib/CnCHj.jar"/>
+      <zipfileset includes="**/*.class" src="lib/trove-3.0.2.jar"/>
+      <zipfileset includes="**/*.class" src="lib/scannotation-1.0.2.jar"/>
+      <zipfileset includes="**/*.class" src="lib/j2h.jar"/>
+      <zipfileset includes="**/*.class" src="lib/saxon9.jar"/>
+      <fileset dir="src">
+	<include name="**/*.txt"/>
+	<include name="**/*.dlog"/>
+      </fileset>
+      <manifest>
+	<attribute name="Main-Class" value="shord.project.Boot"/>
+      </manifest>
+    </jar>
   </target>
 
-  <target name="jar" depends="compile">
-    <jar jarfile="${jarname}">
-      <fileset dir="classes">
-        <include name="**/*.class"/>
-      </fileset>
-	  <fileset dir="datalog">
-        <include name="**/*.dlog"/>
-      </fileset>
-    </jar>
+  <target name="run">
+    <java classname="shord.project.Boot" failonerror="true" classpath="shord.jar"/>
   </target>
 
   <target name="clean">
     <delete dir="classes"/>
-    <delete file="${jarname}"/>
+    <delete file="shord.jar"/>
   </target>
-
 </project>

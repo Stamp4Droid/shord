@@ -21,6 +21,10 @@ public class Config {
     public final String workDirName = System.getProperty("chord.work.dir");
     public final String mainClassName = System.getProperty("chord.main.class");
     
+    // path properties
+    public final String chordClassPath = System.getProperty("chord.class.path");
+    public final String chordModelPath = System.getProperty("chord.model.path");
+    
     // project properties
     public final String mainDirName = System.getProperty("chord.main.dir");
     public final String javaAnalysisPathName = System.getProperty("chord.java.analysis.path");
@@ -29,19 +33,10 @@ public class Config {
     // properties dictating what gets computed/printed by Chord
     public final String runAnalyses = System.getProperty("chord.run.analyses", "");
     public final String printRels = System.getProperty("chord.print.rels", "");
-    public final boolean saveDomMaps = Utils.buildBoolProperty("chord.save.maps", true);
-    // Determines verbosity level of Chord:
-    // 0 => silent
-    // 1 => print task/process enter/leave/time messages and sizes of computed doms/rels
-    //      bddbddb: print sizes of relations output by solver
-    // 2 => all other messages in Chord
-    //      bddbddb: print bdd node resizing messages, gc messages, and solver stats (e.g. how long each iteration took)
-    // 3 => bddbddb: noisy=yes for solver
-    // 4 => bddbddb: tracesolve=yes for solver
-    // 5 => bddbddb: fulltravesolve=yes for solver
-    public final int verbose = Integer.getInteger("chord.verbose", 2);
-
+    
     // properties concerning BDDs
+    public final boolean saveDomMaps = Utils.buildBoolProperty("chord.save.maps", true);
+    public final int verbose = Integer.getInteger("chord.verbose", 2);
     public final boolean useBuddy = Utils.buildBoolProperty("chord.use.buddy", false);
     public final String bddbddbMaxHeap = System.getProperty("chord.bddbddb.max.heap", "4096m");
     

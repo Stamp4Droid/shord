@@ -70,12 +70,8 @@ public class Boot {
         "WARN: Property '%s' defined multiple times; assuming value '%s' instead of '%s'.";
     private static final String CHORD_JAR_NOT_FOUND =
         "ERROR: Boot: Expected Chord to be loaded from chord.jar instead of from '%s'.";
-    private static final String USER_DIR_AS_CHORD_WORK_DIR =
-        "WARN: Boot: Property chord.work.dir not set; using value of user.dir '%s' instead.";
     private static final String CHORD_MAIN_DIR_UNDEFINED =
         "ERROR: Boot: Property chord.main.dir must be set to location of directory named 'main' in your Chord installation.";
-    private static final String CHORD_MAIN_DIR_NOT_FOUND =
-        "ERROR: Boot: Directory '%s' specified by property chord.main.dir not found.";
     private static final String CHORD_WORK_DIR_UNDEFINED =
         "ERROR: Boot: Property chord.work.dir must be set to location of working directory desired during Chord's execution.";
     private static final String CHORD_WORK_DIR_NOT_FOUND =
@@ -96,6 +92,9 @@ public class Boot {
         // resolve Chord's work dir
 
         String workDirName = System.getProperty("chord.work.dir");
+        if(workDirName == null) {
+            Messages.fatal(CHORD_WORK_DIR_UNDEFINED, workDirName);
+        }
         try {
             workDirName = (new File(workDirName)).getCanonicalPath();
         } catch (IOException ex) {
@@ -180,7 +179,7 @@ public class Boot {
                 continue; 
             cmdList.add("-D" + k + "=" + v);
         }
-        cmdList.add("chord.project.Main");
+        cmdList.add("shord.project.Main");
         String[] cmdAry = new String[cmdList.size()];
         cmdList.toArray(cmdAry);
         
