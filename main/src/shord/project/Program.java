@@ -45,15 +45,11 @@ public class Program {
 			options.append(" -allow-phantom-refs");
 			options.append(" -soot-classpath " + Config.v().chordModelPath + File.pathSeparator + Config.v().chordClassPath);
 			options.append(" -f none");
-			options.append(" -d "+ System.getProperty("stamp.out.dir") + File.separator + "jimple");
+			options.append(" -d "+ Config.v().outDirName + File.separator + "jimple");
 			
 			if (!Options.v().parse(options.toString().split(" "))) {
 				throw new CompilationDeathException(CompilationDeathException.COMPILATION_ABORTED, "Option parse error");
 			}
-			
-			//options.set_full_resolver(true);
-			//options.set_allow_phantom_refs(true);
-			//options.set_soot_classpath();
 			
             Scene.v().loadBasicClasses();
 			SootClass mainClass = Scene.v().loadClassAndSupport(Config.v().mainClassName);
