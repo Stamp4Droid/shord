@@ -935,19 +935,31 @@ public class PAGBuilder extends JavaAnalysis
 		relLibrary.save();
 	}
 
-	private static final Set<String> packagePrefices = new HashSet<String>();
+	private static final Set<String> classPrefices = new HashSet<String>();
 	static {
-		packagePrefices.add("java");
-		packagePrefices.add("javax");
+		classPrefices.add("apple.");
+		classPrefices.add("com.apple.");
+		classPrefices.add("com.oracle.");
+		classPrefices.add("com.sun.");
+		classPrefices.add("java.");
+		classPrefices.add("javax.");
+		classPrefices.add("org.ietf.");
+		classPrefices.add("org.jcp");
+		classPrefices.add("org.omg");
+		classPrefices.add("org.w3c");
+		classPrefices.add("org.xml");
+		classPrefices.add("sun.");
+		classPrefices.add("sunw.");
+		classPrefices.add("WrapperGenerator");
 	}
 
 	public static boolean isLibrary(SootMethod method) {
 		if(!method.isConcrete())
 			return false;
 		SootClass cl = method.getDeclaringClass();
-		String packageName = cl.getPackageName();
-		for(String packagePrefix : packagePrefices) {
-			if(packageName.startsWith(packagePrefix)) {
+		String className = cl.getName();
+		for(String classPrefix : classPrefices) {
+			if(className.startsWith(classPrefix)) {
 				return true;
 			}
 		}
