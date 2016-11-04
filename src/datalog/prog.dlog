@@ -1,0 +1,30 @@
+##################
+# Program facts
+##################
+
+# name=prog-dlog
+
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+
+.bddvarorder M0_V0xV1_H0_C0xC1xC2
+
+MV(m:M,v:V) input
+MH(m:M,h:H) input
+CH(o:C,h:H) input
+Library(m:M) input
+
+pt(c:C,v:V,o:C) input
+
+LibraryV(v:V)
+LibraryH(h:H)
+
+aliasP(v:V,u:V) output
+
+LibraryV(v) :- MV(m,v), Library(m).
+LibraryH(h) :- MH(m,h), Library(m).
+
+ptP(v,h) :- pt(_,v,o), !LibraryV(v), CH(o,h), !LibraryH(h).
+aliasP(v,u) :- pt(_,v,o), !LibraryV(v), pt(_,u,o), !LibraryV(u).
