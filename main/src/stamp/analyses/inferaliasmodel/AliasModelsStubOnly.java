@@ -188,7 +188,7 @@ public class AliasModelsStubOnly {
 	public static Set<SootMethod> getReachableM() {
 		if(reachableM == null) {
 			reachableM = new HashSet<SootMethod>();
-			ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("reachableM");
+			ProgramRel relReachableM = (ProgramRel)ClassicProject.g().getTrgt("ci_reachableM");
 			relReachableM.load();
 			for(Object m : relReachableM.getAry1ValTuples()) {
 				reachableM.add((SootMethod)m);
