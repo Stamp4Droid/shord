@@ -21,6 +21,7 @@ pt(c:C,v:V,o:C) input
 LibraryV(v:V)
 LibraryH(h:H)
 
+ptP(v:V,h:H) output
 aliasP(v:V,u:V) output
 
 LibraryV(v) :- MV(m,v), Library(m).
