@@ -1,6 +1,12 @@
-sh run_atlas_lim.sh
-sh run_all_lim.sh
-sh run_empty_lim.sh
-sh run_atlas_full.sh
-sh run_empty_full.sh
-sh run_impl.sh
+sh run_program.sh antlr
+sh run_program.sh avrora
+sh run_program.sh batik
+sh run_program.sh bloat
+sh run_program.sh chart
+sh run_program.sh fop
+sh run_program.sh hsqldb
+sh run_program.sh luindex
+sh run_program.sh lusearch
+sh run_program.sh pmd
+sh run_program.sh sunflow
+sh run_program.sh xalan
