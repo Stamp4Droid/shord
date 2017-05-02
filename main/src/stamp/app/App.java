@@ -216,12 +216,18 @@ public class App
 	{
 		try{
 			File f = new File(apkPath);
-			DexBackedDexFile d = DexFileFactory.loadDexFile(f, 1);
+			//DexBackedDexFile d = DexFileFactory.loadDexFile(f, 1);
+			DexBackedDexFile d = null;
+			try {
+			    d = (DexBackedDexFile)Class.forName("org.jf.dexlib2.DexFileFactory").getMethod("loadDexFile", Class.forName("java.io.File"), int.class).invoke(null, f, 1);
+			} catch(Exception e) {
+			    throw new RuntimeException(e);
+			}
 			for (ClassDef c : d.getClasses()) {
 				String name = Util.dottedClassName(c.getType());
 				classes.add(name);
 			}
-		} catch(IOException e){
+		} catch(Exception e){
 			throw new Error(e);
 		}
 	}
