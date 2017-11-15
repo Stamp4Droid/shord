@@ -35,13 +35,13 @@ class URI
 		return (java.lang.String)r;
     }
 
-	@STAMP(flows={@Flow(from="uri",to="@return")})
-    public static java.net.URI create(java.lang.String uri) {
+	@STAMP(flows={@Flow(from="p0",to="@return")})
+    public static java.net.URI create(java.lang.String p0) {
 		java.net.URI r = null;
-		r = new java.net.URI();
-		((java.net.URI)r).f233 = (java.lang.String)p0;
 		try{
-		    r = new URI(uri);
+		    r = new java.net.URI(null);
+		    r = new URI(p0);
+		    ((java.net.URI)r).f233 = (java.lang.String)p0;
 		    return r;
 		}catch(URISyntaxException e){
 		    return null;
@@ -66,9 +66,13 @@ class URI
 	}
 	public java.net.URI relativize(java.net.URI p0) {
 		java.net.URI r = null;
-		r = new java.net.URI();
-		((java.net.URI)r).f550 = (java.lang.String)((java.net.URI)p0).f233;
-		return (java.net.URI)r;
+		try {
+		    r = new java.net.URI(null);
+		    ((java.net.URI)r).f550 = (java.lang.String)((java.net.URI)p0).f233;
+		    return (java.net.URI)r;
+		} catch(Exception e) {
+		    return null;
+		}
 	}
 	public java.net.URI parseServerAuthority() {
 		java.net.URI r = null;

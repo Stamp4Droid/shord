@@ -224,21 +224,21 @@ public class LinkedBlockingDeque<E> extends java.util.AbstractQueue<E> implement
 			return (int)r;
 		}
 	}
-	public class DescendingItr extends java.util.concurrent.LinkedBlockingDeque<E>.AbstractItr {
+	public class DescendingItr extends java.util.concurrent.LinkedBlockingDeque<E>.AbstractItr<E> {
 		public java.lang.Object f58;
 		private DescendingItr(java.util.concurrent.LinkedBlockingDeque p0) {
 		}
 		public DescendingItr() {
 		}
 	}
-	public class Itr extends java.util.concurrent.LinkedBlockingDeque<E>.AbstractItr {
+	public class Itr extends java.util.concurrent.LinkedBlockingDeque<E>.AbstractItr<E> {
 		public java.lang.Object f103;
 		private Itr(java.util.concurrent.LinkedBlockingDeque p0) {
 		}
 		public Itr() {
 		}
 	}
-	public abstract class AbstractItr implements java.util.Iterator<E> {
+	public abstract class AbstractItr<E> implements java.util.Iterator<E> {
 		AbstractItr(java.util.concurrent.LinkedBlockingDeque p0) {
 		}
 		public AbstractItr() {

@@ -6,13 +6,13 @@ class ArrayList<E>
 	}
 	public ArrayList() {
 	}
-	@STAMP(flows = {@Flow(from="object",to="this")})
+    @STAMP(flows = {@Flow(from="p0",to="this")})
 	public boolean add(E p0) {
 		boolean r = false;
 		((java.util.ArrayList)this).f35 = (java.lang.Object)p0;
 		return (boolean)r;
 	}
-	@STAMP(flows = {@Flow(from="object",to="this")})
+	@STAMP(flows = {@Flow(from="p0",to="this")})
 	public void add(int p0, E p1) {
 		((java.util.ArrayList)this).f35 = (java.lang.Object)p1;
 	}
@@ -93,7 +93,7 @@ class ArrayList<E>
 		((java.util.ArrayList)this).f35 = p0.iterator().next();
 		return (boolean)r;
 	}
-	@STAMP(flows = {@Flow(from="object",to="this")})
+	@STAMP(flows = {@Flow(from="p0",to="this")})
 	public E set(int p0, E p1) {
 		java.lang.Object r = null;
 		r = (java.lang.Object)((java.util.ArrayList)this).f35;
@@ -221,7 +221,7 @@ class ArrayList<E>
 			}
 		}
 	}
-	public class ListItr extends java.util.ArrayList<E>.Itr implements java.util.ListIterator<E> {
+	public class ListItr extends java.util.ArrayList<E>.Itr<E> implements java.util.ListIterator<E> {
 		public java.lang.Object f148;
 		public ListItr() {
 		}
@@ -246,7 +246,7 @@ class ArrayList<E>
 			return (int)r;
 		}
 	}
-	public class Itr implements java.util.Iterator<E> {
+	public class Itr<E> implements java.util.Iterator<E> {
 		public java.lang.Object f9;
 		private Itr(java.util.ArrayList p0) {
 		}

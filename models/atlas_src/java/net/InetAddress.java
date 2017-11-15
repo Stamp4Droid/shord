@@ -7,7 +7,8 @@ class InetAddress
 	}
 
 	public static  java.net.InetAddress[] getAllByName(java.lang.String host) throws java.net.UnknownHostException 
-	{ 
+	{
+	    return null;
 	}
 
 	@STAMP(flows={@Flow(from="host",to="@return")})

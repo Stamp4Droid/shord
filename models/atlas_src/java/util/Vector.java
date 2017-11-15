@@ -6,14 +6,14 @@ class Vector<E>
 	}
 	public Vector() {
 	}
-    @STAMP(flows = {@Flow(from="object",to="this")})
+    @STAMP(flows = {@Flow(from="p0",to="this")})
 	public synchronized boolean add(E p0) {
 		boolean r = false;
 		((java.util.Stack)this).f26 = (java.lang.Object)p0;
 		((java.util.Vector)this).f21 = (java.lang.Object)p0;
 		return (boolean)r;
 	}
-    @STAMP(flows = {@Flow(from="object",to="this")})
+    @STAMP(flows = {@Flow(from="p0",to="this")})
 	public void add(int p0, E p1) {
 		((java.util.Stack)this).f26 = (java.lang.Object)p1;
 		((java.util.Vector)this).f21 = (java.lang.Object)p1;
@@ -123,7 +123,7 @@ class Vector<E>
 		((java.util.Stack)this).f26 = p1.iterator().next();
 		return (boolean)r;
 	}
-    @STAMP(flows = {@Flow(from="object",to="this")})
+    @STAMP(flows = {@Flow(from="p0",to="this")})
 	public synchronized void addElement(E p0) {
 		((java.util.Stack)this).f26 = (java.lang.Object)p0;
 		((java.util.Vector)this).f21 = (java.lang.Object)p0;
@@ -143,7 +143,7 @@ class Vector<E>
 		((ANON223)r).f71 = (java.lang.Object)((java.util.Stack)this).f26;
 		return (java.util.Enumeration<E>)r;
 	}
-    @STAMP(flows = {@Flow(from="object",to="this")})    
+    @STAMP(flows = {@Flow(from="p1",to="this")})    
 	public synchronized E set(int p0, E p1) {
 		java.lang.Object r = null;
 		r = (java.lang.Object)((java.util.Stack)this).f26;
@@ -158,7 +158,7 @@ class Vector<E>
 	}
 	public synchronized void trimToSize() {
 	}
-    @STAMP(flows = {@Flow(from="elements",to="this")})
+    @STAMP(flows = {@Flow(from="p0",to="this")})
     public synchronized void copyInto(java.lang.Object[] p0) {
 	}
 	public synchronized void setSize(int p0) {
@@ -177,12 +177,12 @@ class Vector<E>
 		r = (java.lang.Object)((java.util.Vector)this).f21;
 		return (E)r;
 	}
-    @STAMP(flows = {@Flow(from="object",to="this")})    
+    @STAMP(flows = {@Flow(from="p0",to="this")})    
 	public synchronized void setElementAt(E p0, int p1) {
 	}
 	public synchronized void removeElementAt(int p0) {
 	}
-    @STAMP(flows = {@Flow(from="object",to="this")})
+    @STAMP(flows = {@Flow(from="p0",to="this")})
 	public synchronized void insertElementAt(E p0, int p1) {
 		((java.util.Stack)this).f26 = (java.lang.Object)p0;
 		((java.util.Vector)this).f21 = (java.lang.Object)p0;
@@ -235,7 +235,7 @@ class Vector<E>
 			return (int)r;
 		}
 	}
-	public final class ListItr extends java.util.Vector<E>.Itr implements java.util.ListIterator<E> {
+	public final class ListItr extends java.util.Vector<E>.Itr<E> implements java.util.ListIterator<E> {
 		public java.lang.Object f98;
 		public ListItr() {
 		}
@@ -260,7 +260,7 @@ class Vector<E>
 			return (int)r;
 		}
 	}
-	public class Itr implements java.util.Iterator<E> {
+	public class Itr<E> implements java.util.Iterator<E> {
 		public java.lang.Object f125;
 		private Itr(java.util.Vector p0) {
 		}

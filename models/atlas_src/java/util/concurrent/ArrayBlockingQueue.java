@@ -74,7 +74,7 @@ public class ArrayBlockingQueue<E> extends java.util.AbstractQueue<E> implements
 		java.lang.Object r = null;
 		return (E)r;
 	}
-	public class Itr implements java.util.Iterator<E> {
+	public class Itr<E> implements java.util.Iterator<E> {
 		Itr(java.util.concurrent.ArrayBlockingQueue p0) {
 		}
 		public Itr() {
@@ -93,7 +93,7 @@ public class ArrayBlockingQueue<E> extends java.util.AbstractQueue<E> implements
 	public class Itrs {
 		public Itrs() {
 		}
-		public class Node extends java.lang.ref.WeakReference<java.util.concurrent.ArrayBlockingQueue<E>.Itr> {
+		public class Node extends java.lang.ref.WeakReference<java.util.concurrent.ArrayBlockingQueue<E>.Itr<E>> {
 			public Node() {
 				super(null);
 			}

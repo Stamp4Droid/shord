@@ -7,6 +7,6 @@ class Object
 	{ 
 		return new String(); 
 	}
-	
+
 	//public Object(){  }
 }

@@ -29,15 +29,15 @@ public class Collections {
 		boolean r = false;
 		return (boolean)r;
 	}
-	public static <T> boolean addAll(java.util.Collection<? super T> p0, T[] p1) {
+	public static <T> boolean addAll(java.util.Collection<? super T> p0, T ... p1) {
 		boolean r = false;
 		return (boolean)r;
 	}
-	public static <T> java.util.Set<T> synchronizedSet(java.util.Set<T> p0) {
+	public static <E> java.util.Set<E> synchronizedSet(java.util.Set<E> p0) {
 		java.util.Set r = null;
 		r = new java.util.Collections.SynchronizedSet();
 		((java.util.Collections.SynchronizedSet)r).f78 = p0.iterator().next();
-		return (java.util.Set<T>)r;
+		return (java.util.Set<E>)r;
 	}
 	public static <T> java.util.Enumeration<T> emptyEnumeration() {
 		java.util.Enumeration r = null;
@@ -47,13 +47,13 @@ public class Collections {
 		java.util.Set r = null;
 		return (java.util.Set<E>)r;
 	}
-	public static <T> java.util.List<T> unmodifiableList(java.util.List<? extends T> p0) {
+	public static <E> java.util.List<E> unmodifiableList(java.util.List<? extends E> p0) {
 		java.util.List r = null;
 		r = new java.util.Collections.UnmodifiableList();
 		r = new java.util.Collections.UnmodifiableRandomAccessList();
 		((java.util.Collections.UnmodifiableRandomAccessList)r).f20 = p0.iterator().next();
 		((java.util.Collections.UnmodifiableList)r).f116 = p0.iterator().next();
-		return (java.util.List<T>)r;
+		return (java.util.List<E>)r;
 	}
 	public static <T> java.util.ArrayList<T> list(java.util.Enumeration<T> p0) {
 		java.util.ArrayList r = null;
@@ -125,23 +125,23 @@ public class Collections {
 		int r = 0;
 		return (int)r;
 	}
-	public static <T> java.util.Collection<T> unmodifiableCollection(java.util.Collection<? extends T> p0) {
+	public static <E> java.util.Collection<E> unmodifiableCollection(java.util.Collection<? extends E> p0) {
 		java.util.Collection r = null;
 		r = new java.util.Collections.UnmodifiableCollection();
 		((java.util.Collections.UnmodifiableCollection)r).f32 = p0.iterator().next();
-		return (java.util.Collection<T>)r;
+		return (java.util.Collection<E>)r;
 	}
-	public static <T> java.util.Set<T> unmodifiableSet(java.util.Set<? extends T> p0) {
+	public static <E> java.util.Set<E> unmodifiableSet(java.util.Set<? extends E> p0) {
 		java.util.Set r = null;
 		r = new java.util.Collections.UnmodifiableSet();
 		((java.util.Collections.UnmodifiableSet)r).f42 = p0.iterator().next();
-		return (java.util.Set<T>)r;
+		return (java.util.Set<E>)r;
 	}
-	public static <T> java.util.SortedSet<T> unmodifiableSortedSet(java.util.SortedSet<T> p0) {
+	public static <E> java.util.SortedSet<E> unmodifiableSortedSet(java.util.SortedSet<E> p0) {
 		java.util.SortedSet r = null;
 		r = new java.util.Collections.UnmodifiableSortedSet();
 		((java.util.Collections.UnmodifiableSortedSet)r).f82 = p0.iterator().next();
-		return (java.util.SortedSet<T>)r;
+		return (java.util.SortedSet<E>)r;
 	}
 	public static <T> java.util.NavigableSet<T> unmodifiableNavigableSet(java.util.NavigableSet<T> p0) {
 		java.util.NavigableSet r = null;
@@ -170,11 +170,11 @@ public class Collections {
 		((java.util.Collections.UnmodifiableNavigableMap)r).f54 = p0.values().iterator().next();
 		return (java.util.NavigableMap<K, V>)r;
 	}
-	public static <T> java.util.SortedSet<T> synchronizedSortedSet(java.util.SortedSet<T> p0) {
+	public static <E> java.util.SortedSet<E> synchronizedSortedSet(java.util.SortedSet<E> p0) {
 		java.util.SortedSet r = null;
 		r = new java.util.Collections.SynchronizedSortedSet();
 		((java.util.Collections.SynchronizedSortedSet)r).f66 = p0.iterator().next();
-		return (java.util.SortedSet<T>)r;
+		return (java.util.SortedSet<E>)r;
 	}
 	public static <T> java.util.NavigableSet<T> synchronizedNavigableSet(java.util.NavigableSet<T> p0) {
 		java.util.NavigableSet r = null;
@@ -271,17 +271,17 @@ public class Collections {
 		java.util.NavigableMap r = null;
 		return (java.util.NavigableMap<K, V>)r;
 	}
-	public static <T> java.util.Set<T> singleton(T p0) {
+	public static <E> java.util.Set<E> singleton(E p0) {
 		java.util.Set r = null;
 		r = new java.util.Collections.SingletonSet();
 		((java.util.Collections.SingletonSet)r).f77 = (java.lang.Object)p0;
-		return (java.util.Set<T>)r;
+		return (java.util.Set<E>)r;
 	}
-	public static <T> java.util.List<T> singletonList(T p0) {
+	public static <E> java.util.List<E> singletonList(E p0) {
 		java.util.List r = null;
 		r = new java.util.Collections.SingletonList();
 		((java.util.Collections.SingletonList)r).f139 = (java.lang.Object)p0;
-		return (java.util.List<T>)r;
+		return (java.util.List<E>)r;
 	}
 	public static <K,V> java.util.Map<K, V> singletonMap(K p0, V p1) {
 		java.util.Map r = null;

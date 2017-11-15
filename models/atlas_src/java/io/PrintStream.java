@@ -103,12 +103,12 @@ public class PrintStream
 	@STAMP(flows = {@Flow(from="csq",to="!this")})
 	public  java.io.PrintStream append(java.lang.CharSequence csq, int start, int end) { return this; }
 
-	public java.io.PrintStream printf(java.lang.String p0, java.lang.Object[] p1) {
+	public java.io.PrintStream printf(java.lang.String p0, java.lang.Object ... p1) {
 		java.io.PrintStream r = null;
 		r = (java.io.PrintStream)this;
 		return (java.io.PrintStream)r;
 	}
-	public java.io.PrintStream printf(java.util.Locale p0, java.lang.String p1, java.lang.Object[] p2) {
+	public java.io.PrintStream printf(java.util.Locale p0, java.lang.String p1, java.lang.Object ... p2) {
 		java.io.PrintStream r = null;
 		r = (java.io.PrintStream)this;
 		return (java.io.PrintStream)r;

@@ -3,9 +3,11 @@ class ByteBuffer
     public ByteBuffer() {}
 
     public static java.nio.ByteBuffer allocate(int capacity) {
+	return null;
     }
 
     public static java.nio.ByteBuffer allocateDirect(int capacity) {
+	return null;
     }
 
     @STAMP(flows = {@Flow(from="array",to="@return")})
@@ -25,30 +27,36 @@ class ByteBuffer
 
     @STAMP(flows = {@Flow(from="this",to="dst")})
     public  java.nio.ByteBuffer get(byte[] dst) 
-    { 
+    {
+	return this;
     }
 
     @STAMP(flows = {@Flow(from="this",to="dst")})
     public  java.nio.ByteBuffer get(byte[] dst, int dstOffset, int byteCount) 
     { 
+	return this;
     }
 
     @STAMP(flows = {@Flow(from="src",to="this")})
     public final  java.nio.ByteBuffer put(byte[] src) 
     {
+	return this;
     }
 
     @STAMP(flows = {@Flow(from="src",to="this")})
     public  java.nio.ByteBuffer put(byte[] src, int srcOffset, int byteCount) 
     {
+	return this;
     }
 
     @STAMP(flows = {@Flow(from="src",to="this")})
     public  java.nio.ByteBuffer put(java.nio.ByteBuffer src) 
     {  
+	return this;
     }
 
 	public final java.nio.ByteBuffer order(java.nio.ByteOrder byteOrder) 
 	{
+	    return null;
     }
 }

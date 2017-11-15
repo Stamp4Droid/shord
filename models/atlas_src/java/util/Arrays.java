@@ -190,7 +190,7 @@ public class Arrays {
 		char[] r = null;
 		return (char[])r;
 	}
-	public static <T> java.util.List<T> asList(T[] p0) {
+	public static <T> java.util.List<T> asList(T ... p0) {
 		java.util.List r = null;
 		r = new java.util.Arrays.ArrayList();
 		((java.util.Arrays.ArrayList)r).f120 = (java.lang.Object)((java.lang.Object[])p0)[0];

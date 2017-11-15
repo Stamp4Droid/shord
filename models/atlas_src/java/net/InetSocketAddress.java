@@ -11,7 +11,8 @@ class InetSocketAddress
 	}
 
 	public static  java.net.InetSocketAddress createUnresolved(java.lang.String host, int port) 
-	{ 
+	{
+	    return null;
 	}
 
 }

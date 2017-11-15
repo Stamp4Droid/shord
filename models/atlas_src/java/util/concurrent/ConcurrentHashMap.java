@@ -105,7 +105,7 @@ public class ConcurrentHashMap<K,V> extends java.util.AbstractMap<K, V> implemen
 		((java.util.concurrent.ConcurrentHashMap.KeySetView)r).f67 = (java.lang.Object)((java.util.concurrent.ConcurrentHashMap)this).f50;
 		return (java.util.concurrent.ConcurrentHashMap.KeySetView<K, V>)r;
 	}
-	public java.util.concurrent.ConcurrentHashMap.KeySetView<K, V> keySet() {
+	public java.util.Set<K> keySet() {
 		java.util.concurrent.ConcurrentHashMap.KeySetView r = null;
 		r = new java.util.concurrent.ConcurrentHashMap.KeySetView();
 		((java.util.concurrent.ConcurrentHashMap.KeySetView)r).f67 = (java.lang.Object)((java.util.concurrent.ConcurrentHashMap)this).f50;

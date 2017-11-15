@@ -392,7 +392,7 @@ public class TreeMap<K,V> extends java.util.AbstractMap<K, V> implements java.ut
 			java.util.NavigableMap r = null;
 			return (java.util.NavigableMap<K, V>)r;
 		}
-		public final class DescendingEntrySetView extends java.util.TreeMap.NavigableSubMap<K, V>.EntrySetView {
+	    public final class DescendingEntrySetView extends java.util.TreeMap.NavigableSubMap<K, V>.EntrySetView<K, V> {
 			DescendingEntrySetView(java.util.TreeMap.DescendingSubMap p0) {
 			}
 			public DescendingEntrySetView() {
@@ -449,7 +449,7 @@ public class TreeMap<K,V> extends java.util.AbstractMap<K, V> implements java.ut
 			((java.util.TreeMap.AscendingSubMap)r).f41 = (java.lang.Object)((java.util.TreeMap.AscendingSubMap)this).f41;
 			return (java.util.NavigableMap<K, V>)r;
 		}
-		public final class AscendingEntrySetView extends java.util.TreeMap.NavigableSubMap<K, V>.EntrySetView {
+	    public final class AscendingEntrySetView extends java.util.TreeMap.NavigableSubMap<K, V>.EntrySetView<K, V> {
 			AscendingEntrySetView(java.util.TreeMap.AscendingSubMap p0) {
 			}
 			public AscendingEntrySetView() {
@@ -698,7 +698,7 @@ public class TreeMap<K,V> extends java.util.AbstractMap<K, V> implements java.ut
 				return (boolean)r;
 			}
 		}
-		public abstract class EntrySetView extends java.util.AbstractSet<java.util.Map.Entry<K, V>> {
+	    public abstract class EntrySetView<K, V> extends java.util.AbstractSet<java.util.Map.Entry<K, V>> {
 			EntrySetView(java.util.TreeMap.NavigableSubMap p0) {
 			}
 			public EntrySetView() {

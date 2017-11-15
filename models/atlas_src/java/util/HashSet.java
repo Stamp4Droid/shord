@@ -6,7 +6,7 @@ class HashSet
 	}
 	public HashSet() {
 	}
-	@STAMP(flows = {@Flow(from="object",to="this")})
+	@STAMP(flows = {@Flow(from="p0",to="this")})
 	public boolean add(E p0) {
 		boolean r = false;
 		((java.util.HashSet)this).f11 = (java.lang.Object)p0;

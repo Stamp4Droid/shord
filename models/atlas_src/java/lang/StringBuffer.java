@@ -40,120 +40,84 @@ class StringBuffer
 		r = (java.lang.StringBuffer)this;
 		return (java.lang.StringBuffer)r;
 	}
-	public synchronized java.lang.StringBuffer append(java.lang.Object p0) {
-		java.lang.StringBuffer r = null;
-		r = (java.lang.StringBuffer)this;
-		return (java.lang.StringBuffer)r;
-	}
-	public synchronized java.lang.StringBuffer append(java.lang.String p0) {
-		java.lang.StringBuffer r = null;
-		r = (java.lang.StringBuffer)this;
-		return (java.lang.StringBuffer)r;
-	}
-	public synchronized java.lang.StringBuffer append(java.lang.CharSequence p0) {
-		java.lang.StringBuffer r = null;
-		r = (java.lang.StringBuffer)this;
-		return (java.lang.StringBuffer)r;
-	}
-	public synchronized java.lang.StringBuffer append(java.lang.CharSequence p0, int p1, int p2) {
-		java.lang.StringBuffer r = null;
-		r = (java.lang.StringBuffer)this;
-		return (java.lang.StringBuffer)r;
-	}
-	public synchronized java.lang.StringBuffer append(char[] p0) {
-		java.lang.StringBuffer r = null;
-		r = (java.lang.StringBuffer)this;
-		return (java.lang.StringBuffer)r;
-	}
-	public synchronized java.lang.StringBuffer append(java.lang.StringBuffer p0) {
-		java.lang.StringBuffer r = null;
-		r = (java.lang.StringBuffer)this;
-		return (java.lang.StringBuffer)r;
-	}
-	public synchronized java.lang.StringBuffer append(char[] p0, int p1, int p2) {
-		java.lang.StringBuffer r = null;
-		r = (java.lang.StringBuffer)this;
-		return (java.lang.StringBuffer)r;
-	}
-
 	@STAMP(
 		   flows = {@Flow(from="obj",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer append(java.lang.Object obj) { }
+	public synchronized  java.lang.StringBuffer append(java.lang.Object obj) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="string",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer append(java.lang.String string) { }
+	public synchronized  java.lang.StringBuffer append(java.lang.String string) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="sb",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer append(java.lang.StringBuffer sb) { }
+	public synchronized  java.lang.StringBuffer append(java.lang.StringBuffer sb) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="chars",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer append(char[] chars) { }
+	public synchronized  java.lang.StringBuffer append(char[] chars) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="chars",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer append(char[] chars, int start, int length) { }
+	public synchronized  java.lang.StringBuffer append(char[] chars, int start, int length) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="s",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer append(java.lang.CharSequence s) { }
+	public synchronized  java.lang.StringBuffer append(java.lang.CharSequence s) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="s",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer append(java.lang.CharSequence s, int start, int end) { }
+	public synchronized  java.lang.StringBuffer append(java.lang.CharSequence s, int start, int end) { return this; }
 
-    public  java.lang.StringBuffer appendCodePoint(int codePoint) { return this;}
+    public  java.lang.StringBuffer appendCodePoint(int codePoint) { return this; }
     public synchronized  java.lang.StringBuffer delete(int start, int end) { return this; }
     public synchronized  java.lang.StringBuffer deleteCharAt(int location) { throw new RuntimeException(); }
 
 	@STAMP(flows = {@Flow(from="this",to="buffer")})
 	public synchronized  void getChars(int start, int end, char[] buffer, int idx) { }
 
-	public synchronized  java.lang.StringBuffer insert(int index, char ch) { }
-	public  java.lang.StringBuffer insert(int index, boolean b) { }
-	public  java.lang.StringBuffer insert(int index, int i) { }
-	public  java.lang.StringBuffer insert(int index, long l) { }
-	public  java.lang.StringBuffer insert(int index, double d) { }
-	public  java.lang.StringBuffer insert(int index, float f) { }
+    public synchronized  java.lang.StringBuffer insert(int index, char ch) { return this; }
+    public  java.lang.StringBuffer insert(int index, boolean b) { return this; }
+    public  java.lang.StringBuffer insert(int index, int i) { return this; }
+    public  java.lang.StringBuffer insert(int index, long l) { return this; }
+    public  java.lang.StringBuffer insert(int index, double d) { return this; }
+    public  java.lang.StringBuffer insert(int index, float f) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="obj",to="this")}
 	)
-	public  java.lang.StringBuffer insert(int index, java.lang.Object obj) { }
+	public  java.lang.StringBuffer insert(int index, java.lang.Object obj) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="string",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer insert(int index, java.lang.String string) { }
+	public synchronized  java.lang.StringBuffer insert(int index, java.lang.String string) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="chars",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer insert(int index, char[] chars) { }
+	public synchronized  java.lang.StringBuffer insert(int index, char[] chars) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="chars",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer insert(int index, char[] chars, int start, int length) { }
+	public synchronized  java.lang.StringBuffer insert(int index, char[] chars, int start, int length) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="s",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer insert(int index, java.lang.CharSequence s) { }
+	public synchronized  java.lang.StringBuffer insert(int index, java.lang.CharSequence s) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="s",to="this")}
 	)
-	public synchronized  java.lang.StringBuffer insert(int index, java.lang.CharSequence s, int start, int end) { }
+	public synchronized  java.lang.StringBuffer insert(int index, java.lang.CharSequence s, int start, int end) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="string",to="this")}
@@ -165,7 +129,7 @@ class StringBuffer
 	@STAMP(
 		   flows = {@Flow(from="this",to="@return")}
 	)
-	public synchronized  java.lang.CharSequence subSequence(int start, int end) { }
+	public synchronized  java.lang.CharSequence subSequence(int start, int end) { throw new RuntimeException(); }
 
 	@STAMP(
 		   flows = {@Flow(from="this",to="@return")}

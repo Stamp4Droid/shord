@@ -167,21 +167,21 @@ public class ConcurrentLinkedDeque<E> extends java.util.AbstractCollection<E> im
 			return (int)r;
 		}
 	}
-	public class DescendingItr extends java.util.concurrent.ConcurrentLinkedDeque<E>.AbstractItr {
+	public class DescendingItr extends java.util.concurrent.ConcurrentLinkedDeque<E>.AbstractItr<E> {
 		public java.lang.Object f123;
 		private DescendingItr(java.util.concurrent.ConcurrentLinkedDeque p0) {
 		}
 		public DescendingItr() {
 		}
 	}
-	public class Itr extends java.util.concurrent.ConcurrentLinkedDeque<E>.AbstractItr {
+	public class Itr extends java.util.concurrent.ConcurrentLinkedDeque<E>.AbstractItr<E> {
 		public java.lang.Object f99;
 		private Itr(java.util.concurrent.ConcurrentLinkedDeque p0) {
 		}
 		public Itr() {
 		}
 	}
-	public abstract class AbstractItr implements java.util.Iterator<E> {
+	public abstract class AbstractItr<E> implements java.util.Iterator<E> {
 		AbstractItr(java.util.concurrent.ConcurrentLinkedDeque p0) {
 		}
 		public AbstractItr() {

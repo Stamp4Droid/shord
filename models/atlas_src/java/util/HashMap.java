@@ -159,7 +159,7 @@ class HashMap<K, V>
 			return (long)r;
 		}
 	}
-	public final class EntryIterator extends java.util.HashMap<K, V>.HashIterator implements java.util.Iterator<java.util.Map.Entry<K, V>> {
+    public final class EntryIterator extends java.util.HashMap<K, V>.HashIterator<K, V> implements java.util.Iterator<java.util.Map.Entry<K, V>> {
 		public java.lang.Object f87;
 		public java.lang.Object f93;
 		EntryIterator(java.util.HashMap p0) {
@@ -174,7 +174,7 @@ class HashMap<K, V>
 			return (java.util.Map.Entry<K, V>)r;
 		}
 	}
-	public final class ValueIterator extends java.util.HashMap<K, V>.HashIterator implements java.util.Iterator<V> {
+    public final class ValueIterator extends java.util.HashMap<K, V>.HashIterator<K, V> implements java.util.Iterator<V> {
 		public java.lang.Object f34;
 		ValueIterator(java.util.HashMap p0) {
 		}
@@ -186,7 +186,7 @@ class HashMap<K, V>
 			return (V)r;
 		}
 	}
-	public final class KeyIterator extends java.util.HashMap<K, V>.HashIterator implements java.util.Iterator<K> {
+    public final class KeyIterator extends java.util.HashMap<K, V>.HashIterator<K, V> implements java.util.Iterator<K> {
 		public java.lang.Object f171;
 		KeyIterator(java.util.HashMap p0) {
 		}
@@ -198,7 +198,7 @@ class HashMap<K, V>
 			return (K)r;
 		}
 	}
-	public abstract class HashIterator {
+    public abstract class HashIterator<K, V> {
 		HashIterator(java.util.HashMap p0) {
 		}
 		public HashIterator() {

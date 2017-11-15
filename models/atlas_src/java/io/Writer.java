@@ -22,14 +22,17 @@ class Writer
 	
 	@STAMP(flows = {@Flow(from="c",to="!this")})
     public java.io.Writer append(char c) throws java.io.IOException {
+	    throw new RuntimeException();
     }
 	
 	@STAMP(flows = {@Flow(from="csq",to="!this")})
     public java.io.Writer append(java.lang.CharSequence csq) throws java.io.IOException {
+	    throw new RuntimeException();
     }
 
 	@STAMP(flows = {@Flow(from="csq",to="!this")})
     public java.io.Writer append(java.lang.CharSequence csq, int start, int end) throws java.io.IOException {
+	    throw new RuntimeException();
     }
 
 }

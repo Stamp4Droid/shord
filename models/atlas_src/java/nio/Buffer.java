@@ -1,5 +1,6 @@
 class Buffer 
 {
-	public final  java.nio.Buffer flip() { 
+	public final  java.nio.Buffer flip() {
+	    return null;
 	}
 }

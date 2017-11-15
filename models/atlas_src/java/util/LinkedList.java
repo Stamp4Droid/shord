@@ -6,13 +6,13 @@ class LinkedList<E>
 	}
 	public LinkedList() {
 	}
-	@STAMP(flows = {@Flow(from="object",to="this")})
+	@STAMP(flows = {@Flow(from="p0",to="this")})
 	public boolean add(E p0) {
 		boolean r = false;
 		((java.util.LinkedList)this).f14 = (java.lang.Object)p0;
 		return (boolean)r;
 	}
-	@STAMP(flows = {@Flow(from="object",to="this")})
+	@STAMP(flows = {@Flow(from="p0",to="this")})
 	public void add(int p0, E p1) {
 		((java.util.LinkedList)this).f14 = (java.lang.Object)p1;
 	}
@@ -87,7 +87,7 @@ class LinkedList<E>
 		r = (java.lang.Object)((java.util.LinkedList)this).f14;
 		return (E)r;
 	}
-	@STAMP(flows = {@Flow(from="e",to="this")}) 
+	@STAMP(flows = {@Flow(from="p0",to="this")}) 
 	public void push(E p0) {
 		((java.util.LinkedList)this).f14 = (java.lang.Object)p0;
 	}
@@ -101,7 +101,7 @@ class LinkedList<E>
 		r = (java.lang.Object)((java.util.LinkedList)this).f14;
 		return (E)r;
 	}
-	@STAMP(flows = {@Flow(from="object",to="this")}) 
+	@STAMP(flows = {@Flow(from="p1",to="this")}) 
 	public E set(int p0, E p1) {
 		java.lang.Object r = null;
 		r = (java.lang.Object)((java.util.LinkedList)this).f14;
@@ -118,11 +118,11 @@ class LinkedList<E>
 		((java.util.LinkedList.ListItr)r).f48 = (java.lang.Object)((java.util.LinkedList)this).f14;
 		return (java.util.ListIterator<E>)r;
 	}
-	@STAMP(flows = {@Flow(from="object",to="this")}) 
+	@STAMP(flows = {@Flow(from="p0",to="this")}) 
 	public void addFirst(E p0) {
 		((java.util.LinkedList)this).f14 = (java.lang.Object)p0;
 	}
-	@STAMP(flows = {@Flow(from="object",to="this")}) 
+	@STAMP(flows = {@Flow(from="p0",to="this")}) 
 	public void addLast(E p0) {
 		((java.util.LinkedList)this).f14 = (java.lang.Object)p0;
 	}
@@ -179,7 +179,7 @@ class LinkedList<E>
 		boolean r = false;
 		return (boolean)r;
 	}
-	@STAMP(flows = {@Flow(from="o",to="this")}) 
+	@STAMP(flows = {@Flow(from="p0",to="this")}) 
 	public boolean offer(E p0) {
 		boolean r = false;
 		((java.util.LinkedList)this).f14 = (java.lang.Object)p0;

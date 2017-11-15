@@ -48,7 +48,7 @@ public class LinkedHashMap<K,V> extends java.util.HashMap<K, V> implements java.
 		boolean r = false;
 		return (boolean)r;
 	}
-	public final class LinkedEntryIterator extends java.util.LinkedHashMap<K, V>.LinkedHashIterator implements java.util.Iterator<java.util.Map.Entry<K, V>> {
+    public final class LinkedEntryIterator extends java.util.LinkedHashMap<K, V>.LinkedHashIterator<K, V> implements java.util.Iterator<java.util.Map.Entry<K, V>> {
 		public java.lang.Object f176;
 		public java.lang.Object f142;
 		LinkedEntryIterator(java.util.LinkedHashMap p0) {
@@ -63,7 +63,7 @@ public class LinkedHashMap<K,V> extends java.util.HashMap<K, V> implements java.
 			return (java.util.Map.Entry<K, V>)r;
 		}
 	}
-	public final class LinkedValueIterator extends java.util.LinkedHashMap<K, V>.LinkedHashIterator implements java.util.Iterator<V> {
+    public final class LinkedValueIterator extends java.util.LinkedHashMap<K, V>.LinkedHashIterator<K, V> implements java.util.Iterator<V> {
 		public java.lang.Object f60;
 		LinkedValueIterator(java.util.LinkedHashMap p0) {
 		}
@@ -75,7 +75,7 @@ public class LinkedHashMap<K,V> extends java.util.HashMap<K, V> implements java.
 			return (V)r;
 		}
 	}
-	public final class LinkedKeyIterator extends java.util.LinkedHashMap<K, V>.LinkedHashIterator implements java.util.Iterator<K> {
+    public final class LinkedKeyIterator extends java.util.LinkedHashMap<K, V>.LinkedHashIterator<K, V> implements java.util.Iterator<K> {
 		public java.lang.Object f91;
 		LinkedKeyIterator(java.util.LinkedHashMap p0) {
 		}
@@ -87,7 +87,7 @@ public class LinkedHashMap<K,V> extends java.util.HashMap<K, V> implements java.
 			return (K)r;
 		}
 	}
-	public abstract class LinkedHashIterator {
+    public abstract class LinkedHashIterator<K, V> {
 		LinkedHashIterator(java.util.LinkedHashMap p0) {
 		}
 		public LinkedHashIterator() {

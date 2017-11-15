@@ -102,23 +102,23 @@ class PrintWriter
 	@STAMP(flows = {@Flow(from="csq",to="!this")})
 	public  java.io.PrintWriter append(java.lang.CharSequence csq, int start, int end) { return this; }
 
-    	public java.io.PrintWriter format(java.util.Locale p0, java.lang.String p1, java.lang.Object[] p2) {
+    	public java.io.PrintWriter format(java.util.Locale p0, java.lang.String p1, java.lang.Object ... p2) {
 		java.io.PrintWriter r = null;
 		r = (java.io.PrintWriter)this;
 		return (java.io.PrintWriter)r;
 	}
-	public java.io.PrintWriter format(java.lang.String p0, java.lang.Object[] p1) {
+	public java.io.PrintWriter format(java.lang.String p0, java.lang.Object ... p1) {
 		java.io.PrintWriter r = null;
 		r = (java.io.PrintWriter)this;
 		return (java.io.PrintWriter)r;
 	}
 
-	public java.io.PrintWriter printf(java.util.Locale p0, java.lang.String p1, java.lang.Object[] p2) {
+	public java.io.PrintWriter printf(java.util.Locale p0, java.lang.String p1, java.lang.Object ... p2) {
 		java.io.PrintWriter r = null;
 		r = (java.io.PrintWriter)this;
 		return (java.io.PrintWriter)r;
 	}
-	public java.io.PrintWriter printf(java.lang.String p0, java.lang.Object[] p1) {
+	public java.io.PrintWriter printf(java.lang.String p0, java.lang.Object ... p1) {
 		java.io.PrintWriter r = null;
 		r = (java.io.PrintWriter)this;
 		return (java.io.PrintWriter)r;
