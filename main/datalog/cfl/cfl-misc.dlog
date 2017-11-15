@@ -36,8 +36,8 @@ Framework(m:M) input
 ptd(v:V,h:H) output
 ptd(v,h) :- pt(_,v,o), CH(o,h), MH(m,h), !Framework(m), MV(mp,v), !Framework(mp).
 
-#aliasd(v:V,u:V) output
-#aliasd(v,u) :- pt(_,v,o), pt(_,u,o), MV(m,v), !Framework(m), MV(mp,u), !Framework(mp).
+aliasd(v:V,u:V) output
+aliasd(v,u) :- pt(_,v,o), pt(_,u,o), MV(m,v), !Framework(m), MV(mp,u), !Framework(mp).
 
 fpt(o1:C,f:F,o2:C) input
 fptd(h1:H,f:F,h2:H) output
