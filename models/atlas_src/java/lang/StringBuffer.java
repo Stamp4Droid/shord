@@ -129,7 +129,7 @@ class StringBuffer
 	@STAMP(
 		   flows = {@Flow(from="this",to="@return")}
 	)
-	public synchronized  java.lang.CharSequence subSequence(int start, int end) { throw new RuntimeException(); }
+	public synchronized  java.lang.CharSequence subSequence(int start, int end) { return this; }
 
 	@STAMP(
 		   flows = {@Flow(from="this",to="@return")}

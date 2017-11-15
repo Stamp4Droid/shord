@@ -90,6 +90,7 @@ class Vector<E>
     @STAMP(flows = {@Flow(from="this",to="@return")})
 	public synchronized java.util.List<E> subList(int p0, int p1) {
 		java.util.List r = null;
+		r = new java.util.ArrayList<E>();
 		return (java.util.List<E>)r;
 	}
     @STAMP(flows = {@Flow(from="this",to="@return")})
